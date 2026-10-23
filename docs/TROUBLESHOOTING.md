@@ -150,3 +150,13 @@ The Controller defaults to one transfer and 4 MiB/s relay/readback; Agents retai
 Rollback details: DATA_MODEL and README section 12. Stop all development processes, retain current state/objects, restore the complete pre-upgrade schema-3 backup and v0.5 source together. Newer cache checkpoints intentionally refuse an older Controller. There is no automatic epoch reset or distributed recovery authority in this phase.
 
 Catalog state/epoch missing in schema 4: stop and restore the complete reviewed stopped-state backup. Do not run initialization to create a fresh epoch over existing replicas or edit the schema version.
+
+## Phase 2A engine qualification — blocked
+
+- tools/qualify_pysyncobj.py --download returning exit 1 and qualified=false means the upstream candidate failed ASC safety gates. Current 0.3.17 result is one passing clean-restart probe and five failed gates; this is not a failing ASC production service and must not be relabeled PASS/SKIP.
+- Missing/corrupt .meta in the isolated probe loses a prior vote and emits a second same-term vote. Never repair actual consensus state by deleting metadata or resetting term/vote. ASC has not integrated this engine; no production Raft recovery command exists.
+- Exit 2 / qualification_inconclusive means download, checksum, import or probe execution failed. Preserve the error classification; verify the official artifact/network/environment instead of changing the pinned hash or installing packages automatically.
+- No matching rraft-py 0.2.27 Windows CPython-3.14 wheel was published in the inspected release. go/rustc/cargo were absent from process PATH; no WSL distribution was listed. This is a development qualification blocker, not proof that Android cannot support Raft. Do not auto-install a toolchain or use phone production state to investigate.
+- Existing v0.6 Controller remains single-writer with raft_enabled=false; it cannot elect a replacement or grant strong quorum reads. Metadata caches never promote themselves. Do not run independent copied Controllers against the same logical history.
+
+Reproduce evidence and review alternatives/rollback in PHASE2A-ACCEPTANCE.md. A fresh unchanged-runtime full suite passed 92 tests (3 POSIX skips); no Phase 2A quorum/partition/snapshot acceptance has run.

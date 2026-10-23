@@ -73,3 +73,11 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - No marketing capacity as real usable capacity without measuring files and replication factor.
 
 Phase 1.2A local gate: Codex Windows final 61 tests OK (skipped=3 POSIX installer), 58 PASS, 0 FAIL/ERROR. Three-node HTTPS simulation passed. See PHASE1-2A-ACCEPTANCE.md; Android/SAF/power-cut and distributed acceptance remain open.
+
+## Phase 2A v0.7.0 — engine selection blocked, not released
+
+Completed investigation: mandatory document/source review, actual Catalog-write/authority classification, five candidate assessment, reproducible six-gate PySyncObj probe, and fresh v0.6 Windows regression (92 tests OK, 3 POSIX skips). See PHASE2A-ACCEPTANCE.md and ADR-037/038.
+
+Unmodified PySyncObj 0.3.17 fails missing/corrupt vote-state recovery and other sampled persistence/identity gates. No evaluated candidate is yet qualified for the available Windows Python/target Termux architecture. Next choice is an authorized native toolchain/etcd-raft sidecar qualification, or a reviewed pinned PySyncObj fork with durable persistence and authenticated transport. No system tools/dependencies were installed, no consensus algorithm was invented and no runtime migration/version change was made.
+
+Remaining Phase 2A gates: engine/platform acceptance; deterministic commands and atomic applied-index/receipt persistence; comprehensive Catalog bypass protection; quorum strong reads; safe bootstrap/static membership, snapshot/catch-up/restart; per-voter RPC identity; all 15 requested deterministic election/partition/fault cases plus full regressions. Physical-write failover stays disabled until distributed fencing is proved. Commit/publish v0.7 only after those gates pass; Phase 2B and phone trials remain blocked.

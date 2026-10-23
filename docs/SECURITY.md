@@ -140,3 +140,11 @@ Reconciliation is bounded and non-destructive. Unknown v0.5 files/orphan objects
 Legacy v0.5 whole-volume authorization may omit the new optional scope after a 400 on the extra field, with unchanged certificate pin/current credentials. The Controller must still authorize; a job credential requires scope and is rejected without it. No TLS/security bypass is added.
 
 Before publication inspect all tracked/staged blobs and ignore rules, including metadata checkpoint/export/cache files. Keep complete private state outside source. Stop processes for backups/rollback; keep original manifests/volumes and review restored credentials. Never force-push, lower schema numbers, erase uncertain copies or treat an old restored catalog as current authority automatically.
+
+## Phase 2A engine investigation — rejected dependency, no runtime exposure
+
+The hash-pinned PySyncObj 0.3.17 probe reproduces another vote in the same term after missing/corrupt .meta. Default transport accepts a known address claim without a credential when password=None. This is qualification of an unintegrated upstream candidate: ASC exposes no Raft socket and has no dependency on that package. Do not enable the default transport, substitute a shared admin password or assume the ordinary-restart persistence fix proves fail-closed recovery.
+
+tools/qualify_pysyncobj.py downloads only with explicit --download, checks a fixed official-artifact SHA-256 before importing selected Python modules from temporary state, and never runs packaging/install scripts or opens listeners. Treat external-engine execution as development qualification only; --archive supports an offline verified artifact. No private ASC identity/state is supplied. Synchronization-call observations are not physical power-cut tests.
+
+Per-voter identity, durable vote-before-message ordering, exact cluster/membership binding, bounded authenticated decoding, recovery fencing and isolated-leader strong-read rejection remain unimplemented gates. No keys/tokens are replicated and no consensus log/snapshot containing user metadata is created in this investigation. Existing pinning, grants, lifecycle/rate limits and M51 protection remain unchanged. Full evidence/alternatives: PHASE2A-ACCEPTANCE.md.

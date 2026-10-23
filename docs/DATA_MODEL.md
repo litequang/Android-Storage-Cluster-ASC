@@ -149,3 +149,11 @@ Standalone v0.5 committed files remain intact in local manifest 1 and are report
 Rollback requires matching source plus complete stopped-state pre-upgrade private backups (registry/DB/WAL/config/keys) and retained volumes. v0.5 Controller refuses schema 4. Never lower PRAGMA by hand or erase objects to downgrade. Preserve v0.6 metadata/manifests/objects separately; restoring older identities can reactivate old secrets and loses later registry/catalog changes. Cache checkpoints ahead of a restored Controller are intentionally rejected; epoch/recovery planning is operator-controlled, not automatic failover.
 
 An already-initialized schema-4 registry must contain its Catalog tables and epoch/checkpoint. Missing authority is a restore blocker; initialize never silently recreates an epoch over existing Catalog data.
+
+## Phase 2A investigation — no migration applied
+
+Runtime schemas stay registry 4, local manifest 1 and read-only metadata cache 1. No Raft database, schema-5 migration, new epoch or voter bootstrap state was created. See PHASE2A-ACCEPTANCE.md for engine rejection and the current-state classification.
+
+Proposed future consensus persistence must bind cluster/node identity, engine/schema version, membership, term/vote, indexed log, commit/applied checkpoint and validated snapshot metadata. Lost/corrupt state must stop participation rather than initialize defaults. Existing Catalog epoch/revision alone is not sufficient Raft authority.
+
+A future apply transaction must atomically store Catalog changes/event, applied index/term and permanent replay-safe request receipt (ID, payload digest, result). Prepared command IDs/timestamps/placement must not be regenerated during replay. A snapshot needs the applied checkpoint, membership and receipt set alongside consistent materialization/checksums; schema-1 public exports omit these. Preserve logs until safe snapshot installation/compaction is implemented and tested. These are pending contracts, not a schema currently accepted by source.

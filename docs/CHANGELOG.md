@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Unreleased — 2026-10-23 — Phase 2A engine qualification blocked
+- Keep runtime v0.6.0/base b645e539f737c461aaa112a51f6627ef0da80d92; v0.7.0 is not released and no Raft feature/schema/dependency is enabled.
+- Add standalone tools/qualify_pysyncobj.py: explicit download/offline artifact, pinned official 0.3.17 SHA-256, temporary source/state only, no package installation/listener. Nonzero exit preserves rejected/inconclusive qualification.
+- Reproduce second same-term vote after missing/corrupt upstream metadata; record ordinary restart success, synchronization-call gaps and default address-claim authentication failure. Six probes: 1 PASS / 5 FAIL, not a consensus acceptance result.
+- Document engine alternatives and current Catalog write/authority classification, pending deterministic apply/read barrier/snapshot/fencing contracts and all fifteen unexecuted acceptance gates in PHASE2A-ACCEPTANCE.md. Stop before a homegrown engine per task section 3; integration choice remains pending.
+- Fresh Codex Windows regression: 92 tests OK (skipped=3 POSIX installer), 89 PASS / 0 FAIL / 0 ERROR in 106.154 seconds. Existing asc/ and tests/ unchanged. No v0.7 commit/push, phone/production/M51 access or system installation.
+
 ## v0.6.0 — 2026-10-23 — Phase 1.2B Distributed Storage & Global Catalog
 - Add registry schema 4 transactionally from 0/2/3, preserving lifecycle identities/tokens/codes/grants and unchanged local manifest 1/object bytes. Add global immutable versions, replica evidence, policy, persistent epoch/revision/digest-chained history and explicit node/domain/volume approvals.
 - Add consistent bounded snapshots/deltas and atomic read-only metadata cache schema 1. Validate cluster/epoch/order/gaps/duplicates/digests/rollback and same-checkpoint materialization; compacted history resyncs safely. Offline caches remain lookup-only.

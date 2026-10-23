@@ -109,3 +109,13 @@ Metadata snapshots are consistent read transactions, canonical SHA-256 protected
 Reconciliation rotates persistent per-volume inventory cursors (16 pages/run, 200 rows/page), verifies at most eight known replicas/run and caps diagnostic categories at 256 entries. It reports native v0.5 files and orphan objects without automatic adoption/deletion, repairs deficits only from physically valid sources and preserves suspicious/last copies. Failed target domains are held for explicit retry; spare eligible domains can still heal.
 
 Catalog.mutate is an integration boundary, not a completed deterministic Raft apply. Phase 2 must separate nondeterministic preparation (IDs, time, placement) from replicated application, define fencing/epoch recovery and fault-test quorum behavior. No consensus, election, automatic Controller failover, disaster-proof backup or Android/power-cut readiness is claimed.
+
+## Phase 2A investigation — blocked before runtime integration
+
+Engine qualification rejected unmodified PySyncObj 0.3.17: missing/corrupt vote metadata permits another same-term vote; persistence synchronization and default voter authentication do not meet ASC requirements. See ADR-037/038 and PHASE2A-ACCEPTANCE.md for reproducible evidence and alternatives. No consensus runtime or v0.7 release exists.
+
+The proposed integration separates leader preparation (IDs, clock, placement and physical proof), an engine majority-commit boundary, deterministic Catalog apply, and a transactional applied-index/idempotency receipt. Apply must not consult live network, local clock, random values, unreplicated node approvals or queue leases. File revisions map to committed Catalog changes; engine no-ops do not create file revisions.
+
+A safe read barrier/ReadIndex plus applied-index check is required for strong reads. A local leader flag/term/heartbeat is insufficient. Existing read-only caches remain stale. Public metadata exports need a separate validated consensus snapshot envelope rather than becoming Raft snapshots merely by renaming them.
+
+Registry lifecycle, approvals/probes, job leases/grants and storage side effects remain single-Controller state. Any future metadata-only consensus runtime must prohibit physical-write/job failover until distributed fencing is proved. Bootstrap/membership/recovery must preserve cluster identity and fail closed on lost state. These are design constraints, not enabled behavior; no change to v0.6 component boundaries.

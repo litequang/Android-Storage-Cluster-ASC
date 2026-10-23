@@ -41,3 +41,11 @@ Read AGENTS.md first. Current runtime: one Controller writes Global Catalog; app
 - Prior Windows gate: PHASE1-2A-ACCEPTANCE.md (61 tests, 3 POSIX skips). New results and fault matrix: PHASE1-2B-ACCEPTANCE.md; prior PASS is not reused for changed source.
 
 - Catalog schema.validate_existing blocks known-schema-4 missing tables/epoch instead of recreating authority; test_known_schema_four_never_recreates_missing_epoch_authority preserves data/version and requires backup recovery.
+
+## Phase 2A investigation — engine gate blocked, runtime still v0.6.0
+
+- tools/qualify_pysyncobj.py: artifact / unpack_package / qualify / main. Standalone upstream qualification tool; hash-pinned PySyncObj 0.3.17 modules run in TemporaryDirectory. No ASC import, package install, listener or consensus engine integration. Exit 1 reports rejected gates, not suite PASS.
+- Consensus engine, deterministic state-machine apply, authenticated Raft transport, persistent Raft log and consensus snapshot modules: **not implemented**. No fictitious path or new v0.7 entrypoint is advertised.
+- Actual mutation routing: service.upload_plan -> state.Catalog.mutate CREATE; http.handle -> POLICY; service._execute -> COMPLETE; service._bad_replica -> REPLICA_STATE; service.reconcile -> REVERIFY. state._event materializes revisions; schedule/_new_job write private jobs. All remain single-writer.
+- Existing metadata.MetadataSource/MetadataReplica are Catalog export/cache, not Raft snapshot/install. queue/grants/registry are not consensus state.
+- Investigation, proposed integration contracts and all 15 unexecuted consensus gates: [PHASE2A-ACCEPTANCE.md](PHASE2A-ACCEPTANCE.md). ADR-037/038 record engine rejection and alternatives. Fresh unchanged-runtime regression: 92 tests OK, 3 POSIX skips; engine probe: 1 PASS / 5 FAIL.

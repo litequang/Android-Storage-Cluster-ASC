@@ -4,7 +4,7 @@ ASC có Global File Catalog do một Controller ghi, metadata replica chỉ đ�
 
 Codex đã chạy lại full suite mới: **92 tests, OK (skipped=3)** trên Windows — 89 PASS, không FAIL/ERROR. Ba SKIP là installer cần Linux/Termux Bash. Mô phỏng ZTE V40/Bphone A40/Sony XZ3 dùng state/root riêng, HTTPS/pin thật và file vật lý riêng. Đây là mô phỏng trên một máy Windows, chưa phải chứng minh độ bền của nhiều điện thoại thật.
 
-Chưa có Raft, tự bầu Controller/failover, Dashboard, Cloudflare, phần mềm mobile, SAF hay production readiness. Không truy cập M51, Android thật hoặc dữ liệu production. Phase 2 cần nhiệm vụ riêng.
+Chưa có Raft, tự bầu Controller/failover, Dashboard, Cloudflare, phần mềm mobile, SAF hay production readiness. Không truy cập M51, Android thật hoặc dữ liệu production. Phase 2A đã được yêu cầu, hiện chặn tại kiểm định Raft engine; xem mục 13.
 
 **Mục 1–10 là hướng dẫn lịch sử v0.4.1; mục 11 mô tả Storage Foundation v0.5.0. Mục 12 là quy trình hiện tại v0.6.0.** Không dùng các lệnh điện thoại để triển khai trong lượt này. Giữ source cũ và private-state backup trước migration.
 
@@ -418,3 +418,19 @@ Migration: Controller registry 0/2/3 -> 4 additive; local manifest vẫn 1, cach
 Rollback: dừng toàn bộ ASC development, lưu riêng state/object hiện tại, phục hồi bản sao private state đầy đủ trước nâng cấp cùng source v0.5.0 tại f70b095b8f2ec507baaea5a4bdb3d03667209f94. Không chạy v0.5 Controller trên registry 4 hoặc sửa PRAGMA. Giữ manifest/volume/object mới; không xóa chúng để downgrade. Restore có thể mất thay đổi catalog và kích hoạt lại credential cũ; cô lập môi trường và rà soát quyền. Cache đi trước Controller được phục hồi sẽ từ chối checkpoint lùi; không ép reset epoch.
 
 Gate Phase 1.2B đã đạt trên Windows. Trước Phase 2 cần thiết kế deterministic prepared commands, Raft/fencing/membership/epoch recovery và acceptance partition/quorum. Chưa triển khai Phase 2, Linux/Termux installer, Android/SD/Doze hoặc power-cut acceptance.
+
+## 13. Phase 2A — đang chặn tại bước chọn Raft engine
+
+Đã khảo sát thư viện và kiểm chứng source PySyncObj 0.3.17 bằng SHA-256 cố định. Khi chỉ mất/hỏng file .meta trong fixture, voter cấp phiếu cho peer khác trong cùng term 7; transport mặc định cũng chưa xác thực identity theo yêu cầu ASC. Kết quả probe: **1 PASS / 5 FAIL**, không phải nghiệm thu Raft.
+
+Đã thêm công cụ tái hiện, không cài package hoặc mở server:
+```powershell
+python -B tools/qualify_pysyncobj.py --download
+```
+Exit 1 với qualified=false là engine bị loại ở cửa kiểm định; exit 2 là kiểm định chưa kết luận được. Có thể dùng --archive với gói official đã tải, SHA-256 phải khớp. Source thư viện và journal thử nghiệm chỉ tồn tại trong thư mục tạm.
+
+Regression ASC vừa chạy lại: **92 tests OK (skipped=3), 106.154 giây**; ba SKIP vẫn là installer POSIX. Chưa chạy được 15 tình huống nghiệm thu consensus vì chưa có engine tích hợp. Xem [bằng chứng, lựa chọn thay thế và hợp đồng tích hợp](docs/PHASE2A-ACCEPTANCE.md), [ADR-037/038](docs/DECISIONS.md).
+
+Runtime vẫn **v0.6.0**, registry 4/manifest 1/cache 1, chưa có migration hay quyền ghi quorum. Chưa có commit/push mới và chưa bắt đầu Phase 2B. Lựa chọn tiếp theo cần thống nhất: kiểm định etcd/raft qua Go sidecar với toolchain phát triển được cho phép, hoặc fork PySyncObj được rà soát riêng về persistence/transport. Không tự viết thuật toán bầu cử thay thế.
+
+Rollback lượt khảo sát chỉ cần hoàn tác các thay đổi tool/tài liệu sau rà soát; không phục hồi DB, reset identity hoặc xóa object. Không truy cập M51 hay điện thoại thật.
