@@ -1,6 +1,37 @@
 # CHANGELOG
 
-## Unreleased — 2026-10-23 — Phase 2A engine qualification blocked
+## v0.7.0 — 2026-10-23 — Phase 2A Windows metadata consensus accepted
+
+- Add pinned official HashiCorp Raft/Bolt qualification and a development Go
+  sidecar: durable integrity/quarantine policy, static voters,
+  authenticated peer RPC, deterministic prepared-projection FSM/receipts,
+  snapshots, quorum Barrier reads, local authenticated IPC and shutdown.
+- Add opt-in `controller-run --consensus-config` with deterministic Catalog
+  DECLARE/POLICY preparation, immutable intent-bound receipts, atomic projection/
+  applied checkpoint/receipt transactions, stale follower reads and quorum Barrier
+  strong reads. Exact metadata attachment and explicit empty-voter seed imports
+  preserve existing history; raw node/admin secrets/jobs/grants are not replicated.
+- Persist writer guards across restarts; deny old Catalog/registry/grant/job paths,
+  old transfer authorization and single-writer fallback. Preserve existing RUNNING
+  jobs/objects without activating physical transfers under a newly elected voter.
+- Validate snapshots/log coverage and incomplete vote writes; require an external
+  enrollment witness and refuse state-loss reset/re-init. Fix Android backend
+  compilation with official bbolt v1.4.3; build Windows AMD64 and Android ARM64
+  artifacts outside source. Android runtime, dynamic membership/rebuild and
+  Controller/storage automatic failover remain disabled.
+- Preserve historical PySyncObj 1 PASS / 5 FAIL and the original qualification
+  tool byte-for-byte in Git. New Go tests and actual Python/Go/TLS fault integration
+  pass; full regression/publication results are in PHASE2A-ACCEPTANCE.md. No
+  phone/M51/production access, main merge, force push or Phase 2B work.
+- Final Codex checks: all 15 consensus scenarios PASS; 8 Go tests PASS (12 stable
+  state subcases), 87.679 seconds; full Python 95 tests OK (3 POSIX installer
+  skips), 92 PASS / 0 FAIL / 0 ERROR, 772.597 seconds. go vet, go mod verify,
+  Windows/Android builds, AST/format checks PASS. Publication is on the existing
+  WIP branch only; no production release/deployment or Android execution.
+- Keep Go source/module files LF on Windows checkouts without changing global
+  Git configuration; inspect all tracked/staged content before WIP publication.
+
+## Historical WIP — 2026-10-23 — Phase 2A PySyncObj qualification rejected
 - Keep runtime v0.6.0/base b645e539f737c461aaa112a51f6627ef0da80d92; v0.7.0 is not released and no Raft feature/schema/dependency is enabled.
 - Add standalone tools/qualify_pysyncobj.py: explicit download/offline artifact, pinned official 0.3.17 SHA-256, temporary source/state only, no package installation/listener. Nonzero exit preserves rejected/inconclusive qualification.
 - Reproduce second same-term vote after missing/corrupt upstream metadata; record ordinary restart success, synchronization-call gaps and default address-claim authentication failure. Six probes: 1 PASS / 5 FAIL, not a consensus acceptance result.

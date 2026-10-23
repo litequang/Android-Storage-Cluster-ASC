@@ -141,7 +141,44 @@ Legacy v0.5 whole-volume authorization may omit the new optional scope after a 4
 
 Before publication inspect all tracked/staged blobs and ignore rules, including metadata checkpoint/export/cache files. Keep complete private state outside source. Stop processes for backups/rollback; keep original manifests/volumes and review restored credentials. Never force-push, lower schema numbers, erase uncertain copies or treat an old restored catalog as current authority automatically.
 
-## Phase 2A engine investigation — rejected dependency, no runtime exposure
+## Phase 2A historical engine investigation and Go security boundary
+
+Go qualification continuation supplies a development-only authenticated transport:
+TLS 1.3 verifies trusted configured certificates AND exact leaf fingerprints;
+each RPC header ID/address must match its TLS identity and immutable cluster.
+A configured peer cannot impersonate another configured voter merely by changing
+the message header. Bodies, entry counts, snapshot sizes and deadlines are bounded.
+Peer connections are capped at 32 before TLS handshakes; IPC connections at 16
+and concurrent authenticated IPC handlers at 8. Decoder sizes/deadlines are bounded.
+This is not phone/production certification.
+
+Opt-in Python mode persists SQL guards across process restarts. Every normal
+registry connection denies DML/authority DDL; raw/old SQLite writers lack the
+apply function and cannot pass persistent triggers. Only the adapter apply
+connection is authorized to install a committed projection. Missing guards are
+an attachment blocker. Existing grants are denied; JobQueue cannot start. No
+replication job transfers or physical evidence publication run after attachment.
+
+Each voter has its own peer certificate/key and separate per-node random IPC
+bearer. Config/key/seed/DB/witness files belong outside source/private account
+storage; Go rejects config/state/key/seed paths under a Git checkout. Config
+binding contains public certificates, membership and seed identity, never raw
+IPC/admin/node secrets or private key bytes. Base64 in IPC/snapshots preserves
+bytes and is not encryption. Private metadata still needs OS ACLs/backups.
+
+The trust model includes trusted Python preparation and non-Byzantine voters;
+Raft is not protection against a malicious device administrator able to replace
+code/state/certificates. CAS preconditions/receipts prevent accidental stale
+proposals and retries; local authorized code remains part of the trust boundary.
+Windows filesystem sync is not a physical power-cut or Android durability proof.
+Live stable/log errors latch quarantine in the store and gate RPC/IPC. Required
+missing stable values never reach upstream's defaultable `not found` branch;
+partial repair cannot resume writes in that process. A fatal engine storage error
+may stop the process; startup still requires complete valid reviewed state.
+Android executable is build-only and refuses runtime until separately qualified.
+
+The following PySyncObj paragraphs retain historical pre-Go findings; no rejected
+upstream package was enabled by this continuation.
 
 The hash-pinned PySyncObj 0.3.17 probe reproduces another vote in the same term after missing/corrupt .meta. Default transport accepts a known address claim without a credential when password=None. This is qualification of an unintegrated upstream candidate: ASC exposes no Raft socket and has no dependency on that package. Do not enable the default transport, substitute a shared admin password or assume the ordinary-restart persistence fix proves fail-closed recovery.
 

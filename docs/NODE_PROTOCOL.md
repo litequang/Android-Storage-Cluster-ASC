@@ -201,7 +201,38 @@ RUNNING job default timeout 300 seconds (30–900), Controller relay/readback de
 
 Relevant failures: 400 invalid envelope/ID/path; 401 owner unauthorized; 403 metadata_not_authorized / stale approval / changed credentials / wrong transfer scope; 409 idempotency/version/job/revision/checkpoint conflict or resync_required; 422 physical checksum mismatch; 429 busy/grant/rate bound; 503 unavailable Controller/source/catalog; 507 no eligible quota/capacity. Responses never echo secret-bearing input. Owner upload completion may remain pending if the owned worker is busy; only verified counts, never job existence, prove a replica.
 
-## Phase 2A investigation — protocol unchanged
+## Phase 2A Go metadata protocol continuation
+
+Go continuation (not yet accepted): peer `/raft/v1/{append,vote,prevote,timeout,snapshot}`
+uses TLS 1.3, exact per-voter certificates and ID/address/cluster validation.
+Local loopback IPC has a separate private per-node bearer:
+`GET /v1/status`, `GET /v1/state?consistency=local|strong`,
+`POST /v1/commands`, `/v1/snapshot`, `/v1/shutdown`.
+Strong state waits for a newly committed upstream Barrier and FSM apply; local
+reads report stale/read_only. Commands contain schema/cluster/epoch/request ID,
+intent SHA, expected projection SHA and base64 canonical prepared document bytes.
+State/snapshots retain exact bytes, applied index/term and permanent receipts.
+No membership-change/recovery endpoint exists. The supported membership is static.
+
+Opt-in loopback Controller `/catalog/v1` requires the existing owner admin bearer:
+
+| Method/path | Contract |
+|---|---|
+| GET files or files/ID | Local stale metadata by default; `?consistency=strong` requires local leader + newly committed Barrier; reports exact revision/applied_index/read_only/stale/metadata_only |
+| GET metadata/status | Same consistency options, authenticated leader/role health; automatic_failover=false |
+| POST metadata/declare | request_id/logical_path/version/size/sha256/policy; metadata declaration only, no upload/replica proof |
+| POST files/ID/policy | request_id/policy; committed receipt and applied revision; replay uses same intent/ID |
+
+All legacy upload/complete/download/grant/job/reconcile/node-approval writes are
+denied with distributed_fencing_required; lifecycle mutations are DB-fenced.
+Available replica count is UNKNOWN/null in this mode, not derived from frozen
+per-Controller probes. Follower strong reads fail; no unauthenticated redirect
+or blind forwarding is added. Status leader_id is a routing hint, never authority.
+Repeated same policy with a new request commits a receipt/index without fabricating
+a new Catalog event/revision. SHA-precondition rejection binds its request ID;
+use a new request ID for a newly prepared intent after inspecting a conflict.
+
+The following paragraphs retain the historical pre-Go protocol status/design.
 
 Engine selection is blocked; /api/v1, /storage/v1 and /catalog/v1 still implement v0.6 single-writer behavior. raft_enabled remains false. No Raft RPC, strong-read API, bootstrap, membership-change, leadership-transfer or recovery endpoint is available. Existing cache reads keep stale/read_only and known revision/sync-time semantics.
 

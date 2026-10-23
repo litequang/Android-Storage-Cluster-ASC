@@ -1,5 +1,40 @@
 # ASC Architecture Decision Records
 
+## 2026-10-23 — authorized Go continuation
+
+- ADR-039 (selected for Windows metadata consensus): Owner selects HashiCorp Raft first,
+  etcd/raft only if unsuitable. Use official development Go 1.27.3 Windows AMD64
+  (download SHA-256 f26081f438319757f8a1b46d7d0b2c5ec7583d4038e485e0aa725cfde7885fff),
+  outside source, without changing global PATH. Pin raft v1.8.0 and
+  raft-boltdb/v2 v2.4.2 with Go checksum verification. Backend defaults keep fsync
+  enabled. Missing or inconsistent state quarantines; never automatically reset.
+  No production/Android acceptance or physical power-cut claim follows.
+
+  Pin bbolt v1.4.3 explicitly: backend's transitive v1.4.1 fails the actual
+  Android/ARM64 compile (`bolt_android.go: undefined maxMapSize`). Upstream
+  v1.4.2 fixes this; v1.4.3 also fixes backup corruption. No dependency source is
+  patched. Primary source: https://github.com/etcd-io/bbolt/blob/main/CHANGELOG/CHANGELOG-1.4.md.
+
+- ADR-040: Use a bounded prepared-projection CAS FSM rather than porting ASC's
+  placement/jobs/business logic into Go or invoking Python/network IO during
+  Raft apply. Trusted Python preparation validates canonical Catalog rows/events;
+  Go commits immutable bytes with identity/expected SHA/intent-bound receipts.
+  Go snapshots retain the entire authoritative projection and receipts even if
+  Python has not applied it. Python's installation transaction includes Catalog
+  state/events, applied index/term and receipts. Strong reads commit a Barrier;
+  local views are explicitly stale with exact checkpoints. This is metadata
+  consensus, not full Controller/storage failover. Static three-voter membership
+  and 2 MiB/4096-receipt bounds are explicit; no unsafe eviction or recovery API.
+
+- ADR-041: Persist SQL guards and deny normal writer/DDL connections after
+  attachment; freeze private registry/approvals/jobs/grants and reject old storage
+  authorization. Retain objects and RUNNING jobs unchanged. Attachment requires
+  exact stopped-state seed equality; explicit new-voter import refuses nonempty
+  histories. An external enrollment witness prohibits re-init after whole-state
+  loss; restore only complete reviewed state. Go Android runtime stays refused
+  despite a successful cross-build. Windows metadata configuration is an explicit
+  local-development route, retaining protected-profile/unknown-Android guards.
+
 ## 2026-10-23 — baseline design (proposed targets)
 - ADR-001: Logical file catalog separate from actual phone volumes; no distributed RAID.
 - ADR-002: Eventual full metadata replicas per eligible node, local manifests per storage node.

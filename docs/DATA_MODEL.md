@@ -150,7 +150,47 @@ Rollback requires matching source plus complete stopped-state pre-upgrade privat
 
 An already-initialized schema-4 registry must contain its Catalog tables and epoch/checkpoint. Missing authority is a restore blocker; initialize never silently recreates an epoch over existing Catalog data.
 
-## Phase 2A investigation — no migration applied
+## Historical Phase 2A investigation and Go persistence continuation
+
+Go qualification persistence is separate from registry 4: synchronous official
+raft-boltdb stores checksummed stable values/log extensions; an immutable sealed
+binding anchor and required buckets/keys prevent accidental state recreation.
+An incomplete vote-term/candidate pair is quarantined. FSM snapshots include the
+prepared projection, its SHA-256, applied index/term and bounded permanent request
+receipts. Receipt exhaustion rejects new requests rather than deleting history.
+The opt-in attachment now adds auxiliary consensus schema 1 while retaining base
+registry 4, manifest 1 and public cache 1. It never rewrites local object bytes.
+
+- `settings.consensus_mode=metadata-v1` persists the mode; no missing-config
+  fallback to the legacy writer is allowed.
+- `consensus_checkpoint`: singleton/schema/cluster/epoch/applied_index/applied_term/
+  document_sha256. `consensus_receipts`: request_id plus canonical receipt JSON.
+  Catalog state/files/replicas/events, checkpoint and receipts share one FULL
+  SQLite transaction. No local clock/network/randomness runs during installation.
+- Prepared document schema 1 exports full Catalog files/replicas/history, excludes
+  nodes/credentials/jobs/grants and validates canonical ordering, event digests,
+  history/materialization consistency and bounds. DECLARE records metadata with
+  no byte/replica claim; POLICY preserves no-op revision behavior. Replication
+  evidence commands remain refused pending distributed fencing.
+- Explicit seed attachment requires exact metadata equality. Import is available
+  only into a fresh empty matching-cluster registry; independently initialized
+  nonempty epochs cannot be merged. Export/import CLI never overwrites a seed.
+- Raft snapshots and log tails can overlap or have gaps fully covered by a
+  validated snapshot. Startup verifies the latest snapshot and every retained
+  log; gaps beyond that snapshot quarantine. The outer `.enrolled` witness
+  prevents reinitializing a known voter after loss of its entire state directory.
+- Full prepared document limit: 2 MiB; receipts: 4096 without eviction. A new
+  request after exhaustion fails explicitly. An identical intent/request ID
+  reuses its committed result across preparation, timeout, snapshot and restart.
+
+Rollback: stop all three development voters and Controllers, retain all current
+state/witnesses/configs/objects, then restore complete pre-attachment registry
+backups and matching v0.6 source in an isolated environment. This loses subsequent
+consensus metadata. Do not drop triggers/mode/checkpoint or edit term/schema as a
+rollback shortcut; do not resurrect an unfenced old cluster. No automatic quorum
+rebuild, membership change or state-loss reset is provided.
+
+The following paragraphs retain the original pre-Go design/status as history.
 
 Runtime schemas stay registry 4, local manifest 1 and read-only metadata cache 1. No Raft database, schema-5 migration, new epoch or voter bootstrap state was created. See PHASE2A-ACCEPTANCE.md for engine rejection and the current-state classification.
 

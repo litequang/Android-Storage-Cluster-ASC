@@ -1,4 +1,10 @@
-# Phase 2A — engine qualification BLOCKED (v0.7.0 not released)
+> The initial PySyncObj report below is historical and retained. Current Go
+> continuation evidence/status is appended under **Go sidecar continuation**.
+> Current result: **Phase 2A Windows metadata consensus ACCEPTED**; 15/15 fault
+> scenarios PASS, 8 Go tests PASS, Python 95 OK (3 POSIX skips). No production,
+> Android runtime or automatic Controller/storage failover acceptance is claimed.
+
+# Phase 2A — engine qualification BLOCKED (historical pre-Go report)
 
 Date: 2026-10-23. Accepted runtime/base remains v0.6.0 at b645e539f737c461aaa112a51f6627ef0da80d92. Initial working tree was clean on main tracking origin/main.
 
@@ -130,3 +136,176 @@ Rollback of this investigation requires only reverting its documentation/tool ch
 Phase 2B is **not ready**. Resume Phase 2A after choosing/authorizing an engine integration route, passing engine persistence/identity/platform gates, implementing deterministic Catalog application and executing all fifteen fault cases plus the entire regression suite. No production/phone automatic failover is authorized.
 
 Final development review: all 60 tracked files and both new files were inspected for sensitive filenames and private-key/GitHub/AWS credential patterns; no matching material found. Staging is empty. All Python ASTs parsed and git diff --check passed. Historical changelog content is preserved; asc/ and tests/ match HEAD. Probe --help exited 0; an invalid local artifact was rejected before import with qualification_inconclusive and exit 2. Existing .gitignore was reviewed and needed no change for the temporary-only probe. No commit or push occurred.
+
+## Go sidecar continuation — 2026-10-23
+
+Current workspace: `D:\CODE\ASC-QuickStart\ASC-QuickStart`, branch
+`wip/phase2a-raft-qualification`, starting HEAD
+`31037096c2a4400c0c871779ae6c43bcf30000c1`. Owner explicitly authorized official Go
+development installation/downloads/tests and selected HashiCorp first, etcd/raft
+only if unsuitable. No homegrown election algorithm or new project was created.
+
+**Status: ACCEPTED for Windows metadata consensus.** Scope is Windows
+metadata consensus only, not automatic Controller/storage failover or production.
+The original PySyncObj **1 PASS / 5 FAIL** evidence/tool is unchanged. Phase 2B
+and all phone/M51/production work remain outside scope.
+
+### Engine, toolchain and durable boundary
+
+- Official portable Go **1.27.3 windows/amd64** outside source at
+  `%LOCALAPPDATA%\ASC-DevTools\go1.27.3\go`. Archive SHA-256:
+  `f26081f438319757f8a1b46d7d0b2c5ec7583d4038e485e0aa725cfde7885fff`.
+  No global PATH, service, WSL or phone environment changed.
+- HashiCorp Raft **v1.8.0**, raft-boltdb/v2 **v2.4.2** (MPL-2.0), bbolt
+  **v1.4.3** (MIT), exact direct/transitive checksums in `consensus/go.sum`.
+  `go mod verify` reports all modules verified. No dependency source patched.
+- Actual Android compile first failed on the backend's transitive bbolt v1.4.1
+  (`undefined maxMapSize`). Upstream v1.4.2 fixes this; pinning v1.4.3 resolved it.
+  [Official bbolt changelog](https://github.com/etcd-io/bbolt/blob/main/CHANGELOG/CHANGELOG-1.4.md).
+  The failure is a backend/platform integration issue, not a Raft safety failure.
+- Synchronous official Bolt backend, checksummed stable/log records, immutable
+  cluster/node/static-membership/seed binding, an inner binding anchor and an
+  outer enrollment witness. NoSync is never enabled. Runtime never bootstraps.
+- Upstream StableStore records vote term/candidate separately. ASC marks the
+  interval durably; an interrupted pair quarantines rather than risking another
+  vote. This trades availability for safety without changing upstream Raft.
+- Missing/corrupt state/buckets/keys/anchor/snapshot, mismatched identities and
+  uncovered log gaps refuse participation. Snapshot-covered retained-log gaps
+  are valid after InstallSnapshot and are verified explicitly.
+- Live stable/log errors also latch quarantine. Missing keys are normalized to
+  a non-defaultable quarantine error, never upstream's fresh-store `not found`.
+  Peer RPC/normal IPC and further persistent writes are denied after detection;
+  repairing only one value cannot resume the running process. Tests exercise
+  a live corrupt vote, a missing stable key and sticky write refusal. This is
+  ASC's application state-loss policy, not a claim of an upstream Raft bug.
+- Per-voter TLS 1.3 roots plus exact fingerprints; RPC header ID/address/cluster
+  must match the authenticated certificate before dispatch. No shared node/admin
+  password is used for peers. Local IPC has an independent per-node bearer.
+
+### Implemented metadata integration
+
+`consensus/` supplies init/run, persistent Raft, authenticated transport, FSM,
+snapshot/recovery, status/leader hints, loopback IPC and graceful shutdown.
+`asc/consensus/` supplies the client, deterministic preparation/validation,
+transactional projection, service and explicit stopped-state seed export/import.
+
+Commands compare the expected SHA of the entire canonical prepared Catalog
+document; committed application uses no network, clock, randomness, live probes
+or private job leases. Applied index/term, receipts and all Catalog rows/events
+are persisted atomically. Duplicate intent/ID returns the original receipt;
+conflicting reuse is rejected. New no-op POLICY requests advance the receipt/index
+without inventing a Catalog revision. Responses also report the current projection
+revision separately from the original receipt's result/index.
+
+Explicit attachment preserves existing file metadata and freezes private control
+state. Persistent SQL triggers and normal-connection authorizers deny all old
+Catalog/registry/job/grant writers. Existing transfer grants cannot authorize new
+storage operations. An existing RUNNING job is retained unchanged across election
+and restart; no physical transfer was launched in this test. Local manifests and
+object bytes are unchanged. DECLARE is a metadata declaration with no replica or
+byte-durability claim; POLICY is supported. COMPLETE/REVERIFY/REPLICA_STATE and
+storage automation remain denied pending distributed fencing.
+
+Strong reads wait for a newly committed upstream Barrier and FSM application;
+follower/minority strong reads fail. Local reads report stale/read_only and exact
+revision/applied index. During Go replay, a previously verified Python projection
+can be returned as stale/recovering, never installed backward. All public storage
+availability is UNKNOWN/null in this mode because node approvals/probes are frozen.
+
+### Fifteen required scenarios and additional evidence
+
+All fifteen scenarios below PASS in the final Go/Python integration runs.
+The historical NOT RUN matrix above describes the initial pre-Go investigation.
+
+| # | Required proof | Executable evidence | Result |
+|---|---|---|---|
+| 1 | One quorum-confirmed initial Leader | Go `TestQualificationClusterFaults`, Python real subprocess scenario | PASS |
+| 2 | Commit with 2/3 | Go partition one voter then commit; Python stop Leader then surviving quorum writes | PASS |
+| 3 | Leader stop elects a new Leader | Both suites stop/kill actual Leader | PASS |
+| 4 | Old Leader returns as follower | Both suites restart old process/state and assert Follower | PASS |
+| 5 | One voter cannot commit | Python stops both peers; write and strong read rejected | PASS |
+| 6 | Minority partition cannot commit | Go bidirectional partition; valid conflicting proposal cannot acknowledge | PASS |
+| 7 | No conflicting confirmed histories | Go competing minority/majority proposals carry distinct markers; all final document hashes agree | PASS |
+| 8 | Stale log cannot defeat fresher quorum | Go isolates stale voter, commits on 2/3, stops Leader; stale candidate cannot win | PASS |
+| 9 | Committed metadata survives restart | Go durable restart and Python full sidecar/process restart | PASS |
+| 10 | Duplicate applies once | Go receipt/CAS test; Python retry before/after failover with unchanged revision/receipt | PASS |
+| 11 | Delay/reorder/drop preserves order | Go bounded delays/partition drops; old authenticated AppendEntries delivered/replayed after newer commits cannot regress state | PASS |
+| 12 | Snapshot/follower catch-up | Go offline follower + compaction + InstallSnapshot; Python committed-but-unprojected snapshot recovery | PASS |
+| 13 | API/internal writer bypass denied | Python all authority-table DELETE attempts, raw SQLite, all five legacy mutations, old grants, JobQueue, real HTTPS upload/job/lifecycle routes and no fallback | PASS |
+| 14 | Exact stale follower revision | Python explicit stale read, exact revision and null availability; follower strong read rejected | PASS |
+| 15 | Unauthorized RPC denied | Go peer authentication test: no/unknown cert and valid B cert claiming C; IPC wrong bearer denied | PASS |
+
+
+Additional cases: clean vote retention and second same-term vote denial; missing/
+corrupt DB/term/vote/buckets/anchors/snapshot directory; torn vote marker; snapshot
+corruption/foreign snapshot; static membership mismatch; full directory loss does
+not allow run OR re-init; durable receipts/limit exhaustion; SHA precondition
+conflicts; crash after Go commit/before Python sync, rollback inside Python apply,
+and Python applied-before-ACK; actual Python Controller kill/restart; actual Go
+kill/restart; missing config cannot start the legacy writer; recovery after lost
+quorum; M51/unknown Android guards remain mandatory.
+
+The fault schedule/assertions are repeatable and use actual upstream Raft. Engine
+election timers are randomized wall-clock timers; this is **not** a virtual-clock
+Step/Tick proof or an exhaustive model checker. Durable sync calls were slow on
+this Windows filesystem; 3-second heartbeat / 6-second election / 2-second leader
+lease budgets permit durable vote writes. No persistence check was disabled.
+
+### Reproduction, limits and rollback
+
+See [GO-SIDECAR.md](GO-SIDECAR.md) for config, trust/bootstrap and manual development
+commands. The Python suite creates its own three voters, keys, seed, databases,
+private config and binaries in TemporaryDirectory; it never uses ASC_HOME/private
+production state. No test silently skips when Go/OpenSSL are absent.
+
+Limits: static three voters only; no dynamic membership, emergency quorum rebuild,
+automatic Controller/storage failover, physical power-cut claim, production or
+Android execution. Android ARM64 artifact is cross-compiled with CGO disabled;
+runtime explicitly refuses Android until separately qualified. Go race detector
+is not run because no C compiler is available; `go vet` and actual concurrent
+fault tests are run. Public metadata cache wire schema remains 1, but legacy
+Agent cache sync is not enabled through the metadata-only Controller facade.
+2 MiB documents and 4096 permanent receipts are explicit development bounds.
+
+Rollback requires stopped, isolated complete pre-attachment registry/source
+backups while retaining new state/objects separately. Never delete a witness,
+mode/guard/checkpoint, lower term/schema or rebootstrap a lost voter as recovery.
+No actual private registry or credentials were migrated during this development;
+all enabled-mode checks use isolated fixtures. Publication is conditional on
+full regression plus Git/secret review; no main merge or force push is authorized.
+
+### Executed final-source checks
+
+- Codex-run Go **8 top-level tests PASS, 0 FAIL, 0 SKIP**, plus 12 explicit
+  StableStore subcases, **87.679 seconds**:
+  `go test -v -timeout 240s ./...` in `consensus/`.
+- `go vet ./...`: exit 0. `go mod verify`: exit 0, all modules verified.
+- Windows AMD64 build: exit 0, PE signature/AMD64 machine `0x8664` verified.
+  Android ARM64 build: exit 0, ELF64/AArch64 machine `183`, `GOOS=android`,
+  `GOARCH=arm64`, `CGO_ENABLED=0`; `go version -m` confirms pinned modules.
+- Both builds use `-trimpath -buildvcs=false` and the same `./cmd/asc-raft` source.
+  Artifacts remain outside Git in `%LOCALAPPDATA%\ASC-DevTools\phase2a-build`.
+  Final-source SHA-256 values:
+  Windows `25f6b6ace7d2724ae18567be38eed766975580d063f42b82c4a8bb2ad8486742`;
+  Android `09c024401a5854d737cf129014d3349b88386266ffb0e93cd21633aa9a000f1e`.
+- First full Python run: **95 tests OK (skipped=3), 771.982 seconds**.
+  That run preceded the final live-store quarantine refinement.
+- Final-source full regression: **95 tests OK (skipped=3), 772.597 seconds**:
+  **92 PASS / 0 FAIL / 0 ERROR**. Only the three existing POSIX installer cases
+  skipped; all old Catalog/distributed/storage/TLS and new consensus cases ran.
+  Exact command: `python -B -m unittest discover -s tests -v` from repository
+  root, Python **3.13.15**, with the existing Git OpenSSL directory added only
+  to that child process PATH. No owner-provided PASS or skipped TLS case is reused.
+- `python -B` AST parsing of every tracked/new Python file and `git diff --check`
+  passed. No configured separate Python lint/typecheck pipeline exists.
+- Pre-stage review covered all 62 tracked files and 18 new source/doc files;
+  sensitive filenames and private-key/GitHub/AWS/Slack/OpenAI/literal-bearer
+  credential patterns found no matching material in working tree or existing
+  index. After staging, all **80 tracked/index files** and **38 changed paths**
+  were reviewed, with no matching credentials/private-state artifacts; Python
+  ASTs and staged diff checks PASS. Go source/module files explicitly retain LF
+  in Windows checkouts through `.gitattributes`; no global Git config changed.
+- `tools/qualify_pysyncobj.py` has the identical normalized Git blob as starting
+  HEAD; original report body and six-gate result table are preserved. The rejected
+  engine was not rerun because no probe/upstream artifact/input changed; its
+  historical 1 PASS / 5 FAIL result is not used as a current engine PASS.

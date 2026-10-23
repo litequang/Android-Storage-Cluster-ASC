@@ -5,6 +5,8 @@ from .state import insert
 
 class JobQueue:
     def __init__(self, catalog, timeout=300, max_attempts=5):
+        if catalog.registry.consensus_enabled():
+            raise CatalogError('distributed_fencing_required', 503)
         if type(timeout) is not int or not 30 <= timeout <= 900:
             raise ValueError('invalid job timeout')
         self.catalog, self.registry = catalog, catalog.registry

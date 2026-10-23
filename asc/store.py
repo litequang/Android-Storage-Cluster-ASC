@@ -26,7 +26,20 @@ class Registry:
     def connect(self):
         db = sqlite3.connect(self.path, timeout=15)
         db.row_factory = sqlite3.Row
+        db.create_function('asc_consensus_apply', 0, lambda: 0)
         try:
+            has_settings = db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='settings'").fetchone()
+            distributed = has_settings and db.execute(
+                "SELECT 1 FROM settings WHERE key='consensus_mode' AND value='metadata-v1'").fetchone()
+            if distributed:
+                # Persistent triggers also stop raw/older SQLite writers. This
+                # authorizer prevents normal internal connections removing them.
+                writes = {sqlite3.SQLITE_INSERT, sqlite3.SQLITE_UPDATE, sqlite3.SQLITE_DELETE,
+                          sqlite3.SQLITE_CREATE_TABLE, sqlite3.SQLITE_DROP_TABLE,
+                          sqlite3.SQLITE_CREATE_TRIGGER, sqlite3.SQLITE_DROP_TRIGGER,
+                          sqlite3.SQLITE_ALTER_TABLE, sqlite3.SQLITE_ATTACH, sqlite3.SQLITE_DETACH}
+                db.set_authorizer(lambda action, arg1, arg2, database, source:
+                                  sqlite3.SQLITE_DENY if action in writes else sqlite3.SQLITE_OK)
             with db:
                 yield db
         finally:
@@ -40,6 +53,14 @@ class Registry:
             version = db.execute('PRAGMA user_version').fetchone()[0]
             if version not in (0, 2, 3, SCHEMA_VERSION):
                 raise ValueError('unsupported registry schema; use matching release')
+            if version == SCHEMA_VERSION:
+                distributed = db.execute("SELECT value FROM settings WHERE key='consensus_mode'").fetchone()
+                if distributed:
+                    if distributed[0] != 'metadata-v1' or self.cluster_id() != cluster_id:
+                        raise ValueError('unsupported consensus identity/mode')
+                    from .catalog.schema import validate_existing
+                    validate_existing(db)
+                    return  # No legacy migration/write path in distributed mode.
             db.execute('CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL)')
             existing = db.execute("SELECT value FROM settings WHERE key='cluster_id'").fetchone()
             if existing and existing['value'] != cluster_id:
@@ -71,6 +92,11 @@ class Registry:
                 validate_existing(db)
             migrate(db)
             db.execute(f'PRAGMA user_version={SCHEMA_VERSION}')
+
+    def consensus_enabled(self):
+        with self.connect() as db:
+            row = db.execute("SELECT value FROM settings WHERE key='consensus_mode'").fetchone()
+        return row is not None and row[0] == 'metadata-v1'
 
     def cluster_id(self):
         with self.connect() as db:
@@ -254,6 +280,8 @@ class Registry:
                 'operations': sorted(set(operations)), 'expires_at': now + ttl, 'principal': 'local-admin'}
 
     def storage_authorize(self, node_id, node_token, grant, volume_id, operation, scope=None):
+        if self.consensus_enabled():
+            return None  # Old grants cannot revive physical writes after attachment.
         valid.node_id(node_id)
         valid.secret(grant)
         valid.secret(node_token)

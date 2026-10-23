@@ -3,7 +3,9 @@
 ## Lifecycle boundary inherited from 0.4.1 / Phase 1.1
 
 The lifecycle below is retained. Phase 1.2A local storage is documented at the end.
-The consensus target remains proposed. Later sections document implemented local storage and single-writer distributed Catalog; no Raft, automatic failover or production integration.
+The early consensus target below is historical design. Later sections describe
+single-writer storage and the opt-in Go metadata consensus continuation. Full
+Controller/storage automatic failover and production integration remain absent.
 
 - API stays `/api/v1`; registry schema 2 adds node credential lifecycle and hashed
   enrollment-operation routing without replacing v0.4 cluster/node identities.
@@ -111,6 +113,29 @@ Reconciliation rotates persistent per-volume inventory cursors (16 pages/run, 20
 Catalog.mutate is an integration boundary, not a completed deterministic Raft apply. Phase 2 must separate nondeterministic preparation (IDs, time, placement) from replicated application, define fencing/epoch recovery and fault-test quorum behavior. No consensus, election, automatic Controller failover, disaster-proof backup or Android/power-cut readiness is claimed.
 
 ## Phase 2A investigation — blocked before runtime integration
+
+Go continuation: the development-only `consensus/` package wraps official
+HashiCorp Raft and its synchronous Bolt backend. ASC supplies identity/integrity
+and quarantine policy, not an election algorithm. Runtime open never calls
+bootstrap; initialization is explicit and refuses an existing state directory.
+An interrupted pair of upstream vote-term/candidate writes quarantines restart.
+Engine qualification now includes durable three-voter loopback mTLS election,
+partition, restart and snapshot tests. Windows metadata-only integration acceptance
+passes all 15 scenarios and the full 95-test Python suite (3 POSIX skips).
+`controller-run --consensus-config PRIVATE_FILE` opts into metadata-only consensus:
+Python prepares DECLARE/POLICY documents, Go commits a SHA-preconditioned document
+and durable replay receipts, then Python installs Catalog rows/events, applied
+index/term and receipts in one SQLite transaction. State bytes are base64 on IPC
+to preserve canonical UTF-8 hashes exactly. Snapshots include the Go authoritative
+document and receipts even if Python has not yet projected committed changes.
+
+Persistent SQL guards and default-deny connections block legacy Catalog, registry,
+job and grant writers after attachment. Old grants no longer authorize storage.
+The mode starts no storage worker/heartbeat refresh and exposes only a loopback
+metadata API. Physical objects/manifests are untouched; no Controller/storage
+automatic failover claim is made. Local reads are stale with exact checkpoint;
+strong reads wait for an upstream committed Barrier and applied FSM. During Go
+startup replay, the last verified Python projection remains explicitly stale.
 
 Engine qualification rejected unmodified PySyncObj 0.3.17: missing/corrupt vote metadata permits another same-term vote; persistence synchronization and default voter authentication do not meet ASC requirements. See ADR-037/038 and PHASE2A-ACCEPTANCE.md for reproducible evidence and alternatives. No consensus runtime or v0.7 release exists.
 

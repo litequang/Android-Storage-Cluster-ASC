@@ -10,6 +10,9 @@ def handle(handler):
     service=handler.server.catalog
     if service is None:
         return handler._json(404,{'error':'not_found'})
+    if getattr(service, 'distributed', False):
+        from ..consensus.service import handle as consensus_handle
+        return consensus_handle(handler)
     try:
         parsed=urlsplit(handler.path);parts=parsed.path.removeprefix('/catalog/v1/').split('/')
         query=parse_qs(parsed.query,strict_parsing=True)

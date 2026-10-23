@@ -10,6 +10,7 @@ import time
 from urllib.parse import urlsplit
 from . import validation as valid
 from .store import SCHEMA_VERSION
+from . import __version__
 
 MAX_JSON = valid.MAX_JSON
 
@@ -99,7 +100,7 @@ def _unique_object(pairs):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = 'ASC-LAN/0.6.0'
+    server_version = 'ASC-LAN/' + __version__
     sys_version = ''
 
     def log_message(self, fmt, *args):
@@ -190,6 +191,12 @@ class Handler(BaseHTTPRequestHandler):
                 from .catalog.http import handle
                 return handle(self)
             if path == '/api/v1/info':
+                if getattr(self.server.catalog, 'distributed', False):
+                    return self._json(200, {'cluster_id': self.server.registry.cluster_id(),
+                        'mode': 'metadata-consensus-development', 'schema_version': SCHEMA_VERSION,
+                        'features': ['metadata-consensus-v1'], 'raft_enabled': True,
+                        'automatic_failover': False, 'file_storage_enabled': False,
+                        'global_file_catalog_enabled': True})
                 return self._json(200, {'cluster_id': self.server.registry.cluster_id(),
                                        'mode': 'single-writer-development', 'schema_version': SCHEMA_VERSION,
                                        'features': ['node-lifecycle-v1', 'retry-safe-enrollment-v1', 'local-storage-v1', 'file-scoped-transfers-v1'] +
@@ -286,7 +293,8 @@ def serve(host, port, registry, admin_token, cert, key, catalog=None):
         context.load_cert_chain(certfile=str(cert), keyfile=str(key))
         # Handshake happens in bounded workers, not in the accept loop.
         httpd.tls_context = context
-        print(f'ASC LAN development HTTPS on {host}:{port}. NOT a Raft leader. Ctrl+C to stop.', flush=True)
+        mode = 'metadata consensus; storage automation disabled' if getattr(catalog, 'distributed', False) else 'single-writer; no Raft'
+        print(f'ASC development HTTPS on {host}:{port}; {mode}. Ctrl+C to stop.', flush=True)
         httpd.serve_forever(poll_interval=0.5)
     except KeyboardInterrupt:
         pass

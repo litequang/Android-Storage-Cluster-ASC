@@ -1,12 +1,19 @@
-# ASC QuickStart 0.6.0 — Phase 1.2B: Distributed Storage & Global File Catalog
+# ASC QuickStart 0.7.0 — Go metadata consensus (Windows development)
 
-ASC có Global File Catalog do một Controller ghi, metadata replica chỉ đọc trên node, placement theo volume đã kiểm tra, queue sao chép bền vững, xác minh bytes/SHA-256 và download fallback. Chính sách single/replicated_2/replicated_3 đếm theo device domain do owner phê duyệt, không đếm hai volume cùng điện thoại thành hai bản độc lập.
+Phase 2A đã đạt nghiệm thu Windows ở phạm vi **metadata consensus**; xem mục 14 và
+[báo cáo nghiệm thu hiện tại](docs/PHASE2A-ACCEPTANCE.md#go-sidecar-continuation--2026-10-23).
+Chế độ mặc định giữ storage single-writer. Chế độ consensus chỉ xử lý metadata,
+đóng băng registry/jobs/grants/truyền file; chưa có automatic Controller/storage
+failover hay production/Android readiness. Kết quả PySyncObj **1 PASS / 5 FAIL**
+được giữ nguyên làm bằng chứng lịch sử.
 
-Codex đã chạy lại full suite mới: **92 tests, OK (skipped=3)** trên Windows — 89 PASS, không FAIL/ERROR. Ba SKIP là installer cần Linux/Termux Bash. Mô phỏng ZTE V40/Bphone A40/Sony XZ3 dùng state/root riêng, HTTPS/pin thật và file vật lý riêng. Đây là mô phỏng trên một máy Windows, chưa phải chứng minh độ bền của nhiều điện thoại thật.
+Chế độ storage mặc định kế thừa v0.6: Global File Catalog do một Controller ghi, metadata replica chỉ đọc trên node, placement theo volume đã kiểm tra, queue sao chép bền vững, xác minh bytes/SHA-256 và download fallback. Chính sách single/replicated_2/replicated_3 đếm theo device domain do owner phê duyệt, không đếm hai volume cùng điện thoại thành hai bản độc lập.
 
-Chưa có Raft, tự bầu Controller/failover, Dashboard, Cloudflare, phần mềm mobile, SAF hay production readiness. Không truy cập M51, Android thật hoặc dữ liệu production. Phase 2A đã được yêu cầu, hiện chặn tại kiểm định Raft engine; xem mục 13.
+Nghiệm thu v0.6 trước đây: **92 tests, OK (skipped=3)** trên Windows — 89 PASS, không FAIL/ERROR. Ba SKIP là installer cần Linux/Termux Bash. Mô phỏng ZTE V40/Bphone A40/Sony XZ3 dùng state/root riêng, HTTPS/pin thật và file vật lý riêng. Đây là mô phỏng trên một máy Windows, chưa phải chứng minh độ bền của nhiều điện thoại thật. Kết quả source v0.7 nằm trong báo cáo Phase 2A.
 
-**Mục 1–10 là hướng dẫn lịch sử v0.4.1; mục 11 mô tả Storage Foundation v0.5.0. Mục 12 là quy trình hiện tại v0.6.0.** Không dùng các lệnh điện thoại để triển khai trong lượt này. Giữ source cũ và private-state backup trước migration.
+Go metadata consensus không bổ sung automatic Controller/storage failover, Dashboard, Cloudflare, phần mềm mobile, SAF hay production readiness. Không truy cập M51, Android thật hoặc dữ liệu production. Mục 13 giữ báo cáo khảo sát ban đầu; mục 14 mô tả Go continuation hiện tại.
+
+**Mục 1–10 là hướng dẫn lịch sử v0.4.1; mục 11 mô tả Storage Foundation v0.5.0. Mục 12 là storage single-writer v0.6; mục 14 là metadata consensus v0.7.** Không dùng các lệnh điện thoại để triển khai trong lượt này. Giữ source cũ và private-state backup trước migration.
 
 ## 1. Chuẩn bị — chỉ ZTE và Bphone/XZ3 thử nghiệm
 
@@ -419,7 +426,7 @@ Rollback: dừng toàn bộ ASC development, lưu riêng state/object hiện t�
 
 Gate Phase 1.2B đã đạt trên Windows. Trước Phase 2 cần thiết kế deterministic prepared commands, Raft/fencing/membership/epoch recovery và acceptance partition/quorum. Chưa triển khai Phase 2, Linux/Termux installer, Android/SD/Doze hoặc power-cut acceptance.
 
-## 13. Phase 2A — đang chặn tại bước chọn Raft engine
+## 13. Phase 2A — báo cáo lịch sử trước khi chọn Go
 
 Đã khảo sát thư viện và kiểm chứng source PySyncObj 0.3.17 bằng SHA-256 cố định. Khi chỉ mất/hỏng file .meta trong fixture, voter cấp phiếu cho peer khác trong cùng term 7; transport mặc định cũng chưa xác thực identity theo yêu cầu ASC. Kết quả probe: **1 PASS / 5 FAIL**, không phải nghiệm thu Raft.
 
@@ -434,3 +441,47 @@ Regression ASC vừa chạy lại: **92 tests OK (skipped=3), 106.154 giây**; b
 Runtime vẫn **v0.6.0**, registry 4/manifest 1/cache 1, chưa có migration hay quyền ghi quorum. Chưa có commit/push mới và chưa bắt đầu Phase 2B. Lựa chọn tiếp theo cần thống nhất: kiểm định etcd/raft qua Go sidecar với toolchain phát triển được cho phép, hoặc fork PySyncObj được rà soát riêng về persistence/transport. Không tự viết thuật toán bầu cử thay thế.
 
 Rollback lượt khảo sát chỉ cần hoàn tác các thay đổi tool/tài liệu sau rà soát; không phục hồi DB, reset identity hoặc xóa object. Không truy cập M51 hay điện thoại thật.
+
+## 14. Go sidecar — metadata consensus trên Windows
+
+HashiCorp Raft v1.8.0 + raft-boltdb/v2 v2.4.2 + bbolt v1.4.3, Go 1.27.3.
+Nghiệm thu source cuối: **95 tests OK (skipped=3 POSIX), 92 PASS / 0 FAIL**;
+**8 test Go PASS** và đủ **15 tình huống consensus PASS**. Build Windows AMD64
+và Android ARM64 thành công; Android chỉ được build, chưa được chạy/nghiệm thu.
+Ba voter có durable state riêng, TLS identity riêng, election/quorum, committed
+metadata, snapshot/recovery và local authenticated IPC. Không tự viết thuật toán
+Raft. Không dùng fork PySyncObj. etcd/raft vẫn là phương án dự phòng.
+
+Chạy mô phỏng an toàn từ source hiện tại:
+
+```powershell
+$env:ASC_GO = "$env:LOCALAPPDATA\ASC-DevTools\go1.27.3\go\bin\go.exe"
+$env:PATH = "C:\Program Files\Git\usr\bin;$env:PATH"
+python -B -m unittest tests.test_consensus -v
+```
+
+Test tự tạo ba state riêng trong TemporaryDirectory, sinh credentials riêng,
+build sidecar và chạy Controller Python thật qua pinned HTTPS. Không truy cập
+private ASC_HOME, dữ liệu người dùng, M51 hoặc điện thoại. Thiếu Go/OpenSSL là lỗi,
+không tự đổi thành SKIP. Hướng dẫn đầy đủ: [GO-SIDECAR](docs/GO-SIDECAR.md).
+
+Chỉ bật trên registry phát triển đã dừng, có backup đầy đủ và seed khớp:
+`python -B -m asc.cli controller-run --consensus-config PRIVATE_CONFIG`.
+Không có cờ tự reset/rebootstrap khi mất durable state. Chế độ này không chạy
+worker cũ và không tự fallback single-writer nếu thiếu sidecar/config.
+
+API metadata hỗ trợ khai báo thông tin file (không upload hay chứng minh bản sao)
+và đổi policy với request_id. Mọi thay đổi phải commit quorum và apply giao dịch
+trước ACK. Follower trả stale/read_only cùng revision chính xác; strong read cần
+Barrier mới từ quorum, không dựa vào cờ leader. Replica availability là UNKNOWN.
+Những job/grant cũ được giữ nguyên nhưng không cấp quyền ghi vật lý.
+
+Build executable Android ARM64 đã thực hiện với CGO_ENABLED=0, nhưng chưa chạy
+trên Android; runtime Android chủ động từ chối cho tới kiểm định riêng. Static
+membership ba voter, document tối đa 2 MiB, receipts tối đa 4096 và không tự xóa.
+Dynamic membership, quorum rebuild, distributed storage fencing, power-cut/Doze/
+SD/Android acceptance và Phase 2B chưa thực hiện.
+
+Rollback phải dừng/cô lập toàn cụm development, giữ riêng state/object mới rồi
+phục hồi toàn bộ private backup trước attachment và source v0.6. Không xóa guard,
+checkpoint, mode hay `.enrolled` để chạy tiếp; không re-init voter đã mất state.

@@ -74,10 +74,32 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 
 Phase 1.2A local gate: Codex Windows final 61 tests OK (skipped=3 POSIX installer), 58 PASS, 0 FAIL/ERROR. Three-node HTTPS simulation passed. See PHASE1-2A-ACCEPTANCE.md; Android/SAF/power-cut and distributed acceptance remain open.
 
-## Phase 2A v0.7.0 — engine selection blocked, not released
+## Historical Phase 2A investigation — before Go continuation
 
 Completed investigation: mandatory document/source review, actual Catalog-write/authority classification, five candidate assessment, reproducible six-gate PySyncObj probe, and fresh v0.6 Windows regression (92 tests OK, 3 POSIX skips). See PHASE2A-ACCEPTANCE.md and ADR-037/038.
 
 Unmodified PySyncObj 0.3.17 fails missing/corrupt vote-state recovery and other sampled persistence/identity gates. No evaluated candidate is yet qualified for the available Windows Python/target Termux architecture. Next choice is an authorized native toolchain/etcd-raft sidecar qualification, or a reviewed pinned PySyncObj fork with durable persistence and authenticated transport. No system tools/dependencies were installed, no consensus algorithm was invented and no runtime migration/version change was made.
 
 Remaining Phase 2A gates: engine/platform acceptance; deterministic commands and atomic applied-index/receipt persistence; comprehensive Catalog bypass protection; quorum strong reads; safe bootstrap/static membership, snapshot/catch-up/restart; per-voter RPC identity; all 15 requested deterministic election/partition/fault cases plus full regressions. Physical-write failover stays disabled until distributed fencing is proved. Commit/publish v0.7 only after those gates pass; Phase 2B and phone trials remain blocked.
+
+## Phase 2A v0.7.0 — Go metadata consensus continuation
+
+Owner authorized Go development tooling and selected HashiCorp first. The new
+`consensus/` module and `asc/consensus/` adapter implement static three-voter
+metadata consensus, persistent state/quarantine, per-voter mTLS, loopback IPC,
+deterministic projection CAS/receipts, atomic Python applied checkpoints,
+snapshots/replay, quorum Barrier reads and persistent denial of legacy writers.
+No new project, homegrown Raft or PySyncObj fork was created.
+
+Qualification and actual Python/Go/TLS integration PASS all fifteen gates and
+extra state-loss/crash/identity/replay/snapshot cases. Phase 2A is accepted for
+Windows metadata consensus: 8 Go tests PASS and final Python full suite 95 OK
+(3 existing POSIX installer skips, 92 PASS, no FAIL/ERROR). Publication status
+lives in PHASE2A-ACCEPTANCE.md and the completion report. Commit/push uses only
+the existing WIP branch after secret/staged review, without main merge or force push.
+
+The accepted scope may only be metadata consensus. Registry approvals, private
+jobs/grants and physical storage automation are frozen rather than promoted by
+metadata election. Android ARM64 cross-build proves feasibility only; no phone,
+physical power-cut, Doze/SD, dynamic membership, disaster rebuild or production
+acceptance is inferred. Phase 2B has not started.

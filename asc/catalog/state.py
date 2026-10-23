@@ -62,6 +62,8 @@ class Catalog:
 
     def mutate(self, command, data):
         """Single-writer command boundary: transaction + materialization + ordered event; not a Raft apply."""
+        if self.registry.consensus_enabled():
+            raise CatalogError('consensus_required', 503)
         with self.registry.connect() as db:
             db.execute('BEGIN IMMEDIATE')
             changed = True

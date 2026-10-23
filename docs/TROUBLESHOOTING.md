@@ -160,3 +160,35 @@ Catalog state/epoch missing in schema 4: stop and restore the complete reviewed 
 - Existing v0.6 Controller remains single-writer with raft_enabled=false; it cannot elect a replacement or grant strong quorum reads. Metadata caches never promote themselves. Do not run independent copied Controllers against the same logical history.
 
 Reproduce evidence and review alternatives/rollback in PHASE2A-ACCEPTANCE.md. A fresh unchanged-runtime full suite passed 92 tests (3 POSIX skips); no Phase 2A quorum/partition/snapshot acceptance has run.
+
+## Go metadata consensus continuation
+
+The preceding Phase 2A block is historical PySyncObj status. Current tests,
+qualification and publication status: PHASE2A-ACCEPTANCE.md continuation.
+
+| Symptom | Meaning / safe action |
+|---|---|
+| Go toolchain required / no executable on PATH | Set process-local ASC_GO to an official checked Go executable; no consensus test may silently skip. Portable development location is documented in GO-SIDECAR.md |
+| Android build `undefined maxMapSize` | Backend transitive bbolt v1.4.1 had an upstream Android compile bug. Current module pins v1.4.3; run go mod verify, do not patch module cache or downgrade the pin |
+| Sidecar refused / quarantine | Missing/corrupt/mismatched state, anchor, witness, seed, snapshot, membership or duplicate ownership. Stop; restore the complete reviewed private backup. Do not delete DB/.meta/witness or run init to recover |
+| init refuses after whole directory loss | The external .enrolled witness correctly prevents known-voter reset. Rebuild/rejoin is not implemented; retain all remaining state for reviewed recovery |
+| consensus_seed_mismatch / import refused | Existing metadata differs from the original canonical seed or target has history. Export a consistent stopped primary; import only to an explicitly fresh matching-cluster registry. Never merge independent nonempty epochs |
+| consensus_required / SQL not authorized | Distributed registry is fenced. Use metadata API/adapter, never remove triggers or register the apply function on a normal writer |
+| consensus_guards_missing / projection_quarantined | Restore complete consistent checkpoint/projection/receipt state. Do not edit index/digest/rows or recreate missing guards blindly |
+| stale/recovering after Go restart | Python serves its last verified checkpoint while Go catches up. Restore quorum and wait; this cache cannot grant write authority |
+| quorum_read_unavailable / commit_unconfirmed | Follower, missing quorum or interrupted commit. No success is established. Inspect authenticated status leader_id as a hint, retry SAME intent/request ID against the legitimate Leader after quorum recovers |
+| request_id_conflict | Same ID used for another intent. Preserve original receipt; choose a fresh ID for a genuinely new request |
+| precondition_conflict | Another committed document won the prepared SHA. This rejection is itself a durable receipt. Read current state and prepare a new request ID after inspecting the conflict |
+| receipt_limit | 4096 permanent receipts reached. New requests fail; no safe automatic eviction/reset protocol exists. Preserve state; future reviewed protocol required |
+| distributed_fencing_required / old grants rejected | Intentional metadata-only limit. No upload/download/job/reconcile/grant or private-registry failover. RUNNING job records remain frozen, never treated as complete |
+| Android runtime refused | Cross-compiled artifact is not Android runtime acceptance. Do not install/run it on a phone in this task |
+
+Actual durable sync on this Windows filesystem required election budgets larger
+than subsecond in-memory fixtures. Current heartbeat/election/leader-lease values
+are 3/6/2 seconds. Tests wait for quorum Barrier/application conditions instead of
+asserting a fixed elected ID or disabling fsync. Go timers remain randomized.
+
+Rollback requires stopped/isolated complete pre-attachment private backups and
+matching source, retaining current metadata/objects separately. Full instructions
+and exact commands: GO-SIDECAR.md and DATA_MODEL.md. No production/phone recovery
+was attempted.

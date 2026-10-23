@@ -19,6 +19,7 @@ from .store import Registry, SCHEMA_VERSION
 from .server import serve
 from . import validation as valid
 from .storage.errors import StorageError
+from . import __version__
 
 
 def _show(data):
@@ -76,11 +77,27 @@ def controller_init(args):
 
 
 def controller_run(args):
-    _must_not_protected('controller runtime')
+    consensus_config = getattr(args, 'consensus_config', None)
+    # Explicit Windows metadata development follows the existing storage CLI
+    # boundary. Protected profiles and all Android paths retain the hard guard.
+    if not consensus_config or os.name != 'nt' or inspect().get('protected'):
+        _must_not_protected('controller runtime')
     ensure_private_home(HOME)
     with foreground_lock(HOME, 'controller'):
         cfg = read_private('controller.json')
         reg = _registry(cfg)
+        if consensus_config:
+            from .consensus.service import Service
+            catalog = Service(reg, consensus_config)
+            try:
+                catalog.start()
+                serve('127.0.0.1', cfg['listen_port'], reg, cfg['admin_token'],
+                      HOME / 'server.crt', HOME / 'server.key', catalog=catalog)
+            finally:
+                catalog.close()
+            return
+        if reg.consensus_enabled():
+            raise ValueError('consensus configuration required; single-writer fallback refused')
         reg.update_self(inspect())
         stop = threading.Event()
 
@@ -352,7 +369,7 @@ def local_status(_args):
 
 
 def main():
-    p = argparse.ArgumentParser(description='ASC 0.6.0 / global catalog and single-writer distributed storage')
+    p = argparse.ArgumentParser(description=f'ASC {__version__} / single-writer storage or opt-in metadata consensus')
     sub = p.add_subparsers(dest='action', required=True)
     a = sub.add_parser('inspect', help='Read-only unless --sd-write explicitly requested')
     a.add_argument('--sd-write', action='store_true')
@@ -362,6 +379,7 @@ def main():
     a=sub.add_parser('controller-run')
     a.add_argument('--catalog-rate',type=int,default=4*1024**2)
     a.add_argument('--job-timeout',type=int,default=300)
+    a.add_argument('--consensus-config', help='Private Go config; opt-in metadata-only consensus, loopback API')
     a = sub.add_parser('controller-pair')
     a.add_argument('--ttl', type=int, default=600)
     a.add_argument('--node-id', help='Target existing node for explicit rotation/re-pair')
