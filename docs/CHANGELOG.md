@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v0.5.0 — 2026-10-23 — Phase 1.2A Storage Foundation
+- Added opt-in approved local volumes, stable marker/root identity, Android internal/Termux-SD candidate discovery and a filesystem adapter seam for future SAF. Reject traversal, symlinks/reparse junctions and hardlinked bodies; missing telemetry stays null.
+- Added private node manifest schema 1, independent from registry; immutable UUID object paths, streaming session/staging/upload/size+SHA checks/exclusive final copy/commit/download/list/verify. Interrupted writes restart full-body only; ambiguous copies are preserved, not implicitly published.
+- Added real quota/free-space reserve, pending double-copy reservations and retained/orphan allocation accounting; bounded chunks/rate/concurrency, upload deadline, non-destructive restart inventory and explicit dry-run/apply staging expiry.
+- Migrated registry 0/2 -> 3 additively for hashed short-lived owner grants bound to node generation; separate user data authority from node heartbeat identity. New /storage/v1 API uses separate pinned Agent HTTPS and pinned Controller introspection on every operation and before commit.
+- Integrated opt-in storage runtime/capability heartbeat and CLI setup/status/add-volume/cleanup/owner upload/download. Lifecycle/pinning/re-pair/revoke/protected-device behavior remains covered.
+- Acceptance: Codex Windows final 61 tests OK (skipped=3 POSIX installer), 58 PASS / 0 FAIL / 0 ERROR; three-node HTTPS simulation passed.
+- Added isolated three-node ZTE V40/Bphone A40/Sony XZ3 real loopback HTTPS simulation plus fault injection, Windows junction/SQLite release and old-schema migration regression. Execution results: see PHASE1-2A-ACCEPTANCE.md.
+- Windows regression found during v0.5.0 full suite: bounded discard of small oversized JSON bodies preserves the HTTP 413 rejection instead of racing TLS close/WinError 10053. The same size limit and no-parsing behavior remain enforced.
+- Local status reports pending schema-2 migration accurately; streaming owner client closes failed header-setup connections.
+- Capability probe reports explicit access-denied/read-only as writable=false instead of unknown, preserving null for unmeasured fsync; Backup is an advisory readable archival-source label only.
+- No M51/phone/production access, environment installation, Raft, distributed catalog/durability, backups, PWA or automatic election. Android/SD/power-loss and POSIX installer acceptance remain unverified on this Windows run.
+
+
 ## v0.4.1 — 2026-10-23 — Phase 1.1 Windows accepted / workflow and main publication
 - Owner confirms Windows unittest result: 40 tests, OK (skipped=3). The three installer
   cases require Linux/Termux. TLS, pinning and SQLite migration tests were not skipped.

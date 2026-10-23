@@ -1,4 +1,4 @@
-﻿"""Phase 1.1 acceptance/regression cases. Written for the owner to run, never auto-run."""
+"""Phase 1.1 acceptance/regression cases. Run locally under the current AGENTS.md test policy."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import contextlib
@@ -22,7 +22,7 @@ from asc.identity import fingerprint_from_pem, make_cert, require_openssl, save_
 from asc.runtime import foreground_lock, running
 from asc.planner import recommend
 from asc.server import RateLimiter, Server
-from asc.store import Registry
+from asc.store import Registry, SCHEMA_VERSION
 from asc import validation
 
 
@@ -137,7 +137,7 @@ class RegistryLifecycleTests(unittest.TestCase):
         self.assertTrue(reg.heartbeat('old-node', token, {}))
         self.assertIsNotNone(reg.join(code, 'legacy-client', {}))
         with reg.connect() as db:
-            self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0], 2)
+            self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0], SCHEMA_VERSION)
         with self.assertRaises(ValueError):
             reg.initialize('wrong-cluster')
         self.assertEqual(len(reg.snapshot()['nodes']), 2)
@@ -172,6 +172,32 @@ class RegistryLifecycleTests(unittest.TestCase):
         moved = self.path.with_name('closed-registry.sqlite3')
         self.path.rename(moved)
         moved.unlink()
+
+    def test_schema_two_additive_migration_preserves_tokens_codes_and_grants_fail_closed(self):
+        enrolled = self.modern(self.reg.add_pair_code())
+        pending = self.reg.add_pair_code()
+        before = self.reg.detail(enrolled['node_id'])
+        with self.reg.connect() as db:
+            db.execute('DROP TABLE storage_grants')
+            db.execute('PRAGMA user_version=2')
+        self.reg.initialize('cluster')
+        self.assertEqual(self.reg.detail(enrolled['node_id']), before)
+        self.assertTrue(self.reg.heartbeat(enrolled['node_id'], enrolled['token'], {}))
+        self.assertIsNotNone(self.modern(pending))
+        import uuid
+        volume = str(uuid.uuid4())
+        grant = self.reg.storage_grant(enrolled['node_id'], volume, ['read'])
+        self.assertEqual(self.reg.storage_authorize(enrolled['node_id'], enrolled['token'],
+                         grant['grant'], volume, 'read')['principal'], 'local-admin')
+        self.assertIsNone(self.reg.storage_authorize(enrolled['node_id'], enrolled['token'],
+                          grant['grant'], volume, 'write'))
+        with self.reg.connect() as db:
+            stored = db.execute('SELECT grant_hash FROM storage_grants').fetchone()[0]
+            self.assertNotEqual(stored, grant['grant'])
+            self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0], SCHEMA_VERSION)
+        for invalid in (None, [], 123, 'bad'):
+            with self.assertRaises(ValueError):
+                self.reg.storage_grant(enrolled['node_id'], invalid, ['read'])
 
     def test_future_schema_is_not_downgraded(self):
         for version in (1, 99):

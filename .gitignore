@@ -107,3 +107,12 @@ id_ecdsa*
 id_ed25519*
 authorized_keys
 known_hosts
+
+# Node-local storage state and object bodies
+storage.json
+manifest.sqlite*
+.asc-volume.json
+*.blob
+*.part
+*.probe
+*grant*.json

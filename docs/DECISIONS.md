@@ -43,3 +43,11 @@
 - ADR-022: Foreground OS advisory locks rather than PID-based kill or implicit services.
   Installer reports dependencies, never installs/upgrades them; upgrades use a separate
   versioned source directory and private stopped-state backup before migration.
+
+## 2026-10-23 — Phase 1.2A (0.5.0)
+- ADR-023: Keep independent node manifest schema 1, registry schema 3 and storage wire v1. Preserve lifecycle API/identities; generated UUID relative physical paths prepare for later metadata references without implementing consensus.
+- ADR-024: Use portable exclusive final creation/copy, verify/fsync and then SQLite visibility. Reserve two pending copies plus retained/orphan physical bodies. Preserve ambiguous commits and require reauthorization; no overwrite or final-object GC. Costs an extra copy/hash and no atomic filesystem+DB/power-loss promise.
+- ADR-025: Bind approved root to a random marker plus observed filesystem/root identity. Reject symlinks/reparse/hardlink file bodies; Windows directory handles deny rename during IO, POSIX component walking uses no-follow descriptors. Replacement at a reused path fails closed; fully cloned identity/media cannot be conclusively distinguished, and remount identity changes may require manual review.
+- ADR-026: Separate owner data authority from node authentication. Short-lived hashed whole-volume grants are bound to node credential generation; Agent introspects Controller on every operation and again before commit. Controller outage denies network file access rather than using stale authorization. End-user ACL/login remains future work.
+- ADR-027: Opt-in Agent storage runtime, separate pinned TLS identity, bounded local streaming (64 KiB, one transfer, configured size/rate/quota/reserve), full-body restart only. No implicit deployment/upgrades, replica placement or role election.
+- ADR-028: Windows acceptance uses three separate temporary node states with actual loopback TLS and fault injection. Report POSIX installer skips and absent physical Android/SD/power-loss validation; do not reinterpret simulation as production readiness.

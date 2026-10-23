@@ -1,9 +1,9 @@
 # ASC ARCHITECTURE 2.2 — PROPOSED
 
-## Implemented boundary — 0.4.1 / Phase 1.1
+## Lifecycle boundary inherited from 0.4.1 / Phase 1.1
 
-The design below remains proposed. Implemented runtime is one foreground HTTPS LAN
-Controller with one SQLite writer and foreground agents; no Raft, catalog, storage,
+The lifecycle below is retained. Phase 1.2A local storage is documented at the end.
+The distributed target design remains proposed: no Raft, global catalog, replication,
 automatic failover or production integration.
 
 - API stays `/api/v1`; registry schema 2 adds node credential lifecycle and hashed
@@ -24,10 +24,9 @@ automatic failover or production integration.
   remains protected. Read-only profiling keeps unavailable telemetry null/unknown.
 
 Phase 1.1 Windows acceptance: the owner reports 40 tests OK (skipped=3), with three
-POSIX installer cases unavailable on Windows. Source/tests are unchanged in the
-publication/workflow update, so that result is reused without claiming a Codex rerun.
+POSIX installer cases unavailable on Windows. That was the unchanged-source publication result for v0.4.1; Phase 1.2A runs new local tests.
 Local testing follows AGENTS.md. Linux/Termux installer and real-phone acceptance
-remain deferred; this is development code, not end-to-end storage or production readiness.
+remain deferred; local storage acceptance does not imply distributed/production readiness.
 
 ## Fundamental goals
 - A unified logical file library across many standalone Android phones.
@@ -79,3 +78,17 @@ remain deferred; this is development code, not end-to-end storage or production 
 
 ## Deferred deliberately
 - No full RAID, erasure coding, browser-only background camera backup, active-active multi-leader, instant unbounded file access during partitions, or custom cryptocurrency/blockchain.
+
+## Implemented Phase 1.2A — local storage boundary
+
+An explicitly configured Agent owns one private internal SQLite manifest and up to eight approved filesystem volumes. Windows uses empty configured directories; Android internal storage can use private HOME; SD registration accepts only a descendant of a currently detected pre-existing Termux app folder. Discovery only proposes candidates; it never approves an arbitrary root, formats media or grants Android permissions. LocalVolume is the adapter seam (check/open/remove_staging/sync_directory/allocated_files); kind SAF is rejected until an adapter provides equivalent semantics.
+
+Agent-run starts pinned HTTPS storage alongside heartbeat only when storage.json exists. No configuration keeps Phase 1.1 topology-only behavior. Windows accepts this explicit local storage runtime; Android still requires the original non-protected known-device guard. Controller remains one registry writer, never an Agent-selected leader.
+
+Owner -> pinned Agent /storage/v1 -> pinned Controller authorization -> local engine. The Controller issues short-lived volume/operation-scoped owner grants; node token only authenticates introspection/heartbeat. Registry schema 3 is additive from 0/2. No global file catalog is introduced.
+
+Body processing uses 64 KiB chunks, one transfer per engine, default 8 MiB/s (configurable 1 byte/s–64 MiB/s), default max object 64 MiB (configurable up to 1 GiB). HTTP workers are capped at 32, idle socket timeout 12 seconds, upload body budget 60 + declared_size/rate seconds. Metadata operations serialize with mutations; sessions/files/volumes have explicit bounds (128 pending, 10,000 committed files, 8 volumes).
+
+Commit creates a final UUID object exclusively and copies verified staging, fsyncs, verifies the final copy and reauthorizes before the manifest transaction advertises it. Pending quota reserves two bodies; actual orphan/retained bodies remain charged. Real free space is rechecked with configured reserve. No overwrite or final-object GC exists. Filesystem and SQLite are not one transaction: restart conservatively preserves ambiguous copies. Windows directory fsync and physical power-loss durability are not promised. Detailed states are in DATA_MODEL; portable recovery is deliberately conservative.
+
+This is verified local storage, with no replication, backup, Raft, automatic election or availability when Controller authorization is offline. Android/SD/Doze/power-cut acceptance remains deferred.

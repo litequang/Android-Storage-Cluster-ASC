@@ -1,4 +1,4 @@
-﻿"""HTTPS lifecycle API for a single-writer private LAN development registry."""
+"""HTTPS lifecycle API for a single-writer private LAN development registry."""
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import hashlib
 import hmac
@@ -46,13 +46,13 @@ class Server(ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = True
 
-    def __init__(self, address, registry, admin_token):
+    def __init__(self, address, registry, admin_token, handler=None):
         self.registry = registry
         self.admin_hash = hashlib.sha256(admin_token.encode()).hexdigest()
         self.limiter = RateLimiter()
         self.slots = threading.BoundedSemaphore(32)
         self.tls_context = None
-        super().__init__(address, Handler)
+        super().__init__(address, handler or Handler)
 
     def get_request(self):
         sock, address = super().get_request()
@@ -98,7 +98,7 @@ def _unique_object(pairs):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = 'ASC-LAN/0.4.1'
+    server_version = 'ASC-LAN/0.5.0'
     sys_version = ''
 
     def log_message(self, fmt, *args):
@@ -131,6 +131,22 @@ class Handler(BaseHTTPRequestHandler):
             raise ValueError('invalid framing')
         length = int(lengths[0])
         if length > MAX_JSON:
+            # Windows can reset TLS while the peer is still sending a small oversized body.
+            # Bounded discard only: never parse it, allocate by its length or drain an arbitrary stream.
+            if length <= MAX_JSON * 2:
+                timeout = self.connection.gettimeout()
+                deadline, remaining = time.monotonic() + 2, length
+                try:
+                    self.connection.settimeout(1)
+                    while remaining and time.monotonic() < deadline:
+                        chunk = self.rfile.read1(min(65536, remaining))
+                        if not chunk:
+                            break
+                        remaining -= len(chunk)
+                except OSError:
+                    pass
+                finally:
+                    self.connection.settimeout(timeout)
             raise PayloadTooLarge()
         if length < 1:
             raise ValueError('invalid content length')
@@ -172,8 +188,9 @@ class Handler(BaseHTTPRequestHandler):
             if path == '/api/v1/info':
                 return self._json(200, {'cluster_id': self.server.registry.cluster_id(),
                                        'mode': 'single-writer-development', 'schema_version': SCHEMA_VERSION,
-                                       'features': ['node-lifecycle-v1', 'retry-safe-enrollment-v1'],
-                                       'raft_enabled': False, 'file_storage_enabled': False})
+                                       'features': ['node-lifecycle-v1', 'retry-safe-enrollment-v1', 'local-storage-v1'],
+                                       'raft_enabled': False, 'file_storage_enabled': True,
+                                       'storage_mode': 'node-local-opt-in', 'global_file_catalog_enabled': False})
             if path == '/api/v1/nodes' or path.startswith('/api/v1/nodes/'):
                 if not self._admin():
                     return
@@ -189,18 +206,30 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
-        admin_paths = ('/api/v1/admin/pair', '/api/v1/admin/rename', '/api/v1/admin/revoke')
-        if path not in ('/api/v1/join', '/api/v1/heartbeat') + admin_paths:
+        admin_paths = ('/api/v1/admin/pair', '/api/v1/admin/rename', '/api/v1/admin/revoke', '/api/v1/admin/storage-grant')
+        if path not in ('/api/v1/join', '/api/v1/heartbeat', '/api/v1/storage/authorize') + admin_paths:
             return self._json(404, {'error': 'not_found'})
         if path in admin_paths and not self._admin():
             return
         if path == '/api/v1/join' and self._rate('join', consume=True):
             return
-        if path == '/api/v1/heartbeat' and self._rate('auth'):
+        if path in ('/api/v1/heartbeat', '/api/v1/storage/authorize') and self._rate('auth'):
             return
         try:
             obj = self._read_json()
             reg = self.server.registry
+            if path == '/api/v1/admin/storage-grant':
+                valid.payload(obj, ('node_id', 'volume_id', 'operations'), ('ttl',))
+                return self._json(201, reg.storage_grant(obj['node_id'], obj['volume_id'],
+                                                        obj['operations'], obj.get('ttl', 300)))
+            if path == '/api/v1/storage/authorize':
+                valid.payload(obj, ('node_id', 'grant', 'volume_id', 'operation'))
+                reply = reg.storage_authorize(obj['node_id'], self._bearer(), obj['grant'],
+                                              obj['volume_id'], obj['operation'])
+                if reply is None:
+                    self.server.limiter.blocked('auth', self.client_address[0], consume=True)
+                    return self._json(403, {'error': 'unauthorized'})
+                return self._json(200, reply)
             if path == '/api/v1/join':
                 valid.payload(obj, ('code', 'name', 'profile'), ('enrollment_id', 'enrollment_token', 'node_id'))
                 if 'enrollment_id' in obj or 'enrollment_token' in obj:

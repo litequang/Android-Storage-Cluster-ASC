@@ -1,4 +1,6 @@
-# ASC NODE PROTOCOL — Design contract (not implemented)
+# ASC NODE PROTOCOL — lifecycle/storage implementation and proposed consensus
+
+The initial consensus sections are a future design; implemented lifecycle/storage contracts follow below.
 
 ## Compatibility
 API base path `/api/v1`. Every request and response includes `cluster_id`, `protocol_version`, and required feature flags when relevant. Never reinterpret unknown version fields silently.
@@ -39,7 +41,7 @@ All endpoints HTTPS in private LAN. Self-signed controller certificate is SHA256
 - `POST /api/v1/join` payload `{code,name,profile}` (one-time TTL code created locally by `controller-pair`); returns `{cluster_id,node_id,token,mode}`; node token stored only locally, never logged or returned again. Code itself is an enrollment grant created by trusted local admin; explicit per-node approval UI deferred.
 - `POST /api/v1/heartbeat` authenticated `Authorization: Bearer <node-private-token>`; payload `{node_id, profile}`, returns current topology `{cluster_id,snapshot_at,consensus_status,nodes[],advisory_role_plan[]}`. Node stores this as read-only local topology snapshot.
 - `GET /api/v1/nodes` authenticated with *admin token*; returns topology.
-This topology is **NOT** a global file catalog or consensus snapshot. No file upload/download APIs exist yet. Node profiles are self-reported and untrusted; never use them to grant privileged permissions.
+This topology is **NOT** a global file catalog or consensus snapshot. v0.4 had no file upload/download; Phase 1.2A adds a separate authenticated node-local storage API below. Node profiles are self-reported and untrusted; never use them to grant privileged permissions.
 
 ## IMPLEMENTED Phase 1.1 — 0.4.1 (still single writer; API v1)
 
@@ -125,3 +127,38 @@ omit protocol_version; explicit versions other than integer 1 are rejected.
 
 Any future node-protected operation must check active state and current token using
 the same authorization boundary; no such file/storage operations exist in this release.
+
+## Implemented Phase 1.2A — owner storage API v1
+
+Earlier lifecycle sections describe their historical releases. Current /api/v1 remains backward compatible; info reports schema_version=3, feature local-storage-v1, file_storage_enabled=true, storage_mode=node-local-opt-in, global_file_catalog_enabled=false, raft_enabled=false. This indicates implemented capability, not that every node enabled a volume.
+
+Controller routes (JSON v1, existing bounds/rate limiter):
+- POST /api/v1/admin/storage-grant: admin bearer; body {node_id,volume_id,operations,ttl?}. operations nonempty subset read/write/list/verify; TTL default 300, range 30–900 seconds. 201 returns one explicit secret grant, principal=local-admin, target/operations/expiry. Save privately; no routine status prints it.
+- POST /api/v1/storage/authorize: node bearer; body {node_id,grant,volume_id,operation}. 200 {principal,expires_at} only for active/current node token and matching unexpired generation-bound grant; rejected authority 403. Node token cannot itself read/write files or mint owner grants. Revocation/rotation invalidates prior grants.
+- A grant is whole-volume owner delegation, not completed end-user login/file ACLs. Every network storage operation calls this pinned endpoint. Controller/pin failure fails closed.
+
+Agent uses its separate certificate with an out-of-band confirmed pin. Every /storage/v1 request requires Authorization: Bearer <owner grant> and one X-ASC-Volume-ID: <UUID>. JSON responses retain protocol_version=1; storage wire version is the URL v1.
+
+| Method /storage/v1 path | Operation | Body / response |
+|---|---|---|
+| POST uploads | write | JSON {idempotency_key,logical_path,size,sha256} -> 201 {session} |
+| GET uploads/<session UUID> | write | {session}, scoped to principal/volume |
+| PUT uploads/<session UUID> | write | application/octet-stream, single exact Content-Length -> {session}; no chunked transfer |
+| POST uploads/<session UUID>/commit | write | JSON {} -> {file}; fresh authorization before visibility |
+| GET files?offset=0 | list | {files,next_offset}; at most 200 entries; includes integrity state |
+| GET files/<file UUID> | read | {file}, manifest consistency checked |
+| GET files/<file UUID>/content | read | verified streaming bytes; Content-Length and X-ASC-SHA256 |
+| POST files/<file UUID>/verify | verify | JSON {} -> {file_id,state,error,verified_at} |
+| GET volumes | list | grant-bound volume only; no absolute root |
+
+File metadata: file_id/logical_path/volume_id/relative_path/size/sha256/version/state/created_at/updated_at/last_verified_at. Physical relative names are generated IDs, never client-selected host paths. Size/SHA-256 are mandatory; hash is lowercase 64 hex. Key is 8–128 ASCII letters/digits/underscore/hyphen; logical name max 512 characters, rejects traversal/absolute/control/encoded-percent/backslash/colon components. Zero-byte objects are supported.
+
+Conflicts return 409; checksum mismatch 422; missing object/session 404; invalid/framing request 400; unauthenticated 401; wrong scope/revoked/expired 403; upload deadline 408; too large 413; busy/auth budget 429; unavailable storage/controller/manifest 503; quota/full disk 507. Errors are fixed labels, never reflected secrets. TLS idle workers are bounded. Already-authorized downloads may finish after expiry/revoke; already-received upload data may remain private staging, but commit reauthorizes. This is not continuous per-byte revocation.
+
+Only full-body retries are supported. No Range/resumable protocol, object deletion, remote cleanup, global catalog or distributed commit. Inventory and dry-run/apply staging expiry are local commands.
+
+Heartbeat retains profile_version=1 (or legacy absent) and optional storage={storage_version:1,manifest_schema:1,volumes:[...],recommended_storage_role,max_upload_bytes,max_concurrent_transfers:1,bytes_per_second,resumable_upload:false}. Each volume reports IDs/kind/quota/reserve, actual total/free bytes or null, readable/writable/fsync_tested or null, state, checked_at, last_error. Role is advisory Storage/Backup/Metadata-only; never grants coordination authority or proves a backup exists.
+
+Oversized JSON is rejected with 413. To avoid a Windows TLS close/send race, at most 128 KiB of a slightly oversized declared body is discarded (never parsed), with a 2-second budget and 1-second idle read; arbitrarily large bodies are not drained.
+
+Role derivation: measured writable online volume -> Storage; readable online volume with write denial -> Backup (read-only archival source, not a writable backup destination); otherwise Metadata-only. Reading the approved marker establishes readable access only, not integrity of every stored file. No backup is created by these labels.

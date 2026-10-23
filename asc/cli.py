@@ -1,5 +1,7 @@
 ﻿"""Safe foreground CLI for the single-writer LAN development registry."""
 import argparse
+from contextlib import ExitStack
+import os
 import getpass
 import json
 import secrets
@@ -13,9 +15,10 @@ from .identity import (HOME, ensure_private_home, fingerprint_from_pem, make_cer
                        new_admin_token, read_private, replace_private, save_private)
 from .probe import inspect
 from .runtime import foreground_lock, running
-from .store import Registry
+from .store import Registry, SCHEMA_VERSION
 from .server import serve
 from . import validation as valid
+from .storage.errors import StorageError
 
 
 def _show(data):
@@ -246,8 +249,12 @@ def node_repair(args):
     _enroll(args, repair=True)
 
 
-def agent_once(cfg, sd_test=False):
+def agent_once(cfg, sd_test=False, storage_engine=None):
     profile = inspect(sd_write=sd_test)
+    if storage_engine is not None and profile.get('protected'):
+        raise ValueError('M51 PRODUCTION PROTECTED: storage capability probe refused')
+    if storage_engine is not None:
+        profile['storage'] = storage_engine.capabilities()
     try:
         snap = request_json(cfg['controller'], cfg['pin'], 'POST', '/api/v1/heartbeat',
                             {'node_id': cfg['node_id'], 'profile': profile}, token=cfg['token'])
@@ -264,7 +271,10 @@ def agent_once(cfg, sd_test=False):
 
 
 def agent_run(args):
-    _must_not_protected('agent runtime')
+    if os.name == 'nt' and (HOME / 'storage.json').exists() and not inspect().get('protected'):
+        pass  # Explicit local Windows storage configuration; never an Android guard bypass.
+    else:
+        _must_not_protected('agent runtime')
     ensure_private_home(HOME)
     if not 5 <= args.interval <= 3600:
         raise ValueError('heartbeat interval must be 5..3600 seconds')
@@ -272,24 +282,29 @@ def agent_run(args):
         if (HOME / 'enrollment_pending.json').exists():
             raise ValueError('pending enrollment/re-pair; complete it before starting agent')
         cfg = read_private('node.json')
-        print('ASC Agent foreground; Ctrl+C to stop. Topology only.', flush=True)
-        while True:
-            try:
-                snapshot = agent_once(cfg, args.sd_test)
-                print('Heartbeat OK, nodes:', len(snapshot['nodes']), flush=True)
-            except ClientError as exc:
-                if exc.status in (401, 403):
-                    raise ValueError('Credential rejected (revoked/rotated/invalid). Re-pair required; agent stopped, identity retained.') from None
+        with ExitStack() as stack:
+            runtime = None
+            if (HOME / 'storage.json').exists():
+                from .storage.runtime import StorageRuntime
+                runtime = stack.enter_context(StorageRuntime(HOME, cfg))
+            print('ASC Agent foreground; Ctrl+C to stop.', flush=True)
+            while True:
+                try:
+                    snapshot = agent_once(cfg, args.sd_test, runtime.engine if runtime else None)
+                    print('Heartbeat OK, nodes:', len(snapshot['nodes']), flush=True)
+                except ClientError as exc:
+                    if exc.status in (401, 403):
+                        raise ValueError('Credential rejected (revoked/rotated/invalid). Re-pair required; agent stopped, identity retained.') from None
+                    if args.once:
+                        raise
+                    print('Heartbeat failed; preserving last topology:', str(exc), flush=True)
+                except (OSError, ValueError):
+                    if args.once:
+                        raise
+                    print('Heartbeat unavailable; preserving last topology. Check LAN/controller.', flush=True)
                 if args.once:
-                    raise
-                print('Heartbeat failed; preserving last topology:', str(exc), flush=True)
-            except (OSError, ValueError):
-                if args.once:
-                    raise
-                print('Heartbeat unavailable; preserving last topology. Check LAN/controller.', flush=True)
-            if args.once:
-                return
-            time.sleep(args.interval)
+                    return
+                time.sleep(args.interval)
 
 
 def local_status(_args):
@@ -302,11 +317,11 @@ def local_status(_args):
         if path.exists():
             with Registry(path).connect() as db:
                 version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version == 2:
+            if version == SCHEMA_VERSION:
                 result['topology'] = Registry(path).snapshot()
             else:
                 result['registry_schema'] = version
-                result['migration'] = 'back up private state; controller-run migrates to schema 2'
+                result['migration'] = 'back up private state; controller-run migrates to schema 3'
     elif (HOME / 'node.json').exists():
         result['mode'] = 'enrolled-node'
         cfg = read_private('node.json')
@@ -326,7 +341,7 @@ def local_status(_args):
 
 
 def main():
-    p = argparse.ArgumentParser(description='ASC 0.4.1 / Phase 1.1: single-writer LAN lifecycle')
+    p = argparse.ArgumentParser(description='ASC 0.5.0 / local storage and single-writer LAN lifecycle')
     sub = p.add_subparsers(dest='action', required=True)
     a = sub.add_parser('inspect', help='Read-only unless --sd-write explicitly requested')
     a.add_argument('--sd-write', action='store_true')
@@ -364,6 +379,8 @@ def main():
                 'controller-node': controller_node, 'controller-rename': controller_rename,
                 'controller-revoke': controller_revoke, 'node-join': node_join,
                 'node-repair': node_repair, 'agent-run': agent_run, 'status': local_status}
+    from .storage.cli import register
+    register(sub, handlers, sys.modules[__name__])
     args = p.parse_args()
     try:
         if args.action == 'inspect':
@@ -372,7 +389,7 @@ def main():
             handlers[args.action](args)
     except KeyboardInterrupt:
         print('ASC foreground stopped; identity retained.')
-    except (OSError, ClientError, ValueError, KeyError, sqlite3.Error) as exc:
+    except (OSError, ClientError, ValueError, KeyError, sqlite3.Error, StorageError) as exc:
         # Never print arbitrary OS/server exception text that could contain private input.
         message = str(exc) if isinstance(exc, (ClientError, ValueError)) and not isinstance(exc, json.JSONDecodeError) else 'local state/dependency unavailable; preserve private files and check troubleshooting'
         print(f'ASC error: {message}', file=sys.stderr)

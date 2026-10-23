@@ -1,18 +1,12 @@
-# ASC QuickStart 0.4.1 — Phase 1.1: vòng đời node an toàn
+# ASC QuickStart 0.5.0 — Phase 1.2A: Storage Foundation
 
-Mã nguồn dùng Python standard library, single-writer registry qua HTTPS trong LAN. Phase 1.1 bổ sung quản trị node, revoke/re-pair giữ nguyên node ID, giới hạn thử mã/xác thực và migration dữ liệu v0.4. **Phase 1.1 đã được chủ dự án xác nhận trên Windows: 40 tests, OK (skipped=3).** Ba bài installer cần Linux/Termux; đây không phải kết quả Codex tự chạy.
+ASC đã có storage cục bộ bật riêng: quản lý volume, upload streaming qua HTTPS có quyền, staging, SHA-256, commit object bất biến, download, manifest SQLite và kiểm kê sau restart. Controller vẫn single-writer; chưa có global file catalog, Raft, tự bầu Leader/failover, replication/backup, Dashboard, VPN/gateway hoặc SAF bridge.
 
-Chưa có Raft, tự bầu Leader/failover, file NAS/upload/download, backup dữ liệu phân tán, dashboard, VPN/gateway hay SAF bridge. Không đưa dữ liệu quan trọng vào ASC ở phase này.
+Phase 1.1: chủ dự án đã xác nhận Windows 40 tests OK (skipped=3). Phase 1.2A thay đổi source nên Codex tự chạy targeted tests rồi full suite mới; xem kết quả hiện tại trong [biên bản nghiệm thu](docs/PHASE1-2A-ACCEPTANCE.md). Môi trường mô phỏng dùng ba node ZTE V40/Bphone A40/Sony XZ3 với state/root riêng trong temp, HTTPS thật và pin certificate. Không chạy installer/Agent trên điện thoại thật hoặc truy cập M51.
 
-**Quy trình hiện tại:** cập nhật quy định và xuất bản v0.4.1 lên main theo ủy quyền của
-chủ dự án; không bắt đầu Phase 1.2A trong lượt này. Codex được chạy test/typecheck/lint/build
-local, chạy test mục tiêu sau sửa mã và full suite áp dụng được trước khi hoàn tất Phase.
-Tự phân tích/sửa lỗi hoặc báo blocker, không bỏ hay làm yếu test để PASS. Khi source/test
-không đổi và đã có PASS phù hợp từ chủ dự án, ghi rõ nguồn kết quả và không chạy lại vô ích.
-Các hướng dẫn điện thoại ở mục 1–7 và checklist LAN chỉ là tham khảo cho giai đoạn sau.
-ASC v1.0 tiếp tục từng module với API/migration rõ ràng và kiểm thử nhiều node mô phỏng
-Windows trước Android thật. Không chạy production server, installer điện thoại thật,
-đụng dữ liệu/private state production hoặc truy cập M51.
+Quy trình: Codex tự kiểm thử local, sửa lỗi hoặc báo blocker; không bỏ/làm yếu test. Phát triển từng module có API/schema/migration/rollback rõ ràng. Phase này chỉ storage local; chưa bắt đầu Phase 1.2B. Không đưa dữ liệu quan trọng vào bản phát triển này.
+
+**Mục 1–10 bên dưới giữ hướng dẫn lịch sử v0.4.1 để tham khảo; không phải lệnh triển khai 0.5.0 lên điện thoại trong Phase này. Hướng dẫn hiện tại nằm ở mục 11.** Không ghi đè source cài sẵn, private identity hoặc chạy code cũ trên DB mới.
 
 ## 1. Chuẩn bị — chỉ ZTE và Bphone/XZ3 thử nghiệm
 
@@ -315,3 +309,52 @@ không dùng --force hoặc --force-with-lease. Hash remote main phải bằng c
 Lượt docs/workflow này không đổi API v1, schema 2 hoặc identity. Nếu cần đảo thay đổi
 đã commit, dùng git revert trên commit phù hợp để giữ lịch sử; không sửa private state.
 Rollback runtime về v0.4 vẫn theo mục 9 và cần bản sao private state trước migration.
+
+## 11. Storage Foundation v0.5.0 — Windows trước Android
+
+Không cần điện thoại/Termux để nghiệm thu:
+```powershell
+Set-Location E:\CODE\ASC-QuickStart
+Get-Command openssl
+openssl version
+python -B -m unittest tests.test_storage -v
+python -B -m unittest tests.test_storage_cluster -v
+python -B -m unittest discover -s tests -v
+```
+Nếu OpenSSL đã có trong Git for Windows nhưng chưa ở PATH, chỉ đổi terminal hiện tại:
+```powershell
+$env:PATH = "C:\Program Files\Git\usr\bin;$env:PATH"
+```
+Suite tự tạo/xóa state/certificate/root trong TemporaryDirectory, không sửa PATH hệ thống hay cài dependency. TLS thiếu OpenSSL là ERROR. Ba installer cases vẫn cần POSIX Bash; không coi SKIP là Linux PASS. Xem ma trận lỗi và kết quả thực tế tại [PHASE1-2A-ACCEPTANCE](docs/PHASE1-2A-ACCEPTANCE.md).
+
+Storage chỉ bật khi có storage.json. Lệnh dưới là tham khảo cho node phát triển đã enrolled hợp lệ, với ASC_HOME riêng ngoài source/shared SD; không tự tạo node.json hoặc dùng credential production. Trên Android vẫn chặn M51/thiết bị chưa nhận diện. Windows multi-node hiện được khởi tạo tự động bằng suite, không bỏ qua guard Android của controller-init/node-join.
+
+```text
+python -m asc.cli storage-init --root EMPTY_APPROVED_ROOT --quota 67108864 --reserve 67108864 --max-upload 33554432 --rate 8388608 --host 127.0.0.1 --port 9443
+python -m asc.cli storage-add-volume --root ANOTHER_EMPTY_ROOT --kind directory --quota 67108864 --reserve 67108864
+python -m asc.cli storage-status
+python -m asc.cli agent-run
+```
+storage-init không có --root chọn HOME/storage-data; root phải mới/rỗng. Các kind: directory, internal, termux_sd. SD chỉ cho phép thư mục con của app folder Termux đã phát hiện, không tự cấp quyền hay format. storage-status khi Agent đã dừng thực hiện probe nhỏ, discovery và inventory; không tự đăng ký candidate. Khi Agent chạy, heartbeat gửi storage_version=1 và HTTPS storage chạy cùng vòng đời foreground. Không có storage.json giữ hành vi cũ. Bind mặc định loopback; LAN chỉ dùng địa chỉ private cụ thể và firewall phù hợp, không port-forward.
+
+Quyền người dùng tách khỏi node token. Trên Controller phát triển đã chạy, admin xuất grant ngắn hạn vào file private:
+```text
+python -m asc.cli controller-storage-grant NODE_ID VOLUME_ID --operations read,list,write,verify --ttl 300 --out PRIVATE_OWNER_DIR/owner-grant.json
+python -m asc.cli storage-upload SOURCE_FILE logical/file.bin --key unique_request_0001 --origin https://NODE:9443 --pin CONFIRMED_NODE_STORAGE_PIN --grant-file PRIVATE_OWNER_DIR/owner-grant.json
+python -m asc.cli storage-download FILE_ID NEW_OUTPUT_FILE --origin https://NODE:9443 --pin CONFIRMED_NODE_STORAGE_PIN --grant-file PRIVATE_OWNER_DIR/owner-grant.json
+```
+Xác nhận riêng pin của storage node do storage-init cung cấp; pin Controller không thay thế pin này. Grant TTL 30–900 giây, chỉ ghi hash ở Controller; quyền whole-volume của owner, chưa có login/ACL đa người dùng. Mỗi thao tác gọi Controller để xác thực; mất Controller từ chối truy cập. Revoke/re-pair làm grant thế hệ cũ hết quyền. Client không ghi đè file output có sẵn; output download lỗi được giữ để kiểm tra, không coi là file đã xác minh.
+
+Giới hạn: chunk 64 KiB, một transfer/engine, default 8 MiB/s, max upload mặc định 64 MiB (tối đa cấu hình 1 GiB); quota dự trữ hai bản trong lúc commit, cộng orphan/staging còn sót. Với quota mặc định 64 MiB, upload mới tối đa 32 MiB khi volume rỗng. Chưa hỗ trợ resume theo offset: gửi lại toàn bộ body với session/key cũ. Commit không thay thế logical path đã tồn tại; version hiện là 1.
+
+```text
+python -m asc.cli storage-cleanup --older-than 86400
+python -m asc.cli storage-cleanup --older-than 86400 --apply
+```
+Dừng Agent trước lệnh local. Mặc định dry-run, --apply chỉ xóa staging đủ tuổi/trạng thái, không xóa final object hay bản đã commit. NEEDS_REVIEW/metadata conflict/orphan cần kiểm tra thủ công, không sửa marker/PRAGMA để giả hợp lệ. Chi tiết [API](docs/NODE_PROTOCOL.md), [schema](docs/DATA_MODEL.md), [lỗi](docs/TROUBLESHOOTING.md).
+
+Nâng cấp/rollback: trước khi chạy bản mới, dừng mọi ASC development process và sao lưu đầy đủ private state (DB/WAL/SHM, config, khóa, identity) cùng các volume; giữ source b74bb594a5bff9ad0926255effed1fd41bbc1647 riêng. Registry 0/2 -> 3 additive, manifest mới schema 1. Source cũ không mở DB schema 3. Rollback dùng bản sao dừng trước migration với source tương ứng; giữ manifest/object mới riêng, không xóa file người dùng. Khôi phục backup có thể mất thay đổi và kích hoạt lại credential từng bị revoke; cô lập mạng và rà soát token. Không có downgrade tự động.
+
+Mới chứng minh storage cục bộ trên fixture Windows; chưa chứng minh power-cut durability, Android/SD/Doze, distributed durability hay production readiness. Giữ các gate đó trước cài điện thoại. Phase 1.2B cần nhiệm vụ riêng và hợp đồng metadata/fencing/migration/fault injection.
+
+Kết quả Codex cuối cùng (2026-10-23): **61 tests, OK (skipped=3)** — 58 PASS, không FAIL/ERROR. Ba SKIP là installer POSIX; mô phỏng ba node HTTPS đạt. Source/test đã kiểm tra bằng full suite mới; không dùng lại PASS của v0.4.1.

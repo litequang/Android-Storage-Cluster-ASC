@@ -93,3 +93,29 @@ Old v0.4 Controller code cannot write schema 2 and does not understand revoke. R
 requires the complete stopped-state backup made before upgrade, per device, plus old
 source. Preserve Phase 1.1 state separately. Restoring old state may re-enable compromised
 tokens; keep LAN isolated and do not claim a safe downgrade if those secrets leaked.
+
+## Phase 1.2A storage diagnostics
+
+| Symptom | Meaning / action |
+|---|---|
+| storage_root_not_empty / unsafe_storage_root | Use a new empty explicitly approved directory outside source/private manifest ancestors; never adopt a user folder or follow a junction |
+| unapproved_sd_root | Root must descend from an actually detected existing Termux app folder; discovery/status proposes candidates only; SAF is unimplemented |
+| volume_identity_changed | Card/root/marker differs, including a reused mount path. Preserve both media/state. Do not recreate marker, alter stored identity or bypass verification; review stopped state and restore matching media |
+| volume_unavailable / VOLUME_UNAVAILABLE | Restore original root/media/permissions; unknown space is null. Restart/verify when original medium returns |
+| quota_exceeded / insufficient_space (507) | Pending upload reserves staging + final copy. Retained staging and orphan objects remain charged. Keep configured free-space reserve; no automatic deletion to make room |
+| upload_interrupted / INTERRUPTED | Resend full body with same session/idempotency key. No byte-range/chunk resume. Interrupted or checksum-failed body is never listed as a file |
+| upload_deadline (408) / storage_busy (429) | One transfer per engine; body deadline 60 + size/rate seconds plus bounded socket read timeout. Retry after the current transfer finishes; do not increase limits blindly |
+| NEEDS_REVIEW / object_conflict | Commit may have a final/partial object, or grant changed while copying. Preserve staging and final. No automatic removal/adoption; compare stopped manifest/size/hash before an explicit recovery plan |
+| MISSING / CORRUPT / METADATA_CONFLICT | Startup/verify found missing bytes/hash/reference disagreement. Preserve remaining copies and manifest; do not edit paths/version to make a false success |
+| forbidden (403) | Wrong node/volume/operation, expired/revoked grant or old node generation. Mint a fresh owner grant only after reviewing active identity; node token is not a user grant |
+| authorization_unavailable (503) | Restore Controller reachability and correct out-of-band pin. Never disable pinning or use an offline auth bypass |
+| storage already configured / existing TLS files | Preserve identity. Repeated setup does not replace config/certificates; partial initialization needs explicit recovery, not deleting keys |
+| storage-status says already running | Local inspection/cleanup uses the same engine ownership lock. Stop the development Agent first, inspect, then restart; authenticated network listing remains available |
+
+Local inspection: python -m asc.cli storage-status (stopped Agent) performs a tiny actual read/write/hash/fsync probe and bounded object inventory; it does not adopt orphan objects. storage-cleanup --older-than 86400 previews eligible staging; add --apply only after review. Committed files/final objects are never GC'd. Changed quota/kind on re-register conflicts; live quota editing is deferred.
+
+For repeatable Windows checks use docs/PHASE1-2A-ACCEPTANCE.md. Missing OpenSSL executable remains an error, not a TLS skip. SQLite registry/manifest contexts close in finally, including exceptions; stop runtimes before copying/restoring private DB/WAL/volumes. Rolling schema 3 back requires the original complete stopped-state backup and matching old release, not a PRAGMA edit.
+
+Windows TLS early rejection: a small oversized JSON body could trigger WinError 10053 while the client was still sending, hiding HTTP 413. Handler now discards at most 128 KiB within a bounded 2-second/1-second-read budget before rejecting; payload is never parsed or accepted. Larger/malicious streams are closed without unbounded draining.
+
+write_denied: the root identity marker was readable but the write probe received access-denied/read-only. writable=false and fsync_tested=null; the Backup label is a read-only archival-source suggestion, not eligibility as a writable backup target or proof of any replicated copy.

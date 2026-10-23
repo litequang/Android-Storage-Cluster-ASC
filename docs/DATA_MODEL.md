@@ -97,3 +97,24 @@ keep v0.4 source unchanged and run new code from a separate versioned directory.
 Rollback restores that pre-upgrade state per device; it loses later changes and may
 reactivate credentials revoked since the snapshot. See README sections 7/9. Ordinary
 v0.4 agents can continue heartbeating the upgraded Controller with their existing tokens.
+
+## Implemented Phase 1.2A — registry 3 / manifest 1
+
+Registry initialize accepts user_version 0, 2 or 3, validates cluster identity and migrates transactionally to 3. Existing lifecycle tables, IDs, hashes, timestamps and unused codes are retained. New storage_grants columns: grant_hash PK, node_id, volume_id, token_version, principal, operations JSON, expires_at. Only SHA-256 of the random owner bearer is persisted. Expired rows are pruned at mint; at most 1024 active grants. Profile version remains 1/legacy compatible; profile.storage has storage_version=1.
+
+A separate private HOME/storage/manifest.sqlite3 uses WAL, synchronous FULL and explicit closed connection contexts. New/empty schema 0 initializes to 1 transactionally. Known schema 1 opens idempotently; future/unknown versions or a different node identity abort. This is the initial manifest migration contract, independent of registry version.
+
+| Table | Fields / invariants |
+|---|---|
+| settings | node_id, immutable manifest owner |
+| volumes | volume_id UUID PK, node_id, kind, approved absolute local root UNIQUE, observed medium identity, quota bytes, reserve bytes |
+| uploads | session_id UUID PK, file_id UUID UNIQUE, principal, idempotency_key, logical_path, volume_id, size, sha256, version=1, state, created_at, updated_at; principal/key UNIQUE; live logical path per volume UNIQUE |
+| files | file_id UUID PK, logical_path, volume_id, relative_path, size, sha256, version=1, state, created_at, updated_at, last_verified_at nullable; volume/logical path UNIQUE |
+
+Absolute roots are node-local configuration, never global IDs or wire file paths. Physical names are staging/<session UUID>.part and objects/<file UUID>.blob. Logical names are labels only. Equal idempotency key + principal returns the same session only if all requested content/name/volume fields match. A different key at an occupied logical path conflicts; replacement/version increment is deferred.
+
+Upload states: INITIATED -> WRITING -> READY -> COMMITTING -> COMMITTED. EOF/IO interruption becomes INTERRUPTED (resend full body); bad checksum becomes FAILED. EXPIRED releases an explicitly cleaned staging session. Ambiguous commit/revocation becomes NEEDS_REVIEW and reserves its data. Restart maps WRITING to INTERRUPTED; COMMITTING returns READY only when both staging and final size/hash match, requiring a fresh explicit authorized commit. It never silently publishes.
+
+File states: COMMITTED, CORRUPT, MISSING, VOLUME_UNAVAILABLE, METADATA_CONFLICT. Startup rechecks manifest references and physical hash; unknown/missing verification has last_verified_at=null. Metadata conflicts never become filesystem paths. Inventory reports unreferenced objects, with bounded output, and never adopts/deletes them.
+
+Schema-3 rollback requires the complete stopped-state pre-upgrade schema-2/0 backup and matching old source, not an edited PRAGMA. Preserve new manifest/volume contents separately: reverting source does not remove user objects. Restoring old state can lose later registry changes/reactivate old credentials; isolate the environment and review credentials. No automatic downgrade.

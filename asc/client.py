@@ -13,7 +13,7 @@ class ClientError(Exception):
         self.code = code
 
 
-def request_json(origin, pin, method, path, obj=None, token=None):
+def connect_pinned(origin, pin):
     url = urlsplit(origin)
     if (url.scheme != 'https' or not url.hostname or (url.path not in ('', '/')) or
             url.username or url.password or url.query or url.fragment):
@@ -32,6 +32,15 @@ def request_json(origin, pin, method, path, obj=None, token=None):
         actual = hashlib.sha256(conn.sock.getpeercert(binary_form=True)).hexdigest().upper()
         if actual != expected:
             raise ClientError('SERVER CERTIFICATE PIN MISMATCH: aborting')
+        return conn
+    except BaseException:
+        conn.close()
+        raise
+
+
+def request_json(origin, pin, method, path, obj=None, token=None):
+    conn = connect_pinned(origin, pin)
+    try:
         data = json.dumps(obj, ensure_ascii=False).encode('utf-8') if obj is not None else None
         headers = {'Accept': 'application/json'}
         if data is not None:

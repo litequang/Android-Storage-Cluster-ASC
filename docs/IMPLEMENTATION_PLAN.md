@@ -1,21 +1,11 @@
 # ASC IMPLEMENTATION & ACCEPTANCE PLAN
 
-## Current acceptance order — owner update, 2026-10-23
-- Phase 1.1 Windows is accepted: the owner reports 40 tests OK (skipped=3 POSIX installer).
-  This task only updates workflow/docs and publishes v0.4.1; it does not start Phase 1.2A.
-- Codex now runs local targeted tests after source changes and the full applicable suite
-  before Phase completion, fixing failures or reporting concrete blockers without weakening
-  tests. Reuse the owner PASS when source/tests are unchanged, with clear provenance.
-  Production servers, real-phone installers, real data and production private state remain forbidden.
-- After owner-confirmed Phase 1.1 PASS, develop v1.0 incrementally with explicit versioned
-  API/schema/migration/rollback contracts: Storage Engine, distributed metadata and vetted
-  Raft, backup/recovery, Dashboard Web/PWA, Quick Join and Installer. Do not implement
-  all modules at once, replace the project, or claim unproven safety/HA.
-- Multi-node Windows simulation and end-to-end v1.0 acceptance precede real Android
-  installation trials. Existing phone commands/checklists are deferred reference only.
-- The owner has supplied the required PASS and authorized main publication of v0.4.1;
-  review tracked/staged source and preserve remote history. M51 production remains
-  source-only and outside every development/test/deployment action.
+## Current acceptance order — 2026-10-23
+- Phase 1.1: owner-reported Windows 40 tests OK (3 POSIX installer skips); published baseline b74bb594a5bff9ad0926255effed1fd41bbc1647.
+- Phase 1.2A is explicitly authorized: local storage foundation, versioned API/schema, targeted then full local suite, three-node Windows HTTPS fault simulation, documentation and non-force publish after applicable PASS.
+- See PHASE1-2A-ACCEPTANCE.md for Codex-run results and remaining gates. No owner PASS is reused for changed source/tests.
+- End-to-end v1.0 still requires distributed metadata, vetted Raft/fencing, replication/backup/recovery, Dashboard Web/PWA, Quick Join and Installer acceptance, one phase at a time.
+- No Android installation trial before the Windows v1.0 end-to-end gate. No M51, production data/private state, real-phone installer or environment installation/change in this task.
 
 ## Phase 0 — this package
 Hardware audit is integrated into automatic on-device profiling instead of requiring user to manually inventory every phone. Working quickstart v0.4 enrolls nodes in a *single-writer LAN development registry*. Its hardware scores are recommendations, not proof of reliability. Actual SD capabilities, sleep behavior and voter eligibility still require observation before enabling durable file storage or Raft.
@@ -38,7 +28,13 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
   The publication task changes docs only and reuses that PASS. Linux/Termux installer
   acceptance remains unverified; ZTE/Bphone trials follow the v1.0 Windows end-to-end gate.
 - Durable local file manifest, catalog, file jobs, consensus and storage remain absent;
-  Phase 1 as a whole is not complete.
+  These describe the 1.1 boundary; Phase 1.2A adds local storage below. Phase 1 as a whole is not complete.
+
+### Phase 1.2A — Storage Foundation v0.5.0
+- Implemented approved local volumes/medium identity, private local manifest schema 1, bounded streaming and immutable commit/download/integrity/recovery/controlled staging expiry.
+- Added distinct owner data grants, registry schema 3 additive migration, pinned Agent API and versioned capability heartbeat; Controller remains single-writer.
+- Windows three-node real HTTPS acceptance and fault matrix are in PHASE1-2A-ACCEPTANCE.md. Termux/SAF/Doze/power-cut behavior remains unverified; no distributed durability claim.
+- Future Phase 1.2B requires its own explicit request, global metadata/fencing API/schema and migration contracts, recovery/partition acceptance. It is not implemented in this turn.
 
 ## Phase 2 — Consensus and metadata replication
 - Select and document a maintained Raft library implementation confirmed on target Termux.
@@ -68,3 +64,5 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - No 'any one node can write safely' when original 3-voter quorum absent.
 - No durable data safety until independent copies and tested restore exist.
 - No marketing capacity as real usable capacity without measuring files and replication factor.
+
+Phase 1.2A local gate: Codex Windows final 61 tests OK (skipped=3 POSIX installer), 58 PASS, 0 FAIL/ERROR. Three-node HTTPS simulation passed. See PHASE1-2A-ACCEPTANCE.md; Android/SAF/power-cut and distributed acceptance remain open.

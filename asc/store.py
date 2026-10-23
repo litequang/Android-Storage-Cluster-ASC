@@ -1,4 +1,4 @@
-﻿"""Single-writer development registry; NOT distributed consensus."""
+"""Single-writer development registry; NOT distributed consensus."""
 import hashlib
 from contextlib import contextmanager
 import hmac
@@ -11,7 +11,7 @@ from pathlib import Path
 from .planner import recommend
 from . import validation as valid
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 
 def _digest(s):
@@ -33,12 +33,12 @@ class Registry:
             db.close()
 
     def initialize(self, cluster_id):
-        """Transactional additive v0.4 -> schema 2; never replace identity or rows."""
+        """Transactional additive v0.4/v0.4.1 -> schema 3; never replace identity or rows."""
         with self.connect() as db:
             db.execute('PRAGMA journal_mode=WAL')
             db.execute('BEGIN IMMEDIATE')
             version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version not in (0, SCHEMA_VERSION):
+            if version not in (0, 2, SCHEMA_VERSION):
                 raise ValueError('unsupported registry schema; use matching release')
             db.execute('CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL)')
             existing = db.execute("SELECT value FROM settings WHERE key='cluster_id'").fetchone()
@@ -62,6 +62,10 @@ class Registry:
                     if column not in present:
                         db.execute(f'ALTER TABLE {table} ADD COLUMN {column} {definition}')
             db.execute('INSERT OR IGNORE INTO settings(key,value) VALUES (?,?)', ('cluster_id', cluster_id))
+            db.execute('''CREATE TABLE IF NOT EXISTS storage_grants(
+                grant_hash TEXT PRIMARY KEY,node_id TEXT NOT NULL,volume_id TEXT NOT NULL,
+                token_version INTEGER NOT NULL,principal TEXT NOT NULL,operations TEXT NOT NULL,
+                expires_at INTEGER NOT NULL)''')
             db.execute(f'PRAGMA user_version={SCHEMA_VERSION}')
 
     def cluster_id(self):
@@ -218,3 +222,47 @@ class Registry:
                 'cluster_id': self.cluster_id(), 'snapshot_at': now,
                 'consensus_status': 'NOT_IMPLEMENTED_SINGLE_WRITER',
                 'nodes': nodes, 'advisory_role_plan': recommend(nodes)}
+
+    def storage_grant(self, node_id, volume_id, operations, ttl=300):
+        """Owner delegation; a node bearer never grants user data access."""
+        valid.node_id(node_id)
+        if not isinstance(volume_id, str) or str(uuid.UUID(volume_id)) != volume_id:
+            raise ValueError('invalid volume ID')
+        allowed = {'read', 'write', 'list', 'verify'}
+        if (not isinstance(operations, list) or not operations or
+                any(not isinstance(op, str) or op not in allowed for op in operations) or
+                len(operations) > 4 or type(ttl) is not int or not 30 <= ttl <= 900):
+            raise ValueError('invalid storage grant')
+        token, now = secrets.token_urlsafe(32), int(time.time())
+        with self.connect() as db:
+            db.execute('BEGIN IMMEDIATE')
+            node = db.execute('SELECT * FROM nodes WHERE node_id=?', (node_id,)).fetchone()
+            if (not node or node['state'] != 'active' or node_id == 'local-controller' or
+                    json.loads(node['profile']).get('protected') is True):
+                raise ValueError('node unavailable or protected')
+            db.execute('DELETE FROM storage_grants WHERE expires_at<=?', (now,))
+            if db.execute('SELECT COUNT(*) FROM storage_grants').fetchone()[0] >= 1024:
+                raise ValueError('too many active storage grants')
+            db.execute('INSERT INTO storage_grants VALUES (?,?,?,?,?,?,?)',
+                       (_digest(token), node_id, volume_id, node['token_version'], 'local-admin',
+                        json.dumps(sorted(set(operations))), now + ttl))
+        return {'grant': token, 'node_id': node_id, 'volume_id': volume_id,
+                'operations': sorted(set(operations)), 'expires_at': now + ttl, 'principal': 'local-admin'}
+
+    def storage_authorize(self, node_id, node_token, grant, volume_id, operation):
+        valid.node_id(node_id)
+        valid.secret(grant)
+        valid.secret(node_token)
+        if not isinstance(volume_id, str) or str(uuid.UUID(volume_id)) != volume_id or operation not in ('read', 'write', 'list', 'verify'):
+            raise ValueError('invalid storage authorization')
+        with self.connect() as db:
+            node = db.execute('SELECT * FROM nodes WHERE node_id=?', (node_id,)).fetchone()
+            row = db.execute('SELECT * FROM storage_grants WHERE grant_hash=?', (_digest(grant),)).fetchone()
+        if (not node or node['state'] != 'active' or
+                not hmac.compare_digest(node['token_hash'], _digest(node_token)) or
+                json.loads(node['profile']).get('protected') is True or not row or
+                row['node_id'] != node_id or row['volume_id'] != volume_id or
+                row['token_version'] != node['token_version'] or row['expires_at'] <= int(time.time()) or
+                operation not in json.loads(row['operations'])):
+            return None
+        return {'principal': row['principal'], 'expires_at': row['expires_at']}
