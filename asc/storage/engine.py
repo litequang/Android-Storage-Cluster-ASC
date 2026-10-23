@@ -376,10 +376,12 @@ class StorageEngine:
                 'max_upload_bytes': self.max_upload, 'max_concurrent_transfers': 1,
                 'bytes_per_second': self.rate, 'resumable_upload': False}
 
-    def inventory(self, limit=1000):
+    def inventory(self, limit=1000, volume_id=None):
         """Bounded local audit. Unreferenced objects are reported, never adopted/deleted."""
         result = []
         for record in self.volumes.records():
+            if volume_id is not None and record['volume_id']!=volume_id:
+                continue
             item = {'volume_id': record['volume_id'], 'unreferenced_objects': [], 'truncated': False}
             try:
                 volume = self.volumes.get(record['volume_id'])
@@ -402,4 +404,26 @@ class StorageEngine:
             except (OSError, StorageError):
                 item['error'] = 'volume_unavailable'
             result.append(item)
+        return result
+
+    def placement_status(self, volume_id):
+        with self._mutex:
+            volume=self.volumes.get(volume_id)
+            rows=self.volumes.inspect(probe=True,volume_id=volume_id)
+            for row in rows:
+                try:
+                    row['used_bytes']=self._quota_usage(volume)
+                except (OSError,StorageError):
+                    row.update(used_bytes=None,state='unavailable',last_error='usage_unavailable')
+            return {'node_id':self.node_id,'storage_version':1,'volumes':rows,
+                    'max_upload_bytes':self.max_upload,'bytes_per_second':self.rate,
+                    'max_concurrent_transfers':1,'external_load':None}
+
+    def reconciliation_inventory(self,volume_id,offset=0):
+        result=self.list_files(volume_id,offset)
+        with self.manifest.connect() as db:
+            for row in result['files']:
+                upload=db.execute('SELECT session_id,principal,idempotency_key FROM uploads WHERE file_id=?',(row['file_id'],)).fetchone()
+                row['upload']=dict(upload) if upload else None
+        result['objects']=self.inventory(volume_id=volume_id) if offset==0 else []
         return result

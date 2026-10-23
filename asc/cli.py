@@ -1,4 +1,4 @@
-﻿"""Safe foreground CLI for the single-writer LAN development registry."""
+"""Safe foreground CLI for the single-writer LAN development registry."""
 import argparse
 from contextlib import ExitStack
 import os
@@ -75,7 +75,7 @@ def controller_init(args):
     print('Start: python3 -m asc.cli controller-run')
 
 
-def controller_run(_args):
+def controller_run(args):
     _must_not_protected('controller runtime')
     ensure_private_home(HOME)
     with foreground_lock(HOME, 'controller'):
@@ -93,9 +93,13 @@ def controller_run(_args):
 
         worker = threading.Thread(target=refresh, daemon=True)
         worker.start()
+        from .catalog.service import CatalogService
+        catalog=CatalogService(reg,getattr(args,'catalog_rate',4*1024**2),getattr(args,'job_timeout',300))
         try:
-            serve('0.0.0.0', cfg['listen_port'], reg, cfg['admin_token'], HOME / 'server.crt', HOME / 'server.key')
+            catalog.start(background=True)
+            serve('0.0.0.0', cfg['listen_port'], reg, cfg['admin_token'], HOME / 'server.crt', HOME / 'server.key',catalog=catalog)
         finally:
+            catalog.close()
             stop.set()
             worker.join(timeout=5)
 
@@ -265,6 +269,13 @@ def agent_once(cfg, sd_test=False, storage_engine=None):
         raise
     if snap['cluster_id'] != cfg['cluster_id']:
         raise ClientError('Cluster ID mismatch; refusing snapshot')
+    if snap.get('catalog_metadata_enabled'):
+        try:
+            from .catalog.metadata import synchronize
+            status=synchronize(HOME,cfg)
+            replace_private(HOME / 'metadata_sync_state.json',{'status':'verified','revision':status['revision'],'checked_at':int(time.time())})
+        except (ClientError,OSError,ValueError,StorageError,sqlite3.Error):
+            replace_private(HOME / 'metadata_sync_state.json',{'status':'unavailable','checked_at':int(time.time())})
     replace_private(HOME / 'topology_snapshot.json', snap)
     replace_private(HOME / 'agent_state.json', {'credential_status': 'active', 'checked_at': int(time.time())})
     return snap
@@ -321,7 +332,7 @@ def local_status(_args):
                 result['topology'] = Registry(path).snapshot()
             else:
                 result['registry_schema'] = version
-                result['migration'] = 'back up private state; controller-run migrates to schema 3'
+                result['migration'] = 'back up private state; controller-run migrates to schema 4'
     elif (HOME / 'node.json').exists():
         result['mode'] = 'enrolled-node'
         cfg = read_private('node.json')
@@ -341,14 +352,16 @@ def local_status(_args):
 
 
 def main():
-    p = argparse.ArgumentParser(description='ASC 0.5.0 / local storage and single-writer LAN lifecycle')
+    p = argparse.ArgumentParser(description='ASC 0.6.0 / global catalog and single-writer distributed storage')
     sub = p.add_subparsers(dest='action', required=True)
     a = sub.add_parser('inspect', help='Read-only unless --sd-write explicitly requested')
     a.add_argument('--sd-write', action='store_true')
     a = sub.add_parser('controller-init')
     a.add_argument('--name', default='ASC-Primary')
     a.add_argument('--port', type=int, default=8443)
-    sub.add_parser('controller-run')
+    a=sub.add_parser('controller-run')
+    a.add_argument('--catalog-rate',type=int,default=4*1024**2)
+    a.add_argument('--job-timeout',type=int,default=300)
     a = sub.add_parser('controller-pair')
     a.add_argument('--ttl', type=int, default=600)
     a.add_argument('--node-id', help='Target existing node for explicit rotation/re-pair')
@@ -381,6 +394,8 @@ def main():
                 'node-repair': node_repair, 'agent-run': agent_run, 'status': local_status}
     from .storage.cli import register
     register(sub, handlers, sys.modules[__name__])
+    from .catalog.cli import register as register_catalog
+    register_catalog(sub,handlers,sys.modules[__name__])
     args = p.parse_args()
     try:
         if args.action == 'inspect':
@@ -391,7 +406,7 @@ def main():
         print('ASC foreground stopped; identity retained.')
     except (OSError, ClientError, ValueError, KeyError, sqlite3.Error, StorageError) as exc:
         # Never print arbitrary OS/server exception text that could contain private input.
-        message = str(exc) if isinstance(exc, (ClientError, ValueError)) and not isinstance(exc, json.JSONDecodeError) else 'local state/dependency unavailable; preserve private files and check troubleshooting'
+        message = str(exc) if isinstance(exc, (ClientError, ValueError, StorageError)) and not isinstance(exc, json.JSONDecodeError) else 'local state/dependency unavailable; preserve private files and check troubleshooting'
         print(f'ASC error: {message}', file=sys.stderr)
         sys.exit(1)
 

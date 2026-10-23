@@ -291,9 +291,11 @@ class VolumeManager:
             {'kind': 'termux_sd', 'root': str(Path(v['app_dir']) / 'asc-storage')} for v in _detect_sd_locations()
             if v['app_dir_exists']]
 
-    def inspect(self, probe=False):
+    def inspect(self, probe=False, volume_id=None):
         result = []
         for record in self.records():
+            if volume_id is not None and record['volume_id']!=volume_id:
+                continue
             item = {key: record[key] for key in ('volume_id', 'node_id', 'kind', 'quota', 'reserve')}
             item.update(total_bytes=None, free_bytes=None, readable=None, writable=None,
                         fsync_tested=None, state='unknown', checked_at=int(time.time()), last_error=None)

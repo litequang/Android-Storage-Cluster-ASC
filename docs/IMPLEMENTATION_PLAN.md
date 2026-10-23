@@ -1,11 +1,11 @@
 # ASC IMPLEMENTATION & ACCEPTANCE PLAN
 
 ## Current acceptance order — 2026-10-23
-- Phase 1.1: owner-reported Windows 40 tests OK (3 POSIX installer skips); published baseline b74bb594a5bff9ad0926255effed1fd41bbc1647.
-- Phase 1.2A is explicitly authorized: local storage foundation, versioned API/schema, targeted then full local suite, three-node Windows HTTPS fault simulation, documentation and non-force publish after applicable PASS.
-- See PHASE1-2A-ACCEPTANCE.md for Codex-run results and remaining gates. No owner PASS is reused for changed source/tests.
-- End-to-end v1.0 still requires distributed metadata, vetted Raft/fencing, replication/backup/recovery, Dashboard Web/PWA, Quick Join and Installer acceptance, one phase at a time.
-- No Android installation trial before the Windows v1.0 end-to-end gate. No M51, production data/private state, real-phone installer or environment installation/change in this task.
+- Baselines: v0.4.1 b74bb594a5bff9ad0926255effed1fd41bbc1647; v0.5.0 f70b095b8f2ec507baaea5a4bdb3d03667209f94.
+- Phase 1.2B v0.6.0 is explicitly authorized: Global Catalog, metadata replication, placement, durable copy jobs/reconciliation, local checks and non-force main publication after applicable PASS.
+- Codex final Windows gate: 92 tests OK (skipped=3 POSIX installer), 89 PASS / 0 FAIL / 0 ERROR; no previous owner PASS reused. See PHASE1-2B-ACCEPTANCE.md.
+- Source remains one development project; end-to-end v1.0 still needs vetted Raft/fencing/recovery, application UX/Quick Join/Installer and hardware acceptance, one separate phase at a time.
+- No M51/real-phone/production private-state access, installer execution or system installation/change. Windows simulated nodes precede Android trials.
 
 ## Phase 0 — this package
 Hardware audit is integrated into automatic on-device profiling instead of requiring user to manually inventory every phone. Working quickstart v0.4 enrolls nodes in a *single-writer LAN development registry*. Its hardware scores are recommendations, not proof of reliability. Actual SD capabilities, sleep behavior and voter eligibility still require observation before enabling durable file storage or Raft.
@@ -34,7 +34,14 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - Implemented approved local volumes/medium identity, private local manifest schema 1, bounded streaming and immutable commit/download/integrity/recovery/controlled staging expiry.
 - Added distinct owner data grants, registry schema 3 additive migration, pinned Agent API and versioned capability heartbeat; Controller remains single-writer.
 - Windows three-node real HTTPS acceptance and fault matrix are in PHASE1-2A-ACCEPTANCE.md. Termux/SAF/Doze/power-cut behavior remains unverified; no distributed durability claim.
-- Future Phase 1.2B requires its own explicit request, global metadata/fencing API/schema and migration contracts, recovery/partition acceptance. It is not implemented in this turn.
+- Phase 1.2B was subsequently authorized and is documented below.
+
+### Phase 1.2B — Distributed Storage & Global Catalog v0.6.0
+- Implemented registry-4 Global Catalog with one mutation boundary, physically verified independent copies, measured-domain placement, persistent leased/retried jobs and safe download fallback.
+- Added consistent snapshots/ordered history, atomic read-only node caches and bounded reconciliation with persistent inventory cursors. Uncatalogued/suspect/last copies are preserved; no GC or silent import.
+- Real pinned HTTPS ZTE V40/Bphone A40/Sony XZ3 simulation covers replicas, metadata, outage/fallback, corruption repair, Controller crash, lost ACK, replay/scope/revoke, quota/protected modes and compatibility.
+- Gate PASS on Windows: full 92 tests OK with only 3 POSIX installer skips. Production/Android/SD/power-cut and hardware failure independence remain unverified.
+- Phase 2 readiness: clean command/event boundaries and fault-tested vertical slice exist. Must first define deterministic prepared commands, replicated job/authority boundaries, fencing/epochs, membership and recovery under a vetted Raft implementation. Do not infer consensus from these copies/caches.
 
 ## Phase 2 — Consensus and metadata replication
 - Select and document a maintained Raft library implementation confirmed on target Termux.

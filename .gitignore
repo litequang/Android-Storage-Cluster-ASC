@@ -116,3 +116,8 @@ manifest.sqlite*
 *.part
 *.probe
 *grant*.json
+
+# Catalog metadata checkpoint/runtime exports
+metadata_sync_state.json
+catalog-snapshot*.json
+catalog-metadata*.json

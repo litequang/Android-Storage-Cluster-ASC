@@ -25,10 +25,10 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
-## Scope in v0.5.0 / Phase 1.2A
-Working: all v0.4.1 node lifecycle features plus opt-in local volumes/manifest, pinned owner-authorized streaming storage, immutable commit/download/integrity, conservative recovery, staging expiry and capability heartbeat.
-Phase 1.1 Windows acceptance: owner-reported 40 tests OK (skipped=3 POSIX installer). Phase 1.2A source changes require new Codex-run checks; see docs/PHASE1-2A-ACCEPTANCE.md for actual results and platform limits.
-NOT working: distributed/global file catalog, multi-node consensus, automatic election, replication/backups, PWA, VPN gateway, SD SAF bridge or M51 production integration. No Android/physical power-loss readiness is claimed. Phase 1.2B needs its own explicit task.
+## Scope in v0.6.0 / Phase 1.2B
+Working: prior lifecycle/local storage plus single-writer Global Catalog, approved physical-domain placement, durable scoped replication jobs, verified read-only metadata snapshot/delta caches, bounded reconciliation and download fallback.
+Phase 1.2B Codex Windows acceptance: 92 tests OK (3 POSIX installer skips); see docs/PHASE1-2B-ACCEPTANCE.md for provenance, three-node simulation and limits. Historical 1.2A gate was 61 tests.
+NOT working: Raft/consensus, automatic Controller failover/election, Dashboard/mobile/cloud integration, SAF, production or Android/power-cut readiness. Cache replication is not write authority or proof of file bytes. Phase 2 requires its own explicit task.
 
 ## Documentation update discipline
 After EVERY source change:

@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v0.6.0 — 2026-10-23 — Phase 1.2B Distributed Storage & Global Catalog
+- Add registry schema 4 transactionally from 0/2/3, preserving lifecycle identities/tokens/codes/grants and unchanged local manifest 1/object bytes. Add global immutable versions, replica evidence, policy, persistent epoch/revision/digest-chained history and explicit node/domain/volume approvals.
+- Add consistent bounded snapshots/deltas and atomic read-only metadata cache schema 1. Validate cluster/epoch/order/gaps/duplicates/digests/rollback and same-checkpoint materialization; compacted history resyncs safely. Offline caches remain lookup-only.
+- Add measured quota/reserve/read-write/domain-aware placement for single/replicated_2/replicated_3. Separate desired/verified/available counts; unknown load/stability stays null; protected/stale/unreadable/full targets are excluded.
+- Add durable UPLOAD/COPY jobs, idempotent session/object checkpoints, lease/run-token/generation fencing, backoff, timeout, explicit retry and owned background worker. No source/target data is deleted after failure or restart.
+- Add expiring exact file/job/resource grants separate from node/admin credentials; preserve pinned HTTPS and legacy whole-volume compatibility. Controller independently hashes streamed served bytes before publishing a replica.
+- Reuse Phase 1.2A Engine for bounded Controller-relayed copies and verified download fallback. Add scoped status/inventory, rotating persistent reconciliation cursors and bounded physical proof/report budgets. Keep unknown v0.5 files/orphans/suspect/last copies, with no automatic import or object GC.
+- Add /catalog/v1 API and owner CLI for upload/download/catalog/replicas/policy/jobs/reconcile/node approval; Agent heartbeat imports approved metadata and records sync state. Metadata-only nodes need no fabricated storage endpoint.
+- Fail closed on missing schema-4 catalog/epoch authority instead of recreating it; require reviewed backup restore.
+- Fix replay fingerprint after policy changes, volume-level source eligibility and same-revision no-op timestamp consistency. Add bounded operation timeouts while retaining the original 12-second default for prior transport calls.
+- Acceptance: Codex Windows full 92 tests OK (skipped=3 POSIX installer), 89 PASS / 0 FAIL / 0 ERROR; all distributed/TLS tests ran. Three actual pinned loopback Agent endpoints plus Controller cover independent simulated copies, metadata, outages/fallback, corruption, mid-stream loss, lost ACK, Controller restart, scope/revoke, quota and CLI.
+- No Raft/election/automatic Controller failover, Dashboard/mobile/cloud/SAF, Android/physical power-cut or production readiness. No M51/real-phone/production data access or environment installation.
+
+
 ## v0.5.0 — 2026-10-23 — Phase 1.2A Storage Foundation
 - Added opt-in approved local volumes, stable marker/root identity, Android internal/Termux-SD candidate discovery and a filesystem adapter seam for future SAF. Reject traversal, symlinks/reparse junctions and hardlinked bodies; missing telemetry stays null.
 - Added private node manifest schema 1, independent from registry; immutable UUID object paths, streaming session/staging/upload/size+SHA checks/exclusive final copy/commit/download/list/verify. Interrupted writes restart full-body only; ambiguous copies are preserved, not implicitly published.

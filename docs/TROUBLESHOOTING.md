@@ -119,3 +119,34 @@ For repeatable Windows checks use docs/PHASE1-2A-ACCEPTANCE.md. Missing OpenSSL 
 Windows TLS early rejection: a small oversized JSON body could trigger WinError 10053 while the client was still sending, hiding HTTP 413. Handler now discards at most 128 KiB within a bounded 2-second/1-second-read budget before rejecting; payload is never parsed or accepted. Larger/malicious streams are closed without unbounded draining.
 
 write_denied: the root identity marker was readable but the write probe received access-denied/read-only. writable=false and fsync_tested=null; the Backup label is a read-only archival-source suggestion, not eligibility as a writable backup target or proof of any replicated copy.
+
+## Phase 1.2B operator diagnostics
+
+| Symptom | Meaning / safe action |
+|---|---|
+| no_eligible_storage (507) | No approved fresh writable volume meets double-copy quota/free reserve. Inspect catalog-status plus stopped Agent storage-status. Unknown measurements exclude placement; do not fabricate capacity |
+| desired > verified or available / DEGRADED | Target policy is not satisfied. Inspect replica evidence/jobs. Multiple volumes or IDs on one approved device count once. No automatic deletion to force a healthy report |
+| metadata_not_authorized (403) | Node is unapproved/revoked/protected or generation changed. Review identity; explicitly reapprove metadata permission after re-pair. Do not substitute admin token as node credential |
+| node_not_approved / node_credential_changed | Stale generation, removed volume/permission or protected node. Preserve bytes, restore reviewed configuration and retry same job only after authorization is valid |
+| RETRY / transfer_unavailable / no_verified_source | Network/volume/hash/authority prevented completion. Source and target checkpoints remain. Backoff runs automatically; no verified replica is added |
+| FAILED | Default failed-attempt budget exhausted. Review job history, repair cause, then catalog-retry-job JOB_ID. Same job/key/session is retained. A spare eligible domain may repair; failed target domains are not cloned indefinitely |
+| PENDING UPLOAD after interruption | Owner upload has not been physically confirmed. Repeat catalog-upload with original key/content/version/policy; request issues fresh short-lived authority. Do not invent ACK/proof or erase staging |
+| Target wrote bytes but Controller restarted/offline | Job may be RUNNING/RETRY. Owned worker recovers/checks the same session/local ID, re-verifies bytes and records one replica. Do not manually add a fake replica row |
+| Lost owner ACK | Reconcile can recover a committed manifest entry matching exact job principal/key/name, then still physically verifies it. Original upload retry is also idempotent |
+| CORRUPT / MISSING / METADATA_CONFLICT | Preserve suspect objects and metadata. Reconcile marks discrepancy and queues replacement only from a valid readable source. If no source remains, report unavailable; no fabricated recovery |
+| UNAVAILABLE / removed SD | A volume is not a readable source/target. Keep the original medium and marker. Restore it or heal to another approved physical domain; no reused-path reinitialization |
+| revision_gap / resync_required | Missing/compacted history. Node keeps last verified cache and fetches a new consistent pinned snapshot. At most 1024 history revisions are retained |
+| snapshot_digest_mismatch / same-checkpoint conflict / epoch or lower revision conflict | Preserve the prior cache; inspect Controller consistency/restoration plan. Do not edit revision/digest/epoch or accept a lower checkpoint blindly |
+| inventory_truncated | Work/report bounds were reached. Reconcile persists per-volume offsets/rotation and continues later; output is not proof that unreported files are absent |
+| uncatalogued / unreferenced objects | Standalone v0.5 file or ambiguous body lacks a global reference. Report/retain it. Automatic import/GC is not part of this phase |
+| Worker already owned | Stop the owning development Controller normally. Do not delete .lock or run another independent writer |
+| Long file verification times out | Job/client timeout must cover source/target multi-pass hashing and rate limits. Set reviewed controller-run --job-timeout 30..900 and --catalog-rate 65536..67108864; never disable SHA checks to finish faster |
+| v0.5 Agent cannot join global placement | Global status/inventory/scoped jobs need v0.6 Agent code. Old lifecycle and standalone owner storage stay compatible. Upgrade Controller/source separately with private stopped-state backup |
+
+Use catalog-status, catalog-jobs and catalog-job JOB_ID for current evidence; catalog-reconcile requests bounded scanning. catalog-run-job [JOB_ID] runs one due attempt on the owned worker. catalog-sync and catalog-local-status/files/file inspect verified metadata; local cache never becomes a writer and available-replica count is unknown offline.
+
+The Controller defaults to one transfer and 4 MiB/s relay/readback; Agents retain their own quota/rate/one-transfer limits. An owner upload ACK may return pending when the background worker is busy; wait for verified counts rather than declaring replication from job existence.
+
+Rollback details: DATA_MODEL and README section 12. Stop all development processes, retain current state/objects, restore the complete pre-upgrade schema-3 backup and v0.5 source together. Newer cache checkpoints intentionally refuse an older Controller. There is no automatic epoch reset or distributed recovery authority in this phase.
+
+Catalog state/epoch missing in schema 4: stop and restore the complete reviewed stopped-state backup. Do not run initialization to create a fresh epoch over existing replicas or edit the schema version.

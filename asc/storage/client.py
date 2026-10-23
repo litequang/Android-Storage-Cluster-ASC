@@ -7,13 +7,14 @@ from .volumes import CHUNK, identifier
 
 
 class StorageClient:
-    def __init__(self, origin, pin, grant, volume_id):
+    def __init__(self, origin, pin, grant, volume_id, timeout=12):
         valid.secret(grant)
+        self.timeout = timeout
         self.origin, self.pin, self.grant = origin, pin, grant
         self.volume_id = identifier(volume_id)
 
     def _connection(self, method, path, length=None, content_type=None):
-        conn = connect_pinned(self.origin, self.pin)
+        conn = connect_pinned(self.origin, self.pin, self.timeout)
         try:
             conn.putrequest(method, '/storage/v1/' + path)
             conn.putheader('Authorization', 'Bearer ' + self.grant)

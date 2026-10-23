@@ -13,7 +13,9 @@ class ClientError(Exception):
         self.code = code
 
 
-def connect_pinned(origin, pin):
+def connect_pinned(origin, pin, timeout=12):
+    if type(timeout) is not int or not 1 <= timeout <= 900:
+        raise ClientError('invalid bounded timeout')
     url = urlsplit(origin)
     if (url.scheme != 'https' or not url.hostname or (url.path not in ('', '/')) or
             url.username or url.password or url.query or url.fragment):
@@ -26,7 +28,7 @@ def connect_pinned(origin, pin):
     context.check_hostname = False
     context.verify_mode = ssl.CERT_NONE
     context.minimum_version = ssl.TLSVersion.TLSv1_2
-    conn = http.client.HTTPSConnection(url.hostname, url.port or 443, timeout=12, context=context)
+    conn = http.client.HTTPSConnection(url.hostname, url.port or 443, timeout=timeout, context=context)
     try:
         conn.connect()
         actual = hashlib.sha256(conn.sock.getpeercert(binary_form=True)).hexdigest().upper()
@@ -38,8 +40,8 @@ def connect_pinned(origin, pin):
         raise
 
 
-def request_json(origin, pin, method, path, obj=None, token=None):
-    conn = connect_pinned(origin, pin)
+def request_json(origin, pin, method, path, obj=None, token=None, timeout=12):
+    conn = connect_pinned(origin, pin, timeout)
     try:
         data = json.dumps(obj, ensure_ascii=False).encode('utf-8') if obj is not None else None
         headers = {'Accept': 'application/json'}
@@ -60,7 +62,11 @@ def request_json(origin, pin, method, path, obj=None, token=None):
             code = reply.get('error')
             allowed = {'unauthorized', 'credential_rejected_repair_required', 'rate_limited',
                        'invalid_or_expired_code', 'bad_request', 'payload_too_large',
-                       'not_found', 'registry_unavailable'}
+                       'not_found', 'registry_unavailable', 'no_eligible_storage',
+                       'catalog_unavailable', 'metadata_not_authorized', 'resync_required',
+                       'file_not_found', 'job_not_found', 'logical_version_exists', 'idempotency_conflict',
+                       'invalid_policy', 'job_state_conflict', 'stale_job_lease', 'verification_required',
+                       'protected_or_inactive_node', 'node_not_approved', 'node_credential_changed'}
             code = code if isinstance(code, str) and code in allowed else 'request_failed'
             raise ClientError(f'HTTP {response.status}: {code}', response.status, code)
         return reply

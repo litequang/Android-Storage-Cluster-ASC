@@ -32,7 +32,7 @@ class StorageServer(Server):
 
 
 class StorageHandler(Handler):
-    server_version = 'ASC-Storage/0.5.0'
+    server_version = 'ASC-Storage/0.6.0'
 
     def _json(self, status, data):
         try:
@@ -55,10 +55,17 @@ class StorageHandler(Handler):
             self.server.limiter.blocked('auth', self.client_address[0], consume=True)
             raise StorageError('unauthorized', 401) from None
         cfg = self.server.node_config
+        obj={'node_id':cfg['node_id'],'grant':grant,'volume_id':volume,'operation':operation,
+             'scope':{'method':self.command,'resource':urlsplit(self.path).path.removeprefix('/storage/v1/')}}
         try:
-            reply = request_json(cfg['controller'], cfg['pin'], 'POST', '/api/v1/storage/authorize',
-                                 {'node_id': cfg['node_id'], 'grant': grant,
-                                  'volume_id': volume, 'operation': operation}, cfg['token'])
+            try:
+                reply=request_json(cfg['controller'],cfg['pin'],'POST','/api/v1/storage/authorize',obj,cfg['token'])
+            except ClientError as exc:
+                if exc.status!=400:raise
+                # v0.5 rejects scope. The same pinned authority must approve this request;
+                # only a legacy whole-volume grant can succeed without scope.
+                legacy={k:v for k,v in obj.items() if k!='scope'}
+                reply=request_json(cfg['controller'],cfg['pin'],'POST','/api/v1/storage/authorize',legacy,cfg['token'])
         except ClientError as exc:
             if exc.status in (400, 401, 403):
                 self.server.limiter.blocked('auth', self.client_address[0], consume=True)
@@ -66,6 +73,7 @@ class StorageHandler(Handler):
             raise StorageError('authorization_unavailable', 503) from None
         except (OSError, ValueError):
             raise StorageError('authorization_unavailable', 503) from None
+        self._constraints = reply.get('constraints')
         return reply['principal'], volume
 
     def _route(self):
@@ -77,15 +85,29 @@ class StorageHandler(Handler):
         resource = parts[3]
         extra = parts[4:]
         method = self.command
-        operation = 'write' if resource == 'uploads' else 'verify' if extra[-1:] == ['verify'] else 'list' if resource in ('volumes',) or resource == 'files' and not extra else 'read'
-        if (resource not in ('uploads', 'files', 'volumes') or
+        operation = 'write' if resource == 'uploads' else 'verify' if extra[-1:] == ['verify'] else 'list' if resource in ('volumes','status','inventory') or resource == 'files' and not extra else 'read'
+        if (resource not in ('uploads', 'files', 'volumes','status','inventory') or
                 method not in ('GET', 'POST', 'PUT')):
             raise StorageError('not_found', 404)
         principal, volume = self._authorize(operation)
         engine = self.server.engine
-        if parsed.query and not (method == 'GET' and resource == 'files' and not extra):
+        constraints = self._constraints
+        if constraints and constraints.get('kind')=='target' and resource=='uploads' and extra:
+            session=engine.session(extra[0],principal,volume)
+            if (any(session[field]!=constraints[field] for field in ('idempotency_key','logical_path','size','sha256')) or
+                    constraints['session_id'] and constraints['session_id']!=extra[0] or
+                    constraints['local_file_id'] and constraints['local_file_id']!=session['file_id']):
+                raise StorageError('forbidden',403)
+        if parsed.query and not (method == 'GET' and resource in ('files','inventory') and not extra):
             raise StorageError('bad_request', 400)
         if method == 'GET':
+            if resource=='inventory' and not extra:
+                query=parse_qs(parsed.query,strict_parsing=True)
+                if set(query)-{'offset'} or any(len(v)!=1 for v in query.values()):
+                    raise ValueError()
+                return self._json(200,engine.reconciliation_inventory(volume,int(query.get('offset',['0'])[0])))
+            if resource=='status' and not extra:
+                return self._json(200,engine.placement_status(volume))
             if resource == 'volumes' and not extra:
                 items = engine.volumes.inspect()
                 return self._json(200, {'volumes': [v for v in items if v['volume_id'] == volume]})
@@ -120,6 +142,8 @@ class StorageHandler(Handler):
             obj = self._read_json()
             if resource == 'uploads' and not extra:
                 valid.payload(obj, ('idempotency_key', 'logical_path', 'size', 'sha256'))
+                if constraints and constraints.get('kind')=='target' and any(obj[field]!=constraints[field] for field in ('idempotency_key','logical_path','size','sha256')):
+                    raise StorageError('forbidden',403)
                 row = engine.initiate(principal, volume, obj['idempotency_key'], obj['logical_path'], obj['size'], obj['sha256'])
                 return self._json(201, {'session': row})
             if resource == 'uploads' and len(extra) == 2 and extra[1] == 'commit':

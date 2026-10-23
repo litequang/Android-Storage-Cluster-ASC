@@ -11,7 +11,7 @@ from pathlib import Path
 from .planner import recommend
 from . import validation as valid
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 
 def _digest(s):
@@ -33,12 +33,12 @@ class Registry:
             db.close()
 
     def initialize(self, cluster_id):
-        """Transactional additive v0.4/v0.4.1 -> schema 3; never replace identity or rows."""
+        """Transactional additive v0.4/v0.4.1 -> schema 4; never replace identity or rows."""
         with self.connect() as db:
             db.execute('PRAGMA journal_mode=WAL')
             db.execute('BEGIN IMMEDIATE')
             version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version not in (0, 2, SCHEMA_VERSION):
+            if version not in (0, 2, 3, SCHEMA_VERSION):
                 raise ValueError('unsupported registry schema; use matching release')
             db.execute('CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL)')
             existing = db.execute("SELECT value FROM settings WHERE key='cluster_id'").fetchone()
@@ -66,6 +66,10 @@ class Registry:
                 grant_hash TEXT PRIMARY KEY,node_id TEXT NOT NULL,volume_id TEXT NOT NULL,
                 token_version INTEGER NOT NULL,principal TEXT NOT NULL,operations TEXT NOT NULL,
                 expires_at INTEGER NOT NULL)''')
+            from .catalog.schema import migrate, validate_existing
+            if version==SCHEMA_VERSION:
+                validate_existing(db)
+            migrate(db)
             db.execute(f'PRAGMA user_version={SCHEMA_VERSION}')
 
     def cluster_id(self):
@@ -249,7 +253,7 @@ class Registry:
         return {'grant': token, 'node_id': node_id, 'volume_id': volume_id,
                 'operations': sorted(set(operations)), 'expires_at': now + ttl, 'principal': 'local-admin'}
 
-    def storage_authorize(self, node_id, node_token, grant, volume_id, operation):
+    def storage_authorize(self, node_id, node_token, grant, volume_id, operation, scope=None):
         valid.node_id(node_id)
         valid.secret(grant)
         valid.secret(node_token)
@@ -260,9 +264,25 @@ class Registry:
             row = db.execute('SELECT * FROM storage_grants WHERE grant_hash=?', (_digest(grant),)).fetchone()
         if (not node or node['state'] != 'active' or
                 not hmac.compare_digest(node['token_hash'], _digest(node_token)) or
+                json.loads(node['profile']).get('protected') is True):
+            return None
+        if row is None:
+            from .catalog.grants import authorize
+            with self.connect() as db:
+                return authorize(db, node, _digest(grant), volume_id, operation, scope)
+        if (not node or node['state'] != 'active' or
+                not hmac.compare_digest(node['token_hash'], _digest(node_token)) or
                 json.loads(node['profile']).get('protected') is True or not row or
                 row['node_id'] != node_id or row['volume_id'] != volume_id or
                 row['token_version'] != node['token_version'] or row['expires_at'] <= int(time.time()) or
                 operation not in json.loads(row['operations'])):
             return None
         return {'principal': row['principal'], 'expires_at': row['expires_at']}
+
+    def authenticate_node(self, node_id, token):
+        valid.node_id(node_id)
+        if not isinstance(token,str) or not 1 <= len(token) <= 128:
+            return False
+        with self.connect() as db:
+            row=db.execute('SELECT state,token_hash FROM nodes WHERE node_id=?',(node_id,)).fetchone()
+        return bool(row and row['state']=='active' and hmac.compare_digest(row['token_hash'],_digest(token)))

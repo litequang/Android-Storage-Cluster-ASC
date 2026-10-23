@@ -162,3 +162,41 @@ Heartbeat retains profile_version=1 (or legacy absent) and optional storage={sto
 Oversized JSON is rejected with 413. To avoid a Windows TLS close/send race, at most 128 KiB of a slightly oversized declared body is discarded (never parsed), with a 2-second budget and 1-second idle read; arbitrarily large bodies are not drained.
 
 Role derivation: measured writable online volume -> Storage; readable online volume with write denial -> Backup (read-only archival source, not a writable backup destination); otherwise Metadata-only. Reading the approved marker establishes readable access only, not integrity of every stored file. No backup is created by these labels.
+
+## Implemented Phase 1.2B — Catalog API v1
+
+Controller-run enables /catalog/v1 and advertises global-catalog-v1, metadata-replication-v1, file-scoped-transfers-v1. /api/v1 remains compatible; registry schema is 4. All APIs use pinned HTTPS, existing JSON framing/bounds/rate budgets and protocol_version=1 responses. Global changes require owner admin authority. There is no node promotion/write API.
+
+| Method /catalog/v1 path | Authority | Body / result |
+|---|---|---|
+| GET files?offset=0 | admin | files (at most 50 aggregates), next_offset |
+| GET files/<global UUID> | admin | file, replicas, desired_replicas, verified_replicas, available_replicas, state, availability, protection |
+| GET files/<ID>/replicas | admin | replica records and three separate counts |
+| POST nodes/register | admin | {node_id,device_id,origin?,pin?,volume_ids?,metadata_allowed?:true,storage_allowed?:true}; storage needs explicit private endpoint/pin/nonempty approved volumes; metadata-only does not |
+| POST uploads | admin | {idempotency_key,logical_path,size,sha256,policy,version?:1} -> 201 upload plan with completed flag, file, job_id, key/local logical path and short-lived exact-target grant/endpoint/pin/timeout |
+| POST uploads/<job UUID>/complete | admin | {session_id,local_file_id}; a hint only, never accepted as proof -> job_state and physically verified/pending file report |
+| POST files/<ID>/download | admin | {} -> verified available candidate plan with scoped short-lived read credentials |
+| POST files/<ID>/policy | admin | {policy}; policy mutation + repair scheduling, no object deletion |
+| GET jobs?offset=0 | admin | at most 100 public job states/next_offset |
+| GET jobs/<job UUID> | admin | job/checkpoint detail (no run token) + latest 200 transitions |
+| POST jobs/run | admin | {job_id?} -> one serialized worker attempt or null when busy/no due job |
+| POST jobs/<ID>/retry | admin | {} -> explicit same-job retry cycle |
+| POST reconcile | admin | {} -> bounded inventory/proof/repair report, with truncation/busy indicators |
+| GET metadata/status or nodes | admin | epoch/revision/single-writer mode and approved node probe/sync checkpoints |
+| GET metadata/snapshot?node_id=ID | approved current node bearer | consistent snapshot |
+| GET metadata/changes?node_id=ID&after=N | approved current node bearer | ordered bounded delta page |
+| POST metadata/ack | approved current node bearer | {node_id,epoch,revision,head_digest}; validate against known checkpoint, never proof of file bytes |
+
+Policies: single / replicated_2 / replicated_3. Global file fields: file_id, logical_path, explicit version, size, lowercase SHA-256, policy, created_at, updated_at, revision. Replica fields: replica_id, file_id, node_id, volume_id, local_file_id, state, created_at, updated_at, verified_at. IDs are separate global/local UUIDs; physical device independence is based on explicit owner-approved device_id, not two volumes or aliases.
+
+Upload owner admin credential reaches only Controller. Transfer grant constraints are enforced at Agent before Engine calls: exact job principal/key/local name/size/hash, permitted method/resource, volume and persisted session/local ID. Every operation introspects Controller and commit rechecks authority. Source/read grants authorize one file; inspect grants authorize only status/files/inventory on an approved volume. Node/admin tokens are never transfer credentials.
+
+Snapshot (metadata schema 1): {schema_version:1,cluster_id,epoch,revision,head_digest,created_at,files:[{file,replicas}],digest}. Digest is SHA-256 of canonical sorted-key compact UTF-8 JSON without digest and without transport protocol_version. Delta: {schema_version:1,cluster_id,epoch,from_revision,through_revision,current_revision,head_digest,events}. Each event has epoch/revision/previous_digest/payload/created_at/digest; hash excludes digest. File payload revision equals event revision. Retain 1024 changes, max 100 events/page and below 2 MiB including response margin. Missing history -> 409 resync_required; node retrieves a pinned snapshot and validates rollback/epoch/checkpoint consistency. Offline cache returns stale/read_only and last sync/revision; available replicas are UNKNOWN locally.
+
+Existing /storage/v1 remains wire v1. New GET status returns one grant-bound volume with actual quota/used/free/reserve/read-write/fsync status, node ID and limits. GET inventory?offset=0 returns at most 200 manifest file records plus upload session/principal/key routing (no raw credentials), next_offset and bounded unreferenced physical objects on page zero. This is privileged inventory, not public metadata replication.
+
+POST /api/v1/storage/authorize additionally accepts optional scope={method,resource}. v0.5 whole-volume owner grants remain compatible. A new Agent may retry without scope after an old Controller rejects the extra field with 400, using the same pin and credentials. Scoped job grants require scope and cannot succeed that way. Global jobs/status need v0.6 Agents; old Agents retain lifecycle and standalone owner storage.
+
+RUNNING job default timeout 300 seconds (30–900), Controller relay/readback default 4 MiB/s (64 KiB/s–64 MiB/s). Metadata owner POST client timeout 300; node transfer timeout follows the bounded configured job timeout; old transport default remains 12. Full-body restart only, no Range/chunk resume. Download client verifies bytes and retries candidates using a new seekable output.
+
+Relevant failures: 400 invalid envelope/ID/path; 401 owner unauthorized; 403 metadata_not_authorized / stale approval / changed credentials / wrong transfer scope; 409 idempotency/version/job/revision/checkpoint conflict or resync_required; 422 physical checksum mismatch; 429 busy/grant/rate bound; 503 unavailable Controller/source/catalog; 507 no eligible quota/capacity. Responses never echo secret-bearing input. Owner upload completion may remain pending if the owned worker is busy; only verified counts, never job existence, prove a replica.

@@ -1,12 +1,12 @@
-# ASC QuickStart 0.5.0 — Phase 1.2A: Storage Foundation
+# ASC QuickStart 0.6.0 — Phase 1.2B: Distributed Storage & Global File Catalog
 
-ASC đã có storage cục bộ bật riêng: quản lý volume, upload streaming qua HTTPS có quyền, staging, SHA-256, commit object bất biến, download, manifest SQLite và kiểm kê sau restart. Controller vẫn single-writer; chưa có global file catalog, Raft, tự bầu Leader/failover, replication/backup, Dashboard, VPN/gateway hoặc SAF bridge.
+ASC có Global File Catalog do một Controller ghi, metadata replica chỉ đọc trên node, placement theo volume đã kiểm tra, queue sao chép bền vững, xác minh bytes/SHA-256 và download fallback. Chính sách single/replicated_2/replicated_3 đếm theo device domain do owner phê duyệt, không đếm hai volume cùng điện thoại thành hai bản độc lập.
 
-Phase 1.1: chủ dự án đã xác nhận Windows 40 tests OK (skipped=3). Phase 1.2A thay đổi source nên Codex tự chạy targeted tests rồi full suite mới; xem kết quả hiện tại trong [biên bản nghiệm thu](docs/PHASE1-2A-ACCEPTANCE.md). Môi trường mô phỏng dùng ba node ZTE V40/Bphone A40/Sony XZ3 với state/root riêng trong temp, HTTPS thật và pin certificate. Không chạy installer/Agent trên điện thoại thật hoặc truy cập M51.
+Codex đã chạy lại full suite mới: **92 tests, OK (skipped=3)** trên Windows — 89 PASS, không FAIL/ERROR. Ba SKIP là installer cần Linux/Termux Bash. Mô phỏng ZTE V40/Bphone A40/Sony XZ3 dùng state/root riêng, HTTPS/pin thật và file vật lý riêng. Đây là mô phỏng trên một máy Windows, chưa phải chứng minh độ bền của nhiều điện thoại thật.
 
-Quy trình: Codex tự kiểm thử local, sửa lỗi hoặc báo blocker; không bỏ/làm yếu test. Phát triển từng module có API/schema/migration/rollback rõ ràng. Phase này chỉ storage local; chưa bắt đầu Phase 1.2B. Không đưa dữ liệu quan trọng vào bản phát triển này.
+Chưa có Raft, tự bầu Controller/failover, Dashboard, Cloudflare, phần mềm mobile, SAF hay production readiness. Không truy cập M51, Android thật hoặc dữ liệu production. Phase 2 cần nhiệm vụ riêng.
 
-**Mục 1–10 bên dưới giữ hướng dẫn lịch sử v0.4.1 để tham khảo; không phải lệnh triển khai 0.5.0 lên điện thoại trong Phase này. Hướng dẫn hiện tại nằm ở mục 11.** Không ghi đè source cài sẵn, private identity hoặc chạy code cũ trên DB mới.
+**Mục 1–10 là hướng dẫn lịch sử v0.4.1; mục 11 mô tả Storage Foundation v0.5.0. Mục 12 là quy trình hiện tại v0.6.0.** Không dùng các lệnh điện thoại để triển khai trong lượt này. Giữ source cũ và private-state backup trước migration.
 
 ## 1. Chuẩn bị — chỉ ZTE và Bphone/XZ3 thử nghiệm
 
@@ -358,3 +358,63 @@ Nâng cấp/rollback: trước khi chạy bản mới, dừng mọi ASC developm
 Mới chứng minh storage cục bộ trên fixture Windows; chưa chứng minh power-cut durability, Android/SD/Doze, distributed durability hay production readiness. Giữ các gate đó trước cài điện thoại. Phase 1.2B cần nhiệm vụ riêng và hợp đồng metadata/fencing/migration/fault injection.
 
 Kết quả Codex cuối cùng (2026-10-23): **61 tests, OK (skipped=3)** — 58 PASS, không FAIL/ERROR. Ba SKIP là installer POSIX; mô phỏng ba node HTTPS đạt. Source/test đã kiểm tra bằng full suite mới; không dùng lại PASS của v0.4.1.
+
+## 12. Global Catalog v0.6.0 — nghiệm thu Windows
+
+Lệnh tái hiện:
+```powershell
+Set-Location E:\CODE\ASC-QuickStart
+Get-Command openssl
+python -B -m unittest tests.test_catalog -v
+python -B -m unittest tests.test_distributed -v
+python -B -m unittest discover -s tests -v
+```
+Nếu OpenSSL đã có trong Git for Windows nhưng chưa có PATH, chỉ sửa terminal hiện tại:
+```powershell
+$env:PATH = "C:\Program Files\Git\usr\bin;$env:PATH"
+```
+Không cài dependency hoặc thay môi trường hệ thống tự động. Suite tạo Controller và ba Agent bằng fixture tạm, không cần điện thoại. [Biên bản nghiệm thu](docs/PHASE1-2B-ACCEPTANCE.md) ghi ma trận lỗi, kết quả thực tế và giới hạn.
+
+Các lệnh quản trị sau dành cho môi trường phát triển đã cấu hình identity hợp lệ, ASC_HOME riêng ngoài repo/shared storage. Windows multi-node được khởi tạo bằng suite; guard Android/M51 không bị bỏ qua. Trên Controller phát triển, owner phê duyệt pin/volume và nhãn device domain ổn định cho mỗi node:
+```text
+python -m asc.cli catalog-register-node NODE_ID --origin https://PRIVATE_NODE_IP:9443 --pin CONFIRMED_NODE_STORAGE_PIN --device-id PHONE_LABEL --volume-id VOLUME_ID
+python -m asc.cli catalog-register-node METADATA_NODE_ID --device-id PHONE_LABEL --metadata-only
+python -m asc.cli catalog-status
+python -m asc.cli catalog-upload SOURCE_FILE docs/file.bin --key unique_upload_0001 --policy replicated_2 --version 1
+python -m asc.cli catalog-files
+python -m asc.cli catalog-file GLOBAL_FILE_ID
+python -m asc.cli catalog-replicas GLOBAL_FILE_ID
+python -m asc.cli catalog-download GLOBAL_FILE_ID NEW_OUTPUT_FILE
+```
+Không đưa token vào cờ hoặc dùng node token thay quyền owner. Admin credential chỉ tới Controller qua HTTPS có pin; Agent nhận grant hẹp, ngắn hạn. Node re-pair giữ identity nhưng phải được owner phê duyệt generation/endpoint/volume lại. Hai identity trên một điện thoại phải cùng device domain.
+
+Worker chạy cùng controller-run, mặc định một transfer, 4 MiB/s và lease 300 giây:
+```text
+python -m asc.cli controller-run --catalog-rate 4194304 --job-timeout 300
+python -m asc.cli catalog-jobs
+python -m asc.cli catalog-job JOB_ID
+python -m asc.cli catalog-run-job JOB_ID
+python -m asc.cli catalog-retry-job JOB_ID
+python -m asc.cli catalog-reconcile
+python -m asc.cli catalog-policy GLOBAL_FILE_ID --policy replicated_3
+```
+RUNNING lỗi được retry với backoff, tối đa năm lần trước FAILED; owner xem nguyên nhân rồi retry cùng job. File/session/key không đổi do retry. PENDING owner upload chờ hoàn tất/resume; dùng lại original key/content/version/policy để cấp grant mới. ACK chưa đủ làm replica hợp lệ: Controller xác minh cả bytes được phục vụ. Khi worker bận, ACK có thể trả pending; theo dõi verified/available counts.
+
+Agent heartbeat tự sync metadata khi Controller bật tính năng và node được duyệt. Có thể yêu cầu/tra cứu:
+```text
+python -m asc.cli catalog-sync
+python -m asc.cli catalog-local-status
+python -m asc.cli catalog-local-files
+python -m asc.cli catalog-local-file GLOBAL_FILE_ID
+```
+Cache offline giữ bản cuối đã xác minh, luôn đánh dấu stale/read_only; không xác nhận global write hoặc tự nhận quyền Controller. Khi thiếu log, node lấy snapshot có kiểm tra cluster/epoch/revision/digest. Không chấp nhận checkpoint lùi hoặc snapshot khác nội dung tại cùng checkpoint.
+
+desired/verified/available là ba số khác nhau. Chỉ bản vật lý được xác minh mới có evidence VERIFIED; available còn phụ thuộc trạng thái identity/volume gần nhất. Không đủ node/quota -> DEGRADED, không báo đã bảo vệ đủ. Nếu Controller offline, vẫn đọc metadata cache cục bộ; API file tiếp tục cần Controller xác thực.
+
+Giới hạn: dữ liệu hiện relay qua Controller theo chunk 64 KiB và có thêm readback/hash; chưa hỗ trợ offset/chunk resume hoặc direct peer pull. Catalog tối đa 256 immutable versions, 16 approved nodes, 2048 jobs; lịch sử metadata giữ 1024 revisions. Reconcile quay vòng tối đa 16 trang inventory/200 record và 8 physical proof mỗi lượt; báo cáo diagnostic có giới hạn, cursor được lưu qua restart. Không có object GC, tự xóa excess replica hoặc tự import file standalone v0.5; file lạ/bản nghi vấn được báo và giữ nguyên. Unknown load/stability vẫn null.
+
+Migration: Controller registry 0/2/3 -> 4 additive; local manifest vẫn 1, cache metadata mới 1. Controller mới giữ lifecycle/owner grants cũ; global jobs cần Agent v0.6. Giữ API [NODE_PROTOCOL](docs/NODE_PROTOCOL.md), schema [DATA_MODEL](docs/DATA_MODEL.md), [CODEMAP](docs/CODEMAP.md) và lỗi [TROUBLESHOOTING](docs/TROUBLESHOOTING.md) làm nguồn chuẩn.
+
+Rollback: dừng toàn bộ ASC development, lưu riêng state/object hiện tại, phục hồi bản sao private state đầy đủ trước nâng cấp cùng source v0.5.0 tại f70b095b8f2ec507baaea5a4bdb3d03667209f94. Không chạy v0.5 Controller trên registry 4 hoặc sửa PRAGMA. Giữ manifest/volume/object mới; không xóa chúng để downgrade. Restore có thể mất thay đổi catalog và kích hoạt lại credential cũ; cô lập môi trường và rà soát quyền. Cache đi trước Controller được phục hồi sẽ từ chối checkpoint lùi; không ép reset epoch.
+
+Gate Phase 1.2B đã đạt trên Windows. Trước Phase 2 cần thiết kế deterministic prepared commands, Raft/fencing/membership/epoch recovery và acceptance partition/quorum. Chưa triển khai Phase 2, Linux/Termux installer, Android/SD/Doze hoặc power-cut acceptance.

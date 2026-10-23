@@ -118,3 +118,34 @@ Upload states: INITIATED -> WRITING -> READY -> COMMITTING -> COMMITTED. EOF/IO 
 File states: COMMITTED, CORRUPT, MISSING, VOLUME_UNAVAILABLE, METADATA_CONFLICT. Startup rechecks manifest references and physical hash; unknown/missing verification has last_verified_at=null. Metadata conflicts never become filesystem paths. Inventory reports unreferenced objects, with bounded output, and never adopts/deletes them.
 
 Schema-3 rollback requires the complete stopped-state pre-upgrade schema-2/0 backup and matching old source, not an edited PRAGMA. Preserve new manifest/volume contents separately: reverting source does not remove user objects. Restoring old state can lose later registry changes/reactivate old credentials; isolate the environment and review credentials. No automatic downgrade.
+
+## Implemented Phase 1.2B — registry 4 / local manifest 1 / metadata cache 1
+
+Registry.initialize accepts 0, 2, 3 or 4 and validates the existing cluster identity before additive transactional migration. Node IDs, raw-token hashes, codes, enrollment history, TLS/config files and owner storage grants are preserved. Migration never opens/rewrites Agent manifests or object bodies. Failure rolls back new tables/version; future/unknown versions are rejected. Global cluster_id remains in registry settings; catalog_state holds a persistent random epoch, monotone revision and digest head. Epoch is not a Raft term.
+
+| Table | Purpose / important fields |
+|---|---|
+| catalog_state | singleton, epoch, revision, head_digest |
+| catalog_nodes | explicit node_id, private origin/pin, device_id failure domain, metadata/storage permission, approved generation/volumes, controller-probed capabilities/timestamp/error, last metadata ack |
+| catalog_files | global file_id, logical_path, explicit version, size, sha256, current policy, created/updated/revision, immutable upload_key + upload_policy fingerprint; path/version UNIQUE |
+| catalog_replicas | replica_id, global file_id, node_id, volume_id, local_file_id, state, created/updated/verified time; local physical reference UNIQUE |
+| catalog_events | ordered revision, epoch, previous_digest, digest, canonical public file/replica payload, time |
+| catalog_jobs | job_id/key, global file/replica, UPLOAD/COPY, state, source replica, target node/volume/local object/session, generated local logical path, attempts/backoff, run token/lease/generations, fixed error/times |
+| catalog_job_history | private ordered state/error/time transitions; API returns latest 200 |
+| transfer_grants | SHA-256 token hash only, node/volume/generation, job/side/run token or exact local file, expiration |
+
+Global file_id identifies one immutable logical version; different explicit versions at the same path get distinct IDs. Local_file_id is a separate UUID from the Agent manifest. A new key cannot overwrite an occupied path/version. Replaying the original upload key/content/policy resolves its same file even after a later explicit policy change. Replica local paths are generated _asc-global/<global ID>/<replica ID>; host roots/absolute file paths never enter the metadata replica.
+
+Replica states VERIFIED/MISSING/CORRUPT/UNAVAILABLE/METADATA_CONFLICT are evidence states, not replica-count guesses. Only physical verification can add/reverify a replica. Repeating an unchanged failure does not mutate timestamps behind an unchanged revision. Controller reports desired count from policy, verified distinct approved device domains from evidence, and available count from recent reachable/readable active identities. Keep last verification timestamp visible; offline or revoked authority does not prove bytes were deleted.
+
+Jobs are PENDING/RUNNING/COMPLETED/RETRY/FAILED. Claim/checkpoint is durable before transferring body bytes. A unique active file/target-node index and stable job key/principal/session/local path prevent retry duplicates. RUNNING jobs have lease/run-token fencing and generation checks. Restart under the exclusive OS worker lock converts unfinished RUNNING jobs to RETRY, retaining checkpoints. Backoff is min(300,2^attempts) seconds, default five failed attempts; explicit owner retry resets the retry cycle on the same job. No failure transition deletes bytes or metadata. Uncompleted owner uploads remain pending until resumed/completed/reconciled; expired grants do not erase their reservation.
+
+File/policy/replica materialization and public change event commit atomically. Private node approval/probe, job bookkeeping, metadata ack and inventory cursors are not replicated file events. settings.catalog_inventory_cursor stores fair per-volume offsets and pair rotation across restart. Completed/suspect replicas remain recorded; reducing policy does not perform GC.
+
+Node private catalog-metadata.sqlite3 is cache schema 1: replica_state (cluster/epoch/revision/head/controller revision/last sync), replica_files (canonical public aggregates), replica_events (recent imported digests). Snapshot/delta imports are atomic with explicit closed SQLite handles. read_only=True uses SQLite mode=ro and validates cluster/schema; there is no authoritative mutation entrypoint. Snapshots exclude identity/token/grant/job/private-control tables. File names and digests still contain private user metadata and require approved access.
+
+Standalone v0.5 committed files remain intact in local manifest 1 and are reported as uncatalogued. They are not silently promoted into global replicas. Automatic import/deletion is deferred; global uploads managed in this phase use generated job namespaces.
+
+Rollback requires matching source plus complete stopped-state pre-upgrade private backups (registry/DB/WAL/config/keys) and retained volumes. v0.5 Controller refuses schema 4. Never lower PRAGMA by hand or erase objects to downgrade. Preserve v0.6 metadata/manifests/objects separately; restoring older identities can reactivate old secrets and loses later registry/catalog changes. Cache checkpoints ahead of a restored Controller are intentionally rejected; epoch/recovery planning is operator-controlled, not automatic failover.
+
+An already-initialized schema-4 registry must contain its Catalog tables and epoch/checkpoint. Missing authority is a restore blocker; initialize never silently recreates an epoch over existing Catalog data.

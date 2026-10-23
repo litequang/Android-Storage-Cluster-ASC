@@ -3,8 +3,7 @@
 ## Lifecycle boundary inherited from 0.4.1 / Phase 1.1
 
 The lifecycle below is retained. Phase 1.2A local storage is documented at the end.
-The distributed target design remains proposed: no Raft, global catalog, replication,
-automatic failover or production integration.
+The consensus target remains proposed. Later sections document implemented local storage and single-writer distributed Catalog; no Raft, automatic failover or production integration.
 
 - API stays `/api/v1`; registry schema 2 adds node credential lifecycle and hashed
   enrollment-operation routing without replacing v0.4 cluster/node identities.
@@ -92,3 +91,21 @@ Body processing uses 64 KiB chunks, one transfer per engine, default 8 MiB/s (co
 Commit creates a final UUID object exclusively and copies verified staging, fsyncs, verifies the final copy and reauthorizes before the manifest transaction advertises it. Pending quota reserves two bodies; actual orphan/retained bodies remain charged. Real free space is rechecked with configured reserve. No overwrite or final-object GC exists. Filesystem and SQLite are not one transaction: restart conservatively preserves ambiguous copies. Windows directory fsync and physical power-loss durability are not promised. Detailed states are in DATA_MODEL; portable recovery is deliberately conservative.
 
 This is verified local storage, with no replication, backup, Raft, automatic election or availability when Controller authorization is offline. Android/SD/Doze/power-cut acceptance remains deferred.
+
+## Implemented Phase 1.2B — distributed storage with one metadata writer
+
+The Controller owns registry schema 4, including the Global File Catalog, ordered metadata history and private durable job queue. Every file/replica/policy change goes through Catalog.mutate in one BEGIN IMMEDIATE transaction with its revision/event. Agent local manifest remains schema 1. Each approved node also holds a separate read-only metadata cache schema 1. No global file writes originate from a metadata cache.
+
+Owner explicitly approves a paired node's numeric private endpoint, out-of-band certificate pin, volume IDs, physical device domain and metadata/storage permissions. Metadata-only approval needs no storage endpoint. Re-pair changes generation and requires reapproval. Controller probes actual Agent volume status/quota/free space/read-write/hash/fsync before placement; manufacturer presets, self-reported heartbeat, unknown load and unknown stability never become measured storage evidence. Duplicate node/volume aliases in the same approved device domain count once.
+
+Upload creates a durable UPLOAD job and returns a short-lived exact-target grant to the owner client. File bytes go to existing Agent staging/commit. Controller then verifies size/hash/identity, reads served bytes itself through a bounded SHA-256 stream and publishes a VERIFIED replica. COPY jobs use the same local Engine with a stable job/key/session/object across retries. Bodies currently relay through Controller in 64 KiB chunks; direct node-to-node pulls/chunk resume are future extensions. No raw node/admin secret is forwarded to a peer.
+
+Policies single/replicated_2/replicated_3 are minimum targets across distinct approved device domains. Report desired, historically verified and currently available counts separately; availability uses recent measured volume status and active approved identity, not a promise of continuous reachability. Missing nodes or quota produce explicit degraded/under-replicated reports. Reducing policy does not delete excess objects or cancel an already authorized stream.
+
+One OS-held catalog-worker lock owns scheduling/recovery; one Controller transfer runs at a time, with per-node conflict checks and existing one-transfer Engine admission. Default relay/readback rate 4 MiB/s (64 KiB/s–64 MiB/s), default RUNNING lease 300 seconds (30–900), five failed attempts with backoff. Size/rate/lease must fit a multi-pass verification; timeout preserves data. Pending owner uploads wait for owner completion/resume; grants expire and the same plan/key issues fresh authority.
+
+Metadata snapshots are consistent read transactions, canonical SHA-256 protected, cluster/epoch/revision bound and limited below 2 MiB. Ordered digest-chained deltas retain 1024 revisions, at most 100 events and the byte limit/page. Nodes validate order/gaps/duplicates/checksums before atomic import; missing history triggers a fresh pinned snapshot. A lower revision, wrong cluster/epoch or conflicting same-checkpoint snapshot is refused. Offline caches remain lookup-only and explicitly stale; file authorization continues to require Controller.
+
+Reconciliation rotates persistent per-volume inventory cursors (16 pages/run, 200 rows/page), verifies at most eight known replicas/run and caps diagnostic categories at 256 entries. It reports native v0.5 files and orphan objects without automatic adoption/deletion, repairs deficits only from physically valid sources and preserves suspicious/last copies. Failed target domains are held for explicit retry; spare eligible domains can still heal.
+
+Catalog.mutate is an integration boundary, not a completed deterministic Raft apply. Phase 2 must separate nondeterministic preparation (IDs, time, placement) from replicated application, define fencing/epoch recovery and fault-test quorum behavior. No consensus, election, automatic Controller failover, disaster-proof backup or Android/power-cut readiness is claimed.
