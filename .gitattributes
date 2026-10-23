@@ -1,0 +1,2 @@
+# Keep foreground/installer scripts portable across Windows and Termux checkouts.
+*.sh text eol=lf

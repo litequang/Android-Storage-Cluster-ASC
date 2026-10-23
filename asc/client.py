@@ -1,0 +1,59 @@
+"""HTTPS client using a manually confirmed certificate SHA256 pin."""
+import hashlib
+import http.client
+import json
+import ssl
+from urllib.parse import urlsplit
+
+
+class ClientError(Exception):
+    def __init__(self, message, status=None, code=None):
+        super().__init__(message)
+        self.status = status
+        self.code = code
+
+
+def request_json(origin, pin, method, path, obj=None, token=None):
+    url = urlsplit(origin)
+    if (url.scheme != 'https' or not url.hostname or (url.path not in ('', '/')) or
+            url.username or url.password or url.query or url.fragment):
+        raise ClientError('origin must be https://HOST:PORT without a path')
+    expected = pin.replace(':', '').strip().upper()
+    if len(expected) != 64 or any(c not in '0123456789ABCDEF' for c in expected):
+        raise ClientError('invalid SHA256 certificate fingerprint')
+    # CA validation is intentionally replaced by the out-of-band PIN on private LAN.
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+    context.minimum_version = ssl.TLSVersion.TLSv1_2
+    conn = http.client.HTTPSConnection(url.hostname, url.port or 443, timeout=12, context=context)
+    try:
+        conn.connect()
+        actual = hashlib.sha256(conn.sock.getpeercert(binary_form=True)).hexdigest().upper()
+        if actual != expected:
+            raise ClientError('SERVER CERTIFICATE PIN MISMATCH: aborting')
+        data = json.dumps(obj, ensure_ascii=False).encode('utf-8') if obj is not None else None
+        headers = {'Accept': 'application/json'}
+        if data is not None:
+            headers['Content-Type'] = 'application/json'
+        if token:
+            headers['Authorization'] = f'Bearer {token}'
+        conn.request(method, path, body=data, headers=headers)
+        response = conn.getresponse()
+        raw = response.read(2 * 1024 * 1024 + 1)
+        if len(raw) > 2 * 1024 * 1024:
+            raise ClientError('response too large')
+        reply = json.loads(raw.decode('utf-8'))
+        if not isinstance(reply, dict):
+            raise ClientError('invalid server response')
+        if response.status >= 400:
+            # Only allow known error labels into logs; never reflect arbitrary body text.
+            code = reply.get('error')
+            allowed = {'unauthorized', 'credential_rejected_repair_required', 'rate_limited',
+                       'invalid_or_expired_code', 'bad_request', 'payload_too_large',
+                       'not_found', 'registry_unavailable'}
+            code = code if isinstance(code, str) and code in allowed else 'request_failed'
+            raise ClientError(f'HTTP {response.status}: {code}', response.status, code)
+        return reply
+    finally:
+        conn.close()

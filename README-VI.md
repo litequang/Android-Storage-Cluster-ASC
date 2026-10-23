@@ -1,0 +1,317 @@
+# ASC QuickStart 0.4.1 — Phase 1.1: vòng đời node an toàn
+
+Mã nguồn dùng Python standard library, single-writer registry qua HTTPS trong LAN. Phase 1.1 bổ sung quản trị node, revoke/re-pair giữ nguyên node ID, giới hạn thử mã/xác thực và migration dữ liệu v0.4. **Phase 1.1 đã được chủ dự án xác nhận trên Windows: 40 tests, OK (skipped=3).** Ba bài installer cần Linux/Termux; đây không phải kết quả Codex tự chạy.
+
+Chưa có Raft, tự bầu Leader/failover, file NAS/upload/download, backup dữ liệu phân tán, dashboard, VPN/gateway hay SAF bridge. Không đưa dữ liệu quan trọng vào ASC ở phase này.
+
+**Quy trình hiện tại:** cập nhật quy định và xuất bản v0.4.1 lên main theo ủy quyền của
+chủ dự án; không bắt đầu Phase 1.2A trong lượt này. Codex được chạy test/typecheck/lint/build
+local, chạy test mục tiêu sau sửa mã và full suite áp dụng được trước khi hoàn tất Phase.
+Tự phân tích/sửa lỗi hoặc báo blocker, không bỏ hay làm yếu test để PASS. Khi source/test
+không đổi và đã có PASS phù hợp từ chủ dự án, ghi rõ nguồn kết quả và không chạy lại vô ích.
+Các hướng dẫn điện thoại ở mục 1–7 và checklist LAN chỉ là tham khảo cho giai đoạn sau.
+ASC v1.0 tiếp tục từng module với API/migration rõ ràng và kiểm thử nhiều node mô phỏng
+Windows trước Android thật. Không chạy production server, installer điện thoại thật,
+đụng dữ liệu/private state production hoặc truy cập M51.
+
+## 1. Chuẩn bị — chỉ ZTE và Bphone/XZ3 thử nghiệm
+
+- Cùng Wi-Fi LAN riêng; không port-forward cổng 8443.
+- Không cài, nâng cấp, chạy agent/controller hoặc thay Termux:Boot trên Samsung M51 hosting. Không yêu cầu thao tác trên M51.
+- Termux thử nghiệm cần Android SDK >=24, Python >=3.9, OpenSSL và Bash. Installer không tự cài dependency hoặc chạy pkg upgrade. Nếu báo thiếu, chỉ trên điện thoại thử nghiệm đã xác nhận không phải M51: chạy thủ công `pkg install python openssl`.
+- Chép source release vào Download, ví dụ `ASC-QuickStart-0.4.1`. Dùng quyền storage hiện có; nếu thực sự thiếu, chỉ trên máy thử nghiệm mới cấp quyền bằng `termux-setup-storage`.
+- Không đặt ASC_HOME trong source, Download, /storage hoặc SD. Mặc định secret ở HOME riêng `~/.asc` (directory 0700, file mới 0600 trên Termux).
+- Source v0.4.1 dùng main và origin GitHub ở mục 10. Giữ source v0.4 riêng trước nâng cấp; lịch sử commit v0.4.1 không tự tạo lại bản private state/source v0.4 trước đó.
+
+```bash
+cd ~/storage/downloads/ASC-QuickStart-0.4.1
+bash install.sh audit
+```
+
+Thiếu model/manufacturer/SDK: chỉ audit, từ chối cài/chạy; không có cờ bỏ qua bảo vệ. Baseline nhà sản xuất nằm ở `preset`; số RAM runtime thiếu là null, không dùng thông số hãng để giả RAM đo được. `score_basis` giải thích nguồn điểm; điểm chỉ là đề xuất.
+
+## 2. ZTE V40 — Controller mới
+
+Nếu đã cài v0.4, dùng mục nâng cấp trước, không chạy installer để ghi đè.
+
+```bash
+cd ~/storage/downloads/ASC-QuickStart-0.4.1
+bash install.sh controller
+cd ~/asc-cluster
+python3 -m asc.cli controller-run
+```
+
+Giữ terminal foreground. Mở terminal thứ hai trên ZTE:
+
+```bash
+cd ~/asc-cluster
+python3 -m asc.cli controller-pair --ttl 600
+```
+
+Lệnh quản trị cần Controller đang chạy; đọc admin token từ file riêng, gọi HTTPS loopback với pin certificate. Kết quả có mã 12 ký tự dạng `XXXX-XXXX-XXXX`, TTL 60–1800 giây và SHA256 PIN. Mã là quyền cho phép của admin, không có bước duyệt thứ hai. Lấy IP LAN từ Android Wi-Fi Settings. Không đưa mã lên chat hoặc shell history.
+
+## 3. Bphone / Sony XZ3 — join cùng một bộ cài
+
+```bash
+cd ~/storage/downloads/ASC-QuickStart-0.4.1
+bash install.sh node --controller https://IP_ZTE:8443 --pin SHA256_PIN_ZTE --name Bphone
+cd ~/asc-cluster
+python3 -m asc.cli status
+python3 -m asc.cli agent-run
+```
+
+Thay IP/PIN rồi nhập mã khi được hỏi (ẩn ký tự). Mỗi node dùng một mã riêng. Agent tự gửi profile; không cần nhập thông số phần cứng. PIN sai: dừng trước khi gửi mã/token, không chuyển sang HTTP hoặc bỏ xác minh.
+
+Trên ZTE:
+
+```bash
+python3 -m asc.cli controller-nodes
+python3 -m asc.cli controller-node NODE_ID
+python3 -m asc.cli controller-rename NODE_ID "Bphone phong lam viec"
+```
+
+Tên 1–64 ký tự, không khoảng trắng đầu/cuối hoặc ký tự điều khiển. Output thông thường không chứa token/hash token. `status` là cache cục bộ, không chứng minh token vẫn có quyền hiện tại; trạng thái trước lần heartbeat đầu là unknown.
+
+Chạy lại `bash install.sh node` trên cùng bản cài giữ nguyên node.json, không hỏi mã và không tạo node mới. Installer không thay source cũ; nếu phiên bản khác, dừng và yêu cầu nâng cấp rõ ràng.
+Node đã enrolled và không còn pending có thể chạy lại installer khi agent đang chạy;
+thao tác chỉ báo giữ nguyên identity, không start/stop thêm agent.
+
+## 4. Start, status, stop; không chạy trùng
+
+- Start foreground: `python3 -m asc.cli controller-run` hoặc `python3 -m asc.cli agent-run`.
+- Chỉ gửi một heartbeat để kiểm tra: `python3 -m asc.cli agent-run --once` (exit khác 0 nếu thất bại).
+- Status không gửi mạng: `python3 -m asc.cli status`. Trường foreground là trạng thái khóa tiến trình, bao gồm thao tác join/re-pair đang giữ khóa.
+- Không đọc/xác minh được khóa: foreground trả null (unknown), không đoán tiến trình đang chạy.
+- Stop: Ctrl+C tại terminal đang chạy. Không có daemon hoặc lệnh kill theo PID; không ghi startup/boot/crontab/service.
+- Chạy lần thứ hai trong cùng ASC_HOME bị khóa từ chối. Khóa do OS giữ và tự nhả khi tiến trình thoát; file .lock còn lại là bình thường, không xóa nó khi tiến trình chạy.
+- Script tiện dụng: `bash scripts/run-controller.sh` hoặc `bash scripts/run-agent.sh`; với release nâng cấp đặt `ASC_CODE="$HOME/asc-cluster-0.4.1"` trước khi dùng script. Agent/controller v0.4 không biết khóa mới: phải tự dừng chúng trước nâng cấp.
+
+## 5. Revoke, rotate và re-pair
+
+Trên ZTE, thu hồi ngay token của node:
+
+```bash
+python3 -m asc.cli controller-revoke NODE_ID
+python3 -m asc.cli controller-node NODE_ID
+```
+
+Lặp revoke an toàn: không tăng version lần nữa. Node chuyển revoked/offline, heartbeat tiếp theo bị 401; agent dừng, lưu repair-required và giữ identity/snapshot. Node thường không được gọi endpoint admin. Request đã xác thực và đang xử lý trước revoke có thể đã nhận snapshot.
+
+Để thay token của node đang active hoặc ghép lại node revoked, dừng agent bằng Ctrl+C trước. Trên ZTE:
+
+```bash
+python3 -m asc.cli controller-pair --node-id NODE_ID
+```
+
+Trên chính Bphone/XZ3 đã có node.json:
+
+```bash
+python3 -m asc.cli node-repair
+python3 -m asc.cli agent-run --once
+python3 -m asc.cli agent-run
+```
+
+Nhập mã targeted mới. Giữ node ID, cluster ID, tên admin; đổi token riêng, tăng token_version. Token cũ không còn dùng được sau re-pair thành công. Tạo code mới không tự vô hiệu token active; nếu nghi lộ token, revoke trước rồi tạo code. Mỗi node chỉ có một grant re-pair đang lưu; tạo grant tiếp theo thay grant cũ.
+
+Nếu mất phản hồi mạng, chạy lại đúng node-join/node-repair: yêu cầu được lưu riêng ở enrollment_pending.json, server nhận lại cùng yêu cầu mà không thêm node hay rotate lần nữa. Retry grant đã dùng được giữ đến 24 giờ sau hạn mã, chỉ khi token hiện tại còn active và đúng yêu cầu gốc. Không có retry tự động bằng một secret khác.
+
+Nếu **join lần đầu** bị hết hạn mã hoặc quá cửa sổ retry, ZTE cấp mã general mới bằng controller-pair; node chạy lại lệnh node-join với cùng --controller/--pin và thêm --new-code (hoặc installer node với các cờ này). Yêu cầu chờ giữ nguyên enrollment_id/token, chỉ thay mã grant; nếu join cũ đã thành công thì Controller trả lại cùng node ID. Không xóa pending để bắt đầu lại. Nếu token của thao tác cũ đã revoked/rotated, đường này bị từ chối: dùng targeted re-pair.
+
+Nếu mã hết hạn/chưa dùng hoặc grant đã bị thay, admin tạo targeted code mới rồi node chạy `python3 -m asc.cli node-repair --new-code`. Thao tác này lưu lại pending cũ dưới tên enrollment_abandoned-*.json, không âm thầm bỏ nó.
+
+Nếu chưa có node.json nhưng join có thể đã thành công: **không xóa pending rồi join mới**. Admin xem controller-nodes để xác định ID, tạo code targeted; trên node dùng:
+
+```bash
+python3 -m asc.cli node-repair --controller https://IP_ZTE:8443 --pin SHA256_PIN_ZTE --node-id NODE_ID --cluster-id CLUSTER_ID --new-code
+```
+
+Nếu mất cả identity và không có bản sao, cũng dùng quy trình targeted này. Không tự dò secret hoặc tự tạo node khác. Nếu mất controller.json/TLS/registry, dừng và khôi phục bản sao riêng; không chạy controller-init để tạo danh tính thay thế. Các node_before_repair-*.json, pending và bản sao là secret; không đưa vào repo/ZIP.
+
+## 6. SD và giới hạn runtime
+
+```bash
+python3 -m asc.cli inspect
+python3 -m asc.cli inspect --sd-write
+```
+
+Chỉ dùng --sd-write khi chủ động muốn thử trên máy thử nghiệm. Không đọc được SD: sd_status=unknown; tìm thấy đường dẫn: detected; chỉ write/readback/delete probe thành công mới là writable-tested. Không tạo thư mục SD root, không kiểm tra ghi trên M51 hoặc thiết bị chưa nhận diện. Writable-tested chỉ phản ánh probe nhỏ tại thời điểm đó, không chứng minh độ bền thẻ. Android Doze/OEM vẫn có thể ngắt tiến trình.
+
+## 7. Nâng cấp v0.4, bảo toàn source và identity
+
+Dừng Controller và mọi Agent cũ bằng Ctrl+C. Chạy trên **từng máy thử nghiệm**, với ASC_HOME mặc định. Nếu dùng ASC_HOME khác, thay đường dẫn tương ứng. Không sao lưu secret vào Download/SD/source.
+
+```bash
+umask 077
+ASC_BACKUP="$HOME/asc-before-0.4.1-$(date +%Y%m%d-%H%M%S)"
+mkdir -m 700 "$ASC_BACKUP"
+cp -Rp "$HOME/.asc" "$ASC_BACKUP/state"
+```
+
+Chỉ copy khi mọi ASC process đã dừng: giữ cả SQLite và WAL/SHM nếu còn. Đây là bản sao trạng thái registry development đã dừng, không phải tính năng backup file NAS. Giữ đường dẫn ASC_BACKUP để rollback.
+
+Từ thư mục source release mới, tạo thư mục code có version (không ghi đè ~/asc-cluster cũ):
+
+```bash
+cd ~/storage/downloads/ASC-QuickStart-0.4.1
+if [[ ! -e "$HOME/asc-cluster-0.4.1" ]]; then
+  mkdir -m 700 "$HOME/asc-cluster-0.4.1"
+  cp -R asc docs scripts "$HOME/asc-cluster-0.4.1/"
+  cp AGENTS.md README-VI.md "$HOME/asc-cluster-0.4.1/"
+else
+  echo "Thu muc release da ton tai: kiem tra, khong ghi de"
+fi
+cd ~/asc-cluster-0.4.1
+```
+
+Trên ZTE chạy controller-run: migration transaction cộng cột, PRAGMA user_version 0 -> 2; không đổi cluster ID/node ID/hash token/join-code v0.4. Trên node chỉ chạy agent-run, không join lại. Config v0.4 chưa có config_version vẫn đọc được, không tự viết lại token. API vẫn /api/v1; Controller mới nhận agent v0.4 (profile thiếu version là legacy). Client mới cần Controller Phase 1.1 cho ghép mới/re-pair; heartbeat identity cũ vẫn tương thích wire v0.4.
+
+## 8. Kiểm thử local và kết quả nghiệm thu
+
+Từ source workspace, cần Python >=3.9 và openssl trong PATH. Các bài TLS dùng loopback tạm và file tạm, không truy cập điện thoại hoặc production.
+
+Windows PowerShell — chuẩn bị OpenSSL CLI trước khi chạy suite:
+
+Python có module ssl không đồng nghĩa có openssl.exe. Trên máy dev này đã tìm thấy
+executable đi kèm Git for Windows tại đường dẫn dưới đây; nếu máy khác dùng thư mục
+khác, thay bằng thư mục bin thực sự chứa OpenSSL đã được cài trên máy đó. Không tải
+binary không rõ nguồn và không thay PATH/Termux trên M51.
+
+```powershell
+Set-Location E:\CODE\ASC-QuickStart
+$ascOpenSslBin = 'C:\Program Files\Git\usr\bin'
+if (-not (Test-Path -LiteralPath (Join-Path $ascOpenSslBin 'openssl.exe') -PathType Leaf)) {
+    throw 'Khong tim thay openssl.exe: cai OpenSSL tren may dev va sua ascOpenSslBin theo thu muc bin thuc te.'
+}
+$env:Path = "$ascOpenSslBin;$env:Path"
+Get-Command openssl -ErrorAction Stop
+openssl version
+```
+
+Lệnh trên chỉ bổ sung PATH của phiên PowerShell hiện tại; không tự cài dependency hoặc
+sửa PATH toàn hệ thống. Nếu tự thêm PATH qua Windows Environment Variables, mở lại
+PowerShell/Codex để tiến trình con nhận PATH mới. Nếu executable có nhưng không chạy,
+kiểm tra bộ cài/DLL và kiến trúc phù hợp. Bỏ OpenSSL khỏi PATH vẫn phải làm bài TLS báo
+ERROR rõ ràng, không SKIP hoặc PASS giả. Pinning không đổi.
+
+Sau khi OpenSSL chạy được, kiểm tra riêng hai lỗi cũ và chạy toàn bộ suite:
+
+```powershell
+Set-Location E:\CODE\ASC-QuickStart
+$env:PYTHONDONTWRITEBYTECODE = '1'
+python -m unittest discover -s tests -p test_identity.py -v
+python -m unittest discover -s tests -p test_lifecycle.py -k test_v04_migration_keeps_every_identity_and_code -v
+python -m unittest discover -s tests -p test_foundation.py -k test_lan_tls_join_heartbeat_and_certificate_pin -v
+python -m unittest discover -s tests -p test_lifecycle.py -k LifecycleHTTPTests -v
+python -m unittest discover -s tests -v
+```
+
+`test_identity.py` chỉ mock kiểm tra thông báo dependency và argv; các bài HTTPS/TLS
+phía sau vẫn tạo certificate thật và kiểm tra pin sai. Fixture SQLite dùng closing cho
+connection bên ngoài transaction, đóng cursor và thử đổi tên/xóa ngay trên Windows;
+không dùng gc.collect, sleep hoặc bỏ qua lỗi cleanup.
+
+Linux/Termux, từ source release có thư mục tests:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+```
+
+Kết quả chủ dự án cung cấp ngày 2026-10-23: **40 tests, OK (skipped=3)** trên Windows. Bao gồm enrollment/lifecycle, TLS/pin, migration và khóa chạy trùng. Ba test installer được SKIP vì cần Linux/Termux; chưa tuyên bố các bài này PASS trên Linux. Lượt cập nhật workflow/xuất bản chỉ sửa docs, giữ nguyên source/test, nên dùng lại kết quả này theo chỉ dẫn chủ dự án. Không thay dependency hoặc cài WSL để chạy lại. Trong các Phase tiếp theo, Codex tự chạy test mục tiêu rồi full suite áp dụng được; các lệnh trên phục vụ việc tái hiện khi cần.
+
+Checklist LAN hai máy — hoãn đến giai đoạn Android sau nghiệm thu end-to-end v1.0 trên Windows; không thực hiện trong lượt sửa này:
+
+1. ZTE chạy Controller; tạo code 60 giây bằng controller-pair --ttl 60. Bphone join, agent-run --once; ID xuất hiện trong controller-nodes.
+2. Ghi lại ID riêng; chạy lại installer cùng release, restart agent và reboot máy thử nghiệm rồi start thủ công. ID/số node không đổi.
+3. Mở agent-run hai terminal: terminal thứ hai bị từ chối. Ctrl+C terminal đầu; status foreground.agent=false. Làm tương tự Controller.
+4. Tạo code rồi chờ >60 giây: join từ XZ3 chưa enrolled báo hết hạn. Tạo code mới mới được join; code đã dùng không cho người khác dùng lại.
+5. Revoke Bphone, xác nhận heartbeat 401 và repair-required; chạy revoke lần nữa. Targeted re-pair giữ ID, tăng token_version, một heartbeat mới thành công.
+6. Khi node chưa enrolled, cố ý dùng PIN sai: không gửi join, không lưu identity; chạy lại với PIN đúng. Không sửa node.json để thử PIN.
+7. Chạy inspect khi Android thiếu quyền: null/unknown được giữ nguyên. Không dùng model/preset thay số đo runtime.
+8. Nâng cấp dữ liệu v0.4 theo mục 7; xác nhận ID/token cũ heartbeat được. Dùng suite tự động cho payload lớn, brute force và phân quyền; không thử flood LAN.
+9. M51 không tham gia checklist; không cần SSH, log, DB hay thao tác production.
+
+Trước khi chia sẻ kết quả: che code, token, enrollment payload, file identity/TLS key, private backup, IP/MAC/serial và tên nhạy cảm. Có thể chia sẻ tên test, PASS/FAIL, mã HTTP/lỗi đã che và số lượng node.
+
+## 9. Rollback v0.4
+
+Schema 2 cộng cột nhưng code Controller v0.4 dùng INSERT không nêu cột, đồng thời không hiểu revoke. **Không chạy Controller v0.4 trực tiếp trên DB schema 2.** Dừng tất cả ASC trước rollback, giữ LAN cô lập trong lúc phục hồi.
+
+Giữ trạng thái mới riêng, khôi phục snapshot trước nâng cấp trên từng máy tương ứng (thay ASC_BACKUP bằng đường dẫn đã lưu, không copy secret của máy khác):
+
+```bash
+ASC_BACKUP="$HOME/asc-before-0.4.1-THOI_DIEM_DA_LUU"
+mv "$HOME/.asc" "$HOME/.asc-phase1.1-retained-$(date +%Y%m%d-%H%M%S)"
+cp -Rp "$ASC_BACKUP/state" "$HOME/.asc"
+cd ~/asc-cluster
+```
+
+Sau đó ZTE chạy controller-run v0.4; node chạy agent-run v0.4 từ source cũ. Không xóa Termux hoặc private state. Rollback mất các thay đổi registry sau bản sao; code v0.4 không thực thi revoke. Token đã thu hồi sau bản sao có thể hoạt động lại: nếu nghi lộ token, không mở mạng lại với v0.4; giữ Phase 1.1 hoặc thiết kế re-enrollment có kiểm soát. Không rollback riêng một Controller trong khi node đã đổi token mà không đồng bộ kế hoạch phục hồi.
+
+
+## 10. Source sạch và xuất bản GitHub
+
+Origin: https://github.com/litequang/Android-Storage-Cluster-ASC.git.
+Chủ dự án đã xác nhận Windows 40 tests OK (skipped=3) và ủy quyền review/commit/push
+v0.4.1 lên main. Codex được thực hiện các bước đó trong phạm vi được giao; không cần
+xin lại quyền đã cấp. Khi network, sandbox hoặc xác thực chặn, báo blocker cụ thể,
+không vượt bảo vệ. Trạng thái thực tế và hash xem bằng các lệnh kiểm tra bên dưới.
+
+.gitignore loại private state/recovery copies, khóa TLS/SSH, DB runtime/journal,
+.env/credential/token, logs/temp và archive. Vẫn giữ ASC_HOME ngoài repo. Trước mỗi
+commit/push phải kiểm tra cả file đã tracked và nội dung staged; ignore không xóa file
+đã tracked hoặc phát hiện mọi secret nhúng trong source. Không dùng git add -f.
+Nếu từng commit secret thật, revoke/rotate rồi lập kế hoạch khắc phục lịch sử riêng;
+không tự rewrite lịch sử hoặc force push.
+
+Metadata .git có thể thuộc tài khoản sandbox. Helper sau chỉ tin workspace này cho
+từng lệnh, không sửa safe.directory global và không dùng wildcard:
+
+```powershell
+Set-Location E:\CODE\ASC-QuickStart
+function Invoke-AscGit {
+    & git -c safe.directory=E:/CODE/ASC-QuickStart @args
+    if ($LASTEXITCODE -ne 0) { throw 'Git failed: stop and inspect; do not force.' }
+}
+Invoke-AscGit status --short --branch
+Invoke-AscGit remote -v
+Invoke-AscGit ls-files
+Invoke-AscGit diff --cached --name-only
+Invoke-AscGit diff --cached
+```
+
+Xác minh origin fetch/push đúng URL trên và nhánh main. Đọc refs/fetch remote trước
+đồng bộ; nếu đã có lịch sử thì review và tích hợp trên lịch sử đó. Không reset --hard,
+clean, xóa lịch sử hoặc force để ép source local lên GitHub. Với thay đổi mã, chạy test
+mục tiêu rồi full suite trước commit Phase; với docs-only, được dùng PASS source/test
+không đổi và ghi rõ nguồn kết quả.
+
+`.gitattributes` giữ LF cho *.sh khi checkout trên Windows để script vẫn đọc được bằng Bash;
+không cần đổi core.autocrlf toàn hệ thống. Metadata này không sửa code/test của kết quả PASS.
+
+Stage source rõ phạm vi, review toàn bộ staged diff và các phát hiện secret trước commit:
+
+```powershell
+Invoke-AscGit add -- .gitignore .gitattributes AGENTS.md ASC-CODEX-PHASE1-1.md CODEX-NEXT-PROMPT.md README-VI.md install.sh asc docs scripts tests
+Invoke-AscGit diff --cached --name-only
+Invoke-AscGit diff --cached --stat
+Invoke-AscGit diff --cached
+```
+
+Khi kiểm tra sạch và có kết quả áp dụng được, commit bằng danh tính Git đã cấu hình.
+Lệnh mẫu cho commit xuất bản v0.4.1; không lặp lại nếu commit đã tồn tại:
+
+```powershell
+Invoke-AscGit commit -m "Publish ASC v0.4.1 and update local development workflow"
+Invoke-AscGit push --set-upstream origin main
+Invoke-AscGit rev-parse HEAD
+Invoke-AscGit ls-remote origin refs/heads/main
+Invoke-AscGit status --short --branch
+```
+
+Push bình thường phải giữ lịch sử; nếu non-fast-forward thì dừng để fetch/review/tích hợp,
+không dùng --force hoặc --force-with-lease. Hash remote main phải bằng commit local
+định xuất bản. Không tạo workflow chạy trên production, không thao tác M51.
+
+Lượt docs/workflow này không đổi API v1, schema 2 hoặc identity. Nếu cần đảo thay đổi
+đã commit, dùng git revert trên commit phù hợp để giữ lịch sử; không sửa private state.
+Rollback runtime về v0.4 vẫn theo mục 9 và cần bản sao private state trước migration.
