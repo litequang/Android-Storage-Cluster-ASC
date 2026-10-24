@@ -319,3 +319,10 @@ physical gates and unchanged-source 11 uncached Go/vet/modules/builds PASS. Qual
 83-member source-only QuickStart archive + SHA, owner README/pilot and full handoff
 published on separate Demo branch. No Android/runtime/real SD/production acceptance,
 APK, GC/Raft enablement, Phase 3D or Dashboard. Core source/tests and WIP preserved.
+
+### DEMO.4a — optional trusted-HTTPS owner-session backend
+Separate browser CA/IP SAN preserving Core/node TLS, one-use owner login/session/CSRF,
+read-only node/volume/file/replica views with UNKNOWN/domain safeguards, bounded
+private upload/download spool through existing Catalog/client/SHA/fallback. CLI-only
+node approval, no second Catalog/schema migration, policy/delete/GC/public access.
+35 targeted tests PASS on Linux synthetic; frontend/new package/Android not accepted.

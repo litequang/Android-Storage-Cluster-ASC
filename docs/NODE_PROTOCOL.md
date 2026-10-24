@@ -429,3 +429,23 @@ binds node ID/generation, storage pin, approved volume and owner physical domain
 Only replicated_2 new uploads are permitted with two measured independent domains;
 policy change/reduction, whole-volume admin grant and backup/replication/GC mutation
 routes are excluded. Existing node-scoped metadata cache is not write authority.
+
+## DEMO.4a browser API (separate optional trusted-HTTPS origin)
+Core pinned owner `POST /demo/v1/dashboard/code {}` returns one explicit private
+5-minute one-use browser grant + browser origin/public CA SHA. Node/session tokens
+cannot authorize this Core admin route; disabled Dashboard returns unavailable.
+Browser POST /api/login {code} requires exact Origin/Host, sets __Host-ASC-Demo cookie
+Secure/HttpOnly/SameSite=Strict/Path=/ (30 minutes), returns anti-CSRF nonce only.
+GET /api/session bootstraps nonce for that cookie. All other browser APIs require
+cookie + X-ASC-CSRF, exact Host, same Origin when present; mutations require Origin.
+No CORS. Sessions/grants/tickets are process-local and bounded; restart denies old ones.
+GET /api/state, /api/nodes/ID, /api/files/ID, /api/uploads/ID are sanitized owner views.
+POST /api/refresh {} invokes existing bounded reconcile. POST /api/uploads takes
+logical_path/size/sha256/idempotency_key, prepares existing replicated_2 plan and
+returns a session-bound transfer ID (never Node grant). PUT /api/uploads/ID requires
+exact octet-stream Content-Length and bounded full SHA before Core forwarding;
+200/202 reports actual protection/replication, not upload percentage success.
+GET /api/files/ID/content requires CSRF, verifies existing fallback into private spool
+before attachment output with X-ASC-SHA256. POST /api/logout {} invalidates session.
+32 MiB maximum browser body/download, one transfer, eight request workers; metadata
+max 8 KiB, no chunked/ambiguous frames. No node approve/policy/delete/GC browser route.

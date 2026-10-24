@@ -344,3 +344,19 @@ with an O_NOFOLLOW regular/single-link/inode-checked opener before any marker wr
 Do not call Core foreground_lock directly from Demo. State preflight validates
 existing internal Core worker/engine lock paths before invoking those constructors.
 No Core runtime/schema is changed; existing immutable source/state boundaries hold.
+
+## DEMO.4a optional browser facade
+Dashboard listener is opt-in inside the existing Controller process/OS lifetime;
+Core Catalog/worker and pinned metadata/Storage clients remain the sole storage
+logic. Browser port uses its own private CA/leaf with IP SAN; Core/node TLS pins
+and identities never change. Owner manually trusts public CA after SHA comparison.
+Pinned local owner CLI mints a one-use login grant, redeemed for a bounded RAM-only
+HttpOnly/Secure/SameSite session; restart clears grants/sessions. Browser never sees
+Core admin/node/transfer bearer or key. Exact Host/Origin/CSRF and local CSP protect
+browser routes. Node administration is read-only; domain approval stays CLI.
+One bounded private temporary spool relays upload/download via existing Core client,
+with actual received counts/full SHA and conservative protection from Core replica
+counts. Unknown/stale metrics remain null; duplicate domains do not create copies.
+No second Catalog, election, deletion, GC or public endpoint. Default runtime keeps
+Dashboard disabled. Optional completed Dashboard config is versioned independently;
+root/base schemas unchanged so old CLI-only 0.3.0 can ignore this feature safely.

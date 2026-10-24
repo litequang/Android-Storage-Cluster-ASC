@@ -361,3 +361,18 @@ and launcher function as described in DEMO-ANDROID-PILOT.md; preview created no
 cluster identity. Never delete existing private state to make installation pass.
 Owner Android observations belong in the blank pilot record; Cloud PASS does not
 populate it. Unknown/M51/real production operations remain prohibited for Codex.
+
+## DEMO.4 browser backend
+Dashboard is optional: stop local foregrounds before dashboard-init, then explicitly
+run-controller --dashboard. A port/config/partial-key conflict preserves state;
+never delete keys or alter versions to make startup pass. Original CLI-only mode
+can run without a completed Dashboard config. Export only public CA to a NEW HOME
+file via dashboard-trust, compare SHA and manually trust it on owner browser device.
+Untrusted CA/wrong IP SAN must fail; no click-through/HTTP fallback. dashboard-code
+requires running Dashboard + pinned Core owner admin; one code expires in five
+minutes and replacement invalidates prior code. Session lasts thirty minutes and
+restart/logout invalidates it. Re-login rather than copying admin/node credentials.
+Backend 202 means copies pending, never protected; preserve same idempotency key/file.
+Byte receipt and checksum/protection differ. Browser transfers max 32 MiB, one at a
+time; larger file uses existing CLI. Unknown capacity and shared-domain ambiguity
+stay UNKNOWN. UI/browser/Android qualification is separate; see current progress.

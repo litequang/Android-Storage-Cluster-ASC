@@ -391,3 +391,15 @@ is private and is never part of a public package. No schema restore/migrator exi
 Demo coordination files keep Core's empty-or-one-space convention and OS locks; no
 state/schema migration in DEMO.3a.1. Existing linked/nonregular/multi-link or unexpected
 coordination files are refused/preserved before writes; never auto-delete a lock.
+
+## Optional Dashboard state 1 (DEMO.4a)
+Base Demo/registry/manifest/cache/wire formats unchanged. Private dashboard/ holds
+CA key/public certificate, separate leaf key/cert, empty bounded ephemeral spool/
+and dashboard.json exactly format=1, host (existing Controller IP), distinct port,
+max_upload_bytes<=32 MiB. No key/cert regeneration over existing/partial state.
+Completed optional config is checked before new writable Core open; partial state
+without config is retained, never adopted into a running Dashboard. Old 0.3.0 can
+ignore optional directory in CLI-only mode; complete stopped backups include it.
+Login grant hashes/expiry, session hashes/CSRF/expiry and transfer ticket/status/
+actual bytes live only in bounded RAM, never a second persistent Catalog. Restart
+invalidates them; durable upload key/job/session/object authority remains in Core.

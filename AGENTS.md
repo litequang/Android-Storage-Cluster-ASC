@@ -39,6 +39,22 @@ M51/unknown-device guards. Dashboard Lite may follow the first CLI package; no A
 try the tested checksum-verified package on actual ZTE/Bphone/XZ3. Keep all Core
 modules/tests and Core branch intact. Earlier task scope below is historical.
 
+## Current DEMO.4 authorization — Dashboard Lite / 0.4.0
+
+Owner explicitly authorizes DEMO.4a backend, 4b frontend, 4c compatible QuickStart
+0.4.0 on feature/android-demo-alpha from verified 2d19eb0. After ordered documents
+read Demo plan/progress/acceptance/QuickStart/pilot and DEMO4-PLAN. Implement and
+target-test each checkpoint, update contracts/CODEMAP/progress, secret review,
+commit/push/remote verify before next. Reuse sole Controller Catalog/transfer logic;
+owner-only browser session, trusted HTTPS, CSRF/XSS/traversal/body limits. No Core
+admin/node/key in browser, no Dashboard approval unless separately proved (current
+design read-only node admin). Preserve 0.3.0 compatibility/IDs/keys/volumes and test
+exact old package upgrade/rollback. Full Python/Go and checksum package before final
+source-ready. Old Dashboard deferral below is historical, superseded by this task.
+No real phone/M51/production/boot/system packages, Raft/GC/reduction/3D/public access
+or consensus change. Browser integration uses isolated trusted-CA synthetic profile;
+never disable TLS validation to claim PASS. Android runtime remains NOT TESTED.
+
 ## Demo Alpha first CLI handoff — Linux synthetic source-ready
 
 DEMO.0/1/2/3a/3a.1/3b completed on feature/android-demo-alpha. Final implementation

@@ -27,19 +27,20 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.3a | PUSHED/REMOTE VERIFIED: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 |
 | DEMO.3a.1 | PUSHED/REMOTE VERIFIED: aaf7d163fbac032bb31a033efe2ebb21406509bf |
 | DEMO.3b | PUSHED/REMOTE VERIFIED: 52850b9072241ab4bb7643b06127965d25d96904 |
-| DEMO.4 | Deferred behind initial CLI package / owner pilot; optional UI |
+| DEMO.4a | Backend implemented; 35 targeted PASS; publication review |
+| DEMO.4b | NOT STARTED, wait for 4a remote verification |
+| DEMO.4c | NOT STARTED, 0.4.0 NOT QUALIFIED |
 | Demo source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Next action
 
-Final hardened source aaf7d16: 14 targeted PASS and fresh full **222 PASS / 0 SKIP**.
-Final 0.3.0 source package/checksum and acceptance PUBLISHED/REMOTE VERIFIED at
-52850b9072241ab4bb7643b06127965d25d96904; actual GitHub download SHA verified. Next functional step is OWNER-only ZTE/Bphone pilot using
-DEMO-QUICKSTART and blank DEMO-ANDROID-PILOT. DEMO.4 remains deferred. Reuse existing Core functions; do not enable Raft/GC or change
-Core guards. Read DEMO-TRACK-PLAN for architecture, risk and upgrade contract.
-Each checkpoint must record changed files, exact actual tests/results, hash/push
-verification, current functionality, limits, rollback and short usage. Package
-must be tested and SHA-verified before publication, with unpacked secret review.
+Current owner request explicitly starts DEMO.4 from fetched/verified local+remote
+2d19eb06cee1b6bede0fbafac9d4704704c039a9, clean tree. 0.3.0 archive SHA checked
+again PASS. Ordered mandatory docs and all Demo handoff docs read, relevant runtime/
+Catalog/client/state/installer source audited. DEMO4-PLAN records current contract.
+Publish/verify completed 4a backend, then 4b real frontend/browser integration, then
+4c exact 0.3.0 compatibility/full qualification/new archive. Do not mark 0.4.0 ready
+from 0.3's historical PASS. All source/Linux synthetic only; no phones/production.
 
 Known gaps: old installer has fixed destination/version-only comparison; old
 controller-run binds wildcard; one ASC_HOME cannot cohost Controller and enrolled
@@ -268,3 +269,41 @@ Stop all foregrounds before backup/upgrade/code rollback. No automatic DB/data
 restore or APK/Raft migration. Android remains NOT TESTED until owner evidence;
 Codex has no phone/M51/production/GC activation authorization. DEMO.4 Dashboard Lite
 remains deferred, no pending mandatory source acceptance gate for first CLI package.
+
+## DEMO.4a backend — actual implemented / targeted evidence
+
+New asc/demo/dashboard/{auth,tls,views,http,runtime,__init__}.py, expanded Demo
+Controller/CLI/state; new tests/test_demo_dashboard.py. Core modules/tests/Go and
+Core branch unchanged; 0.3.0 public archive preserved. Node approval remains CLI.
+
+Explicit stopped `dashboard-init --port 8444` creates separate private browser CA
+and leaf with IP SAN, preserving Core/node certs. Export ONLY public CA through
+`dashboard-trust --out NEW_HOME_FILE`, verify SHA out of band and trust manually
+on owner client. `run-controller --dashboard` opts in; `dashboard-code` prints a
+one-time private login grant over existing pinned owner admin API. No default
+password/HTTP/TLS bypass or public bind. UI assets not implemented until 4b.
+
+API uses process-local bounded owner sessions, Secure/HttpOnly/SameSite cookie,
+Host/Origin/CSRF, rate/body/worker/transfer limits. Sanitized nodes/capacity/files/
+replicas reuse Registry/Catalog. Unknown stays null; same physical domain counts
+once. Upload prepares existing replicated_2 job and uses private bounded spool
+with actual byte counter/full SHA before unchanged pinned client forwarding;
+download reuses fallback and verifies whole spool before serving. No Core secrets,
+grants or private paths returned to browser. No new persistent Catalog/schema.
+
+Actual command (activation Python 3.13.5 / Go 1.27.3):
+`python -B -m unittest tests.test_demo_dashboard tests.test_demo_installer
+tests.test_demo_lan tests.test_demo_upgrade tests.test_distributed -v`:
+**35 PASS / 0 SKIP / 0 FAIL/ERROR, 136.486s**. New tests use actual CA-verified
+HTTPS: untrusted CA/wrong SAN fail, one-use login/cookie/CSRF/Origin/Host, token
+isolation, two physical synthetic copies, SHA/fallback/idempotency, bad SHA, bounds
+before body, ticket-session scope, traversal/disabled mutations, unknown capacity,
+same-domain dedup, session invalidation after restart, public-CA export/no overwrite
+and existing browser keys preserved. 14 unchanged Demo and 15 distributed tests PASS.
+
+0.4.0 is not released/qualified; no browser UI/Android result claimed. Cloud has
+Chromium 154, Playwright and certutil available for isolated trusted-CA real browser
+4b tests, no dependency/system install needed. Rollback now: stop Controller and
+restart without --dashboard (CLI-only), preserve optional private Dashboard files.
+Existing source upgrade/code rollback remains stopped + NEW complete private backup.
+Next checkpoint only after 4a normal Demo push and advertised remote SHA match.

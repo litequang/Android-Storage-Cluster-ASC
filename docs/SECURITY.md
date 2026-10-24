@@ -349,3 +349,19 @@ Preflight also rejects linked Core engine/worker lock files. Fresh hardened full
 qualification supersedes the first candidate; old preview is historical, not a
 recommended install. Source/state remain private to the owner; no hostile co-owner
 filesystem mutation or Android power-cut qualification is claimed.
+
+## DEMO.4a browser boundary
+HTTPS uses separate private browser CA/IP SAN, explicit manual public-CA trust after
+out-of-band SHA, never click-through/insecure HTTP/TLS flags. Codex touches only
+isolated synthetic trust profiles. CA/leaf private keys stay in private state; Core
+and node certs/pins preserved. No shared/default password: pinned owner CLI produces
+one-use high-entropy 5-minute grant, exchanged for RAM-only 30-minute host cookie
+Secure/HttpOnly/SameSite=Strict and per-session CSRF. Exact Host/Origin/Sec-Fetch,
+CSRF, no CORS, strict local CSP/frame denial/no-store, bounded login/auth budgets,
+workers/metadata/transfers. Browser never receives Core admin/node/transfer secrets.
+One private temporary spool <=32 MiB, exact framing/deadline, SHA before forwarding,
+existing Core idempotent jobs/placement/byte proof/fallback. Authorized input receipt
+is not checksum proof or replica protection. Download fully verifies before output;
+no arbitrary host path or overwrite. Node approval remains CLI; no policy/GC/delete
+route. Errors/logs suppress untrusted inputs and exceptions. Runtime defaults off;
+no public/real-device/Android acceptance, Root schema/consensus/GC change follows.

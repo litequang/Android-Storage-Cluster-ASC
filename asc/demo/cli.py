@@ -57,8 +57,14 @@ def execute(args):
         return {'verified': True, 'backup_sha256': report['backup_sha256']}
     if args.command in ('upgrade', 'rollback'):
         return upgrade.activate(root, prefix, args.release_id, args.backup, args.command)
+    if args.command == 'dashboard-init':
+        from .dashboard.tls import setup
+        return setup(root, args.port, args.max_upload)
+    if args.command == 'dashboard-trust':
+        from .dashboard.tls import export_ca
+        return export_ca(root, args.out)
     if args.command == 'run-controller':
-        with ControllerRuntime(root):
+        with ControllerRuntime(root, dashboard=args.dashboard):
             print('Demo Controller foreground; Ctrl+C stops. No automatic failover.', flush=True)
             while True:
                 time.sleep(1)
@@ -91,6 +97,8 @@ def execute(args):
                 upgrade.startup_check(prefix, root)
             cfg = read_json(home / 'node.json')
             lan_host(args.host)
+            if (root / 'dashboard/dashboard.json').exists() and read_json(root / 'dashboard/dashboard.json')['port'] == args.port:
+                raise ValueError('Dashboard/storage port conflict')
             volume_root = (args.root or home / 'data').expanduser().absolute()
             # Internal means private dedicated Demo data only; microSD requires Core app-folder approval.
             if args.kind == 'internal' and volume_root != home / 'data':
@@ -106,6 +114,9 @@ def execute(args):
                             'capabilities': engine.capabilities(), 'identity_preserved': True}
             return setup(home, cfg, volume_root, args.kind, args.quota, args.reserve, args.port, args.host, args.max_upload)
     client = owner(root)
+    if args.command == 'dashboard-code':
+        from ..client import request_json
+        return request_json(client.origin, client.pin, 'POST', '/demo/v1/dashboard/code', {}, client.token)
     if args.command == 'pair':
         reply = lifecycle_request(client, 'POST', 'admin/pair', {'ttl': 600})
         return {'code': reply['code'], 'pin': client.pin, 'origin': client.origin,
@@ -145,7 +156,14 @@ def main():
     init.add_argument('--host', required=True)
     init.add_argument('--port', type=int, default=8443)
     init.add_argument('--name', default='ASC-Demo-Controller')
-    commands.add_parser('run-controller')
+    controller = commands.add_parser('run-controller')
+    controller.add_argument('--dashboard', action='store_true', help='explicit optional browser HTTPS listener')
+    browser = commands.add_parser('dashboard-init')
+    browser.add_argument('--port', type=int, default=8444)
+    browser.add_argument('--max-upload', type=int, default=32 * 1024**2)
+    commands.add_parser('dashboard-code')
+    trust = commands.add_parser('dashboard-trust')
+    trust.add_argument('--out', type=Path, required=True)
     node = commands.add_parser('run-node')
     node.add_argument('--interval', type=int, default=10)
     node.add_argument('--once', action='store_true')

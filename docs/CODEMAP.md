@@ -370,3 +370,12 @@ leaves outside empty test-owned bytes unchanged. Core runtime.py is unchanged.
 Qualified Demo 0.3.0: releases/asc-demo-alpha-0.3.0.tar.gz + .sha256, 83 source/doc/
 manifest members. Final acceptance/AGENTS/progress identify aaf7d16 implementation,
 222 Python/11 Go evidence, publication receipt and owner-only Android pilot limits.
+
+## DEMO.4a Dashboard backend
+- `asc/demo/dashboard/tls.py`: explicit stopped setup/load/export/public_info for separate private CA + IP SAN browser HTTPS; original Core/node keys unchanged.
+- `dashboard/auth.py`: bounded in-memory hashed one-use grants and owner sessions/CSRF; restart invalidates all browser credentials.
+- `dashboard/views.py`: whitelisted Registry/Catalog node/volume/file/replica projections; measured freshness/nulls, owner domain counts, pending reservations and conservative shared-domain free-space aggregation.
+- `dashboard/http.py`: exact same-origin browser routes, cookie/CSRF/Host/Origin/rates, one private bounded spool/transfer, actual byte/SHA counters, existing pinned ClusterClient upload/download/fallback. No node approval/policy/delete route.
+- `dashboard/runtime.py`: optional second HTTPS listener in Controller process, same Catalog/service/lifecycle.
+- `demo/lan.py`: explicit dashboard-enabled ControllerRuntime and pinned owner-only login-code route; `demo/cli.py`: dashboard-init/trust/code, run-controller --dashboard. `state.py` checks completed optional Dashboard format before writable Core open.
+- `tests/test_demo_dashboard.py`: session unit bounds + real CA/SAN HTTPS/storage/auth/byte/domain/fallback/refusal tests. Current contract: DEMO4-PLAN; actual handoff: DEMO-TRACK-PROGRESS.

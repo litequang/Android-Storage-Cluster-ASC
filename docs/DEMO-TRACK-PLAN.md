@@ -1,6 +1,6 @@
 # ASC Android Demo Alpha — independent Demo Track
 
-Status: DEMO.0–3 Linux synthetic SOURCE-READY; final 222 Python/11 Go PASS and qualified 0.3.0 package. Android runtime NOT TESTED; DEMO.4 deferred. See acceptance/progress publication receipt.
+Status: 0.3.0 DEMO.0–3 accepted Linux synthetic; DEMO.4 now explicitly authorized and IN PROGRESS. See DEMO4-PLAN and progress. 0.4.0 NOT QUALIFIED yet; Android runtime NOT TESTED.
 Date: 2026-10-24 UTC. Branch: `feature/android-demo-alpha`.
 Verified Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c` on
 `wip/phase2a-raft-qualification`; never use main or publish Demo commits to Core.
@@ -106,3 +106,10 @@ pointer and revalidates current schema; incompatible restore/migration is not
 implemented and must remain a documented blocker. Termux uninstall can lose private
 keys/data; Demo is for disposable non-important files and requires owner retention
 of separate private backups. No actual phone access is authorized for Codex.
+
+## Authorized DEMO.4 continuation
+
+Owner requests Dashboard Lite now; old deferral was for first CLI delivery only.
+Follow DEMO4-PLAN: 4a owner-session/trusted-HTTPS backend, 4b responsive Vietnamese
+frontend/real browser tests, 4c exact 0.3 upgrade/rollback/full qualification and new
+checksum package. Same Catalog and immutable-state contracts, Core WIP preserved.

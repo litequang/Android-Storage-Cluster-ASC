@@ -96,14 +96,34 @@ class DemoHandler(Handler):
         return super().do_GET()
 
     def do_POST(self):
+        if urlsplit(self.path).path == '/demo/v1/dashboard/code':
+            if self.path != '/demo/v1/dashboard/code':
+                return self._json(400, {'error': 'bad_request'})
+            if not self._admin():
+                return
+            from ..server import PayloadTooLarge
+            try:
+                if self._read_json() != {}:
+                    return self._json(400, {'error': 'bad_request'})
+                api = getattr(self.server, 'dashboard_api', None)
+                if api is None:
+                    return self._json(503, {'error': 'dashboard_disabled'})
+                from .dashboard.auth import GRANT_TTL
+                from .dashboard.tls import public_info
+                return self._json(200, dict(public_info(api.root, api.cfg), code=api.sessions.issue(), expires_in=GRANT_TTL))
+            except PayloadTooLarge:
+                return self._json(413, {'error': 'payload_too_large'})
+            except (ValueError, KeyError, TypeError, OSError):
+                return self._json(400, {'error': 'bad_request'})
         if not self.allowed():
             return self._json(404, {'error': 'not_found'})
         return super().do_POST()
 
 
 class ControllerRuntime:
-    def __init__(self, root):
+    def __init__(self, root, dashboard=False):
         self.root = Path(root)
+        self.dashboard_enabled = dashboard
 
     def __enter__(self):
         guard()
@@ -116,6 +136,9 @@ class ControllerRuntime:
                     startup_check(os.environ['ASC_DEMO_PREFIX'], self.root)
                 if marker['role'] != 'controller':
                     raise ValueError('not a Controller')
+                if self.dashboard_enabled:
+                    from .dashboard.tls import load_config
+                    load_config(self.root, marker)
                 home = self.root / 'controller'
                 self.stack.enter_context(foreground_lock(home, 'controller'))
                 cfg = read_json(home / 'controller.json')
@@ -150,6 +173,10 @@ class ControllerRuntime:
                 profile_thread.start()
                 self.stack.callback(profile_thread.join)
                 self.stack.callback(profile_stop.set)
+                if self.dashboard_enabled:
+                    from .dashboard.runtime import DashboardRuntime
+                    browser = self.stack.enter_context(DashboardRuntime(self.root, marker, self.service, owner(self.root)))
+                    self.server.dashboard_api = browser.api
             return self
         except BaseException:
             self.stack.close()

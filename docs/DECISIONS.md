@@ -203,3 +203,12 @@ ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telem
   files and linked internal worker/engine locks before any Demo operation/constructor.
   Do not unlink/replace a suspicious lock to make startup pass. Fresh hardened
   targeted/full qualification supersedes the initial package candidate.
+
+- ADR-057 (DEMO.4): browser trust uses separate explicit private CA/IP-SAN listener
+  in the same Controller process, preserving all Core/node certificate pins. Never
+  instruct a browser to bypass TLS errors. Owner CLI issues one-use RAM grants;
+  browser gets scoped HttpOnly/Secure/SameSite session + CSRF, not Core credentials.
+  Keep node approval CLI-only. Reuse Catalog and pinned ClusterClient for bounded
+  private spooled transfers; received bytes/SHA/protection are separate facts.
+  Root/base schemas unchanged; optional Dashboard format is independently validated,
+  backed up and ignored by compatible old CLI-only source after stopped rollback.

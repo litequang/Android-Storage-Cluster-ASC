@@ -125,6 +125,9 @@ def inspect_state(root):
         cache = home / 'catalog-metadata.sqlite3'
         if cache.exists():
             read_db(cache, 1)
+    if (root / 'dashboard/dashboard.json').exists():
+        from .dashboard.tls import load_config
+        load_config(root, marker)
     return marker
 
 
