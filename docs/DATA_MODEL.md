@@ -298,3 +298,8 @@ extension. Existing base schemas and 3A/3B members remain unchanged. Policy coun
 in one prepared runtime document; receipt conflicts fail closed. No automatic
 receipt/history eviction. Complete stopped pre-enable state/volume backups plus
 matching source are required for rollback; physical GC is still absent in 3C.1.
+
+3C.2a optional replication.moves map (<=128): move ID -> file_id/source_replica_id,
+job_id (nullable if enough other domains already exist), COPY_PENDING/READY,
+created_at/updated_at. Same-source planning reuses durable intent; takeover retains
+intent while existing COPY leases/grants receive their established invalidation.

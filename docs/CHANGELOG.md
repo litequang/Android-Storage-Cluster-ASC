@@ -232,3 +232,5 @@
 - 3C.1: explicit bounded replication extension, owner replay-safe policy count
   transitions 1/2/3 and reconciliation using existing independent COPY/proof jobs.
   Shortages remain explicit; lowering policy preserves every replica and byte.
+- 3C.2a: durable Drain/Rebalance intents, stable independent COPY jobs and explicit
+  no-target reports; retain source records/bytes until separate proof/retirement.

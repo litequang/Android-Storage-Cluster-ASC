@@ -15,6 +15,10 @@ def handle(handler,parts,query):
         valid.payload(obj,('request_id',));result=service.enable(obj)
     elif parts==['policy']:
         valid.payload(obj,('request_id','file_id','copies'));result=service.policy(obj)
+    elif parts==['move']:
+        valid.payload(obj,('request_id','replica_id'));result=service.move(obj)
+    elif parts==['drain']:
+        valid.payload(obj,('request_id','node_id'));result=service.drain(obj)
     elif parts==['reconcile']:
         valid.payload(obj,('request_id',));result=service.reconcile(obj)
     else:return handler._json(404,{'error':'not_found'})

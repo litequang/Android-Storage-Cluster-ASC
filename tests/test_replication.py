@@ -77,3 +77,43 @@ class DynamicPolicyTests(unittest.TestCase):
         self.assertEqual(result['desired_replicas'],3)
         self.assertEqual(result['scheduled_jobs'],[])
         self.assertEqual(self.runtime.doc['catalog']['replicas'],original)
+
+
+class MovePlanningTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture,self.file_id,self.runtime,self.service,self.replication=fixture_runtime(self)
+        from asc.nodes.history import empty
+        self.runtime.doc['insights']=empty()
+        self.source=self.runtime.doc['catalog']['replicas'][0]
+
+    def test_drain_creates_one_durable_copy_and_never_removes_source(self):
+        original=copy.deepcopy(self.runtime.doc['catalog']['replicas'])
+        obj={'request_id':'drain-source','node_id':self.source['node_id']}
+        result=self.replication.drain(obj)
+        self.assertEqual(len(result['move_ids']),1)
+        self.assertEqual(result,self.replication.drain(obj))
+        again=self.replication.drain({**obj,'request_id':'drain-again'})
+        self.assertEqual(again['move_ids'],result['move_ids'])
+        self.assertEqual(self.runtime.doc['catalog']['replicas'],original)
+        job=next(j for j in self.runtime.doc['tables']['catalog_jobs'] if j['kind']=='COPY')
+        self.assertNotEqual(job['target_node_id'],self.source['node_id'])
+        move=self.runtime.doc['replication']['moves'][result['move_ids'][0]]
+        self.assertEqual(move['state'],'COPY_PENDING')
+        state.validate(state.takeover(self.runtime.doc,'voter-b',5))
+
+    def test_unavailable_capacity_keeps_only_readable_copy_and_reports_block(self):
+        for node in self.runtime.doc['tables']['catalog_nodes']:node['storage_allowed']=0
+        original=copy.deepcopy(self.runtime.doc['catalog']['replicas'])
+        result=self.replication.drain({'request_id':'drain-shortage','node_id':self.source['node_id']})
+        self.assertEqual(result['move_ids'],[])
+        self.assertEqual(result['blocked_replicas'][0]['replica_id'],self.source['replica_id'])
+        self.assertEqual(self.runtime.doc['catalog']['replicas'],original)
+        self.assertEqual(self.runtime.doc['insights']['preferences'][self.source['node_id']]['mode'],'drain')
+
+    def test_move_job_survives_sql_roundtrip_and_does_not_duplicate_on_new_request(self):
+        obj={'request_id':'move-source','replica_id':self.source['replica_id']}
+        first=self.replication.move(obj)
+        second=self.replication.move({**obj,'request_id':'move-source-again'})
+        self.assertEqual(first['move_ids'],second['move_ids'])
+        reg=state.prepare_registry(self.runtime.doc);self.addCleanup(reg.db.close)
+        self.assertEqual(state.export(reg.db,self.runtime.doc['revision'],self.runtime.doc['authority']),self.runtime.doc)

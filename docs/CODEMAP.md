@@ -246,3 +246,7 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   Replication; Catalog HTTP delegates only after owner/quorum gate. No unlink.
   `tests/test_replication.DynamicPolicyTests`: count transitions, deduplication,
   shortages, failed quorum and 3A/3B/3C roundtrip/takeover preservation.
+- 3C.2a `Replication.plan_moves/move/drain/required`: durable bounded migration
+  plans using existing stable COPY jobs, 3B target preferences/capacity and independent
+  domains; retained snapshot copy targets raise the safety floor. Source is retained;
+  shortage reports blocked replicas. MovePlanningTests cover replay/shortage/roundtrip.

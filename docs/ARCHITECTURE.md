@@ -216,3 +216,10 @@ commit policy/history/scheduled COPY jobs/intent receipt atomically through actu
 term Go CAS. Increasing policy schedules missing independent domains; decreasing
 policy retains all current replicas and bytes. Existing physical proof worker,
 reservations, failure/lease fences and read behavior remain. No physical GC path.
+
+3C.2a adds durable move intents, not automatic source removal. Explicit owner Drain
+sets 3B preference and schedules independent COPY work atomically; explicit move
+can rebalance one replica. At most 128 intents; repeated requests/source IDs reuse
+same intent/job. Required survivors include retained backup snapshot copy counts.
+No target space/domain means a blocked report and preserved source. A READY plan
+still requires fresh survivor-byte proofs before a later retirement checkpoint.

@@ -369,3 +369,8 @@ POST reconcile {request_id} -> bounded per-file available/desired counts and job
 logically EXPIRED versions are not newly replicated. GET status reports explicit
 enable/schema; physical GC remains false. Same request/intent replays the same
 result, conflicting reuse fails 409; null/invalid request IDs are rejected.
+
+3C.2a POST replication/drain {request_id,node_id} (requires 3B insights enabled)
+sets Drain and returns move_ids/blocked_replicas, physical_deletions=0. POST
+replication/move {request_id,replica_id} plans one rebalancing move. No immediate
+source removal; moves use existing COPY jobs and cannot override safe placement.
