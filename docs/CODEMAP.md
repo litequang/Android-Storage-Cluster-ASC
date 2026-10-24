@@ -207,3 +207,11 @@ Historical PySyncObj evidence below remains unchanged.
 - 3B.3 `nodes.preferences.effective`: safe defaults/generation handling;
   `Insights.preference` + owner POST route: durable idempotent preferences, no
   movement/deletion. PreferenceTests cover modes, replay/conflict and generations.
+- 3B.4 `catalog.placement.candidates`: eligibility/capacity/domain first, enabled
+  preference + confidence-adjusted score ranking; legacy ordering without enable.
+  `nodes.history` preserves per-bucket generation during re-pair and allows new
+  measurements without attributing earlier failures to the new credential.
+  SmartPlacementTests/TLSTests cover actual byte uploads/copies, drained nodes,
+  independent policy domains, reservations, deterministic ordering and hard gates.
+- Linux fixture portability: `test_distributed` CLI simulated profile explicitly
+  allows installation; actual CLI M51/unknown-device guard remains unchanged.

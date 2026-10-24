@@ -214,3 +214,7 @@
   backup state through preparation/takeover; no physical or consensus policy change.
 - 3B.3: owner Auto/Preferred/Avoid New Storage/Drain/Protected preferences with
   replay/generation semantics; no automatic movement or physical deletion.
+- 3B.4: enabled allocation preferences and confidence-adjusted score ranking after
+  original hard capacity/approval/domain gates. Preserve independent replica policy,
+  reserved double-copy capacity and reads from drained nodes. Reject future probes.
+  Retain per-generation telemetry across re-pair while collecting new samples.

@@ -11,10 +11,10 @@ def active_nodes(db):
 def eligible(node):
     try:
         profile = json.loads(node['profile'])
-        return (node['state'] == 'active' and now() - node['last_seen'] < 100 and
+        return (node['state'] == 'active' and 0 <= now() - node['last_seen'] < 100 and
                 node['approved_generation'] == node['token_version'] and
                 profile.get('protected') is not True and node['last_error'] is None and
-                node['checked_at'] is not None and now() - node['checked_at'] <= 60)
+                node['checked_at'] is not None and 0 <= now() - node['checked_at'] <= 60)
     except (ValueError, TypeError, KeyError, AttributeError):
         return False
 
@@ -29,8 +29,17 @@ def readable(node,volume_id):
 
 def candidates(db, size, exclude_devices=()):
     result = []
-    for node in active_nodes(db):
+    nodes = active_nodes(db)
+    row = db.execute("SELECT value FROM settings WHERE key='phase3b_insights'").fetchone()
+    insights = json.loads(row[0]) if row else None
+    from ..nodes.preferences import effective, BLOCK_NEW
+    from ..nodes.view import observations
+    from ..nodes.scoring import score
+    for node in nodes:
         if not eligible(node) or not node['storage_allowed'] or node['device_id'] in exclude_devices:
+            continue
+        preference = effective(insights or {}, node['node_id'], node['token_version'])
+        if preference in BLOCK_NEW:
             continue
         capabilities = json.loads(node['capabilities'] or '{}')
         if type(capabilities.get('max_upload_bytes')) is not int or capabilities['max_upload_bytes'] < size:
@@ -41,7 +50,9 @@ def candidates(db, size, exclude_devices=()):
         if running:
             continue
         for volume in capabilities.get('volumes', []):
-            if volume.get('state') != 'online' or volume.get('writable') is not True:
+            if (volume.get('volume_id') not in json.loads(node['volume_ids']) or
+                    volume.get('state') != 'online' or volume.get('writable') is not True or
+                    volume.get('readable') is not True):
                 continue
             values = [volume.get(k) for k in ('free_bytes', 'quota', 'reserve', 'used_bytes')]
             if any(type(v) is not int or v < 0 for v in values):
@@ -52,7 +63,15 @@ def candidates(db, size, exclude_devices=()):
                               (node['node_id'], volume['volume_id'])).fetchone()[0]
             available = min(free - reserve, quota - used) - held
             if available >= size * 2:
+                report = score(observations({'tables': {'catalog_nodes': nodes}, 'insights': insights or {}}, node), now())
                 result.append({'node_id': node['node_id'], 'device_id': node['device_id'],
                                'volume_id': volume['volume_id'], 'available_bytes': available,
-                               'origin': node['origin'], 'pin': node['pin']})
+                               'origin': node['origin'], 'pin': node['pin'],
+                               'preference': preference, 'node_score': report['score'],
+                               'score_confidence': report['confidence'],
+                               'ranking_points': round((report['score'] or 0)*report['confidence']/100, 4),
+                               'placement_reason': 'approved fresh writable independent domain; double-copy capacity reserved'})
+    if insights is not None:
+        return sorted(result, key=lambda r: (r['preference'] != 'preferred', -r['ranking_points'],
+                      -r['available_bytes'], r['node_id'], r['volume_id']))
     return sorted(result, key=lambda r: (-r['available_bytes'], r['node_id'], r['volume_id']))

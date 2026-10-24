@@ -31,14 +31,17 @@ def validate(state, nodes):
             rows = history[field]
             if not isinstance(rows,list) or len(rows)>bound:
                 raise ValueError('invalid_node_insights')
-            previous=-1
+            previous=(-1,-1)
             for row in rows:
-                if set(row) != {'start','metrics'} or set(row['metrics']) != set(METRICS):
+                if set(row) - {'generation'} != {'start','metrics'} or set(row['metrics']) != set(METRICS):
                     raise ValueError('invalid_node_insights')
                 integer(row['start'],0,2**63-1)
-                if row['start'] % interval or not previous < row['start'] <= history['last_sample_at']:
+                generation=row.get('generation',history['generation'])
+                integer(generation,1,2**63-1)
+                position=(row['start'],generation)
+                if row['start'] % interval or not previous < position or row['start'] > history['last_sample_at']:
                     raise ValueError('invalid_node_insights')
-                previous=row['start']
+                previous=position
                 for name, metric in row['metrics'].items():
                     if set(metric) != {'sum','count'}:
                         raise ValueError('invalid_node_insights')
@@ -81,33 +84,42 @@ def record(state, node_id, generation, observations, at):
             raise CatalogError('node_history_limit',409)
         row={'generation':generation, 'last_sample_at':at, 'hours':[], 'days':[]}
         state['history'][node_id]=row
-    if row['generation'] != generation:
-        # Retain prior measurements tagged by generation; never attribute them to a new credential.
-        return
+    for field in ('hours','days'):
+        for bucket in row[field]:
+            bucket.setdefault('generation',row['generation'])
+    row['generation']=generation
     row['last_sample_at']=at
     for field,interval,bound in (('hours',3600,24),('days',86400,30)):
         start=at//interval*interval
         row[field]=[r for r in row[field] if start-(bound-1)*interval <= r['start'] <= start]
-        bucket=next((r for r in row[field] if r['start']==start),None)
+        bucket=next((r for r in row[field] if r['start']==start and r['generation']==generation),None)
         if bucket is None:
-            bucket={'start':start,'metrics':{n:{'sum':0,'count':0} for n in METRICS}}
+            bucket={'start':start,'generation':generation,'metrics':{n:{'sum':0,'count':0} for n in METRICS}}
             row[field].append(bucket)
         for name in METRICS:
             item=observations[name]
             if item['value'] is not None and 0 <= at-item['observed_at'] <= scoring.FRESH_SECONDS:
                 bucket['metrics'][name]['sum']+=int(item['value']) if name=='reachable' else item['value']
                 bucket['metrics'][name]['count']+=1
+        row[field]=sorted(row[field],key=lambda r:(r['start'],r['generation']))[-bound:]
 
 
-def summary(state, node_id, window, at):
+def summary(state, node_id, window, at, generation=None):
     field,interval,count=WINDOWS[window]
     start=at//interval*interval-(count-1)*interval
     history=state['history'].get(node_id)
-    rows={r['start']:r for r in history[field]} if history else {}
+    records=[r for r in history[field] if generation is None or r.get('generation',history['generation'])==generation] if history else []
+    rows={}
+    for row in records:
+        target=rows.setdefault(row['start'],{'metrics':{n:{'sum':0,'count':0} for n in METRICS},'generations':[]})
+        target['generations'].append(row.get('generation',history['generation']))
+        for name in METRICS:
+            for field_name in ('sum','count'):
+                target['metrics'][name][field_name]+=row['metrics'][name][field_name]
     buckets=[]
     for stamp in range(start,start+interval*count,interval):
         row=rows.get(stamp)
-        buckets.append({'start':stamp,'end':min(stamp+interval,at+1),
+        buckets.append({'start':stamp,'end':min(stamp+interval,at+1), 'generations':row['generations'] if row else [],
             'metrics':{name:{'mean':row['metrics'][name]['sum']/row['metrics'][name]['count']
                       if row and row['metrics'][name]['count'] else None,
                       'samples':row['metrics'][name]['count'] if row else 0,

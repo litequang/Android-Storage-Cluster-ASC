@@ -237,3 +237,126 @@ class PreferenceTests(unittest.TestCase):
         with self.assertRaises(CatalogError):
             self.service.preference('local-controller',{**obj,'mode':'auto'})
         self.assertEqual(index,self.runtime.index)
+
+
+class SmartPlacementTests(unittest.TestCase):
+    def setUp(self):
+        from tests import test_catalog
+        self.fixture=test_catalog.CatalogTests(methodName='test_global_idempotency_explicit_versions_and_no_false_replica_count')
+        self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        self.reg=self.fixture.reg;self.nodes=self.fixture.nodes
+        from asc.nodes.history import empty
+        self.insights=empty()
+        self.save()
+
+    def save(self):
+        import json
+        with self.reg.connect() as db:
+            db.execute("INSERT OR REPLACE INTO settings VALUES('phase3b_insights',?)",(json.dumps(self.insights),))
+
+    def preference(self,index,mode):
+        self.insights.setdefault('preferences',{})[self.nodes[index]['node_id']]={
+            'mode':mode,'generation':1,'updated_at':0}
+        self.save()
+
+    def candidates(self,excluded=()):
+        from asc.catalog.placement import candidates
+        with self.reg.connect() as db:return candidates(db,4,excluded)
+
+    def test_preferred_cannot_override_capacity_protection_domain_or_unknown(self):
+        import json
+        self.preference(0,'preferred')
+        self.assertEqual(self.candidates()[0]['node_id'],self.nodes[0]['node_id'])
+        self.assertNotIn(self.nodes[0]['node_id'],{r['node_id'] for r in self.candidates(['physical-0'])})
+        with self.reg.connect() as db:
+            db.execute('UPDATE nodes SET profile=? WHERE node_id=?',(json.dumps({'protected':True}),self.nodes[0]['node_id']))
+        self.assertNotIn(self.nodes[0]['node_id'],{r['node_id'] for r in self.candidates()})
+        with self.reg.connect() as db:
+            db.execute("UPDATE nodes SET profile='{}' WHERE node_id=?",(self.nodes[0]['node_id'],))
+            db.execute("UPDATE catalog_nodes SET capabilities='{}' WHERE node_id=?",(self.nodes[0]['node_id'],))
+        self.assertNotIn(self.nodes[0]['node_id'],{r['node_id'] for r in self.candidates()})
+
+    def test_avoid_drain_protected_block_new_but_preserve_existing_replicas_and_reads(self):
+        from asc.catalog.placement import active_nodes,readable
+        for mode in ['avoid-new-storage','drain','protected']:
+            self.preference(0,mode)
+            self.assertNotIn(self.nodes[0]['node_id'],{r['node_id'] for r in self.candidates()})
+            with self.reg.connect() as db:
+                node=next(n for n in active_nodes(db) if n['node_id']==self.nodes[0]['node_id'])
+                self.assertTrue(readable(node,self.nodes[0]['volume_id']))
+        for i in range(3):self.preference(i,'drain')
+        self.assertEqual(self.candidates(),[])
+        from asc.catalog.common import CatalogError
+        with self.assertRaises(CatalogError):self.fixture.create()
+
+    def test_real_catalog_upload_and_copy_schedule_keep_policy_and_domain_independence(self):
+        self.preference(0,'preferred');self.preference(1,'avoid-new-storage')
+        file_id=self.fixture.create()['file']['file_id']
+        self.assertEqual(self.fixture.upload_job(file_id)['target_node_id'],self.nodes[0]['node_id'])
+        self.fixture.complete_upload(file_id)
+        jobs=self.fixture.catalog.schedule(file_id)
+        self.assertEqual(len(jobs),1)
+        with self.reg.connect() as db:
+            target=db.execute('SELECT target_node_id FROM catalog_jobs WHERE job_id=?',(jobs[0],)).fetchone()[0]
+        self.assertEqual(target,self.nodes[2]['node_id'])
+        self.assertEqual(self.fixture.catalog.file(file_id)['desired_replicas'],2)
+
+    def test_score_ranks_only_safe_targets_and_ties_are_deterministic(self):
+        import json
+        with self.reg.connect() as db:
+            for i,node in enumerate(self.nodes):
+                db.execute('UPDATE nodes SET profile=? WHERE node_id=?',(json.dumps({'memory_mb':8192 if i==2 else 0}),node['node_id']))
+        first=self.candidates()
+        self.assertEqual(first[0]['node_id'],self.nodes[2]['node_id'])
+        self.assertEqual(first,self.candidates())
+        self.assertGreater(first[0]['score_confidence'],0)
+        # Pending double-copy reservations still reduce exact available capacity.
+        self.fixture.create(policy='single')
+        second=self.candidates()
+        self.assertEqual(next(r for r in first if r['node_id']==self.nodes[2]['node_id'])['available_bytes']-
+                         next(r for r in second if r['node_id']==self.nodes[2]['node_id'])['available_bytes'],8)
+
+
+class HistoryGenerationTests(unittest.TestCase):
+    def test_repair_retains_prior_generation_and_collects_new_generation_separately(self):
+        from asc.nodes import history
+        state=history.empty()
+        obs=ScoreEngineTests().measured(reachable=False)
+        history.record(state,'node-a',1,obs,1000)
+        obs['reachable'].update(value=True,observed_at=1100)
+        history.record(state,'node-a',2,obs,1100)
+        self.assertEqual(len(state['history']['node-a']['hours']),2)
+        history.validate(state,[{'node_id':'node-a'}])
+        self.assertEqual(history.summary(state,'node-a','24h',1100,generation=2)['reliability'],100)
+        self.assertEqual(history.summary(state,'node-a','24h',1100,generation=1)['reliability'],0)
+        self.assertEqual(history.summary(state,'node-a','24h',1100)['buckets'][-1]['generations'],[1,2])
+
+
+from tests import test_distributed as distributed_fixture
+
+
+class SmartPlacementTLSTests(unittest.TestCase):
+    setUp=distributed_fixture.DistributedTests.setUp
+    stop_controller=distributed_fixture.DistributedTests.stop_controller
+    controller=distributed_fixture.DistributedTests.controller
+    owner=distributed_fixture.DistributedTests.owner
+    assert_status=distributed_fixture.DistributedTests.assert_status
+    upload_global=distributed_fixture.DistributedTests.upload_global
+    drain=distributed_fixture.DistributedTests.drain
+
+    def test_enabled_preferences_place_actual_bytes_on_independent_tls_nodes(self):
+        import json
+        from asc.nodes.history import empty
+        state=empty()
+        state['preferences']={self.nodes[0]['cfg']['node_id']:{'mode':'preferred','generation':1,'updated_at':0},
+                              self.nodes[1]['cfg']['node_id']:{'mode':'drain','generation':1,'updated_at':0}}
+        with self.reg.connect() as db:
+            db.execute("INSERT INTO settings VALUES('phase3b_insights',?)",(json.dumps(state),))
+        file_id=self.upload_global();self.drain()
+        report=self.service.catalog.file(file_id)
+        self.assertEqual(report['available_replicas'],2)
+        self.assertEqual({r['node_id'] for r in report['replicas']},
+                         {self.nodes[0]['cfg']['node_id'],self.nodes[2]['cfg']['node_id']})
+        import io
+        output=io.BytesIO();self.global_client.download(file_id,output)
+        self.assertEqual(output.getvalue(),self.data)

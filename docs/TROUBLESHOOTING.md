@@ -270,3 +270,8 @@ tracked and calls the existing validated init/run APIs; no Raft module is rewrit
   inherited Go 4096-receipt lifetime limit.
 - Re-paired node: retained prior-generation history does not score the new identity.
   No history or credential is silently rewritten to manufacture continuity.
+- Avoid/Drain/Protected can intentionally cause no_eligible_storage or an explicit
+  replica deficit; Preferred never overrides protection/capacity/domain gates.
+  Existing authorized jobs may finish; Drain does not move or delete stored bytes.
+- Linux CLI integration tests use an explicitly permitted fake hardware profile.
+  Real unknown hardware remains refused; do not add a product bypass for Cloud.

@@ -281,3 +281,10 @@ All Controllers must upgrade before the first preference write. Old code rejects
 unknown extension fields. Restrictive modes survive credential-generation changes;
 stale Preferred becomes Auto until owner explicitly sets it for the new identity.
 No node identity, Catalog replica/version/backup or raw token is overwritten.
+
+3B.4 history buckets additionally tag credential generation (older buckets infer
+the record generation until the next capture). Re-pair keeps old buckets and adds
+new-generation samples separately, even within the same UTC hour/day. The same
+24/30 record bounds apply across generations; frequent re-pair can reduce window
+coverage, reported through gaps. History exposes generations; score filters to the
+current approved generation. No authority/backup/history outside telemetry is pruned.

@@ -197,3 +197,15 @@ paths remain unchanged. Post-refresh capture samples fresh pinned probe observat
 at most once/node/hour into UTC calendar-hour/day aggregates. Missing hours remain
 UNKNOWN; observed probe success is not continuous uptime. Takeover preserves history;
 probe freshness is still invalidated. No voter/membership/leadership decision uses it.
+
+3B.4 placement consumes insights only after enable, preserving legacy ordering
+without the extension. Hard checks run before any preference/score: active current
+approved identity, non-protected profile, fresh nonfuture heartbeat/pinned probe,
+approved readable+writable online volume, upload limit, double-copy free/quota
+reserve minus pending reservations, no running target transfer, excluded/planned
+physical domains. Eligible Preferred first, then score*confidence/100, available
+bytes, stable node/volume ID. Existing policy/schedule still chooses at most one
+new target per independent approved device domain; no score changes voter state.
+Avoid/Drain/Protected exclude new target allocation, retaining authenticated reads
+and existing work/bytes. Re-pair keeps generation-tagged history and collects new
+samples separately; only current-generation reliability contributes to score.

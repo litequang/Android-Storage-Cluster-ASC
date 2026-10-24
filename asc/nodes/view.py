@@ -38,7 +38,7 @@ def observations(doc, node):
     if state:
         latest = state['history'].get(node['node_id'])
         if latest and latest['generation'] == node['token_version']:
-            report = summary(state, node['node_id'], '24h', latest['last_sample_at'])
+            report = summary(state, node['node_id'], '24h', latest['last_sample_at'], generation=node['token_version'])
             if report['probe_samples']:
                 put('reliability', report['reliability']/100, latest['last_sample_at'], report['probe_samples'])
     return result
