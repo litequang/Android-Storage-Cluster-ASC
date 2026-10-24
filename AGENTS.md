@@ -25,6 +25,20 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
+## Current Android Demo Alpha task — separate Demo Track
+
+The owner now authorizes `feature/android-demo-alpha` from verified Core WIP HEAD
+(at least acea2ae), independent of Core. After ordered reads, read IMPLEMENTATION_PLAN,
+PHASE3C acceptance/progress, README-VI, DEMO-TRACK-PLAN and DEMO-TRACK-PROGRESS.
+Complete DEMO.0 then 1/2/3 with targeted PASS, documentation/secret/package review,
+normal Demo-only push and remote verification before each next checkpoint. Reuse
+single-writer components with separate Demo state, explicit private LAN binds and
+upgrade compatibility; never enable Android Raft/failover/physical GC or weaken
+M51/unknown-device guards. Dashboard Lite may follow the first CLI package; no APK,
+3D or public access. Codex has source/Linux-synthetic scope only; owner alone will
+try the tested checksum-verified package on actual ZTE/Bphone/XZ3. Keep all Core
+modules/tests and Core branch intact. Earlier task scope below is historical.
+
 ## Current Phase 3C task — authorized isolated-test development
 
 Phase 3C is now authorized from `b1b46e527826617748a8bc68795259060e12d705`

@@ -273,3 +273,9 @@
   compile-only. Ordinary/runtime/real-device GC remains locked, with no production,
   Android, hardware power-cut, Phase 3D or Dashboard qualification/deployment.
   Source version remains 0.10.0 development; no release tag or installer change.
+
+## Android Demo Alpha — separate track (not source-ready yet)
+
+- DEMO.0: audit/reuse plan and upgrade contract on feature/android-demo-alpha from
+  acea2ae, with account-independent progress. No runtime code/device/GC unlock;
+  preserve Core branch, source, tests and historical qualification.

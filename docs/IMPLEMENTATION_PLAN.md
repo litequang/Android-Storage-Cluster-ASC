@@ -72,6 +72,17 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 Phase 3B changes no static voter membership/quorum and never performs physical GC.
 Android, SAF, SD/power-cut, 1GB+ restore and production remain separately unqualified.
 
+## Parallel Android Demo Track — owner-authorized Alpha
+
+Independent `feature/android-demo-alpha` from verified Core acea2ae. Reuse existing
+single-writer LAN storage for owner phone trials, with dedicated guarded Termux
+QuickStart, separate private state, two-copy checksum/fallback and explicit upgrade
+contract. Source/Linux synthetic testing only by Codex; Android runtime acceptance
+is performed later by the owner. No Raft/GC/3D/native APK/public ingress. Dashboard
+Lite follows initial CLI engine/upgrade delivery if needed. Plan/progress:
+[DEMO-TRACK-PLAN.md](DEMO-TRACK-PLAN.md), [DEMO-TRACK-PROGRESS.md](DEMO-TRACK-PROGRESS.md).
+Core roadmap and accepted 3C evidence remain intact.
+
 ## NO premature promises
 - Not always-on despite Doze/ROM limitations until verified on devices.
 - No 'any one node can write safely' when original 3-voter quorum absent.

@@ -327,3 +327,10 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   all 39 legacy + 3 replication + 3 actual GC authorization + 8 Linux physical
   groups PASS. Fresh uncached Go 11 tests/vet/module/build PASS. Physical executor
   remains synthetic-only/default absent; Windows/Android outputs compile-only.
+
+## Android Demo Alpha audit / separate track
+
+Branch `feature/android-demo-alpha` from acea2ae. Audit/reuse boundaries, staged
+checkpoint contract and upgrade design: DEMO-TRACK-PLAN.md; durable current handoff:
+DEMO-TRACK-PROGRESS.md. No Demo implementation at DEMO.0. Reuse single-writer
+Registry/CatalogService/StorageRuntime and existing guards; preserve all Core paths.
