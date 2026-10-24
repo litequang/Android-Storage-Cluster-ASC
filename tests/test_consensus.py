@@ -307,15 +307,15 @@ class ConsensusTests(unittest.TestCase):
                 'admin_token': admin, 'listen_port': int(api_address.rsplit(':', 1)[1])}))
             env = dict(os.environ, ASC_HOME=str(home)); pin = fingerprint_from_pem(home/'server.crt')
             origin = 'https://' + api_address
-            command = [sys.executable, '-B', '-m', 'asc.cli']
-            if os.name != 'nt':
-                # Synthetic metadata Controller only; no product platform bypass.
-                script = ("from unittest.mock import patch; from types import SimpleNamespace; "
-                          "import asc.cli as c; "
-                          "p=patch.object(c,'os',SimpleNamespace(name='nt')); p.start(); "
-                          "q=patch.object(c,'inspect',return_value={'protected':False,"
-                          "'installation_allowed':True,'simulation':True}); q.start(); c.main()")
-                command = [sys.executable, '-B', '-c', script]
+            # Synthetic metadata Controller on every host, including Windows.
+            # No-config retry must reach the attached-registry guard; a real
+            # unknown PC profile cannot prove the no-fallback assertion below.
+            script = ("from unittest.mock import patch; from types import SimpleNamespace; "
+                      "import asc.cli as c; "
+                      "p=patch.object(c,'os',SimpleNamespace(name='nt')); p.start(); "
+                      "q=patch.object(c,'inspect',return_value={'protected':False,"
+                      "'installation_allowed':True,'simulation':True}); q.start(); c.main()")
+            command = [sys.executable, '-B', '-c', script]
             def launch_controller():
                 proc = subprocess.Popen(command + ['controller-run',
                     '--consensus-config', str(self.configs[leader])], cwd=ROOT, env=env,

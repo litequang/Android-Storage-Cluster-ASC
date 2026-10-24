@@ -27,8 +27,9 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 | 3C.3b | PUSH VERIFIED `445af5c`; 59 targeted + 20 TLS/unit PASS |
 | 3C.4a | PUSH VERIFIED `b5cb2ed`; 91 targeted + 23 TLS/unit PASS |
 | 3C.4b | PUSH VERIFIED `c909e1e70a4ce7a01674b6caaed1b3b4e6574a65` by Windows fetch on 2026-10-24; prior Cloud local executor/journal checks retained |
-| 3C.4c | IMPLEMENTED / targeted Windows PASS; publication commit identified by Git log/next checkpoint |
-| 3C.5 | NOT STARTED |
+| 3C.4c | PUSH VERIFIED `74bb6a90f2e4e04751b3edb83d60ac00807ab06f`; 85 targeted OK (11 Linux-only skips) + actual Go/TLS GC fault test PASS |
+| 3C.5a | Windows metadata fixture no-fallback repair; 11 targeted consensus/runtime/device safety PASS (27.498s); commit identified by next report |
+| 3C.5 | PARTIAL: first Windows full Python has a reproduced fixture failure; Go tests/vet/module/build PASS; Linux physical fault qualification pending |
 | Full regression / acceptance | NOT RUN; Phase 3C NOT accepted |
 
 ## Current Windows continuation
@@ -59,8 +60,8 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
   Windows physical denial with unchanged bytes, Leader loss/takeover and quorum
   loss denying old permits. Linux unlink/lost-TLS-ACK branch is added but unrun here.
 - All 133 tracked/new working paths and contents reviewed: 0 private artifact/key/
-  credential findings; all 90 Python files parse; whitespace review PASS. Exact
-  staged blobs are reviewed again before commit. No source behavior changed after
+  credential findings; all 90 Python files parse; whitespace review PASS. All 20
+  staged blobs were reviewed with 0 findings before the verified 3C.4c push. No source behavior changed after
   these PASS results (only reporting and a module description updated).
 - Intermediate failures: existing Windows nonexistent-arena path leaked
   FileNotFoundError (now fixed to the original closed CatalogError); new unit
@@ -73,7 +74,8 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 
 ## Next action / resume
 
-Publish 3C.4c after final staged review and verify remote WIP HEAD before 3C.5. Final 3C.5 must run full Python/Go checks and
+3C.4c is published and independently remote-verified. Complete 3C.5 full Python
+reporting here, then publish progress. Final 3C.5 must also run
 Linux synthetic physical-boundary faults (paused final callback, quorum/term change,
 real unlink/lost ACK/restart) before ACCEPTED. Windows skipped physical tests are a
 concrete remaining qualification limit, not evidence that GC is safe on Windows.
@@ -83,3 +85,17 @@ original dirty worktree and all history; no reset/force/main or device deploymen
 Rollback requires stopped/isolated matching private state AND byte backups. Never
 restore an older Catalog over physically GC-mutated volumes or erase reservations,
 retirements, journals, terms or receipts. Synthetic volumes only; real devices locked.
+
+3C.5 intermediate finding: the first full run on 74bb6a9 found the existing
+metadata subprocess no-fallback assertion failing on Windows. Isolated reproduction
+`python -B -m unittest tests.test_consensus -v`: 3 tests, 1 FAIL, 28.779s. Actual
+stderr was DEVICE IDENTITY UNKNOWN, not the required attached-registry error.
+The synthetic profile wrapper previously ran only on Linux. It now runs on every
+host with unchanged product code, no-fallback assertion and explicit guard tests.
+The first full run is not PASS; after this repair a fresh full rerun is mandatory.
+
+3C.5a targeted repair check:
+`python -B -m unittest tests.test_consensus tests.test_nodes.RuntimeSafetyTests tests.test_lifecycle.DeviceSafetyTests -v`:
+**11 PASS, 27.498s**. Product M51/Android/unknown-device guards and all original
+no-fallback assertions are unchanged. Go source has not changed after the fresh
+11-test/vet/module verification/Windows+Android compile PASS recorded in acceptance.

@@ -300,3 +300,5 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   fixture routes/capabilities never enter product handlers/configs. Linux attaches
   only fresh-arena executors and drops a real successful GC TLS ACK before retry;
   Windows asserts physical denial. Prior tests and ordinary history aging remain.
+
+- 3C.5a `tests/test_consensus.py` synthetic metadata launcher supplies its explicitly permitted fake profile on Windows as well as Linux. No-config subprocess must reach the unchanged attached-registry no-fallback guard; all original assertions and separate M51/Android guard tests remain.

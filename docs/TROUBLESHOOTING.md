@@ -307,3 +307,5 @@ tracked and calls the existing validated init/run APIs; no Raft module is rewrit
 - gc_execution_unconfirmed / gc_completion_unconfirmed: the remote result or its exact scope is unconfirmed; retain Controller reservation and Node journal. Retry the same gc_job_id after current quorum/proofs recover; do not mint another target, edit DONE or delete the journal.
 - gc_permit_rejected / gc_permit_changed / gc_scope_rejected: expired or replaced run, changed identity/approval/endpoint or wrong exact scope. Only the explicit owner execution may renew a permit; never change term/schema/token fields manually.
 - Missing/nonexistent test arena now returns unsafe_gc_test_arena consistently on Windows too. It never creates/adopts that directory or grants capability.
+
+- Windows metadata regression initially failed its no-fallback stderr assertion because the unconfigured real PC correctly hit DEVICE IDENTITY UNKNOWN first. Synthetic launchers now supply a permitted fake profile on both platforms; do not relax the assertion or change the product hardware/config guards.
