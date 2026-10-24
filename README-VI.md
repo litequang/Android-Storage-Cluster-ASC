@@ -1,4 +1,15 @@
-# ASC QuickStart 0.8.0 — Controller failover (Windows development)
+# ASC QuickStart 0.9.0 — Backup, Versioning & Safe Restore (Windows development)
+
+Phase 3A v0.9.0 **đạt nghiệm thu Windows development ngày 2026-10-24**:
+full Python **122 tests OK — 119 PASS / 3 SKIP POSIX**, 556.852 giây; **12/12 ca
+Phase 3A** và **20/20 ca failover Phase 2B PASS**. Go tests/vet và build Windows
+PASS; Android ARM64 chỉ cross-build, chưa chạy. Có version history, snapshot tại
+committed Raft index, retention/trash logic, restore thành version mới và backup
+scheduler phục hồi qua Leader failover. Không có GC xóa byte vật lý. Chỉ bật bằng
+`backup-enable` sau khi mọi Controller development nâng source và giữ private
+backup đầy đủ. Lệnh: [README](README.md); file sửa, kiểm thử, giới hạn và rollback:
+[PHASE3A-ACCEPTANCE.md](docs/PHASE3A-ACCEPTANCE.md). Không triển khai trên Android,
+M51 hoặc production; không bắt đầu Phase 3B/Dashboard.
 
 Phase 2B v0.8.0 **đạt nghiệm thu Windows development ngày 2026-10-24**:
 20/20 ca failover PASS; full regression 101 test, 98 PASS và 3 SKIP POSIX.

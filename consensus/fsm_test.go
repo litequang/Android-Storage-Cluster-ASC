@@ -118,3 +118,38 @@ func TestRuntimeAuthorityUsesActualCommittedTerm(t *testing.T) {
 		t.Fatal("snapshot lost runtime authority")
 	}
 }
+
+func TestBackupProjectionKeepsActualTermFencingAndSnapshotBytes(t *testing.T) {
+	seed := []byte(`{"schema":1,"cluster_id":"cluster-a","epoch":"epoch-a","revision":0}`)
+	f := NewFSM("cluster-a", "epoch-a", seed)
+	apply := func(index, term uint64, c Command) Receipt {
+		b, e := json.Marshal(c)
+		if e != nil {
+			t.Fatal(e)
+		}
+		return f.Apply(&raft.Log{Index: index, Term: term, Data: b}).(Receipt)
+	}
+	document := []byte(`{"schema":2,"cluster_id":"cluster-a","epoch":"epoch-a","revision":1,"authority":{"node_id":"a","term":3},"backup":{"schema":1,"snapshots":{"retained":{"source_index":10,"manifest_sha256":"retained-hash"}}}}`)
+	c := Command{Schema: 1, Cluster: "cluster-a", Epoch: "epoch-a", RequestID: "backup-capture-001", Intent: sum([]byte("backup")), Expected: sum(seed), AuthorityTerm: 3, Document: document}
+	if r := apply(11, 3, c); r.Error != "" {
+		t.Fatal(r.Error)
+	}
+	before := f.View()
+	c.RequestID = "backup-stale-delete"
+	c.Expected = before.SHA
+	c.Document = []byte(`{"schema":2,"cluster_id":"cluster-a","epoch":"epoch-a","revision":2,"authority":{"node_id":"a","term":3},"backup":{"schema":1,"snapshots":{}}}`)
+	if r := apply(12, 4, c); r.Error != "stale_authority" {
+		t.Fatal("stale backup delete accepted", r)
+	}
+	if !bytes.Equal(f.View().Document, document) {
+		t.Fatal("stale backup changed retained manifest")
+	}
+	raw, _ := json.Marshal(f.View())
+	restored := NewFSM("cluster-a", "epoch-a", seed)
+	if e := restored.Restore(io.NopCloser(bytes.NewReader(seal(raw)))); e != nil {
+		t.Fatal(e)
+	}
+	if !bytes.Equal(restored.View().Document, document) {
+		t.Fatal("snapshot lost exact backup bytes")
+	}
+}

@@ -25,6 +25,11 @@ class Service(CatalogService):
         self._refresh_lock = threading.Lock()
         self._refreshed = None
         super().__init__(runtime.registry, rate, timeout)
+        from ..backup.service import Backups
+        self.backups = Backups(self)
+        from ..backup.catalog import VersionedCatalog
+        self.catalog = VersionedCatalog(runtime.registry)
+        self.queue.catalog = self.catalog
 
     def refresh(self):
         # Coalesce worker/owner probes within the same activation. A takeover
@@ -51,7 +56,22 @@ class Service(CatalogService):
             return
         return super()._bad_replica(replica, exc)
 
+    def upload_plan(self, obj):
+        view = self.runtime.view()
+        backup = view['document'].get('backup')
+        if backup:
+            files = {f['file_id']: f for f in view['document']['catalog']['files']}
+            for job_id, job in backup['jobs'].items():
+                if (job['kind'] == 'RESTORE' and files[job['source_file_id']]['logical_path'] == obj['logical_path'] and
+                        job['target_version'] == obj.get('version', 1) and obj['idempotency_key'] != 'restore-'+job_id):
+                    raise CatalogError('restore_version_reserved', 409)
+        return super().upload_plan(obj)
+
     def download_plan(self, file_id):
+        from ..backup.state import status
+        backup = self.runtime.view()['document'].get('backup')
+        if backup and status(backup, file_id) != 'LIVE':
+            raise CatalogError('version_not_live', 409)
         self.refresh()
         entry = self.catalog.file(file_id)
         with self.registry.connect() as db:
@@ -89,6 +109,7 @@ class Service(CatalogService):
                     # Pending/recovered work takes priority over background
                     # audits; a multi-replica audit must not starve owner ACKs.
                     job = self.run_one()
+                    self.backups.tick()
                     if job is None and time.monotonic()-last_reconcile >= 30:
                         self.reconcile(); last_reconcile = time.monotonic()
             except (CatalogError, ClientError, sqlite3.Error, OSError, ValueError):
@@ -157,7 +178,8 @@ class RuntimeHandler(Handler):
                     'raft_enabled': True, 'automatic_failover': True, 'file_storage_enabled': True,
                     'global_file_catalog_enabled': True, 'schema_version': 4,
                     'features': ['controller-failover-v1', 'node-lifecycle-v1', 'retry-safe-enrollment-v1',
-                                 'global-catalog-v1', 'metadata-replication-v1', 'file-scoped-transfers-v1']})
+                                 'global-catalog-v1', 'metadata-replication-v1', 'file-scoped-transfers-v1',
+                                 'backup-versioning-v1']})
             if self.command == 'GET' and parsed.path.startswith('/catalog/v1/'):
                 query = parse_qs(parsed.query, strict_parsing=True)
                 if any(len(v) != 1 for v in query.values()) or parsed.fragment:
@@ -182,8 +204,17 @@ class RuntimeHandler(Handler):
                     def public(f):
                         return {'file': {k: f[k] for k in FILE_FIELDS}, 'replicas': [r for r in doc['replicas']
                             if r['file_id'] == f['file_id']], **common}
+                    backup = view['document'].get('backup')
+                    if backup:
+                        from ..backup.state import heads, status
+                        original_public = public
+                        def public(f):
+                            return {**original_public(f), 'version_state': status(backup, f['file_id'])}
                     if parts == ['files']:
-                        return self._json(200, {'files': [public(f) for f in doc['files']], **common})
+                        visible = doc['files']
+                        if backup:
+                            visible = [f for f in heads(doc) if status(backup, f['file_id']) == 'LIVE']
+                        return self._json(200, {'files': [public(f) for f in visible], **common})
                     file = next((f for f in doc['files'] if f['file_id'] == parts[1]), None)
                     if file is None:
                         raise CatalogError('file_not_found', 404)

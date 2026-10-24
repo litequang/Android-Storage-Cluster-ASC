@@ -214,3 +214,22 @@ The hash-pinned PySyncObj 0.3.17 probe reproduces another vote in the same term 
 tools/qualify_pysyncobj.py downloads only with explicit --download, checks a fixed official-artifact SHA-256 before importing selected Python modules from temporary state, and never runs packaging/install scripts or opens listeners. Treat external-engine execution as development qualification only; --archive supports an offline verified artifact. No private ASC identity/state is supplied. Synchronization-call observations are not physical power-cut tests.
 
 Per-voter identity, durable vote-before-message ordering, exact cluster/membership binding, bounded authenticated decoding, recovery fencing and isolated-leader strong-read rejection remain unimplemented gates. No keys/tokens are replicated and no consensus log/snapshot containing user metadata is created in this investigation. Existing pinning, grants, lifecycle/rate limits and M51 protection remain unchanged. Full evidence/alternatives: PHASE2A-ACCEPTANCE.md.
+
+## Phase 3A backup boundary
+
+Enable only after all development Controllers run matching source. Every logical
+delete/expiry, snapshot, schedule, job checkpoint and restore uses existing actual-
+term Go CAS. Former/minority Leaders cannot commit these operations; no physical
+delete grant, purge endpoint or object GC is introduced. Snapshot pins and active
+restores prevent logical expiry. Hash verification uses actual served bytes and
+approved physical-domain assertions; failure leaves suspect/last copies retained.
+
+Snapshots/jobs remain inside the cluster. They are not offline/disaster backups,
+and a metadata snapshot alone does not prove readable bytes. VERIFIED records
+historical checks, never continuous availability. No production, Android/SD,
+physical power-cut, Byzantine-Controller or disconnected-backup qualification.
+Backup manifests contain private names/hashes; keep private state outside source.
+
+As with the existing transfer contract, previously issued short-lived read grants
+may remain usable until expiry; already-authorized streams can finish. Logical
+trash is not a revocation/secure-erasure mechanism. No final bytes are overwritten.

@@ -40,15 +40,22 @@ def rows(db, table):
 
 
 def export(db, revision, authority):
-    return {'schema': 2, 'cluster_id': db.execute("SELECT value FROM settings WHERE key='cluster_id'").fetchone()[0],
+    result = {'schema': 2, 'cluster_id': db.execute("SELECT value FROM settings WHERE key='cluster_id'").fetchone()[0],
             'epoch': db.execute('SELECT epoch FROM catalog_state').fetchone()[0],
             'revision': revision, 'authority': authority,
             'catalog': catalog_export(db), 'tables': {t: rows(db, t) for t in SHARED},
             'inventory_cursor': (lambda r: r[0] if r else None)(db.execute(
                 "SELECT value FROM settings WHERE key='catalog_inventory_cursor'").fetchone())}
+    backup = db.execute("SELECT value FROM settings WHERE key='phase3a_backup'").fetchone()
+    if backup:
+        result['backup'] = json.loads(backup[0])
+    return result
 
 
 def _install(db, doc):
+    db.execute("DELETE FROM settings WHERE key='phase3a_backup'")
+    if 'backup' in doc:
+        db.execute("INSERT INTO settings VALUES('phase3a_backup',?)", (canonical(doc['backup']).decode(),))
     for table in [*SHARED, *TABLES.values(), 'storage_grants']:
         db.execute(f'DELETE FROM {table}')
     db.execute('UPDATE catalog_state SET epoch=?,revision=?,head_digest=? WHERE singleton=1',
@@ -69,7 +76,7 @@ def _install(db, doc):
 
 def validate(doc):
     try:
-        if (not isinstance(doc, dict) or set(doc) != {'schema', 'cluster_id', 'epoch', 'revision',
+        if (not isinstance(doc, dict) or set(doc) - {'backup'} != {'schema', 'cluster_id', 'epoch', 'revision',
                 'authority', 'catalog', 'tables', 'inventory_cursor'} or doc['schema'] != 2 or
                 type(doc['revision']) is not int or not 0 < doc['revision'] < 2**63 or
                 set(doc['tables']) != set(SHARED) or
@@ -78,6 +85,9 @@ def validate(doc):
                 type(doc['authority']['term']) is not int or not 0 < doc['authority']['term'] < 2**63):
             raise ValueError()
         catalog_validate(doc['catalog'])
+        if 'backup' in doc:
+            from ..backup.state import validate as validate_backup
+            validate_backup(doc['backup'], doc['catalog'])
         if (doc['cluster_id'], doc['epoch']) != (doc['catalog']['cluster_id'], doc['catalog']['epoch']):
             raise ValueError()
         if len(canonical(doc)) > 2*1024**2:
@@ -163,6 +173,9 @@ def takeover(doc, node_id, term):
     result['revision'] += 1
     result['authority'] = {'node_id': node_id, 'term': term}
     result['tables']['transfer_grants'] = []
+    if 'backup' in result:
+        from ..backup.state import takeover as backup_takeover
+        result['backup'] = backup_takeover(result['backup'])
     for job in result['tables']['catalog_jobs']:
         job.update(run_token=None, lease_until=None)
         if job['state'] == 'RUNNING':

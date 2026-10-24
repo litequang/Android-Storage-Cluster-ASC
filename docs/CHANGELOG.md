@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## v0.9.0 — 2026-10-24 — Phase 3A Windows development accepted
+
+- Explicit bounded backup schema 1 on the existing runtime schema 2: immutable
+  version history/live heads, exact committed-index logical snapshot manifests,
+  snapshot pins, logical TRASH/EXPIRED and conservative retention policies.
+- Durable backup schedules, claims/proof checkpoints/retries and version-reserved
+  restore jobs survive Controller changes. Restore reuses existing same-key upload,
+  immutable Storage commit and independent byte proof, creating a new version.
+- Verify enough distinct approved domains before backup completion; preserve
+  suspect/last copies. Recheck active work after takeover and reject stale/minority
+  authority with existing Go actual-term CAS and online Storage introspection.
+- Add owner-only backup API/CLI, strict completion-proof validation, request replay
+  and bounds. Retention protects the last historically verified version while a
+  higher upload is incomplete; it never removes physical objects.
+- Restore the documented Go init/run launcher missing in the supplied base checkout;
+  scope executable ignore rules so the source directory is tracked. Existing Raft,
+  Store/Engine, lifecycle and metadata envelopes retain their established boundaries.
+- Fresh full Python: 122 tests OK, 119 PASS / 3 existing POSIX skips, 556.852s;
+  12/12 Phase 3A and 20/20 Phase 2B fault gates PASS. Go 11 top-level tests,
+  go vet, module verification and Windows/Android ARM64 builds PASS (Android
+  compile only). Exact evidence/intermediate failures: PHASE3A-ACCEPTANCE.md.
+  No Android/production or disconnected-backup qualification.
+
 ## v0.8.0 — 2026-10-24 — Phase 2B Windows development accepted
 
 - Final full regression: 101 tests, 98 PASS / 3 existing POSIX skips,

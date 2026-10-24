@@ -274,3 +274,34 @@ Engine selection is blocked; /api/v1, /storage/v1 and /catalog/v1 still implemen
 Future protocol requirements: per-voter authenticated pinned/trusted transport before message decoding; immutable cluster/membership identity; bounded versioned commands with idempotency/payload digest; majority commit and deterministic apply before successful write response; engine read barrier and applied-index check for strong reads. Never infer voting identity from a submitted node_id/address or use a shared long-lived admin secret.
 
 All CREATE/POLICY/COMPLETE/REPLICA_STATE/REVERIFY callers and alternate direct writer paths require one enforced consensus authority boundary before such a mode can be advertised. Physical proof/late ACK alone must not publish a replica outside committed apply. Until distributed storage fencing is accepted, future metadata leadership changes cannot activate old Controller job/grant automation. Exact current routing and pending contracts are in PHASE2A-ACCEPTANCE.md; these statements introduce no new wire schema or active guarantees.
+
+## Phase 3A owner backup API (opt-in runtime only)
+
+`/catalog/v1/backup/*` requires owner admin and current Runtime quorum/term gate.
+POST enable {request_id} explicitly enables backup schema 1 after all Controllers
+upgrade. All mutations below require request_id (8..128 URL-safe characters) and
+return the same committed result for the same intent; conflicting reuse is 409.
+GET status/snapshots/jobs/schedules/policies/trash returns bounded records.
+GET history?logical_path=URL_ENCODED_PATH returns immutable versions and state/pins.
+
+| POST suffix | Additional body / result |
+|---|---|
+| snapshots | copies?:2 (1..3), retention_seconds?:604800 (60..315360000); snapshot_id/job_id |
+| restore | file_id, snapshot_id?; durable job_id and new target_version |
+| snapshots/ID/restore | one reserved restore job per captured file |
+| delete | file_id; logical TRASH only |
+| policies | logical_path, keep_last (1..256), max_age_seconds/trash_seconds (60..315360000) |
+| retention/run | expired_versions, physical_deletions=0 |
+| schedules | interval_seconds (60..86400), copies?, retention_seconds?; schedule_id |
+| schedules/ID | enabled boolean |
+| jobs/ID/retry | explicit same-job retry with fresh checks |
+| jobs/run | optional job_id; one bounded worker turn, no request_id required |
+
+GET files lists latest LIVE heads after enable; file/ID exposes version_state.
+Local stale views use the same namespace rule. Strict version-1 node metadata
+snapshot/delta envelopes remain unchanged and continue to retain all version data;
+those caches do not implement current backup/trash authority. Normal download of
+TRASH/EXPIRED returns 409 version_not_live; owner restore uses fresh scoped proof.
+snapshot_unverified_head rejects an in-flight head rather than omitting it.
+Physical delete/purge endpoints do not exist. Backup CLI commands use the same
+pinned owner client; explicit --request-id supports retry after lost response.

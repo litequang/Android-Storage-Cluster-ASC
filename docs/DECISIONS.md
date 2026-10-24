@@ -124,3 +124,20 @@ and exact executed evidence in PHASE2B-ACCEPTANCE.md.
 
 - ADR-037 (decided): Do not adopt unmodified PySyncObj 0.3.17. Its MIT official sdist was SHA-256 verified and exercised with tools/qualify_pysyncobj.py. A clean restart retains term/vote, but deleting or corrupting only .meta permits a second vote to another peer in the same term. Probe also observes absent fsync/mapping-flush boundaries and unauthenticated default address handshake. This does not assert measured physical power-cut loss or an exploit against ASC. Evidence, exact hash, primary sources and limits: [PHASE2A-ACCEPTANCE.md](PHASE2A-ACCEPTANCE.md). No patch, engine dependency or runtime mode is installed.
 - ADR-038 (pending integration choice): Prefer investigating etcd-io/raft v3.7.0 (Apache-2.0) through a Go sidecar for deterministic engine ticks/messages and safe read barriers; a Go development toolchain and Windows/Android artifact qualification are still needed. HashiCorp raft v1.8.0 (MPL-2.0) is another native alternative. rraft-py 0.2.27 (Apache-2.0) has no matching published Windows CPython-3.14 wheel and requires unverified native build work; raftos 0.2.6 (MIT) has persistence and legacy pinned-dependency gaps. A reviewed PySyncObj fork with durable/fail-closed persistence and per-voter pinned transport is an alternative, not an accepted implementation. No engine is finally selected, no homemade Raft is authorized by this ADR, and no universal claim that all libraries are unsuitable is made. Report alternatives to the owner before crossing the task's custom-engine boundary.
+
+## Phase 3A decisions
+
+- ADR-045: Extend runtime schema 2 with optional bounded backup schema 1. Explicit
+  enable after all Controllers upgrade; old validators fail closed. Preserve the
+  frozen source registry and Engine. No automatic SQL or identity migration.
+- ADR-046: Capture logical manifests at an exact quorum-confirmed source index;
+  retain immutable version pins separately from current heads. Independently hash
+  domain-separated replicas before backup verification. In-cluster logical backups
+  are not disconnected disaster backups. Historical verification can become stale.
+- ADR-047: Restore creates a new version with a durable job/reserved version and
+  stable existing upload key. Takeover invalidates backup leases/proof progress;
+  fresh verification and current Storage authority are required. Retention only
+  marks EXPIRED, never deletes final bytes or permits stale-Leader physical GC.
+
+ADR-045..047 passed the actual Windows Phase 3A fault matrix and full regression;
+qualification evidence and remaining limits: PHASE3A-ACCEPTANCE.md.

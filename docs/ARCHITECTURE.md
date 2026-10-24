@@ -171,3 +171,19 @@ The proposed integration separates leader preparation (IDs, clock, placement and
 A safe read barrier/ReadIndex plus applied-index check is required for strong reads. A local leader flag/term/heartbeat is insufficient. Existing read-only caches remain stale. Public metadata exports need a separate validated consensus snapshot envelope rather than becoming Raft snapshots merely by renaming them.
 
 At that initial stage, registry lifecycle, approvals/probes, job leases/grants and storage side effects remained single-Controller state. Metadata-only consensus must prohibit physical-write/job failover until distributed fencing is proved. Bootstrap/membership/recovery must preserve cluster identity and fail closed on lost state. These were the initial integration constraints; the separate Phase 2B boundary and qualification above describe the later opt-in runtime.
+
+## Phase 3A opt-in backup boundary ? Windows development accepted
+
+POST backup/enable adds bounded backup schema 1 to the existing schema-2 runtime
+projection. All Controllers must use the matching source before enabling it.
+Existing Go CAS, actual-term checks, private cache and Storage introspection carry
+this extension unchanged. Base registry 4/manifest 1/public cache 1 are unchanged.
+Snapshots capture exact committed index/term/control and Catalog revisions plus
+immutable version descriptors; subsequent verification is historical evidence.
+Backup jobs request existing domain-separated COPY jobs and independently hash
+served bytes. Restore uses existing UPLOAD/session/commit/proof paths with one
+persisted version and stable key; it creates a new version, preserving the source.
+Retention expires logical references only. Physical immutable bytes are preserved.
+
+The executed 12-gate Phase 3A matrix and fresh complete regression qualify this
+bounded Windows development path only; see PHASE3A-ACCEPTANCE.md.

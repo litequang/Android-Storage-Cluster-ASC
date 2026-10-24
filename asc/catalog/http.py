@@ -41,6 +41,9 @@ def handle(handler):
                 return handler._json(403,{'error':'metadata_not_authorized'})
             return handler._json(200,service.metadata_ack(obj))
         if not handler._admin():return
+        if parts[0] == 'backup' and getattr(service, 'failover', False):
+            from ..backup.http import handle as backup_handle
+            return backup_handle(handler, parts[1:], query)
         if method=='GET':
             if parts==['files'] or parts==['jobs']:
                 if set(query)-{'offset'}:raise ValueError()

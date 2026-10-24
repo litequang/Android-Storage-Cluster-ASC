@@ -124,7 +124,8 @@ catalog-snapshot*.json
 catalog-metadata*.json
 
 # Go consensus development artifacts and private sidecar config/state
-asc-raft
+/asc-raft
+/consensus/asc-raft
 asc-raft.exe
 *.test
 consensus*.json

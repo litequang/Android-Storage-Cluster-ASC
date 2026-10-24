@@ -226,3 +226,34 @@ Rollback requires stopped/isolated complete pre-attachment private backups and
 matching source, retaining current metadata/objects separately. Full instructions
 and exact commands: GO-SIDECAR.md and DATA_MODEL.md. No production/phone recovery
 was attempted.
+
+## Phase 3A backup/restore diagnostics
+
+- phase3a_not_enabled: upgrade every stopped development Controller to matching
+  source, preserve complete private backups, then explicit backup-enable.
+- invalid_backup_projection: preserve full state; restore reviewed consistent
+  backup. Never edit manifest digests, source indices or tombstones to accept it.
+- snapshot_unverified_head: latest version lacks verified replica evidence; finish
+  its existing upload before capture. Older versions are not silently substituted.
+- copies_pending: ordinary Catalog COPY jobs have not met requested domains yet.
+  Inspect existing jobs/probes/space; backup is not VERIFIED. No data is removed.
+- backup_unavailable/restore_unavailable: checksum, node, quorum or transfer failed;
+  checkpoints and original bytes remain. Repair cause; use same-job explicit retry
+  after five failed attempts. NEEDS_REVIEW still requires exact retained hashes.
+- version_not_live/version_expired: ordinary download denied by logical lifecycle.
+  Restore a retained version or a retained snapshot reference into a new version.
+- restore_version_reserved: an existing restore owns that logical version; use a
+  different explicit upload version or complete/retry the same restore job.
+- Stale backup lease/Controller failure: new Leader invalidates leases, preserves
+  snapshot/reserved version/upload key and rechecks bytes. Do not reset state.
+- Logical retention does not free disk space. Final immutable objects remain;
+  capacity exhaustion is explicit. Physical GC requires separate qualification.
+- Projection/receipt limits fail closed. No automatic history eviction exists.
+
+Due captures with an unverified head or exhausted snapshot/job bound record a fixed
+schedule last_error and retry time; existing jobs continue. Retrying a logically
+expired source is refused, preserving the same restore eligibility rules.
+
+The supplied base commit omitted `consensus/cmd/asc-raft/main.go`: the unanchored
+asc-raft ignore also matched the source directory. The source launcher is now
+tracked and calls the existing validated init/run APIs; no Raft module is rewritten.

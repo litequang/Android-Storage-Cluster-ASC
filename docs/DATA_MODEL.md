@@ -220,3 +220,33 @@ Runtime schemas stay registry 4, local manifest 1 and read-only metadata cache 1
 Proposed future consensus persistence must bind cluster/node identity, engine/schema version, membership, term/vote, indexed log, commit/applied checkpoint and validated snapshot metadata. Lost/corrupt state must stop participation rather than initialize defaults. Existing Catalog epoch/revision alone is not sufficient Raft authority.
 
 A future apply transaction must atomically store Catalog changes/event, applied index/term and permanent replay-safe request receipt (ID, payload digest, result). Prepared command IDs/timestamps/placement must not be regenerated during replay. A snapshot needs the applied checkpoint, membership and receipt set alongside consistent materialization/checksums; schema-1 public exports omit these. Preserve logs until safe snapshot installation/compaction is implemented and tested. These are pending contracts, not a schema currently accepted by source.
+
+## Phase 3A extension persistence
+
+The optional `backup` member of runtime schema 2 has its own `schema:1` and strict
+bounded maps: files (256 tombstones), snapshots (64 manifests), jobs (256),
+schedules (32), policies (256), requests (512 intent/result receipts). Overall
+runtime 2 MiB and Go permanent 4096-receipt limits still apply; exhaustion rejects
+new work rather than evicting authority. MemoryRegistry carries this JSON in its
+private disposable settings only; the persistent authority is the Go document.
+
+Snapshot manifest binds cluster/epoch, source applied index/term, control revision,
+Catalog revision/digest, captured creation time and immutable file descriptors.
+Manifest SHA excludes later verification/expiry state. Job proofs record streamed
+size/SHA, approved distinct domains and verification time. Backup/restore jobs have
+lease/run IDs and durable cursors; takeover resets active proof progress and leases.
+Restore reserves max Catalog/pending-restore version+1; its stable existing UPLOAD
+key is restore-<job UUID>. Old/new objects and their manifests are never overwritten.
+
+LIVE is implicit. TRASH and EXPIRED tombstones affect namespace/download eligibility;
+metadata version history remains. Retained snapshots and active restore jobs pin
+versions. keep_last plus minimum age expires only older unpinned versions; trash
+expires after its grace period. Scheduled retention is logical, physical GC absent.
+
+Rollback: before enable upgrade all stopped development Controllers and retain full
+private state/witnesses/volumes and matching v0.8 source. Once enabled, old runtime
+validators refuse the extension. Stop/isolate all voters and restore complete
+pre-enable private backups plus matching source; preserve post-enable state and
+objects separately. Do not remove the extension, lower schemas or edit Raft state.
+The latest historically verified version is also retained while a higher version
+is still incomplete. Older-version age/count retention counts verified versions.

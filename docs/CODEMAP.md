@@ -1,4 +1,4 @@
-# ASC CODEMAP — v0.8.0 Phase 2B development / v0.6 default storage boundary
+# ASC CODEMAP — v0.9.0 Phase 3A development / preserved v0.6 default boundary
 
 ## Phase 2B — Windows development qualified
 
@@ -145,3 +145,47 @@ Historical PySyncObj evidence below remains unchanged.
 - Default-mode mutation routing: service.upload_plan -> state.Catalog.mutate CREATE; http.handle -> POLICY; service._execute -> COMPLETE; service._bad_replica -> REPLICA_STATE; service.reconcile -> REVERIFY. These remain single-writer and are all denied after consensus attachment. Distributed writes use Adapter.submit -> quorum FSM CAS -> Adapter.sync transaction.
 - Existing metadata.MetadataSource/MetadataReplica are Catalog export/cache, not Raft snapshot/install. queue/grants/registry are not consensus state.
 - Historical investigation and current 15-gate evidence: [PHASE2A-ACCEPTANCE.md](PHASE2A-ACCEPTANCE.md). ADR-037/038 retain PySyncObj rejection; ADR-039 selects Go. Historical v0.6 regression: 92 tests OK, 3 POSIX skips; PySyncObj probe: 1 PASS / 5 FAIL. New source requires fresh full regression.
+
+## Phase 3A extension ? Windows development accepted
+
+- `asc/backup/state.py`: bounded backup schema 1 validation, committed-view
+  manifest capture, version heads/pins and takeover lease invalidation.
+- `asc/failover/state.py`: optional backup extension carried through existing
+  schema-2 export/install/validation and takeover. Original base SQL is unchanged.
+- `asc/backup/service.py`: Backups._edit idempotent term-bound changes,
+  snapshot/restore/delete/policy/retention, durable schedules/claims/checkpoints,
+  physical checksum/domain verification and same-key restore upload recovery.
+- `asc/backup/http.py`: owner-only `/catalog/v1/backup` routes through RuntimeHandler.
+  `failover.Service` owns the scheduler and denies non-LIVE normal downloads.
+- `tests/test_backup.py`: bounded-projection/retention/idempotency unit tests plus
+  reused real three-voter/TLS Windows fixture, without duplicating Phase 2B tests.
+- `asc/backup/catalog.py`: live namespace displays only latest LIVE heads after
+  explicit enable; per-version lookup/history and public metadata remain intact.
+- `asc/backup/cli.py`: explicit backup-* owner commands with required retry IDs;
+  `catalog.cli.register` shares its existing protected-device/pinned client guard.
+  Restore version reservations reject conflicting uploads; worker runs retention
+  each minute using committed pins and advances due schedules atomically.
+- Backup projection validation checks proof/cursor coverage, independent domain
+  counts and restored target identity before accepting completion. Resume can
+  verify an already completed target without requiring the original source again.
+- `consensus/fsm_test.go:TestBackupProjectionKeepsActualTermFencingAndSnapshotBytes`
+  checks stale backup deletion rejection and exact extension snapshot retention.
+- Unit acceptance additionally rejects incomplete/duplicate-domain backup proof,
+  stale checkpoint completion, invalid retention bounds and projection exhaustion;
+  covers empty snapshots, batch restore replay and active-restore trash pins.
+- Windows acceptance also drops a real successful restore commit ACK over pinned
+  TLS, crashes the Controller, and checks one stable job/session/object/version
+  after takeover. Snapshot/restart acceptance requires a real successful Go snapshot.
+- Scheduler records/defer retries for an unverified head or exhausted map bound
+  without starving existing backup/restore jobs. `asc/__init__.py`: 0.9.0 development.
+- Base-commit packaging repair: `consensus/cmd/asc-raft/main.go` restores the
+  documented thin init/run launcher using ReadConfig/Config.Initialize/Start/Close;
+  `main_test.go` rejects malformed invocations. `.gitignore` now scopes Unix binary
+  names to output locations so the command source directory is publishable.
+- Retention additionally protects the latest historically VERIFIED version while
+  a newer upload is incomplete; request IDs are hashed for bounded Go receipt keys.
+  Fault acceptance corrupts every source and requires bounded FAILED with no proof.
+
+- Final fresh gate: 122 Python tests OK (119 PASS / 3 POSIX skips), 12/12
+  Phase 3A + 20/20 Phase 2B faults; Go/vet/build PASS. Exact reproduction,
+  changed paths, bounded guarantees and rollback: PHASE3A-ACCEPTANCE.md.
