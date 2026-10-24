@@ -39,7 +39,9 @@ class Executor:
 
     def _authorize(self,contract,authorize):
         if not callable(authorize):raise StorageError('gc_fresh_authorization_required',403)
+        started=time.monotonic()
         reply=authorize()
+        if time.monotonic()-started>10:raise StorageError('gc_authority_budget_expired',409)
         if not isinstance(reply,dict) or reply.get('constraints')!=contract:
             raise StorageError('gc_fresh_authorization_required',403)
         proof=reply.get('authority',{})

@@ -1,6 +1,7 @@
-"""Guarded GC planning/confirmation. Physical execution is separately unavailable."""
+"""Guarded GC planning/confirmation and separately capability-locked execution."""
 import copy
 from .planner import graph
+from .execution import GCExecution
 from .proofs import verify,recheck,nodes
 from .arena import require_controller
 from ..catalog.common import CatalogError, digest, identifier, key, now, uid
@@ -10,7 +11,7 @@ def confirmation(plan_id,plan_sha256):
     return 'DELETE-ISOLATED-TEST-OBJECT:'+plan_id+':'+plan_sha256
 
 
-class GarbageCollection:
+class GarbageCollection(GCExecution):
     def __init__(self,replication):
         self.replication=replication;self.service=replication.service;self.runtime=replication.runtime
 

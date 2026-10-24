@@ -406,3 +406,11 @@ current-term unchanged graph/proofs and issued temporary fixture capability; cre
 RESERVED gc_job_id with physical_deletions=0. Default runtime returns 403
 physical_gc_locked even for the owner; there is no runtime config/CLI/env enable.
 Wrong/expired/changed plan returns 409; no physical executor/execute endpoint yet.
+
+### Checkpoint 3C.4c - isolated GC authorization
+
+Owner-only `POST /catalog/v1/replication/gc-execute {gc_job_id}` explicitly executes an already confirmed reservation. Job ID is the retry identity; retries renew the ephemeral run/permit, not the object or confirmation. DONE replays its single-object outcome. There is no enable flag/CLI/env, and ordinary Controllers return physical_gc_locked. No raw GC bearer is returned in the owner API or persisted.
+
+Test-only attached Storage executor accepts `POST /storage/v1/gc/<gc_job_id>` with exactly `{}`, bearer and X-ASC-Volume-ID. No object/path body is accepted. Distributed pinned introspection uses operation=gc, exact scope `{method:POST,resource:gc/<id>}` and a new nonce. Reply constraints bind GC job/retirement/node/volume/local/global IDs, generated logical path, size/SHA, cluster/epoch/plan SHA, permit term/run/expiry; reply authority binds the request nonce and intent to an actual-term committed receipt. Every callback rehashes independent survivors and rechecks target references/current credentials, with no authorization cache or legacy fallback. A superseded/expired permit, new pin, changed approval/generation, stale Leader or missing quorum is denied. The executor reauthorizes immediately before unlink or known journal replay.
+
+Ordinary Agent has an empty executor map; Windows/Android physical execution stays locked. Storage failure yields gc_execution_unconfirmed (503) and keeps the durable job/run. Retry the same GC job; only a matching exact node result can mark DONE. physical_deletions=1 is the historical one-object job outcome, never an incremental counter. Node replay reports unlinked_now=false and logical_bytes_removed_now=0.

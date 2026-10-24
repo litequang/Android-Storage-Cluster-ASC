@@ -249,3 +249,5 @@
 - 3C.4b: isolated fresh Linux temporary-volume executor, exact-body checksum/identity
   and final callback gate, durable bounded journal and crash/lost-ACK restart
   recovery. No network activation yet; ordinary Agent/real devices remain locked.
+
+- 3C.4c development: connect confirmed synthetic GC jobs to exact-object, fresh-proof, actual-term quorum introspection and explicit owner execution; preserve hash-only permits, takeover fencing and journal replay. Default Agent/real-device physical GC remains locked. Windows targeted qualification: 85 tests OK (74 PASS / 11 Linux-only physical skips), plus actual three-voter/TLS GC authorization fault test PASS. Linux physical network execution and final Phase 3C acceptance remain pending.

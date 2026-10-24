@@ -34,6 +34,7 @@ class Service(CatalogService):
         self.gc_test_context = None
         from ..replication.gc import GarbageCollection
         self.gc = GarbageCollection(self.replication)
+        runtime.gc_authorizer = self.gc
         from ..backup.catalog import VersionedCatalog
         self.catalog = VersionedCatalog(runtime.registry)
         self.queue.catalog = self.catalog

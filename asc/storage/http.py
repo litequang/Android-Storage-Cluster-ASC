@@ -31,6 +31,7 @@ class StorageServer(Server):
     def __init__(self, address, engine, node_config):
         self.engine, self.node_config = engine, dict(node_config)
         self.discovery = None
+        self.gc_executors = {}  # Only an in-process synthetic fixture may attach issued executors.
         if 'controllers' in node_config:
             from ..failover.discovery import Discovery
             if not node_config.get('cluster_epoch'):
@@ -96,6 +97,7 @@ class StorageHandler(Handler):
         except (OSError, ValueError):
             raise StorageError('authorization_unavailable', 503) from None
         self._constraints = reply.get('constraints')
+        self._authority_reply = reply
         return reply['principal'], volume
 
     def _route(self):
@@ -107,6 +109,26 @@ class StorageHandler(Handler):
         resource = parts[3]
         extra = parts[4:]
         method = self.command
+        if resource == 'gc':
+            if method != 'POST' or len(extra) != 1 or parsed.query:
+                raise StorageError('not_found', 404)
+            identifier(extra[0])
+            if self.server.discovery is None or not self.server.gc_executors:
+                raise StorageError('physical_gc_locked', 403)
+            principal, volume = self._authorize('gc')
+            from ..replication.sandbox import Executor
+            executor = self.server.gc_executors.get(volume)
+            if type(executor) is not Executor or executor.engine is not self.server.engine:
+                raise StorageError('physical_gc_locked', 403)
+            executor.capability.validate(self.server.engine)
+            exact = self._constraints
+            if not exact or exact.get('gc_job_id') != extra[0]:
+                raise StorageError('forbidden', 403)
+            valid.payload(self._read_json(), ())
+            def fresh():
+                self._authorize('gc')  # New nonce/actual-term commit; no cached reply or fallback.
+                return self._authority_reply
+            return self._json(200, executor.execute(exact, fresh))
         operation = 'write' if resource == 'uploads' else 'verify' if extra[-1:] == ['verify'] else 'list' if resource in ('volumes','status','inventory') or resource == 'files' and not extra else 'read'
         if (resource not in ('uploads', 'files', 'volumes','status','inventory') or
                 method not in ('GET', 'POST', 'PUT')):

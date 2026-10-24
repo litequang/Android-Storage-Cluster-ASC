@@ -24,7 +24,8 @@ def temporary_identity(path):
     supported_test_host()
     raw=Path(path).absolute();root=Path(tempfile.gettempdir()).resolve()
     if raw.is_symlink():raise CatalogError('unsafe_gc_test_arena',403)
-    resolved=raw.resolve(strict=True)
+    try:resolved=raw.resolve(strict=True)
+    except OSError:raise CatalogError('unsafe_gc_test_arena',403) from None
     if resolved==root or not resolved.is_relative_to(root):raise CatalogError('unsafe_gc_test_arena',403)
     for parent in (raw,*raw.parents):
         if parent==root:break

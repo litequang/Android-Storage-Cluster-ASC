@@ -281,3 +281,22 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   `arena.fixture_node_capability` mints before first data; restart must match retained
   binding. Ordinary runtime has no executor; SandboxTests exercise actual fake-byte
   unlink/crash/ACK/restart/link/root/corruption/default-lock boundaries.
+
+- 3C.4c `replication.execution.GCExecution`: contract/permit_hash, issue, authorize,
+  execute; ephemeral generation/approval/endpoint-bound exact-object permits,
+  streamed external-domain survivor proof, full graph recheck, fresh actual-term
+  nonce receipt and exact completion. Never hold Runtime lock across network proof.
+- `RuntimeRegistry.storage_authorize` dispatches GC separately; Service installs
+  the authorizer but issues no capability. `replication.http` adds explicit owner
+  gc-execute; no background GC. `StorageHandler` requires an issued exact-volume
+  Executor and a fresh nonce at the final boundary, with no legacy fallback.
+  Sandbox rejects callbacks over 10s before the existing 250ms local unlink budget.
+- `tests/test_gc_authorization.py`: exact scopes/nonces, hash-only permits,
+  generation/endpoint/revoke/protection, pins/last copies/corruption, policy/term/
+  quorum changes, completion/lost ACK and delayed reply. Missing arena paths fail
+  closed on Windows too; no nonexistent directory is created/adopted.
+- `tests/test_gc_faults.py` / `tests/gc_fixture.py`: actual three-Go/TLS cohosts,
+  separate owner-authenticated fixture preparation sharing the real Runtime lock;
+  fixture routes/capabilities never enter product handlers/configs. Linux attaches
+  only fresh-arena executors and drops a real successful GC TLS ACK before retry;
+  Windows asserts physical denial. Prior tests and ordinary history aging remain.

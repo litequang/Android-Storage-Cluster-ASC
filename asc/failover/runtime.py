@@ -242,6 +242,11 @@ class RuntimeRegistry(Registry):
     def storage_authorize(self, node_id, node_token, grant, volume_id, operation, scope=None, nonce=None):
         valid.secret(node_token); valid.secret(grant); key(nonce)
         runtime = self.runtime
+        if operation == 'gc':
+            authorizer = getattr(runtime, 'gc_authorizer', None)
+            if authorizer is None:
+                raise CatalogError('physical_gc_locked', 403)
+            return authorizer.authorize(node_id, node_token, grant, volume_id, scope, nonce)
         with runtime.operation(), runtime.lock:
             view = runtime.view()
             if view['document']['authority'] != {'node_id': runtime.node_id, 'term': runtime.local.term}:

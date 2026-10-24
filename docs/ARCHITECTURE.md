@@ -286,3 +286,5 @@ Retry does not repeat an unlink or claim additional bytes, and always reauthoriz
 No network GC endpoint is wired yet; this checkpoint qualifies local fake-callback
 and filesystem behavior, not final quorum fencing. Physical execution stays locked
 on Windows/Android/real devices and outside issued synthetic temporary arenas.
+
+3C.4c connects explicit confirmed GC jobs to Controller/Storage authorization. Every run replaces the memory-only bearer and stores only its hash/run/term. Authorization rehashes independent survivors, rechecks the full target graph and current credentials, and commits a fresh nonce receipt. Storage accepts only an issued exact-volume executor, never a config switch; no background GC. A callback taking over 10 seconds is refused, followed by the existing 250ms local unlink budget. These bounds do not make network and filesystem atomic.

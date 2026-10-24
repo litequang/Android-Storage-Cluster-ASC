@@ -26,29 +26,60 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 | 3C.3a | PUSH VERIFIED `9a675c2`; 69 targeted + 17 TLS/unit PASS |
 | 3C.3b | PUSH VERIFIED `445af5c`; 59 targeted + 20 TLS/unit PASS |
 | 3C.4a | PUSH VERIFIED `b5cb2ed`; 91 targeted + 23 TLS/unit PASS |
-| 3C.4b | Isolated local executor/journal; 67 safety regression + final local tests PASS; publication pending |
-| 3C.4c–3C.5 | NOT STARTED |
+| 3C.4b | PUSH VERIFIED `c909e1e70a4ce7a01674b6caaed1b3b4e6574a65` by Windows fetch on 2026-10-24; prior Cloud local executor/journal checks retained |
+| 3C.4c | IMPLEMENTED / targeted Windows PASS; publication commit identified by Git log/next checkpoint |
+| 3C.5 | NOT STARTED |
 | Full regression / acceptance | NOT RUN; Phase 3C NOT accepted |
+
+## Current Windows continuation
+
+- Fetched origin and verified `c909e1e70a4ce7a01674b6caaed1b3b4e6574a65` as remote
+  WIP HEAD and 3C.4b. Its earlier publication-pending label is corrected above.
+- Original `E:/CODE/ASC-QuickStart` remains on 0550967 with uncommitted older 3B.1
+  work. It was not reset, stashed, overwritten or pulled across those edits.
+  Isolated detached worktree `.asc-worktrees/phase3c` starts exactly at c909e1e;
+  publication destination is only `HEAD:refs/heads/wip/phase2a-raft-qualification`.
+- Existing Python 3.14.7, private portable Go 1.27.3 and existing Git OpenSSL are
+  used with process-local environment only. No WSL distro is installed. Physical
+  executor remains Linux-only; do not bypass its Windows/Android lock for tests.
+- 3C.4c implements Controller/Storage integration, same-job fresh permits, target
+  generation/approval/endpoint binding, final full graph/external-domain SHA proof,
+  nonce/current-term quorum receipt, exact completion and journal replay transport.
+  Raw bearer is memory-only, no normal capability/enable path or automatic GC.
+
+## Checks so far (new Codex-run Windows evidence)
+
+- `python -B -m unittest tests.test_gc_authorization -q`: **12 PASS, 9.466s**.
+- `python -B -m unittest tests.test_gc_authorization tests.test_replication tests.test_gc_sandbox tests.test_storage tests.test_storage_cluster tests.test_distributed tests.test_failover.RuntimeStateTests -v`:
+  **85 tests OK: 74 PASS / 11 existing Linux-only physical SKIP, 116.410s**.
+  Existing TLS/distributed/runtime checks ran; no test/gate was weakened.
+- `python -B -m unittest tests.test_gc_faults -v`: **1 PASS, 306.174s**.
+  Actual three-Go/three-Python pinned TLS: external-domain streamed SHA, exact
+  nonce/intent receipt, wrong scope/volume/bearer and superseded run rejection,
+  Windows physical denial with unchanged bytes, Leader loss/takeover and quorum
+  loss denying old permits. Linux unlink/lost-TLS-ACK branch is added but unrun here.
+- All 133 tracked/new working paths and contents reviewed: 0 private artifact/key/
+  credential findings; all 90 Python files parse; whitespace review PASS. Exact
+  staged blobs are reviewed again before commit. No source behavior changed after
+  these PASS results (only reporting and a module description updated).
+- Intermediate failures: existing Windows nonexistent-arena path leaked
+  FileNotFoundError (now fixed to the original closed CatalogError); new unit
+  fixture initially referenced an unexposed helper/omitted required fake fields
+  (fixed). First integration harness incorrectly used a second writer against
+  the same sidecar and correctly hit CAS/probe holds. It now performs synthetic
+  preparation on the actual cohost Runtime lock; protection gates remain intact.
+- Prior Cloud 3C.4b 67 PASS / 49.807s and local journal evidence remain historical,
+  not new Windows physical-deletion proof. No real phone/M51/production accessed.
 
 ## Next action / resume
 
-Verify 3C.4b publication, then 3C.4c wire exact-object Controller/Storage authorization
-and actual three-voter/TLS execution. Ordinary runtime/Agent has no executor or
-context; no config/env/CLI enable exists. Local physical executor is Linux x86
-fresh synthetic temp volumes only, with immutable restart binding and FULL journal.
-Unit callbacks are simulated authorization, not yet proof of network quorum fencing.
+Publish 3C.4c after final staged review and verify remote WIP HEAD before 3C.5. Final 3C.5 must run full Python/Go checks and
+Linux synthetic physical-boundary faults (paused final callback, quorum/term change,
+real unlink/lost ACK/restart) before ACCEPTED. Windows skipped physical tests are a
+concrete remaining qualification limit, not evidence that GC is safe on Windows.
+No test capability is created by normal Controller or Agent startup. Preserve the
+original dirty worktree and all history; no reset/force/main or device deployment.
 
-`python -B -m unittest tests.test_gc_sandbox tests.test_storage tests.test_storage_cluster tests.test_distributed tests.test_replication -v`
-**67 PASS, 49.807s** (actual local unlink plus existing Storage/TLS/distributed).
-`python -B -m unittest tests.test_gc_sandbox tests.test_storage -v`: final local
-PASS (see 3c4b-local-final.log), adds post-manifest/DONE lost-ACK and reappeared-body
-holds. Source unchanged after tests. Logs under /workspace/work/phase3c.
-
-Next: issued Controller fixture context + issued Node arena only; default absent
-capabilities remain locked. Target-specific raw grant must never enter replicated
-state/logs; persist only hash. Fresh nonce/current-term quorum reauthorization at
-final unlink must reprove external-domain survivors/current graph. Takeover clears
-permit; paused/expired/missing quorum/new pin/old run must deny. No cached/fallback
-permit. Node journal makes actual unlink + lost ACK idempotent. API execute must
-be explicit confirmed test-only, never automatic background GC. Final full/fault
-acceptance and real physical-boundary timing limitations remain to document.
+Rollback requires stopped/isolated matching private state AND byte backups. Never
+restore an older Catalog over physically GC-mutated volumes or erase reservations,
+retirements, journals, terms or receipts. Synthetic volumes only; real devices locked.

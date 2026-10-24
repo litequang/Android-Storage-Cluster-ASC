@@ -31,6 +31,8 @@ def handle(handler,parts,query):
         valid.payload(obj,('request_id','retired_replica_id'));result=handler.server.catalog.gc.prepare(obj)
     elif parts==['gc-confirm']:
         valid.payload(obj,('request_id','plan_id','confirmation'));result=handler.server.catalog.gc.confirm(obj)
+    elif parts==['gc-execute']:
+        valid.payload(obj,('gc_job_id',));result=handler.server.catalog.gc.execute(obj)
     elif parts==['archive-jobs']:
         valid.payload(obj,('request_id','retired_replica_id'));result=service.archive_jobs(obj)
     elif parts==['reconcile']:
