@@ -8,6 +8,7 @@ from urllib.parse import urlsplit
 from ..identity import ensure_private_home, save_private
 from ..storage.volumes import no_links
 from .installer import private_path
+from .locks import validate_lock
 
 from . import STATE_FORMATS
 
@@ -67,6 +68,10 @@ def inspect_state(root):
         raise ValueError('unsupported Demo state contract')
     uuid.UUID(marker['installation_id'])
     lan_host(marker['host'])
+    for base, roles in ((root, ('demo-operation',)), (root / 'controller', ('controller', 'catalog-worker')),
+                        (root / 'node', ('agent',)), (root / 'node/storage', ('storage-engine',))):
+        for role in roles:
+            validate_lock(base / (role + '.lock'))
     for name in ('controller', 'node'):
         home = root / name
         no_links(home)

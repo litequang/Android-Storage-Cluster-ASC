@@ -358,3 +358,12 @@ Registry/CatalogService/StorageRuntime and existing guards; preserve all Core pa
 Demo final qualification/package evidence is recorded in `docs/DEMO-TRACK-ACCEPTANCE.md`;
 README / README-VI link the separate Demo plan/progress/owner workflow. Public package
 contains source only, all Core Python retained; no Go sidecar/runtime/private data.
+`docs/DEMO-ANDROID-PILOT.md` is the blank owner-only device acceptance checklist and
+installer-preview prefix handoff; no phone result is prefilled by Cloud tests.
+
+DEMO.3a.1: `asc/demo/locks.py` validates no links/regular/single-link/inode identity
+before writing coordination files, opens with O_NOFOLLOW on Linux and reuses Core
+OS lock primitives. All Demo lifecycle/source operations use private_lock; state
+preflight checks internal engine/worker coordination files before Core constructors.
+Final synthetic regression in test_demo_upgrade.py proves symlink/hardlink refusal
+leaves outside empty test-owned bytes unchanged. Core runtime.py is unchanged.

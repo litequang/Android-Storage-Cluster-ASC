@@ -60,7 +60,7 @@ def build(source, output):
     source, output = Path(source), Path(output)
     # Public source allowlist only. Private state, binaries and build outputs never enter.
     names = [p.relative_to(source).as_posix() for p in (source / 'asc').rglob('*.py')]
-    names += ['scripts/demo-alpha.sh', 'docs/DEMO-QUICKSTART.md']
+    names += ['scripts/demo-alpha.sh', 'docs/DEMO-QUICKSTART.md', 'docs/DEMO-ANDROID-PILOT.md']
     files = {}
     for name in sorted(names):
         p = source / name

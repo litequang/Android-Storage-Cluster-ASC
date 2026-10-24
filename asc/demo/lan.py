@@ -16,7 +16,7 @@ from ..catalog.service import CatalogService
 from ..client import ClientError, request_json
 from ..identity import fingerprint_from_pem
 from ..probe import inspect
-from ..runtime import foreground_lock
+from .locks import private_lock as foreground_lock
 from ..server import Handler, Server
 from ..store import Registry
 from .installer import guard

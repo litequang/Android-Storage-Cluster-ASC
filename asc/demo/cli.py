@@ -9,7 +9,7 @@ import time
 from .installer import install, preflight, guard
 from .state import initialize, inspect_state, lan_origin, lan_host, read_json
 from ..identity import ensure_private_home
-from ..runtime import foreground_lock
+from .locks import private_lock as foreground_lock
 from ..client import ClientError
 from ..storage.errors import StorageError
 

@@ -387,3 +387,7 @@ private state/bodies; external volumes use volume-<UUID>/, preserving empty dire
 Only known OS coordination lock files are excluded. Completion follows source
 stability and copied readback verification; failed copies stay incomplete. Backup
 is private and is never part of a public package. No schema restore/migrator exists.
+
+Demo coordination files keep Core's empty-or-one-space convention and OS locks; no
+state/schema migration in DEMO.3a.1. Existing linked/nonregular/multi-link or unexpected
+coordination files are refused/preserved before writes; never auto-delete a lock.

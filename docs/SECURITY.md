@@ -340,3 +340,12 @@ not change state. A PREPARED journal blocks runtime, including a startup that ra
 with activation; explicit recovery refuses if state or backup has changed. These
 are Linux synthetic fault guarantees, not Android power-cut qualification. Diagnostics
 whitelist status/counts/capacity only; no arbitrary error/config/profile/log dump.
+
+DEMO.3a.1 corrects an existing-lock symlink hazard reproduced after initial full
+qualification: Core foreground_lock can write its empty-file marker before later
+backup path rejection. Demo now uses a separate O_NOFOLLOW/regular/single-link/
+inode-bound opener BEFORE writes and reuses Core OS locks, preserving Core source.
+Preflight also rejects linked Core engine/worker lock files. Fresh hardened full
+qualification supersedes the first candidate; old preview is historical, not a
+recommended install. Source/state remain private to the owner; no hostile co-owner
+filesystem mutation or Android power-cut qualification is claimed.

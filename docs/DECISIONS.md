@@ -195,3 +195,11 @@ ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telem
   remove Android Raft guards. Exactly two owner-approved physical domains and
   measured double-copy capacity gate a new upload; report interruption/degradation
   honestly. No implicit migration, policy reduction, whole-volume grant or GC path.
+
+- ADR-056 (Demo final review): reuse Core OS _lock/_unlock primitives through a
+  Demo-specific no-follow regular/single-link/inode opener. Reusing foreground_lock
+  as a whole was unsafe for an existing symlink because its empty marker write
+  precedes later path checks. Preserve Core source; reject unexpected coordination
+  files and linked internal worker/engine locks before any Demo operation/constructor.
+  Do not unlink/replace a suspicious lock to make startup pass. Fresh hardened
+  targeted/full qualification supersedes the initial package candidate.

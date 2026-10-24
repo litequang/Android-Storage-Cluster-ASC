@@ -226,6 +226,37 @@ class DemoUpgradeTests(lan_fixtures.DemoLANTests):
         self.assertTrue(failed.exists())
         self.assertFalse((failed / 'backup-complete.json').exists())
 
+    def test_linked_lifecycle_lock_refused_before_touching_outside_file(self):
+        self.stop_all()
+        outside = self.home / 'not-approved-test-owned-empty-file'
+        outside.write_bytes(b'')
+        for index, lock in enumerate((self.controller / 'demo-operation.lock',
+                                     self.controller / 'controller/controller.lock',
+                                     self.controller / 'node/agent.lock',
+                                     self.controller / 'node/storage/storage-engine.lock',
+                                     self.prefix_for(self.controller) / 'install.lock')):
+            with self.subTest(lock=lock.name):
+                old = lock.read_bytes()
+                lock.unlink()  # Unheld file created solely by this synthetic fixture.
+                lock.symlink_to(outside)
+                destination = self.home / ('blocked-linked-lock-' + str(index))
+                command = ('stage', str(self.source)) if lock.name == 'install.lock' else ('backup', str(destination))
+                result = self.command_result(self.controller, *command)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(outside.read_bytes(), b'', 'refuse BEFORE any outside-file write')
+                self.assertFalse(destination.exists())
+                lock.unlink()  # Only the symlink created by this controlled fixture.
+                lock.write_bytes(old)
+        # Hardlinked coordination files are also rejected before open/write.
+        lock = self.controller / 'demo-operation.lock'
+        old = lock.read_bytes()
+        lock.unlink()
+        os.link(outside, lock)
+        self.assertNotEqual(self.command_result(self.controller, 'backup', str(self.home / 'blocked-hardlink')).returncode, 0)
+        self.assertEqual(outside.read_bytes(), b'')
+        lock.unlink()
+        lock.write_bytes(old)
+
 
 if __name__ == '__main__':
     unittest.main()

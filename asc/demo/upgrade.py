@@ -9,7 +9,8 @@ import shutil
 import stat
 import tempfile
 from ..identity import ensure_private_home, replace_private, save_private
-from ..runtime import foreground_lock, running
+from ..runtime import running
+from .locks import private_lock as foreground_lock
 from ..storage.volumes import LocalVolume, no_links
 from ..storage.errors import StorageError
 from .installer import private_path, guard

@@ -354,3 +354,10 @@ complete backup and selects old compatible code only. It never restores old byte
 DB. If code integrity prevents launcher execution, retain old release/package and
 seek review, not network bypass or identity regeneration. Controlled multi-node
 upgrade uses stop-all; mixed-version/rolling/endpoint/schema migrations unqualified.
+
+Existing Demo installer-preview 0.1.0 code is intentionally retained/refused as an
+implicit upgrade target. For the first final Alpha install use a NEW code prefix
+and launcher function as described in DEMO-ANDROID-PILOT.md; preview created no
+cluster identity. Never delete existing private state to make installation pass.
+Owner Android observations belong in the blank pilot record; Cloud PASS does not
+populate it. Unknown/M51/real production operations remain prohibited for Codex.

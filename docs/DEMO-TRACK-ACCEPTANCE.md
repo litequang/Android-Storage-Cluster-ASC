@@ -3,15 +3,16 @@
 Status: IN PROGRESS / NOT SOURCE-READY until fresh full Python regression completes.
 Scope: Linux x86_64 synthetic only. Android/real SD/Doze/power-cut/production NOT TESTED.
 Branch: feature/android-demo-alpha. Core accepted base acea2ae remains unchanged.
-Frozen implementation: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 (DEMO.3a).
+Initial implementation: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 (DEMO.3a).
+Final lock hardening requires a new source checkpoint and fresh full run below.
 Date: 2026-10-24 UTC. Python 3.13.5, Go 1.27.3 linux/amd64, OpenSSL.
 
 ## Actual evidence
 
 | Gate | Actual result |
 |---|---|
-| Frozen Demo targeted | 13 PASS / 0 SKIP / 0 FAIL/ERROR, 65.492s |
-| Fresh full Python (all Core + Demo) | RUNNING; no PASS claim yet |
+| Frozen Demo targeted | 14 PASS / 0 SKIP / 0 FAIL/ERROR, 69.640s (hardened source) |
+| Fresh full Python (all Core + Demo) | Initial 221 PASS / 0 SKIP, 1444.112s on initial source; NEW hardened full run required |
 | Go uncached `go test -count=1 -v -timeout 240s ./...` | 11 top-level PASS, consensus 19.489s / launcher 0.003s |
 | `go vet ./...` | PASS |
 | `go mod verify` | All modules verified, PASS |
@@ -67,7 +68,7 @@ not published because runtime logs can contain private fixture details). Go logs
 are adjacent. A different account needs the repository/toolchain, not this path.
 No physical fault tests were skipped, weakened or replaced by an assumed result.
 
-## Candidate package (not released until full gate)
+## Initial candidate (RETIRED / NOT RELEASED; superseded by lock hardening)
 
 Archive: asc-demo-alpha-0.3.0.tar.gz, deterministic source only, 81 entries.
 Archive SHA-256: `3510d37f9e54feb4884f9ed7f78b31891f9974bbd79ae73b06e0a21f5c878603`.
@@ -98,3 +99,28 @@ Rollback uses stopped compatible code selection after a NEW verified full backup
 never an older database overwrite. PREPARED recovery additionally verifies current
 state still matches its backup; otherwise preserve directories and seek review.
 DEMO.4 Dashboard Lite intentionally deferred, as authorized for first CLI delivery.
+
+## Final-review defect and DEMO.3a.1 safety correction
+
+After the initial full 221 PASS, a new synthetic fault test reproduced a real issue:
+an existing coordination-file symlink let reused Core foreground_lock write one
+space into an empty outside test-owned file BEFORE backup rejected the symlink.
+The new case FAILED before the correction (3.540s); no phone/real data was involved.
+Core source remains unchanged. New Demo locks.py opens with O_NOFOLLOW on Linux,
+checks regular/single-link/inode identity/content BEFORE writing, then reuses Core
+OS lock/unlock primitives. Demo lifecycle/install/stage/backup/activation wrappers
+use it; read-only state preflight also rejects linked internal Core engine/worker
+locks before their constructors. Symlink/hardlink failure test checks outside bytes
+unchanged across root/controller/agent/engine/prefix locks.
+
+The initial candidate and old installer preview are historical only; do not install
+them for owner trials. A hardened candidate/full run is required before source-ready.
+Package now includes blank owner Android pilot checklist and the safe separate-prefix
+procedure if preview source already exists. All Android results remain NOT TESTED.
+
+Hardened candidate: 83 entries, includes lock adapter + owner pilot record.
+Release ID `ab229efb9179d356f7b4f363d0a82fa40d33a53164ca215f7c2625be8aaaece8`,
+archive SHA `3bf81c5d94891fa064e2f05f99d60d620b4c5db71c87bb2ee6c89ac72b9a445a`.
+Hardened fresh full Python must complete before any source-ready/publication claim.
+Go source unchanged by this Python-only fix; actual uncached Go/module/vet/build
+results above remain applicable and are not falsely reported as rerun.

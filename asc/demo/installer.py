@@ -9,7 +9,7 @@ import tempfile
 from ..identity import ensure_private_home, save_private
 from ..probe import inspect
 from ..storage.volumes import no_links
-from ..runtime import foreground_lock
+from .locks import private_lock as foreground_lock
 from .package import verify
 
 

@@ -304,3 +304,11 @@ background updater. Diagnostic output uses a status whitelist. Installed-source
 tests caught/fixed prefix ancestry and node re-exec issues; compatibility permits
 Core's existing catalog inventory cursor while rejecting consensus/advanced state.
 Final source-ready status waits for fresh full qualification and checksum package.
+
+### Demo Track DEMO.3a.1 — refuse linked coordination files before writes
+Final review reproduced a symlinked lifecycle lock changing an outside empty
+synthetic file before backup refusal. New Demo-only no-follow/regular/single-link/
+inode validation precedes any lock marker write; internal Core lock preflight and
+symlink/hardlink regression added. Core unchanged. Initial 221-case full PASS is
+retained as provenance; a fresh hardened full run is required. Installer preview
+retired from recommended installs; final candidate includes blank Android pilot.

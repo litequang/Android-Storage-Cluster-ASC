@@ -1,6 +1,6 @@
 # ASC Demo Track progress / account-independent handoff
 
-Updated: 2026-10-24 (Asia/Saigon).
+Updated: 2026-10-24 UTC.
 Branch: `feature/android-demo-alpha`.
 Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 
@@ -25,12 +25,15 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.1 | PUSHED/REMOTE VERIFIED: 789ea8f9675c3339287eace1486126bd886c17e3 |
 | DEMO.2 | PUSHED/REMOTE VERIFIED: ae299c7981cd683cf61966c7ed64cfb05e557c51 |
 | DEMO.3a | PUSHED/REMOTE VERIFIED: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 |
+| DEMO.3a.1 | 14 targeted PASS; safe coordination opener; publish then fresh full 222 |
 | DEMO.4 | Deferred behind initial CLI package / owner pilot; optional UI |
 | Demo source-ready | NOT QUALIFIED; Android runtime NOT TESTED |
 
 ## Next action
 
-DEMO.3a is published/verified. DEMO.3b full Python is RUNNING on frozen source; Go/module/vet/build and exact candidate archive checks PASS. Finish fresh full suite, then final package publication/acceptance. Do not mark source-ready before full PASS. Reuse existing Core functions; do not enable Raft/GC or change
+Initial full 221 PASS is historical after a final-review fault was found/fixed.
+Publish/verify DEMO.3a.1 (14 targeted PASS), then fresh full 222 Python, hardened
+candidate verification and final DEMO.3b acceptance/package publication. Reuse existing Core functions; do not enable Raft/GC or change
 Core guards. Read DEMO-TRACK-PLAN for architecture, risk and upgrade contract.
 Each checkpoint must record changed files, exact actual tests/results, hash/push
 verification, current functionality, limits, rollback and short usage. Package
@@ -160,3 +163,34 @@ record actual result, reverify deterministic candidate SHA/public contents, copy
 archive+checksum into explicitly allowlisted releases/, update acceptance/progress/
 AGENTS/CHANGELOG, secret-review, commit/push Demo and verify advertised remote.
 DEMO.4 deferred as authorized for initial CLI handoff.
+
+## DEMO.3a.1 — final-review lock safety correction
+
+Initial fresh full on source 597b3ff: **221 PASS / 0 SKIP / 0 FAIL/ERROR, 1444.112s**.
+All eight Linux GC gates 01–08 plus prior Core acceptance/fault suites actually ran.
+Before final publication, an added fault exposed a symlinked lifecycle lock writing
+a space to an outside empty test-owned file before backup refusal (expected
+regression FAILED before fix, 3.540s). No real device/data or release deployment.
+
+New asc/demo/locks.py checks no-follow/regular/single-link/inode/content before
+coordination writes, then reuses Core OS primitive. Demo wrappers and internal-lock
+state preflight use it; Core source is unchanged. New test checks root/controller/
+agent/engine/prefix symlinks and hardlinks preserve outside bytes. Full acceptance
+is reset to NOT QUALIFIED until fresh full suite on hardened source (222 expected).
+Old candidate SHA above is retired, never released. Preview 0.1.0 is historical,
+not recommended; new prefix procedure and owner-only blank Android pilot now in
+docs/DEMO-ANDROID-PILOT.md (also included in final candidate).
+
+After final 14 targeted PASS, secret review and this source checkpoint push/remote
+verification, rerun full Python. Existing uncached 11 Go/vet/module/build PASS may
+be reused: Go/Core source identical; this correction affects Demo Python only.
+Regenerate/inspect final candidate, record actual fresh full result and archive SHA,
+then publish final DEMO.3b. Do not use the earlier 221 PASS as final-source evidence.
+
+DEMO.3a.1 final actual targeted command:
+`python -B -m unittest tests.test_demo_installer tests.test_demo_lan
+tests.test_demo_upgrade -v`: **14 PASS / 0 SKIP / 0 FAIL/ERROR, 69.640s**.
+Hardened candidate (still NOT released) has 83 public files, release ID
+`ab229efb9179d356f7b4f363d0a82fa40d33a53164ca215f7c2625be8aaaece8`,
+SHA `3bf81c5d94891fa064e2f05f99d60d620b4c5db71c87bb2ee6c89ac72b9a445a`.
+Next full log: /workspace/work/demo3b/full-python-hardened.log (must finish/rerun).

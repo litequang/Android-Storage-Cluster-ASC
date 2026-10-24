@@ -338,3 +338,9 @@ atomic pointer are separate durable writes; interrupted activation blocks startu
 until explicit recovery verifies unchanged state+backup and selects old compatible
 code. No DB/byte restore or implicit migration. Multi-phone upgrades require owner
 stop-all/backup/change/start Controller then nodes; mixed versions not qualified.
+
+Demo coordination-file hardening (DEMO.3a.1): Demo wraps the Core OS lock primitives
+with an O_NOFOLLOW regular/single-link/inode-checked opener before any marker write.
+Do not call Core foreground_lock directly from Demo. State preflight validates
+existing internal Core worker/engine lock paths before invoking those constructors.
+No Core runtime/schema is changed; existing immutable source/state boundaries hold.
