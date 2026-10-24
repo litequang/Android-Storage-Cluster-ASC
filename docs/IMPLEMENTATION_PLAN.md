@@ -49,22 +49,24 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - Test leader loss, network partition 1/2, stale log candidate, power cycling, membership update, rollback/replay, no false commits and stale-leader fencing.
 - Gate: failure injection pass. Otherwise remain read-only/single-writer test mode.
 
-## Phase 3 — Storage/data protection
-- Internal storage adapter; separate SD and optional Android SAF bridge.
-- Staging/immutable object ids, SHA256, chunks, retries, versioning, replica placement and safe GC.
-- Recovery: delete mistake, node loss, card removal, lost metadata snapshot, file corruption.
-- Gate: reproducible verified restore of representative 1GB+ file and important metadata backups.
+## Current roadmap — 2026-10-24
 
-## Phase 4 — User-facing application
-- ASC Drive PWA mobile/desktop: files/search/volumes/node view/jobs/restore/health.
-- Quick Join installer: true enrollment (not CSV registration), signed config, idempotent install/reinstall, safe rollback.
-- WebDAV/desktop sync/android photo background/iOS native only as follow-on capabilities once storage integrity works.
+- **Phase 3A — Backup, Versioning & Safe Restore: DONE**, v0.9.0 Windows
+  development accepted. Preserve [acceptance evidence](PHASE3A-ACCEPTANCE.md).
+- **Phase 3B — Node Scoring, Telemetry, Node Preferences & Smart Placement**:
+  active; checkpoint contract and resume instructions in [PHASE3B-PLAN.md](PHASE3B-PLAN.md)
+  and [PHASE3B-PROGRESS.md](PHASE3B-PROGRESS.md).
+- **Phase 3C — Dynamic Replication, Replica Reduction & Safe Garbage Collection**:
+  future; actual reduction/physical deletion requires separate authorization and qualification.
+- **Phase 3D — External Backup & Disaster Recovery**: future, independent external
+  copies and reviewed disaster recovery; in-cluster snapshots do not supply this.
+- **Phase 4 — ASC Drive Web/PWA and Android Quick Join**: future application and
+  enrollment UX; no Dashboard in Phase 3B.
+- **Phase 5 — Remote Access & Production Qualification**: future private access,
+  real-device sleep/network/power qualification and explicit production review.
 
-## Phase 5 — Remote access and production readiness
-- LAN local discovery independent of cloud.
-- Tailscale private connectivity, leader-aware gateway(s) on compatible devices; HTTPS edge optional after threat review.
-- M51 production-protected export-only first; load-throttled backups of consistent MariaDB/web artifacts after explicit approval.
-- 72h test with phone sleep, Wi-Fi dropout, power loss, failover, monitoring of temperatures. Confirm no hosting impact.
+Phase 3B changes no static voter membership/quorum and never performs physical GC.
+Android, SAF, SD/power-cut, 1GB+ restore and production remain separately unqualified.
 
 ## NO premature promises
 - Not always-on despite Doze/ROM limitations until verified on devices.
