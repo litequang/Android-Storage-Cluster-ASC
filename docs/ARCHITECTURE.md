@@ -234,3 +234,14 @@ event. Existing versions/snapshots/events/jobs and source bytes remain. A bounde
 retirement record permanently fences that exact node/volume/local-object identity
 against reintroduction. Background work advances at most one ready move per turn.
 No retirement implies physical GC eligibility; all retained pointers still count.
+
+3C.3a GC planning indexes every current-version physical pointer, trash content pin,
+retained snapshot, all backup/restore jobs (including terminal evidence), every
+Catalog job physical/source pointer (including COMPLETED), live scoped grants and
+retained public event replicas. Only proven retired identities are candidates;
+unknown/native inventory is held, never inferred reclaimable. Strong owner plan
+binds graph and complete plan SHA, source epoch/term/checkpoint and 60-second
+expiry, but supplies no delete authority. Logical excess and reclaimable bytes
+remain distinct. Monotone Runtime transitions reject extension/receipt/retirement/
+move erasure and retained-history edits; ordinary <=1024-event append/retention is
+allowed only with the previous digest anchor, not arbitrary compaction for GC.

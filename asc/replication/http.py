@@ -9,6 +9,10 @@ def handle(handler,parts,query):
         doc=service.runtime.view()['document']
         return handler._json(200,{'enabled':'replication' in doc,'physical_gc_enabled':False,
                                   'replication_schema':doc.get('replication',{}).get('schema')})
+    if handler.command=='GET' and parts==['gc-plan']:
+        from .planner import plan
+        from ..catalog.common import now
+        return handler._json(200,plan(service.runtime.view(strong=True),now()))
     if handler.command=='GET' and parts==['moves']:
         return handler._json(200,{'moves':service.runtime.view()['document'].get('replication',{}).get('moves',{})})
     if handler.command!='POST':return handler._json(404,{'error':'not_found'})

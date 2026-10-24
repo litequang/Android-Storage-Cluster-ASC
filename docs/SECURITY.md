@@ -257,3 +257,10 @@ retained-backup copy floor. Delayed proof/new policy/current job references can
 block retirement. Retired local-object identities are permanently fenced from
 reintroduction; historical metadata/job references still prevent physical reclaim.
 This checkpoint adds no final-object unlink, destructive grant or real-device flag.
+
+Phase 3C GC plans are not destructive permissions. Terminal Catalog/backup jobs,
+expired-version records with physical pointers, trash, snapshot and retained-event
+history still count. No hidden eviction makes a target eligible. Every Runtime
+writer preserves permanent retirement/receipt/move fences and ordinary retained
+history through a transition check; the trust boundary still assumes configured
+non-Byzantine Controllers/Python preparation, not a malicious OS administrator.

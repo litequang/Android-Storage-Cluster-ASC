@@ -70,3 +70,30 @@ def validate(state, doc):
         return state
     except (ValueError,KeyError,TypeError,AttributeError):
         raise CatalogError('invalid_replication_projection',409) from None
+
+
+def transition(before,after):
+    """Monotone retirement/receipt/history fences across all Runtime writers."""
+    old=before.get('replication')
+    if old is None:return
+    new=after.get('replication')
+    if new is None:raise CatalogError('replication_downgrade_forbidden',409)
+    for field in ('requests','retired'):
+        for key,value in old.get(field,{}).items():
+            if new.get(field,{}).get(key)!=value:raise CatalogError('replication_history_changed',409)
+    for move_id,move in old.get('moves',{}).items():
+        current=new.get('moves',{}).get(move_id)
+        if not current or any(current[k]!=move[k] for k in ('source_replica_id','file_id','job_id','created_at')):
+            raise CatalogError('replication_history_changed',409)
+        if move['state']=='RETIRED' and current['state']!='RETIRED':raise CatalogError('replication_history_changed',409)
+    previous=before['catalog'];current=after['catalog']
+    if not previous['revision']<=current['revision']<=previous['revision']+1024:
+        raise CatalogError('catalog_transition_invalid',409)
+    events={e['revision']:e for e in current['events']}
+    for event in previous['events']:
+        if event['revision']>current['revision']-1024 and events.get(event['revision'])!=event:
+            raise CatalogError('retained_history_changed',409)
+    if current['revision']>previous['revision']:
+        first=events.get(previous['revision']+1)
+        if not first or first['previous_digest']!=previous['head_digest']:
+            raise CatalogError('catalog_transition_invalid',409)

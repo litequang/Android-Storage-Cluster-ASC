@@ -382,3 +382,10 @@ source retirement; physical_deletions=0. Pending/unverified COPY, stale/changed
 proof or insufficient survivors returns 409; Protected source returns 403.
 The existing Leader worker also advances one ready move per turn. Source physical
 bytes and historical pointers remain retained until a separate future GC protocol.
+
+3C.3a GET replication/gc-plan (owner/current quorum) returns gc_plan_schema=1,
+plan_sha256, graph_sha256, epoch/term/control_revision/applied_index, generated_at/
+expires_at (60s), bounded retired candidates, eligibility/holds and reference counts/
+examples. eligible_logical_bytes and held_logical_bytes are logical sizes, not a
+measured filesystem-free delta. physical_deletions=0, physical_gc_enabled=false.
+Unknown/native objects are held; their unobserved count is null. No apply route yet.

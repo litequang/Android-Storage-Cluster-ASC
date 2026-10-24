@@ -119,6 +119,8 @@ class Runtime:
             return {**current, 'stale': not strong, 'read_only': True}
 
     def commit(self, view, document, request_id=None, intent=None):
+        from ..replication.state import transition
+        transition(view['document'], document)
         request_id = request_id or uid()
         key(request_id); projection.validate(document)
         receipt = self.client.submit({'schema': 1, 'cluster_id': self.cluster, 'epoch': self.epoch,

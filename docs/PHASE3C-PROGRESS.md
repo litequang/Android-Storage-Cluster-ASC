@@ -22,32 +22,28 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 | 3C.0 | PUSH VERIFIED `6a9deb58614bb51b351c3a9aed0cdee5e109180a`; docs/link/whitespace and tracked/staged review PASS |
 | 3C.1 | PUSH VERIFIED `41fd522`; 70 targeted + 4 runtime tests PASS |
 | 3C.2a | PUSH VERIFIED `c6a1012`; 73 targeted tests PASS (3.451s) |
-| 3C.2b | 13 targeted PASS; all 39 legacy fault gates PASS; initial combined fixture error preserved; publication pending |
-| 3C.3–3C.5 | NOT STARTED |
+| 3C.2b | PUSH VERIFIED `173faf8`; 13 targeted + all 39 legacy gates PASS; initial combined fixture error recorded |
+| 3C.3a | Pure full graph + monotone transition guards; 69 targeted and 17 TLS/unit tests PASS; publication pending |
+| 3C.3b–3C.5 | NOT STARTED |
 | Full regression / acceptance | NOT RUN; Phase 3C NOT accepted |
 
 ## Next action / resume
 
-Publish/verify 3C.2b, then implement 3C.3 GC reference graph and monotone transition
-guards. Fresh copy/domain proofs and logical retirement are implemented; original
-bytes/events/completed jobs remain. Retired identities cannot reenter current
-Catalog or active jobs. No physical unlink or garbage collection exists yet.
+Verify 3C.3a publication, then 3C.3b explicit audited terminal-job pointer release.
+GC graph currently correctly holds retired bodies referenced by completed jobs
+and old Catalog events. No physical unlink exists. Never discard retained events
+or active jobs to fabricate eligibility. Terminal-job archival must preserve
+identity/history/digest, upload retry and completion replay without raw object
+pointers; monotone transitions must reject job resurrection or unaudited removal.
 
-Targeted retest:
+3C.3a checks (existing activation):
+`python -B -m unittest tests.test_replication tests.test_failover.RuntimeStateTests tests.test_backup.BackupStateTests tests.test_nodes -q`
+**69 PASS, 3.804s**.
 `python -B -m unittest tests.test_replication_faults tests.test_replication -v`
-**13 PASS, 16.600s**; includes actual three-Go/three-Python/TLS copy-before-retire
-and policy 1/2/3/1 gates. Product source unchanged after retest.
+**17 PASS, 24.849s**, actual three-voter/TLS copy and 1/2/3/1 policies with new
+Runtime transition guards. Source unchanged afterward. Logs in /workspace/work/phase3c.
 
-Broader safety run:
-`python -B -m unittest tests.test_replication_faults tests.test_replication tests.test_backup tests.test_failover tests.test_node_faults -v`
-**40 tests, 402.993s; 39 PASS / 1 ERROR** in the initial new fixture (empty move list
-because target probes were not ready). All existing **12/12 3A + 20/20 2B + 7/7 3B**
-fault gates PASS in that run. New fixture now waits for actual successful probes;
-its fresh retest above PASS. Combined initial command remains reported ERROR,
-never relabeled PASS. Final full acceptance still must rerun every applicable test.
-
-Logs: `/workspace/work/phase3c/3c2b-regression.log`, `3c2b-retest.log`,
-`3c2b-unit.log`. Existing activation `/workspace/asc-cloud/activate.sh`.
-Next graph must scan every authoritative version/snapshot/trash/job/grant/history
-pointer; no history eviction to force eligibility. Add permanent transition fences
-before physical apply. No Phase acceptance or real-device permission.
+3C.2b broader initial run: 40 tests / 1 initial new-fixture ERROR (402.993s), all
+39 legacy 3A/2B/3B gates PASS; repaired new fixture retest 13 PASS (16.600s).
+Do not relabel that initial command PASS. Final full acceptance reruns all tests.
+No Phase completion, phone/production/voter/3D/Dashboard permission.

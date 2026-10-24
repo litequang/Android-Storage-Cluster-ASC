@@ -237,3 +237,6 @@
 - 3C.2b: current-term fresh survivor checksum/domain proofs before logical source
   retirement; preserve bytes/history/jobs and permanently fence retired object IDs.
   Ready moves advance through the existing Leader worker without physical GC.
+- 3C.3a: read-only full-reference GC plan, explicit held/reclaimable estimates and
+  checkpoint/graph/plan SHA; prevent retirement/receipt/history fence erasure across
+  Runtime commits. Native/unknown data stays held; no physical GC execution.

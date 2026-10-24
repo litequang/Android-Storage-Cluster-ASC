@@ -169,3 +169,8 @@ qualification evidence and remaining limits: PHASE3A-ACCEPTANCE.md.
   deletion occurs there. Require fresh streamed independent survivor proofs and
   current policy/retained-backup floor, then permanently fence the retired physical
   identity against reintroduction. Historical references are not silently evicted.
+- ADR-052: Use a pure complete reference graph and graph/plan digests, not current
+  replica count alone, for GC eligibility. Keep terminal job and event pointers as
+  holds until an explicit audited release/ordinary retention genuinely removes
+  them. Immutable fences and append/retention transition checks apply to all Runtime
+  writers. A plan/estimated logical size never proves authorization or reclaimed disk.

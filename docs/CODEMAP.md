@@ -256,3 +256,9 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   retain original bytes and full retirement/proof record. Runtime worker advances
   moves. Validator permanently fences retired physical identities from new Catalog
   records/active jobs. RetirementTests and ReplicationClusterTests cover this path.
+- 3C.3a `replication.planner.references/graph/plan`: pure full authoritative
+  reference index and checkpoint/graph/plan SHA, separate eligible/held logical
+  bytes, explicit reference reasons/examples; unknown/native count UNKNOWN/held.
+  `replication.state.transition` runs in every Runtime.commit to preserve retirement/
+  request/move fences and retained event history. GCPlannerTests cover all reference
+  classes and ordinary 1024-event aging without manual history eviction.

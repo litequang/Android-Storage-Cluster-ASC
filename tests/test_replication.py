@@ -190,3 +190,74 @@ class RetirementTests(unittest.TestCase):
         self.service._proof.side_effect=changed
         with self.assertRaises(CatalogError):self.complete()
         self.assertTrue(any(r['replica_id']==self.source['replica_id'] for r in self.runtime.doc['catalog']['replicas']))
+
+
+class GCPlannerTests(unittest.TestCase):
+    def setUp(self):
+        holder=RetirementTests();holder.setUp();self.addCleanup(holder.doCleanups)
+        finish_copy(holder.replication,holder.runtime,holder.job_id);holder.complete()
+        self.runtime=holder.runtime;self.doc=self.runtime.doc
+        self.source=holder.source;self.replication=holder.replication
+
+    def test_history_and_every_terminal_job_reference_block_gc_without_mutation(self):
+        from asc.replication.planner import plan
+        from asc.catalog.common import now,digest
+        view={**self.runtime.view(),'stale':False};old=copy.deepcopy(view)
+        result=plan(view,now());candidate=result['candidates'][0]
+        self.assertIn('retained_history',candidate['holds'])
+        self.assertIn('catalog_job_reference',candidate['holds'])
+        self.assertEqual(result['eligible_logical_bytes'],0)
+        self.assertEqual(view,old)
+        self.assertEqual(result['plan_sha256'],digest({k:v for k,v in result.items() if k!='plan_sha256'}))
+        self.assertFalse(result['physical_gc_enabled'])
+
+    def test_all_reference_categories_are_traversed_including_nonhead_history(self):
+        from asc.replication.planner import references
+        from asc.replication.proofs import physical
+        from asc.backup.state import empty,capture
+        from asc.catalog.common import now
+        doc=copy.deepcopy(self.doc);stamp=now()
+        backup=empty();doc['backup']=backup
+        # This direct graph test intentionally supplies all reference categories;
+        # runtime validation independently rejects retired identity reintroduction.
+        doc['catalog']['replicas'].append(self.source)
+        backup['files'][self.source['file_id']]={'state':'TRASH','changed_at':stamp,'retain_until':stamp+60}
+        snapshot=capture({'document':doc,'state':{'index':1,'term':4}},backup,stamp,60)
+        snapshot['files']=[{k:doc['catalog']['files'][0][k] for k in ('file_id','logical_path','version','size','sha256')}]
+        backup['snapshots']['synthetic-pin']=snapshot
+        backup['jobs']['synthetic-restore']={'source_file_id':self.source['file_id'],'target_file_id':None,
+                                           'snapshot_id':None,'proofs':[]}
+        doc['tables']['transfer_grants'].append({'node_id':self.source['node_id'],'volume_id':self.source['volume_id'],
+            'local_file_id':self.source['local_file_id'],'expires_at':stamp+60,'grant_hash':'a'*64})
+        index,files=references(doc,stamp)
+        codes={code for code,_ in index[physical(self.source)]}
+        codes.update(code for code,_ in files[self.source['file_id']])
+        self.assertTrue({'trash_version','trash_pin','snapshot_pin','backup_job_reference',
+                         'catalog_job_reference','in_flight_grant','retained_history'}<=codes)
+
+    def test_retirement_and_retained_event_fences_cannot_be_dropped_by_another_writer(self):
+        from asc.replication.state import transition
+        old=copy.deepcopy(self.doc)
+        for change in ('extension','receipt','retired','event'):
+            doc=copy.deepcopy(old)
+            if change=='extension':del doc['replication']
+            elif change=='receipt':doc['replication']['requests'].clear()
+            elif change=='retired':doc['replication']['retired'].clear()
+            else:doc['catalog']['events'].pop(0)
+            with self.subTest(change=change),self.assertRaises(CatalogError):transition(old,doc)
+        transition(old,copy.deepcopy(old))
+
+    def test_normal_retained_history_window_can_age_without_manual_history_eviction(self):
+        from asc.replication.state import transition
+        from asc.replication.planner import references
+        from asc.replication.proofs import physical
+        old=copy.deepcopy(self.doc)
+        def change(reg,catalog):
+            for i in range(1024):
+                catalog.mutate('POLICY',{'file_id':self.source['file_id'],'policy':'replicated_2' if i%2==0 else 'single'})
+        self.replication.workspace(self.doc,change)
+        transition(old,self.doc);state.validate(self.doc)
+        from asc.catalog.common import now
+        index,_=references(self.doc,now())
+        self.assertFalse(any(c=='retained_history' for c,_ in index[physical(self.source)]))
+        self.assertTrue(any(c=='catalog_job_reference' for c,_ in index[physical(self.source)]))
