@@ -25,7 +25,19 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
-## Current Phase 3B handoff — v0.10.0
+## Current Phase 3C task — authorized isolated-test development
+
+Phase 3C is now authorized from `b1b46e527826617748a8bc68795259060e12d705`
+on the same WIP branch. After ordered docs and Phase 3B handoff, read
+`docs/PHASE3C-PLAN.md` and `docs/PHASE3C-PROGRESS.md`. Every checkpoint must
+pass its checks and be pushed/remote-verified before continuing. Physical GC is
+default disabled, isolated-test only, and forbidden on real devices/production.
+Preserve all version/snapshot/job/history references and the last readable copy;
+use copy-before-retirement and current quorum/term fencing. No 3D, Dashboard,
+phone/M51/production or voter/membership change. Earlier phase scope below is
+historical and does not cancel this explicitly authorized Phase 3C task.
+
+## Phase 3B handoff — v0.10.0
 
 After the mandatory ordered reads, read `docs/PHASE3A-ACCEPTANCE.md`,
 `docs/PHASE3B-PLAN.md`, `docs/PHASE3B-PROGRESS.md` and

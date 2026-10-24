@@ -58,7 +58,9 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
   Checkpoint contract and resume instructions in [PHASE3B-PLAN.md](PHASE3B-PLAN.md)
   and [PHASE3B-PROGRESS.md](PHASE3B-PROGRESS.md).
 - **Phase 3C — Dynamic Replication, Replica Reduction & Safe Garbage Collection**:
-  future; actual reduction/physical deletion requires separate authorization and qualification.
+  ACTIVE: owner-authorized isolated-test development; [plan](PHASE3C-PLAN.md) and
+  [progress](PHASE3C-PROGRESS.md). Physical GC stays off by default and locked
+  on real devices until separate qualification.
 - **Phase 3D — External Backup & Disaster Recovery**: future, independent external
   copies and reviewed disaster recovery; in-cluster snapshots do not supply this.
 - **Phase 4 — ASC Drive Web/PWA and Android Quick Join**: future application and
