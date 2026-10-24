@@ -259,3 +259,9 @@
 - Preserve a fixed safe GC error-label whitelist for explicit fresh-plan/proof retries; unknown error content stays redacted. Fault simulation now exercises legitimate stale-plan retry and client-level lost-ACK recovery without weakening confirmation or byte assertions.
 
 - 3C.5c Windows reporting: hardened source 895e5bb passes full 203 Python tests (189 PASS / 14 platform skips), all prior/new applicable Windows faults, Go 11 uncached tests/vet/module verify and builds. Phase 3C remains NOT ACCEPTED until separately executed Linux physical network GC faults pass; no real-device activation.
+
+- Linux 3C.5 continuation from 8d5cd7d: bound reuse of successful structural Catalog
+  validation to two exact immutable JSON byte strings; preserve native types,
+  mutation/history checks and all current authority/physical-proof gates. Add
+  synthetic-only paused TLS/crash/journal/replay/reference fault qualification;
+  runtime GC/device locks and destructive freshness budgets remain unchanged.

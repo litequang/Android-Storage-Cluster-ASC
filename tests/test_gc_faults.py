@@ -12,7 +12,7 @@ from asc.storage.client import StorageClient
 from tests import test_failover as fixture, test_replication_faults as replication_fixture
 
 
-class GCClusterTests(unittest.TestCase):
+class GCFixture:
     setUpClass=classmethod(fixture.FailoverTests.setUpClass.__func__)
     start=fixture.FailoverTests.start
     stop=fixture.FailoverTests.stop
@@ -80,6 +80,8 @@ class GCClusterTests(unittest.TestCase):
                 if exc.code!='stale_gc_proof' or attempt==4:raise
                 # New nonce means a newly streamed, quorum-committed authorization.
 
+
+class GCClusterTests(GCFixture,unittest.TestCase):
     def test_real_quorum_scope_takeover_and_default_windows_lock(self):
         self.make_cluster()
         self.owner.request('POST','nodes/enable',{'request_id':uid()});self.post('enable')

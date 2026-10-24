@@ -180,3 +180,10 @@ qualification evidence and remaining limits: PHASE3A-ACCEPTANCE.md.
 - ADR-053 refinement (3C.5b): bind the complete graph digest across survivor IO and final authorization CAS, including survivor endpoint approval changes. Preserve exact prior evidence instead of accepting merely unchanged node/volume IDs after reapproval. This is ephemeral validation, not a new permit/persistence schema.
 
 ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telemetry while preserving protected state and every reference/approval/policy field. Existing planner/confirmation digests are unchanged. This avoids false proof invalidation on ordinary heartbeat while retaining actual pinned freshness/readability gates and approval-race rejection.
+
+- ADR-054 (Linux 3C.5): reuse pure structural Catalog validation only by exact
+  immutable canonical JSON bytes, bounded to two admitted <=2 MiB Catalogs. Verify
+  native JSON types before keying so Python tuples/non-string keys cannot alias
+  valid input. Failures are not cached, caller objects are not retained/returned,
+  and runtime/extension/authority/term/quorum/physical-proof checks remain fresh.
+  Do not increase destructive freshness budgets to compensate for repeated work.

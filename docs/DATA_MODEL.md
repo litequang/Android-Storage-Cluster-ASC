@@ -348,3 +348,8 @@ Controller upload completion is served from the permanent archived receipt inste
 Rollback after deletion requires matching retained byte backups, not metadata alone.
 
 3C.4c uses existing gc_jobs fields without a schema migration. permit_hash is SHA-256 over a canonical binding of bearer SHA plus target node, volume, credential/approved generation, device domain and endpoint/pin. Only the raw bearer in memory is sent to the pinned exact target. A new execution replaces run/hash/proofs/120s expiry and increments attempts on the same immutable job. RUNNING last_error=execution_unconfirmed remains until exact authenticated completion; takeover resets unfinished permits as before. DONE retains its immutable outcome and survivor references. The existing node journal identity excludes ephemeral permit/run fields, permitting the same exact object to recover after renewal/takeover without a second unlink. No raw token is added to request receipts or logs.
+
+Linux 3C.5 structural-validation reuse is memory-only: two successfully validated
+exact immutable canonical Catalog byte strings, each <=2 MiB. Native JSON type
+checks avoid representation aliases; caller dictionaries and failed inputs are
+not cached. No persisted schema, receipt, manifest, journal or authority change.

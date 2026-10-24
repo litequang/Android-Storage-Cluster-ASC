@@ -313,3 +313,11 @@ tracked and calls the existing validated init/run APIs; no Raft module is rewrit
 - stale_gc_proof: current references or endpoint/approval graph changed during checksum streaming. Preserve the reservation and retry the same job for new proof. Never accept a former endpoint checksum under a new pin.
 
 - A heartbeat can legitimately stale an exact confirmed plan. Reprepare/reconfirm its new SHA; retain old plan receipts. The isolated fault harness bounds these retries and never treats a denied attempt as successful physical/lost-ACK evidence.
+
+Linux GC qualification with a full 1024-event history can expose repeated expensive
+structural checks and stale plans under CPU contention. Exact-byte structural reuse
+reduces repeated work; it grants no authority. Run heavy fault matrices serially,
+reprepare stale exact plans and obtain new proofs, preserving the 10s callback and
+250ms local budgets. Never clear history or extend freshness limits to get PASS.
+Synthetic-only pause/crash/stack controls live in tests/gc_fixture.py, not runtime
+config or product endpoints.

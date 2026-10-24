@@ -298,3 +298,11 @@ reappeared/corrupt/unknown files are held. No physical power-cut guarantee follo
 3C.5b review reproduced a survivor-approval race: a new endpoint pin during proof could otherwise leave node/volume/generation unchanged. An ephemeral full graph SHA now must remain identical across proof and final CAS for both permit issuance and final introspection. New references/approvals invalidate evidence; default physical/device locks remain.
 
 Proof fingerprint ignores volatile self-reported profile telemetry only; effective protected state, generation, approved endpoint/pin/domain/volumes, policies and every reference remain bound. Original current-document freshness/readability and streamed SHA checks still run. The integration test exposed ordinary heartbeat noise; a regression explicitly distinguishes telemetry-only changes from protection changes.
+
+Structural Catalog validation reuse during Linux qualification is not an
+operation-authorization cache. It keys the complete exact canonical Catalog bytes,
+checks native JSON types and admits only successful validation (two entries).
+Mutation, history/hash/materialization mismatches and invalid Python type aliases
+must fail. Runtime identity/extensions, hashes, quorum, term, references, streamed
+survivors and final nonce checks still run. No time budget or real-device lock is
+relaxed to obtain physical PASS.

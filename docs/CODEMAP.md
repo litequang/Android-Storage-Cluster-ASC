@@ -312,3 +312,13 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
 - `asc.client.request_json` permits only fixed GC error labels for actionable retries, retaining unknown-text redaction. GC fault harness retries stale plan/proof with fresh exact confirmation/nonce on the same retirement/job, and accepts safe client-level lost-ACK recovery only after the actual drop marker is consumed.
 
 - Final hardened Windows gate on 895e5bb: 203 Python OK (189 PASS / 14 platform skips), all legacy/replication/GC authorization faults PASS; Go/vet/module/build PASS. PHASE3C-ACCEPTANCE and PROGRESS retain Linux physical qualification as NOT ACCEPTED and provide Cloud continuation.
+
+- Linux 3C.5: `failover.state._validate_catalog` reuses only successful structural
+  Catalog validation for two exact immutable JSON byte strings (each <=2 MiB).
+  Native-type checks reject Python tuple/key aliases; no mutable document or
+  authority is cached. `test_runtime_validation` covers mutation, history and
+  materialization mismatch, type aliases and uncached failures.
+- `test_gc_faults.GCFixture` shares helpers without inheriting test cases;
+  `gc_fixture` supplies private synthetic pause/crash hooks and stack diagnostics.
+  `test_gc_linux_faults` exercises real TLS boundaries, partitions/takeover,
+  delayed replies, process death/journal recovery, references and cluster replay.

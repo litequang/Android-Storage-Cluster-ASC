@@ -1,5 +1,6 @@
 """Bounded runtime projection and isolated SQL preparation, never a live DB copy."""
 from contextlib import contextmanager, closing
+from functools import lru_cache
 import copy
 import json
 import re
@@ -16,6 +17,26 @@ from .. import validation as valid
 SHARED = {'nodes': 64, 'join_codes': 256, 'enrollments': 1024,
           'catalog_nodes': 16, 'catalog_jobs': 2048,
           'catalog_job_history': 8192, 'transfer_grants': 4096}
+
+
+def _json_tree(value):
+    """Keep canonical JSON from aliasing invalid Python tuples/keys to valid data."""
+    if type(value) is dict:
+        return all(type(k) is str and _json_tree(v) for k,v in value.items())
+    if type(value) is list:return all(_json_tree(v) for v in value)
+    return type(value) in (str,int,float,bool,type(None))
+
+
+@lru_cache(maxsize=2)
+def _validated_catalog_bytes(raw):
+    # Only immutable exact bytes, never caller-owned dictionaries or authority.
+    # Each admitted Catalog is <=2 MiB. Failed validation is never cached.
+    catalog_validate(json.loads(raw))
+
+
+def _validate_catalog(doc):
+    if not _json_tree(doc):return catalog_validate(doc)
+    _validated_catalog_bytes(canonical(doc))
 
 
 class MemoryRegistry(Registry):
@@ -96,7 +117,7 @@ def validate(doc):
                 not isinstance(doc['authority']['node_id'], str) or not 1 <= len(doc['authority']['node_id']) <= 64 or
                 type(doc['authority']['term']) is not int or not 0 < doc['authority']['term'] < 2**63):
             raise ValueError()
-        catalog_validate(doc['catalog'])
+        _validate_catalog(doc['catalog'])
         if 'backup' in doc:
             from ..backup.state import validate as validate_backup
             validate_backup(doc['backup'], doc['catalog'])

@@ -292,3 +292,11 @@ on Windows/Android/real devices and outside issued synthetic temporary arenas.
 3C.5b additionally binds the complete reference/approval graph before and after streamed survivor proof. Current identity/domain/freshness checks alone cannot reuse proof from a formerly approved endpoint after its pin changes. The transient graph SHA is not persisted and changes no schema; any concurrent graph change requires fresh proof.
 
 Proof fingerprint retains all references, policies, approvals, identities and effective protection. Only unrelated self-reported profile telemetry is canonicalized away; current pinned readability/freshness still uses the real document. Ordinary heartbeat free-space changes must not substitute for, or invalidate, independently streamed byte evidence by themselves. Confirmed plan SHA semantics are unchanged.
+
+Linux qualification exposed repeated structural validation of identical 1024-event
+Catalogs in runtime read/preparation. A bounded two-entry cache admits only
+successfully validated exact canonical JSON bytes with native JSON types; no mutable
+document, authority, time-dependent evidence or grant is cached. Changed bytes
+validate again, including history/materialization checks. All other runtime
+validation, digest verification, fresh quorum/nonce and streamed-proof gates remain
+per-operation. Callback/local time budgets are unchanged.
