@@ -26,15 +26,15 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.2 | PUSHED/REMOTE VERIFIED: ae299c7981cd683cf61966c7ed64cfb05e557c51 |
 | DEMO.3a | PUSHED/REMOTE VERIFIED: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 |
 | DEMO.3a.1 | PUSHED/REMOTE VERIFIED: aaf7d163fbac032bb31a033efe2ebb21406509bf |
-| DEMO.3b | Final full 222 PASS / package qualified; publication receipt follows |
+| DEMO.3b | PUSHED/REMOTE VERIFIED: 52850b9072241ab4bb7643b06127965d25d96904 |
 | DEMO.4 | Deferred behind initial CLI package / owner pilot; optional UI |
 | Demo source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Next action
 
 Final hardened source aaf7d16: 14 targeted PASS and fresh full **222 PASS / 0 SKIP**.
-Final 0.3.0 source package/checksum and acceptance ready; publish/verify DEMO.3b and
-record receipt below. Next functional step is OWNER-only ZTE/Bphone pilot using
+Final 0.3.0 source package/checksum and acceptance PUBLISHED/REMOTE VERIFIED at
+52850b9072241ab4bb7643b06127965d25d96904; actual GitHub download SHA verified. Next functional step is OWNER-only ZTE/Bphone pilot using
 DEMO-QUICKSTART and blank DEMO-ANDROID-PILOT. DEMO.4 remains deferred. Reuse existing Core functions; do not enable Raft/GC or change
 Core guards. Read DEMO-TRACK-PLAN for architecture, risk and upgrade contract.
 Each checkpoint must record changed files, exact actual tests/results, hash/push
@@ -228,3 +228,43 @@ DEMO-QUICKSTART; owner blank pilot not populated by Cloud tests. Complete per-ch
 changed-file routes are in entries above and CODEMAP; exact filenames follow the
 Git history (Core and its tests are unchanged). Publication receipt is appended
 after normal Demo-only push and advertised remote HEAD/package verification.
+
+## Verified GitHub publication receipt — COMPLETE first CLI source handoff
+
+DEMO.3b publication commit: **52850b9072241ab4bb7643b06127965d25d96904**.
+Normal push succeeded; advertised feature/android-demo-alpha remote HEAD matched
+that exact hash. Core WIP remote remained acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c.
+No force/reset/history edit/main merge or real-device access occurred.
+
+Downloaded the archive from the immutable GitHub raw URL at that exact commit
+through inherited network/TLS policy, 141336 bytes, then compared bytes and SHA-256
+with the tested local publication: PASS,
+`3bf81c5d94891fa064e2f05f99d60d620b4c5db71c87bb2ee6c89ac72b9a445a`.
+No proxy/CA changes, network bypass, installer package mutation or secret exposure.
+
+| Checkpoint | Published commit / verification |
+|---|---|
+| DEMO.0 audit/plan | 2b877ff6f4312110447e817210815794b2f84d87, remote verified |
+| DEMO.1 installer preview (historical, not recommended) | 789ea8f9675c3339287eace1486126bd886c17e3, remote verified |
+| DEMO.2 LAN | ae299c7981cd683cf61966c7ed64cfb05e557c51, remote verified |
+| DEMO.3a upgrade-safe implementation | 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380, remote verified |
+| In-progress handoff | cb37dd42d78bedba70818d10317cc167e38189f0, remote verified |
+| DEMO.3a.1 final lock hardening | aaf7d163fbac032bb31a033efe2ebb21406509bf, remote verified |
+| DEMO.3b final acceptance/package | 52850b9072241ab4bb7643b06127965d25d96904, remote + downloaded package SHA verified |
+
+No implementation/packaged-guide changes follow final 222 PASS. This receipt updates
+reporting only and reuses that unchanged-source qualification; docs/whitespace/
+tracked+index secrets are checked before its normal push and remote verification.
+The receipt commit is the subsequent Git history entry, not an additional feature.
+
+34 changed files through DEMO.3b (Core source/tests/Go untouched); obtain exact
+per-checkpoint file lists with `git show --stat COMMIT` and aggregate with
+`git diff --name-only acea2ae..52850b9`. Routes/files are recorded above/CODEMAP.
+
+Next: OWNER follows docs/DEMO-QUICKSTART.md and blank docs/DEMO-ANDROID-PILOT.md
+for ZTE/Bphone (optional Sony). Verify package SHA BEFORE extraction; keep all
+existing private state/source and use new prefix if historical preview exists.
+Stop all foregrounds before backup/upgrade/code rollback. No automatic DB/data
+restore or APK/Raft migration. Android remains NOT TESTED until owner evidence;
+Codex has no phone/M51/production/GC activation authorization. DEMO.4 Dashboard Lite
+remains deferred, no pending mandatory source acceptance gate for first CLI package.

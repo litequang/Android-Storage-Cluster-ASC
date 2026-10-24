@@ -131,3 +131,12 @@ single-writer->Raft, medium-identity or production migration is implemented.
 Rollback selects old compatible code only after a NEW complete verified private backup;
 never overwrite current data with an old DB. PREPARED recovery additionally requires
 unchanged current state matching its backup; otherwise preserve directories for review.
+
+## Publication verification
+
+Normal Demo branch push and advertised remote verification succeeded at
+`52850b9072241ab4bb7643b06127965d25d96904`. Downloaded that commit's exact public
+GitHub archive (141336 bytes) and verified identical bytes/SHA-256 to the qualified
+local package. Core remote still acea2ae. See PROGRESS publication receipt and Git
+history for checkpoint hashes, source/changed-file routes and owner next steps.
+This later receipt is docs-only; implementation, package and test evidence unchanged.
