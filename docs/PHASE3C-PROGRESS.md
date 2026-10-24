@@ -25,29 +25,30 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 | 3C.2b | PUSH VERIFIED `173faf8`; 13 targeted + all 39 legacy gates PASS; initial combined fixture error recorded |
 | 3C.3a | PUSH VERIFIED `9a675c2`; 69 targeted + 17 TLS/unit PASS |
 | 3C.3b | PUSH VERIFIED `445af5c`; 59 targeted + 20 TLS/unit PASS |
-| 3C.4a | Default-locked plans/confirmation/quorum reservations; 91 targeted + 23 TLS/unit PASS; publication pending |
-| 3C.4b–3C.5 | NOT STARTED |
+| 3C.4a | PUSH VERIFIED `b5cb2ed`; 91 targeted + 23 TLS/unit PASS |
+| 3C.4b | Isolated local executor/journal; 67 safety regression + final local tests PASS; publication pending |
+| 3C.4c–3C.5 | NOT STARTED |
 | Full regression / acceptance | NOT RUN; Phase 3C NOT accepted |
 
 ## Next action / resume
 
-Verify 3C.4a publication, then 3C.4b isolated local executor/journal with fault tests.
-No physical unlink exists yet. Default Controller gc_test_context=None; only an
-issued in-process synthetic temporary x86 context can confirm. No CLI/config/env
-enable. GC prepare stores fresh external-domain proof and 60s immutable plan;
-exact SHA confirmation reserves one target. Pending permits/proofs clear on takeover.
+Verify 3C.4b publication, then 3C.4c wire exact-object Controller/Storage authorization
+and actual three-voter/TLS execution. Ordinary runtime/Agent has no executor or
+context; no config/env/CLI enable exists. Local physical executor is Linux x86
+fresh synthetic temp volumes only, with immutable restart binding and FULL journal.
+Unit callbacks are simulated authorization, not yet proof of network quorum fencing.
 
-`python -B -m unittest tests.test_replication tests.test_catalog tests.test_backup.BackupStateTests tests.test_failover.RuntimeStateTests tests.test_nodes -q`
-**91 PASS, 5.369s**.
-`python -B -m unittest tests.test_replication_faults tests.test_replication -v`
-**23 PASS, 18.783s** (real TLS policy/copy/archive/replay plus reservation units).
-Initial 22-unit run: 1 ERROR from incorrect transition-helper module in new test;
-corrected import and complete retests PASS. Product guards unchanged.
+`python -B -m unittest tests.test_gc_sandbox tests.test_storage tests.test_storage_cluster tests.test_distributed tests.test_replication -v`
+**67 PASS, 49.807s** (actual local unlink plus existing Storage/TLS/distributed).
+`python -B -m unittest tests.test_gc_sandbox tests.test_storage -v`: final local
+PASS (see 3c4b-local-final.log), adds post-manifest/DONE lost-ACK and reappeared-body
+holds. Source unchanged after tests. Logs under /workspace/work/phase3c.
 
-Next executor must require a distinct fresh synthetic temporary-volume capability,
-never adopt an existing populated volume; serialize with Engine transfers; use
-no-follow root/object identity and SHA; journal before unlink; reauthorize freshly
-at the final boundary; recover known unlink/lost-ACK idempotently without accepting
-unknown absence. Keep default runtime unreachable. Then wire exact-scope Storage/
-Controller authorization and run real three-voter fault/regression gates before
-claiming acceptance. Existing 3C.2b intermediate fixture error remains documented.
+Next: issued Controller fixture context + issued Node arena only; default absent
+capabilities remain locked. Target-specific raw grant must never enter replicated
+state/logs; persist only hash. Fresh nonce/current-term quorum reauthorization at
+final unlink must reprove external-domain survivors/current graph. Takeover clears
+permit; paused/expired/missing quorum/new pin/old run must deny. No cached/fallback
+permit. Node journal makes actual unlink + lost ACK idempotent. API execute must
+be explicit confirmed test-only, never automatic background GC. Final full/fault
+acceptance and real physical-boundary timing limitations remain to document.

@@ -55,3 +55,56 @@ def require_controller(service):
     if type(capability) is not ControllerTestContext:raise CatalogError('physical_gc_locked',403)
     capability.validate()
     return capability
+
+
+class NodeTestVolume:
+    def __init__(self,seal,engine,volume,binding):
+        if seal is not _seal:raise CatalogError('physical_gc_locked',403)
+        self.home,self.home_identity=temporary_identity(engine.home)
+        self.root,self.root_identity=temporary_identity(volume.root)
+        self.record=dict(volume.record);self.binding=dict(binding)
+        _issued.add(self)
+
+    def validate(self,engine):
+        if type(self) is not NodeTestVolume or self not in _issued:raise CatalogError('physical_gc_locked',403)
+        if platform.system()!='Linux' or os.name!='posix':raise CatalogError('physical_gc_platform_locked',403)
+        if temporary_identity(self.home)!=(self.home,self.home_identity) or temporary_identity(self.root)!=(self.root,self.root_identity):
+            raise CatalogError('unsafe_gc_test_arena',403)
+        volume=engine.volumes.get(self.record['volume_id']);volume.check()
+        for folder in ('objects','staging'):
+            info=(volume.root/folder).stat()
+            if [info.st_dev,info.st_ino]!=self.binding[folder+'_identity']:
+                raise CatalogError('unsafe_gc_test_arena',403)
+        if volume.record!=self.record or engine.node_id!=self.binding['node_id']:
+            raise CatalogError('unsafe_gc_test_arena',403)
+        return volume
+
+
+def fixture_node_capability(engine,volume_id):
+    """Mint only before first data; restart needs the exact retained arena binding."""
+    import json
+    import uuid
+    from ..identity import save_private
+    from ..storage.volumes import no_links
+    if platform.system()!='Linux' or os.name!='posix':raise CatalogError('physical_gc_platform_locked',403)
+    temporary_identity(engine.home)
+    volume=engine.volumes.get(volume_id);volume.check();temporary_identity(volume.root)
+    if volume.record['kind']!='directory':raise CatalogError('physical_gc_locked',403)
+    path=engine.home/('gc-test-volume-'+volume_id+'.json');no_links(path)
+    base={'schema':1,'node_id':engine.node_id,'volume_id':volume_id,
+          'root':str(volume.root),'medium':volume.record['medium'],
+          **{folder+'_identity':[(volume.root/folder).stat().st_dev,(volume.root/folder).stat().st_ino] for folder in ('objects','staging')}}
+    if path.exists():
+        if path.stat().st_size>4096:raise CatalogError('unsafe_gc_test_arena',403)
+        binding=json.loads(path.read_text())
+        if set(binding)!={*base,'arena_id'} or any(binding[k]!=v for k,v in base.items()):raise CatalogError('unsafe_gc_test_arena',403)
+        from ..catalog.common import identifier
+        identifier(binding['arena_id'])
+    else:
+        with engine.manifest.connect() as db:
+            if (db.execute('SELECT COUNT(*) FROM files WHERE volume_id=?',(volume_id,)).fetchone()[0] or
+                    db.execute('SELECT COUNT(*) FROM uploads WHERE volume_id=?',(volume_id,)).fetchone()[0] or
+                    any((volume.root/'objects').iterdir()) or any((volume.root/'staging').iterdir())):
+                raise CatalogError('gc_existing_volume_not_adopted',403)
+        binding={**base,'arena_id':str(uuid.uuid4())};save_private(path,binding)
+    return NodeTestVolume(_seal,engine,volume,binding)

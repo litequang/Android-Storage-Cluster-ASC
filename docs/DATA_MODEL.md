@@ -335,3 +335,14 @@ RESERVED has no permit/proof; RUNNING permits must match the current authority t
 and bounded 120s lifetime; DONE is immutable. Takeover resets unfinished execution
 to RESERVED with no permission; reservations/confirmation/audit identity remain.
 Lifetime/2 MiB/Go receipt bounds fail closed without erasing reference history.
+
+3C.4b test-only private files under Engine HOME: gc-test-volume-<volume UUID>.json
+binds schema 1, node/volume/root/medium and root-subdirectory identities plus arena ID.
+A first binding refuses any existing upload/file/body; a marker alone never activates
+ordinary runtime. gc-journal-<volume UUID>.sqlite3 schema 1 binds the arena SHA and
+<=256 immutable job/object identities with digest and PREPARED/DELETING/DONE phase.
+No grant token is stored. Unknown schema/binding/hash/link fails closed. Base local
+manifest schema stays 1; after confirmed unlink its exact file row is removed,
+completed upload receipt remains. Restart cannot republish the deleted body; old
+Controller upload completion is served from the permanent archived receipt instead.
+Rollback after deletion requires matching retained byte backups, not metadata alone.

@@ -273,3 +273,11 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   real Android/ARM/non-temporary roots refused. No unlink implementation yet.
   State validates/fences plans/jobs and invalidates pending permits on takeover;
   GCReservationTests cover default lock/confirmation/expiry/new pin/no-quorum.
+- 3C.4b `replication.sandbox.Executor`: Linux x86 temporary-volume-only exact-body
+  unlink under existing Engine transfer/mutex ownership and no-follow descriptors;
+  current root/object-dir/file identity, SHA and final fresh authorization callback.
+  `replication.journal`: private FULL SQLite immutable-identity PREPARED/DELETING/
+  DONE journal with quarantine/bounds and restart/idempotent known-absence handling.
+  `arena.fixture_node_capability` mints before first data; restart must match retained
+  binding. Ordinary runtime has no executor; SandboxTests exercise actual fake-byte
+  unlink/crash/ACK/restart/link/root/corruption/default-lock boundaries.

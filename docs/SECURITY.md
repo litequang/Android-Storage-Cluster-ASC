@@ -282,3 +282,13 @@ malicious administrator who can replace Python or unlink files directly. Actual
 physical execution will need a separate fresh-volume capability and nonce-bound
 last-boundary authorization/journal; no unlink exists at 3C.4a. Survivors must also
 be outside the GC target's device domain to avoid self-dependency/IO-lock deadlock.
+
+3C.4b physical unlink is possible only through an issued NodeTestVolume capability
+for a fresh Linux x86 temporary directory volume, in addition to the later required
+Controller authorization. Existing populated/native volumes are never adopted.
+Real Android/ARM/Windows, non-temporary/source roots and normal Agent initialization
+remain locked. Root/subdirectory/file identities, single-link regular body, exact
+manifest/name/size/SHA and immediate fresh callback are mandatory. Existing Engine
+transfer ownership prevents deleting through another active local stream. Known
+journal absence is idempotent recovery, not fabricated reclaimed-space evidence;
+reappeared/corrupt/unknown files are held. No physical power-cut guarantee follows.

@@ -246,3 +246,6 @@
 - 3C.4a: durable fresh-proof GC plans, exact SHA confirmation and current-term
   quorum reservation with default absent synthetic-only capability; no physical
   executor. Preserve immutable reservations/plans and reset permits on takeover.
+- 3C.4b: isolated fresh Linux temporary-volume executor, exact-body checksum/identity
+  and final callback gate, durable bounded journal and crash/lost-ACK restart
+  recovery. No network activation yet; ordinary Agent/real devices remain locked.

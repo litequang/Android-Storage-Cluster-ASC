@@ -268,3 +268,21 @@ retirement identity cannot be removed/reused. Takeover invalidates pending permi
 and proofs; no physical executor or unlink is present in this checkpoint. GC job
 survivor evidence itself is a retained reference; reserved targets are retirement
 journals, not new data-use pins. Repeated confirmation with the same request replays.
+
+3C.4b supplies a separately issued Node test-volume capability: Linux x86, existing
+approved directory under temporary storage, exact node/volume/root/objects/staging
+identities, and no pre-existing sessions/files/bodies when first issued. Retained
+binding allows restart only on the exact same arena. Normal Agent constructs none.
+Executor serializes through Engine.transfer (including in-flight reads), verifies
+manifest/upload scope and SHA, journals identity before deletion intent, then calls
+fresh authorization immediately before descriptor-relative single-object unlink.
+A 250ms post-authorization local budget rejects delayed boundary work; no recursive
+or arbitrary path removal. Recheck links/inodes/size/change times/root at the boundary.
+
+The private FULL SQLite journal progresses PREPARED -> DELETING -> DONE across
+unlink, directory fsync and manifest removal. Only a known matching DELETING/DONE
+intent can acknowledge absence; unknown/corrupt/mismatched/reappeared data is held.
+Retry does not repeat an unlink or claim additional bytes, and always reauthorizes.
+No network GC endpoint is wired yet; this checkpoint qualifies local fake-callback
+and filesystem behavior, not final quorum fencing. Physical execution stays locked
+on Windows/Android/real devices and outside issued synthetic temporary arenas.

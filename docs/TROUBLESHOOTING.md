@@ -294,3 +294,12 @@ tracked and calls the existing validated init/run APIs; no Raft module is rewrit
   never re-adopt an old local ID/clear the fence. Use a new stable COPY job/object.
 - Logical retirement frees no disk by itself. History/job/grant/snapshot pins can
   legitimately keep all retired bytes; future GC must enumerate these holds.
+- gc_existing_volume_not_adopted/physical_gc_platform_locked: intentional isolated
+  Linux x86 fresh-volume boundary; never create a marker/flag to convert real data.
+- gc_journal_quarantined/gc_journal_conflict/gc_unknown_absence: retain complete
+  state and original bytes; restore reviewed matching journal/volume backups.
+  Never delete/edit the journal to claim an object was safely removed.
+- gc_checksum_mismatch/gc_object_identity_changed/unsafe_gc_test_arena: preserve
+  original and replacement/link targets; no recursive cleanup or identity override.
+- gc_authority_budget_expired: final local work exceeded the short fresh-proof
+  budget; no unlink occurred. Retry with a newly authorized same immutable intent.
