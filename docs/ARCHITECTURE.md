@@ -187,3 +187,13 @@ Retention expires logical references only. Physical immutable bytes are preserve
 
 The executed 12-gate Phase 3A matrix and fresh complete regression qualify this
 bounded Windows development path only; see PHASE3A-ACCEPTANCE.md.
+
+## Phase 3B optional node insights
+
+Read-only score views derive from one verified runtime document, never live network
+IO during apply. Explicit owner enable adds insights schema 1; upgrade all stopped
+Controllers first. Existing prepared-document CAS, term authority and byte-proof
+paths remain unchanged. Post-refresh capture samples fresh pinned probe observations
+at most once/node/hour into UTC calendar-hour/day aggregates. Missing hours remain
+UNKNOWN; observed probe success is not continuous uptime. Takeover preserves history;
+probe freshness is still invalidated. No voter/membership/leadership decision uses it.

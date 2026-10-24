@@ -27,6 +27,8 @@ class Service(CatalogService):
         super().__init__(runtime.registry, rate, timeout)
         from ..backup.service import Backups
         self.backups = Backups(self)
+        from ..nodes.service import Insights
+        self.insights = Insights(self)
         from ..backup.catalog import VersionedCatalog
         self.catalog = VersionedCatalog(runtime.registry)
         self.queue.catalog = self.catalog
@@ -39,6 +41,7 @@ class Service(CatalogService):
             if self._refreshed and self._refreshed[0] == term and time.monotonic()-self._refreshed[1] < 10:
                 return
             super().refresh()
+            self.insights.capture()
             self._refreshed = (term, time.monotonic())
 
     def status(self):
@@ -180,9 +183,10 @@ class RuntimeHandler(Handler):
                     'features': ['controller-failover-v1', 'node-lifecycle-v1', 'retry-safe-enrollment-v1',
                                  'global-catalog-v1', 'metadata-replication-v1', 'file-scoped-transfers-v1',
                                  'backup-versioning-v1']})
-            if self.command == 'GET' and parsed.path == '/catalog/v1/nodes/scores':
+            if self.command == 'GET' and (parsed.path == '/catalog/v1/nodes/scores' or
+                    parsed.path.startswith('/catalog/v1/nodes/') and parsed.path.endswith('/history')):
                 query = parse_qs(parsed.query, strict_parsing=True)
-                if (set(query) - {'consistency'} or parsed.fragment or
+                if (set(query) - {'consistency', 'window'} or parsed.fragment or
                         any(len(v) != 1 for v in query.values()) or
                         query.get('consistency', ['local'])[0] not in ('local', 'strong')):
                     raise ValueError()
@@ -191,7 +195,21 @@ class RuntimeHandler(Handler):
                 from ..nodes.view import scores
                 from ..catalog.common import now
                 view = runtime.view(strong=query.get('consistency') == ['strong'])
-                return self._json(200, scores(view, now()))
+                result = scores(view, now())
+                if parsed.path.endswith('/history'):
+                    from ..nodes.history import summary, empty, WINDOWS
+                    parts = parsed.path.split('/')
+                    window = query.get('window', ['24h'])[0]
+                    if len(parts) != 6 or window not in WINDOWS:
+                        raise ValueError()
+                    node_id = valid.node_id(parts[4])
+                    if node_id not in {n['node_id'] for n in view['document']['tables']['nodes']}:
+                        raise CatalogError('node_not_found', 404)
+                    result = {k:v for k,v in result.items() if k != 'nodes'}
+                    result.update(node_id=node_id, **summary(view['document'].get('insights', empty()), node_id, window, now()))
+                elif 'window' in query:
+                    raise ValueError()
+                return self._json(200, result)
             if self.command == 'GET' and parsed.path.startswith('/catalog/v1/'):
                 query = parse_qs(parsed.query, strict_parsing=True)
                 if any(len(v) != 1 for v in query.values()) or parsed.fragment:

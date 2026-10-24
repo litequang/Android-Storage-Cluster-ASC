@@ -49,10 +49,16 @@ def export(db, revision, authority):
     backup = db.execute("SELECT value FROM settings WHERE key='phase3a_backup'").fetchone()
     if backup:
         result['backup'] = json.loads(backup[0])
+    insights = db.execute("SELECT value FROM settings WHERE key='phase3b_insights'").fetchone()
+    if insights:
+        result['insights'] = json.loads(insights[0])
     return result
 
 
 def _install(db, doc):
+    db.execute("DELETE FROM settings WHERE key='phase3b_insights'")
+    if 'insights' in doc:
+        db.execute("INSERT INTO settings VALUES('phase3b_insights',?)", (canonical(doc['insights']).decode(),))
     db.execute("DELETE FROM settings WHERE key='phase3a_backup'")
     if 'backup' in doc:
         db.execute("INSERT INTO settings VALUES('phase3a_backup',?)", (canonical(doc['backup']).decode(),))
@@ -76,7 +82,7 @@ def _install(db, doc):
 
 def validate(doc):
     try:
-        if (not isinstance(doc, dict) or set(doc) - {'backup'} != {'schema', 'cluster_id', 'epoch', 'revision',
+        if (not isinstance(doc, dict) or set(doc) - {'backup', 'insights'} != {'schema', 'cluster_id', 'epoch', 'revision',
                 'authority', 'catalog', 'tables', 'inventory_cursor'} or doc['schema'] != 2 or
                 type(doc['revision']) is not int or not 0 < doc['revision'] < 2**63 or
                 set(doc['tables']) != set(SHARED) or
@@ -88,6 +94,9 @@ def validate(doc):
         if 'backup' in doc:
             from ..backup.state import validate as validate_backup
             validate_backup(doc['backup'], doc['catalog'])
+        if 'insights' in doc:
+            from ..nodes.history import validate as validate_insights
+            validate_insights(doc['insights'], doc['tables']['nodes'])
         if (doc['cluster_id'], doc['epoch']) != (doc['catalog']['cluster_id'], doc['catalog']['epoch']):
             raise ValueError()
         if len(canonical(doc)) > 2*1024**2:

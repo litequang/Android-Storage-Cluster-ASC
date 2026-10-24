@@ -250,3 +250,27 @@ pre-enable private backups plus matching source; preserve post-enable state and
 objects separately. Do not remove the extension, lower schemas or edit Raft state.
 The latest historically verified version is also retained while a higher version
 is still incomplete. Older-version age/count retention counts verified versions.
+
+## Phase 3B insights schema 1 (explicit opt-in)
+
+Optional runtime `insights`: schema=1, history (<=16 node records), requests
+(<=128 permanent owner intent/result receipts). Per node: approved credential
+generation, last_sample_at, <=24 hourly buckets and <=30 daily buckets. Each
+bucket contains raw sums/counts for capacity_ratio/reachable/memory_mb/thermal_c,
+with at most one fresh probe sample per node per calendar hour. No raw profiles,
+addresses, secrets or unbounded samples enter this extension. Base registry 4,
+Engine manifest 1, public metadata cache 1 and Phase 3A backup schema are unchanged.
+
+24h/7d/30d means UTC calendar buckets including the partial current bucket; gaps
+are null with zero observed samples, never fabricated outage/uptime. Reliability
+is observed successful probes / observed probes in the reported window. Score
+reliability remains fresh for 3600 seconds (hourly sampling); other score inputs
+retain 120-second freshness. Prior-generation history is retained/tagged and not
+used for new-generation scores. Whole-runtime 2 MiB / Go 4096 permanent receipts
+remain limits: sustained long-running deployments can exhaust receipts before
+30 days. Retention describes available history, not a promise of 30-day runtime
+capacity. No authority receipt is evicted to collect telemetry.
+
+Rollback requires complete stopped/isolated pre-enable backups and matching source;
+retain newer runtime/history/backup/object state separately. Old validators refuse
+the extension; never remove it by hand or change schemas/terms to downgrade.

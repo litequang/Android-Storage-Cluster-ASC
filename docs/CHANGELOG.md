@@ -209,3 +209,6 @@
   score with component explanations, separate probe reliability and confidence.
   UNKNOWN/stale/future inputs never become fabricated measured zeros. No API,
   placement or voter membership changes at this checkpoint.
+- 3B.2: explicitly enabled bounded node history with hourly sampling, UTC calendar
+  24h/7d/30d views and observed-probe reliability. Preserve history and Phase 3A
+  backup state through preparation/takeover; no physical or consensus policy change.

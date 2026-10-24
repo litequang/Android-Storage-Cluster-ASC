@@ -333,3 +333,12 @@ revision; strong uses the existing quorum read gate. Unapproved/revoked/changed
 node generation has UNKNOWN scores. Only pinned status capacity/reachability and
 runtime memory are currently available; reliability/thermal remain UNKNOWN until
 actual history/sensors exist. Normal node tokens do not authorize this route.
+
+3B.2: owner `POST /catalog/v1/nodes/enable {request_id}` explicitly enables bounded
+insights schema 1, with same-intent replay/conflicting-ID protection. Owner-only
+`GET /catalog/v1/nodes/ID/history?window=24h|7d|30d&consistency=local|strong`
+returns source checkpoint, generation, observed buckets, raw metric means/counts,
+provenance and null continuous_uptime. UTC calendar buckets include current partial
+bucket. Score reliability uses last 24h observed probe samples, with 3600-second
+freshness rather than the 120-second live-input budget. Thermal stays UNKNOWN until
+an actual supported sensor is collected. No sensor is inferred from device specs.

@@ -33,6 +33,14 @@ def observations(doc, node):
     ram = profile.get('memory_mb')
     if type(ram) in (int, float) and math.isfinite(ram) and 0 <= ram <= 1048576:
         put('memory_mb', ram, node['last_seen'])
+    from .history import summary
+    state = doc.get('insights')
+    if state:
+        latest = state['history'].get(node['node_id'])
+        if latest and latest['generation'] == node['token_version']:
+            report = summary(state, node['node_id'], '24h', latest['last_sample_at'])
+            if report['probe_samples']:
+                put('reliability', report['reliability']/100, latest['last_sample_at'], report['probe_samples'])
     return result
 
 

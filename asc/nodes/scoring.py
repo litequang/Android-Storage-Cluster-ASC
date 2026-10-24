@@ -51,7 +51,7 @@ def score(observations, at):
     for name, weight in WEIGHTS.items():
         item = observations[name]
         value, stamp = item['value'], item['observed_at']
-        fresh = value is not None and 0 <= at - stamp <= FRESH_SECONDS
+        fresh = value is not None and 0 <= at - stamp <= (3600 if name == 'reliability' else FRESH_SECONDS)
         normalized = None
         if fresh:
             if name in ('capacity_ratio', 'reliability'):

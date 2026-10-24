@@ -257,3 +257,16 @@ expired source is refused, preserving the same restore eligibility rules.
 The supplied base commit omitted `consensus/cmd/asc-raft/main.go`: the unanchored
 asc-raft ignore also matched the source directory. The source launcher is now
 tracked and calls the existing validated init/run APIs; no Raft module is rewritten.
+
+## Phase 3B node insights
+
+- phase3b_not_enabled: upgrade all stopped development Controllers, retain complete
+  private backups, then owner POST nodes/enable with a stable request_id.
+- UNKNOWN/low confidence: missing/stale/future/unapproved inputs or history gaps;
+  inspect source times and counts. Never substitute preset RAM/readiness scores.
+- node_history_limit/node_request_limit/runtime_projection_limit/receipt_limit:
+  bounded state exhausted; preserve authority and existing backups. No automatic
+  receipt eviction/reset. Hourly sampling reduces growth but does not remove the
+  inherited Go 4096-receipt lifetime limit.
+- Re-paired node: retained prior-generation history does not score the new identity.
+  No history or credential is silently rewritten to manufacture continuity.

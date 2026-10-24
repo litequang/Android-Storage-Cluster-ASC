@@ -199,3 +199,8 @@ Historical PySyncObj evidence below remains unchanged.
   ScoreEngineTests cover partial coverage, known zero, extremes and monotonicity.
 - 3B.1c `nodes.view.observations/scores` and RuntimeHandler nodes/scores route:
   owner-only local/strong read-only score view; no live refresh or placement write.
+- 3B.2 `nodes.history`: strict bounded hourly/daily aggregation, gap-aware windows;
+  `nodes.service.Insights`: explicit enable, replay-safe CAS and post-refresh capture.
+  `failover.state` preserves/validates extension across SQL preparation/takeover;
+  RuntimeHandler history route serves owner local/strong views. Telemetry tests
+  cover retention, missing/failure samples, malformed state and lost reply replay.

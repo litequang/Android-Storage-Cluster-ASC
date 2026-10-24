@@ -113,3 +113,80 @@ class ScoreViewTests(unittest.TestCase):
         runtime.view.assert_called_once_with(strong=False)
         self.assertEqual(h._json.call_args.args[0],200)
         self.assertTrue(h._json.call_args.args[1]['read_only'])
+
+
+class TelemetryHistoryTests(unittest.TestCase):
+    def test_hourly_coalescing_retention_and_unknown_gaps(self):
+        from asc.nodes import history
+        state=history.empty()
+        obs=ScoreEngineTests().measured(reachable=True,capacity_ratio=.5)
+        for day in range(40):
+            at=day*86400+1000
+            for item in obs.values():
+                if item['value'] is not None:item['observed_at']=at
+            history.record(state,'node-a',1,obs,at)
+            history.record(state,'node-a',1,obs,at+1)
+        self.assertEqual(len(state['history']['node-a']['days']),30)
+        self.assertEqual(len(state['history']['node-a']['hours']),1)
+        report=history.summary(state,'node-a','24h',at)
+        self.assertEqual(report['probe_samples'],1)
+        self.assertEqual(report['observed_buckets'],1)
+        self.assertIsNone(report['buckets'][0]['metrics']['reachable']['mean'])
+        self.assertEqual(history.summary(state,'node-a','7d',at)['probe_samples'],7)
+        self.assertEqual(history.summary(state,'node-a','30d',at)['probe_samples'],30)
+        self.assertIsNone(report['continuous_uptime'])
+        history.validate(state,[{'node_id':'node-a'}])
+
+    def test_failed_probe_is_measured_zero_and_no_sensor_data_is_invented(self):
+        from asc.nodes import history
+        state=history.empty();obs=ScoreEngineTests().measured(reachable=False)
+        history.record(state,'node-a',1,obs,1000)
+        report=history.summary(state,'node-a','24h',1000)
+        self.assertEqual(report['reliability'],0)
+        self.assertIsNone(report['buckets'][-1]['metrics']['thermal_c']['mean'])
+        history.record(state,'node-a',1,scoring.unknown(),5000)
+        self.assertEqual(state['history']['node-a']['last_sample_at'],1000)
+
+    def test_history_refuses_nonfinite_and_future_schema(self):
+        from asc.nodes import history
+        state=history.empty();state['schema']=2
+        with self.assertRaises(ValueError):history.validate(state,[])
+        state=history.empty()
+        history.record(state,'node-a',1,ScoreEngineTests().measured(reachable=True),1000)
+        state['history']['node-a']['hours'][0]['metrics']['reachable']['sum']=float('nan')
+        with self.assertRaises(ValueError):history.validate(state,[{'node_id':'node-a'}])
+
+    def test_extension_roundtrip_takeover_and_backup_never_lose_history(self):
+        from asc.failover import state as projection
+        from asc.backup.state import empty as backup_empty
+        from asc.catalog.common import uid
+        from asc.nodes import history
+        reg=projection.MemoryRegistry(uid());self.addCleanup(reg.db.close)
+        reg.seed_self('local',{})
+        doc=projection.export(reg.db,1,{'node_id':'voter-a','term':4})
+        doc['backup']=backup_empty();doc['insights']=history.empty()
+        history.record(doc['insights'],'local-controller',1,ScoreEngineTests().measured(reachable=True),1000)
+        projection.validate(doc)
+        prepared=projection.prepare_registry(doc);self.addCleanup(prepared.db.close)
+        self.assertEqual(projection.export(prepared.db,1,doc['authority']),doc)
+        newer=projection.takeover(doc,'voter-b',5)
+        self.assertEqual(newer['insights'],doc['insights'])
+        self.assertEqual(newer['backup'],doc['backup'])
+
+    def test_enable_lost_reply_replays_and_conflicting_request_is_rejected(self):
+        from asc.failover import state as projection
+        from asc.catalog.common import uid,CatalogError
+        from asc.nodes.service import Insights
+        from tests import test_backup
+        from types import SimpleNamespace
+        reg=projection.MemoryRegistry(uid());self.addCleanup(reg.db.close)
+        runtime=test_backup.ProjectionRuntime(projection.export(reg.db,1,{'node_id':'voter-a','term':4}))
+        service=Insights(SimpleNamespace(runtime=runtime))
+        runtime.crash=True
+        with self.assertRaises(test_backup.fixture.helpers.SimulatedCrash):
+            service.enable({'request_id':'enable-insights'})
+        index=runtime.index
+        self.assertTrue(service.enable({'request_id':'enable-insights'})['enabled'])
+        self.assertEqual(runtime.index,index)
+        with self.assertRaises(CatalogError):
+            service.edit('different',{'request_id':'enable-insights'},lambda d,s:{})
