@@ -209,3 +209,10 @@ new target per independent approved device domain; no score changes voter state.
 Avoid/Drain/Protected exclude new target allocation, retaining authenticated reads
 and existing work/bytes. Re-pair keeps generation-tagged history and collects new
 samples separately; only current-generation reliability contributes to score.
+
+Phase 3C.1 explicitly enables replication schema 1 on the same runtime schema 2.
+Owner policies and reconciliation prepare existing Catalog SQL in memory and
+commit policy/history/scheduled COPY jobs/intent receipt atomically through actual-
+term Go CAS. Increasing policy schedules missing independent domains; decreasing
+policy retains all current replicas and bytes. Existing physical proof worker,
+reservations, failure/lease fences and read behavior remain. No physical GC path.

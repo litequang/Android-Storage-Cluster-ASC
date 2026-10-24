@@ -29,6 +29,8 @@ class Service(CatalogService):
         self.backups = Backups(self)
         from ..nodes.service import Insights
         self.insights = Insights(self)
+        from ..replication.service import Replication
+        self.replication = Replication(self)
         from ..backup.catalog import VersionedCatalog
         self.catalog = VersionedCatalog(runtime.registry)
         self.queue.catalog = self.catalog

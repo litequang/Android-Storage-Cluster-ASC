@@ -52,6 +52,9 @@ def handle(handler):
             obj = handler._read_json()
             valid.payload(obj, ('request_id', 'mode'))
             return handler._json(200, service.insights.preference(parts[1], obj))
+        if parts[0] == 'replication' and getattr(service, 'failover', False):
+            from ..replication.http import handle as replication_handle
+            return replication_handle(handler, parts[1:], query)
         if parts[0] == 'backup' and getattr(service, 'failover', False):
             from ..backup.http import handle as backup_handle
             return backup_handle(handler, parts[1:], query)

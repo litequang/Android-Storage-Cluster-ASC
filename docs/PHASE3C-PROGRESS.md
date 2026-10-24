@@ -19,20 +19,20 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 
 | Checkpoint | Actual state |
 |---|---|
-| 3C.0 | Plan, data-loss risk analysis and progress prepared; docs-only validation/publication pending |
-| 3C.1–3C.5 | NOT STARTED |
+| 3C.0 | PUSH VERIFIED `6a9deb58614bb51b351c3a9aed0cdee5e109180a`; docs/link/whitespace and tracked/staged review PASS |
+| 3C.1 | Replication extension/policy/reconcile; 70 targeted + 4 runtime tests PASS; publication pending |
+| 3C.2–3C.5 | NOT STARTED |
 | Full regression / acceptance | NOT RUN; Phase 3C NOT accepted |
 
 ## Next action / resume
 
-1. Finish documentation link/whitespace checks and tracked/staged secret review;
-   commit/push 3C.0 and verify WIP remote equals HEAD. Do not implement 3C.1 yet.
-2. After verified publication, inspect only mapped replication/transfer/runtime/
-   manifest/volume/auth/backup code needed for 3C.1; implement explicit bounded
-   replication extension and replay-safe 1/2/3 policy/reconciliation with tests.
-3. Follow PHASE3C-PLAN sequentially. After each split: tests PASS, related docs and
-   this progress, secret review, commit/push and remote verification before next.
+Verify 3C.1 publication before implementing 3C.2 Drain/Rebalance. No physical delete.
+Commands after existing activation:
+`python -B -m unittest tests.test_replication tests.test_catalog tests.test_backup.BackupStateTests tests.test_nodes -q`
+**70 PASS, 3.410s** (includes real pinned TLS placement fixture).
+`python -B -m unittest tests.test_failover.RuntimeStateTests -q`: **4 PASS**.
 
-Physical deletion remains absent/default blocked. Phase 3C is newly authorized
-only for synthetic isolated test volumes; historical 3B restriction does not
-supersede this task. No phone/M51/production, 3D/Dashboard or voter changes.
+3C.1 uses explicit replication schema 1 and 256 replay receipts, retains legacy
+schemas/3A/3B and actual-term CAS. Increasing schedules independent COPY jobs;
+reducing policy preserves current replica records/bytes. No quorum/invalid count
+cannot commit. Full regression/GC fault acceptance NOT RUN; no Phase completion.

@@ -358,3 +358,14 @@ Retained snapshot/restore pins, trash/expired versions and unfinished jobs hold 
 reduction. Protected replicas remain held. Every candidate requires future fresh
 byte verification. apply_supported=false and physical_deletions=0 always. No apply,
 delete, destructive grant or final-manifest mutation endpoint exists in Phase 3B.
+
+## Phase 3C owner replication API (explicit runtime only)
+
+All `/catalog/v1/replication/*` routes require owner admin and the existing current-
+term quorum gate. POST enable {request_id} -> enabled/schema and physical_gc_enabled=false.
+POST policy {request_id,file_id,copies:1|2|3} -> desired/verified/available counts,
+policy and scheduled COPY job IDs; reducing does not remove replicas or bytes.
+POST reconcile {request_id} -> bounded per-file available/desired counts and jobs;
+logically EXPIRED versions are not newly replicated. GET status reports explicit
+enable/schema; physical GC remains false. Same request/intent replays the same
+result, conflicting reuse fails 409; null/invalid request IDs are rejected.

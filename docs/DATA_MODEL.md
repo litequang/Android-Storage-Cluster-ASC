@@ -288,3 +288,13 @@ new-generation samples separately, even within the same UTC hour/day. The same
 24/30 record bounds apply across generations; frequent re-pair can reduce window
 coverage, reported through gaps. History exposes generations; score filters to the
 current approved generation. No authority/backup/history outside telemetry is pruned.
+
+## Phase 3C replication schema 1 (explicit enable)
+
+Optional `replication` member: schema=1 and requests map (<=256 permanent intent/
+result receipts). All Controllers upgrade first; older validators reject unknown
+extension. Existing base schemas and 3A/3B members remain unchanged. Policy count
+1/2/3 maps to single/replicated_2/replicated_3. Policy and scheduled jobs commit
+in one prepared runtime document; receipt conflicts fail closed. No automatic
+receipt/history eviction. Complete stopped pre-enable state/volume backups plus
+matching source are required for rollback; physical GC is still absent in 3C.1.

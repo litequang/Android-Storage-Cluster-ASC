@@ -237,3 +237,12 @@ Historical PySyncObj evidence below remains unchanged.
 
 Phase 3B final qualification and exact reproduction: PHASE3B-ACCEPTANCE.md.
 All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
+
+## Phase 3C checkpoints
+
+- 3C.1 `replication.state/service/http`: optional bounded schema-1 extension,
+  replay-safe owner policy 1/2/3 and explicit reconciliation through existing
+  Catalog/COPY jobs. `failover.state` preserves extension; runtime Service owns
+  Replication; Catalog HTTP delegates only after owner/quorum gate. No unlink.
+  `tests/test_replication.DynamicPolicyTests`: count transitions, deduplication,
+  shortages, failed quorum and 3A/3B/3C roundtrip/takeover preservation.

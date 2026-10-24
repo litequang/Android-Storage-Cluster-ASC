@@ -226,3 +226,9 @@
   11 tests/vet/module verify and Linux/Windows/Android builds PASS. Retain actual
   product platform/device guards; reject null node mutation replay IDs. Exact
   evidence/remaining platform limits: PHASE3B-ACCEPTANCE.md.
+
+## Phase 3C development — not accepted
+
+- 3C.1: explicit bounded replication extension, owner replay-safe policy count
+  transitions 1/2/3 and reconciliation using existing independent COPY/proof jobs.
+  Shortages remain explicit; lowering policy preserves every replica and byte.
