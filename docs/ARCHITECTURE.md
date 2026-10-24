@@ -288,3 +288,7 @@ and filesystem behavior, not final quorum fencing. Physical execution stays lock
 on Windows/Android/real devices and outside issued synthetic temporary arenas.
 
 3C.4c connects explicit confirmed GC jobs to Controller/Storage authorization. Every run replaces the memory-only bearer and stores only its hash/run/term. Authorization rehashes independent survivors, rechecks the full target graph and current credentials, and commits a fresh nonce receipt. Storage accepts only an issued exact-volume executor, never a config switch; no background GC. A callback taking over 10 seconds is refused, followed by the existing 250ms local unlink budget. These bounds do not make network and filesystem atomic.
+
+3C.5b additionally binds the complete reference/approval graph before and after streamed survivor proof. Current identity/domain/freshness checks alone cannot reuse proof from a formerly approved endpoint after its pin changes. The transient graph SHA is not persisted and changes no schema; any concurrent graph change requires fresh proof.
+
+Proof fingerprint retains all references, policies, approvals, identities and effective protection. Only unrelated self-reported profile telemetry is canonicalized away; current pinned readability/freshness still uses the real document. Ordinary heartbeat free-space changes must not substitute for, or invalidate, independently streamed byte evidence by themselves. Confirmed plan SHA semantics are unchanged.

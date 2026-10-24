@@ -1,6 +1,7 @@
 """Exact GC authorization tests. Unit receipts are explicit fakes; no real volumes."""
 import copy
 import hashlib
+import json
 import secrets
 import unittest
 from types import SimpleNamespace
@@ -158,6 +159,58 @@ class GCAuthorizationTests(unittest.TestCase):
             client.return_value.json.side_effect=raced
             with self.assertRaises(CatalogError):self.gc.execute({'gc_job_id':self.job_id})
             self.assertEqual(self.runtime.doc['replication']['gc_jobs'][self.job_id]['state'],'RUNNING')
+
+    def test_survivor_endpoint_change_during_proof_denies_issue_and_authorize(self):
+        self.issue();before=copy.deepcopy(self.runtime.doc)
+        survivor=before['catalog']['replicas'][0]['node_id']
+        for operation in ('issue','authorize'):
+            self.runtime.doc=copy.deepcopy(before)
+            def changed(*args):
+                next(n for n in self.runtime.doc['tables']['catalog_nodes'] if n['node_id']==survivor)['pin']='F'*64
+                return {'physically_verified':True}
+            self.service._proof.side_effect=changed
+            with self.subTest(operation=operation),self.assertRaises(CatalogError) as denied:
+                self.gc.issue(self.job_id) if operation=='issue' else self.authorize()
+            self.assertEqual(denied.exception.code,'stale_gc_proof')
+
+    def test_new_reference_during_stream_proof_denies_final_authority(self):
+        from asc.backup.state import empty
+        self.issue()
+        def pinned(*args):
+            self.runtime.doc['backup']=empty()
+            self.runtime.doc['backup']['files'][self.exact['file_id']]={'state':'TRASH','changed_at':1,'retain_until':2}
+            return {'physically_verified':True}
+        self.service._proof.side_effect=pinned
+        with self.assertRaises(CatalogError) as denied:self.authorize()
+        self.assertEqual(denied.exception.code,'stale_gc_proof')
+
+    def test_volatile_telemetry_is_not_authority_but_protection_change_is(self):
+        self.issue();before=copy.deepcopy(self.runtime.doc)
+        survivor=before['catalog']['replicas'][0]['node_id']
+        for protected in (False,True):
+            self.runtime.doc=copy.deepcopy(before)
+            def heartbeat(*args):
+                node=next(n for n in self.runtime.doc['tables']['nodes'] if n['node_id']==survivor)
+                profile=json.loads(node['profile']);profile.update(protected=protected,storage={'free_bytes':123,'checked_at':456})
+                node['profile']=json.dumps(profile)
+                return {'physically_verified':True}
+            self.service._proof.side_effect=heartbeat
+            with self.subTest(protected=protected):
+                if protected:
+                    with self.assertRaises(CatalogError) as denied:self.authorize()
+                    self.assertEqual(denied.exception.code,'stale_gc_proof')
+                else:self.assertEqual(self.authorize()['constraints'],self.exact)
+
+    def test_fixed_gc_errors_are_actionable_and_unknown_error_text_stays_redacted(self):
+        from asc.client import request_json
+        for label in ('stale_gc_plan','gc_plan_expired','stale_gc_proof','gc_execution_unconfirmed','arbitrary-private-detail'):
+            response=mock.Mock(status=409)
+            response.read.return_value=json.dumps({'error':label}).encode()
+            with mock.patch('asc.client.connect_pinned') as connect:
+                connect.return_value.getresponse.return_value=response
+                with self.assertRaises(ClientError) as rejected:
+                    request_json('https://127.0.0.1:9443','A'*64,'POST','/synthetic',{})
+            self.assertEqual(rejected.exception.code,'request_failed' if label=='arbitrary-private-detail' else label)
 
     def test_retained_snapshots_and_backup_jobs_block_final_authority(self):
         from asc.backup.state import empty,capture

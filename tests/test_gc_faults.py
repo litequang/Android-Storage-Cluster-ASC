@@ -51,8 +51,21 @@ class GCClusterTests(unittest.TestCase):
         return request_json(e['origin'],e['pin'],'POST','/fixture/gc/'+action,obj,e['token'],timeout=120)
 
     def issue(self,job_id):
-        reply=self.fixture_call('issue',{'gc_job_id':job_id})
-        return reply['raw'],reply['exact'],reply['target']
+        for attempt in range(5):
+            try:
+                reply=self.fixture_call('issue',{'gc_job_id':job_id})
+                return reply['raw'],reply['exact'],reply['target']
+            except ClientError as exc:
+                if exc.code not in ('stale_gc_proof','precondition_conflict') or attempt==4:raise
+                # The stale attempt was denied; obtain new real proof on this job.
+
+    def prepare_confirm(self,replica_id):
+        for attempt in range(5):
+            prepared=self.post('gc-prepare',retired_replica_id=replica_id)
+            try:return self.post('gc-confirm',plan_id=prepared['plan_id'],confirmation=prepared['required_confirmation'])
+            except ClientError as exc:
+                if exc.code not in ('stale_gc_plan','gc_plan_expired','precondition_conflict') or attempt==4:raise
+                # Preserve expired/stale plans; prepare and confirm a fresh exact SHA.
 
     def introspect(self,exact,raw,**changes):
         node=next(n for n in self.nodes if n['node_id']==exact['node_id'])
@@ -60,7 +73,12 @@ class GCClusterTests(unittest.TestCase):
              'scope':{'method':'POST','resource':'gc/'+exact['gc_job_id']},'nonce':uid()}
         obj.update(changes)
         leader=self.wait_ready();e=self.endpoints[leader]
-        return request_json(e['origin'],e['pin'],'POST','/api/v1/storage/authorize',obj,node['token'],timeout=60)
+        for attempt in range(5):
+            obj['nonce']=uid()
+            try:return request_json(e['origin'],e['pin'],'POST','/api/v1/storage/authorize',obj,node['token'],timeout=60)
+            except ClientError as exc:
+                if exc.code!='stale_gc_proof' or attempt==4:raise
+                # New nonce means a newly streamed, quorum-committed authorization.
 
     def test_real_quorum_scope_takeover_and_default_windows_lock(self):
         self.make_cluster()
@@ -88,8 +106,7 @@ class GCClusterTests(unittest.TestCase):
         self.post('archive-jobs',retired_replica_id=source['replica_id'])
         # Exercise ordinary append/retention through the actual cohost's lock.
         self.assertEqual(self.fixture_call('age',{'file_id':file_id})['appended'],1024)
-        prepared=self.post('gc-prepare',retired_replica_id=source['replica_id'])
-        confirmed=self.post('gc-confirm',plan_id=prepared['plan_id'],confirmation=prepared['required_confirmation'])
+        confirmed=self.prepare_confirm(source['replica_id'])
         job_id=confirmed['gc_job_id']
         raw,exact,target=self.issue(job_id)
         proof=self.introspect(exact,raw)
@@ -109,8 +126,13 @@ class GCClusterTests(unittest.TestCase):
             with self.assertRaises(ClientError):self.owner.request('POST','replication/gc-execute',{'gc_job_id':job_id})
             print('GC fault PASS: Windows physical path remains locked, original bytes retained',flush=True)
         else:
-            (self.homes[source_index]/'storage'/'test-gc-lost-ack').write_text('synthetic fault')
-            with self.assertRaises(ClientError):self.owner.request('POST','replication/gc-execute',{'gc_job_id':job_id})
+            marker=self.homes[source_index]/'storage'/'test-gc-lost-ack';marker.write_text('synthetic fault')
+            for attempt in range(5):
+                try:self.owner.request('POST','replication/gc-execute',{'gc_job_id':job_id})
+                except ClientError as exc:
+                    if exc.code not in ('stale_gc_proof','gc_execution_unconfirmed'):raise
+                if not marker.exists():break
+            self.assertFalse(marker.exists(),'must drop an actual successful GC reply; a denied attempt is not lost ACK evidence')
             self.assertFalse(body.exists(),'lost ACK follows actual unlink, not a simulated success')
             result=self.owner.request('POST','replication/gc-execute',{'gc_job_id':job_id})
             self.assertEqual(result['state'],'DONE');self.assertFalse(body.exists())

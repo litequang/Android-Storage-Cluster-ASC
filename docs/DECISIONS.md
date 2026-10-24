@@ -176,3 +176,7 @@ qualification evidence and remaining limits: PHASE3A-ACCEPTANCE.md.
   writers. A plan/estimated logical size never proves authorization or reclaimed disk.
 
 - ADR-053: GC authorization is a separate exact-job scope, never a whole-volume grant. Each explicit execution commits a new hash-only generation/approval/endpoint-bound permit after streamed external-domain survivor proof. Final Storage introspection performs that proof again and commits a nonce in the actual term. Release the Runtime lock during network proof to allow ordinary scoped survivor reads. Persist only reservation/run/hash/proofs; same-job journal identity survives new permits and takeover. No background or real-device enable path.
+
+- ADR-053 refinement (3C.5b): bind the complete graph digest across survivor IO and final authorization CAS, including survivor endpoint approval changes. Preserve exact prior evidence instead of accepting merely unchanged node/volume IDs after reapproval. This is ephemeral validation, not a new permit/persistence schema.
+
+ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telemetry while preserving protected state and every reference/approval/policy field. Existing planner/confirmation digests are unchanged. This avoids false proof invalidation on ordinary heartbeat while retaining actual pinned freshness/readability gates and approval-race rejection.

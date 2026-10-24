@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import hmac
+import json
 import secrets
 
 from .arena import require_controller
@@ -28,6 +29,16 @@ def permit_hash(raw,target,volume_id):
                    **{k:target[k] for k in ('node_id','token_version','approved_generation','device_id','origin','pin')}})
 
 
+def proof_fingerprint(doc):
+    # Bind every reference, policy and approval plus effective protection. The
+    # self-reported storage/free-space heartbeat is not destructive authority.
+    # Actual freshness/readability still runs in _target and proofs.recheck.
+    binding={**doc,'tables':{**doc['tables'],'nodes':[
+        {**node,'profile':json.dumps({'protected':json.loads(node['profile']).get('protected')})}
+        for node in doc['tables']['nodes']]}}
+    return graph(binding,now())[1]
+
+
 class GCExecution:
     def _target(self,doc,job_id):
         job=doc.get('replication',{}).get('gc_jobs',{}).get(job_id)
@@ -42,12 +53,14 @@ class GCExecution:
 
     def _prove(self,doc,job_id):
         job,retired,target,required=self._target(doc,job_id)
+        proof_graph=proof_fingerprint(doc)
         proofs=verify(self.service,doc,retired['file']['file_id'],{job['retired_replica_id']},required,
                       exclude_devices={target['device_id']})
-        return proofs,doc['authority']['term']
+        return proofs,doc['authority']['term'],proof_graph
 
-    def _recheck(self,doc,job_id,proofs,term):
+    def _recheck(self,doc,job_id,proofs,term,proof_graph):
         if doc['authority']['term']!=term:raise CatalogError('stale_survivor_proof',409)
+        if proof_fingerprint(doc)!=proof_graph:raise CatalogError('stale_gc_proof',409)
         job,retired,target,required=self._target(doc,job_id)
         recheck(doc,retired['file']['file_id'],proofs,{job['retired_replica_id']},required,
                 exclude_devices={target['device_id']})
@@ -58,11 +71,11 @@ class GCExecution:
         require_controller(self.service);identifier(job_id)
         self.service.refresh()
         with self.runtime.operation() as view:
-            proofs,term=self._prove(view['document'],job_id)
+            proofs,term,proof_graph=self._prove(view['document'],job_id)
         raw=secrets.token_urlsafe(40)
         with self.runtime.lock,self.runtime.operation() as view:
             doc=copy.deepcopy(view['document'])
-            job,target,required=self._recheck(doc,job_id,proofs,term)
+            job,target,required=self._recheck(doc,job_id,proofs,term,proof_graph)
             stamp=now()
             job.update(state='RUNNING',permit_term=term,permit_hash=permit_hash(raw,target,doc['replication']['retired'][job['retired_replica_id']]['replica']['volume_id']),
                        run_id=uid(),permit_expires_at=stamp+120,proofs=proofs,required_domains=required,
@@ -97,12 +110,12 @@ class GCExecution:
         # must themselves use the existing fresh Controller introspection path.
         with self.runtime.operation() as view:
             job,exact=self._credential(view['document'],node_id,node_token,grant,volume_id,scope)
-            proofs,term=self._prove(view['document'],job['gc_job_id'])
+            proofs,term,proof_graph=self._prove(view['document'],job['gc_job_id'])
         with self.runtime.lock,self.runtime.operation() as view:
             doc=view['document']
             current,checked=self._credential(doc,node_id,node_token,grant,volume_id,scope)
             if checked!=exact:raise CatalogError('gc_permit_changed',403)
-            self._recheck(doc,job['gc_job_id'],proofs,term)
+            self._recheck(doc,job['gc_job_id'],proofs,term,proof_graph)
             intent=digest({'node_id':node_id,'grant_sha256':hashlib.sha256(grant.encode()).hexdigest(),
                            'volume_id':volume_id,'operation':'gc','scope':scope,'nonce':nonce})
             receipt=self.runtime.commit(view,doc,'authorize-'+nonce,intent)

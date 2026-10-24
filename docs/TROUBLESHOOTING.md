@@ -309,3 +309,7 @@ tracked and calls the existing validated init/run APIs; no Raft module is rewrit
 - Missing/nonexistent test arena now returns unsafe_gc_test_arena consistently on Windows too. It never creates/adopts that directory or grants capability.
 
 - Windows metadata regression initially failed its no-fallback stderr assertion because the unconfigured real PC correctly hit DEVICE IDENTITY UNKNOWN first. Synthetic launchers now supply a permitted fake profile on both platforms; do not relax the assertion or change the product hardware/config guards.
+
+- stale_gc_proof: current references or endpoint/approval graph changed during checksum streaming. Preserve the reservation and retry the same job for new proof. Never accept a former endpoint checksum under a new pin.
+
+- A heartbeat can legitimately stale an exact confirmed plan. Reprepare/reconfirm its new SHA; retain old plan receipts. The isolated fault harness bounds these retries and never treats a denied attempt as successful physical/lost-ACK evidence.

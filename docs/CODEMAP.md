@@ -302,3 +302,11 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   Windows asserts physical denial. Prior tests and ordinary history aging remain.
 
 - 3C.5a `tests/test_consensus.py` synthetic metadata launcher supplies its explicitly permitted fake profile on Windows as well as Linux. No-config subprocess must reach the unchanged attached-registry no-fallback guard; all original assertions and separate M51/Android guard tests remain.
+
+- Phase 3C qualification/remaining physical gates: PHASE3C-ACCEPTANCE.md; current status NOT ACCEPTED. PHASE3C-PROGRESS records independently verified checkpoint hashes and Windows fixture repair provenance.
+
+- 3C.5b `GCExecution._prove/_recheck` binds an ephemeral complete graph SHA across network proof and final CAS, including survivor pinned endpoints/approvals and every reference. New race tests change a survivor pin or introduce a pin during streaming; old evidence must fail closed with stale_gc_proof.
+
+- `execution.proof_fingerprint` reuses the complete graph with effective profile protection, excluding unrelated self-reported heartbeat telemetry. Actual fresh/readable gates still use the original document; race tests require endpoint/protection/pin changes to deny and telemetry-only changes to remain non-authoritative.
+
+- `asc.client.request_json` permits only fixed GC error labels for actionable retries, retaining unknown-text redaction. GC fault harness retries stale plan/proof with fresh exact confirmation/nonce on the same retirement/job, and accepts safe client-level lost-ACK recovery only after the actual drop marker is consumed.

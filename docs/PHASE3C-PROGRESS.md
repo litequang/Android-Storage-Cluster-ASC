@@ -28,9 +28,10 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 | 3C.4a | PUSH VERIFIED `b5cb2ed`; 91 targeted + 23 TLS/unit PASS |
 | 3C.4b | PUSH VERIFIED `c909e1e70a4ce7a01674b6caaed1b3b4e6574a65` by Windows fetch on 2026-10-24; prior Cloud local executor/journal checks retained |
 | 3C.4c | PUSH VERIFIED `74bb6a90f2e4e04751b3edb83d60ac00807ab06f`; 85 targeted OK (11 Linux-only skips) + actual Go/TLS GC fault test PASS |
-| 3C.5a | Windows metadata fixture no-fallback repair; 11 targeted consensus/runtime/device safety PASS (27.498s); commit identified by next report |
+| 3C.5a | PUSH VERIFIED `8d45b2637801a64ae5fa67cd3cb5a4c7295010f8`; 11 targeted consensus/runtime/device safety PASS (27.498s) |
+| 3C.5b | Proof/reference/approval race hardening; 53 targeted PASS + actual Go/TLS PASS (345.308s); publication commit identified next |
 | 3C.5 | PARTIAL: first Windows full Python has a reproduced fixture failure; Go tests/vet/module/build PASS; Linux physical fault qualification pending |
-| Full regression / acceptance | NOT RUN; Phase 3C NOT accepted |
+| Full regression / acceptance | Prior 8d45b26 full: 199 OK / 14 platform skips; latest hardening targeted PASS; final full rerun pending. Phase 3C NOT accepted |
 
 ## Current Windows continuation
 
@@ -99,3 +100,50 @@ The first full run is not PASS; after this repair a fresh full rerun is mandator
 **11 PASS, 27.498s**. Product M51/Android/unknown-device guards and all original
 no-fallback assertions are unchanged. Go source has not changed after the fresh
 11-test/vet/module verification/Windows+Android compile PASS recorded in acceptance.
+
+First full completed: **199 tests, 184 PASS / 1 FAIL / 14 SKIP, 1038.894s**.
+Only failure was the reproduced/fixed Windows metadata fixture assertion. All
+12/12 3A, 20/20 2B, 7/7 3B, 3/3 existing 3C replication gates and new Windows GC
+authorization faults passed within that failed overall run. Fourteen skips are
+3 POSIX installer + 11 Linux physical-executor cases. No TLS/consensus gate skipped.
+Fresh full source/test commit is **8d45b2637801a64ae5fa67cd3cb5a4c7295010f8**;
+raw log TEMP/asc-phase3c-python-final.log. No source/test edits during this final run.
+
+3C.5b review finding: the second full run on 8d45b26 passed **199 tests,
+185 PASS / 14 SKIP, 1010.082s**, but a separate synthetic race probe then proved
+survivor endpoint reapproval during streaming could reuse old byte evidence.
+The new proof_fingerprint binds all references, policies, approvals, identities,
+endpoints and effective protection across IO and final CAS. It does not change
+persistence/wire schemas. Two race tests require denial for endpoint changes and
+new pins during streaming. A further regression distinguishes unrelated heartbeat
+telemetry from protected state; actual freshness/readability still uses the real
+current document. Original planner/confirmation digests are unchanged.
+
+Initial strict whole-profile binding correctly denied an ordinary heartbeat in
+the actual TLS test (1 ERROR, 151.186s); unrelated self-reported telemetry is now
+canonicalized only in the transient proof binding. No safety gate/assertion was
+removed. Latest focused command:
+`python -B -m unittest tests.test_gc_authorization tests.test_replication tests.test_failover.RuntimeStateTests -q`:
+**41 PASS, 15.278s**. Actual Go/TLS rerun is pending; latest full regression must
+be repeated after publication of this source change. Phase 3C remains NOT ACCEPTED.
+
+The subsequent actual TLS run correctly rejected a stale exact confirmation
+(1 ERROR, 41.403s) under concurrent heartbeat. The owner client now preserves only
+fixed safe GC error labels (unknown text stays redacted). The new fault harness
+bounds explicit retries: reprepare/reconfirm a new SHA for stale plans, obtain
+new byte proofs/nonces for stale proof, and keep the same retirement/job identity.
+Negative wrong-scope/old-token assertions remain immediate failures. Linux lost-ACK
+checks require the actual successful-drop marker and missing original body, allowing
+safe Discovery-level recovery to return success instead of demanding an exception.
+
+Latest focused command additionally includes foundation and device guards:
+`python -B -m unittest tests.test_gc_authorization tests.test_replication tests.test_failover.RuntimeStateTests tests.test_foundation tests.test_lifecycle.DeviceSafetyTests -q`:
+**53 PASS, 16.995s**. This includes 16 GC unit tests and fixed-error redaction.
+
+3C.5b final actual TLS rerun: `python -B -m unittest tests.test_gc_faults -v`,
+**1 PASS, 345.308s**. Exact scope/nonce, superseded permits, Windows physical
+lock/unchanged bytes, actual Leader loss and quorum loss all PASS after fresh-plan/
+proof retry. This hardening is ready for publication; then run fresh full Python
+on its published hash. Go code is unchanged since successful uncached Go checks.
+The nested worktree alone is locally excluded through .git/info/exclude (existing
+entries preserved); original 0550967 worktree still has its same older local edits.
