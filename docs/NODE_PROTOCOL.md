@@ -374,3 +374,11 @@ result, conflicting reuse fails 409; null/invalid request IDs are rejected.
 sets Drain and returns move_ids/blocked_replicas, physical_deletions=0. POST
 replication/move {request_id,replica_id} plans one rebalancing move. No immediate
 source removal; moves use existing COPY jobs and cannot override safe placement.
+
+3C.2b GET replication/moves returns bounded durable intents. POST
+replication/complete-move {request_id,move_id} streams/hashes required independent
+survivors, rechecks current authority/policy/generation/jobs and commits only logical
+source retirement; physical_deletions=0. Pending/unverified COPY, stale/changed
+proof or insufficient survivors returns 409; Protected source returns 403.
+The existing Leader worker also advances one ready move per turn. Source physical
+bytes and historical pointers remain retained until a separate future GC protocol.

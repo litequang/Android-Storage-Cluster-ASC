@@ -303,3 +303,16 @@ matching source are required for rollback; physical GC is still absent in 3C.1.
 job_id (nullable if enough other domains already exist), COPY_PENDING/READY,
 created_at/updated_at. Same-source planning reuses durable intent; takeover retains
 intent while existing COPY leases/grants receive their established invalidation.
+
+3C.2b move terminal state RETIRED plus optional replication.retired (<=256 records).
+Key is original replica ID; record retains exact original replica, immutable file
+identity/size/SHA/version/path, required_domains, fresh proof records, retirement
+term/time. Proofs bind replica/node/volume/local IDs, approved physical domain and
+credential generation, size/SHA and observation time. Catalog removal/event and
+retirement record share the quorum-committed document. Old events and completed
+job pointers are retained and continue to hold future physical GC.
+
+A retired physical identity cannot appear in current Catalog replicas or active/
+retryable job sources/targets, even under another replica ID. This fence survives
+snapshot/replay/takeover and cannot be removed to roll back metadata independently
+of bytes. Whole-runtime and authority receipt bounds remain fail-closed.

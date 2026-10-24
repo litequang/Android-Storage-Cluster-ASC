@@ -9,6 +9,8 @@ def handle(handler,parts,query):
         doc=service.runtime.view()['document']
         return handler._json(200,{'enabled':'replication' in doc,'physical_gc_enabled':False,
                                   'replication_schema':doc.get('replication',{}).get('schema')})
+    if handler.command=='GET' and parts==['moves']:
+        return handler._json(200,{'moves':service.runtime.view()['document'].get('replication',{}).get('moves',{})})
     if handler.command!='POST':return handler._json(404,{'error':'not_found'})
     obj=handler._read_json()
     if parts==['enable']:
@@ -19,6 +21,8 @@ def handle(handler,parts,query):
         valid.payload(obj,('request_id','replica_id'));result=service.move(obj)
     elif parts==['drain']:
         valid.payload(obj,('request_id','node_id'));result=service.drain(obj)
+    elif parts==['complete-move']:
+        valid.payload(obj,('request_id','move_id'));result=service.complete_move(obj)
     elif parts==['reconcile']:
         valid.payload(obj,('request_id',));result=service.reconcile(obj)
     else:return handler._json(404,{'error':'not_found'})

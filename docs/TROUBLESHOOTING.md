@@ -280,3 +280,17 @@ tracked and calls the existing validated init/run APIs; no Raft module is rewrit
   do not copy it into production or add a runtime bypass. A startup refusal in a
   plain Linux launch is expected. Use existing `/workspace/asc-cloud/activate.sh`
   in this Cloud environment to select Go 1.27.3/Python 3.13.5, not `/usr/bin/go`.
+
+## Phase 3C development
+
+- phase3c_not_enabled: matching all-Controller upgrade/private stopped backup before
+  explicit owner replication/enable. No implicit schema upgrade or GC activation.
+- no_independent_eligible_target: Drain can remain blocked by actual quota/domain/
+  status/policy. Keep source; wait for measured fresh probes, not a fabricated ACK.
+- copy_not_verified/survivor_verification_required/survivor_proof_changed:
+  source is retained; finish the same COPY job and obtain current independent
+  served-byte proof. A terminal FAILED job needs explicit existing retry.
+- retired_object_reintroduction: preserve retirement journal and remaining copies;
+  never re-adopt an old local ID/clear the fence. Use a new stable COPY job/object.
+- Logical retirement frees no disk by itself. History/job/grant/snapshot pins can
+  legitimately keep all retired bytes; future GC must enumerate these holds.

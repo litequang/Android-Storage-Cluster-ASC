@@ -1,5 +1,7 @@
 """Replay-safe replication policy through existing actual-term quorum CAS."""
 import copy
+import json
+import threading
 
 from . import state
 from ..catalog.common import CatalogError, digest, identifier, key, POLICIES, now, uid
@@ -10,6 +12,7 @@ from ..failover.state import prepare_registry, export
 class Replication:
     def __init__(self, service):
         self.service,self.runtime=service,service.runtime
+        self._tick=threading.Lock()
 
     def edit(self, action, obj, change, enable=False):
         request=key(obj.get('request_id'))
@@ -136,3 +139,62 @@ class Replication:
             replica_ids=[r['replica_id'] for r in doc['catalog']['replicas'] if r['node_id']==node_id]
             return self.plan_moves(doc,extension,replica_ids)
         return self.edit('drain',obj,change)
+
+    def complete_move(self,obj):
+        from .proofs import verify,recheck,physical,nodes
+        from ..nodes.preferences import effective
+        identifier(obj['move_id']);key(obj.get('request_id'))
+        self.service.refresh()
+        view=self.runtime.view();doc=view['document']
+        move=doc.get('replication',{}).get('moves',{}).get(obj['move_id'])
+        if not move:raise CatalogError('move_not_found',404)
+        if move['state']=='RETIRED':
+            return self.edit('complete-move',obj,lambda d,s,v:{'move_id':obj['move_id'],'state':'RETIRED','physical_deletions':0})
+        if move['job_id']:
+            job=next((j for j in doc['tables']['catalog_jobs'] if j['job_id']==move['job_id']),None)
+            if not job or job['state']!='COMPLETED':raise CatalogError('copy_not_verified',409)
+        source_id=move['source_replica_id'];file_id=move['file_id']
+        proofs=verify(self.service,doc,file_id,{source_id},self.required(doc,file_id))
+        proof_term=doc['authority']['term']
+        self.service.refresh()
+        def change(doc,extension,view):
+            if doc['authority']['term']!=proof_term:raise CatalogError('stale_survivor_proof',409)
+            move=extension['moves'][obj['move_id']]
+            if move['state']=='RETIRED':return {'move_id':obj['move_id'],'state':'RETIRED','physical_deletions':0}
+            source=next((r for r in doc['catalog']['replicas'] if r['replica_id']==source_id),None)
+            if not source:raise CatalogError('source_replica_changed',409)
+            node=nodes(doc).get(source['node_id'])
+            if (not node or json.loads(node['profile']).get('protected') is True or
+                    effective(doc.get('insights',{}),node['node_id'],node['token_version'])=='protected'):
+                raise CatalogError('protected_replica',403)
+            for job in doc['tables']['catalog_jobs']:
+                if job['state']=='COMPLETED':continue
+                if (job['source_replica_id']==source_id or
+                        (job['target_node_id'],job['target_volume_id'],job['target_local_file_id'])==physical(source)):
+                    raise CatalogError('replica_in_flight',409)
+            required=self.required(doc,file_id)
+            recheck(doc,file_id,proofs,{source_id},required)
+            if len(extension.get('retired',{}))>=256:raise CatalogError('retirement_limit',409)
+            file=next(f for f in doc['catalog']['files'] if f['file_id']==file_id)
+            stamp=now()
+            record={'replica':dict(source),'file':{k:file[k] for k in ('file_id','logical_path','version','size','sha256')},
+                    'required_domains':required,'proofs':proofs,'retired_at':stamp,'term':proof_term}
+            def retire(reg,catalog):
+                reg.db.execute('DELETE FROM catalog_replicas WHERE replica_id=?',(source_id,))
+                catalog._event(reg.db,file_id);reg.db.commit()
+            self.workspace(doc,retire)
+            extension.setdefault('retired',{})[source_id]=record
+            move.update(state='RETIRED',updated_at=stamp)
+            return {'move_id':obj['move_id'],'state':'RETIRED','physical_deletions':0}
+        return self.edit('complete-move',obj,change)
+
+    def tick(self):
+        if not self._tick.acquire(blocking=False):return
+        try:
+            doc=self.runtime.view()['document']
+            jobs={j['job_id']:j for j in doc['tables']['catalog_jobs']}
+            for move_id,move in doc.get('replication',{}).get('moves',{}).items():
+                if (move['state']!='RETIRED' and (move['job_id'] is None or
+                        jobs.get(move['job_id'],{}).get('state')=='COMPLETED')):
+                    return self.complete_move({'move_id':move_id,'request_id':'move-retire-'+move_id})
+        finally:self._tick.release()

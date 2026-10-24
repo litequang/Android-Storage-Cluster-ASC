@@ -115,6 +115,7 @@ class Service(CatalogService):
                     # audits; a multi-replica audit must not starve owner ACKs.
                     job = self.run_one()
                     self.backups.tick()
+                    self.replication.tick()
                     if job is None and time.monotonic()-last_reconcile >= 30:
                         self.reconcile(); last_reconcile = time.monotonic()
             except (CatalogError, ClientError, sqlite3.Error, OSError, ValueError):

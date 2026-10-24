@@ -250,3 +250,9 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   plans using existing stable COPY jobs, 3B target preferences/capacity and independent
   domains; retained snapshot copy targets raise the safety floor. Source is retained;
   shortage reports blocked replicas. MovePlanningTests cover replay/shortage/roundtrip.
+- 3C.2b `replication.proofs`: actual served-byte verification and fresh distinct-
+  domain/current-generation recheck; `Replication.complete_move/tick`: finish one
+  durable move after COPY completion, commit source-reference retirement and event,
+  retain original bytes and full retirement/proof record. Runtime worker advances
+  moves. Validator permanently fences retired physical identities from new Catalog
+  records/active jobs. RetirementTests and ReplicationClusterTests cover this path.

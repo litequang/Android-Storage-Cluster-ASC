@@ -250,3 +250,10 @@ platform/profile wrapper in tests/test_failover.py. The product entrypoint still
 refuses plain Linux/Android runtime and protected devices; RuntimeSafetyTests
 verify refusal before private-state access. This is not new Linux/Android runtime
 or production authorization. Node mutation APIs reject null replay IDs.
+
+Phase 3C logical retirement must first rehash served survivor bytes on independent
+approved domains, bind current generations/term and preserve the current policy/
+retained-backup copy floor. Delayed proof/new policy/current job references can
+block retirement. Retired local-object identities are permanently fenced from
+reintroduction; historical metadata/job references still prevent physical reclaim.
+This checkpoint adds no final-object unlink, destructive grant or real-device flag.

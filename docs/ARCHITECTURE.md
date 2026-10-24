@@ -223,3 +223,14 @@ can rebalance one replica. At most 128 intents; repeated requests/source IDs reu
 same intent/job. Required survivors include retained backup snapshot copy counts.
 No target space/domain means a blocked report and preserved source. A READY plan
 still requires fresh survivor-byte proofs before a later retirement checkpoint.
+
+3C.2b owns an additional trusted prepared-Catalog retirement boundary. After the
+existing COPY job commits physical completion, verify required survivors by actual
+streamed SHA, excluding the retiring replica. Required domains include current
+policy and retained snapshot backup copy counts. A final CAS rechecks term, current
+policy, approvals/generations, freshness and unfinished source/target jobs before
+removing only the current replica reference and appending its ordinary Catalog
+event. Existing versions/snapshots/events/jobs and source bytes remain. A bounded
+retirement record permanently fences that exact node/volume/local-object identity
+against reintroduction. Background work advances at most one ready move per turn.
+No retirement implies physical GC eligibility; all retained pointers still count.

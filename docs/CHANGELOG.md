@@ -234,3 +234,6 @@
   Shortages remain explicit; lowering policy preserves every replica and byte.
 - 3C.2a: durable Drain/Rebalance intents, stable independent COPY jobs and explicit
   no-target reports; retain source records/bytes until separate proof/retirement.
+- 3C.2b: current-term fresh survivor checksum/domain proofs before logical source
+  retirement; preserve bytes/history/jobs and permanently fence retired object IDs.
+  Ready moves advance through the existing Leader worker without physical GC.

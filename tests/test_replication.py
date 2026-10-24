@@ -117,3 +117,76 @@ class MovePlanningTests(unittest.TestCase):
         self.assertEqual(first['move_ids'],second['move_ids'])
         reg=state.prepare_registry(self.runtime.doc);self.addCleanup(reg.db.close)
         self.assertEqual(state.export(reg.db,self.runtime.doc['revision'],self.runtime.doc['authority']),self.runtime.doc)
+
+
+def finish_copy(replication,runtime,job_id):
+    from asc.catalog.queue import JobQueue
+    def apply(reg,catalog):
+        queue=JobQueue(catalog);job=queue.claim(job_id)
+        job=queue.checkpoint(job,uid(),uid())
+        file=catalog._file(reg.db,job['file_id'])
+        catalog.mutate('COMPLETE',{'job_id':job_id,'run_token':job['run_token'],'proof':{
+            'file_id':job['target_local_file_id'],'volume_id':job['target_volume_id'],
+            'logical_path':job['logical_path'],'size':file['size'],'sha256':file['sha256'],
+            'state':'COMMITTED','physically_verified':True}})
+    replication.workspace(runtime.doc,apply)
+
+
+class RetirementTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture,self.file_id,self.runtime,self.service,self.replication=fixture_runtime(self)
+        self.source=copy.deepcopy(self.runtime.doc['catalog']['replicas'][0])
+        result=self.replication.move({'request_id':'start-test-move','replica_id':self.source['replica_id']})
+        self.move_id=result['move_ids'][0]
+        self.job_id=self.runtime.doc['replication']['moves'][self.move_id]['job_id']
+        self.service._client=mock.Mock();self.service._proof=mock.Mock(return_value={'physically_verified':True})
+
+    def complete(self):
+        return self.replication.complete_move({'request_id':'retire-test-move','move_id':self.move_id})
+
+    def test_copy_completion_and_fresh_independent_proof_required_before_retirement(self):
+        with self.assertRaises(CatalogError) as caught:self.complete()
+        self.assertEqual(caught.exception.code,'copy_not_verified')
+        finish_copy(self.replication,self.runtime,self.job_id)
+        self.assertEqual(len(self.runtime.doc['catalog']['replicas']),2)
+        result=self.complete()
+        self.assertEqual(result['physical_deletions'],0)
+        self.assertEqual(len(self.runtime.doc['catalog']['replicas']),1)
+        record=self.runtime.doc['replication']['retired'][self.source['replica_id']]
+        self.assertEqual(record['replica'],self.source)
+        self.assertEqual(record['proofs'][0]['sha256'],self.runtime.doc['catalog']['files'][0]['sha256'])
+        self.service._proof.assert_called_once()
+        self.assertEqual(result,self.complete())
+        self.service._proof.assert_called_once()
+        self.assertTrue(any(self.source in e['payload']['replicas'] for e in self.runtime.doc['catalog']['events']))
+        state.validate(state.takeover(self.runtime.doc,'voter-b',5))
+
+    def test_corrupt_survivor_or_no_quorum_cannot_retire_source(self):
+        finish_copy(self.replication,self.runtime,self.job_id)
+        original=copy.deepcopy(self.runtime.doc)
+        self.service._proof.side_effect=CatalogError('replica_corrupt',422)
+        with self.assertRaises(CatalogError):self.complete()
+        self.assertEqual(self.runtime.doc,original)
+        self.service._proof.side_effect=None
+        with mock.patch.object(self.runtime,'commit',side_effect=CatalogError('no_quorum',503)):
+            with self.assertRaises(CatalogError):self.complete()
+        self.assertEqual(self.runtime.doc,original)
+
+    def test_retired_physical_identity_cannot_reenter_catalog_under_another_replica_id(self):
+        from asc.catalog.state import insert,Catalog
+        finish_copy(self.replication,self.runtime,self.job_id);self.complete()
+        reg=state.prepare_registry(self.runtime.doc);self.addCleanup(reg.db.close)
+        replica={**self.source,'replica_id':uid()}
+        insert(reg.db,'catalog_replicas',replica);Catalog(reg)._event(reg.db,self.file_id)
+        doc=state.export(reg.db,self.runtime.doc['revision']+1,self.runtime.doc['authority'])
+        with self.assertRaises(CatalogError) as caught:state.validate(doc)
+        self.assertEqual(caught.exception.code,'retired_object_reintroduction')
+
+    def test_new_policy_or_generation_during_proof_blocks_stale_retirement(self):
+        finish_copy(self.replication,self.runtime,self.job_id)
+        def changed(*args):
+            self.runtime.doc['catalog']['files'][0]['policy']='replicated_3'
+            return {'physically_verified':True}
+        self.service._proof.side_effect=changed
+        with self.assertRaises(CatalogError):self.complete()
+        self.assertTrue(any(r['replica_id']==self.source['replica_id'] for r in self.runtime.doc['catalog']['replicas']))

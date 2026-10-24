@@ -160,3 +160,12 @@ qualification evidence and remaining limits: PHASE3A-ACCEPTANCE.md.
   fresh byte verification under a separately qualified apply protocol. No deletion
   grant/manifest writer/apply endpoint is added. Cloud full regression and 39 fault
   gates qualify this boundary; no physical GC or new platform runtime follows.
+
+## Phase 3C decisions
+
+- ADR-051: Extend bounded optional runtime state for replay-safe policy/moves and
+  retired-object fences, reusing existing Go actual-term CAS and COPY Engine.
+  Trusted preparation adds an explicit Catalog retirement/event boundary; no byte
+  deletion occurs there. Require fresh streamed independent survivor proofs and
+  current policy/retained-backup floor, then permanently fence the retired physical
+  identity against reintroduction. Historical references are not silently evicted.
