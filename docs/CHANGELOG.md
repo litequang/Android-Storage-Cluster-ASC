@@ -312,3 +312,10 @@ inode validation precedes any lock marker write; internal Core lock preflight an
 symlink/hardlink regression added. Core unchanged. Initial 221-case full PASS is
 retained as provenance; a fresh hardened full run is required. Installer preview
 retired from recommended installs; final candidate includes blank Android pilot.
+
+### Demo Track DEMO.3b — 0.3.0 source-ready, Linux synthetic only
+Final hardened fresh full 222 Python PASS/0 skips, 14 targeted PASS, all eight Linux
+physical gates and unchanged-source 11 uncached Go/vet/modules/builds PASS. Qualified
+83-member source-only QuickStart archive + SHA, owner README/pilot and full handoff
+published on separate Demo branch. No Android/runtime/real SD/production acceptance,
+APK, GC/Raft enablement, Phase 3D or Dashboard. Core source/tests and WIP preserved.

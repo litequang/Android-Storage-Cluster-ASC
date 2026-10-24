@@ -25,15 +25,17 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.1 | PUSHED/REMOTE VERIFIED: 789ea8f9675c3339287eace1486126bd886c17e3 |
 | DEMO.2 | PUSHED/REMOTE VERIFIED: ae299c7981cd683cf61966c7ed64cfb05e557c51 |
 | DEMO.3a | PUSHED/REMOTE VERIFIED: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 |
-| DEMO.3a.1 | 14 targeted PASS; safe coordination opener; publish then fresh full 222 |
+| DEMO.3a.1 | PUSHED/REMOTE VERIFIED: aaf7d163fbac032bb31a033efe2ebb21406509bf |
+| DEMO.3b | Final full 222 PASS / package qualified; publication receipt follows |
 | DEMO.4 | Deferred behind initial CLI package / owner pilot; optional UI |
-| Demo source-ready | NOT QUALIFIED; Android runtime NOT TESTED |
+| Demo source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Next action
 
-Initial full 221 PASS is historical after a final-review fault was found/fixed.
-Publish/verify DEMO.3a.1 (14 targeted PASS), then fresh full 222 Python, hardened
-candidate verification and final DEMO.3b acceptance/package publication. Reuse existing Core functions; do not enable Raft/GC or change
+Final hardened source aaf7d16: 14 targeted PASS and fresh full **222 PASS / 0 SKIP**.
+Final 0.3.0 source package/checksum and acceptance ready; publish/verify DEMO.3b and
+record receipt below. Next functional step is OWNER-only ZTE/Bphone pilot using
+DEMO-QUICKSTART and blank DEMO-ANDROID-PILOT. DEMO.4 remains deferred. Reuse existing Core functions; do not enable Raft/GC or change
 Core guards. Read DEMO-TRACK-PLAN for architecture, risk and upgrade contract.
 Each checkpoint must record changed files, exact actual tests/results, hash/push
 verification, current functionality, limits, rollback and short usage. Package
@@ -194,3 +196,35 @@ Hardened candidate (still NOT released) has 83 public files, release ID
 `ab229efb9179d356f7b4f363d0a82fa40d33a53164ca215f7c2625be8aaaece8`,
 SHA `3bf81c5d94891fa064e2f05f99d60d620b4c5db71c87bb2ee6c89ac72b9a445a`.
 Next full log: /workspace/work/demo3b/full-python-hardened.log (must finish/rerun).
+
+## DEMO.3b final actual acceptance — Linux synthetic only
+
+Final implementation/tests aaf7d163fbac032bb31a033efe2ebb21406509bf was normally
+pushed/remote-verified before the fresh full run. **222 PASS / 0 SKIP / 0 FAIL/ERROR,
+1422.541s**, completed 2026-10-24 17:59:37 UTC, full-python-hardened.log. All eight
+Linux physical gates 01–08 plus legacy Core regression/acceptance/faults actually
+ran and PASS. Final 14 Demo targeted PASS (69.640s); exact hardened archive and
+launcher rerun/readback/preservation/tamper checks PASS. 103 Python AST / shell
+syntax / Core source preservation PASS. Go 11 uncached tests, vet/module verify and
+Linux/Android cross-build PASS from this task remain applicable (Go source unchanged
+by Demo-Python fix); no false rerun or Android-runtime claim.
+
+Final package releases/asc-demo-alpha-0.3.0.tar.gz + .sha256, 83 public members.
+SHA `3bf81c5d94891fa064e2f05f99d60d620b4c5db71c87bb2ee6c89ac72b9a445a`.
+Content ID `ab229efb9179d356f7b4f363d0a82fa40d33a53164ca215f7c2625be8aaaece8`.
+Exact archive/tree/README/pilot inventory and unpacked secrets review PASS. Earlier
+81-file candidate is retired/never released; preview 0.1.0 historical only.
+
+DEMO.3b changes: qualified public archive/checksum and narrow ignore exception;
+final acceptance/progress/plan, AGENTS and CHANGELOG/CODEMAP handoff. No implementation
+or packaged-guide change after final fresh full PASS. See acceptance for full test
+matrix, source/Go preservation and qualification limits.
+
+Now source-ready for manual Android trials ONLY; no Android runtime PASS. Controller
+single-writer/no automatic failover, pinned LAN TLS, real two-copy SHA/fallback and
+upgrade/backup/code-rollback work in Linux synthetic. GC/Raft/real devices remain
+locked/outside Codex scope; no production/data-protection promise. Rollback/usage in
+DEMO-QUICKSTART; owner blank pilot not populated by Cloud tests. Complete per-checkpoint
+changed-file routes are in entries above and CODEMAP; exact filenames follow the
+Git history (Core and its tests are unchanged). Publication receipt is appended
+after normal Demo-only push and advertised remote HEAD/package verification.

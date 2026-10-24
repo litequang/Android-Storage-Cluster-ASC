@@ -367,3 +367,6 @@ OS lock primitives. All Demo lifecycle/source operations use private_lock; state
 preflight checks internal engine/worker coordination files before Core constructors.
 Final synthetic regression in test_demo_upgrade.py proves symlink/hardlink refusal
 leaves outside empty test-owned bytes unchanged. Core runtime.py is unchanged.
+Qualified Demo 0.3.0: releases/asc-demo-alpha-0.3.0.tar.gz + .sha256, 83 source/doc/
+manifest members. Final acceptance/AGENTS/progress identify aaf7d16 implementation,
+222 Python/11 Go evidence, publication receipt and owner-only Android pilot limits.

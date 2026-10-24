@@ -39,6 +39,21 @@ M51/unknown-device guards. Dashboard Lite may follow the first CLI package; no A
 try the tested checksum-verified package on actual ZTE/Bphone/XZ3. Keep all Core
 modules/tests and Core branch intact. Earlier task scope below is historical.
 
+## Demo Alpha first CLI handoff — Linux synthetic source-ready
+
+DEMO.0/1/2/3a/3a.1/3b completed on feature/android-demo-alpha. Final implementation
+source/tests aaf7d163fbac032bb31a033efe2ebb21406509bf: 14 targeted PASS, fresh
+full 222 Python PASS/0 skips, all eight Linux GC gates, unchanged-source 11 uncached
+Go/vet/modules/Linux build/Android cross-build PASS. Read DEMO-TRACK-PLAN/PROGRESS/
+ACCEPTANCE, DEMO-QUICKSTART and blank DEMO-ANDROID-PILOT after mandatory docs.
+Qualified source-only 0.3.0 package and SHA live in releases/. Git history/progress
+identifies publication commit; Core WIP remains acea2ae, Core modules/tests unchanged.
+Android runtime/real SD/Doze/power-cut/production NOT TESTED; owner alone tries the
+phones. Codex remains SOURCE/Linux-synthetic only, no M51/phone/production/GC/Raft
+activation. DEMO.4 deferred for initial CLI handoff. No pending mandatory source
+acceptance gate remains after publication receipt; next step is owner manual pilot.
+Keep compatible identities/bytes; migration/DB restore/mixed versions unsupported.
+
 ## Current Phase 3C task — authorized isolated-test development
 
 Phase 3C is now authorized from `b1b46e527826617748a8bc68795259060e12d705`
