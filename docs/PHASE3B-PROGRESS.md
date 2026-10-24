@@ -23,8 +23,9 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 | 3B.1a | PUSH VERIFIED `bdf32ac`; contract + 3 targeted tests PASS |
 | 3B.1b | PUSH VERIFIED `412bb1a`; 7 contract/engine tests PASS |
 | 3B.1c | PUSH VERIFIED `50f3e23`; 13 targeted tests PASS |
-| 3B.2 | Bounded history/explicit enable/replay; 38 targeted tests PASS; publication pending |
-| 3B.3–3B.5 | NOT STARTED |
+| 3B.2 | PUSH VERIFIED `d948762`; 38 targeted tests PASS |
+| 3B.3 | Preferences persistence/replay/generation handling; 41 targeted tests PASS; publication pending |
+| 3B.4–3B.5 | NOT STARTED |
 | Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
 
 3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
@@ -33,9 +34,13 @@ Publication verification is reported after push and recorded in the next update.
 
 ## Next action / resume
 
-Verify 3B.2 publication, then 3B.3 preferences. Exact targeted command:
+Verify 3B.3 publication, then 3B.4 smart placement consumes preferences/score.
+Targeted command (41 PASS):
+`source /workspace/asc-cloud/activate.sh`
 `python -B -m unittest tests.test_nodes tests.test_failover.RuntimeStateTests tests.test_backup.BackupStateTests -q`
-38 PASS. History sampling is hourly (not minute) to respect permanent Go receipt
-bounds; inherited 4096 lifetime receipt capacity remains a documented limit.
-Prior-generation history is retained and excluded from scoring after re-pair.
-Full regression/Go qualification pending; no Phase completion claim.
+
+Existing environment tools found: `/workspace/asc-cloud/go1.27.3/go/bin/go`,
+Go 1.27.3 linux/amd64; activation selects Python 3.13.5 and existing module caches.
+Use activation for all subsequent checks. No tool download/system install needed.
+Initial `/usr/bin/go` diagnostic was a wrong-tool PATH issue, now resolved.
+Full regression/Go qualification still pending; no Phase completion claim.

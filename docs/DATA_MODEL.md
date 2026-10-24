@@ -274,3 +274,10 @@ capacity. No authority receipt is evicted to collect telemetry.
 Rollback requires complete stopped/isolated pre-enable backups and matching source;
 retain newer runtime/history/backup/object state separately. Old validators refuse
 the extension; never remove it by hand or change schemas/terms to downgrade.
+
+3B.3 adds optional bounded `insights.preferences` (<=64 node records), each exactly
+mode/generation/updated_at. Existing insights without preferences remain valid.
+All Controllers must upgrade before the first preference write. Old code rejects
+unknown extension fields. Restrictive modes survive credential-generation changes;
+stale Preferred becomes Auto until owner explicitly sets it for the new identity.
+No node identity, Catalog replica/version/backup or raw token is overwritten.

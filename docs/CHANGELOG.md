@@ -212,3 +212,5 @@
 - 3B.2: explicitly enabled bounded node history with hourly sampling, UTC calendar
   24h/7d/30d views and observed-probe reliability. Preserve history and Phase 3A
   backup state through preparation/takeover; no physical or consensus policy change.
+- 3B.3: owner Auto/Preferred/Avoid New Storage/Drain/Protected preferences with
+  replay/generation semantics; no automatic movement or physical deletion.

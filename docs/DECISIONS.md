@@ -141,3 +141,14 @@ and exact executed evidence in PHASE2B-ACCEPTANCE.md.
 
 ADR-045..047 passed the actual Windows Phase 3A fault matrix and full regression;
 qualification evidence and remaining limits: PHASE3A-ACCEPTANCE.md.
+
+## Phase 3B decisions
+
+- ADR-048: Advisory deterministic score and separately reported confidence and
+  observed probe reliability; UNKNOWN for absent/stale/future data, never use
+  manufacturer readiness hints as measurements. No score-driven voter authority.
+- ADR-049: Optional versioned bounded node-insights extension through existing
+  actual-term prepared-document CAS. Hourly calendar aggregates preserve gaps,
+  generation provenance and authority receipt limits. Owner preferences are
+  replay-safe; restrictive choices survive re-pair, stale Preferred does not.
+  Drain is an allocation preference, not automatic movement or physical GC.

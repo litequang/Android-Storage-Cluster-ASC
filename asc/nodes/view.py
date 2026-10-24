@@ -45,8 +45,9 @@ def observations(doc, node):
 
 
 def scores(view, at):
+    from .preferences import effective
     doc = view['document']
-    return {'nodes': [{'node_id': n['node_id'], **score(observations(doc, n), at)}
+    return {'nodes': [{'node_id': n['node_id'], 'preference': effective(doc.get('insights', {}), n['node_id'], n['token_version']), **score(observations(doc, n), at)}
                       for n in doc['tables']['nodes']],
             'cluster_id': doc['cluster_id'], 'epoch': doc['epoch'],
             'revision': doc['catalog']['revision'], 'control_revision': doc['revision'],

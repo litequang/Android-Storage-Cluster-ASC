@@ -46,6 +46,12 @@ def handle(handler):
             obj = handler._read_json()
             valid.payload(obj, ('request_id',))
             return handler._json(200, service.insights.enable(obj))
+        if (len(parts) == 3 and parts[0] == 'nodes' and parts[2] == 'preferences' and
+                method == 'POST' and getattr(service, 'failover', False)):
+            if query: raise ValueError()
+            obj = handler._read_json()
+            valid.payload(obj, ('request_id', 'mode'))
+            return handler._json(200, service.insights.preference(parts[1], obj))
         if parts[0] == 'backup' and getattr(service, 'failover', False):
             from ..backup.http import handle as backup_handle
             return backup_handle(handler, parts[1:], query)

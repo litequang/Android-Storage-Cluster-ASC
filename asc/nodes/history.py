@@ -16,7 +16,7 @@ def integer(value, low, high):
 
 
 def validate(state, nodes):
-    if (not isinstance(state, dict) or set(state) != {'schema', 'history', 'requests'} or
+    if (not isinstance(state, dict) or set(state) - {'preferences'} != {'schema', 'history', 'requests'} or
             type(state['schema']) is not int or state['schema'] != 1 or
             not isinstance(state['history'], dict) or len(state['history']) > 16 or
             not isinstance(state['requests'], dict) or len(state['requests']) > 128):
@@ -53,6 +53,15 @@ def validate(state, nodes):
         if (set(receipt) != {'intent','result'} or not isinstance(receipt['intent'],str) or
                 len(receipt['intent']) != 64 or not isinstance(receipt['result'],dict)):
             raise ValueError('invalid_node_insights')
+    from .preferences import MODES
+    preferences=state.get('preferences',{})
+    if not isinstance(preferences,dict) or len(preferences)>64:
+        raise ValueError('invalid_node_preferences')
+    for node_id,row in preferences.items():
+        if (node_id not in identities or set(row) != {'mode','generation','updated_at'} or
+                row['mode'] not in MODES):
+            raise ValueError('invalid_node_preferences')
+        integer(row['generation'],1,2**63-1);integer(row['updated_at'],0,2**63-1)
     return state
 
 

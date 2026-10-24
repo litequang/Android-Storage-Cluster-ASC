@@ -190,3 +190,50 @@ class TelemetryHistoryTests(unittest.TestCase):
         self.assertEqual(runtime.index,index)
         with self.assertRaises(CatalogError):
             service.edit('different',{'request_id':'enable-insights'},lambda d,s:{})
+
+
+class PreferenceTests(unittest.TestCase):
+    def setUp(self):
+        from asc.failover import state
+        from asc.catalog.common import uid
+        from asc.nodes.service import Insights
+        from tests.test_backup import ProjectionRuntime
+        from types import SimpleNamespace
+        reg=state.MemoryRegistry(uid());self.addCleanup(reg.db.close)
+        reg.seed_self('local',{})
+        self.runtime=ProjectionRuntime(state.export(reg.db,1,{'node_id':'voter-a','term':4}))
+        self.service=Insights(SimpleNamespace(runtime=self.runtime))
+        self.service.enable({'request_id':'enable-preferences'})
+
+    def test_modes_are_replay_safe_and_never_move_or_delete_existing_catalog(self):
+        from asc.nodes.preferences import MODES,effective
+        original=copy.deepcopy(self.runtime.doc['catalog'])
+        for mode in MODES:
+            obj={'request_id':'pref-'+mode,'mode':mode}
+            first=self.service.preference('local-controller',obj)
+            index=self.runtime.index
+            self.assertEqual(first,self.service.preference('local-controller',obj))
+            self.assertEqual(index,self.runtime.index)
+            self.assertEqual(effective(self.runtime.doc['insights'],'local-controller',1),mode)
+            self.assertEqual(first['physical_deletions'],0)
+            self.assertFalse(first['automatic_movement'])
+        self.assertEqual(original,self.runtime.doc['catalog'])
+
+    def test_generation_change_retains_restriction_but_cannot_promote_stale_preferred(self):
+        from asc.nodes.preferences import effective,BLOCK_NEW
+        for mode in ['preferred',*BLOCK_NEW]:
+            self.service.preference('local-controller',{'request_id':'generation-'+mode,'mode':mode})
+            self.assertEqual(effective(self.runtime.doc['insights'],'local-controller',2),
+                             mode if mode in BLOCK_NEW else 'auto')
+
+    def test_invalid_modes_and_conflicting_requests_do_not_commit(self):
+        from asc.catalog.common import CatalogError
+        for mode in ['Prefer',None,{},'delete']:
+            with self.assertRaises((ValueError,TypeError)):
+                self.service.preference('local-controller',{'request_id':'bad-pref','mode':mode})
+        obj={'request_id':'stable-pref','mode':'drain'}
+        self.service.preference('local-controller',obj)
+        index=self.runtime.index
+        with self.assertRaises(CatalogError):
+            self.service.preference('local-controller',{**obj,'mode':'auto'})
+        self.assertEqual(index,self.runtime.index)

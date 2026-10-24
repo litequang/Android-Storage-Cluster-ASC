@@ -204,3 +204,6 @@ Historical PySyncObj evidence below remains unchanged.
   `failover.state` preserves/validates extension across SQL preparation/takeover;
   RuntimeHandler history route serves owner local/strong views. Telemetry tests
   cover retention, missing/failure samples, malformed state and lost reply replay.
+- 3B.3 `nodes.preferences.effective`: safe defaults/generation handling;
+  `Insights.preference` + owner POST route: durable idempotent preferences, no
+  movement/deletion. PreferenceTests cover modes, replay/conflict and generations.

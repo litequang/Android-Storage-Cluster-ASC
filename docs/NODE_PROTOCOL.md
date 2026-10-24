@@ -342,3 +342,10 @@ provenance and null continuous_uptime. UTC calendar buckets include current part
 bucket. Score reliability uses last 24h observed probe samples, with 3600-second
 freshness rather than the 120-second live-input budget. Thermal stays UNKNOWN until
 an actual supported sensor is collected. No sensor is inferred from device specs.
+
+3B.3: owner-only `POST /catalog/v1/nodes/ID/preferences {request_id, mode}` persists
+one of auto (Auto), preferred (Preferred), avoid-new-storage (Avoid New Storage),
+drain (Drain), protected (Protected). Scores response includes effective preference.
+Requests replay exactly; conflicting reuse is 409. Drain reports automatic_movement=false
+and physical_deletions=0. Preference persistence is complete in 3B.3; allocation
+consumption is enabled only in 3B.4, never by changing read or voter eligibility.

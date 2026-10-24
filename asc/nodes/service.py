@@ -42,3 +42,16 @@ class Insights:
             for node in doc['tables']['nodes']:
                 history.record(state,node['node_id'],node['token_version'],observations(doc,node),stamp)
         return self.edit('capture',{},change)
+
+    def preference(self, node_id, obj):
+        from .preferences import MODES
+        from .. import validation as valid
+        valid.node_id(node_id)
+        if obj['mode'] not in MODES: raise ValueError('invalid_node_preference')
+        def change(doc,state):
+            node=next((n for n in doc['tables']['nodes'] if n['node_id']==node_id),None)
+            if node is None: raise CatalogError('node_not_found',404)
+            row={'mode':obj['mode'],'generation':node['token_version'],'updated_at':now()}
+            state.setdefault('preferences',{})[node_id]=row
+            return {'node_id':node_id,**row,'automatic_movement':False,'physical_deletions':0}
+        return self.edit('preference:'+node_id,obj,change)
