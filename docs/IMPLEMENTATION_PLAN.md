@@ -54,7 +54,8 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - **Phase 3A — Backup, Versioning & Safe Restore: DONE**, v0.9.0 Windows
   development accepted. Preserve [acceptance evidence](PHASE3A-ACCEPTANCE.md).
 - **Phase 3B — Node Scoring, Telemetry, Node Preferences & Smart Placement**:
-  active; checkpoint contract and resume instructions in [PHASE3B-PLAN.md](PHASE3B-PLAN.md)
+  DONE for v0.10.0 Linux Cloud simulation; [acceptance](PHASE3B-ACCEPTANCE.md).
+  Checkpoint contract and resume instructions in [PHASE3B-PLAN.md](PHASE3B-PLAN.md)
   and [PHASE3B-PROGRESS.md](PHASE3B-PROGRESS.md).
 - **Phase 3C — Dynamic Replication, Replica Reduction & Safe Garbage Collection**:
   future; actual reduction/physical deletion requires separate authorization and qualification.

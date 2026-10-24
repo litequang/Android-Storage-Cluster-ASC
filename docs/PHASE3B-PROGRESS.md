@@ -11,9 +11,9 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
   base without reset/deletion/main merge.
 - Read AGENTS.md, ordered architecture/contracts/security/history and Phase 3A
   acceptance. Prior Windows 122-test PASS is historical, not a fresh Cloud result.
-- Cloud Python 3.12.14; `/usr/bin/go` exists but `go version` returns
-  `Go: Unknown option: version`. Investigate existing tool locations before Go
-  qualification; do not install/change system environment without authorization.
+- Initial default PATH selected Python 3.12.14 and an unrelated `/usr/bin/go`.
+  Resolved using the existing `/workspace/asc-cloud/activate.sh`: Python 3.13.5
+  and official existing Go 1.27.3; no installation/global PATH/proxy changes.
 
 ## Checkpoints
 
@@ -29,26 +29,34 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 | 3B.5a | PUSH VERIFIED `5494dce`; 37 targeted tests PASS |
 | 3B.5b | PUSH VERIFIED `8b2e2eb`; 7/7 new faults + 53 targeted tests PASS |
 | 3B.5c | PUSH VERIFIED `a1be049`; 3 consensus + 2 safety tests PASS |
-| 3B.5d | Storage CLI synthetic profile fix; targeted validation/publication pending |
-| Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
+| 3B.5d | PUSH VERIFIED `d1cd0e4`; 6 Storage CLI/consensus/safety checks PASS |
+| Final regression / acceptance | 152 Python tests OK (0 skips); 12/12 3A + 20/20 2B + 7/7 3B faults PASS; Go/vet/module/build PASS; accepted for Cloud simulation |
 
-3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
-commit. No runtime tests required for this documentation-only checkpoint.
-Publication verification is reported after push and recorded in the next update.
+3B.0 documentation checks: `git diff --check` and local Markdown-link validation
+PASS; publication was independently verified before 3B.1a. No runtime changes.
 
 ## Next action / resume
 
-3B.5d targeted command **6 PASS, 25.228s**:
-`python -B -m unittest tests.test_storage_cluster.ClusterTests.test_cli_owner_upload_download_and_protected_setup_refusal tests.test_consensus tests.test_nodes.RuntimeSafetyTests -v`
-Publish/verify 3B.5d, then run full regression on frozen source. First full run:
-152 tests, 371.462s, 1 failure + 1 error (old metadata and Storage CLI fixture
-Windows assumptions). Both fixtures now use permitted synthetic profiles; product
-guards and existing byte/protected-setup assertions are unchanged. The metadata
-no-fallback assertion is stronger. Intermediate rerun was stopped, not accepted.
+Phase 3B checkpoints 3B.0–3B.5 are implemented and qualified for Linux Cloud
+simulation, v0.10.0. Final source under test: `d1cd0e4a439db9836d1b44eacb20d1affa8eeb08`.
+Full Python **152 tests OK (152 PASS, 0 SKIP), 369.626s**; all **39/39**
+Phase 3A/2B/3B fault gates PASS. Uncached Go 11 top-level tests, vet, module
+verification and Linux/Windows/Android builds PASS. See PHASE3B-ACCEPTANCE.md
+for exact commands, intermediate failures/fixes, limits and rollback.
 
-Go post-checkpoint verify/vet/uncached 11 tests/builds PASS (18.100s consensus,
-0.003s launcher); source/modules unchanged. Activate existing tools with
-`source /workspace/asc-cloud/activate.sh`, then:
-`python -B -m unittest discover -s tests -v`
-Record actual complete result in acceptance/progress; no completion claim until
-all checks PASS and final report is committed/pushed/verified on WIP.
+1. Fetch exact WIP branch and verify final reporting commit is on GitHub before
+   continuing from another account/session; preserve any local changes.
+2. Read AGENTS.md ordered docs, this plan/progress and acceptance. No unfinished
+   Phase 3B implementation checkpoint remains. No source changes after full PASS.
+3. Await a separate authorized task for Windows owner execution, real-device
+   qualification or Phase 3C/3D/4/5. Do not begin physical reduction/GC, Dashboard,
+   deployment, dynamic quorum/membership or phone access from this handoff.
+
+Use existing `/workspace/asc-cloud/activate.sh` (Python 3.13.5, Go 1.27.3). Product
+failover runtime still refuses Linux/Android; test cohosts use a synthetic fixture
+wrapper. Cloud PASS is not a new Windows runtime/device/production claim. Hourly
+history has gaps and inherited receipt limits; UNKNOWN remains UNKNOWN.
+
+All code checkpoints have independently verified remote refs. The final reporting
+commit is identified by Git log/final response; source under test is recorded above.
+No main/force push/GC/production/phone work.

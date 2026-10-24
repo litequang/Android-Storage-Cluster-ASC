@@ -1,4 +1,7 @@
-# ASC QuickStart 0.9.0 — Backup, Versioning & Safe Restore (Windows development)
+# ASC v0.10.0 — Node Scoring, Telemetry & Smart Placement
+
+Phase 3B đã nghiệm thu mô phỏng Linux Cloud; xem [kết quả](docs/PHASE3B-ACCEPTANCE.md).
+Kết quả Windows Phase 3A dưới đây được giữ làm lịch sử.
 
 Phase 3A v0.9.0 **đạt nghiệm thu Windows development ngày 2026-10-24**:
 full Python **122 tests OK — 119 PASS / 3 SKIP POSIX**, 556.852 giây; **12/12 ca
@@ -510,3 +513,16 @@ SD/Android acceptance và Phase 2B chưa thực hiện.
 Rollback phải dừng/cô lập toàn cụm development, giữ riêng state/object mới rồi
 phục hồi toàn bộ private backup trước attachment và source v0.6. Không xóa guard,
 checkpoint, mode hay `.enrolled` để chạy tiếp; không re-init voter đã mất state.
+
+
+## Phase 3B v0.10.0 — nghiệm thu mô phỏng Linux Cloud
+
+Đã có Node Score 0–100, reliability/confidence riêng, telemetry 24h/7d/30d,
+Auto/Preferred/Avoid New Storage/Drain/Protected và Smart Placement sau các điều
+kiện an toàn. Replica Reduction chỉ preview/dry-run, không xóa byte vật lý.
+Thiếu dữ liệu vẫn UNKNOWN; lịch sử có giới hạn, khoảng trống và nguồn đo rõ ràng.
+
+Đọc docs/PHASE3B-PLAN.md, PHASE3B-PROGRESS.md và PHASE3B-ACCEPTANCE.md trước
+khi tiếp tục từ tài khoản khác. Lệnh chủ sở hữu ở README.md. Mọi checkpoint phải
+push và xác minh trên nhánh WIP trước bước kế tiếp. Kết quả Cloud không thay thế
+nghiệm thu Windows/Android thực tế; không thay đổi quorum hay triển khai production.

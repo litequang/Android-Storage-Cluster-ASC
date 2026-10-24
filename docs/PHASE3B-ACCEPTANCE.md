@@ -1,6 +1,8 @@
-# Phase 3B acceptance — pending final gate
+# Phase 3B acceptance — Linux Cloud development simulation
 
-Status: NOT ACCEPTED YET. Linux Cloud isolated development simulation only.
+Status: ACCEPTED for Linux Cloud isolated development simulation; all applicable
+checks below PASS. Windows runtime and real Android/production requalification
+remain outside this Cloud result.
 Date: 2026-10-24 (Asia/Saigon). Version: 0.10.0 development.
 Base: 0550967f57f145ff75179c20500e4aafe9c5cb31 (Phase 3A Windows accepted).
 Branch: wip/phase2a-raft-qualification. See PLAN/PROGRESS for published checkpoints.
@@ -9,7 +11,7 @@ Branch: wip/phase2a-raft-qualification. See PLAN/PROGRESS for published checkpoi
 
 All results here are new Codex-run Cloud checks, not reused Windows evidence.
 Existing tools: Python 3.13.5, Go 1.27.3 linux/amd64, activated through
-`source /workspace/asc-cloud/activate.sh`. No system install/PATH/proxy changes.
+`source /workspace/asc-cloud/activate.sh`. No system installation, global PATH or proxy changes.
 
 - 3B.1a: 3 contract tests PASS. 3B.1b: 7 contract/engine tests PASS.
 - 3B.1c: 13 score/runtime tests PASS.
@@ -21,8 +23,8 @@ Existing tools: Python 3.13.5, Go 1.27.3 linux/amd64, activated through
 - 3B.5a: 37 targeted preview/CLI/placement/history/backup/runtime tests PASS.
 - 3B.5b: `python -B -m unittest tests.test_node_faults -v`: 1 matrix test,
   **7/7 gates PASS, 73.429s** (logs in workspace work/ only).
-- Existing Go module verification/vet/11 top-level tests PASS; Linux AMD64,
-  Windows AMD64 and Android ARM64 builds PASS. Final post-checkpoint checks pending.
+- Existing and post-checkpoint Go verification/vet/11 top-level tests PASS; Linux
+  AMD64, Windows AMD64 and Android ARM64 builds PASS. Exact final evidence below.
 
 ## Executed new fault gates
 
@@ -80,12 +82,6 @@ volume backups and matching source. Rollback stops/isolates all voters, restores
 complete pre-enable backups plus matching source, and retains newer state/objects
 separately. Never edit extension/schema/term/membership or reinitialize lost state.
 
-## Final full regression and publication
-
-PENDING. Phase 3B must not be declared complete until full Python (including
-existing Phase 3A/2B and new faults), Go test/vet/module/build and final tracked/
-staged secret/whitespace review pass and source/report commits are on GitHub.
-
 ## Final regression intermediate fixture repair — 3B.5c
 
 First full Cloud run found one metadata-only subprocess fixture assuming Windows
@@ -96,7 +92,7 @@ no product code changed. The no-fallback assertion is strengthened to require
 as successful fencing. Existing protected/Android guard assertions remain intact.
 Targeted `python -B -m unittest tests.test_consensus -v`: **3 PASS, 22.837s**.
 `python -B -m unittest tests.test_nodes.RuntimeSafetyTests -v`: **2 PASS**.
-This intermediate full run is not acceptance; a new complete run is required.
+This intermediate failure required a fresh full rerun; final successful evidence is below.
 
 ## Complete first full-run findings — 3B.5d
 
@@ -109,5 +105,59 @@ Targeted Storage CLI + all consensus + runtime safety: **6 PASS, 25.228s**.
 
 A rerun started after 3B.5c was stopped before completion when the full first-run
 summary revealed the Storage CLI error. It contributes no acceptance result.
-A new full run on published 3B.5d is required. No test is skipped/weakened and
+A fresh full run on published 3B.5d followed (result below). No test is skipped/weakened and
 no real platform/device guard is changed to address these fixture assumptions.
+
+## Final full regression and publication
+
+Source commit under test: `d1cd0e4a439db9836d1b44eacb20d1affa8eeb08`. No source/test changes during final full
+regression; only reporting docs change afterward. All commands used existing
+activation: `source /workspace/asc-cloud/activate.sh`.
+
+| Exact command / check | Actual result |
+|---|---|
+| `python -B -m unittest discover -s tests -v` | **152 tests OK: 152 PASS / 0 SKIP, 0 FAIL/ERROR, 369.626s** |
+| Phase 3A retained fault matrix within full run | **12/12 PASS** |
+| Phase 2B retained fault matrix within full run | **20/20 PASS** |
+| New Phase 3B fault matrix within full run | **7/7 PASS** |
+| `go mod verify` | all modules verified |
+| `go vet ./...` | PASS, exit 0 |
+| `go test -count=1 -v -timeout 240s ./...` | **11 top-level tests PASS**, fresh uncached: consensus 18.100s, launcher 0.003s |
+| `CGO_ENABLED=0 go build -trimpath -buildvcs=false -o PRIVATE_OUTPUT ./cmd/asc-raft` | Linux AMD64 PASS |
+| Same build with `GOOS=windows GOARCH=amd64` | Windows AMD64 PASS, compile only |
+| Same build with `GOOS=android GOARCH=arm64` | Android ARM64 PASS, compile only |
+| Python AST / tracked+staged content / whitespace | PASS, final publication review below |
+
+No prior Windows PASS was reused as current evidence. Linux runs the existing
+POSIX installer fixtures too; no TLS/storage/consensus/fault gate is skipped or
+weakened. Go source/module files are unchanged from the accepted base; final
+post-checkpoint verification/builds succeeded and uncached tests ran again.
+
+Raw logs are private scratch artifacts under `/workspace/work/`:
+phase3b-python-final.log, phase3b-go-uncached.log, 3b5-faults-retest.log and targeted
+checkpoint logs. Build binaries and synthetic keys/state stay outside source.
+Summary and reproduction commands are durable in GitHub; raw temporary logs are
+not required for another session to continue.
+
+All checkpoint source commits are pushed/verified individually on the exact WIP
+branch. Final reporting commit and verified remote hash appear in the final task
+report and Git log (a commit cannot embed its own hash). No main merge, force push,
+release/deployment, phone/private production access or physical GC occurred.
+
+## Source and documentation routing / final review
+
+- `asc/nodes/`: strict observation/score contract, checkpoint views, bounded history,
+  quorum-committed preferences, pure reduction preview and pinned owner CLI.
+- `asc/catalog/{placement,http,cli}.py` and `asc/failover/{state,service}.py`:
+  hard-gated allocation/API, optional extension roundtrip and leader refresh capture.
+- `asc/__init__.py`: 0.10.0. Existing Engine/manifests and Go engine/modules unchanged.
+- `tests/test_nodes.py`, `test_node_faults.py`: contract/safety/history/placement/preview
+  tests and seven actual fault gates. Prior fixture-only portability adjustments
+  preserve/strengthen prior assertions and product guards.
+- AGENTS, README/README-VI, CODEMAP, roadmap, architecture/ADR, API/schema/security/
+  troubleshooting/changelog and Phase 3B plan/progress/acceptance carry the handoff.
+
+Final review: 71 Python source/test files parse; all 113 tracked paths and working/
+index blob contents reviewed for private artifacts/key/token/credential patterns,
+with 0 findings. Staged diff/whitespace review PASS; final commit changes documents
+only. Source/tests stay exactly at the fully tested source commit above.

@@ -1,7 +1,7 @@
-# Android Storage Cluster (ASC) — v0.9.0 development
+# Android Storage Cluster (ASC) — v0.10.0 development
 
 Vietnamese project and historical setup guide: [README-VI.md](README-VI.md).
-Current Phase 3A evidence and limits: [PHASE3A-ACCEPTANCE.md](docs/PHASE3A-ACCEPTANCE.md).
+Historical Phase 3A Windows evidence and limits: [PHASE3A-ACCEPTANCE.md](docs/PHASE3A-ACCEPTANCE.md).
 
 ## Phase 3A Windows development — version history and logical backups
 
@@ -30,7 +30,7 @@ approved physical domains. Retention/trash expiry is logical; no physical bytes
 are garbage-collected. Keep disconnected backups for irreplaceable data. Exact
 contracts, limits, results and rollback: docs/PHASE3A-ACCEPTANCE.md.
 
-## Phase 3B node insights (development; acceptance pending)
+## Phase 3B node insights — v0.10.0 Cloud simulation accepted
 
 After all stopped development Controllers upgrade and complete private backups:
 
@@ -49,3 +49,5 @@ missing/stale sensors remain UNKNOWN. History is bounded UTC calendar 24h/7d/30d
 with hourly samples and explicit gaps, not continuous uptime. Reduction is preview
 only, with zero physical deletions and no apply command. Permanent receipt/runtime
 limits still apply. Plan/progress: docs/PHASE3B-PLAN.md and PHASE3B-PROGRESS.md.
+
+Phase 3B exact new Cloud results/limits: [PHASE3B-ACCEPTANCE.md](docs/PHASE3B-ACCEPTANCE.md). Windows runtime and real-device execution remain separate.

@@ -25,7 +25,25 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
-## Scope in v0.6.0 / Phase 1.2B
+## Current Phase 3B handoff — v0.10.0
+
+After the mandatory ordered reads, read `docs/PHASE3A-ACCEPTANCE.md`,
+`docs/PHASE3B-PLAN.md`, `docs/PHASE3B-PROGRESS.md` and
+`docs/PHASE3B-ACCEPTANCE.md`. WIP branch is `wip/phase2a-raft-qualification`;
+Phase 3A base is `0550967f57f145ff75179c20500e4aafe9c5cb31`. Fetch GitHub and
+preserve local work; never use main/reset/force push to continue. Every checkpoint
+must pass targeted checks, update progress, undergo tracked/staged secret review,
+commit/push and remote verification before starting the next checkpoint.
+
+Phase 3B is qualified for Linux Cloud synthetic simulation only. Product failover
+entrypoint still permits Windows development only; test launchers do not authorize
+real Linux/Android/phone deployment. Scores/preferences never change voter/quorum
+or grant byte proof. Drain does not move data. Reduction is preview only; no
+physical GC, Phase 3C/3D or Dashboard is authorized by the Phase 3B handoff.
+Historical scope below is not the current feature list; consult current CODEMAP/
+CHANGELOG/acceptance. Respect separate task authorization before future phases.
+
+## Historical scope in v0.6.0 / Phase 1.2B
 Working: prior lifecycle/local storage plus single-writer Global Catalog, approved physical-domain placement, durable scoped replication jobs, verified read-only metadata snapshot/delta caches, bounded reconciliation and download fallback.
 Phase 1.2B Codex Windows acceptance: 92 tests OK (3 POSIX installer skips); see docs/PHASE1-2B-ACCEPTANCE.md for provenance, three-node simulation and limits. Historical 1.2A gate was 61 tests.
 NOT working: Raft/consensus, automatic Controller failover/election, Dashboard/mobile/cloud integration, SAF, production or Android/power-cut readiness. Cache replication is not write authority or proof of file bytes. Phase 2 requires its own explicit task.

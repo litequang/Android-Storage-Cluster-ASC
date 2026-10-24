@@ -152,3 +152,11 @@ qualification evidence and remaining limits: PHASE3A-ACCEPTANCE.md.
   generation provenance and authority receipt limits. Owner preferences are
   replay-safe; restrictive choices survive re-pair, stale Preferred does not.
   Drain is an allocation preference, not automatic movement or physical GC.
+
+- ADR-050: Reduction is a pure checkpoint-bound proposal in Phase 3B. Keep current
+  policy minimum independent readable domains; retained snapshot/restore pins,
+  non-LIVE versions, unfinished work and stale views hold reduction. Unknown/old
+  proofs cannot count, Protected copies are held, and every future candidate needs
+  fresh byte verification under a separately qualified apply protocol. No deletion
+  grant/manifest writer/apply endpoint is added. Cloud full regression and 39 fault
+  gates qualify this boundary; no physical GC or new platform runtime follows.

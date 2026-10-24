@@ -1,4 +1,4 @@
-# ASC CODEMAP — v0.9.0 Phase 3A development / preserved v0.6 default boundary
+# ASC CODEMAP — v0.10.0 Phase 3B Cloud simulation / preserved default boundaries
 
 ## Phase 2B — Windows development qualified
 
@@ -234,3 +234,6 @@ Historical PySyncObj evidence below remains unchanged.
 - 3B.5d `test_storage_cluster` owner upload/download CLI fixture supplies an
   explicitly permitted synthetic profile on Linux. Existing protected setup
   refusal, byte equality, pinning and non-overwrite assertions are unchanged.
+
+Phase 3B final qualification and exact reproduction: PHASE3B-ACCEPTANCE.md.
+All published checkpoint and continuation status: PHASE3B-PROGRESS.md.

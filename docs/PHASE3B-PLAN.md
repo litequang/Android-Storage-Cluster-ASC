@@ -1,5 +1,8 @@
 # Phase 3B plan and continuation contract
 
+Status: all checkpoints complete for v0.10.0 Linux Cloud simulation; actual
+results and platform limits: [PHASE3B-ACCEPTANCE.md](PHASE3B-ACCEPTANCE.md).
+
 Date: 2026-10-24. Repository: litequang/Android-Storage-Cluster-ASC.
 Only development/push branch: `wip/phase2a-raft-qualification`.
 Accepted base: `0550967f57f145ff75179c20500e4aafe9c5cb31` (Phase 3A v0.9.0).
