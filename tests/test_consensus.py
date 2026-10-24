@@ -307,8 +307,17 @@ class ConsensusTests(unittest.TestCase):
                 'admin_token': admin, 'listen_port': int(api_address.rsplit(':', 1)[1])}))
             env = dict(os.environ, ASC_HOME=str(home)); pin = fingerprint_from_pem(home/'server.crt')
             origin = 'https://' + api_address
+            command = [sys.executable, '-B', '-m', 'asc.cli']
+            if os.name != 'nt':
+                # Synthetic metadata Controller only; no product platform bypass.
+                script = ("from unittest.mock import patch; from types import SimpleNamespace; "
+                          "import asc.cli as c; "
+                          "p=patch.object(c,'os',SimpleNamespace(name='nt')); p.start(); "
+                          "q=patch.object(c,'inspect',return_value={'protected':False,"
+                          "'installation_allowed':True,'simulation':True}); q.start(); c.main()")
+                command = [sys.executable, '-B', '-c', script]
             def launch_controller():
-                proc = subprocess.Popen([sys.executable, '-B', '-m', 'asc.cli', 'controller-run',
+                proc = subprocess.Popen(command + ['controller-run',
                     '--consensus-config', str(self.configs[leader])], cwd=ROOT, env=env,
                     stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
@@ -341,9 +350,10 @@ class ConsensusTests(unittest.TestCase):
                 self.assertEqual(files['revision'], 9); self.assertFalse(files['stale'])
             finally:
                 proc.kill(); proc.communicate(timeout=10)
-            fallback = subprocess.run([sys.executable, '-B', '-m', 'asc.cli', 'controller-run'], cwd=ROOT,
+            fallback = subprocess.run(command + ['controller-run'], cwd=ROOT,
                 env=env, capture_output=True, timeout=15)
             self.assertNotEqual(fallback.returncode, 0)
+            self.assertIn(b'consensus configuration required', fallback.stderr)
             with self.registries[0].connect() as db:
                 self.assertEqual([dict(r) for r in db.execute('SELECT * FROM catalog_jobs')], self.original_jobs)
         with self.subTest('membership_binding_missing_state_and_no_automatic_bootstrap'):

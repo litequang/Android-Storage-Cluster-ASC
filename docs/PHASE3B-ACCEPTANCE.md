@@ -85,3 +85,15 @@ separately. Never edit extension/schema/term/membership or reinitialize lost sta
 PENDING. Phase 3B must not be declared complete until full Python (including
 existing Phase 3A/2B and new faults), Go test/vet/module/build and final tracked/
 staged secret/whitespace review pass and source/report commits are on GitHub.
+
+## Final regression intermediate fixture repair — 3B.5c
+
+First full Cloud run found one metadata-only subprocess fixture assuming Windows
+in actual_python_controller_write_crash_restart_and_no_legacy_fallback. Its
+synthetic launcher now uses the same module-local platform/profile technique;
+no product code changed. The no-fallback assertion is strengthened to require
+`consensus configuration required`, so an unrelated hardware refusal cannot count
+as successful fencing. Existing protected/Android guard assertions remain intact.
+Targeted `python -B -m unittest tests.test_consensus -v`: **3 PASS, 22.837s**.
+`python -B -m unittest tests.test_nodes.RuntimeSafetyTests -v`: **2 PASS**.
+This intermediate full run is not acceptance; a new complete run is required.

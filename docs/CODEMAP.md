@@ -227,3 +227,7 @@ Historical PySyncObj evidence below remains unchanged.
   synthetic profile wrapper on Linux; real entrypoint still refuses Linux/Android.
   RuntimeSafetyTests prove the product guard and required non-null mutation IDs.
   `asc/__init__.py`: 0.10.0 development; acceptance remains platform-scoped.
+- 3B.5c `test_consensus` metadata-only subprocess fixture also uses a module-local
+  synthetic platform/profile launcher on Linux. The fallback assertion now checks
+  the exact missing-consensus diagnostic, ensuring hardware refusal cannot falsely
+  satisfy the no-legacy-writer gate; product/platform guard remains unchanged.

@@ -27,7 +27,8 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 | 3B.3 | PUSH VERIFIED `e24704c`; 41 targeted tests PASS |
 | 3B.4 | PUSH VERIFIED `b23722a`; 54 targeted tests PASS (59.175s) |
 | 3B.5a | PUSH VERIFIED `5494dce`; 37 targeted tests PASS |
-| 3B.5b | 7/7 new real fault gates PASS (73.429s); 53 targeted tests PASS (2.676s); publication pending |
+| 3B.5b | PUSH VERIFIED `8b2e2eb`; 7/7 new faults + 53 targeted tests PASS |
+| 3B.5c | Metadata fixture Linux portability; 3 consensus + 2 safety tests PASS; publication pending |
 | Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
 
 3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
@@ -36,23 +37,18 @@ Publication verification is reported after push and recorded in the next update.
 
 ## Next action / resume
 
-Verify 3B.5b publication, then final acceptance gate. Source version 0.10.0.
-`python -B -m unittest tests.test_node_faults -v`: **7/7 fault gates PASS,
-73.429s**. `python -B -m unittest tests.test_nodes tests.test_backup.BackupStateTests tests.test_failover.RuntimeStateTests -v`:
-**53 PASS, 2.676s**. AST parses all Python sources/tests; no source changes pending.
+Publish/verify 3B.5c, then repeat full Python regression. Initial full run has
+one failure in the old metadata-only subprocess fixture's Windows assumption;
+it is not accepted. Fixed test-only launcher; strengthened no-legacy-fallback
+assertion checks the actual consensus-config diagnostic. Product guard unchanged.
+`python -B -m unittest tests.test_consensus -v`: **3 PASS, 22.837s**.
+`python -B -m unittest tests.test_nodes.RuntimeSafetyTests -v`: **2 PASS**.
 
-First fault attempt failed at Windows-only product entrypoint. Test-only synthetic
-Linux launcher now supplies a module-local platform/profile mock; direct product
-Linux refusal remains and has an explicit regression. New runtime never bypasses
-guards outside tests. See PHASE3B-ACCEPTANCE.md for all intermediate findings.
+Go post-checkpoint module verify/vet/uncached tests/builds PASS. Exact Go command:
+`go test -count=1 -v -timeout 240s ./...` — 11 top-level tests, consensus 18.100s,
+launcher 0.003s; Linux/Windows/Android builds PASS (latter two compile-only).
 
-Next exact commands (activate `/workspace/asc-cloud/activate.sh`):
-- `python -B -m unittest discover -s tests -v`
-- In consensus: `go mod verify`, `go vet ./...`, `go test -v -timeout 240s ./...`
-- `CGO_ENABLED=0 go build -trimpath -buildvcs=false -o PRIVATE_OUTPUT ./cmd/asc-raft`
-  for Linux AMD64 and compile-only Windows AMD64/Android ARM64.
-Record actual counts/failures/skips/platform limits in PHASE3B-ACCEPTANCE.md, fix
-failures without weakening tests, review tracked/staged secrets, commit/push final
-report and verify remote. Do not claim Phase completion before that gate.
-
-All checkpoints remain on WIP only; no main merge/force/GC/production/phone work.
+Use `source /workspace/asc-cloud/activate.sh`; preserve all code at the published
+checkpoint for the next full `python -B -m unittest discover -s tests -v`.
+Only after a fresh full PASS: complete acceptance/progress, review secrets,
+commit/push final report and verify remote. No Phase 3B completion claim yet.
