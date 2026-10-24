@@ -97,3 +97,17 @@ as successful fencing. Existing protected/Android guard assertions remain intact
 Targeted `python -B -m unittest tests.test_consensus -v`: **3 PASS, 22.837s**.
 `python -B -m unittest tests.test_nodes.RuntimeSafetyTests -v`: **2 PASS**.
 This intermediate full run is not acceptance; a new complete run is required.
+
+## Complete first full-run findings — 3B.5d
+
+The first run completed **152 tests in 371.462s: 1 failure + 1 error**, not PASS.
+The failure was the metadata launcher fixed in 3B.5c. The error was the legacy
+Storage CLI fixture using the actual unrecognized Linux host profile. Its two
+owner upload/download calls now supply an explicitly permitted synthetic profile;
+M51/protected setup refusal, byte equality and non-overwrite assertions remain.
+Targeted Storage CLI + all consensus + runtime safety: **6 PASS, 25.228s**.
+
+A rerun started after 3B.5c was stopped before completion when the full first-run
+summary revealed the Storage CLI error. It contributes no acceptance result.
+A new full run on published 3B.5d is required. No test is skipped/weakened and
+no real platform/device guard is changed to address these fixture assumptions.

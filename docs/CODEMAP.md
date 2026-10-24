@@ -231,3 +231,6 @@ Historical PySyncObj evidence below remains unchanged.
   synthetic platform/profile launcher on Linux. The fallback assertion now checks
   the exact missing-consensus diagnostic, ensuring hardware refusal cannot falsely
   satisfy the no-legacy-writer gate; product/platform guard remains unchanged.
+- 3B.5d `test_storage_cluster` owner upload/download CLI fixture supplies an
+  explicitly permitted synthetic profile on Linux. Existing protected setup
+  refusal, byte equality, pinning and non-overwrite assertions are unchanged.

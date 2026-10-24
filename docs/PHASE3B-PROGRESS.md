@@ -28,7 +28,8 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 | 3B.4 | PUSH VERIFIED `b23722a`; 54 targeted tests PASS (59.175s) |
 | 3B.5a | PUSH VERIFIED `5494dce`; 37 targeted tests PASS |
 | 3B.5b | PUSH VERIFIED `8b2e2eb`; 7/7 new faults + 53 targeted tests PASS |
-| 3B.5c | Metadata fixture Linux portability; 3 consensus + 2 safety tests PASS; publication pending |
+| 3B.5c | PUSH VERIFIED `a1be049`; 3 consensus + 2 safety tests PASS |
+| 3B.5d | Storage CLI synthetic profile fix; targeted validation/publication pending |
 | Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
 
 3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
@@ -37,18 +38,17 @@ Publication verification is reported after push and recorded in the next update.
 
 ## Next action / resume
 
-Publish/verify 3B.5c, then repeat full Python regression. Initial full run has
-one failure in the old metadata-only subprocess fixture's Windows assumption;
-it is not accepted. Fixed test-only launcher; strengthened no-legacy-fallback
-assertion checks the actual consensus-config diagnostic. Product guard unchanged.
-`python -B -m unittest tests.test_consensus -v`: **3 PASS, 22.837s**.
-`python -B -m unittest tests.test_nodes.RuntimeSafetyTests -v`: **2 PASS**.
+3B.5d targeted command **6 PASS, 25.228s**:
+`python -B -m unittest tests.test_storage_cluster.ClusterTests.test_cli_owner_upload_download_and_protected_setup_refusal tests.test_consensus tests.test_nodes.RuntimeSafetyTests -v`
+Publish/verify 3B.5d, then run full regression on frozen source. First full run:
+152 tests, 371.462s, 1 failure + 1 error (old metadata and Storage CLI fixture
+Windows assumptions). Both fixtures now use permitted synthetic profiles; product
+guards and existing byte/protected-setup assertions are unchanged. The metadata
+no-fallback assertion is stronger. Intermediate rerun was stopped, not accepted.
 
-Go post-checkpoint module verify/vet/uncached tests/builds PASS. Exact Go command:
-`go test -count=1 -v -timeout 240s ./...` — 11 top-level tests, consensus 18.100s,
-launcher 0.003s; Linux/Windows/Android builds PASS (latter two compile-only).
-
-Use `source /workspace/asc-cloud/activate.sh`; preserve all code at the published
-checkpoint for the next full `python -B -m unittest discover -s tests -v`.
-Only after a fresh full PASS: complete acceptance/progress, review secrets,
-commit/push final report and verify remote. No Phase 3B completion claim yet.
+Go post-checkpoint verify/vet/uncached 11 tests/builds PASS (18.100s consensus,
+0.003s launcher); source/modules unchanged. Activate existing tools with
+`source /workspace/asc-cloud/activate.sh`, then:
+`python -B -m unittest discover -s tests -v`
+Record actual complete result in acceptance/progress; no completion claim until
+all checks PASS and final report is committed/pushed/verified on WIP.
