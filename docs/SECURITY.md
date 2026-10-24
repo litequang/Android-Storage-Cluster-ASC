@@ -315,3 +315,15 @@ system changes. Source/private paths stay in dedicated private HOME subdirectori
 without symlinks. A mismatched existing source/launcher is preserved and refused.
 Packages contain allowlisted public source only; inspect unpacked files before Git
 publication. No cluster-ready or Android-runtime claim follows installer tests.
+
+## Demo LAN safety (DEMO.2)
+One Controller grants all writes; no fallback/election authority exists on nodes.
+TLS pinning remains mandatory, and old node tokens cannot authorize owner routes.
+All setup/runtime mutations recheck device/dependency guards. Root/controller/node
+state compatibility is read-only checked before writable Core constructors. Existing
+Core ~/.asc, Raft and advanced extension state is never adopted. Two phone labels
+are an owner trust decision, not hardware attestation: never give separate labels
+to two volumes/identities on the same phone. Node storage requires fresh per-request
+pinned Controller introspection, including when a grant predates Controller loss.
+Physical GC has no attached executor/discovery and remains locked; no Demo deletion
+command or policy reduction route exists. LAN is trusted pilot scope, not production.

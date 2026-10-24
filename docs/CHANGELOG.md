@@ -285,3 +285,12 @@ Separate guarded Android preflight, immutable source-only package with per-file 
 archive SHA-256, read-only dry-run and state-preserving rerun. Stable launcher verifies
 before import and disables bytecode. Linux synthetic qualification only; no LAN
 cluster/runtime/upgrade readiness yet. Existing Core installer/guards unchanged.
+
+### Demo Track DEMO.2 — restricted single-writer LAN CLI
+Dedicated marked state and exact read-only schema checks; separate Controller/node
+homes permit Controller phone storage. Explicit private IPv4 TLS binds, Core durable
+enrollment and owner domain approval, measured two-copy upload, SHA verification,
+replica reporting and download fallback reuse existing engines. Controller loss
+fails closed; missing volume/domain/capacity/pin/unknown schema/attached state and
+M51/unknown runtime guards tested on Linux synthetic. No Android runtime qualification,
+upgrade readiness, Raft, reduction, GC or Dashboard claim.

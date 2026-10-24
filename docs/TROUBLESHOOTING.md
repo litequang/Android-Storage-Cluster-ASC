@@ -330,3 +330,15 @@ Checksum, existing unmarked prefix, modified source or symlink refusal means sto
 and preserve directories; do not delete identities or overwrite source. An exact
 package rerun resumes a partial code install. Different releases need a later
 explicit stopped upgrade, never an installer overwrite.
+
+## Demo LAN incomplete replication / offline media
+Use `replicas FILE_ID` to request fresh reconciliation and display verified/available
+counts. Upload exit 4 means protection incomplete: preserve bytes/jobs and retry the
+same key and identical file, not a new logical overwrite. Missing/offline/changed
+volume or one eligible domain denies a new upload. Restore the original medium and
+marker; never substitute its directory or treat free-space estimates as write proof.
+Controller outage denies both metadata writes and node operation authorization;
+keep existing state and restart that Controller manually. Do not promote a node.
+Explicit bind requires the phone's private Wi-Fi IPv4 (same isolated LAN); wildcard,
+public, link-local and hostname inputs are refused. Pin mismatch always means stop
+and verify the correct Controller certificate out of band, never switch to HTTP.

@@ -308,3 +308,18 @@ SHA identifies each release, with a strictly verified inventory. The stable laun
 verifies bytes with stdlib before importing release code and runs Python without
 bytecode writes. Explicit stopped upgrades are deferred to DEMO.3. No new network
 runtime is delivered by the installer preview.
+
+## Demo single-writer LAN boundary (DEMO.2)
+A Demo Controller may cohost an enrolled Storage Node in a different private home:
+<state>/controller versus <state>/node. It retains one fixed metadata writer with
+Core registry 4; no failover bootstrap, consensus state or advanced Core extension
+is adopted. ControllerRuntime binds explicit private IPv4 with Core pinned HTTPS,
+Catalog jobs and byte proofs. Node runs Core StorageRuntime and agent_once in its
+own process with ASC_HOME set before import, retaining OS engine/agent locks.
+Demo lifecycle operation lock serializes setup/startup with future stopped upgrades.
+Two identities on one physical phone MUST use the same owner-approved domain label.
+New files require two independently labeled, fresh actually writable domains with
+Core double-copy capacity; race/outage may leave retained incomplete jobs. CLI only
+reports protected=true after two available verified domains; downloads may use one
+readable copy while Controller is up. All node requests still introspect Controller
+for grants; its outage denies new authority rather than selecting another writer.

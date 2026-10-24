@@ -418,3 +418,14 @@ Ordinary Agent has an empty executor map; Windows/Android physical execution sta
 3C.5b: stale_gc_proof (409) rejects any reference/approval graph change during streamed proof, including a survivor pin/endpoint change. Retry the same GC job to obtain new current evidence; no old proof is relabeled. Wire and persistence shapes stay unchanged.
 
 Known GC error labels are now preserved by the pinned client whitelist; unrecognized server text remains request_failed. A stale/expired confirmation requires a newly prepared exact plan SHA; a stale proof requires fresh byte proof/nonce. No permission is inferred from a retry. Discovery may already recover a lost Node ACK; tests must prove actual unlink/reply loss rather than require an outer exception.
+
+## Demo LAN restriction of existing v1 protocol (DEMO.2)
+Demo reuses pinned Core enrollment, heartbeat, Catalog and per-request Storage
+introspection (no new wire schema). Controller endpoint must be numeric RFC1918/
+loopback IPv4 HTTPS with explicit port, never wildcard/public/hostname. Owner sees
+one-time codes only via explicit `pair`; joining node uses hidden interactive entry
+and Core durable enrollment retry. Owner token stays in Controller home. Approve
+binds node ID/generation, storage pin, approved volume and owner physical domain.
+Only replicated_2 new uploads are permitted with two measured independent domains;
+policy change/reduction, whole-volume admin grant and backup/replication/GC mutation
+routes are excluded. Existing node-scoped metadata cache is not write authority.

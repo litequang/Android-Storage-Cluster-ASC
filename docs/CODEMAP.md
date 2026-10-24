@@ -341,3 +341,9 @@ Registry/CatalogService/StorageRuntime and existing guards; preserve all Core pa
 - `asc/demo/cli.py`, `scripts/demo-alpha.sh`: separate guarded Demo entry point; installer/preflight only at this checkpoint.
 - `tests/test_demo_installer.py`: extracted package execution, deterministic checksums/tampering, dry-run/rerun/state retention, dependency/M51/unknown/unmarked/symlink refusal.
 - `docs/DEMO-QUICKSTART.md`, `releases/`: owner installer preview and adjacent checksum.
+
+## Android Demo LAN (DEMO.2)
+- `asc/demo/state.py`: dedicated Demo marker format 1, exact read-only Core registry/manifest/cache compatibility, Raft/legacy/missing identity refusal, RFC1918/loopback-only IPv4 origin checks.
+- `asc/demo/lan.py`: DemoCatalog two-domain measured upload gate, restricted Core HTTP handler, explicit-bind ControllerRuntime, isolated Core-HOME node process/StorageRuntime/heartbeats; owner Core ClusterClient transfer and bounded protection reporting.
+- `asc/demo/cli.py`: init/join/storage-init/run-controller/run-node/pair/approve/nodes/files/replicas/upload/download; no policy reduction, whole-volume grants, Raft or GC commands.
+- `tests/test_demo_lan.py`: actual subprocess CLI/controller/two synthetic phone nodes, TLS/SHA/fallback/Controller loss, domain/capacity/missing volume/guard/schema/attached-state refusal.

@@ -187,3 +187,11 @@ ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telem
   valid input. Failures are not cached, caller objects are not retained/returned,
   and runtime/extension/authority/term/quorum/physical-proof checks remain fresh.
   Do not increase destructive freshness budgets to compensate for repeated work.
+
+- ADR-055 (Demo Track): keep independently versioned immutable Demo code and marked
+  state separate from Core/private legacy state. Reuse single-writer registry 4,
+  Catalog transfer/proof/fallback and local manifest 1 with explicit private LAN
+  binds; isolate Controller and enrolled node homes on a cohosted phone. Do not
+  remove Android Raft guards. Exactly two owner-approved physical domains and
+  measured double-copy capacity gate a new upload; report interruption/degradation
+  honestly. No implicit migration, policy reduction, whole-volume grant or GC path.

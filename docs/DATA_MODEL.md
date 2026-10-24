@@ -361,3 +361,15 @@ compact JSON of every field except release_id). No links/special/unlisted/missin
 files are accepted. Prefix install.json format=1 selects releases/<release_id>;
 source and launcher are exclusive-create/verify-on-rerun. No private identity/schema
 is created or migrated by install. Preview capability is installer only.
+
+## Demo private state format 1 (DEMO.2)
+<state>/demo.json contains exactly format, track=android-demo-alpha,
+mode=single-writer-demo, role=controller|node, stable installation_id, state_formats
+(demo1/registry4/manifest1/metadata1/config1/wire1), explicit host and port.
+Controller identity/certs/registry live in controller/, enrolled identity/certs/
+manifest/cache in node/. Core schemas are reused unchanged. An unmarked existing
+root, unknown version, consensus/extension state, missing registry/node identity or
+mismatched node/cluster is refused before Core constructors can create/migrate it.
+Internal file data is the dedicated node/data root; explicitly approved SD adapters
+still require the existing Termux app-folder and UUID/medium checks. Repeated setup
+with identical parameters verifies rather than replaces identities/volume markers.

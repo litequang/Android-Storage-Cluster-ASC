@@ -40,3 +40,73 @@ An interrupted source install may be retried with the exact same checked archive
 If integrity/path/state checks refuse, retain the directory and seek review rather
 than deleting keys or overwriting it. No phones or production data were used by
 Cloud qualification. This preview is not the final QuickStart Package.
+
+## DEMO.2 source CLI workflow (final package pending DEMO.3)
+
+The installer preview archive above intentionally has no cluster commands. Use only
+the later final qualified package for owner phone trials. The source implementation
+now provides the following LAN sequence. Every terminal must define:
+
+```sh
+ascdemo() { sh "$HOME/.local/share/asc-demo/bin/asc-demo" "$@"; }
+```
+
+Choose the Controller ZTE's private Wi-Fi IP, e.g. 192.168.1.20. Use another unused
+private IP for Bphone, e.g. 192.168.1.21; examples are placeholders, never public IPs.
+Controller terminal:
+
+```sh
+ascdemo init --role controller --host 192.168.1.20
+ascdemo run-controller
+```
+
+Leave the foreground running. In another ZTE terminal, request `ascdemo pair`.
+Privately copy its origin/pin and enter the one-time code at the joining prompt:
+
+```sh
+ascdemo join --controller https://192.168.1.20:8443 --pin CONTROLLER_PIN --name ZTE-demo-storage
+ascdemo storage-init --host 192.168.1.20 --quota 268435456 --reserve 67108864
+ascdemo run-node
+```
+
+On Bphone after verified install:
+
+```sh
+ascdemo init --role node --host 192.168.1.21
+# Obtain a NEW pair code from ZTE, then enter it at the join prompt.
+ascdemo join --controller https://192.168.1.20:8443 --pin CONTROLLER_PIN --name Bphone-demo-storage
+ascdemo storage-init --host 192.168.1.21 --quota 268435456 --reserve 67108864
+ascdemo run-node
+```
+
+Storage setup prints volume ID, Storage pin and tested capabilities. On ZTE owner
+terminal, use `ascdemo nodes` for enrolled node IDs. Approve each with its exact
+volume ID/pin and a physical domain label (e.g. zte-phone / bphone-phone):
+
+```sh
+ascdemo approve --node-id NODE_ID --volume-id VOLUME_ID --origin https://192.168.1.21:9443 --pin STORAGE_PIN --domain bphone-phone
+```
+
+Repeat approval for the ZTE storage endpoint with domain zte-phone. Two volumes on
+one phone must share the same label. Actual SD use is optional: only a NEW empty
+subdirectory inside an already accessible Termux SD app-folder may be selected via
+`storage-init --kind termux_sd --root APPROVED_EMPTY_APP_FOLDER ...`; do not use
+shared media/photo folders or existing data. Internal default uses node/data only.
+No SD permission changes, writes outside approval, formatting or SAF promise.
+
+Use a small disposable file available to Termux; never important/private files:
+
+```sh
+ascdemo upload "$HOME/demo-input.txt" demo/input.txt --key unique-demo-upload-001
+ascdemo files
+ascdemo replicas FILE_ID
+ascdemo download FILE_ID "$HOME/new-demo-output.txt"
+sha256sum "$HOME/demo-input.txt" "$HOME/new-demo-output.txt"
+```
+
+Success reports protected=true only after two verified available physical domains.
+Incomplete replication returns exit 4; retry the same key/file, retain state.
+The output filename must be new. When one node stops, download may use the surviving
+copy while Controller is up; new uploads need two eligible phones. Stop processes
+with Ctrl+C in each foreground terminal; stop node agents, then Controller, before
+backup/upgrade. No boot registration or automatic restart/failover is installed.

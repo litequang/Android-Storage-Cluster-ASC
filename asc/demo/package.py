@@ -5,7 +5,7 @@ import io
 import json
 from pathlib import Path, PurePosixPath
 import tarfile
-from . import VERSION, CAPABILITIES
+from . import VERSION, CAPABILITIES, STATE_FORMATS
 
 
 def digest(data):
@@ -64,7 +64,7 @@ def build(source, output):
             raise ValueError('unsafe package source')
         files[name] = p.read_bytes()
     body = {'format': 1, 'version': VERSION, 'capabilities': CAPABILITIES,
-            'state_formats': {'demo': 1, 'registry': 4, 'manifest': 1, 'config': 1, 'wire': 1},
+            'state_formats': STATE_FORMATS,
             'files': {name: digest(data) for name, data in files.items()}}
     manifest = dict(body, release_id=digest(encoded(body)))
     files['release.json'] = encoded(manifest) + b'\n'

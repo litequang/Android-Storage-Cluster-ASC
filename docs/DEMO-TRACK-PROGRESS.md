@@ -22,15 +22,15 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | Checkpoint | Actual state |
 |---|---|
 | DEMO.0 | PUSHED/REMOTE VERIFIED: 2b877ff6f4312110447e817210815794b2f84d87 |
-| DEMO.1 | Installer preview targeted checks PASS; publication follows final review |
-| DEMO.2 | NOT STARTED |
+| DEMO.1 | PUSHED/REMOTE VERIFIED: 789ea8f9675c3339287eace1486126bd886c17e3 |
+| DEMO.2 | LAN implementation/fault checks complete; final docs/secret review then publish |
 | DEMO.3 | NOT STARTED |
 | DEMO.4 | Deferred behind initial CLI package / owner pilot; optional UI |
 | Demo source-ready | NOT QUALIFIED; Android runtime NOT TESTED |
 
 ## Next action
 
-Publish/remote-verify DEMO.1, then implement DEMO.2 LAN runtime/CLI. Reuse existing Core functions; do not enable Raft/GC or change
+Publish/remote-verify DEMO.2, then implement DEMO.3 upgrade/backup/rollback, final package and full source qualification. Reuse existing Core functions; do not enable Raft/GC or change
 Core guards. Read DEMO-TRACK-PLAN for architecture, risk and upgrade contract.
 Each checkpoint must record changed files, exact actual tests/results, hash/push
 verification, current functionality, limits, rollback and short usage. Package
@@ -65,3 +65,29 @@ Installer preview archive SHA-256:
 `65e8dd503bebbf93c1d4efe3805e67bc120974e80de29411a30057f119eaa14f`.
 77 public files; package checksum PASS from releases/ directory; package members
 reviewed for private paths, links/special entries and credential material.
+
+## DEMO.2 evidence / continuation
+
+New source asc/demo/state.py and lan.py; expanded CLI/package state contract.
+New tests/test_demo_lan.py; Core sources/tests unchanged. CODEMAP, architecture,
+ADR-055, protocol/data/security/troubleshooting/changelog/QuickStart updated.
+Actual targeted commands (activated Python 3.13.5):
+- `python -m unittest tests.test_demo_lan tests.test_demo_installer
+  tests.test_distributed -v`: 20 PASS / 0 skips (54.564s), including 15 unchanged
+  distributed regressions.
+- Final Demo-only run includes 3 LAN + 3 installer cases after guard refinements.
+  6 PASS / 0 skips in 19.613s (demo2-six.log, Linux synthetic).
+
+Actual subprocesses use separate fake Android HOME/properties and pinned HTTPS
+loopback sockets, real file bodies/SHA and two distinct synthetic phone roots; ZTE
+cohosts Controller/node in separate subhomes. Tested: two physical copies, same-key
+retry, stopped-node download, preserved existing output, degraded count, no new row
+when only one eligible domain; same-domain identities, missing actual volume,
+double-copy quota refusal, wrong pin, owner-token isolation, blocked admin grant/
+policy/GC surfaces, Controller loss rejecting a previously issued actual node grant.
+Future schema/consensus state, wildcard/public binds, M51 and unknown runtime
+refused without identity recreation. No physical object GC, policy reduction or
+Raft runtime launched. Rollback: Ctrl+C, retain complete Demo state and matching
+release; no schema change. Old installer preview remains immutable, intentionally
+has no LAN capability. Final owner package waits for DEMO.3/full tests. Android
+runtime/real SD/background/power-cut remain NOT TESTED.
