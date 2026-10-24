@@ -300,3 +300,11 @@ document, authority, time-dependent evidence or grant is cached. Changed bytes
 validate again, including history/materialization checks. All other runtime
 validation, digest verification, fresh quorum/nonce and streamed-proof gates remain
 per-operation. Callback/local time budgets are unchanged.
+
+## Demo Track immutable installer boundary
+DEMO.1 installs a public source-only release under a dedicated private code prefix;
+private Core/Demo state is never adopted or initialized by installation. A content
+SHA identifies each release, with a strictly verified inventory. The stable launcher
+verifies bytes with stdlib before importing release code and runs Python without
+bytecode writes. Explicit stopped upgrades are deferred to DEMO.3. No new network
+runtime is delivered by the installer preview.

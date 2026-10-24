@@ -353,3 +353,11 @@ Linux 3C.5 structural-validation reuse is memory-only: two successfully validate
 exact immutable canonical Catalog byte strings, each <=2 MiB. Native JSON type
 checks avoid representation aliases; caller dictionaries and failed inputs are
 not cached. No persisted schema, receipt, manifest, journal or authority change.
+
+## Demo source package format 1 (DEMO.1)
+`release.json` records format=1, version, capabilities, exact state_formats, a mapping
+of relative public source paths to SHA-256, and release_id=SHA256(canonical sorted
+compact JSON of every field except release_id). No links/special/unlisted/missing
+files are accepted. Prefix install.json format=1 selects releases/<release_id>;
+source and launcher are exclusive-create/verify-on-rerun. No private identity/schema
+is created or migrated by install. Preview capability is installer only.

@@ -306,3 +306,12 @@ Mutation, history/hash/materialization mismatches and invalid Python type aliase
 must fail. Runtime identity/extensions, hashes, quorum, term, references, streamed
 survivors and final nonce checks still run. No time budget or real-device lock is
 relaxed to obtain physical PASS.
+
+## Demo installer preview
+Use the archive SHA from a trusted verified checkpoint before extraction. A self-
+contained manifest detects corruption but is not a publisher signature. Installer
+checks existing device/M51/unknown/dependency guards before any writes; no pkg or
+system changes. Source/private paths stay in dedicated private HOME subdirectories
+without symlinks. A mismatched existing source/launcher is preserved and refused.
+Packages contain allowlisted public source only; inspect unpacked files before Git
+publication. No cluster-ready or Android-runtime claim follows installer tests.

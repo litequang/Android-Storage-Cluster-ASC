@@ -279,3 +279,9 @@
 - DEMO.0: audit/reuse plan and upgrade contract on feature/android-demo-alpha from
   acea2ae, with account-independent progress. No runtime code/device/GC unlock;
   preserve Core branch, source, tests and historical qualification.
+
+### Demo Track DEMO.1 — installer preview
+Separate guarded Android preflight, immutable source-only package with per-file and
+archive SHA-256, read-only dry-run and state-preserving rerun. Stable launcher verifies
+before import and disables bytecode. Linux synthetic qualification only; no LAN
+cluster/runtime/upgrade readiness yet. Existing Core installer/guards unchanged.

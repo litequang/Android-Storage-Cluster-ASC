@@ -133,3 +133,6 @@ failover*.json
 bootstrap*.json
 raft-state/
 *.enrolled
+
+# Deliberately public source-only Demo installer preview (review unpacked contents).
+!/releases/asc-demo-alpha-installer-0.1.0.tar.gz

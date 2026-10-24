@@ -334,3 +334,10 @@ Branch `feature/android-demo-alpha` from acea2ae. Audit/reuse boundaries, staged
 checkpoint contract and upgrade design: DEMO-TRACK-PLAN.md; durable current handoff:
 DEMO-TRACK-PROGRESS.md. No Demo implementation at DEMO.0. Reuse single-writer
 Registry/CatalogService/StorageRuntime and existing guards; preserve all Core paths.
+
+## Android Demo installer (DEMO.1)
+- `asc/demo/installer.py`: read-only device/dependency preflight, private path checks, immutable source installation, separately verified launcher; no Core state adoption.
+- `asc/demo/package.py`: deterministic public-source allowlist archive, per-file inventory/content SHA and release identity verification.
+- `asc/demo/cli.py`, `scripts/demo-alpha.sh`: separate guarded Demo entry point; installer/preflight only at this checkpoint.
+- `tests/test_demo_installer.py`: extracted package execution, deterministic checksums/tampering, dry-run/rerun/state retention, dependency/M51/unknown/unmarked/symlink refusal.
+- `docs/DEMO-QUICKSTART.md`, `releases/`: owner installer preview and adjacent checksum.

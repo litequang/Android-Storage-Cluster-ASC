@@ -321,3 +321,12 @@ reprepare stale exact plans and obtain new proofs, preserving the 10s callback a
 250ms local budgets. Never clear history or extend freshness limits to get PASS.
 Synthetic-only pause/crash/stack controls live in tests/gc_fixture.py, not runtime
 config or product endpoints.
+
+## Demo installer preview refusal
+Run `sh scripts/demo-alpha.sh preflight` for read-only dependency/device/SD status.
+Missing or non-working OpenSSL/Python/pkg requires owner review/manual preparation;
+no automatic installation occurs. Protected/unknown devices have no override.
+Checksum, existing unmarked prefix, modified source or symlink refusal means stop
+and preserve directories; do not delete identities or overwrite source. An exact
+package rerun resumes a partial code install. Different releases need a later
+explicit stopped upgrade, never an installer overwrite.
