@@ -37,6 +37,20 @@ use copy-before-retirement and current quorum/term fencing. No 3D, Dashboard,
 phone/M51/production or voter/membership change. Earlier phase scope below is
 historical and does not cancel this explicitly authorized Phase 3C task.
 
+## Phase 3C.5 completed handoff — Linux synthetic only
+
+Phase 3C is ACCEPTED for Linux x86_64 isolated synthetic qualification. Final
+source/tests: `8b679bc42077ab68f6bb00063f13e744fa171258`; fresh full 208 Python
+PASS (0 skips), all mandatory legacy/new physical faults, 11 uncached Go tests,
+vet/module verification and Linux/Windows/Android builds PASS (cross-builds only
+for Windows/Android). No source/test changes after the successful final run.
+After the mandatory ordered reads, read PHASE3C-PLAN, PHASE3C-PROGRESS and
+PHASE3C-ACCEPTANCE. Final docs-only reporting commit is identified by Git history.
+No unfinished mandatory Phase 3C checkpoint remains. Fetch/verify WIP and preserve
+local work before any later explicit task. Ordinary runtime issues no GC capability
+or executor; real-device/Android/production GC remains locked. No 3D/Dashboard,
+phone/M51/production or voter change is authorized by this completed handoff.
+
 ## Phase 3B handoff — v0.10.0
 
 After the mandatory ordered reads, read `docs/PHASE3A-ACCEPTANCE.md`,

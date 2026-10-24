@@ -1,4 +1,4 @@
-# ASC CODEMAP — v0.10.0 Phase 3B Cloud simulation / preserved default boundaries
+# ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
 ## Phase 2B — Windows development qualified
 
@@ -303,7 +303,7 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
 
 - 3C.5a `tests/test_consensus.py` synthetic metadata launcher supplies its explicitly permitted fake profile on Windows as well as Linux. No-config subprocess must reach the unchanged attached-registry no-fallback guard; all original assertions and separate M51/Android guard tests remain.
 
-- Phase 3C qualification/remaining physical gates: PHASE3C-ACCEPTANCE.md; current status NOT ACCEPTED. PHASE3C-PROGRESS records independently verified checkpoint hashes and Windows fixture repair provenance.
+- Phase 3C final qualification: PHASE3C-ACCEPTANCE.md; ACCEPTED for Linux x86_64 synthetic only. PHASE3C-PROGRESS records source 8b679bc, verified checkpoints and retained Windows provenance; no real-device or ordinary-runtime GC enable.
 
 - 3C.5b `GCExecution._prove/_recheck` binds an ephemeral complete graph SHA across network proof and final CAS, including survivor pinned endpoints/approvals and every reference. New race tests change a survivor pin or introduce a pin during streaming; old evidence must fail closed with stale_gc_proof.
 
@@ -311,7 +311,7 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
 
 - `asc.client.request_json` permits only fixed GC error labels for actionable retries, retaining unknown-text redaction. GC fault harness retries stale plan/proof with fresh exact confirmation/nonce on the same retirement/job, and accepts safe client-level lost-ACK recovery only after the actual drop marker is consumed.
 
-- Final hardened Windows gate on 895e5bb: 203 Python OK (189 PASS / 14 platform skips), all legacy/replication/GC authorization faults PASS; Go/vet/module/build PASS. PHASE3C-ACCEPTANCE and PROGRESS retain Linux physical qualification as NOT ACCEPTED and provide Cloud continuation.
+- Final hardened Windows gate on 895e5bb: 203 Python OK (189 PASS / 14 platform skips), all legacy/replication/GC authorization faults PASS; Go/vet/module/build PASS. That Windows checkpoint left Linux physical qualification pending; the later Linux result below supersedes that historical status.
 
 - Linux 3C.5: `failover.state._validate_catalog` reuses only successful structural
   Catalog validation for two exact immutable JSON byte strings (each <=2 MiB).
@@ -322,3 +322,8 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   `gc_fixture` supplies private synthetic pause/crash hooks and stack diagnostics.
   `test_gc_linux_faults` exercises real TLS boundaries, partitions/takeover,
   delayed replies, process death/journal recovery, references and cluster replay.
+
+- Final 3C.5e: frozen source/tests 8b679bc, fresh full **208 Python PASS / 0 SKIP**,
+  all 39 legacy + 3 replication + 3 actual GC authorization + 8 Linux physical
+  groups PASS. Fresh uncached Go 11 tests/vet/module/build PASS. Physical executor
+  remains synthetic-only/default absent; Windows/Android outputs compile-only.

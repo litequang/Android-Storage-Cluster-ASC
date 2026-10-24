@@ -227,7 +227,7 @@
   product platform/device guards; reject null node mutation replay IDs. Exact
   evidence/remaining platform limits: PHASE3B-ACCEPTANCE.md.
 
-## Phase 3C development — not accepted
+## Phase 3C — Linux synthetic qualification accepted
 
 - 3C.1: explicit bounded replication extension, owner replay-safe policy count
   transitions 1/2/3 and reconciliation using existing independent COPY/proof jobs.
@@ -265,3 +265,11 @@
   mutation/history checks and all current authority/physical-proof gates. Add
   synthetic-only paused TLS/crash/journal/replay/reference fault qualification;
   runtime GC/device locks and destructive freshness budgets remain unchanged.
+
+- 3C.5e final Linux qualification on frozen source 8b679bc: **208 Python PASS,
+  0 SKIP/FAIL/ERROR, 1336.964s**; all 39 prior faults, 3 replication, 3 actual
+  GC authorization and 8 Linux physical groups PASS. Fresh Go 11 uncached tests,
+  vet/module verification and Linux/Windows/Android builds PASS; cross-builds are
+  compile-only. Ordinary/runtime/real-device GC remains locked, with no production,
+  Android, hardware power-cut, Phase 3D or Dashboard qualification/deployment.
+  Source version remains 0.10.0 development; no release tag or installer change.

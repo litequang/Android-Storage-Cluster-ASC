@@ -4,51 +4,62 @@ Updated: 2026-10-24 (Asia/Saigon).
 Branch: `wip/phase2a-raft-qualification`.
 Base: `b1b46e527826617748a8bc68795259060e12d705`.
 
-## Current Linux 3C.5 continuation
+## Current handoff — Phase 3C ACCEPTED for Linux synthetic qualification
 
-Fetched and fast-forwarded to owner-verified `8d5cd7d75ef0113e417b86940c0ad5d2ea2ccaa1`;
-working tree initially clean after preserving the previous Cloud handoff drafts in
-an explicit local stash and `/workspace/work/phase3c/paused-handoff`. No reset,
-main merge, force push, dropped local work, system installation or proxy change.
-Origin's fetch mapping only tracks main; WIP was fetched explicitly into its own
-remote-tracking ref. Inherited network policy snapshot is unrestricted; actual
-GitHub fetch/advertised ref succeeded. Existing Cloud activation is unchanged.
+**All mandatory Phase 3C work is complete for Linux x86_64 isolated synthetic
+qualification.** Starting HEAD `8d5cd7d75ef0113e417b86940c0ad5d2ea2ccaa1` was
+fetched and fast-forwarded; previous Cloud draft documents were preserved in a
+local stash and `/workspace/work/phase3c/paused-handoff`, with no reset/discard.
+WIP was fetched explicitly because origin's default fetch mapping only tracks main.
 
-3C.5d targeted qualification is COMPLETE; publication follows this review. Runtime-only change reuses successful pure
-structural validation for two exact immutable native-JSON Catalog byte strings;
-it does not cache authority or relax any quorum/proof/freshness/device guard.
-Synthetic-only fixture controls add actual pause/crash and response evidence.
+3C.5d source/tests **8b679bc42077ab68f6bb00063f13e744fa171258** were pushed
+normally and independently matched against GitHub, with a clean tree before the
+final run. No source/test changes during or after that successful full run; 3C.5e
+updates reporting documents only. Its own hash is identified by Git log/final task
+report after remote verification.
 
-- `python -B -m unittest tests.test_runtime_validation tests.test_gc_authorization tests.test_replication tests.test_failover.RuntimeStateTests -v`:
-  **45 PASS, 10.566s**.
-- `python -B -m unittest tests.test_gc_sandbox tests.test_gc_authorization tests.test_gc_faults -v`:
-  **28 PASS, 189.338s**. Actual Linux network-authorized unlink, a genuinely lost
-  successful TLS ACK, same-job journal replay and old-permit/quorum denial PASS.
-- Expanded matrix first completed run: **2 tests, 1 PASS / 1 FAIL, 563.336s**.
-  Reference/snapshot/backup/version/trash replay case PASS. The other case passed
-  real quorum, term and delayed-final-reply gates but a stale attempt was denied
-  before the requested crash hook. The unconsumed marker correctly FAILED the
-  test; this run is not overall PASS. Bounded fresh-permit retries now still require
-  actual process exit 91, consumed hook, correct journal and byte state.
-- Corrected boundary-only command:
-  `python -B -m unittest tests.test_gc_linux_faults.LinuxGCPhysicalTests.test_paused_quorum_term_crashes_and_durable_whole_cluster_replay -v`:
-  **1 PASS, 503.590s**, gates 01-05: actual partition/new term/paused successful
-  receipt, real exits 91 before/after unlink, durable journal replay and actual Go
-  snapshot/all-process replay with readable survivors. Reference-only final target:
-  `python -B -m unittest tests.test_gc_linux_faults.LinuxGCPhysicalTests.test_actual_last_copy_corruption_and_new_snapshot_backup_version_pins -v`:
-  **1 PASS, 313.247s**, gates 06-08. Both expanded Linux cases now independently
-  PASS on the final source; the earlier combined failed command remains failed
-  evidence and is not relabeled.
-- Earlier competing baseline/diagnostic runs were interrupted without a qualifying
-  result after repeated 1024-event structural validation/CPU contention. An initial
-  new-test import also accidentally discovered a legacy testcase; interrupted and
-  changed to module-based helper reuse. No test/assertion/device/time guard weakened.
+| Final check on 8b679bc | Actual result |
+|---|---|
+| Full Python | **208 PASS / 0 SKIP / 0 FAIL / 0 ERROR, 1336.964s** |
+| Legacy 3A / 2B / 3B faults | **12/12 + 20/20 + 7/7 PASS** |
+| Existing 3C replication / actual GC authorization | **3/3 + 3/3 PASS** |
+| New Linux physical boundary/crash/reference/replay | **8/8 PASS** |
+| Go module verification / vet | PASS |
+| Uncached Go tests | **11 top-level PASS**, consensus 18.197s / launcher 0.004s |
+| Linux amd64 / Windows amd64 / Android arm64 builds | PASS; Windows/Android compile-only |
 
-Next: commit/push/remote-verify 3C.5d after targeted PASS and secret review. Then
-run 3C.5e fresh final full Python/Go/fault regression and applicable builds, with
-source/tests frozen at that published hash; only reporting docs change afterward. Current Python
-discovery: 208 tests. Phase 3C remains **NOT ACCEPTED** until all required gates
-and final regressions actually PASS. Raw logs stay in `/workspace/work/phase3c/`.
+Targeted qualification: 45 validation/GC/replication/runtime PASS (10.566s),
+28 sandbox/authorization/actual Go-TLS PASS (189.338s), boundary-only 1 PASS
+(503.590s), reference-only 1 PASS (313.247s). Exact commands, all gates, limits,
+intermediate failures and rollback: [PHASE3C-ACCEPTANCE.md](PHASE3C-ACCEPTANCE.md).
+The first expanded command (2 tests / 1 FAIL / 563.336s) remains FAILED evidence:
+a stale attempt was denied before its crash hook. Fresh-proof retries still demand
+actual exit 91, consumed markers and journal/byte state. Earlier interrupted
+competing/duplicate-import diagnostics contribute no PASS. No gate was weakened.
+
+Linux adds pure exact-byte structural-validation reuse (two admitted <=2 MiB
+Catalogs) and synthetic-only pause/crash/response diagnostics. No authority/proof
+cache, schema/membership change or real-device enable. Normal runtime has no GC
+capabilities/executor; product Linux/Android entrypoint/device locks remain intact.
+All actual unlinks were on newly issued synthetic temporary arenas. No M51,
+real phone, production, user data, proxy bypass, installation, main merge or force
+push. Source remains development version 0.10.0; this is qualification, not a tag,
+production release or deployment.
+
+**Next action:** no remaining Phase 3C checkpoint. Fetch/verify the final WIP
+reporting commit before resuming on another account. Await a separate explicit task
+for later platform/device qualification or Phase 3D; do not start Dashboard/3D or
+unlock real-device GC. Read AGENTS in order, PLAN, this PROGRESS and ACCEPTANCE.
+Private raw logs/binaries/configs/keys/volumes are outside Git under
+`/workspace/work/phase3c/` and disposable test directories; use the recorded
+commands to reproduce, never transfer production state. Rollback requires complete
+matching private state AND byte backups; never clear fences/journals or reset voters.
+
+Final reporting review: all 136 tracked working/index paths and exact staged
+blobs reviewed, 0 findings; all 92 Python files parse; 9 Markdown reporting files
+only, local links/fences/whitespace PASS. Source/tests/Go remain byte-identical to
+the fully tested 8b679bc tree. Publication/remote verification follows this review;
+report commit is available through Git history/final response.
 
 ## Original Cloud session verification (historical)
 
@@ -77,12 +88,12 @@ and final regressions actually PASS. Raw logs stay in `/workspace/work/phase3c/`
 | 3C.5a | PUSH VERIFIED `8d45b2637801a64ae5fa67cd3cb5a4c7295010f8`; 11 targeted consensus/runtime/device safety PASS (27.498s) |
 | 3C.5b | PUSH VERIFIED `895e5bb26bf79ac36bbf85e22d82babfaac84b55`; 53 targeted PASS + actual Go/TLS PASS (345.308s) |
 | 3C.5c | PUSH VERIFIED `8d5cd7d75ef0113e417b86940c0ad5d2ea2ccaa1`; Windows final reporting: 203 OK (189 PASS / 14 platform skips), 1008.998s; final report commit identified by Git log |
-| 3C.5d | Linux targeted COMPLETE: 45 unit/runtime + 28 sandbox/actual network + 1 boundary/crash + 1 reference/replay PASS; source commit identified in Git log |
-| 3C.5e | Fresh final full regression NOT STARTED; begin only after 3C.5d push/remote verification |
-| 3C.5 | Linux physical gates PASS in targeted runs; final fresh full regression pending |
-| Full regression / acceptance | Hardened source 895e5bb: 203 OK / 14 platform skips; Go/vet/module/build PASS. Phase 3C NOT ACCEPTED: Linux physical gates remain |
+| 3C.5d | PUSH VERIFIED `8b679bc42077ab68f6bb00063f13e744fa171258`; Linux targeted COMPLETE: 45 unit/runtime + 28 sandbox/actual network + 1 boundary/crash + 1 reference/replay PASS; source commit identified in Git log |
+| 3C.5e | Full 208 Python PASS (0 skips), all fault groups and Go/vet/module/build PASS; reporting commit identified in Git log |
+| 3C.5 | COMPLETE / ACCEPTED — Linux synthetic only; normal runtime and real-device GC remain locked |
+| Full regression / acceptance | Source 8b679bc: fresh Linux 208 PASS / 0 SKIP, all mandatory faults and Go/vet/module/build PASS; ACCEPTED for Linux synthetic qualification |
 
-## Current Windows continuation
+## Windows continuation (historical)
 
 - Fetched origin and verified `c909e1e70a4ce7a01674b6caaed1b3b4e6574a65` as remote
   WIP HEAD and 3C.4b. Its earlier publication-pending label is corrected above.

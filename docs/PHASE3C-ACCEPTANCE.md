@@ -1,41 +1,49 @@
-# Phase 3C qualification - Linux continuation and retained Windows evidence
+# Phase 3C acceptance — Linux Cloud synthetic qualification
 
+Status: **ACCEPTED — Linux x86_64 isolated synthetic environment only**.
+Date: 2026-10-24 (Asia/Saigon). All mandatory checks in this scope PASS.
+Branch: `wip/phase2a-raft-qualification`.
+Starting verified HEAD: `8d5cd7d75ef0113e417b86940c0ad5d2ea2ccaa1`.
+Final source/tests: **8b679bc42077ab68f6bb00063f13e744fa171258** (3C.5d),
+normally pushed and independently remote-verified before final regression.
+The following 3C.5e reporting commit changes documents only; identify its own SHA
+from Git history/final task report. Source/tests stayed frozen throughout the
+successful final full run. No Phase 3C.0–3C.4c reimplementation.
 
-## Current Linux qualification (3C.5d targeted PASS; full regression pending; NOT ACCEPTED)
+## Fresh final checks on 8b679bc
 
-Start: owner-verified `8d5cd7d75ef0113e417b86940c0ad5d2ea2ccaa1`, fetched and
-fast-forwarded on the same WIP branch with previous local handoff drafts preserved.
-This session uses existing Python 3.13.5 / Go 1.27.3 Linux amd64 toolchain and fresh
-synthetic temporary volumes only. No phone, production, normal-runtime GC enable,
-proxy bypass or platform/freshness guard change.
+All results here are new Codex-run Linux checks, not reused Windows/owner PASS.
+Existing Python 3.13.5, Go 1.27.3 linux/amd64, OpenSSL and Cloud activation were
+used. No installation, proxy/TLS bypass, phone/M51/production access or normal
+runtime GC unlock. Previous local handoff drafts were preserved in a local stash
+and private scratch copy before fast-forward; no reset or discarded user work.
 
-New exact-byte structural-validation checks: 45 PASS / 10.566s. Linux sandbox,
-authorization and actual Go/TLS GC suite: **28 PASS / 189.338s**, including real
-unlink followed by a lost successful TLS ACK and idempotent same-job replay. This
-is fresh Linux evidence, distinct from the Windows report below.
+| Exact command / check | Actual final result |
+|---|---|
+| `python -B -m unittest discover -s tests -v` | **208 PASS / 0 SKIP / 0 FAIL / 0 ERROR, 1336.964s** |
+| Retained Phase 3A / 2B / 3B faults | **12/12 + 20/20 + 7/7 PASS** |
+| Existing Phase 3C replication faults | **3/3 PASS** |
+| Actual Go/TLS GC authorization groups | **3/3 PASS**, including real unlink/lost successful ACK/same-job replay |
+| New Linux physical-boundary fault groups | **8/8 PASS**, detailed below |
+| `go mod verify` | All modules verified; PASS |
+| `go vet ./...` | PASS |
+| `go test -count=1 -v -timeout 240s ./...` | **11 top-level tests PASS**, uncached; consensus 18.197s, launcher 0.004s |
+| Linux amd64 build | PASS; CGO_ENABLED=0 |
+| Windows amd64 / Android arm64 cross-builds | PASS; CGO_ENABLED=0; compile-only |
+| Python AST / links / whitespace / tracked+index secrets review | PASS; final publication review below |
 
-Expanded physical matrix first completed attempt: 2 tests / 1 PASS / 1 FAIL /
-563.336s. Actual missing/corrupt last survivor, new snapshot/backup pin during final
-pause, immutable versions/trash and snapshot/replay/restore case PASS. The second
-case passed real quorum/term/delayed-reply gates, then FAILED because an attempt
-was denied before the crash hook; Node crash was not observed. The corrected
-harness must obtain fresh proof and still prove actual exit 91/journal/byte state.
-The corrected boundary-only rerun is **1 PASS / 503.590s**, proving gates 01-05
-including actual Node/cohost exits 91 before/after unlink, durable journal recovery
-and real Go snapshot/all-process replay. Final reference-only target is **1 PASS / 313.247s**, gates 06-08.
-Interrupted earlier diagnostics/competing runs contribute no
-acceptance result. Complete fresh final Python/Go/build regression has not started.
+Linux ran all 11 existing physical sandbox cases, both new physical matrix cases,
+and the three POSIX installer cases skipped on Windows. No required test/gate was
+skipped, removed, weakened or supplied a fake success. Raw final logs remain
+outside Git: `/workspace/work/phase3c/linux-python-final.log`,
+`linux-go-final.log`, `linux-go-final-results.json`. Builds, private configs,
+keys/tokens, journals, bindings, manifests and bodies are not published.
 
-Pure structural Catalog validation reuse keys two exact immutable canonical JSON
-byte strings, validates native types and caches only success. It retains all
-mutation/history/materialization rejection, runtime/extension validation and fresh
-quorum/term/nonce/streamed-byte checks. No authorization, mutable document or
-physical proof is cached. Destructive budgets remain 10s callback / 250ms local.
+## Actual Linux fault evidence
 
-See PHASE3C-PROGRESS for exact targeted commands and current continuation. A future
-reporting checkpoint must replace this partial status only after fresh full PASS.
-
-### Linux targeted fault evidence (actual execution)
+All network/physical groups below also PASS inside the final 208-test run. Actual
+three-Go/three-Python cohosts, pinned TLS, new synthetic temporary volumes, original
+Storage Engine and real filesystem unlink/fsync/journal operations are used.
 
 | Gate | Evidence |
 |---|---|
@@ -49,22 +57,141 @@ reporting checkpoint must replace this partial status only after fresh full PASS
 | 07 All retained references | New real snapshot/backup pin during final pause denies unlink; versions, backup job and trash remain held |
 | 08 Backup/version replay | Actual Go snapshot/all-process restart retains manifest/pins; old TRASH version restores via retained snapshot into new version with exact served bytes |
 
-Gates 01-05: boundary-only target **1 PASS / 503.590s**. Gates 06-08:
-reference-only target **1 PASS / 313.247s**. Commands are preserved in PROGRESS;
-raw logs: linux-boundary-crash-retest.log and linux-reference-final-targeted.log.
-These are separate successful commands; the earlier two-test failed attempt remains
-recorded above. Every denial requires actual Storage response evidence; a client
-timeout is insufficient. Every crash requires process exit 91 and the expected
-journal/byte state. No fake callback, clock or success is used in these gates.
 
-Structural validation and existing GC/replication/runtime target:
-`python -B -m unittest tests.test_runtime_validation tests.test_gc_authorization tests.test_replication tests.test_failover.RuntimeStateTests -v`:
-**45 PASS / 10.566s**. Tracked/index review: **136 paths, 0 findings**; all
-**92 Python files parse** using Python-compatible UTF-8 BOM decoding; phase links
-and whitespace PASS. Checkpoint publication precedes the final full run. No Phase
-3C acceptance claim yet; full Python/Go/vet/module/build checks remain outstanding.
+Separate targeted commands before publication:
+
+- `python -B -m unittest tests.test_runtime_validation tests.test_gc_authorization tests.test_replication tests.test_failover.RuntimeStateTests -v`: **45 PASS, 10.566s**.
+- `python -B -m unittest tests.test_gc_sandbox tests.test_gc_authorization tests.test_gc_faults -v`: **28 PASS, 189.338s**.
+- `python -B -m unittest tests.test_gc_linux_faults.LinuxGCPhysicalTests.test_paused_quorum_term_crashes_and_durable_whole_cluster_replay -v`: **1 PASS, 503.590s**, groups 01-05.
+- `python -B -m unittest tests.test_gc_linux_faults.LinuxGCPhysicalTests.test_actual_last_copy_corruption_and_new_snapshot_backup_version_pins -v`: **1 PASS, 313.247s**, groups 06-08.
+
+Every negative boundary requires an actual rejected Storage response and retained
+bytes; a client timeout alone is insufficient. Every crash requires consumed fault
+markers, actual process exit 91 and the correct journal/byte state. Retry obtains
+new current proof/permit on the same immutable job; a denied attempt cannot count
+as a crash, unlink or lost-ACK success. The delayed successful reply uses real
+elapsed time, not a mocked clock. Histories age through 1024 ordinary POLICY events
+and actual quorum commit, never manual removal of retained references.
+
+## Linux findings and intermediate runs
+
+Earlier competing baseline/diagnostic runs were interrupted without qualification
+when repeated full structural validation of the same 1024-event Catalog produced
+CPU contention/stale plans. An initial new-test import also discovered an unwanted
+legacy testcase; it was interrupted and changed to module-based helper reuse.
+Those incomplete runs contribute no PASS or final acceptance evidence.
+
+The completed first expanded matrix was **2 tests: 1 PASS / 1 FAIL, 563.336s**.
+Reference/version/backup replay passed. The boundary case passed quorum/term/slow
+reply checks but correctly FAILED because a stale request was denied before its
+crash hook: the marker remained and Node exit 91 was not observed. The fixture now
+bounds fresh-permit retries while retaining actual rejection, crash, journal and
+byte assertions. Corrected separate targets and the fresh combined full suite
+PASS as recorded above. The earlier failed command is not relabeled PASS.
+
+The only product change for 3C.5d is bounded reuse of successful pure structural
+Catalog validation for two exact immutable canonical JSON byte strings (each
+<=2 MiB). Native-type checks prevent tuples/non-string keys aliasing valid JSON.
+No mutable caller object or failed validation is cached. Mutation, history digest,
+materialization and invalid-type rejection have new regression coverage. Runtime
+identity/extensions, hashes, quorum, term, references, nonce receipts and freshly
+streamed survivor checks still run. There is no authorization/proof cache or
+changed schema, and no destructive time budget/platform/device guard was relaxed.
+
+## Limits and rollback
+
+This qualification proves the tested Linux synthetic process/network/filesystem
+paths. It does not qualify Android, real phones/M51, production, SD/SAF/Doze,
+physical power cuts, Byzantine administrators/Controllers, hardware-independent
+disaster recovery or large-object performance. Synthetic approved failure domains
+share one host; software domain checks are not proof of independent physical disks.
+Fresh Windows execution of this later source was not performed; the retained
+Windows result below qualifies its own earlier hash. Cross-builds are compile-only.
+
+Normal Service issues no Controller capability; normal StorageRuntime has an empty
+executor map. Product failover entrypoint remains Windows-development-only; Linux
+cohosts use the explicitly synthetic test launcher. Physical GC requires issued
+fresh Linux x86 temporary-volume capabilities and explicit exact confirmation;
+existing populated/native volumes cannot be adopted. Real-device GC remains locked,
+with no normal CLI/config/env enable and no background GC. No membership/quorum,
+Phase 3D or Dashboard change/deployment occurred.
+
+A fresh actual-term quorum/nonce receipt authorizes the irreversible boundary, but
+network and filesystem are not one atomic transaction. A syscall already authorized
+cannot be recalled. The unchanged 10s callback and 250ms local budgets reject slow
+work; they do not provide instantaneous revocation/failure detection. Permanent
+retirement/reservation/survivor fences prevent new metadata relying on the target.
+The tests prove loss/term changes before the final callback and stale delayed reply
+denial; no nanosecond-atomic or real-device power-loss promise follows.
+
+Bounds remain 2 MiB runtime projection, 4096 permanent Go receipts and bounded
+replication/GC maps/journals. Exhaustion fails closed without evicting backups,
+reference history or authority. Base manifest/registry/wire schemas are unchanged.
+Rollback requires stopping/isolating all development processes and restoring
+complete matching private state/configs/keys/Raft witnesses/manifests/journals AND
+matching byte backups/source. Old metadata cannot recreate deleted bytes. Preserve
+newer state separately; never erase fences/journals, edit terms/schema or reset voters.
+
+## Changed paths for Linux qualification
+
+| Paths | Responsibility |
+|---|---|
+| `asc/failover/state.py` | Bounded exact-byte pure structural Catalog validation reuse |
+| `tests/test_runtime_validation.py` | Mutation/history/materialization/type/error cache safety |
+| `tests/gc_fixture.py`, `tests/test_gc_faults.py` | Test-only pause/crash/response diagnostics, shared helpers without duplicated testcases |
+| `tests/test_gc_linux_faults.py` | Actual TLS/quorum/term/unlink/crash/journal/reference/replay matrix |
+| AGENTS, README/README-VI, CODEMAP, roadmap, architecture/ADR/data/security/troubleshooting/changelog and 3C PLAN/PROGRESS/ACCEPTANCE | Scope, source routes, evidence, intermediate failures, limits, rollback and account-independent continuation |
+
+No Go source/module, original Engine, voter membership, persisted schema or ordinary
+runtime/device guards changed for this Linux continuation.
+
+## Linux reproduction and handoff
+
+Use the existing Cloud `source /workspace/asc-cloud/activate.sh`, or existing
+appropriate Python/Go/OpenSSL on another supported development host. No toolchain
+installation is part of this task. From the exact source commit:
+
+```sh
+python -B -m unittest tests.test_gc_sandbox tests.test_gc_authorization tests.test_gc_faults tests.test_gc_linux_faults -v
+python -B -m unittest discover -s tests -v
+cd consensus
+go mod verify
+go vet ./...
+go test -count=1 -v -timeout 240s ./...
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -buildvcs=false -o /workspace/work/phase3c/asc-phase3c-linux-amd64 ./cmd/asc-raft
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -trimpath -buildvcs=false -o /workspace/work/phase3c/asc-phase3c-windows-amd64.exe ./cmd/asc-raft
+CGO_ENABLED=0 GOOS=android GOARCH=arm64 go build -trimpath -buildvcs=false -o /workspace/work/phase3c/asc-phase3c-android-arm64 ./cmd/asc-raft
+```
+
+Output paths above are Cloud-private scratch paths; on another development host,
+choose an existing private output directory outside source. Never execute Android
+outputs on a device in this task. Full source is frozen at 8b679bc; only reporting
+documents change for 3C.5e. No unfinished mandatory Phase 3C checkpoint remains.
+Future Windows/device qualification or Phase 3D needs its own explicit task; do not
+start it or enable real-device GC from this acceptance.
+
+## Final Linux publication review
+
+- Reviewed working/index content for all **136 tracked paths**, including the new
+  tests, with **0 private artifact/key/credential findings**. Final reporting stages
+  exactly **9 Markdown files**; no runtime state, logs or binaries are tracked.
+- All **92 Python files parse** using Python-compatible UTF-8 BOM decoding; changed
+  Markdown links/fences and working/staged whitespace checks PASS. Initial AST
+  tooling was corrected to decode inherited Windows BOMs; source was not rewritten.
+- `git diff HEAD -- asc tests consensus` is empty after the successful full run.
+  Final reports do not change the tested source. Both owner base 8d5cd7d and accepted
+  Phase 3B base b1b46e5 remain ancestors; the old local draft stash is retained.
+- Source 8b679bc was independently push/remote-verified before regression. Final
+  normal WIP push and remote SHA comparison follow this review; its reporting
+  commit SHA is supplied by Git log/final task response. No remaining test blocker
+  in this Linux synthetic scope; no main merge, force push, tag or deployment.
 
 ## Retained Windows evidence at 8d5cd7d (historical)
+
+The remaining text records the earlier Windows session. Its remaining/unrun and
+NOT ACCEPTED statements describe that past source/session, superseded by the
+successful Linux qualification above; they are retained as provenance.
+
 
 Status: **NOT ACCEPTED**. Checkpoint 3C.4c is implemented and published with
 Windows Controller/Storage authorization evidence. Final 3C.5 Linux physical

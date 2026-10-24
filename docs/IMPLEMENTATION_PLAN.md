@@ -58,9 +58,10 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
   Checkpoint contract and resume instructions in [PHASE3B-PLAN.md](PHASE3B-PLAN.md)
   and [PHASE3B-PROGRESS.md](PHASE3B-PROGRESS.md).
 - **Phase 3C — Dynamic Replication, Replica Reduction & Safe Garbage Collection**:
-  ACTIVE: owner-authorized isolated-test development; [plan](PHASE3C-PLAN.md) and
-  [progress](PHASE3C-PROGRESS.md). Physical GC stays off by default and locked
-  on real devices until separate qualification.
+  DONE for Linux x86_64 isolated synthetic qualification; [acceptance](PHASE3C-ACCEPTANCE.md),
+  [plan](PHASE3C-PLAN.md) and [progress](PHASE3C-PROGRESS.md). Fresh 208 Python / 11
+  Go tests, all required faults, vet/module/build PASS on 8b679bc. Physical GC stays
+  off by default and locked on real devices; no deployment/platform unlock.
 - **Phase 3D — External Backup & Disaster Recovery**: future, independent external
   copies and reviewed disaster recovery; in-cluster snapshots do not supply this.
 - **Phase 4 — ASC Drive Web/PWA and Android Quick Join**: future application and

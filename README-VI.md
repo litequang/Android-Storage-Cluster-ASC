@@ -1,5 +1,13 @@
 # ASC v0.10.0 — Node Scoring, Telemetry & Smart Placement
 
+Phase 3C đã **nghiệm thu Linux x86_64 synthetic** trên source `8b679bc`:
+**208 Python PASS, không skip**, toàn bộ fault gates và Go/vet/module/build PASS.
+Xem [nghiệm thu và giới hạn](docs/PHASE3C-ACCEPTANCE.md),
+[tiến độ/bàn giao](docs/PHASE3C-PROGRESS.md). Unlink chỉ chạy trong fixture với
+volume tạm tổng hợp được cấp capability riêng; runtime bình thường không có
+executor/capability hay cờ bật. GC vẫn khóa trên thiết bị thật, Android và production.
+Không có triển khai hay release mới; các kết quả giai đoạn trước bên dưới là lịch sử.
+
 Phase 3B đã nghiệm thu mô phỏng Linux Cloud; xem [kết quả](docs/PHASE3B-ACCEPTANCE.md).
 Kết quả Windows Phase 3A dưới đây được giữ làm lịch sử.
 

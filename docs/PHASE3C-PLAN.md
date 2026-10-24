@@ -1,7 +1,8 @@
 # Phase 3C plan / safety and continuation contract
 
-Status: 3C.5d Linux physical network/fault targets PASS; fresh final full
-Python/Go/build regression pending in 3C.5e. Phase 3C NOT ACCEPTED. Date: 2026-10-24 (Asia/Saigon).
+Status: all checkpoints complete; Phase 3C ACCEPTED for Linux x86_64 isolated
+synthetic qualification. Fresh 208 Python / 11 Go tests, all mandatory faults,
+vet/module/build PASS on 8b679bc; see PHASE3C-ACCEPTANCE.md. Date: 2026-10-24 (Asia/Saigon).
 Repository: litequang/Android-Storage-Cluster-ASC.
 Only branch: `wip/phase2a-raft-qualification`.
 Base: `b1b46e527826617748a8bc68795259060e12d705` (Phase 3B v0.10.0).

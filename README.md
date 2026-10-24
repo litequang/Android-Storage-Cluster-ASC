@@ -3,6 +3,17 @@
 Vietnamese project and historical setup guide: [README-VI.md](README-VI.md).
 Historical Phase 3A Windows evidence and limits: [PHASE3A-ACCEPTANCE.md](docs/PHASE3A-ACCEPTANCE.md).
 
+## Phase 3C Linux synthetic qualification
+
+Dynamic replication, copy-before-retirement and guarded GC are qualified on frozen
+source `8b679bc`: **208 Python tests PASS (0 skips)**, all mandatory faults and
+Go/vet/module/build PASS. Evidence, timing/rollback limits and handoff:
+[PHASE3C-ACCEPTANCE.md](docs/PHASE3C-ACCEPTANCE.md),
+[PHASE3C-PROGRESS.md](docs/PHASE3C-PROGRESS.md).
+Physical unlink runs only with issued fresh synthetic Linux temporary-volume
+capabilities. Ordinary runtime has no executor/capability or normal enable switch;
+real-device/Android/production GC remains locked. This is not a deployment or release.
+
 ## Phase 3A Windows development — version history and logical backups
 
 Use matching v0.9 source on every development Controller and retain complete
