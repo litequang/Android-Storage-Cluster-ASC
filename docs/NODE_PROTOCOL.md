@@ -305,3 +305,23 @@ TRASH/EXPIRED returns 409 version_not_live; owner restore uses fresh scoped proo
 snapshot_unverified_head rejects an in-flight head rather than omitting it.
 Physical delete/purge endpoints do not exist. Backup CLI commands use the same
 pinned owner client; explicit --request-id supports retry after lost response.
+
+## Phase 3B.1a Node Score contract (no API/placement change yet)
+
+Score schema 1 uses five observations, each exactly
+`{value, observed_at, source, samples}`. UNKNOWN is null/null/expected-source/0.
+Known values have integer UTC timestamps and positive sample counts. Finite raw
+ranges: capacity_ratio 0..1, reachable boolean, reliability 0..1, memory_mb
+0..1048576, thermal_c -40..150. No manufacturer/baseline input is accepted.
+Capacity/reachability source is controller-probe, reliability is
+controller-probe-history; memory/thermal are explicitly agent-runtime self-reports.
+
+Engine contract: capacity 30%, reachability 20%, observed probe reliability 30%,
+RAM 10%, thermal 10%. Normalize capacity/reliability linearly to 0..100, reachable
+true/false to 100/0, RAM linearly to 8192 MiB capped 100, thermal 100 at <=35C and
+0 at >=65C with linear interpolation. Freshness is 120 seconds, inclusive; future
+or older observations become UNKNOWN. Score is weighted mean over known weights,
+null when none known. Confidence is known weight percentage, with reliability
+weight multiplied by min(samples/10,1); reliability is separately reported as a
+probe-success percentage, never continuous uptime or disk durability. Report all
+component values/status/source/time/contribution. Scores confer no Raft authority.

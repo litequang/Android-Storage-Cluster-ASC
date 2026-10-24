@@ -19,8 +19,9 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 
 | Checkpoint | Actual state / evidence |
 |---|---|
-| 3B.0 | Plan/progress/roadmap prepared; documentation-only, no source behavior change; commit/push gate pending below |
-| 3B.1a–3B.5 | NOT STARTED |
+| 3B.0 | PUSH VERIFIED `2b3529db0f1374b1be20fc0b2121cf21f601eef2`; remote WIP equals local commit |
+| 3B.1a | Contract + 3 targeted tests PASS; publication pending |
+| 3B.1b–3B.5 | NOT STARTED |
 | Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
 
 3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
@@ -29,12 +30,8 @@ Publication verification is reported after push and recorded in the next update.
 
 ## Next action / resume
 
-1. Verify 3B.0 local commit against remote WIP (`git log`, `git ls-remote`). If
-   unsynchronized, finish publication before any source checkpoint.
-2. Implement 3B.1a contract/tests, run targeted checks, update this file and relevant
-   docs, review tracked/staged secrets, commit/push and verify remote.
-3. Follow PHASE3B-PLAN in order. Never skip a publication gate or claim Phase 3B
-   complete while any applicable test is failing/unrun.
+Finish 3B.1a publication/remote verification, then implement 3B.1b engine against
+NODE_PROTOCOL formula. Target: `python -B -m unittest tests.test_nodes -v`
+(3 PASS). No placement/API behavior change yet. Full phase regression remains pending.
 
-All telemetry/preferences/placement/reduction features are still unimplemented.
 No phone, M51, production, quorum/membership, physical GC or Phase 3C/3D work.

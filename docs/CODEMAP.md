@@ -189,3 +189,9 @@ Historical PySyncObj evidence below remains unchanged.
 - Final fresh gate: 122 Python tests OK (119 PASS / 3 POSIX skips), 12/12
   Phase 3A + 20/20 Phase 2B faults; Go/vet/build PASS. Exact reproduction,
   changed paths, bounded guarantees and rollback: PHASE3A-ACCEPTANCE.md.
+
+## Phase 3B checkpoints
+
+- `asc/nodes/scoring.py`: version-1 observation contract, bounded finite values,
+  explicit UNKNOWN/provenance and published weights; `tests/test_nodes.py` tests
+  malformed/boundary inputs. No score consumer or placement change in 3B.1a.
