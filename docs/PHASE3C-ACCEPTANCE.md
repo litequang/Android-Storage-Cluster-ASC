@@ -8,8 +8,9 @@ Branch: `wip/phase2a-raft-qualification`.
 Verified starting checkpoint: `c909e1e70a4ce7a01674b6caaed1b3b4e6574a65` (3C.4b).
 Published 3C.4c runtime source: `74bb6a90f2e4e04751b3edb83d60ac00807ab06f`.
 Prior full-run source/test commit: `8d45b2637801a64ae5fa67cd3cb5a4c7295010f8`.
-Latest 3C.5b proof-race hardening passes targeted checks; publication hash and
-fresh complete regression are recorded in the following report.
+Final hardened source/test commit: `895e5bb26bf79ac36bbf85e22d82babfaac84b55`
+(3C.5b). Targeted and full Windows checks PASS on that published hash. Linux physical
+qualification remains incomplete; Phase 3C is NOT ACCEPTED.
 
 ## Actual checks
 
@@ -17,21 +18,31 @@ All current results are new Codex-run Windows evidence, not reused Cloud/owner
 PASS. Existing Python 3.14.7, portable Go 1.27.3 and Git OpenSSL only. Process-local
 ASC_GO/PATH changes; no system installation, proxy/TLS bypass, phone or production.
 
-| Command | Result |
+| Command / final source | Actual result |
 |---|---|
-| `python -B -m unittest tests.test_gc_authorization -q` | 12 PASS, 9.466s |
-| `python -B -m unittest tests.test_gc_authorization tests.test_replication tests.test_gc_sandbox tests.test_storage tests.test_storage_cluster tests.test_distributed tests.test_failover.RuntimeStateTests -v` | 85 OK: 74 PASS / 11 existing Linux-only physical SKIP, 116.410s |
-| `python -B -m unittest tests.test_gc_faults -v` | 1 actual three-voter/TLS test PASS, 306.174s |
-| `python -B -m unittest discover -s tests -v` | Prior 8d45b26 run: 199 OK, 185 PASS / 14 SKIP, 1010.082s. Latest hardening requires a new full run |
+| `python -B -m unittest tests.test_gc_authorization tests.test_replication tests.test_failover.RuntimeStateTests tests.test_foundation tests.test_lifecycle.DeviceSafetyTests -q` | **53 PASS, 16.995s**; hardened source |
+| `python -B -m unittest tests.test_gc_faults -v` | **1 actual three-voter/TLS test PASS, 345.308s**; hardened source |
+| `python -B -m unittest discover -s tests -v` on **895e5bb** | **203 OK: 189 PASS / 14 platform SKIP, 0 FAIL/ERROR, 1008.998s** |
 | `go mod verify` | All modules verified |
 | `go vet ./...` | PASS |
-| `go test -count=1 -v -timeout 240s ./...` | 11 top-level tests PASS; consensus 22.494s, launcher 1.013s |
+| `go test -count=1 -v -timeout 240s ./...` | **11 top-level tests PASS**; consensus 22.494s, launcher 1.013s |
 | Windows AMD64 / Linux AMD64 / Android ARM64 builds | PASS; CGO_ENABLED=0, Linux/Android compile-only |
-| Python AST / tracked+staged secret review / whitespace | 90 Python files parse; 133 tracked/new working paths and 20 exact staged blobs reviewed, 0 secret/private artifact findings; whitespace PASS |
+| Python AST / tracked+staged secret review / whitespace | 90 Python files parse; 134 tracked paths and exact staged blobs reviewed with 0 findings; whitespace PASS |
+
+Final full source/tests remained frozen at 895e5bb. Only reporting docs changed
+afterward. Fourteen skips are **3 existing POSIX installer + 11 existing Linux-only
+physical sandbox tests**. No TLS, consensus, backup, distributed or Windows GC
+authorization test was skipped/weakened. The new GC matrix runs its Windows lock
+branch; its Linux physical unlink/lost-ACK branch remains separately unrun.
+
+Final full log contains all **12/12 3A + 20/20 2B + 7/7 3B + 3/3 existing 3C
+replication fault gates PASS**, plus all three new GC authorization milestone
+groups. These are Windows synthetic development results, not physical-GC acceptance.
 
 Raw local logs stay outside source in TEMP: asc-3c4c-targeted.log,
 asc-phase3c-python-full.log (first failed run), asc-phase3c-python-final.log
-and asc-phase3c-go-full.log. No raw keys, tokens,
+(prior 199-test PASS), asc-phase3c-python-hardened-final.log and
+asc-phase3c-go-full.log. No raw keys, tokens,
 object bodies, runtime caches, bindings or journals are published.
 
 ## Executed GC evidence
@@ -216,3 +227,33 @@ for this later hardening. The actual TLS rerun and final full result follow belo
 retry on real Go/TLS under the Windows physical lock. Final full regression is
 still required after this source publication. No new Go source/module change;
 prior fresh Go/vet/module/build results remain applicable to the unchanged Go tree.
+
+3C.5b publication independently verified local/fetch/advertised remote equality:
+`895e5bb26bf79ac36bbf85e22d82babfaac84b55`. Fresh final full run starts exactly
+there, with source/tests frozen. Current Go tree is byte-identical to the previously
+checked Go tree; Windows/Linux/Android builds are unchanged source and only Windows
+Go tests are executed here. No Linux/Android executable is run on a device.
+
+## Final Windows gate and account-independent handoff
+
+Final full source/test hash: **895e5bb26bf79ac36bbf85e22d82babfaac84b55**.
+`python -B -m unittest discover -s tests -v`: **203 tests OK, 189 PASS / 14 SKIP,
+0 FAIL/ERROR, 1008.998s**. All prior/new applicable Windows checks PASS. No source
+or tests changed during/after this final successful run. Go tree remains identical
+to the fresh tested/vetted/module-verified/built tree (checked against c909e1e).
+No Go rerun was needed for later Python-only changes; Python full regression still
+builds and runs actual current Go fixtures. No owner-supplied PASS was reused.
+
+Resume from the latest verified WIP reporting commit, with runtime/test source
+895e5bb. Do not redo checkpoints 3C.0-3C.4c. Finish only the remaining 3C.5 Linux
+synthetic network physical-boundary, pause/term/quorum, crash/journal, lost-ACK and
+snapshot/replay gates described above, then full applicable regressions. No WSL
+installation/platform bypass is authorized by this handoff. **NOT ACCEPTED** remains
+the Phase 3C status until these remaining gates actually PASS.
+
+3C.4c, 3C.5a and 3C.5b were individually pushed/remote-verified. Final reporting
+commit changes documents only, follows full tracked/index secret review, and is
+identified by Git log/final response after independent fetch/ls-remote equality.
+Original root local changes remain preserved; use the isolated worktree or a fresh
+remote checkout. No main merge, force push, phone/M51/production access or Android
+execution occurred. Rollback still requires matching private state AND byte backups.

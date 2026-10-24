@@ -1,7 +1,7 @@
 # Phase 3C plan / safety and continuation contract
 
-Status: 3C.4c published; 3C.5 Windows regression in progress, Linux physical
-network qualification pending. Date: 2026-10-24 (Asia/Saigon).
+Status: 3C.4c/3C.5b published; 3C.5 Windows checks PASS, Linux physical
+network qualification pending. Phase 3C NOT ACCEPTED. Date: 2026-10-24 (Asia/Saigon).
 Repository: litequang/Android-Storage-Cluster-ASC.
 Only branch: `wip/phase2a-raft-qualification`.
 Base: `b1b46e527826617748a8bc68795259060e12d705` (Phase 3B v0.10.0).

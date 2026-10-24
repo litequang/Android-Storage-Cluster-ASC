@@ -29,9 +29,10 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 | 3C.4b | PUSH VERIFIED `c909e1e70a4ce7a01674b6caaed1b3b4e6574a65` by Windows fetch on 2026-10-24; prior Cloud local executor/journal checks retained |
 | 3C.4c | PUSH VERIFIED `74bb6a90f2e4e04751b3edb83d60ac00807ab06f`; 85 targeted OK (11 Linux-only skips) + actual Go/TLS GC fault test PASS |
 | 3C.5a | PUSH VERIFIED `8d45b2637801a64ae5fa67cd3cb5a4c7295010f8`; 11 targeted consensus/runtime/device safety PASS (27.498s) |
-| 3C.5b | Proof/reference/approval race hardening; 53 targeted PASS + actual Go/TLS PASS (345.308s); publication commit identified next |
-| 3C.5 | PARTIAL: first Windows full Python has a reproduced fixture failure; Go tests/vet/module/build PASS; Linux physical fault qualification pending |
-| Full regression / acceptance | Prior 8d45b26 full: 199 OK / 14 platform skips; latest hardening targeted PASS; final full rerun pending. Phase 3C NOT accepted |
+| 3C.5b | PUSH VERIFIED `895e5bb26bf79ac36bbf85e22d82babfaac84b55`; 53 targeted PASS + actual Go/TLS PASS (345.308s) |
+| 3C.5c | Windows final reporting: 203 OK (189 PASS / 14 platform skips), 1008.998s; final report commit identified by Git log |
+| 3C.5 | PARTIAL: all Windows applicable checks PASS; Linux physical network fault qualification pending |
+| Full regression / acceptance | Hardened source 895e5bb: 203 OK / 14 platform skips; Go/vet/module/build PASS. Phase 3C NOT ACCEPTED: Linux physical gates remain |
 
 ## Current Windows continuation
 
@@ -75,17 +76,27 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 
 ## Next action / resume
 
-3C.4c is published and independently remote-verified. Complete 3C.5 full Python
-reporting here, then publish progress. Final 3C.5 must also run
-Linux synthetic physical-boundary faults (paused final callback, quorum/term change,
-real unlink/lost ACK/restart) before ACCEPTED. Windows skipped physical tests are a
-concrete remaining qualification limit, not evidence that GC is safe on Windows.
-No test capability is created by normal Controller or Agent startup. Preserve the
-original dirty worktree and all history; no reset/force/main or device deployment.
+The hardened source **895e5bb26bf79ac36bbf85e22d82babfaac84b55** is pushed and
+independently remote-verified. Final Windows full: **203 OK, 189 PASS / 14 SKIP,
+0 FAIL/ERROR, 1008.998s**. Go 11 uncached tests/vet/module verify and Windows/Linux/
+Android builds PASS (Linux/Android compile-only). Details and exact commands:
+[PHASE3C-ACCEPTANCE.md](PHASE3C-ACCEPTANCE.md).
 
-Rollback requires stopped/isolated matching private state AND byte backups. Never
-restore an older Catalog over physically GC-mutated volumes or erase reservations,
-retirements, journals, terms or receipts. Synthetic volumes only; real devices locked.
+Only 3C.5 physical qualification remains: use a supported Linux x86 synthetic temp
+arena, execute all physical sandbox/network GC branches and paused final callback,
+term/quorum loss before unlink, Node crash/journal restart, lost ACK and whole-cluster
+snapshot/replay. Run full applicable regression afterward and publish/verify before
+ACCEPTED. Windows has no installed Linux/WSL distro and physical execution remains
+locked. Do not bypass/install a platform or operate real data to claim PASS.
+
+No 3C.0-3C.4c reimplementation is needed. Ordinary startup issues no GC capability.
+Preserve the original dirty root worktree; continue in `.asc-worktrees/phase3c` or
+from latest verified remote WIP reporting commit. Rollback needs stopped/isolated
+matching private state AND byte backups. Do not erase fences/journals/receipts,
+edit terms/schema, reset voters, merge main, force push or deploy to phones/M51.
+
+The following chronological notes preserve intermediate failures and source
+provenance; the final result above supersedes their earlier RUNNING/pending labels.
 
 3C.5 intermediate finding: the first full run on 74bb6a9 found the existing
 metadata subprocess no-fallback assertion failing on Windows. Isolated reproduction
@@ -147,3 +158,15 @@ proof retry. This hardening is ready for publication; then run fresh full Python
 on its published hash. Go code is unchanged since successful uncached Go checks.
 The nested worktree alone is locally excluded through .git/info/exclude (existing
 entries preserved); original 0550967 worktree still has its same older local edits.
+
+Final hardened full run source/test hash:
+`895e5bb26bf79ac36bbf85e22d82babfaac84b55`, independently pushed/fetched/ls-remote
+verified before starting the run. Log: TEMP/asc-phase3c-python-hardened-final.log.
+No source/test edits after that published checkpoint; only reporting docs change.
+
+Final hardened gate completed: **203 OK (189 PASS / 14 SKIP), 1008.998s** on
+895e5bb. All 39 legacy 3A/2B/3B fault gates + 3 existing replication gates and all
+three new GC authorization groups PASS in that final log. No tests/source changed
+afterward. Reporting publication follows tracked/staged review; its own hash is
+available through Git log/final response. Phase 3C remains NOT ACCEPTED for the
+concrete remaining Linux physical gates, not because Windows regression failed.
