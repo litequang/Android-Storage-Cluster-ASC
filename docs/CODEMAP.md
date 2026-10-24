@@ -197,3 +197,5 @@ Historical PySyncObj evidence below remains unchanged.
   malformed/boundary inputs. No score consumer or placement change in 3B.1a.
 - 3B.1b `scoring.score`: pure freshness/normalization/weighted mean and confidence;
   ScoreEngineTests cover partial coverage, known zero, extremes and monotonicity.
+- 3B.1c `nodes.view.observations/scores` and RuntimeHandler nodes/scores route:
+  owner-only local/strong read-only score view; no live refresh or placement write.

@@ -78,3 +78,38 @@ class ScoreEngineTests(unittest.TestCase):
         result = scoring.score(self.measured(reachable=True),1000)
         self.assertEqual(result['score'],100); self.assertEqual(result['confidence'],20)
         with self.assertRaises(ValueError): scoring.score(scoring.unknown(),True)
+
+
+class ScoreViewTests(unittest.TestCase):
+    def setUp(self):
+        from asc.failover.state import MemoryRegistry, export
+        from asc.catalog.common import uid
+        self.reg = MemoryRegistry(uid()); self.addCleanup(self.reg.db.close)
+        self.reg.seed_self('local', {'memory_mb': 4096})
+        self.doc = export(self.reg.db, 1, {'node_id': 'voter-a', 'term': 4})
+
+    def test_readonly_snapshot_keeps_exact_checkpoint_and_unknown_unapproved_inputs(self):
+        from asc.nodes.view import scores
+        original = copy.deepcopy(self.doc)
+        result = scores({'document': self.doc,'state':{'index':88,'term':4},'stale':True},1000)
+        self.assertEqual(result['applied_index'],88)
+        self.assertTrue(result['stale']); self.assertTrue(result['read_only'])
+        self.assertIsNone(result['nodes'][0]['score'])
+        self.assertEqual(original,self.doc)
+
+    def test_api_requires_admin_and_never_enters_mutation_operation(self):
+        from types import SimpleNamespace
+        from unittest import mock
+        from asc.failover.service import RuntimeHandler
+        h = object.__new__(RuntimeHandler)
+        h.command='GET';h.path='/catalog/v1/nodes/scores'
+        runtime = SimpleNamespace(view=mock.Mock(return_value={'document':self.doc,
+                                  'state':{'index':88,'term':4},'stale':True}))
+        h.server=SimpleNamespace(catalog=SimpleNamespace(runtime=runtime))
+        h._admin=mock.Mock(return_value=False);h._json=mock.Mock()
+        h._runtime_dispatch();runtime.view.assert_not_called()
+        h._admin.return_value=True
+        h._runtime_dispatch()
+        runtime.view.assert_called_once_with(strong=False)
+        self.assertEqual(h._json.call_args.args[0],200)
+        self.assertTrue(h._json.call_args.args[1]['read_only'])

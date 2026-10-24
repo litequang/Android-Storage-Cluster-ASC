@@ -325,3 +325,11 @@ null when none known. Confidence is known weight percentage, with reliability
 weight multiplied by min(samples/10,1); reliability is separately reported as a
 probe-success percentage, never continuous uptime or disk durability. Report all
 component values/status/source/time/contribution. Scores confer no Raft authority.
+
+3B.1c: `GET /catalog/v1/nodes/scores?consistency=local|strong` is owner-admin only,
+read-only and never probes or writes preferences/placement. Local (default) works
+on a stale follower, labels exact source applied index/term/control and Catalog
+revision; strong uses the existing quorum read gate. Unapproved/revoked/changed
+node generation has UNKNOWN scores. Only pinned status capacity/reachability and
+runtime memory are currently available; reliability/thermal remain UNKNOWN until
+actual history/sensors exist. Normal node tokens do not authorize this route.

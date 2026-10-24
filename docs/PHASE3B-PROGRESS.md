@@ -21,8 +21,9 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 |---|---|
 | 3B.0 | PUSH VERIFIED `2b3529db0f1374b1be20fc0b2121cf21f601eef2`; remote WIP equals local commit |
 | 3B.1a | PUSH VERIFIED `bdf32ac`; contract + 3 targeted tests PASS |
-| 3B.1b | Pure score engine; 7 contract/engine tests PASS; publication pending |
-| 3B.1c–3B.5 | NOT STARTED |
+| 3B.1b | PUSH VERIFIED `412bb1a`; 7 contract/engine tests PASS |
+| 3B.1c | Read-only owner score API; 13 targeted tests PASS (9 node + 4 runtime); publication pending |
+| 3B.2–3B.5 | NOT STARTED |
 | Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
 
 3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
@@ -31,6 +32,8 @@ Publication verification is reported after push and recorded in the next update.
 
 ## Next action / resume
 
-Verify 3B.1b publication, then 3B.1c read-only owner score API. Exact targeted
-command: `python -B -m unittest tests.test_nodes -v` (7 PASS).
-No placement/API behavior change yet; full regression remains pending.
+Verify 3B.1c publication, then 3B.2 optional bounded replicated telemetry history.
+Command: `python -B -m unittest tests.test_nodes tests.test_failover.RuntimeStateTests -v`
+(13 PASS). Initial new fixture called seed_self without name (2 errors); fixed
+fixture call, fresh target passes; no existing assertions weakened.
+Full phase regression/Go qualification remains pending.

@@ -233,3 +233,8 @@ Backup manifests contain private names/hashes; keep private state outside source
 As with the existing transfer contract, previously issued short-lived read grants
 may remain usable until expiry; already-authorized streams can finish. Logical
 trash is not a revocation/secure-erasure mechanism. No final bytes are overwritten.
+
+Phase 3B scores expose owner-only operational telemetry, with source provenance.
+Agent runtime RAM is self-reported and grants no trust; controller-pinned capacity
+is a time-bound observation, not durability. Local score reads can be stale and
+retain their source checkpoint. Score APIs do not grant storage or voter authority.
