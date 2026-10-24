@@ -8,19 +8,20 @@ def active_nodes(db):
         'SELECT c.*,n.state,n.last_seen,n.token_version,n.profile FROM catalog_nodes c JOIN nodes n USING(node_id)')]
 
 
-def eligible(node):
+def eligible(node, at=None):
+    at = now() if at is None else at
     try:
         profile = json.loads(node['profile'])
-        return (node['state'] == 'active' and 0 <= now() - node['last_seen'] < 100 and
+        return (node['state'] == 'active' and 0 <= at - node['last_seen'] < 100 and
                 node['approved_generation'] == node['token_version'] and
                 profile.get('protected') is not True and node['last_error'] is None and
-                node['checked_at'] is not None and 0 <= now() - node['checked_at'] <= 60)
+                node['checked_at'] is not None and 0 <= at - node['checked_at'] <= 60)
     except (ValueError, TypeError, KeyError, AttributeError):
         return False
 
 
-def readable(node,volume_id):
-    if not eligible(node):return False
+def readable(node,volume_id,at=None):
+    if not eligible(node,at=at):return False
     try:
         return any(v.get('volume_id')==volume_id and v.get('state')=='online' and v.get('readable') is True
                    for v in json.loads(node['capabilities'] or '{}').get('volumes',[]))

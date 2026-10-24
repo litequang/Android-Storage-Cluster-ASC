@@ -215,3 +215,8 @@ Historical PySyncObj evidence below remains unchanged.
   independent policy domains, reservations, deterministic ordering and hard gates.
 - Linux fixture portability: `test_distributed` CLI simulated profile explicitly
   allows installation; actual CLI M51/unknown-device guard remains unchanged.
+- 3B.5a `nodes.reduction.preview`: pure checkpoint-bound policy/domain/pin/job/proof
+  checks with no IO/apply/deletion; RuntimeHandler owner local/strong GET route.
+  ReductionPreviewTests prove nonmutation and conservative stale/pin/domain holds.
+  `nodes.cli.register`: shared pinned owner client for enable/scores/history/
+  preferences/reduction preview, required mutation replay IDs; no apply command.

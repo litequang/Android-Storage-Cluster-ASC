@@ -218,3 +218,6 @@
   original hard capacity/approval/domain gates. Preserve independent replica policy,
   reserved double-copy capacity and reads from drained nodes. Reject future probes.
   Retain per-generation telemetry across re-pair while collecting new samples.
+- 3B.5a: checkpoint-bound replica reduction dry-run with explicit retention/job/
+  domain/proof holds and zero physical deletion. Add owner node-insights CLI using
+  the existing protected-device guard and pinned client; no apply command.

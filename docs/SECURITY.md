@@ -238,3 +238,9 @@ Phase 3B scores expose owner-only operational telemetry, with source provenance.
 Agent runtime RAM is self-reported and grants no trust; controller-pinned capacity
 is a time-bound observation, not durability. Local score reads can be stale and
 retain their source checkpoint. Score APIs do not grant storage or voter authority.
+
+Phase 3B reduction preview never authorizes deletion. Even a strong read supplies
+historical evidence only; proposed excess copies require fresh byte verification
+in a separately qualified future phase. Stale views, pins, unfinished work and
+insufficient independent available domains prevent proposals. Hardware protection,
+node generation and owner authentication remain mandatory; no membership API added.

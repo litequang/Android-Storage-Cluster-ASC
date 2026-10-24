@@ -183,6 +183,19 @@ class RuntimeHandler(Handler):
                     'features': ['controller-failover-v1', 'node-lifecycle-v1', 'retry-safe-enrollment-v1',
                                  'global-catalog-v1', 'metadata-replication-v1', 'file-scoped-transfers-v1',
                                  'backup-versioning-v1']})
+            if (self.command == 'GET' and parsed.path.startswith('/catalog/v1/files/') and
+                    parsed.path.endswith('/reduction-preview')):
+                query = parse_qs(parsed.query, strict_parsing=True)
+                parts = parsed.path.split('/')
+                if (len(parts) != 6 or set(query)-{'consistency'} or parsed.fragment or
+                        any(len(v) != 1 for v in query.values()) or
+                        query.get('consistency', ['local'])[0] not in ('local','strong')):
+                    raise ValueError()
+                if not self._admin(): return
+                from ..nodes.reduction import preview
+                from ..catalog.common import now
+                view = runtime.view(strong=query.get('consistency') == ['strong'])
+                return self._json(200, preview(view, parts[4], now()))
             if self.command == 'GET' and (parsed.path == '/catalog/v1/nodes/scores' or
                     parsed.path.startswith('/catalog/v1/nodes/') and parsed.path.endswith('/history')):
                 query = parse_qs(parsed.query, strict_parsing=True)

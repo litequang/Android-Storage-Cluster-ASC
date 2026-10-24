@@ -79,3 +79,5 @@ def register(parser,handlers,cli):
 
     from ..backup.cli import register as register_backup
     register_backup(parser, handlers, client, cli)
+    from ..nodes.cli import register as register_nodes
+    register_nodes(parser, handlers, client, cli)

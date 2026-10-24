@@ -29,3 +29,23 @@ A snapshot is UNVERIFIED until durable backup jobs independently hash enough
 approved physical domains. Retention/trash expiry is logical; no physical bytes
 are garbage-collected. Keep disconnected backups for irreplaceable data. Exact
 contracts, limits, results and rollback: docs/PHASE3A-ACCEPTANCE.md.
+
+## Phase 3B node insights (development; acceptance pending)
+
+After all stopped development Controllers upgrade and complete private backups:
+
+```bash
+python -m asc.cli node-insights-enable --request-id enable-nodes-001
+python -m asc.cli node-scores --consistency strong
+python -m asc.cli node-history NODE_ID --window 30d
+python -m asc.cli node-preference NODE_ID --mode drain --request-id drain-node-001
+python -m asc.cli replica-reduction-preview FILE_ID --consistency strong
+```
+
+Owner-only pinned client; use the same request ID after a lost mutation reply.
+Auto/Preferred/Avoid New Storage/Drain/Protected affect new allocation after hard
+safety gates. Drain never moves/deletes existing bytes. Score/confidence are separate;
+missing/stale sensors remain UNKNOWN. History is bounded UTC calendar 24h/7d/30d
+with hourly samples and explicit gaps, not continuous uptime. Reduction is preview
+only, with zero physical deletions and no apply command. Permanent receipt/runtime
+limits still apply. Plan/progress: docs/PHASE3B-PLAN.md and PHASE3B-PROGRESS.md.

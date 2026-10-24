@@ -349,3 +349,12 @@ drain (Drain), protected (Protected). Scores response includes effective prefere
 Requests replay exactly; conflicting reuse is 409. Drain reports automatic_movement=false
 and physical_deletions=0. Preference persistence is complete in 3B.3; allocation
 consumption is enabled only in 3B.4, never by changing read or voter eligibility.
+
+3B.5a: owner-only `GET /catalog/v1/files/ID/reduction-preview?consistency=local|strong`
+returns checkpoint-bound schema-1 dry_run proposal, keep IDs, candidate IDs, required/
+available independent domains and explicit holds. Default stale/local view proposes
+nothing. Suspect/unavailable/old (>300s) proof cannot count toward retained domains.
+Retained snapshot/restore pins, trash/expired versions and unfinished jobs hold all
+reduction. Protected replicas remain held. Every candidate requires future fresh
+byte verification. apply_supported=false and physical_deletions=0 always. No apply,
+delete, destructive grant or final-manifest mutation endpoint exists in Phase 3B.

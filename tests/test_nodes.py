@@ -360,3 +360,85 @@ class SmartPlacementTLSTests(unittest.TestCase):
         import io
         output=io.BytesIO();self.global_client.download(file_id,output)
         self.assertEqual(output.getvalue(),self.data)
+
+
+class ReductionPreviewTests(unittest.TestCase):
+    def setUp(self):
+        from tests import test_catalog
+        from asc.catalog.common import uid,now
+        from asc.catalog.state import insert
+        from asc.failover.state import export
+        fixture=test_catalog.CatalogTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
+        self.file_id=fixture.create(policy='single')['file']['file_id']
+        fixture.complete_upload(self.file_id)
+        with fixture.reg.connect() as db:
+            used=db.execute('SELECT node_id FROM catalog_replicas').fetchone()[0]
+            for node in fixture.nodes:
+                if node['node_id']==used:continue
+                insert(db,'catalog_replicas',{'replica_id':uid(),'file_id':self.file_id,'node_id':node['node_id'],
+                       'volume_id':node['volume_id'],'local_file_id':uid(),'state':'VERIFIED',
+                       'created_at':now(),'updated_at':now(),'verified_at':now()})
+            fixture.catalog._event(db,self.file_id)
+            self.doc=export(db,10,{'node_id':'voter-a','term':4})
+        self.at=now()
+        self.view={'document':self.doc,'state':{'index':100,'term':4},'stale':False}
+
+    def preview(self):
+        from asc.nodes.reduction import preview
+        return preview(self.view,self.file_id,self.at)
+
+    def test_preview_is_nonmutating_and_retains_policy_independent_domains(self):
+        original=copy.deepcopy(self.view)
+        result=self.preview()
+        self.assertEqual(len(result['candidates']),2)
+        self.assertEqual(len(result['keep_replica_ids']),1)
+        self.assertFalse(result['apply_supported']);self.assertEqual(result['physical_deletions'],0)
+        self.assertTrue(all(r['requires_fresh_byte_verification'] for r in result['candidates']))
+        self.assertEqual(self.view,original)
+        self.doc['catalog']['files'][0]['policy']='replicated_3'
+        self.assertEqual(self.preview()['candidates'],[])
+
+    def test_stale_suspect_unavailable_and_duplicate_domains_cannot_remove_last_copy(self):
+        self.view['stale']=True
+        self.assertEqual(self.preview()['candidates'],[])
+        self.view['stale']=False
+        self.doc['catalog']['files'][0]['policy']='replicated_2'
+        for node in self.doc['tables']['catalog_nodes']:node['device_id']='same-device'
+        self.assertIn('insufficient_current_independent_domains',self.preview()['holds'])
+        self.assertEqual(self.preview()['candidates'],[])
+        for replica in self.doc['catalog']['replicas']:replica['state']='CORRUPT'
+        self.assertEqual(self.preview()['available_domains'],0)
+
+    def test_retained_snapshot_active_jobs_and_expired_history_are_held(self):
+        from asc.backup.state import empty,capture
+        from asc.catalog.common import uid
+        backup=empty();self.doc['backup']=backup
+        snapshot=capture(self.view,backup,self.at,1000)
+        backup['snapshots'][uid()]=snapshot
+        self.assertEqual(self.preview()['candidates'],[])
+        backup['snapshots'].clear()
+        backup['files'][self.file_id]={'state':'TRASH','changed_at':self.at,'retain_until':self.at+1000}
+        self.assertEqual(self.preview()['candidates'],[])
+        backup['files'].clear()
+        self.doc['tables']['catalog_jobs'][0]['state']='RETRY'
+        self.assertIn('unfinished_catalog_job',self.preview()['holds'])
+        self.assertEqual(self.preview()['candidates'],[])
+
+
+class NodeCommandTests(unittest.TestCase):
+    def test_commands_use_pinned_owner_factory_exact_paths_and_durable_request_ids(self):
+        import argparse
+        from unittest import mock
+        from types import SimpleNamespace
+        from asc.nodes.cli import register
+        parser=argparse.ArgumentParser();sub=parser.add_subparsers(dest='action');handlers={}
+        api=mock.Mock();factory=mock.Mock(return_value=api)
+        register(sub,handlers,factory,SimpleNamespace(_show=mock.Mock()))
+        for argv,method,path,obj in [
+            (['node-scores','--consistency','strong'],'GET','nodes/scores?consistency=strong',None),
+            (['node-history','node-a','--window','30d'],'GET','nodes/node-a/history?window=30d&consistency=local',None),
+            (['node-preference','node-a','--mode','drain','--request-id','fixed-id'],'POST','nodes/node-a/preferences',{'request_id':'fixed-id','mode':'drain'})]:
+            args=parser.parse_args(argv);handlers[args.action](args)
+            expected=(method,path) if obj is None else (method,path,obj)
+            self.assertEqual(api.request.call_args.args,expected)
+        self.assertEqual(factory.call_count,3)
