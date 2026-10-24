@@ -12,6 +12,10 @@ def register(parser,handlers,cli):
 
     def client():
         guard()
+        bootstrap=cli.HOME/'cluster-client.json'
+        if bootstrap.exists():
+            cfg=cli._read_path(bootstrap)
+            return ClusterClient(cluster_id=cfg['cluster_id'],controllers=cfg['controllers'])
         cfg=cli.read_private('controller.json')
         return ClusterClient('https://127.0.0.1:'+str(cfg['listen_port']),
                              cli.fingerprint_from_pem(cli.HOME/'server.crt'),cfg['admin_token'])

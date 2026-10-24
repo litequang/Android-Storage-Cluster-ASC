@@ -66,7 +66,9 @@ def request_json(origin, pin, method, path, obj=None, token=None, timeout=12):
                        'catalog_unavailable', 'metadata_not_authorized', 'resync_required',
                        'file_not_found', 'job_not_found', 'logical_version_exists', 'idempotency_conflict',
                        'invalid_policy', 'job_state_conflict', 'stale_job_lease', 'verification_required',
-                       'protected_or_inactive_node', 'node_not_approved', 'node_credential_changed'}
+                       'protected_or_inactive_node', 'node_not_approved', 'node_credential_changed',
+                       'controller_not_ready', 'stale_authority', 'runtime_recovering',
+                       'quorum_read_unavailable', 'commit_unconfirmed', 'precondition_conflict'}
             code = code if isinstance(code, str) and code in allowed else 'request_failed'
             raise ClientError(f'HTTP {response.status}: {code}', response.status, code)
         return reply

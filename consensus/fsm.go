@@ -17,13 +17,14 @@ const MaxReceipts = 4096
 // Preparation validates ASC semantics in Python; apply has no clocks, random
 // IDs, network IO, grants or jobs. Failed preconditions are committed receipts.
 type Command struct {
-	Schema    int    `json:"schema"`
-	Cluster   string `json:"cluster_id"`
-	Epoch     string `json:"epoch"`
-	RequestID string `json:"request_id"`
-	Intent    string `json:"intent_sha256"`
-	Expected  string `json:"expected_sha256"`
-	Document  []byte `json:"document"`
+	Schema        int    `json:"schema"`
+	Cluster       string `json:"cluster_id"`
+	Epoch         string `json:"epoch"`
+	RequestID     string `json:"request_id"`
+	Intent        string `json:"intent_sha256"`
+	Expected      string `json:"expected_sha256"`
+	Document      []byte `json:"document"`
+	AuthorityTerm uint64 `json:"authority_term,omitempty"`
 }
 type Receipt struct {
 	Digest string `json:"command_sha256"`
@@ -85,7 +86,20 @@ func (f *FSM) Apply(l *raft.Log) interface{} {
 		return Receipt{Error: "receipt_limit"}
 	}
 	receipt := Receipt{Digest: h, Intent: c.Intent, Index: l.Index, Term: l.Term, SHA: f.state.SHA}
-	if c.Expected != f.state.SHA {
+	var shape struct {
+		Schema    int `json:"schema"`
+		Authority struct {
+			Term uint64 `json:"term"`
+		} `json:"authority"`
+	}
+	json.Unmarshal(c.Document, &shape)
+	var oldShape struct {
+		Schema int `json:"schema"`
+	}
+	json.Unmarshal(f.state.Document, &oldShape)
+	if (shape.Schema == 2 || oldShape.Schema == 2) && (c.AuthorityTerm == 0 || c.AuthorityTerm != l.Term || shape.Schema != 2 || shape.Authority.Term != l.Term) {
+		receipt.Error = "stale_authority"
+	} else if c.Expected != f.state.SHA {
 		receipt.Error = "precondition_conflict"
 	} else {
 		var doc struct {

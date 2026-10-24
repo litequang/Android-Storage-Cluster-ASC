@@ -1,5 +1,28 @@
 # ASC DATA MODEL — Conceptual v1
 
+## Phase 2B development schema — Windows qualified
+
+Runtime document schema 2 wraps unchanged validated Catalog schema 1 with
+cluster/epoch/control revision, activation node/term, allowlisted authority rows
+(nodes/join_codes/enrollments/catalog_nodes/catalog_jobs/catalog_job_history/
+transfer_grants) and the bounded inventory cursor. Node/code/grant values are
+hashes; job lease IDs alone are not bearer authority. Legacy whole-volume grants
+are not promoted. A separate private runtime.sqlite3 caches the complete committed
+document/state with SHA and applied checkpoint; it cannot become a writer without
+a fresh quorum barrier. Base registry 4, manifest 1 and metadata cache 1 remain
+unchanged. Explicit stopped-state upgrade compares the exact metadata SHA and
+preserves the original guarded registry and object volumes. No automatic downgrade
+or voter reset exists. See PHASE2B-ACCEPTANCE.md before using development commands.
+
+No additional migration table is needed for attachment provenance: the permanent
+`runtime-upgrade-<source Catalog SHA>` receipt binds the original full runtime
+document SHA. Reconstructing takeover from frozen private rows must match that
+SHA for a configured initial owner, or the local state must be an empty-authority
+metadata follower of that exact source. Conflicting histories fail closed.
+Manifest schema remains 1. NEEDS_REVIEW can return to READY only for a freshly
+authorized distributed job whose retained staging AND immutable final body both
+match the original size/SHA/session scope; ordinary legacy resume stays denied.
+
 No production schema exists. These logical entities and invariants must be represented in the initial migrations and wire contract.
 
 ## Entities

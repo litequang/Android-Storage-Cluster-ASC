@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+import uuid
 from unittest import mock
 from asc.storage.engine import StorageEngine
 from asc.storage.errors import StorageError
@@ -58,6 +59,31 @@ class EngineTests(unittest.TestCase):
         path = self.base / 'private' / 'manifest.sqlite3'
         moved = path.with_suffix('.closed')
         path.rename(moved); moved.unlink()
+
+    def test_fenced_job_resume_requires_fresh_authority_and_two_matching_retained_bodies(self):
+        principal = 'job:'+str(uuid.uuid4())
+        def revoked():
+            raise StorageError('forbidden', 403)
+        for index in range(2):
+            row = self.engine.initiate(principal, self.volume, 'fenced_job_'+str(index), 'recovery/'+str(index), len(self.data), self.digest)
+            self.engine.upload(row['session_id'], principal, self.volume, io.BytesIO(self.data), len(self.data))
+            self.assert_code('forbidden', lambda: self.engine.commit(row['session_id'], principal, self.volume, revoked))
+            self.assert_code('session_not_ready', lambda: self.engine.commit(row['session_id'], principal, self.volume))
+            final = self.base/'data'/'objects'/(row['file_id']+'.blob')
+            staging = self.base/'data'/'staging'/(row['session_id']+'.part')
+            self.assertEqual(final.read_bytes(), self.data)
+            self.assertEqual(staging.read_bytes(), self.data)
+            if index == 0:
+                self.assert_code('forbidden', lambda: self.engine.commit(row['session_id'], principal, self.volume, revoked, resume_verified=True))
+                self.assertEqual(self.engine.session(row['session_id'], principal, self.volume)['state'], 'NEEDS_REVIEW')
+                proof = self.engine.commit(row['session_id'], principal, self.volume, lambda: None, resume_verified=True)
+                self.assertEqual(proof['file_id'], row['file_id'])
+                self.assertEqual(final.read_bytes(), self.data)
+            else:
+                final.write_bytes(b'X'+self.data[1:])
+                self.assert_code('object_requires_review', lambda: self.engine.commit(row['session_id'], principal, self.volume, lambda: None, resume_verified=True))
+                self.assertEqual(self.engine.session(row['session_id'], principal, self.volume)['state'], 'NEEDS_REVIEW')
+                self.assertTrue(final.exists()); self.assertTrue(staging.exists())
 
     def test_conflicting_requests_and_bounded_concurrency(self):
         row = self.initiate()

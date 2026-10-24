@@ -6,10 +6,16 @@ from .common import CatalogError
 
 
 class ClusterClient:
-    def __init__(self,origin,pin,admin_token):
+    def __init__(self,origin=None,pin=None,admin_token=None,*,cluster_id=None,controllers=None):
         self.origin,self.pin,self.token=origin,pin,admin_token
+        self.discovery=None
+        if controllers is not None:
+            from ..failover.discovery import Discovery
+            self.discovery=Discovery(cluster_id,controllers,admin_token)
 
     def request(self,method,path,obj=None):
+        if self.discovery is not None:
+            return self.discovery.request(method,'/catalog/v1/'+path,obj)
         return request_json(self.origin,self.pin,method,'/catalog/v1/'+path,obj,self.token,timeout=300 if method=='POST' else 12)
 
     def upload(self,stream,logical_path,key,policy='replicated_2',version=1):

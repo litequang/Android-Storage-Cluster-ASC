@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## v0.8.0 — 2026-10-24 — Phase 2B Windows development accepted
+
+- Final full regression: 101 tests, 98 PASS / 3 existing POSIX skips,
+  0 FAIL/ERROR, 1736.964 seconds. All 20 automatic-failover fault cases PASS.
+  Go 9 top-level tests and Windows/Android ARM64 builds PASS; Android runtime
+  remains unexecuted. Exact evidence and intermediate failures are retained in
+  PHASE2B-ACCEPTANCE.md.
+
+- Preserve exact metadata snapshot/delta schema and digest in runtime responses;
+  add regression import checks and real pinned Agent sync across takeover/restart.
+  Keep safe HTTP errors working before a malformed request has a parsed path.
+
+- Audit unsafe single-Controller state before activation. Add opt-in schema-2
+  runtime projection, disposable SQL preparation, term-bound CAS, committed
+  takeover/lease/grant invalidation, private verified cache and leader-only worker.
+- Add pinned multi-endpoint discovery with bounded retries, explicit stale reads,
+  nonce-bound online Storage authority and Python liveness withdrawal at sidecar.
+- Preserve default/Phase 2A behavior, original guarded private state, immutable
+  Engine, historical PySyncObj 1 PASS / 5 FAIL and M51 restrictions. Acceptance
+  is isolated Windows development; no phone or production deployment occurred.
+- Reject unmerged private Controller authority using the initial upgrade receipt;
+  support only freshly scoped revalidation of matching retained job bodies, keeping
+  legacy NEEDS_REVIEW behavior. Prioritize queue recovery over bounded background
+  physical audit. Add real TLS lost-ACK injection and negative attachment tests.
+
 ## v0.7.0 — 2026-10-23 — Phase 2A Windows metadata consensus accepted
 
 - Add pinned official HashiCorp Raft/Bolt qualification and a development Go

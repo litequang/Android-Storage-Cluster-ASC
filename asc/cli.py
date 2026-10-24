@@ -122,6 +122,11 @@ def controller_run(args):
 
 
 def _admin_request(method, path, obj=None):
+    bootstrap=HOME/'cluster-client.json'
+    if bootstrap.exists() and os.name=='nt' and not inspect().get('protected'):
+        from .failover.discovery import Discovery
+        cfg=_read_path(bootstrap)
+        return Discovery(cfg['cluster_id'],cfg['controllers']).request(method,path,obj)
     _must_not_protected('controller administration')
     cfg = read_private('controller.json')
     # No token CLI flag or output. Node installations have no controller credential.
@@ -201,6 +206,31 @@ def _enroll(args, repair=False):
         cluster = (current['cluster_id'] if current else args.cluster_id) if repair else None
         origin = current['controller'] if current else args.controller
         pin = current['pin'] if current else args.pin
+        controllers = current.get('controllers') if current else None
+        if controllers:
+            from .catalog.common import identifier
+            if not current.get('cluster_epoch'):
+                raise ValueError('pinned cluster epoch required for distributed re-pair')
+            identifier(current['cluster_epoch'])
+        def enrollment_request(method, path, payload=None):
+            if not controllers:
+                return request_json(origin, pin, method, path, payload)
+            from .failover.discovery import Discovery
+            trusted = Discovery(cluster, controllers, current['token'])
+            last = None
+            for endpoint in trusted.endpoints:
+                try:
+                    result = request_json(endpoint['origin'], endpoint['pin'], method, path, payload, timeout=20)
+                    if result.get('cluster_id') != cluster:
+                        raise ClientError('Cluster ID mismatch; refusing re-pair')
+                    return result
+                except ClientError as exc:
+                    if exc.status not in (None, 429, 502, 503, 504):
+                        raise
+                    last = exc
+                except OSError as exc:
+                    last = exc
+            raise last or ClientError('no pinned Controller for enrollment', 503)
         if repair and (not target or not cluster):
             raise ValueError('lost identity: node-repair requires --node-id and --cluster-id from controller')
         if not origin or not pin:
@@ -214,7 +244,8 @@ def _enroll(args, repair=False):
         if pending_path.exists():
             pending = _read_path(pending_path)
             if (pending['controller'] != origin or pending['pin'] != pin or
-                    pending.get('target_node_id') != target or pending.get('cluster_id') != cluster):
+                    pending.get('target_node_id') != target or pending.get('cluster_id') != cluster or
+                    controllers and pending.get('controllers') != controllers):
                 raise ValueError('pending operation differs; preserve it and use controlled node-repair --new-code')
             if args.new_code and not repair:
                 # Keep operation ID/token: even a replacement grant cannot create a duplicate.
@@ -224,7 +255,7 @@ def _enroll(args, repair=False):
                 replace_private(pending_path, pending)
             print('Retrying saved enrollment operation; no new identity generated.')
         else:
-            info = request_json(origin, pin, 'GET', '/api/v1/info')
+            info = enrollment_request('GET', '/api/v1/info')
             if 'retry-safe-enrollment-v1' not in info.get('features', []):
                 raise ValueError('upgrade controller to Phase 1.1 before new enrollment; existing v0.4 heartbeats remain supported')
             if cluster and info['cluster_id'] != cluster:
@@ -242,8 +273,10 @@ def _enroll(args, repair=False):
                                    'enrollment_token': secrets.token_urlsafe(32)}}
             if target:
                 pending['payload']['node_id'] = target
+            if controllers:
+                pending['controllers'] = controllers
             save_private(pending_path, pending)
-        reply = request_json(origin, pin, 'POST', '/api/v1/join', pending['payload'])
+        reply = enrollment_request('POST', '/api/v1/join', pending['payload'])
         if (reply['cluster_id'] != pending['expected_cluster_id'] or
                 (target and reply['node_id'] != target) or
                 reply['token'] != pending['payload']['enrollment_token']):
@@ -252,6 +285,8 @@ def _enroll(args, repair=False):
         state = {'config_version': 1, 'controller': origin, 'pin': pin,
                  'node_id': reply['node_id'], 'token': reply['token'],
                  'token_version': reply['token_version'], 'cluster_id': reply['cluster_id']}
+        if controllers:
+            state.update(controllers=controllers, cluster_epoch=current['cluster_epoch'])
         if repair and current:
             replace_private(node_path, state)
         else:
@@ -277,8 +312,13 @@ def agent_once(cfg, sd_test=False, storage_engine=None):
     if storage_engine is not None:
         profile['storage'] = storage_engine.capabilities()
     try:
-        snap = request_json(cfg['controller'], cfg['pin'], 'POST', '/api/v1/heartbeat',
-                            {'node_id': cfg['node_id'], 'profile': profile}, token=cfg['token'])
+        if 'controllers' in cfg:
+            from .failover.discovery import Discovery
+            snap = Discovery(cfg['cluster_id'], cfg['controllers'], cfg['token']).request(
+                'POST', '/api/v1/heartbeat', {'node_id': cfg['node_id'], 'profile': profile})
+        else:
+            snap = request_json(cfg['controller'], cfg['pin'], 'POST', '/api/v1/heartbeat',
+                                {'node_id': cfg['node_id'], 'profile': profile}, token=cfg['token'])
     except ClientError as exc:
         if exc.status in (401, 403):
             replace_private(HOME / 'agent_state.json',

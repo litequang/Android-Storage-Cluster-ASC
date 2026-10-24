@@ -1,0 +1,221 @@
+"""Leader-only existing Catalog worker and explicit stale read/lifecycle API."""
+import hashlib
+import hmac
+import json
+import sqlite3
+import threading
+import time
+from urllib.parse import urlsplit, parse_qs
+
+from ..catalog.common import CatalogError
+from ..catalog.service import CatalogService
+from ..catalog.metadata import FILE_FIELDS
+from ..catalog.placement import active_nodes, readable
+from ..client import ClientError
+from ..runtime import foreground_lock
+from ..server import Handler, PayloadTooLarge
+from .. import validation as valid
+
+
+class Service(CatalogService):
+    failover = True
+
+    def __init__(self, runtime, rate=4*1024**2, timeout=300):
+        self.runtime = runtime
+        self._refresh_lock = threading.Lock()
+        self._refreshed = None
+        super().__init__(runtime.registry, rate, timeout)
+
+    def refresh(self):
+        # Coalesce worker/owner probes within the same activation. A takeover
+        # changes term and invalidates replicated probe freshness independently.
+        with self._refresh_lock:
+            term = getattr(self.runtime.local, 'term', None)
+            if self._refreshed and self._refreshed[0] == term and time.monotonic()-self._refreshed[1] < 10:
+                return
+            super().refresh()
+            self._refreshed = (term, time.monotonic())
+
+    def status(self):
+        result = super().status()
+        view = self.runtime.view()
+        return {**result, 'writer': self.runtime.node_id, 'raft_enabled': True,
+                'automatic_failover': True, 'applied_index': view['state']['index'],
+                'term': view['document']['authority']['term']}
+
+    def _bad_replica(self, replica, exc):
+        # Failed permission/quorum is not evidence of missing/corrupt bytes.
+        if (getattr(exc, 'status', None) in (401, 403, 429) or
+                getattr(exc, 'code', None) in {'authorization_unavailable', 'stale_authority',
+                    'controller_not_ready', 'quorum_read_unavailable', 'commit_unconfirmed'}):
+            return
+        return super()._bad_replica(replica, exc)
+
+    def download_plan(self, file_id):
+        self.refresh()
+        entry = self.catalog.file(file_id)
+        with self.registry.connect() as db:
+            nodes = {n['node_id']: n for n in active_nodes(db)}
+        checked = 0
+        for replica in entry['replicas']:
+            node = nodes.get(replica['node_id'])
+            if replica['state'] != 'UNAVAILABLE' or not node or not readable(node, replica['volume_id']) or checked >= 3:
+                continue
+            checked += 1
+            try:
+                audit = self._client(replica['node_id'], replica['volume_id'], 'audit', replica['local_file_id'])
+                self._proof(audit, replica['local_file_id'], replica['volume_id'],
+                    '_asc-global/'+file_id+'/'+replica['replica_id'], entry['file'])
+                self.catalog.mutate('REVERIFY', {'replica_id': replica['replica_id'], 'physically_verified': True})
+            except (ClientError, CatalogError, OSError, ValueError) as exc:
+                self._bad_replica(replica, exc)
+        return super().download_plan(file_id)
+
+    def start(self, background=True):
+        owner = foreground_lock(self.registry.path.parent, 'catalog-worker')
+        owner.__enter__(); self._owner = owner
+        if background:
+            self._thread = threading.Thread(target=self._loop, daemon=True)
+            self._thread.start()
+            self.runtime.worker = self._thread
+        return self
+
+    def _loop(self):
+        last_reconcile = 0
+        while not self._stop.is_set():
+            try:
+                with self.runtime.operation():
+                    # Takeover has already durably fenced leases and grants.
+                    # Pending/recovered work takes priority over background
+                    # audits; a multi-replica audit must not starve owner ACKs.
+                    job = self.run_one()
+                    if job is None and time.monotonic()-last_reconcile >= 30:
+                        self.reconcile(); last_reconcile = time.monotonic()
+            except (CatalogError, ClientError, sqlite3.Error, OSError, ValueError):
+                pass
+            self._stop.wait(1)
+
+    def reconcile(self, max_verify=1):
+        return super().reconcile(max_verify=max_verify)
+
+
+class RuntimeHandler(Handler):
+    def _json(self, status, data):
+        runtime = self.server.catalog.runtime
+        # MetadataSource already owns a versioned, digest-bound envelope. Adding
+        # fields or replacing its revision would invalidate every node import.
+        metadata_envelope = urlsplit(getattr(self, 'path', '')).path in (
+            '/catalog/v1/metadata/snapshot', '/catalog/v1/metadata/changes')
+        if status < 300 and getattr(runtime.local, 'term', None) is not None and not metadata_envelope:
+            view = runtime.view()
+            data = {**data, 'cluster_id': runtime.cluster, 'epoch': runtime.epoch,
+                    'revision': view['document']['catalog']['revision'],
+                    'control_revision': view['document']['revision'], 'applied_index': view['state']['index'],
+                    'term': view['document']['authority']['term'], 'stale': False,
+                    'read_only': self.command == 'GET'}
+            if data.get('mode') == 'single-writer-development':
+                data['mode'] = 'distributed-runtime-development'
+        return super()._json(status, data)
+
+    def _discovery_auth(self, view):
+        if self._rate('auth'):
+            return False
+        token_hash = hashlib.sha256(self._bearer().encode()).hexdigest()
+        allowed = hmac.compare_digest(token_hash, self.server.admin_hash) or any(
+            n['state'] == 'active' and hmac.compare_digest(token_hash, n['token_hash'])
+            for n in view['document']['tables']['nodes'])
+        if not allowed:
+            self.server.limiter.blocked('auth', self.client_address[0], consume=True)
+            self._json(401, {'error': 'unauthorized'})
+        return allowed
+
+    def _runtime_dispatch(self):
+        runtime = self.server.catalog.runtime
+        parsed = urlsplit(self.path)
+        try:
+            if self.command == 'GET' and parsed.path == '/cluster/v1/leader':
+                if parsed.query or parsed.fragment:
+                    raise ValueError()
+                view = runtime.view()
+                if not self._discovery_auth(view):
+                    return
+                ready = False
+                try:
+                    runtime.ensure_ready(); ready = True
+                except CatalogError:
+                    pass
+                return self._json(200, {'cluster_id': runtime.cluster, 'node_id': runtime.node_id,
+                    'mode': runtime.mode, 'write_ready': ready, 'term': runtime.term,
+                    'automatic_failover': True})
+            if self.command == 'GET' and parsed.path == '/api/v1/info':
+                try:
+                    routing_hint = runtime.client.status()['role'] == 'Leader'
+                except CatalogError:
+                    routing_hint = False
+                return self._json(200, {'cluster_id': runtime.cluster, 'mode': 'distributed-runtime-development',
+                    'node_id': runtime.node_id, 'leader_hint': routing_hint, 'routing_hint_only': True,
+                    'raft_enabled': True, 'automatic_failover': True, 'file_storage_enabled': True,
+                    'global_file_catalog_enabled': True, 'schema_version': 4,
+                    'features': ['controller-failover-v1', 'node-lifecycle-v1', 'retry-safe-enrollment-v1',
+                                 'global-catalog-v1', 'metadata-replication-v1', 'file-scoped-transfers-v1']})
+            if self.command == 'GET' and parsed.path.startswith('/catalog/v1/'):
+                query = parse_qs(parsed.query, strict_parsing=True)
+                if any(len(v) != 1 for v in query.values()) or parsed.fragment:
+                    raise ValueError()
+                consistency = query.get('consistency', ['local'])[0]
+                if consistency not in ('local', 'strong'):
+                    raise ValueError()
+                parts = parsed.path.removeprefix('/catalog/v1/').split('/')
+                if consistency == 'local' and (parts == ['files'] or len(parts) == 2 and parts[0] == 'files' or
+                                                parts == ['metadata', 'status']):
+                    if set(query) - {'consistency'}:
+                        raise ValueError()
+                    if not self._admin():
+                        return
+                    view = runtime.view(); doc = view['document']['catalog']
+                    common = {'cluster_id': runtime.cluster, 'epoch': runtime.epoch,
+                        'revision': doc['revision'], 'control_revision': view['document']['revision'],
+                        'applied_index': view['state']['index'], 'stale': True, 'read_only': True,
+                        'automatic_failover': True, 'available_replicas': None, 'availability': 'UNKNOWN'}
+                    if parts == ['metadata', 'status']:
+                        return self._json(200, {**common, 'mode': runtime.mode})
+                    def public(f):
+                        return {'file': {k: f[k] for k in FILE_FIELDS}, 'replicas': [r for r in doc['replicas']
+                            if r['file_id'] == f['file_id']], **common}
+                    if parts == ['files']:
+                        return self._json(200, {'files': [public(f) for f in doc['files']], **common})
+                    file = next((f for f in doc['files'] if f['file_id'] == parts[1]), None)
+                    if file is None:
+                        raise CatalogError('file_not_found', 404)
+                    return self._json(200, public(file))
+                # Existing route parser has no consistency parameter. Strong
+                # reads below enter the same quorum/term gate as mutations.
+                if 'consistency' in query:
+                    if set(query) != {'consistency'}:
+                        raise ValueError()
+                    self.path = parsed.path
+            if self.command == 'POST' and parsed.path == '/api/v1/storage/authorize':
+                if parsed.query or parsed.fragment:
+                    raise ValueError()
+                if self._rate('auth'):
+                    return
+                obj = self._read_json()
+                valid.payload(obj, ('node_id', 'grant', 'volume_id', 'operation', 'scope', 'nonce'))
+                reply = runtime.registry.storage_authorize(obj['node_id'], self._bearer(), obj['grant'],
+                    obj['volume_id'], obj['operation'], obj['scope'], obj['nonce'])
+                if reply is None:
+                    self.server.limiter.blocked('auth', self.client_address[0], consume=True)
+                    return self._json(403, {'error': 'unauthorized'})
+                return self._json(200, reply)
+            with runtime.operation():
+                return super().do_GET() if self.command == 'GET' else super().do_POST()
+        except CatalogError as exc:
+            return self._json(exc.status, {'error': exc.code})
+        except PayloadTooLarge:
+            return self._json(413, {'error': 'payload_too_large'})
+        except (ValueError, KeyError, TypeError, UnicodeError, RecursionError, OverflowError):
+            return self._json(400, {'error': 'bad_request'})
+        except (sqlite3.Error, OSError):
+            return self._json(503, {'error': 'runtime_unavailable'})
+
+    do_GET = do_POST = _runtime_dispatch

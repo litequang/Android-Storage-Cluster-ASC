@@ -1,2 +1,2 @@
-"""Android Storage Cluster - optional metadata consensus, development only."""
-__version__ = '0.7.0'
+"""Android Storage Cluster - opt-in Controller failover, Windows development."""
+__version__ = '0.8.0'

@@ -207,13 +207,27 @@ class StorageEngine:
             size, digest = self._hash(stream)
         return size == row['size'] and digest == row['sha256']
 
-    def commit(self, session_id, principal, volume_id, reauthorize=None):
+    def commit(self, session_id, principal, volume_id, reauthorize=None, *, resume_verified=False):
         with self.transfer():
             row = self.session(session_id, principal, volume_id)
             volume = self.volumes.get(volume_id)
             volume.check()
             if row['state'] == 'COMMITTED':
                 return self.file(row['file_id'], volume_id)
+            if row['state'] == 'NEEDS_REVIEW' and resume_verified and reauthorize is not None and principal.startswith('job:'):
+                # Distributed failover may revoke authority after a complete
+                # immutable copy. Only a freshly scoped job can resume the SAME
+                # session, after independently rehashing BOTH retained bodies.
+                # Missing/mismatched/unknown bodies remain held, never deleted.
+                try:
+                    matched = self._verified(volume, self._stage(row), row) and self._verified(volume, self._object(row), row)
+                except (OSError, StorageError):
+                    matched = False
+                if not matched:
+                    raise StorageError('object_requires_review', 409)
+                reauthorize()
+                self._state(session_id, 'READY')
+                row['state'] = 'READY'
             if row['state'] != 'READY':
                 raise StorageError('session_not_ready', 409)
             if not self._verified(volume, self._stage(row), row):

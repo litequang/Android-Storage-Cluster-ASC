@@ -45,7 +45,7 @@ class Registry:
         finally:
             db.close()
 
-    def initialize(self, cluster_id):
+    def initialize(self, cluster_id, *, initial_catalog_epoch=None):
         """Transactional additive v0.4/v0.4.1 -> schema 4; never replace identity or rows."""
         with self.connect() as db:
             db.execute('PRAGMA journal_mode=WAL')
@@ -90,7 +90,12 @@ class Registry:
             from .catalog.schema import migrate, validate_existing
             if version==SCHEMA_VERSION:
                 validate_existing(db)
-            migrate(db)
+            if initial_catalog_epoch is not None:
+                from .catalog.common import identifier
+                identifier(initial_catalog_epoch)
+                migrate(db, initial_catalog_epoch)
+            else:
+                migrate(db)
             db.execute(f'PRAGMA user_version={SCHEMA_VERSION}')
 
     def consensus_enabled(self):

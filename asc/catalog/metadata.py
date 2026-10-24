@@ -247,8 +247,13 @@ class MetadataReplica:
 def synchronize(home,node):
     replica=MetadataReplica(Path(home)/'catalog-metadata.sqlite3',node['cluster_id'])
     prefix='/catalog/v1/metadata/'
+    discovery=None
+    if 'controllers' in node:
+        from ..failover.discovery import Discovery
+        discovery=Discovery(node['cluster_id'],node['controllers'],node['token'])
     def get(path):
-        reply=request_json(node['controller'],node['pin'],'GET',prefix+path,token=node['token'])
+        reply=(discovery.request('GET',prefix+path) if discovery else
+               request_json(node['controller'],node['pin'],'GET',prefix+path,token=node['token']))
         version=reply.pop('protocol_version',None)
         if type(version) is not int or version!=1:raise CatalogError('unsupported_metadata_protocol',409)
         return reply
@@ -266,7 +271,9 @@ def synchronize(home,node):
             if isinstance(exc,ClientError) and exc.status!=409:
                 raise
             status=replica.install(get('snapshot?node_id='+node['node_id']))
-    request_json(node['controller'],node['pin'],'POST',prefix+'ack',
-                 {'node_id':node['node_id'],'epoch':status['epoch'],'revision':status['revision'],'head_digest':status['head_digest']},
-                 node['token'])
+    ack={'node_id':node['node_id'],'epoch':status['epoch'],'revision':status['revision'],'head_digest':status['head_digest']}
+    if discovery:
+        discovery.request('POST',prefix+'ack',ack)
+    else:
+        request_json(node['controller'],node['pin'],'POST',prefix+'ack',ack,node['token'])
     return status

@@ -1,5 +1,39 @@
 # ASC TROUBLESHOOTING
 
+## Phase 2B Windows development
+
+- Metadata `invalid_snapshot` / `invalid_metadata` from a runtime: snapshots and
+  deltas must keep MetadataSource's exact versioned envelope. Runtime checkpoint
+  labels previously broke this contract; the response wrapper now preserves it.
+  Never loosen the cache validator or recalculate a received digest to accept it.
+
+- `controller_not_ready` / `runtime_recovering`: Follower, replay or missing
+  quorum; preserve state, wait for authenticated discovery/quorum. A cached role
+  cannot authorize writes.
+- `stale_authority`: actual Raft term differs from the prepared activation;
+  preserve stable request/job/session IDs and rediscover. Never increment a term
+  in client input or reset votes to bypass this check.
+- `runtime_cache_quarantined` / `invalid_runtime_projection`: stop and retain
+  complete state for reviewed restore; never edit the checkpoint/document/hash.
+- `attached_registry_required` / `upgrade_precondition_conflict`: runtime upgrade
+  requires a stopped attached primary and exact reviewed committed metadata SHA.
+  It cannot merge independent histories or replace keys/private SQL.
+- Sidecar shuts down after Python dies: expected armed liveness watchdog after
+  12 seconds. Restart matching complete state; never run init for recovery.
+- Distributed Storage denies missing epoch/nonce/proof: provision the correct
+  trusted cluster epoch and pinned bootstrap list. Never disable proof or use an
+  old whole-volume grant as a fallback.
+- `unmerged_controller_authority`: the original private registry is neither the
+  committed primary source nor a fresh matching metadata follower. Preserve both
+  histories; operator review is required. Never erase private jobs/identities or
+  bypass this check to attach.
+- NEEDS_REVIEW after quorum loss: a fresh exact distributed job may resume only
+  when staging and final both still match. `object_requires_review` retains both
+  bodies for review; never delete/rewrite an unknown copy to make retry succeed.
+- Queue delayed by audit: runtime now runs due work first and limits each audit
+  turn to one physical verification. Owner completion may still return PENDING;
+  inspect the same persistent job until physical proof is committed.
+
 | Symptom | Likely cause | Safe action |
 |---|---|---|
 | `getprop` missing on Windows/Linux | Probe is designed for Termux; other OS uses fallback | Run from Android Termux for hardware names; unknown telemetry is okay |

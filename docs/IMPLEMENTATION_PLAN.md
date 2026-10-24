@@ -102,4 +102,13 @@ The accepted scope may only be metadata consensus. Registry approvals, private
 jobs/grants and physical storage automation are frozen rather than promoted by
 metadata election. Android ARM64 cross-build proves feasibility only; no phone,
 physical power-cut, Doze/SD, dynamic membership, disaster rebuild or production
-acceptance is inferred. Phase 2B has not started.
+acceptance is inferred.
+
+## Phase 2B v0.8.0 — Windows development complete
+
+Controller failover is implemented on the existing WIP branch. The readiness
+audit and design for unsafe authority groups are in PHASE2B-ACCEPTANCE.md.
+All 20 fault scenarios PASS with separate temporary processes/volumes; the final
+full regression is 101 tests OK (98 PASS, 3 POSIX skips), with 9 Go tests and both
+Windows/Android ARM64 builds PASS. Original engines and Phase 2A evidence remain
+intact. No real-phone/Android runtime or production acceptance is inferred.

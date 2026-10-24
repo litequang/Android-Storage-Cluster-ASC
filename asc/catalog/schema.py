@@ -2,11 +2,11 @@
 from .common import uid, ZERO
 
 
-def migrate(db):
+def migrate(db, initial_epoch=None):
     db.execute('''CREATE TABLE IF NOT EXISTS catalog_state(
         singleton INTEGER PRIMARY KEY CHECK(singleton=1),epoch TEXT NOT NULL,
         revision INTEGER NOT NULL,head_digest TEXT NOT NULL)''')
-    db.execute('INSERT OR IGNORE INTO catalog_state VALUES(1,?,0,?)', (uid(), ZERO))
+    db.execute('INSERT OR IGNORE INTO catalog_state VALUES(1,?,0,?)', (initial_epoch if initial_epoch is not None else uid(), ZERO))
     db.execute('''CREATE TABLE IF NOT EXISTS catalog_nodes(
         node_id TEXT PRIMARY KEY,origin TEXT NOT NULL,pin TEXT NOT NULL,device_id TEXT NOT NULL,
         metadata_allowed INTEGER NOT NULL,storage_allowed INTEGER NOT NULL,

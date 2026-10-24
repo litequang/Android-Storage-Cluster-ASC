@@ -26,6 +26,7 @@ runtime/
 backups/
 node.json
 controller.json
+cluster-client.json
 enrollment_pending.json
 enrollment_abandoned-*.json
 node_before_repair-*.json
@@ -127,5 +128,7 @@ asc-raft
 asc-raft.exe
 *.test
 consensus*.json
+failover*.json
+bootstrap*.json
 raft-state/
 *.enrolled

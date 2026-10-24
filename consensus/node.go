@@ -147,14 +147,16 @@ func (c Config) Initialize() error {
 }
 
 type Node struct {
-	Raft      *raft.Raft
-	FSM       *FSM
-	Store     *Store
-	Transport *Transport
-	cfg       Config
-	ipc       *http.Server
-	slots     chan struct{}
-	closed    sync.Once
+	Raft            *raft.Raft
+	FSM             *FSM
+	Store           *Store
+	Transport       *Transport
+	cfg             Config
+	ipc             *http.Server
+	slots           chan struct{}
+	closed          sync.Once
+	runtimeMu       sync.Mutex
+	runtimeDeadline time.Time
 }
 
 func Start(cfg Config, seed []byte) (*Node, error) {
@@ -254,8 +256,28 @@ func Start(cfg Config, seed []byte) (*Node, error) {
 	}
 	n.ipc = &http.Server{Handler: n, ReadHeaderTimeout: time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 20 * time.Second, IdleTimeout: 3 * time.Second, MaxHeaderBytes: 4096, ErrorLog: log.New(io.Discard, "", 0)}
 	go n.ipc.Serve(limitListener(ipc, 16))
+	go n.watchRuntime()
 	ok = true
 	return n, nil
+}
+
+// An explicitly armed Python runtime must remain alive. Withdrawal shuts down
+// this voter through the upstream API; it never changes votes/membership.
+func (n *Node) watchRuntime() {
+	tick := time.NewTicker(500 * time.Millisecond)
+	defer tick.Stop()
+	for range tick.C {
+		if n.Raft.State() == raft.Shutdown {
+			return
+		}
+		n.runtimeMu.Lock()
+		expired := !n.runtimeDeadline.IsZero() && time.Now().After(n.runtimeDeadline)
+		n.runtimeMu.Unlock()
+		if expired {
+			n.Close()
+			return
+		}
+	}
 }
 func sameMembership(a, b raft.Configuration) bool {
 	aa := map[raft.ServerID]raft.Server{}
@@ -326,6 +348,11 @@ func (n *Node) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	switch {
+	case r.Method == "POST" && r.URL.Path == "/v1/runtime/heartbeat":
+		n.runtimeMu.Lock()
+		n.runtimeDeadline = time.Now().Add(12 * time.Second)
+		n.runtimeMu.Unlock()
+		reply(200, map[string]bool{"ok": true})
 	case r.Method == "GET" && r.URL.Path == "/v1/status":
 		_, leader := n.Raft.LeaderWithID()
 		s := n.FSM.View()
@@ -358,6 +385,16 @@ func (n *Node) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		if _, e := hex.DecodeString(c.Intent); e != nil {
 			deny(400, "invalid_intent")
+			return
+		}
+		var runtimeDoc struct {
+			Schema    int `json:"schema"`
+			Authority struct {
+				NodeID string `json:"node_id"`
+			} `json:"authority"`
+		}
+		if json.Unmarshal(c.Document, &runtimeDoc) != nil || runtimeDoc.Schema == 2 && runtimeDoc.Authority.NodeID != n.cfg.NodeID {
+			deny(409, "stale_authority")
 			return
 		}
 		f := n.Raft.Apply(b, 5*time.Second)

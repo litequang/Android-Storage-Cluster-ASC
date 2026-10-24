@@ -1,9 +1,57 @@
-# ASC CODEMAP — v0.7.0 Phase 2A development / v0.6 default storage boundary
+# ASC CODEMAP — v0.8.0 Phase 2B development / v0.6 default storage boundary
 
-Read AGENTS.md first. Default storage mode retains one Controller. Opt-in
-metadata consensus uses the Go sidecar described below; it freezes all physical
-write/lifecycle/job/grant automation. No automatic Controller/storage failover or
-production deployment. Acceptance status: PHASE2A-ACCEPTANCE.md continuation.
+## Phase 2B — Windows development qualified
+
+- `asc/failover/state.py`: runtime schema-2 envelope, authority-table allowlist,
+  bounded validation, disposable in-memory SQL preparation and takeover fencing.
+- `asc/failover/runtime.py`: Runtime.view/commit/ensure_ready/operation, durable
+  verified private cache and RuntimeRegistry.connect; existing business SQL is
+  prepared in memory and acknowledged only after Go commits. Original Phase 2A
+  registry guards stay in place. No physical bytes/keys are in this projection.
+- `asc/failover/service.py`: leader-only CatalogService worker, Recovery/Follower/
+  Leader transitions, RuntimeHandler discovery/stale reads/Storage introspection.
+  RuntimeHandler._json preserves exact MetadataSource snapshot/delta envelopes;
+  runtime checkpoint labels must not alter their schema/digest. Failover tests
+  import real pinned metadata before/after takeover and snapshot/restart.
+  The repaired fake cohost restarts with retained Go state and waits for current
+  quorum readiness before reapproval; Python-only failures remain separate cases.
+- `asc/failover/discovery.py`: pinned endpoint allowlist, TTL and bounded retries;
+  catalog.client, cli.agent_once, catalog.metadata.synchronize and storage.http
+  opt in only through explicit `controllers` configuration.
+- `asc/failover/cli.py`: explicit stopped development upgrade and separate opt-in
+  run entrypoint. No automatic migration, installation or production execution.
+- `consensus/fsm.go`: schema-2 commands require actual apply-term authority;
+  `node.go`: local authenticated Python liveness watchdog and owner-ID check.
+- Phase 2B state audit, final 101-test regression, 20/20 fault matrix and limits:
+  PHASE2B-ACCEPTANCE.md. Qualification is Windows development only.
+- `tests/test_failover.py`: actual three-Go/three-Python cohost processes, fake
+  independent volumes, TLS, upload/copy/reconnect and recovery qualification.
+  `consensus/runtime_fixture_test.go` supplies authenticated bounded partition
+  controls only in a Go test executable; they are absent from `asc-raft` builds.
+  `fsm_test.go: TestRuntimeAuthorityUsesActualCommittedTerm` checks stale/high
+  term, downgrade and snapshot authority retention. Existing tests remain intact.
+- Runtime schema validation supplies a constant disposable initial epoch through
+  Registry.initialize/schema.migrate; default initialization/migrations retain
+  their original call contract and never replace an existing persistent epoch.
+- `failover.state.verify_attachment` reconstructs the initial full projection
+  against the permanent upgrade receipt. A conflicting private registry fails
+  closed; only the exact primary or an exact fresh metadata follower can attach.
+- `storage.engine.commit(..., resume_verified=True)` is used only by distributed
+  Storage HTTP after fresh scoped authority; both retained bodies must rehash to
+  the same known job/session. Legacy commits keep their previous contract.
+  `catalog.service._execute` requests this narrow recovery for NEEDS_REVIEW only
+  in failover mode. No Engine replacement or object deletion is introduced.
+- Runtime worker prioritizes pending jobs and bounds background reconcile to one
+  physical verification per turn. `tests/test_failover.LostAckProxy` drops an
+  actual successful TLS commit reply; it is test code, never a product endpoint.
+  Replay checks inspect job-scoped sessions/manifests and immutable bytes on all
+  volumes, plus the single original UPLOAD job; unrelated copies may continue.
+
+Read AGENTS.md first. Default storage mode retains one Controller. The older
+metadata-only mode below freezes physical/lifecycle/job/grant automation. Separate
+Phase 2B runtime above adds Controller/storage coordination failover with its own
+qualification in PHASE2B-ACCEPTANCE.md. No production/Android deployment. Historical
+metadata acceptance remains in PHASE2A-ACCEPTANCE.md.
 
 | Responsibility | Source / entry points | Dependencies / tests |
 |---|---|---|
@@ -32,7 +80,7 @@ production deployment. Acceptance status: PHASE2A-ACCEPTANCE.md continuation.
 | Catalog invariants and migration fixtures | tests/test_catalog.py | registry-3 preservation, rollback failure, materialized snapshot consistency, domains/quotas, cache and lease tests |
 | Distributed acceptance | tests/test_distributed.py: DistributedTests | reuses helpers from test_storage_cluster without duplicate tests; real four-endpoint HTTPS, three isolated temp nodes |
 | Previous regression and installers | tests/test_foundation.py, test_identity.py, test_lifecycle.py, test_storage.py, test_storage_cluster.py, test_installer.py | full suite includes all; three POSIX installer tests skip on Windows |
-| Version / private state exclusion | asc/__init__.py; .gitignore; .gitattributes | 0.7.0; inspect tracked AND staged contents before publishing |
+| Version / private state exclusion | asc/__init__.py; .gitignore; .gitattributes | 0.8.0 development; inspect tracked AND staged contents before publishing |
 
 ## Lookup routes
 

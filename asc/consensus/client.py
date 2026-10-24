@@ -45,7 +45,8 @@ class Client:
             if response.status != 200:
                 # Never reflect untrusted remote errors/payloads into API logs.
                 known = {'ipc_unauthorized', 'ipc_busy', 'quorum_read_unavailable', 'commit_unconfirmed',
-                         'precondition_conflict', 'request_id_conflict', 'receipt_limit', 'unsupported_operation', 'voter_quarantined'}
+                         'precondition_conflict', 'request_id_conflict', 'receipt_limit', 'unsupported_operation',
+                         'voter_quarantined', 'stale_authority'}
                 error = result.get('error')
                 raise CatalogError(error if error in known else 'consensus_unavailable', response.status)
             return result

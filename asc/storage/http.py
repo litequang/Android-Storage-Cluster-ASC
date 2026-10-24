@@ -3,6 +3,8 @@ import json
 import sqlite3
 import ssl
 import time
+import uuid
+import hashlib
 from urllib.parse import urlsplit, parse_qs
 from .. import validation as valid
 from ..client import ClientError, request_json
@@ -28,6 +30,12 @@ class UploadBody:
 class StorageServer(Server):
     def __init__(self, address, engine, node_config):
         self.engine, self.node_config = engine, dict(node_config)
+        self.discovery = None
+        if 'controllers' in node_config:
+            from ..failover.discovery import Discovery
+            if not node_config.get('cluster_epoch'):
+                raise ValueError('distributed storage requires pinned cluster epoch')
+            self.discovery = Discovery(node_config['cluster_id'], node_config['controllers'], node_config['token'])
         super().__init__(address, None, '', StorageHandler)
 
 
@@ -58,14 +66,28 @@ class StorageHandler(Handler):
         obj={'node_id':cfg['node_id'],'grant':grant,'volume_id':volume,'operation':operation,
              'scope':{'method':self.command,'resource':urlsplit(self.path).path.removeprefix('/storage/v1/')}}
         try:
-            try:
-                reply=request_json(cfg['controller'],cfg['pin'],'POST','/api/v1/storage/authorize',obj,cfg['token'])
-            except ClientError as exc:
-                if exc.status!=400:raise
-                # v0.5 rejects scope. The same pinned authority must approve this request;
-                # only a legacy whole-volume grant can succeed without scope.
-                legacy={k:v for k,v in obj.items() if k!='scope'}
-                reply=request_json(cfg['controller'],cfg['pin'],'POST','/api/v1/storage/authorize',legacy,cfg['token'])
+            if self.server.discovery is not None:
+                from ..catalog.common import digest
+                nonce = uuid.uuid4().hex
+                obj['nonce'] = nonce
+                reply = self.server.discovery.request('POST', '/api/v1/storage/authorize', obj)
+                proof = reply.get('authority', {})
+                expected = digest({'node_id': cfg['node_id'], 'grant_sha256': hashlib.sha256(grant.encode()).hexdigest(),
+                    'volume_id': volume, 'operation': operation, 'scope': obj['scope'], 'nonce': nonce})
+                if (proof.get('cluster_id') != cfg['cluster_id'] or proof.get('epoch') != cfg['cluster_epoch'] or
+                        proof.get('nonce') != nonce or proof.get('intent_sha256') != expected or
+                        type(proof.get('term')) is not int or proof['term'] < 1 or
+                        type(proof.get('index')) is not int or proof['index'] < 1):
+                    raise ClientError('invalid committed operation authority', 403)
+            else:
+                try:
+                    reply=request_json(cfg['controller'],cfg['pin'],'POST','/api/v1/storage/authorize',obj,cfg['token'])
+                except ClientError as exc:
+                    if exc.status!=400:raise
+                    # v0.5 rejects scope. The same pinned authority must approve this request;
+                    # only a legacy whole-volume grant can succeed without scope.
+                    legacy={k:v for k,v in obj.items() if k!='scope'}
+                    reply=request_json(cfg['controller'],cfg['pin'],'POST','/api/v1/storage/authorize',legacy,cfg['token'])
         except ClientError as exc:
             if exc.status in (400, 401, 403):
                 self.server.limiter.blocked('auth', self.client_address[0], consume=True)
@@ -148,7 +170,11 @@ class StorageHandler(Handler):
                 return self._json(201, {'session': row})
             if resource == 'uploads' and len(extra) == 2 and extra[1] == 'commit':
                 valid.payload(obj, ())
-                row = engine.commit(extra[0], principal, volume, lambda: self._authorize('write'))
+                resume = self.server.discovery is not None and constraints and constraints.get('kind') == 'target'
+                if resume:
+                    row = engine.commit(extra[0], principal, volume, lambda: self._authorize('write'), resume_verified=True)
+                else:
+                    row = engine.commit(extra[0], principal, volume, lambda: self._authorize('write'))
                 return self._json(200, {'file': row})
             if resource == 'files' and len(extra) == 2 and extra[1] == 'verify':
                 valid.payload(obj, ())

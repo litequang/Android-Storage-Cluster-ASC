@@ -1,11 +1,36 @@
 # ASC ARCHITECTURE 2.2 — PROPOSED
 
+## Phase 2B development boundary — Windows qualified
+
+The new opt-in failover runtime prepares existing business SQL against disposable
+in-memory state, commits a bounded schema-2 authority envelope through the same
+Go CAS FSM, and caches only verified committed bytes/checkpoints in a separate
+private runtime DB. The original guarded Phase 2A registry remains preserved.
+Control revision is distinct from Catalog revision. Takeover commits the owner
+and actual Raft term, invalidates old grants and leases, preserves stable job/
+session/object identities, and invalidates placement probes before work resumes.
+An authenticated liveness heartbeat withdraws a sidecar if Python dies. Discovery
+uses provisioned pins only; storage requires fresh online committed authority.
+The readiness audit and executed Windows qualification are in PHASE2B-ACCEPTANCE.md.
+
+Runtime attachment proves the frozen original private state against the permanent
+initial upgrade receipt. It refuses independent authority histories instead of
+discarding them. A fresh follower must have the exact source Catalog and no private
+authority to merge. Pending jobs run before background reconciliation, with one
+physical verification per audit turn. A known scoped job can explicitly resume a
+held immutable final copy only after rehashing matching retained staging/final
+bodies and obtaining fresh authority; unknown/mismatched bodies remain held.
+
+Public MetadataSource snapshot/delta envelopes retain their original exact schema,
+digest and transaction revision. Runtime response labels are not injected into
+these versioned payloads; node caches continue using the unchanged strict validator.
+
 ## Lifecycle boundary inherited from 0.4.1 / Phase 1.1
 
 The lifecycle below is retained. Phase 1.2A local storage is documented at the end.
 The early consensus target below is historical design. Later sections describe
-single-writer storage and the opt-in Go metadata consensus continuation. Full
-Controller/storage automatic failover and production integration remain absent.
+single-writer storage and the opt-in Go metadata consensus continuation. Phase 2B
+Controller failover is described above; production/Android integration is absent.
 
 - API stays `/api/v1`; registry schema 2 adds node credential lifecycle and hashed
   enrollment-operation routing without replacing v0.4 cluster/node identities.
@@ -112,7 +137,7 @@ Reconciliation rotates persistent per-volume inventory cursors (16 pages/run, 20
 
 Catalog.mutate is an integration boundary, not a completed deterministic Raft apply. Phase 2 must separate nondeterministic preparation (IDs, time, placement) from replicated application, define fencing/epoch recovery and fault-test quorum behavior. No consensus, election, automatic Controller failover, disaster-proof backup or Android/power-cut readiness is claimed.
 
-## Phase 2A investigation — blocked before runtime integration
+## Phase 2A — Go metadata mode and preserved initial investigation
 
 Go continuation: the development-only `consensus/` package wraps official
 HashiCorp Raft and its synchronous Bolt backend. ASC supplies identity/integrity
@@ -137,10 +162,12 @@ automatic failover claim is made. Local reads are stale with exact checkpoint;
 strong reads wait for an upstream committed Barrier and applied FSM. During Go
 startup replay, the last verified Python projection remains explicitly stale.
 
-Engine qualification rejected unmodified PySyncObj 0.3.17: missing/corrupt vote metadata permits another same-term vote; persistence synchronization and default voter authentication do not meet ASC requirements. See ADR-037/038 and PHASE2A-ACCEPTANCE.md for reproducible evidence and alternatives. No consensus runtime or v0.7 release exists.
+### Initial PySyncObj investigation (historical)
+
+Engine qualification rejected unmodified PySyncObj 0.3.17: missing/corrupt vote metadata permits another same-term vote; persistence synchronization and default voter authentication do not meet ASC requirements. See ADR-037/038 and PHASE2A-ACCEPTANCE.md for reproducible evidence and alternatives. At that initial stage no consensus runtime or v0.7 release existed; the Go continuation above subsequently qualified metadata consensus.
 
 The proposed integration separates leader preparation (IDs, clock, placement and physical proof), an engine majority-commit boundary, deterministic Catalog apply, and a transactional applied-index/idempotency receipt. Apply must not consult live network, local clock, random values, unreplicated node approvals or queue leases. File revisions map to committed Catalog changes; engine no-ops do not create file revisions.
 
 A safe read barrier/ReadIndex plus applied-index check is required for strong reads. A local leader flag/term/heartbeat is insufficient. Existing read-only caches remain stale. Public metadata exports need a separate validated consensus snapshot envelope rather than becoming Raft snapshots merely by renaming them.
 
-Registry lifecycle, approvals/probes, job leases/grants and storage side effects remain single-Controller state. Any future metadata-only consensus runtime must prohibit physical-write/job failover until distributed fencing is proved. Bootstrap/membership/recovery must preserve cluster identity and fail closed on lost state. These are design constraints, not enabled behavior; no change to v0.6 component boundaries.
+At that initial stage, registry lifecycle, approvals/probes, job leases/grants and storage side effects remained single-Controller state. Metadata-only consensus must prohibit physical-write/job failover until distributed fencing is proved. Bootstrap/membership/recovery must preserve cluster identity and fail closed on lost state. These were the initial integration constraints; the separate Phase 2B boundary and qualification above describe the later opt-in runtime.

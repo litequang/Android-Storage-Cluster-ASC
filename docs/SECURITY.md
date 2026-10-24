@@ -1,5 +1,34 @@
 # ASC SECURITY & RECOVERY
 
+## Phase 2B development trust boundary — Windows qualified
+
+The opt-in runtime keeps distinct endpoint pins/admin credentials and node-local
+TLS/IPC secrets. Replicated state includes credential hashes and public lease IDs,
+not raw secrets or private keys. Existing metadata-mode guards remain untouched.
+Every runtime mutation is quorum committed in its actual activation term; takeover
+invalidates old grants/leases and rechecks physical evidence. Storage introspection
+uses an exact nonce-bound committed receipt over pinned online HTTPS, with no
+authorization cache/legacy fallback. Already-authorized immutable IO may finish;
+fresh commit authorization and current Catalog lease fencing govern publication.
+This assumes trusted preparation and non-Byzantine configured Controllers, as in
+Phase 2A; receipts are not independently signed Byzantine quorum certificates.
+No delete/GC API, score-driven election, phone deployment or production claim is
+introduced. Read the executed fault matrix and limits before development use.
+
+A conflicting frozen private Controller registry is an attachment blocker, proved
+against the initial committed document receipt rather than inferred from matching
+Catalog alone. Cache corruption or a dead worker withdraws Python liveness rather
+than leaving an unhealthy Controller as permanent Leader. Held object resume does
+not bypass revocation: exact fresh job scope and two matching retained hashes are
+required, then commit reauthorizes. Corrupt/unknown bodies are preserved.
+
+Agent bearer/re-pair/revoke and pinned Raft voter certificates are separate trust
+layers. Revoking an Agent denies its heartbeat/grants; it does not remove a static
+voter or rotate its peer key. Voter removal/certificate revocation requires a
+separate reviewed membership/trust protocol and is not implemented here. Public
+self hints expose no grant authority; the actual API still requires quorum and
+current credentials. Owner bootstrap secrets never belong in Agent configuration.
+
 ## Security boundaries
 - Separate owner/admin/user accounts from node machine credentials; authorization must not rely only on being connected to VPN.
 - Do not expose node agent, SFTP or consensus traffic to public Internet.

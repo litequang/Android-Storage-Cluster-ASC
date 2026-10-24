@@ -64,3 +64,57 @@ func TestFSMReceiptsCASAndSnapshot(t *testing.T) {
 		t.Fatal("receipt bound bypassed")
 	}
 }
+
+func TestRuntimeAuthorityUsesActualCommittedTerm(t *testing.T) {
+	seed := []byte(`{"schema":1,"cluster_id":"cluster-a","epoch":"epoch-a","revision":0}`)
+	f := NewFSM("cluster-a", "epoch-a", seed)
+	apply := func(index, term uint64, c Command) Receipt {
+		b, e := json.Marshal(c)
+		if e != nil {
+			t.Fatal(e)
+		}
+		return f.Apply(&raft.Log{Index: index, Term: term, Data: b}).(Receipt)
+	}
+	c := Command{Schema: 1, Cluster: "cluster-a", Epoch: "epoch-a", RequestID: "runtime-upgrade-1", Intent: sum([]byte("upgrade")), Expected: sum(seed),
+		AuthorityTerm: 3, Document: []byte(`{"schema":2,"cluster_id":"cluster-a","epoch":"epoch-a","revision":1,"authority":{"node_id":"a","term":3}}`)}
+	if r := apply(2, 3, c); r.Error != "" {
+		t.Fatal(r.Error)
+	}
+	before := f.View()
+	c.RequestID = "delayed-old-term"
+	c.Intent = sum([]byte("old"))
+	c.Expected = before.SHA
+	if r := apply(3, 4, c); r.Error != "stale_authority" {
+		t.Fatal("old runtime term accepted", r)
+	}
+	c.RequestID = "self-asserted-high-term"
+	c.AuthorityTerm = 1000
+	if r := apply(4, 4, c); r.Error != "stale_authority" {
+		t.Fatal("self asserted term accepted", r)
+	}
+	c.RequestID = "downgrade-to-metadata"
+	c.AuthorityTerm = 0
+	c.Document = []byte(`{"schema":1,"cluster_id":"cluster-a","epoch":"epoch-a","revision":2}`)
+	if r := apply(5, 4, c); r.Error != "stale_authority" {
+		t.Fatal("runtime downgrade accepted", r)
+	}
+	if got := f.View(); got.SHA != before.SHA {
+		t.Fatal("denied authority changed document")
+	}
+	c.RequestID = "takeover-new-term"
+	c.Intent = sum([]byte("takeover"))
+	c.AuthorityTerm = 4
+	c.Document = []byte(`{"schema":2,"cluster_id":"cluster-a","epoch":"epoch-a","revision":2,"authority":{"node_id":"b","term":4}}`)
+	if r := apply(6, 4, c); r.Error != "" {
+		t.Fatal(r.Error)
+	}
+	view := f.View()
+	raw, _ := json.Marshal(view)
+	restored := NewFSM("cluster-a", "epoch-a", seed)
+	if e := restored.Restore(io.NopCloser(bytes.NewReader(seal(raw)))); e != nil {
+		t.Fatal(e)
+	}
+	if got := restored.View(); got.SHA != view.SHA || !bytes.Equal(got.Document, c.Document) {
+		t.Fatal("snapshot lost runtime authority")
+	}
+}

@@ -1,10 +1,24 @@
-# ASC QuickStart 0.7.0 — Go metadata consensus (Windows development)
+# ASC QuickStart 0.8.0 — Controller failover (Windows development)
+
+Phase 2B v0.8.0 **đạt nghiệm thu Windows development ngày 2026-10-24**:
+20/20 ca failover PASS; full regression 101 test, 98 PASS và 3 SKIP POSIX.
+Audit và kết quả thực chạy: [PHASE2B-ACCEPTANCE.md](docs/PHASE2B-ACCEPTANCE.md).
+Runtime thử nghiệm riêng ở `asc.failover`, chỉ bật bằng cấu hình development
+tường minh sau chuyển đổi metadata đã dừng. Không chạy các lệnh mới trên điện
+thoại, M51 hoặc private state thật. Lịch sử v0.7 và bằng chứng PySyncObj giữ nguyên.
+
+Owner CLI thử nghiệm có thể dùng private `ASC_HOME/cluster-client.json` gồm
+`config_version: 1`, `cluster_id`, `controllers` (mỗi endpoint có node_id/origin/pin
+và token admin riêng). Các lệnh `catalog-*` và quản trị Controller sẽ tìm Leader
+qua danh sách này. Không chép file owner sang Agent; cấu hình Agent chỉ giữ token
+của chính nó cùng danh sách pin công khai. Chi tiết chuyển đổi và rollback trong
+báo cáo Phase 2B; phạm vi hiện tại dùng state/volume thử nghiệm, chưa phải production.
 
 Phase 2A đã đạt nghiệm thu Windows ở phạm vi **metadata consensus**; xem mục 14 và
 [báo cáo nghiệm thu hiện tại](docs/PHASE2A-ACCEPTANCE.md#go-sidecar-continuation--2026-10-23).
-Chế độ mặc định giữ storage single-writer. Chế độ consensus chỉ xử lý metadata,
-đóng băng registry/jobs/grants/truyền file; chưa có automatic Controller/storage
-failover hay production/Android readiness. Kết quả PySyncObj **1 PASS / 5 FAIL**
+Chế độ mặc định giữ storage single-writer. Chế độ metadata-only của Phase 2A
+đóng băng registry/jobs/grants/truyền file; runtime Phase 2B riêng ở trên bổ sung
+Controller/storage failover cho Windows development. Kết quả PySyncObj **1 PASS / 5 FAIL**
 được giữ nguyên làm bằng chứng lịch sử.
 
 Chế độ storage mặc định kế thừa v0.6: Global File Catalog do một Controller ghi, metadata replica chỉ đọc trên node, placement theo volume đã kiểm tra, queue sao chép bền vững, xác minh bytes/SHA-256 và download fallback. Chính sách single/replicated_2/replicated_3 đếm theo device domain do owner phê duyệt, không đếm hai volume cùng điện thoại thành hai bản độc lập.

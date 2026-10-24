@@ -1,5 +1,40 @@
 # ASC NODE PROTOCOL — lifecycle/storage implementation and proposed consensus
 
+## Phase 2B development protocol — Windows qualified
+
+Explicit runtime uses authenticated `GET /cluster/v1/leader` with self node ID,
+cluster, mode, write_ready and term, never an arbitrary redirect address. Discovery
+only calls configured endpoint/pin identities; readiness checks actual quorum.
+Private IPC adds `POST /v1/runtime/heartbeat` (12-second armed watchdog) and
+schema-2 commands require `authority_term` matching the actual applied log term.
+Distributed Agent introspection requires a fresh nonce with the existing exact
+scope; its pinned reply binds cluster/epoch/term/committed index/nonce/intent digest.
+It has no legacy fallback. `controllers` bootstrap configuration opts clients and
+Agents in; distributed Storage additionally pins `cluster_epoch`. Local Catalog
+reads remain explicitly stale with exact Catalog/control revisions and applied
+index; `consistency=strong` requires the runtime quorum gate. Distributed enrollment
+requires the existing retry-safe operation/token fields. Old wire/config paths
+retain their original behavior. Qualification: PHASE2B-ACCEPTANCE.md.
+
+Metadata snapshot/changes responses keep the existing exact version-1 envelope;
+only the existing transport protocol_version is added and removed as before.
+Runtime labels (control_revision, applied_index, term, stale/read_only) must not be
+injected into these digest-bound payloads or replace their captured revision.
+
+Wire `/storage/v1/uploads/<session>/commit` keeps its existing empty JSON body.
+For explicit distributed Storage only, a currently authorized exact target job
+may resume NEEDS_REVIEW after both retained bodies match; commit reauthorizes
+again before visibility. The client cannot request an unsafe recovery flag on
+wire. Legacy whole-volume callers cannot use this behavior.
+
+`/api/v1/info` also exposes a self node ID and explicitly non-authoritative local
+Leader hint. A TLS-pinned hint can route a rejected Agent to the quorum-gated
+heartbeat API for an authoritative repair-required response. It is never cached
+as readiness, cannot authorize a Storage operation and cannot introduce an address.
+Owner Catalog/admin CLI can opt in through private cluster-client.json with
+distinct endpoint credentials. Explicit Agent re-pair retains pinned bootstrap/
+epoch and pending operation identity and tries only those approved endpoints.
+
 The initial consensus sections are a future design; implemented lifecycle/storage contracts follow below.
 
 ## Compatibility

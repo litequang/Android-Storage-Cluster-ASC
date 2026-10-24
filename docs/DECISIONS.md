@@ -1,5 +1,27 @@
 # ASC Architecture Decision Records
 
+## Phase 2B design — Windows development qualified
+
+- ADR-042: Extend the existing prepared-document CAS with a versioned bounded
+  runtime envelope containing explicitly allowlisted authority rows, hashes and
+  public lease IDs. Prepare old business transactions on disposable SQL, keeping
+  original metadata-mode guards intact. Control revision is independent from
+  Catalog history. No private keys/raw bearer tokens enter the envelope.
+- ADR-043: Runtime commands must match the actual Raft apply term and local
+  configured owner ID. Commit takeover before authority, invalidate grants/leases,
+  retain checkpoints and reverify physical evidence. Online pinned per-operation
+  introspection plus a fresh nonce-bound committed receipt authorizes Storage;
+  client-supplied term and discovery hints never authorize it. No destructive API.
+- ADR-044: A Python liveness watchdog explicitly armed over private IPC shuts
+  down a voter through the upstream API after 12 seconds without heartbeat. This
+  prevents a surviving sidecar permanently owning a dead Python Controller. It
+  changes no election algorithm/membership. Retain healthy leadership rather than
+  use oscillating scores; planned transfer remains disabled pending qualification.
+
+These decisions passed the isolated Windows Phase 2B fault matrix and full
+regression. Android runtime and production remain unqualified; see the limits
+and exact executed evidence in PHASE2B-ACCEPTANCE.md.
+
 ## 2026-10-23 — authorized Go continuation
 
 - ADR-039 (selected for Windows metadata consensus): Owner selects HashiCorp Raft first,

@@ -186,6 +186,9 @@ class CatalogService:
         if job['kind']=='COPY':
             session=target.initiate(job['idempotency_key'],job['logical_path'],file['size'],file['sha256'])
             job=self.queue.checkpoint(job,session['session_id'],session['file_id'])
+            if session['state']=='NEEDS_REVIEW' and getattr(self,'failover',False):
+                target.commit(session['session_id'])  # Fresh runtime scope + exact retained-body revalidation.
+                session['state']='COMMITTED'
             if session['state'] not in ('READY','COMMITTED'):
                 job,replica,source=self._choose_source(job,file)
                 with source_stream(source,replica['local_file_id'],file['size'],file['sha256'],self.rate,job['lease_until']) as reader:
