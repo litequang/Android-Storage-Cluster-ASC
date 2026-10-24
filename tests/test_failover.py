@@ -312,7 +312,17 @@ class FailoverTests(unittest.TestCase):
         return self.wait_ready()
 
     def launch_python(self, i):
-        proc = subprocess.Popen([sys.executable, '-B', '-m', 'asc.failover.cli', 'run', '--config', str(self.homes[i]/'failover.json')],
+        command = [sys.executable, '-B', '-m', 'asc.failover.cli']
+        if os.name != 'nt':
+            # Synthetic test cohost only. Product entrypoint still refuses Linux/
+            # Android; patch this module's OS selector, never global os/pathlib.
+            script = ("from unittest.mock import patch; from types import SimpleNamespace; "
+                      "import asc.failover.cli as c; "
+                      "p=patch.object(c,'os',SimpleNamespace(name='nt')); p.start(); "
+                      "q=patch.object(c,'inspect',return_value={'protected':False,"
+                      "'installation_allowed':True,'simulation':True}); q.start(); c.main()")
+            command = [sys.executable, '-B', '-c', script]
+        proc = subprocess.Popen(command + ['run', '--config', str(self.homes[i]/'failover.json')],
             cwd=ROOT, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
         self.python[i] = proc

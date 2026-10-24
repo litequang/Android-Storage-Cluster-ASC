@@ -26,8 +26,8 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 | 3B.2 | PUSH VERIFIED `d948762`; 38 targeted tests PASS |
 | 3B.3 | PUSH VERIFIED `e24704c`; 41 targeted tests PASS |
 | 3B.4 | PUSH VERIFIED `b23722a`; 54 targeted tests PASS (59.175s) |
-| 3B.5a | Pure reduction preview + owner CLI; 37 targeted tests PASS; publication pending |
-| 3B.5b | New real three-voter fault matrix NOT STARTED |
+| 3B.5a | PUSH VERIFIED `5494dce`; 37 targeted tests PASS |
+| 3B.5b | 7/7 new real fault gates PASS (73.429s); 53 targeted tests PASS (2.676s); publication pending |
 | Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
 
 3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
@@ -36,12 +36,23 @@ Publication verification is reported after push and recorded in the next update.
 
 ## Next action / resume
 
-Verify 3B.5a publication, then 3B.5b real node-insights fault matrix (same checkpoint
-split for review). New reduction preview is pure and conservative; no physical GC.
-Exact target (37 PASS):
-`python -B -m unittest tests.test_nodes.ReductionPreviewTests tests.test_nodes.NodeCommandTests tests.test_nodes.SmartPlacementTests tests.test_nodes.TelemetryHistoryTests tests.test_backup.BackupStateTests tests.test_failover.RuntimeStateTests -q`
+Verify 3B.5b publication, then final acceptance gate. Source version 0.10.0.
+`python -B -m unittest tests.test_node_faults -v`: **7/7 fault gates PASS,
+73.429s**. `python -B -m unittest tests.test_nodes tests.test_backup.BackupStateTests tests.test_failover.RuntimeStateTests -v`:
+**53 PASS, 2.676s**. AST parses all Python sources/tests; no source changes pending.
 
-Existing Go checks PASS (11 top-level tests); builds running (record final exit).
-Full Python regression and new node-insights fault gates remain pending.
-Use `source /workspace/asc-cloud/activate.sh` for Python 3.13.5 / Go 1.27.3.
-No Phase 3B completion claim until all applicable checks pass and publish.
+First fault attempt failed at Windows-only product entrypoint. Test-only synthetic
+Linux launcher now supplies a module-local platform/profile mock; direct product
+Linux refusal remains and has an explicit regression. New runtime never bypasses
+guards outside tests. See PHASE3B-ACCEPTANCE.md for all intermediate findings.
+
+Next exact commands (activate `/workspace/asc-cloud/activate.sh`):
+- `python -B -m unittest discover -s tests -v`
+- In consensus: `go mod verify`, `go vet ./...`, `go test -v -timeout 240s ./...`
+- `CGO_ENABLED=0 go build -trimpath -buildvcs=false -o PRIVATE_OUTPUT ./cmd/asc-raft`
+  for Linux AMD64 and compile-only Windows AMD64/Android ARM64.
+Record actual counts/failures/skips/platform limits in PHASE3B-ACCEPTANCE.md, fix
+failures without weakening tests, review tracked/staged secrets, commit/push final
+report and verify remote. Do not claim Phase completion before that gate.
+
+All checkpoints remain on WIP only; no main merge/force/GC/production/phone work.

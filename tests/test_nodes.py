@@ -442,3 +442,22 @@ class NodeCommandTests(unittest.TestCase):
             expected=(method,path) if obj is None else (method,path,obj)
             self.assertEqual(api.request.call_args.args,expected)
         self.assertEqual(factory.call_count,3)
+
+
+class RuntimeSafetyTests(unittest.TestCase):
+    def test_product_linux_entrypoint_is_still_refused_before_private_state_access(self):
+        from unittest import mock
+        from types import SimpleNamespace
+        from asc.failover import cli
+        with mock.patch.object(cli,'os',SimpleNamespace(name='posix')), mock.patch.object(cli,'inspect',return_value={'protected':False}):
+            with self.assertRaisesRegex(ValueError,'Windows development only'):
+                cli.run('/no-private-state-access')
+
+    def test_enable_rejects_null_request_id_before_reading_runtime(self):
+        from unittest import mock
+        from types import SimpleNamespace
+        from asc.catalog.common import CatalogError
+        from asc.nodes.service import Insights
+        runtime=mock.Mock()
+        with self.assertRaises(CatalogError):Insights(SimpleNamespace(runtime=runtime)).enable({'request_id':None})
+        runtime.view.assert_not_called()

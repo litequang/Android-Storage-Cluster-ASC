@@ -11,7 +11,7 @@ class Insights:
 
     def edit(self, action, obj, change, enable=False):
         request=obj.get('request_id')
-        if request is not None: key(request)
+        if action != 'capture' or request is not None: key(request)
         intent=digest({'action':action,'payload':obj})
         with self.runtime.lock, self.runtime.operation() as view:
             doc=copy.deepcopy(view['document'])

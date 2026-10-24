@@ -182,7 +182,7 @@ class RuntimeHandler(Handler):
                     'global_file_catalog_enabled': True, 'schema_version': 4,
                     'features': ['controller-failover-v1', 'node-lifecycle-v1', 'retry-safe-enrollment-v1',
                                  'global-catalog-v1', 'metadata-replication-v1', 'file-scoped-transfers-v1',
-                                 'backup-versioning-v1']})
+                                 'backup-versioning-v1', 'node-insights-v1', 'replica-reduction-preview-v1']})
             if (self.command == 'GET' and parsed.path.startswith('/catalog/v1/files/') and
                     parsed.path.endswith('/reduction-preview')):
                 query = parse_qs(parsed.query, strict_parsing=True)

@@ -220,3 +220,10 @@ Historical PySyncObj evidence below remains unchanged.
   ReductionPreviewTests prove nonmutation and conservative stale/pin/domain holds.
   `nodes.cli.register`: shared pinned owner client for enable/scores/history/
   preferences/reduction preview, required mutation replay IDs; no apply command.
+- 3B.5b `tests/test_node_faults.py`: seven real three-voter/three-Controller/TLS
+  gates for owner reads/enable replay, smart placement, history, snapshot holds,
+  watchdog failover, minority rejection and actual Go snapshot/all-process replay.
+  Shared `test_failover.launch_python` supplies a test-only module-local platform/
+  synthetic profile wrapper on Linux; real entrypoint still refuses Linux/Android.
+  RuntimeSafetyTests prove the product guard and required non-null mutation IDs.
+  `asc/__init__.py`: 0.10.0 development; acceptance remains platform-scoped.

@@ -275,3 +275,8 @@ tracked and calls the existing validated init/run APIs; no Raft module is rewrit
   Existing authorized jobs may finish; Drain does not move or delete stored bytes.
 - Linux CLI integration tests use an explicitly permitted fake hardware profile.
   Real unknown hardware remains refused; do not add a product bypass for Cloud.
+- Real Python failover entrypoint is still Windows development only. Cloud fault
+  suites use a synthetic test launcher with a module-local platform/profile mock;
+  do not copy it into production or add a runtime bypass. A startup refusal in a
+  plain Linux launch is expected. Use existing `/workspace/asc-cloud/activate.sh`
+  in this Cloud environment to select Go 1.27.3/Python 3.13.5, not `/usr/bin/go`.

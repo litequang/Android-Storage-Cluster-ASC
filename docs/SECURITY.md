@@ -244,3 +244,9 @@ historical evidence only; proposed excess copies require fresh byte verification
 in a separately qualified future phase. Stale views, pins, unfinished work and
 insufficient independent available domains prevent proposals. Hardware protection,
 node generation and owner authentication remain mandatory; no membership API added.
+
+Linux Cloud qualification runs synthetic Controller cohosts using a test-only
+platform/profile wrapper in tests/test_failover.py. The product entrypoint still
+refuses plain Linux/Android runtime and protected devices; RuntimeSafetyTests
+verify refusal before private-state access. This is not new Linux/Android runtime
+or production authorization. Node mutation APIs reject null replay IDs.

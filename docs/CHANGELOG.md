@@ -221,3 +221,6 @@
 - 3B.5a: checkpoint-bound replica reduction dry-run with explicit retention/job/
   domain/proof holds and zero physical deletion. Add owner node-insights CLI using
   the existing protected-device guard and pinned client; no apply command.
+- 3B.5b / v0.10.0 development: real seven-gate node-insights fault matrix passes
+  on Linux Cloud using synthetic cohosts. Retain actual product platform/device
+  guards; reject null node mutation replay IDs. Full regression/acceptance pending.
