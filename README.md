@@ -62,3 +62,12 @@ only, with zero physical deletions and no apply command. Permanent receipt/runti
 limits still apply. Plan/progress: docs/PHASE3B-PLAN.md and PHASE3B-PROGRESS.md.
 
 Phase 3B exact new Cloud results/limits: [PHASE3B-ACCEPTANCE.md](docs/PHASE3B-ACCEPTANCE.md). Windows runtime and real-device execution remain separate.
+
+## Separate Android Demo Track
+
+`feature/android-demo-alpha` builds on the accepted Core WIP branch, with a bounded
+single-writer LAN CLI and immutable source/private-state separation. See the
+[Demo plan](docs/DEMO-TRACK-PLAN.md), [progress](docs/DEMO-TRACK-PROGRESS.md),
+[acceptance](docs/DEMO-TRACK-ACCEPTANCE.md) and [owner QuickStart](docs/DEMO-QUICKSTART.md).
+Use only a checksum-verified package with completed Linux acceptance. Android
+runtime is a separate owner pilot; no Raft/GC/M51/production qualification is implied.

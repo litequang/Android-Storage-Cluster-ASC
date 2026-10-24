@@ -354,3 +354,7 @@ Registry/CatalogService/StorageRuntime and existing guards; preserve all Core pa
 - `asc/demo/cli.py`: backup/verify-backup/stage/upgrade-preflight/upgrade/rollback/recover-upgrade/diagnose; node re-exec resolves its verified installed source.
 - `tests/test_demo_upgrade.py`: inherited LAN fault gates run via installed launchers, plus backup/external-volume/mutation/crash/upgrade/code-rollback/identity and diagnostics tests.
 - `docs/DEMO-QUICKSTART.md`: final owner manual CLI workflow, archive README source, limitations and manual stopped cluster sequence.
+
+Demo final qualification/package evidence is recorded in `docs/DEMO-TRACK-ACCEPTANCE.md`;
+README / README-VI link the separate Demo plan/progress/owner workflow. Public package
+contains source only, all Core Python retained; no Go sidecar/runtime/private data.

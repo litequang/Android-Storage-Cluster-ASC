@@ -24,13 +24,13 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.0 | PUSHED/REMOTE VERIFIED: 2b877ff6f4312110447e817210815794b2f84d87 |
 | DEMO.1 | PUSHED/REMOTE VERIFIED: 789ea8f9675c3339287eace1486126bd886c17e3 |
 | DEMO.2 | PUSHED/REMOTE VERIFIED: ae299c7981cd683cf61966c7ed64cfb05e557c51 |
-| DEMO.3a | Targeted PASS / source checkpoint publishing; full gate/package in DEMO.3b |
+| DEMO.3a | PUSHED/REMOTE VERIFIED: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 |
 | DEMO.4 | Deferred behind initial CLI package / owner pilot; optional UI |
 | Demo source-ready | NOT QUALIFIED; Android runtime NOT TESTED |
 
 ## Next action
 
-Publish/remote-verify DEMO.3a after final 13 targeted cases, then DEMO.3b fresh full Python/Go qualification, final candidate package verification and acceptance. Do not mark source-ready until those gates PASS. Reuse existing Core functions; do not enable Raft/GC or change
+DEMO.3a is published/verified. DEMO.3b full Python is RUNNING on frozen source; Go/module/vet/build and exact candidate archive checks PASS. Finish fresh full suite, then final package publication/acceptance. Do not mark source-ready before full PASS. Reuse existing Core functions; do not enable Raft/GC or change
 Core guards. Read DEMO-TRACK-PLAN for architecture, risk and upgrade contract.
 Each checkpoint must record changed files, exact actual tests/results, hash/push
 verification, current functionality, limits, rollback and short usage. Package
@@ -133,3 +133,30 @@ No full regression PASS claimed yet. Candidate source frozen; if changed, retest
 and regenerate candidate. Next: fresh full 221 Python expected (208 Core + 13 Demo),
 uncached Go tests/vet/modules and applicable Linux/Android cross-build; record exact
 actual counts/results, inspect/copy final public package and publish DEMO.3b.
+
+## DEMO.3b durable in-progress handoff (not a completion claim)
+
+597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 was pushed normally and advertised
+remote HEAD verified before starting full qualification. Core remote still acea2ae.
+Fresh full Python is running in this Cloud workspace, output
+/workspace/work/demo3b/full-python.log, exec session 29010. If that session is gone
+or completion evidence absent, rerun full suite; do not infer PASS from progress.
+No implementation/packaged-guide change since frozen 13-case targeted PASS.
+
+Go completed fresh: all modules verified, vet PASS, 11 uncached top-level tests
+PASS (consensus 19.489s, launcher 0.003s), Linux AMD64 build and Android ARM64
+cross-build PASS. Android binary is not launched by Demo; cross-build not runtime
+qualification. Exact final candidate byte-for-byte matches deterministic rebuild
+and was executed for dry-run/install/launcher/rerun/identity sentinel preservation/
+tamper refusal in isolated fake Android HOME, PASS. AST: 102 tracked Python parse.
+Core source/tests/Go verified unchanged against acea2ae. See provisional
+DEMO-TRACK-ACCEPTANCE.md for actual fault matrix, candidate SHA and commands.
+Full Python has no reported failure at this snapshot, but still RUNNING.
+
+This reporting update changes docs only; it reuses the unchanged-source 13-targeted
+PASS, checks links/whitespace/secrets, and intentionally does NOT release candidate
+or mark DEMO.3b done. Next account should finish/rerun full 221 expected Python,
+record actual result, reverify deterministic candidate SHA/public contents, copy
+archive+checksum into explicitly allowlisted releases/, update acceptance/progress/
+AGENTS/CHANGELOG, secret-review, commit/push Demo and verify advertised remote.
+DEMO.4 deferred as authorized for initial CLI handoff.

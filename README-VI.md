@@ -534,3 +534,12 @@ Thiếu dữ liệu vẫn UNKNOWN; lịch sử có giới hạn, khoảng trốn
 khi tiếp tục từ tài khoản khác. Lệnh chủ sở hữu ở README.md. Mọi checkpoint phải
 push và xác minh trên nhánh WIP trước bước kế tiếp. Kết quả Cloud không thay thế
 nghiệm thu Windows/Android thực tế; không thay đổi quorum hay triển khai production.
+
+## Android Demo Alpha — nhánh thử nghiệm riêng
+
+Demo Track ở `feature/android-demo-alpha`, xuất phát từ Core Phase 3C đã nghiệm thu;
+không dùng main. Xem [kế hoạch](docs/DEMO-TRACK-PLAN.md),
+[tiến độ](docs/DEMO-TRACK-PROGRESS.md), [nghiệm thu](docs/DEMO-TRACK-ACCEPTANCE.md)
+và [QuickStart ZTE/Bphone](docs/DEMO-QUICKSTART.md). Chỉ dùng gói có checksum từ
+checkpoint đã đủ Linux PASS; runtime Android do chủ dự án thử riêng. Đây là CLI
+single-writer LAN với private state riêng, không bật Android Raft/GC hay đụng M51.
