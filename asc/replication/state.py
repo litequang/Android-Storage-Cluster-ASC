@@ -8,7 +8,7 @@ def empty():
 
 def validate(state, doc):
     try:
-        if (not isinstance(state,dict) or set(state)-{'moves','retired'}!={'schema','requests'} or
+        if (not isinstance(state,dict) or set(state)-{'moves','retired','archived_jobs'}!={'schema','requests'} or
                 type(state['schema']) is not int or state['schema']!=1 or
                 not isinstance(state['requests'],dict) or len(state['requests'])>256):
             raise ValueError()
@@ -67,6 +67,17 @@ def validate(state, doc):
         for move in moves.values():
             if (move['state']=='RETIRED') != (move['source_replica_id'] in retired):raise ValueError()
             if move['state']!='RETIRED' and not any(r['replica_id']==move['source_replica_id'] and r['file_id']==move['file_id'] for r in doc['catalog']['replicas']):raise ValueError()
+        archives=state.get('archived_jobs',{})
+        if not isinstance(archives,dict) or len(archives)>512:raise ValueError()
+        current_jobs={j['job_id'] for j in doc['tables']['catalog_jobs']}
+        for job_id,record in archives.items():
+            identifier(job_id)
+            if (set(record)!={'job_id','file_id','kind','state','created_at','updated_at','archived_at','original_sha256','completion_sha256'} or
+                    record['job_id']!=job_id or record['file_id'] not in files or record['kind'] not in ('UPLOAD','COPY') or
+                    record['state']!='COMPLETED' or job_id in current_jobs):raise ValueError()
+            for field in ('created_at','updated_at','archived_at'):
+                if type(record[field]) is not int or not 0<=record[field]<2**63:raise ValueError()
+            content(0,record['original_sha256']);content(0,record['completion_sha256'])
         return state
     except (ValueError,KeyError,TypeError,AttributeError):
         raise CatalogError('invalid_replication_projection',409) from None
@@ -78,7 +89,7 @@ def transition(before,after):
     if old is None:return
     new=after.get('replication')
     if new is None:raise CatalogError('replication_downgrade_forbidden',409)
-    for field in ('requests','retired'):
+    for field in ('requests','retired','archived_jobs'):
         for key,value in old.get(field,{}).items():
             if new.get(field,{}).get(key)!=value:raise CatalogError('replication_history_changed',409)
     for move_id,move in old.get('moves',{}).items():
@@ -97,3 +108,17 @@ def transition(before,after):
         first=events.get(previous['revision']+1)
         if not first or first['previous_digest']!=previous['head_digest']:
             raise CatalogError('catalog_transition_invalid',409)
+
+    from .archive import record as archive_record
+    previous_jobs={j['job_id']:j for j in before['tables']['catalog_jobs']}
+    current_jobs={j['job_id']:j for j in after['tables']['catalog_jobs']}
+    for job_id,job in previous_jobs.items():
+        if job_id in current_jobs:continue
+        archived=new.get('archived_jobs',{}).get(job_id)
+        if (job['state']!='COMPLETED' or not archived or archived!=archive_record(job,archived['archived_at'])):
+            raise CatalogError('job_reference_removed_without_archive',409)
+    for job_id,record in new.get('archived_jobs',{}).items():
+        if job_id not in old.get('archived_jobs',{}):
+            job=previous_jobs.get(job_id)
+            if not job or job['state']!='COMPLETED' or record!=archive_record(job,record['archived_at']):
+                raise CatalogError('job_archive_not_proven',409)

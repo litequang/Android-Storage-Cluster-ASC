@@ -240,3 +240,6 @@
 - 3C.3a: read-only full-reference GC plan, explicit held/reclaimable estimates and
   checkpoint/graph/plan SHA; prevent retirement/receipt/history fence erasure across
   Runtime commits. Native/unknown data stays held; no physical GC execution.
+- 3C.3b: explicit audited COMPLETED-job pointer release; retain identity/history,
+  upload/completion replay and immutable digests, reject unaudited removal or job
+  resurrection. History and backup pointers continue to block physical GC.

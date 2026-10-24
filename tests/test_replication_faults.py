@@ -83,3 +83,21 @@ class ReplicationClusterTests(unittest.TestCase):
         self.post('policy',file_id=file_id,copies=1)
         self.assertEqual(blob.read_bytes(),data)
         self.mark(2,'1/2/3/1 policies, explicit Drain shortage and new-object repair preserve retired identity fencing')
+
+        original_job=self.owner.request('GET','jobs/'+uploaded['job_id'])['job']
+        archived=self.post('archive-jobs',retired_replica_id=source['replica_id'])
+        self.assertIn(uploaded['job_id'],archived['archived_job_ids'])
+        replay=self.owner.upload(io.BytesIO(data),'phase3c/move.bin','phase3c-upload','single')
+        self.assertEqual(replay['file']['file']['file_id'],file_id)
+        completion=self.owner.request('POST','uploads/'+uploaded['job_id']+'/complete',{
+            'session_id':original_job['target_session_id'],'local_file_id':original_job['target_local_file_id']})
+        self.assertEqual(completion['job_state'],'COMPLETED')
+        tombstone=self.owner.request('GET','jobs/'+uploaded['job_id'])['job']
+        self.assertTrue(tombstone['archived'])
+        self.assertNotIn('target_local_file_id',tombstone)
+        plan=self.owner.request('GET','replication/gc-plan')
+        candidate=next(r for r in plan['candidates'] if r['retired_replica_id']==source['replica_id'])
+        self.assertIn('retained_history',candidate['holds'])
+        self.assertNotIn('catalog_job_reference',candidate['holds'])
+        self.assertEqual(blob.read_bytes(),data)
+        self.mark(3,'explicit terminal-job archive retains audit/completion/upload replay; retained history still blocks GC')

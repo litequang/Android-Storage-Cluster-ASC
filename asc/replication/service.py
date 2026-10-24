@@ -198,3 +198,26 @@ class Replication:
                         jobs.get(move['job_id'],{}).get('state')=='COMPLETED')):
                     return self.complete_move({'move_id':move_id,'request_id':'move-retire-'+move_id})
         finally:self._tick.release()
+
+    def archive_jobs(self,obj):
+        from .archive import record
+        from .proofs import physical
+        identifier(obj['retired_replica_id'])
+        def change(doc,extension,view):
+            retired=extension.get('retired',{}).get(obj['retired_replica_id'])
+            if not retired:raise CatalogError('retired_replica_not_found',404)
+            target=physical(retired['replica']);replica_id=obj['retired_replica_id']
+            jobs=[j for j in doc['tables']['catalog_jobs'] if j['source_replica_id']==replica_id or j['replica_id']==replica_id or
+                  (j['target_node_id'],j['target_volume_id'],j['target_local_file_id'])==target]
+            if any(j['state']!='COMPLETED' for j in jobs):raise CatalogError('job_still_retains_object',409)
+            if len(extension.get('archived_jobs',{}))+len(jobs)>512:raise CatalogError('job_archive_limit',409)
+            archives={j['job_id']:record(j,now()) for j in jobs}
+            def apply(reg,catalog):
+                for job_id in archives:
+                    # COMPLETED already denies these job grants; revoke retained rows too.
+                    reg.db.execute('DELETE FROM transfer_grants WHERE job_id=?',(job_id,))
+                    reg.db.execute('DELETE FROM catalog_jobs WHERE job_id=?',(job_id,))
+            self.workspace(doc,apply)
+            extension.setdefault('archived_jobs',{}).update(archives)
+            return {'archived_job_ids':list(archives),'physical_deletions':0,'history_retained':True}
+        return self.edit('archive-jobs',obj,change)

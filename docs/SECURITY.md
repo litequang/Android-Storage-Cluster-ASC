@@ -264,3 +264,11 @@ history still count. No hidden eviction makes a target eligible. Every Runtime
 writer preserves permanent retirement/receipt/move fences and ordinary retained
 history through a transition check; the trust boundary still assumes configured
 non-Byzantine Controllers/Python preparation, not a malicious OS administrator.
+
+Terminal transfer-job pointer release is explicit owner authority, not ignored GC
+references. A permanent exact-row audit hash, identity and exact-completion hash
+replace the terminal record; state history remains. COMPLETED already denies the
+old scoped grant; those invalid grants are removed atomically with archival.
+Old request replay cannot restore a physical pointer or grant. Backup/restore-job
+and retained Catalog event pointers are not archived by this operation and remain
+GC holds. Physical execution must also serialize against local in-flight Engine IO.

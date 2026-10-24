@@ -316,3 +316,12 @@ A retired physical identity cannot appear in current Catalog replicas or active/
 retryable job sources/targets, even under another replica ID. This fence survives
 snapshot/replay/takeover and cannot be removed to roll back metadata independently
 of bytes. Whole-runtime and authority receipt bounds remain fail-closed.
+
+3C.3b optional replication.archived_jobs <=512 permanent records: job_id/file_id,
+kind/state=COMPLETED, created_at/updated_at/archived_at, original_sha256 and
+completion_sha256. The latter binds original session/local-file IDs by digest
+without retaining a usable physical pointer. State history rows remain unchanged.
+No archived ID may reappear in catalog_jobs; immutable archive receipts and exact
+prior completed-row hash are checked at every Runtime transition. Archive is
+explicit and may still reclaim zero bytes because retained events/snapshots/jobs
+hold them. Lifetime limits never silently evict archived identity or authority.

@@ -130,7 +130,14 @@ class CatalogService:
         self.refresh()
         entry=self.catalog.mutate('CREATE',obj);file_id=entry['file']['file_id']
         with self.registry.connect() as db:
-            job=dict(db.execute("SELECT * FROM catalog_jobs WHERE file_id=? AND kind='UPLOAD'",(file_id,)).fetchone())
+            row=db.execute("SELECT * FROM catalog_jobs WHERE file_id=? AND kind='UPLOAD'",(file_id,)).fetchone()
+            if row is None:
+                extension=db.execute("SELECT value FROM settings WHERE key='phase3c_replication'").fetchone()
+                archives=json.loads(extension[0]).get('archived_jobs',{}) if extension else {}
+                old=next((j for j in archives.values() if j['file_id']==file_id and j['kind']=='UPLOAD'),None)
+                if old is None:raise CatalogError('upload_job_missing',409)
+                return {'completed':True,'file':self.catalog.file(file_id)}
+            job=dict(row)
         if job['state']=='COMPLETED':
             return {'completed':True,'file':self.catalog.file(file_id)}
         job=self.queue.upload_lease(job['job_id'])

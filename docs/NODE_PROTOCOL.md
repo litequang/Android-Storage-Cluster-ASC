@@ -389,3 +389,11 @@ expires_at (60s), bounded retired candidates, eligibility/holds and reference co
 examples. eligible_logical_bytes and held_logical_bytes are logical sizes, not a
 measured filesystem-free delta. physical_deletions=0, physical_gc_enabled=false.
 Unknown/native objects are held; their unobserved count is null. No apply route yet.
+
+3C.3b POST replication/archive-jobs {request_id,retired_replica_id} explicitly
+archives only related COMPLETED transfer jobs and invalid job-scoped grant rows;
+returns archived_job_ids/history_retained=true/physical_deletions=0. Nonterminal
+references fail 409. GET jobs/ID and list expose archived=true, completed identity
+and audit evidence, with unavailable physical fields null/absent. Exact old upload
+and completion retries remain successful; mismatched completion is rejected and
+archived jobs cannot be retried/reintroduced. Retained event/history pins remain.

@@ -245,3 +245,15 @@ expiry, but supplies no delete authority. Logical excess and reclaimable bytes
 remain distinct. Monotone Runtime transitions reject extension/receipt/retirement/
 move erasure and retained-history edits; ordinary <=1024-event append/retention is
 allowed only with the previous digest anchor, not arbitrary compaction for GC.
+
+3C.3b explicit owner archive may release completed transfer-job physical pointers
+only for a proven retired replica. Active/retryable jobs cannot be archived.
+COMPLETED job-scoped grants already deny further authority and are removed with
+those terminal rows. Retain job identity/file/kind/times, full-record SHA and exact
+completion digest in bounded permanent audit receipts, plus unchanged state history.
+No raw local-object/session/source pointer remains in archived receipts; the logical
+file still resolves through its current verified replicas. Upload/completion replay
+returns its original success without reviving the old physical target. Every writer
+must prove archival against the prior exact terminal row; historical Catalog event
+pointers still block GC until the ordinary existing retention window ages them.
+No event eviction/archive/byte deletion is performed to create eligibility.

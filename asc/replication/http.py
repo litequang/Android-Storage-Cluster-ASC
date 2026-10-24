@@ -27,6 +27,8 @@ def handle(handler,parts,query):
         valid.payload(obj,('request_id','node_id'));result=service.drain(obj)
     elif parts==['complete-move']:
         valid.payload(obj,('request_id','move_id'));result=service.complete_move(obj)
+    elif parts==['archive-jobs']:
+        valid.payload(obj,('request_id','retired_replica_id'));result=service.archive_jobs(obj)
     elif parts==['reconcile']:
         valid.payload(obj,('request_id',));result=service.reconcile(obj)
     else:return handler._json(404,{'error':'not_found'})

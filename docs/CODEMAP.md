@@ -262,3 +262,8 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   `replication.state.transition` runs in every Runtime.commit to preserve retirement/
   request/move fences and retained event history. GCPlannerTests cover all reference
   classes and ordinary 1024-event aging without manual history eviction.
+- 3C.3b `replication.archive` + `Replication.archive_jobs`: explicit terminal-job
+  physical-pointer release with immutable identity/record digest/completion digest;
+  retained job history remains. Queue GET/list/completion and upload replay support
+  archived receipts. Transition checks require exact proven COMPLETED archive and
+  forbid mutation/resurrection; JobArchiveTests + real TLS archive/replay gate.

@@ -261,3 +261,73 @@ class GCPlannerTests(unittest.TestCase):
         index,_=references(self.doc,now())
         self.assertFalse(any(c=='retained_history' for c,_ in index[physical(self.source)]))
         self.assertTrue(any(c=='catalog_job_reference' for c,_ in index[physical(self.source)]))
+
+
+class JobArchiveTests(unittest.TestCase):
+    def setUp(self):
+        holder=RetirementTests();holder.setUp();self.addCleanup(holder.doCleanups)
+        finish_copy(holder.replication,holder.runtime,holder.job_id);holder.complete()
+        self.runtime=holder.runtime;self.doc=self.runtime.doc;self.source=holder.source
+        self.replication=holder.replication;self.file_id=holder.file_id
+
+    def archive(self):
+        result=self.replication.archive_jobs({'request_id':'archive-source-jobs','retired_replica_id':self.source['replica_id']})
+        self.doc=self.runtime.doc
+        return result
+
+    def test_explicit_archive_preserves_hash_history_and_exact_upload_completion_replay(self):
+        from asc.replication.state import transition
+        from asc.replication.planner import references
+        from asc.replication.proofs import physical
+        from asc.catalog.queue import JobQueue
+        from asc.catalog.state import Catalog
+        from asc.catalog.common import now
+        before=copy.deepcopy(self.doc)
+        upload=next(j for j in self.doc['tables']['catalog_jobs'] if j['kind']=='UPLOAD')
+        history=copy.deepcopy(self.doc['tables']['catalog_job_history'])
+        result=self.archive();transition(before,self.doc);state.validate(self.doc)
+        self.assertGreater(len(result['archived_job_ids']),0)
+        self.assertEqual(history,self.doc['tables']['catalog_job_history'])
+        self.assertEqual(self.archive(),result)
+        index,_=references(self.doc,now())
+        self.assertFalse(any(c=='catalog_job_reference' for c,_ in index[physical(self.source)]))
+        self.assertTrue(any(c=='retained_history' for c,_ in index[physical(self.source)]))
+        reg=state.prepare_registry(self.doc);self.addCleanup(reg.db.close)
+        queue=JobQueue(Catalog(reg))
+        self.assertTrue(queue.get(upload['job_id'])['archived'])
+        self.assertTrue(queue.ack_upload(upload['job_id'],upload['target_session_id'],upload['target_local_file_id'])['archived'])
+        with self.assertRaises(CatalogError):queue.ack_upload(upload['job_id'],uid(),uid())
+        with self.assertRaises(CatalogError):queue.retry(upload['job_id'])
+        self.assertTrue(all(j.get('archived') for j in queue.list()['jobs']))
+
+    def test_unaudited_job_removal_archive_change_and_job_resurrection_are_blocked(self):
+        from asc.replication.state import transition
+        before=copy.deepcopy(self.doc)
+        original_job=copy.deepcopy(before['tables']['catalog_jobs'][0])
+        missing=copy.deepcopy(before);missing['tables']['catalog_jobs'].pop()
+        with self.assertRaises(CatalogError):transition(before,missing)
+        self.archive();state.validate(self.doc)
+        before=copy.deepcopy(self.doc)
+        changed=copy.deepcopy(before);next(iter(changed['replication']['archived_jobs'].values()))['original_sha256']='0'*64
+        with self.assertRaises(CatalogError):transition(before,changed)
+        resurrected=copy.deepcopy(before)
+        # No current job ID may coexist with its permanent terminal receipt.
+        resurrected['tables']['catalog_jobs'].append(original_job)
+        with self.assertRaises(CatalogError):state.validate(resurrected)
+        original=next(iter(before['replication']['archived_jobs']))
+        reg=state.prepare_registry(self.doc);self.addCleanup(reg.db.close)
+        from asc.catalog.state import Catalog
+        from asc.catalog.queue import JobQueue
+        self.assertEqual(JobQueue(Catalog(reg)).get(original)['state'],'COMPLETED')
+
+    def test_archive_and_normal_history_aging_make_only_proven_retired_bytes_eligible(self):
+        from asc.replication.planner import plan
+        from asc.catalog.common import now
+        self.archive()
+        def age(reg,catalog):
+            for i in range(1024):catalog.mutate('POLICY',{'file_id':self.file_id,'policy':'replicated_2' if i%2==0 else 'single'})
+        self.replication.workspace(self.doc,age)
+        result=plan({**self.runtime.view(),'stale':False},now())
+        self.assertTrue(result['candidates'][0]['eligible'])
+        self.assertEqual(result['eligible_logical_bytes'],4)
+        self.assertFalse(result['physical_gc_enabled'])
