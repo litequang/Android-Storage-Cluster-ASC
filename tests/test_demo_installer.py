@@ -111,6 +111,9 @@ esac
         link.symlink_to(self.root)
         self.assertNotEqual(self.run_cli('install', '--prefix', str(link / 'escape')).returncode, 0)
         self.assertFalse((self.root / 'escape').exists())
+        traversal = self.home / 'unused' / '..' / 'escape-two'
+        self.assertNotEqual(self.run_cli('install', '--prefix', str(traversal)).returncode, 0)
+        self.assertFalse((self.home / 'escape-two').exists())
 
 
 if __name__ == '__main__':

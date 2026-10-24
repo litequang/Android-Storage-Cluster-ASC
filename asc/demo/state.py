@@ -45,6 +45,7 @@ def read_db(path, version, inspect=None):
     no_links(path)
     db = sqlite3.connect(path.as_uri() + '?mode=ro', uri=True, timeout=5)
     try:
+        db.row_factory = sqlite3.Row
         if db.execute('PRAGMA user_version').fetchone()[0] != version:
             raise ValueError('unsupported schema; matching release or tested migration required')
         if db.execute('PRAGMA quick_check').fetchone()[0] != 'ok':
@@ -61,6 +62,7 @@ def inspect_state(root):
             or type(marker['format']) is not int or marker['format'] != 1
             or marker['track'] != 'android-demo-alpha' or marker['mode'] != 'single-writer-demo'
             or marker['role'] not in ('controller', 'node') or marker['state_formats'] != FORMATS
+            or any(type(v) is not int for v in marker['state_formats'].values())
             or type(marker['port']) is not int or not 1024 <= marker['port'] <= 65535):
         raise ValueError('unsupported Demo state contract')
     uuid.UUID(marker['installation_id'])
@@ -99,8 +101,10 @@ def inspect_state(root):
                 raise ValueError('partial/misplaced registry')
             cfg = read_json(home / 'controller.json')
             def registry_check(db):
-                if db.execute("SELECT 1 FROM settings WHERE key IN ('consensus_mode','phase3b_insights','phase3c_replication')").fetchone():
+                if db.execute("SELECT 1 FROM settings WHERE key NOT IN ('cluster_id','catalog_inventory_cursor')").fetchone():
                     raise ValueError('Core extension/consensus state is outside Demo contract')
+                from ..catalog.schema import validate_existing
+                validate_existing(db)
                 if db.execute("SELECT value FROM settings WHERE key='cluster_id'").fetchone()[0] != cfg['cluster_id']:
                     raise ValueError('cluster identity mismatch')
             read_db(registry, 4, registry_check)

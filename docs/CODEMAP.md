@@ -347,3 +347,10 @@ Registry/CatalogService/StorageRuntime and existing guards; preserve all Core pa
 - `asc/demo/lan.py`: DemoCatalog two-domain measured upload gate, restricted Core HTTP handler, explicit-bind ControllerRuntime, isolated Core-HOME node process/StorageRuntime/heartbeats; owner Core ClusterClient transfer and bounded protection reporting.
 - `asc/demo/cli.py`: init/join/storage-init/run-controller/run-node/pair/approve/nodes/files/replicas/upload/download; no policy reduction, whole-volume grants, Raft or GC commands.
 - `tests/test_demo_lan.py`: actual subprocess CLI/controller/two synthetic phone nodes, TLS/SHA/fallback/Controller loss, domain/capacity/missing volume/guard/schema/attached-state refusal.
+
+## Demo upgrade-safe source (DEMO.3a)
+- `asc/demo/upgrade.py`: prefix/state binding, stopped lifecycle locks, complete private state+approved-volume inventory/copy/readback, exact release compatibility, immutable staging, journaled activation/code rollback, interrupted activation recovery, whitelist diagnostics. No automatic schema/data restore.
+- `asc/demo/installer.py`: private code-prefix ancestor validation differs from private state root; installed source remains immutable.
+- `asc/demo/cli.py`: backup/verify-backup/stage/upgrade-preflight/upgrade/rollback/recover-upgrade/diagnose; node re-exec resolves its verified installed source.
+- `tests/test_demo_upgrade.py`: inherited LAN fault gates run via installed launchers, plus backup/external-volume/mutation/crash/upgrade/code-rollback/identity and diagnostics tests.
+- `docs/DEMO-QUICKSTART.md`: final owner manual CLI workflow, archive README source, limitations and manual stopped cluster sequence.

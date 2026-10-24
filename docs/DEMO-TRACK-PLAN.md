@@ -1,6 +1,6 @@
 # ASC Android Demo Alpha — independent Demo Track
 
-Status: DEMO.0 audit/planning; implementation not yet source-ready.
+Status: DEMO.0/1/2 published; DEMO.3a upgrade source implemented, DEMO.3b full acceptance/package pending. Not yet source-ready.
 Date: 2026-10-24 (Asia/Saigon). Branch: `feature/android-demo-alpha`.
 Verified Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c` on
 `wip/phase2a-raft-qualification`; never use main or publish Demo commits to Core.

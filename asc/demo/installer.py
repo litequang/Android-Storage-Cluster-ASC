@@ -13,13 +13,15 @@ from ..runtime import foreground_lock
 from .package import verify
 
 
-def private_path(value):
+def private_path(value, code_prefix=False):
+    if '..' in Path(value).parts:
+        raise ValueError('private paths must not contain parent traversal')
     path = Path(value).expanduser().absolute()
     no_links(path)
     home = Path.home().resolve()
     source = Path(__file__).resolve().parents[2]
     if (home not in path.parents or path == source or source in path.parents
-            or path in source.parents or path == home):
+            or (path in source.parents and not code_prefix) or path == home):
         raise ValueError('choose a dedicated private HOME directory outside source')
     return path
 
@@ -97,7 +99,7 @@ def install(source, prefix, dry_run=False):
     guard()  # Before ANY filesystem mutation, including prefix/lock creation.
     source = Path(source)
     release = verify(source)
-    prefix = private_path(prefix)
+    prefix = private_path(prefix, code_prefix=True)
     if prefix.exists() and not (prefix / 'install.json').exists():
         raise ValueError('existing unmarked installation; preserve for explicit recovery')
     if dry_run:

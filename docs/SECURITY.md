@@ -327,3 +327,16 @@ to two volumes/identities on the same phone. Node storage requires fresh per-req
 pinned Controller introspection, including when a grant predates Controller loss.
 Physical GC has no attached executor/discovery and remains locked; no Demo deletion
 command or policy reduction route exists. LAN is trusted pilot scope, not production.
+
+## Demo upgrade and diagnostic controls (DEMO.3a)
+Stopped local OS locks plus operation fencing prevent runtime/activation races;
+source prefix is bound to one marked root. Active and candidate releases must pass
+full inventories before activation. Full private backups require actual approved
+original volume markers and sufficient measured capacity, reject symlink/hardlink/
+special files, and verify copy/source checksums; retain partial failure for review.
+Backup contains identities/secrets and uses private 0700 directories / 0600 files.
+Never publish it or restore an older DB over current objects. Source rollback does
+not change state. A PREPARED journal blocks runtime, including a startup that raced
+with activation; explicit recovery refuses if state or backup has changed. These
+are Linux synthetic fault guarantees, not Android power-cut qualification. Diagnostics
+whitelist status/counts/capacity only; no arbitrary error/config/profile/log dump.

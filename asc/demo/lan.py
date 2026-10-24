@@ -111,6 +111,9 @@ class ControllerRuntime:
         try:
             with foreground_lock(self.root, 'demo-operation'):
                 marker = inspect_state(self.root)
+                if os.environ.get('ASC_DEMO_PREFIX'):
+                    from .upgrade import startup_check
+                    startup_check(os.environ['ASC_DEMO_PREFIX'], self.root)
                 if marker['role'] != 'controller':
                     raise ValueError('not a Controller')
                 home = self.root / 'controller'
@@ -169,6 +172,9 @@ def run_node(root, interval=10, once=False):
     with ExitStack() as stack:
         with foreground_lock(root, 'demo-operation'):
             inspect_state(root)
+            if os.environ.get('ASC_DEMO_PREFIX'):
+                from .upgrade import startup_check
+                startup_check(os.environ['ASC_DEMO_PREFIX'], root)
             home = root / 'node'
             if (home / 'enrollment_pending.json').exists():
                 raise ValueError('complete enrollment first')

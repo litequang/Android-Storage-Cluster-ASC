@@ -23,14 +23,14 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 |---|---|
 | DEMO.0 | PUSHED/REMOTE VERIFIED: 2b877ff6f4312110447e817210815794b2f84d87 |
 | DEMO.1 | PUSHED/REMOTE VERIFIED: 789ea8f9675c3339287eace1486126bd886c17e3 |
-| DEMO.2 | LAN implementation/fault checks complete; final docs/secret review then publish |
-| DEMO.3 | NOT STARTED |
+| DEMO.2 | PUSHED/REMOTE VERIFIED: ae299c7981cd683cf61966c7ed64cfb05e557c51 |
+| DEMO.3a | Targeted PASS / source checkpoint publishing; full gate/package in DEMO.3b |
 | DEMO.4 | Deferred behind initial CLI package / owner pilot; optional UI |
 | Demo source-ready | NOT QUALIFIED; Android runtime NOT TESTED |
 
 ## Next action
 
-Publish/remote-verify DEMO.2, then implement DEMO.3 upgrade/backup/rollback, final package and full source qualification. Reuse existing Core functions; do not enable Raft/GC or change
+Publish/remote-verify DEMO.3a after final 13 targeted cases, then DEMO.3b fresh full Python/Go qualification, final candidate package verification and acceptance. Do not mark source-ready until those gates PASS. Reuse existing Core functions; do not enable Raft/GC or change
 Core guards. Read DEMO-TRACK-PLAN for architecture, risk and upgrade contract.
 Each checkpoint must record changed files, exact actual tests/results, hash/push
 verification, current functionality, limits, rollback and short usage. Package
@@ -91,3 +91,45 @@ Raft runtime launched. Rollback: Ctrl+C, retain complete Demo state and matching
 release; no schema change. Old installer preview remains immutable, intentionally
 has no LAN capability. Final owner package waits for DEMO.3/full tests. Android
 runtime/real SD/background/power-cut remain NOT TESTED.
+
+## DEMO.3a upgrade implementation (full acceptance still pending)
+
+Source: new asc/demo/upgrade.py; installer/CLI/LAN/state/package/version refinements.
+Tests: new tests/test_demo_upgrade.py includes inherited LAN fault gates intentionally
+rerun through installed launchers, plus compatible upgrade/code rollback, complete
+private backup/readback, future/installer-only refusal, running-process refusal,
+interrupted actual pointer/journal recovery, identities/certs/volume bytes, redacted
+diagnostics, external approved synthetic directory-volume and copy-mutation failure.
+Docs: CODEMAP, architecture/data/security/troubleshooting/changelog/owner QuickStart.
+
+Initial installed-launcher tests exposed prefix ancestry refusal and a node re-exec
+source lookup gap; fixed without weakening guards. Restart test exposed legitimate
+Core catalog_inventory_cursor missing from compatibility allowlist; explicitly
+allowed it while rejecting other extension/consensus settings. Complete backups
+preserve empty staging/objects folders and external approved volumes. No automatic
+data/schema restore or APK/Raft migration. Keep all state/releases on refusal.
+
+Actual intermediate targeted runs: 12 PASS/0 skips (59.012s) for installed upgrade
+plus source LAN/installer; external volume and concurrent mutation case 1 PASS
+(3.884s). Final combined 13-case run follows final source/QuickStart freeze. Linux
+synthetic only; no Android runtime/real SD/background/power-cut qualification.
+Rollback: stopped code-only rollback with NEW complete private backup; explicit
+recover-upgrade after PREPARED verifies unchanged state and returns old code.
+Usage: docs/DEMO-QUICKSTART.md now has full owner preparation/controller/cohost/node/
+TLS/domain/upload/download/stop/backup/upgrade/rollback/diagnostic sequence. Final
+package MUST wait for DEMO.3b acceptance; old preview remains installer-only.
+
+Final frozen DEMO.3a command:
+`python -B -m unittest tests.test_demo_installer tests.test_demo_lan
+tests.test_demo_upgrade -v`: **13 PASS / 0 SKIP / 0 FAIL/ERROR, 65.492s**.
+Includes malformed journal refusal, stale backup recovery refusal, traversal refusal
+and original identity/file preservation after source upgrade/code rollback.
+Candidate source-only package built outside repository for DEMO.3b, not released:
+81 public files, release ID
+`1b89251efe77dbff5de531ab055ed1e99a3ce351a819a13737df35801dd5714c`,
+archive SHA `3510d37f9e54feb4884f9ed7f78b31891f9974bbd79ae73b06e0a21f5c878603`.
+Deterministic build/unpacked secrets/inventory/README/checksum review PASS.
+No full regression PASS claimed yet. Candidate source frozen; if changed, retest
+and regenerate candidate. Next: fresh full 221 Python expected (208 Core + 13 Demo),
+uncached Go tests/vet/modules and applicable Linux/Android cross-build; record exact
+actual counts/results, inspect/copy final public package and publish DEMO.3b.

@@ -18,14 +18,45 @@ def execute(args):
     from .lan import core_call, owner, lifecycle_request, ControllerRuntime, run_node, upload
     root = args.state.expanduser().absolute()
     guard()
+    from . import upgrade
+    prefix = Path(os.environ.get('ASC_DEMO_PREFIX', str(Path.home() / '.local/share/asc-demo')))
+    prefix = getattr(args, 'prefix', prefix).expanduser().absolute()
     if args.command == 'init':
+        if os.environ.get('ASC_DEMO_PREFIX'):
+            bound = prefix / 'state-binding.json'
+            if bound.exists() and read_json(bound)['state'] != str(root):
+                raise ValueError('prefix belongs to another state; preserve identity')
+            journal = prefix / 'upgrade-journal.json'
+            if journal.exists() and upgrade.read_journal(prefix)['status'] == 'PREPARED':
+                raise ValueError('explicit upgrade recovery required')
         initialize(root, args.role, args.host, args.port)
         with foreground_lock(root, 'demo-operation'):
             inspect_state(root)
             if args.role == 'controller':
                 core_call(root / 'controller', ['controller-init', '--name', args.name, '--port', str(args.port)])
+            if os.environ.get('ASC_DEMO_PREFIX'):
+                upgrade.binding(prefix, root, create=True)
         return {'initialized': True, 'mode': 'single-writer-demo', 'private_state_retained': True}
     inspect_state(root)
+    if args.command == 'recover-upgrade':
+        return upgrade.recover(root, prefix)
+    if os.environ.get('ASC_DEMO_PREFIX'):
+        upgrade.startup_check(prefix, root)
+    if args.command == 'diagnose':
+        return upgrade.diagnose(root)
+    if args.command == 'stage':
+        return upgrade.stage(args.source, prefix)
+    if args.command == 'upgrade-preflight':
+        release = upgrade.verify(upgrade.release_path(prefix, args.release_id))
+        return upgrade.compatibility(release, root)
+    if args.command == 'backup':
+        with upgrade.stopped(root):
+            return upgrade.backup_locked(root, args.destination, prefix)
+    if args.command == 'verify-backup':
+        report = upgrade.verify_backup(args.destination)
+        return {'verified': True, 'backup_sha256': report['backup_sha256']}
+    if args.command in ('upgrade', 'rollback'):
+        return upgrade.activate(root, prefix, args.release_id, args.backup, args.command)
     if args.command == 'run-controller':
         with ControllerRuntime(root):
             print('Demo Controller foreground; Ctrl+C stops. No automatic failover.', flush=True)
@@ -35,12 +66,15 @@ def execute(args):
         # Re-exec only to bind Core import-time HOME; never change a running module global.
         if os.environ.get('ASC_HOME') != str(root / 'node'):
             env = dict(os.environ, ASC_HOME=str(root / 'node'), PYTHONDONTWRITEBYTECODE='1')
+            os.chdir(Path(__file__).resolve().parents[2])
             os.execve(sys.executable, [sys.executable, '-B', '-m', 'asc.demo.cli', *sys.argv[1:]], env)
         run_node(root, args.interval, args.once)
         return {'stopped': True}
     if args.command == 'join':
         lan_origin(args.controller)
         with foreground_lock(root, 'demo-operation'):
+            if os.environ.get('ASC_DEMO_PREFIX'):
+                upgrade.startup_check(prefix, root)
             prior = root / 'node/node.json'
             if prior.exists():
                 cfg = read_json(prior)
@@ -53,6 +87,8 @@ def execute(args):
         from ..storage.engine import StorageEngine
         home = root / 'node'
         with foreground_lock(root, 'demo-operation'), foreground_lock(home, 'agent'):
+            if os.environ.get('ASC_DEMO_PREFIX'):
+                upgrade.startup_check(prefix, root)
             cfg = read_json(home / 'node.json')
             lan_host(args.host)
             volume_root = (args.root or home / 'data').expanduser().absolute()
@@ -142,6 +178,19 @@ def main():
     down = commands.add_parser('download')
     down.add_argument('file_id')
     down.add_argument('output', type=Path)
+    commands.add_parser('diagnose')
+    commands.add_parser('recover-upgrade')
+    for command in ('stage', 'upgrade-preflight', 'backup', 'verify-backup', 'upgrade', 'rollback'):
+        item = commands.add_parser(command)
+        item.add_argument('--prefix', type=Path, default=Path(os.environ.get('ASC_DEMO_PREFIX', str(Path.home() / '.local/share/asc-demo'))))
+        if command == 'stage':
+            item.add_argument('source', type=Path)
+        elif command in ('backup', 'verify-backup'):
+            item.add_argument('destination', type=Path)
+        else:
+            item.add_argument('release_id')
+        if command in ('upgrade', 'rollback'):
+            item.add_argument('--backup', type=Path, required=True)
     args = parser.parse_args()
     try:
         if args.command == 'preflight':

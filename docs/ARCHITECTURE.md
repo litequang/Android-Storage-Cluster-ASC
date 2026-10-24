@@ -323,3 +323,18 @@ Core double-copy capacity; race/outage may leave retained incomplete jobs. CLI o
 reports protected=true after two available verified domains; downloads may use one
 readable copy while Controller is up. All node requests still introspect Controller
 for grants; its outage denies new authority rather than selecting another writer.
+
+## Demo stopped upgrade boundary (DEMO.3a)
+An installed prefix binds exactly one dedicated Demo root. Setup/runtime rechecks
+binding and PREPARED upgrade journal inside lifecycle startup fencing; activation
+holds root operation plus controller/catalog-worker/agent/storage-engine OS locks.
+No activation proceeds with any local runtime running. Candidate source is verified
+and staged immutably, requires exact native integer formats and installer/LAN/
+upgrade-safe capabilities; old installer-only releases cannot run initialized state.
+Complete private state plus every approved original medium is inventoried, copied,
+fsynced and independently hashed before atomic source selection. Changes during
+copy, missing medium, links or unknown formats fail closed. PREPARED journal and
+atomic pointer are separate durable writes; interrupted activation blocks startup
+until explicit recovery verifies unchanged state+backup and selects old compatible
+code. No DB/byte restore or implicit migration. Multi-phone upgrades require owner
+stop-all/backup/change/start Controller then nodes; mixed versions not qualified.

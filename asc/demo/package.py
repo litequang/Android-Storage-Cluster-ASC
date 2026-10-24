@@ -24,12 +24,16 @@ def safe_name(name):
 
 def verify(root):
     root = Path(root)
+    if not root.is_dir() or any(p.is_symlink() for p in (root, *root.parents)):
+        raise ValueError('unsafe release root')
     manifest_path = root / 'release.json'
     if manifest_path.is_symlink() or manifest_path.stat().st_size > 1024 * 1024:
         raise ValueError('invalid release manifest')
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
-    if (manifest.get('format') != 1 or not isinstance(manifest.get('files'), dict)
-            or not manifest['files'] or not isinstance(manifest.get('capabilities'), list)):
+    if (not isinstance(manifest, dict) or type(manifest.get('format')) is not int or manifest.get('format') != 1 or not isinstance(manifest.get('files'), dict)
+            or not manifest['files'] or not isinstance(manifest.get('capabilities'), list)
+            or any(not isinstance(x, str) for x in manifest['capabilities'])
+            or not isinstance(manifest.get('state_formats'), dict)):
         raise ValueError('unsupported release manifest')
     body = {k: v for k, v in manifest.items() if k != 'release_id'}
     if manifest.get('release_id') != digest(encoded(body)):
@@ -63,6 +67,7 @@ def build(source, output):
         if not safe_name(name) or p.is_symlink():
             raise ValueError('unsafe package source')
         files[name] = p.read_bytes()
+    files['README.md'] = (source / 'docs/DEMO-QUICKSTART.md').read_bytes()
     body = {'format': 1, 'version': VERSION, 'capabilities': CAPABILITIES,
             'state_formats': STATE_FORMATS,
             'files': {name: digest(data) for name, data in files.items()}}

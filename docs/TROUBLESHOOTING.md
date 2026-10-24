@@ -342,3 +342,15 @@ keep existing state and restart that Controller manually. Do not promote a node.
 Explicit bind requires the phone's private Wi-Fi IPv4 (same isolated LAN); wildcard,
 public, link-local and hostname inputs are refused. Pin mismatch always means stop
 and verify the correct Controller certificate out of band, never switch to HTTP.
+
+## Demo activation interrupted / incompatible state
+Stop every local foreground before backup/upgrade/rollback. A lock conflict leaves
+pointer/state intact; do not remove lock files or kill guessed PIDs. Unknown format,
+installer-only candidate, missing medium, source mutation, checksum mismatch, links
+or insufficient backup space means preserve state and resolve the cause. A failed
+backup has no backup-complete.json and is never valid recovery evidence. PREPARED
+journal blocks startup: recover-upgrade verifies unchanged current state against its
+complete backup and selects old compatible code only. It never restores old bytes/
+DB. If code integrity prevents launcher execution, retain old release/package and
+seek review, not network bypass or identity regeneration. Controlled multi-node
+upgrade uses stop-all; mixed-version/rolling/endpoint/schema migrations unqualified.

@@ -294,3 +294,13 @@ replica reporting and download fallback reuse existing engines. Controller loss
 fails closed; missing volume/domain/capacity/pin/unknown schema/attached state and
 M51/unknown runtime guards tested on Linux synthetic. No Android runtime qualification,
 upgrade readiness, Raft, reduction, GC or Dashboard claim.
+
+### Demo Track DEMO.3a — stopped upgrade, backup and identity preservation
+Version 0.3.0-alpha adds prefix/state binding, complete verified private backup
+including external approved volumes/empty directories, exact-format compatibility,
+immutable staging, journaled source activation/code rollback and explicit interrupted
+activation recovery. Stable IDs/keys/pins/bytes retained; no schema/data restore or
+background updater. Diagnostic output uses a status whitelist. Installed-source
+tests caught/fixed prefix ancestry and node re-exec issues; compatibility permits
+Core's existing catalog inventory cursor while rejecting consensus/advanced state.
+Final source-ready status waits for fresh full qualification and checksum package.

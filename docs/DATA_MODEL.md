@@ -373,3 +373,17 @@ mismatched node/cluster is refused before Core constructors can create/migrate i
 Internal file data is the dedicated node/data root; explicitly approved SD adapters
 still require the existing Termux app-folder and UUID/medium checks. Repeated setup
 with identical parameters verifies rather than replaces identities/volume markers.
+
+## Demo backup/activation format 1 (DEMO.3a)
+Prefix state-binding.json records format, absolute private root, installation UUID.
+It never includes Controller/node credentials. install.json remains format/release_id.
+upgrade-journal.json records format, status PREPARED|COMPLETED|RECOVERED_OLD_CODE,
+action, installation UUID, old/new release IDs, private backup path and backup digest.
+PREPARED denies runtime even after the new pointer was persisted.
+Private backup-complete.json records format=1, installation UUID, exact formats,
+selected release ID, source label/root map, entries (directories plus file size/SHA)
+and SHA256(canonical body excluding backup_sha256). state/ contains all stopped
+private state/bodies; external volumes use volume-<UUID>/, preserving empty directories.
+Only known OS coordination lock files are excluded. Completion follows source
+stability and copied readback verification; failed copies stay incomplete. Backup
+is private and is never part of a public package. No schema restore/migrator exists.
