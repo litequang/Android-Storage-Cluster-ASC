@@ -331,3 +331,62 @@ class JobArchiveTests(unittest.TestCase):
         self.assertTrue(result['candidates'][0]['eligible'])
         self.assertEqual(result['eligible_logical_bytes'],4)
         self.assertFalse(result['physical_gc_enabled'])
+
+
+class GCReservationTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        from asc.replication.gc import GarbageCollection
+        from asc.replication.arena import fixture_controller_context
+        holder=JobArchiveTests();holder.setUp();self.addCleanup(holder.doCleanups);holder.archive()
+        self.holder=holder;self.runtime=holder.runtime;self.service=holder.replication.service
+        def age(reg,catalog):
+            for i in range(1024):catalog.mutate('POLICY',{'file_id':holder.file_id,'policy':'replicated_2' if i%2==0 else 'single'})
+        holder.replication.workspace(self.runtime.doc,age)
+        self.gc=GarbageCollection(holder.replication)
+        root=tempfile.TemporaryDirectory(prefix='asc-gc-controller-');self.addCleanup(root.cleanup)
+        self.capability=fixture_controller_context(root.name)
+
+    def prepare(self):
+        return self.gc.prepare({'request_id':'prepare-test-gc','retired_replica_id':self.holder.source['replica_id']})
+
+    def test_default_locked_confirmation_and_explicit_sandbox_reservation_replay(self):
+        plan=self.prepare()
+        obj={'request_id':'confirm-test-gc','plan_id':plan['plan_id'],'confirmation':plan['required_confirmation']}
+        with self.assertRaises(CatalogError) as denied:self.gc.confirm(obj)
+        self.assertEqual(denied.exception.code,'physical_gc_locked')
+        self.service.gc_test_context=self.capability
+        result=self.gc.confirm(obj)
+        self.assertEqual(result['state'],'RESERVED');self.assertEqual(result['physical_deletions'],0)
+        self.assertEqual(result,self.gc.confirm(obj))
+        state.validate(self.runtime.doc)
+        old=copy.deepcopy(self.runtime.doc)
+        newer=state.takeover(old,'voter-b',5);state.validate(newer)
+        from asc.replication.state import transition
+        transition(old,newer)
+        job=next(iter(newer['replication']['gc_jobs'].values()))
+        self.assertIsNone(job['permit_hash'])
+        tampered=copy.deepcopy(newer);tampered['replication']['gc_jobs'].clear()
+        with self.assertRaises(CatalogError):transition(newer,tampered)
+
+    def test_wrong_confirmation_expired_plan_new_pin_and_quorum_failure_cannot_reserve(self):
+        plan=self.prepare();self.service.gc_test_context=self.capability
+        obj={'request_id':'confirm-test-gc','plan_id':plan['plan_id'],'confirmation':'yes'}
+        with self.assertRaises(CatalogError):self.gc.confirm(obj)
+        obj['confirmation']=plan['required_confirmation']
+        with mock.patch('asc.replication.gc.now',return_value=plan['expires_at']):
+            with self.assertRaises(CatalogError):self.gc.confirm(obj)
+        from asc.backup.state import empty
+        self.runtime.doc['backup']=empty()
+        self.runtime.doc['backup']['files'][self.holder.file_id]={'state':'TRASH','changed_at':1,'retain_until':2}
+        with self.assertRaises(CatalogError):self.gc.confirm(obj)
+        self.runtime.doc.pop('backup')
+        with mock.patch.object(self.runtime,'commit',side_effect=CatalogError('no_quorum',503)):
+            with self.assertRaises(CatalogError):self.gc.confirm(obj)
+        self.assertFalse(self.runtime.doc['replication'].get('gc_jobs'))
+
+    def test_real_device_and_nontemporary_contexts_remain_locked(self):
+        from asc.replication.arena import fixture_controller_context
+        with mock.patch('asc.replication.arena.platform.machine',return_value='aarch64'):
+            with self.assertRaises(CatalogError):fixture_controller_context('/workspace')
+        with self.assertRaises(CatalogError):fixture_controller_context('/workspace')

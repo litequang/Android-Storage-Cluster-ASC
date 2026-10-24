@@ -24,27 +24,30 @@ Base: `b1b46e527826617748a8bc68795259060e12d705`.
 | 3C.2a | PUSH VERIFIED `c6a1012`; 73 targeted tests PASS (3.451s) |
 | 3C.2b | PUSH VERIFIED `173faf8`; 13 targeted + all 39 legacy gates PASS; initial combined fixture error recorded |
 | 3C.3a | PUSH VERIFIED `9a675c2`; 69 targeted + 17 TLS/unit PASS |
-| 3C.3b | Audited terminal-job pointer release/replay; 59 targeted + 20 TLS/unit PASS; publication pending |
-| 3C.4–3C.5 | NOT STARTED |
+| 3C.3b | PUSH VERIFIED `445af5c`; 59 targeted + 20 TLS/unit PASS |
+| 3C.4a | Default-locked plans/confirmation/quorum reservations; 91 targeted + 23 TLS/unit PASS; publication pending |
+| 3C.4b–3C.5 | NOT STARTED |
 | Full regression / acceptance | NOT RUN; Phase 3C NOT accepted |
 
 ## Next action / resume
 
-Verify 3C.3b publication, then 3C.4a guarded confirmation/reservation protocol
-(default locked; no physical unlink yet). Explicit terminal-job archives preserve
-identity/hash/history and upload/completion replay, remove no events, never archive
-active/retryable/backup jobs. A retired body remains held by every retained pointer.
+Verify 3C.4a publication, then 3C.4b isolated local executor/journal with fault tests.
+No physical unlink exists yet. Default Controller gc_test_context=None; only an
+issued in-process synthetic temporary x86 context can confirm. No CLI/config/env
+enable. GC prepare stores fresh external-domain proof and 60s immutable plan;
+exact SHA confirmation reserves one target. Pending permits/proofs clear on takeover.
 
-`python -B -m unittest tests.test_replication tests.test_catalog tests.test_backup.BackupStateTests tests.test_failover.RuntimeStateTests -v`
-**59 PASS, 1.378s**. Initial new archive fixture cached the old projection across
-fake commit (2 FAIL/1 ERROR); refresh its test reference, no production/test
-assertions weakened. Corrected whole target PASS.
+`python -B -m unittest tests.test_replication tests.test_catalog tests.test_backup.BackupStateTests tests.test_failover.RuntimeStateTests tests.test_nodes -q`
+**91 PASS, 5.369s**.
 `python -B -m unittest tests.test_replication_faults tests.test_replication -v`
-**20 PASS, 14.861s**; actual TLS copy/1-2-3-1/archive/upload+completion replay gates.
-Source unchanged after tests. Logs /workspace/work/phase3c/3c3b-*.log.
+**23 PASS, 18.783s** (real TLS policy/copy/archive/replay plus reservation units).
+Initial 22-unit run: 1 ERROR from incorrect transition-helper module in new test;
+corrected import and complete retests PASS. Product guards unchanged.
 
-Next GC must have: default absent in-process isolated test capability; no CLI/env/
-config enable for real devices; owner plan-SHA confirmation; irreversible bounded
-quorum reservation and exact-object nonce-bound final authorization; private durable
-node journal, no-follow/root/size/SHA checks and idempotent lost-ACK/crash handling.
-Do not delete any object with live graph pins. Final full safety regression pending.
+Next executor must require a distinct fresh synthetic temporary-volume capability,
+never adopt an existing populated volume; serialize with Engine transfers; use
+no-follow root/object identity and SHA; journal before unlink; reauthorize freshly
+at the final boundary; recover known unlink/lost-ACK idempotently without accepting
+unknown absence. Keep default runtime unreachable. Then wire exact-scope Storage/
+Controller authorization and run real three-voter fault/regression gates before
+claiming acceptance. Existing 3C.2b intermediate fixture error remains documented.

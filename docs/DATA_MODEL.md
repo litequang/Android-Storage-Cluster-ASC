@@ -325,3 +325,13 @@ No archived ID may reappear in catalog_jobs; immutable archive receipts and exac
 prior completed-row hash are checked at every Runtime transition. Archive is
 explicit and may still reclaim zero bytes because retained events/snapshots/jobs
 hold them. Lifetime limits never silently evict archived identity or authority.
+
+3C.4a optional replication.gc_plans <=64 and gc_jobs <=128. Plans bind target retired
+ID, graph/plan SHA, source term/control/index, 60s time bounds, required domains and
+fresh proof records. Immutable plan rows are preserved by every Runtime writer.
+Jobs bind immutable confirmation/target/plan/graph/term plus RESERVED/RUNNING/DONE,
+permit term/hash/run/expiry, proofs, attempts/error/times. No raw grant is persisted.
+RESERVED has no permit/proof; RUNNING permits must match the current authority term
+and bounded 120s lifetime; DONE is immutable. Takeover resets unfinished execution
+to RESERVED with no permission; reservations/confirmation/audit identity remain.
+Lifetime/2 MiB/Go receipt bounds fail closed without erasing reference history.

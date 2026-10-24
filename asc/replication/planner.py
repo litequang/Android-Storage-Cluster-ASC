@@ -38,6 +38,8 @@ def references(doc, at):
     for grant in doc['tables']['transfer_grants']:
         if grant['expires_at']>at and grant['local_file_id'] is not None:
             index[(grant['node_id'],grant['volume_id'],grant['local_file_id'])].append(('in_flight_grant',grant['grant_hash']))
+    for job_id,job in doc.get('replication',{}).get('gc_jobs',{}).items():
+        for proof in job['proofs']:index[physical(proof)].append(('gc_survivor_job_reference',job_id))
     for event in doc['catalog']['events']:
         for replica in event['payload']['replicas']:
             index[physical(replica)].append(('retained_history',str(event['revision'])))
@@ -52,7 +54,9 @@ def graph(doc, at):
         replica=retired['replica'];file=retired['file']
         refs=sorted(set(index.get(physical(replica),[])+file_pins.get(file['file_id'],[])))
         hold_codes={code for code,_ in refs}
-        remaining=survivors(doc,file['file_id'],{replica_id})
+        target=approved.get(replica['node_id'])
+        excluded_domains={target['device_id']} if target else set()
+        remaining=survivors(doc,file['file_id'],{replica_id},exclude_devices=excluded_domains)
         required=Replication.required(doc,file['file_id'])
         if len({n['device_id'] for _,n in remaining})<required:hold_codes.add('insufficient_current_independent_domains')
         target=approved.get(replica['node_id'])
@@ -63,6 +67,9 @@ def graph(doc, at):
         elif not readable(target,replica['volume_id'],at=at):hold_codes.add('target_not_current')
         elif effective(doc.get('insights',{}),target['node_id'],target['token_version'])=='protected':hold_codes.add('protected_preference')
         # The source is never inferred from unknown inventory; only durable retirements qualify.
+        for job_id,job in doc.get('replication',{}).get('gc_jobs',{}).items():
+            if job['retired_replica_id']==replica_id:
+                hold_codes.add('gc_already_completed' if job['state']=='DONE' else 'gc_reserved')
         holds=sorted(hold_codes)
         rows.append({'retired_replica_id':replica_id,'node_id':replica['node_id'],
                      'volume_id':replica['volume_id'],'local_file_id':replica['local_file_id'],

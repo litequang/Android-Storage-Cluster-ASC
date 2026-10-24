@@ -31,6 +31,9 @@ class Service(CatalogService):
         self.insights = Insights(self)
         from ..replication.service import Replication
         self.replication = Replication(self)
+        self.gc_test_context = None
+        from ..replication.gc import GarbageCollection
+        self.gc = GarbageCollection(self.replication)
         from ..backup.catalog import VersionedCatalog
         self.catalog = VersionedCatalog(runtime.registry)
         self.queue.catalog = self.catalog

@@ -257,3 +257,14 @@ returns its original success without reviving the old physical target. Every wri
 must prove archival against the prior exact terminal row; historical Catalog event
 pointers still block GC until the ordinary existing retention window ages them.
 No event eviction/archive/byte deletion is performed to create eligibility.
+
+3C.4a separates overview planning from a durable selected-object plan. Prepare
+requires fresh streamed survivors outside the target device domain, rechecks every
+reference and stores an immutable 60s plan SHA. Exact owner confirmation plus an
+in-process issued synthetic temporary Controller capability may reserve one target
+through quorum. Ordinary runtime never constructs that capability; JSON/config/env
+cannot supply it, and Android/ARM/non-temporary hosts are refused. Reservation and
+retirement identity cannot be removed/reused. Takeover invalidates pending permits
+and proofs; no physical executor or unlink is present in this checkpoint. GC job
+survivor evidence itself is a retained reference; reserved targets are retirement
+journals, not new data-use pins. Repeated confirmation with the same request replays.

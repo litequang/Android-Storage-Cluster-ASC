@@ -267,3 +267,9 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   retained job history remains. Queue GET/list/completion and upload replay support
   archived receipts. Transition checks require exact proven COMPLETED archive and
   forbid mutation/resurrection; JobArchiveTests + real TLS archive/replay gate.
+- 3C.4a `replication.gc.GarbageCollection.prepare/confirm`: fresh independent proof,
+  durable 60s plan/digest and exact confirmation, irreversible bounded reservation.
+  `replication.arena`: in-process temporary x86 fixture capability, default absent,
+  real Android/ARM/non-temporary roots refused. No unlink implementation yet.
+  State validates/fences plans/jobs and invalidates pending permits on takeover;
+  GCReservationTests cover default lock/confirmation/expiry/new pin/no-quorum.

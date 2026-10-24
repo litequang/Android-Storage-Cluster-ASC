@@ -194,6 +194,9 @@ def takeover(doc, node_id, term):
     if 'backup' in result:
         from ..backup.state import takeover as backup_takeover
         result['backup'] = backup_takeover(result['backup'])
+    if 'replication' in result:
+        from ..replication.state import takeover as replication_takeover
+        result['replication'] = replication_takeover(result['replication'])
     for job in result['tables']['catalog_jobs']:
         job.update(run_token=None, lease_until=None)
         if job['state'] == 'RUNNING':

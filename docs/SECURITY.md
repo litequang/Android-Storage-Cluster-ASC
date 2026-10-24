@@ -272,3 +272,13 @@ old scoped grant; those invalid grants are removed atomically with archival.
 Old request replay cannot restore a physical pointer or grant. Backup/restore-job
 and retained Catalog event pointers are not archived by this operation and remain
 GC holds. Physical execution must also serialize against local in-flight Engine IO.
+
+GC confirmation requires a separately issued in-process fixture capability; a path,
+boolean/config flag, owner token or forged JSON object cannot supply it. It is
+bound to a real temporary home identity outside source on supported x86 desktop
+hosts, refuses Android/Termux/ARM and is absent in ordinary runtime initialization.
+This is an accidental-use boundary for trusted test code, not a sandbox against a
+malicious administrator who can replace Python or unlink files directly. Actual
+physical execution will need a separate fresh-volume capability and nonce-bound
+last-boundary authorization/journal; no unlink exists at 3C.4a. Survivors must also
+be outside the GC target's device domain to avoid self-dependency/IO-lock deadlock.

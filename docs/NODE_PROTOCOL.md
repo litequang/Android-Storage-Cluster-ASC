@@ -397,3 +397,12 @@ references fail 409. GET jobs/ID and list expose archived=true, completed identi
 and audit evidence, with unavailable physical fields null/absent. Exact old upload
 and completion retries remain successful; mismatched completion is rejected and
 archived jobs cannot be retried/reintroduced. Retained event/history pins remain.
+
+3C.4a POST replication/gc-prepare {request_id,retired_replica_id}: require full graph
+eligibility and fresh survivor bytes; return durable plan_id/plan_sha256/expires_at
+and required_confirmation. POST replication/gc-confirm {request_id,plan_id,confirmation}
+requires exact `DELETE-ISOLATED-TEST-OBJECT:<plan_id>:<plan_sha256>`, nonexpired
+current-term unchanged graph/proofs and issued temporary fixture capability; creates
+RESERVED gc_job_id with physical_deletions=0. Default runtime returns 403
+physical_gc_locked even for the owner; there is no runtime config/CLI/env enable.
+Wrong/expired/changed plan returns 409; no physical executor/execute endpoint yet.

@@ -243,3 +243,6 @@
 - 3C.3b: explicit audited COMPLETED-job pointer release; retain identity/history,
   upload/completion replay and immutable digests, reject unaudited removal or job
   resurrection. History and backup pointers continue to block physical GC.
+- 3C.4a: durable fresh-proof GC plans, exact SHA confirmation and current-term
+  quorum reservation with default absent synthetic-only capability; no physical
+  executor. Preserve immutable reservations/plans and reset permits on takeover.
