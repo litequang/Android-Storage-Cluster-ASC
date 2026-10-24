@@ -20,8 +20,9 @@ Updated: 2026-10-24 (Asia/Saigon). Target branch:
 | Checkpoint | Actual state / evidence |
 |---|---|
 | 3B.0 | PUSH VERIFIED `2b3529db0f1374b1be20fc0b2121cf21f601eef2`; remote WIP equals local commit |
-| 3B.1a | Contract + 3 targeted tests PASS; publication pending |
-| 3B.1b–3B.5 | NOT STARTED |
+| 3B.1a | PUSH VERIFIED `bdf32ac`; contract + 3 targeted tests PASS |
+| 3B.1b | Pure score engine; 7 contract/engine tests PASS; publication pending |
+| 3B.1c–3B.5 | NOT STARTED |
 | Final regression / acceptance | NOT RUN; Phase 3B is NOT accepted |
 
 3B.0 checks: `git diff --check` and local Markdown-link validation must pass before
@@ -30,8 +31,6 @@ Publication verification is reported after push and recorded in the next update.
 
 ## Next action / resume
 
-Finish 3B.1a publication/remote verification, then implement 3B.1b engine against
-NODE_PROTOCOL formula. Target: `python -B -m unittest tests.test_nodes -v`
-(3 PASS). No placement/API behavior change yet. Full phase regression remains pending.
-
-No phone, M51, production, quorum/membership, physical GC or Phase 3C/3D work.
+Verify 3B.1b publication, then 3B.1c read-only owner score API. Exact targeted
+command: `python -B -m unittest tests.test_nodes -v` (7 PASS).
+No placement/API behavior change yet; full regression remains pending.

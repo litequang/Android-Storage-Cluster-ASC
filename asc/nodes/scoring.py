@@ -40,3 +40,36 @@ def validate(observations):
                 not RANGES[name][0] <= value <= RANGES[name][1]):
             raise ValueError('invalid_score_observations')
     return observations
+
+
+def score(observations, at):
+    """Compute explainable advisory score without IO, clock sampling or mutation."""
+    validate(observations)
+    if type(at) is not int or not 0 <= at < 2**63:
+        raise ValueError('invalid_score_time')
+    components, total, known, confidence = {}, 0, 0, 0
+    for name, weight in WEIGHTS.items():
+        item = observations[name]
+        value, stamp = item['value'], item['observed_at']
+        fresh = value is not None and 0 <= at - stamp <= FRESH_SECONDS
+        normalized = None
+        if fresh:
+            if name in ('capacity_ratio', 'reliability'):
+                normalized = value * 100
+            elif name == 'reachable':
+                normalized = 100 if value else 0
+            elif name == 'memory_mb':
+                normalized = min(100, value * 100 / 8192)
+            else:
+                normalized = max(0, min(100, (65 - value) * 100 / 30))
+            total += weight * normalized
+            known += weight
+            confidence += weight * (min(1, item['samples']/10) if name == 'reliability' else 1)
+        components[name] = {**item, 'status': 'KNOWN' if fresh else 'UNKNOWN',
+                            'normalized': normalized, 'weight': weight,
+                            'weighted_points': None if normalized is None else round(normalized*weight/100, 4)}
+    return {'score_schema': SCHEMA, 'score': round(total/known, 2) if known else None,
+            'confidence': round(confidence, 2),
+            'reliability': components['reliability']['normalized'],
+            'known_weight': known, 'evaluated_at': at, 'advisory_only': True,
+            'components': components}

@@ -195,3 +195,5 @@ Historical PySyncObj evidence below remains unchanged.
 - `asc/nodes/scoring.py`: version-1 observation contract, bounded finite values,
   explicit UNKNOWN/provenance and published weights; `tests/test_nodes.py` tests
   malformed/boundary inputs. No score consumer or placement change in 3B.1a.
+- 3B.1b `scoring.score`: pure freshness/normalization/weighted mean and confidence;
+  ScoreEngineTests cover partial coverage, known zero, extremes and monotonicity.

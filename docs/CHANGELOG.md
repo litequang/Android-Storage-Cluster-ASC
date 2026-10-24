@@ -202,3 +202,10 @@
 - Added safe Termux installer that will not overwrite existing ASC installation or mutate M51 hosting.
 - Added unit/integration tests, CODEMAP and permanent Codex documentation maintenance policy.
 - Explicit scope exclusion: no real Raft, file storage, user dashboard, auto failover, internet gateway or backup yet.
+
+## Phase 3B checkpoints (development, not yet accepted)
+
+- 3B.1a/b: versioned strict observation contract and deterministic 0–100 advisory
+  score with component explanations, separate probe reliability and confidence.
+  UNKNOWN/stale/future inputs never become fabricated measured zeros. No API,
+  placement or voter membership changes at this checkpoint.

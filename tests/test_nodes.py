@@ -35,3 +35,46 @@ class ScoreContractTests(unittest.TestCase):
         for name, limits in scoring.RANGES.items():
             high = copy.deepcopy(obj); high[name]['value'] = limits[1]
             scoring.validate(high)
+
+
+class ScoreEngineTests(unittest.TestCase):
+    def measured(self, **values):
+        obj = scoring.unknown()
+        for name, value in values.items():
+            obj[name].update(value=value, observed_at=1000, samples=10)
+        return obj
+
+    def test_all_unknown_is_null_and_zero_confidence(self):
+        result = scoring.score(scoring.unknown(), 1000)
+        self.assertIsNone(result['score']); self.assertIsNone(result['reliability'])
+        self.assertEqual(result['confidence'], 0)
+
+    def test_exact_weighted_result_and_independent_confidence(self):
+        obj = self.measured(capacity_ratio=.5, reachable=True, reliability=.8,
+                            memory_mb=4096, thermal_c=50)
+        original = copy.deepcopy(obj)
+        result = scoring.score(obj, 1000)
+        self.assertEqual(result['score'], 69)
+        self.assertEqual(result['reliability'], 80)
+        self.assertEqual(result['confidence'], 100)
+        obj['reliability']['samples'] = 1
+        self.assertEqual(scoring.score(obj, 1000)['confidence'], 73)
+        self.assertEqual(original['reliability']['samples'], 10)
+
+    def test_stale_future_and_inclusive_freshness_do_not_create_zero_values(self):
+        obj = self.measured(reachable=False)
+        self.assertEqual(scoring.score(obj, 1120)['score'], 0)
+        for stamp in (1121, 999):
+            result = scoring.score(obj, stamp)
+            self.assertIsNone(result['score'])
+            self.assertEqual(result['components']['reachable']['status'], 'UNKNOWN')
+        self.assertEqual(obj['reachable']['value'], False)
+
+    def test_partial_coverage_extremes_and_monotonicity(self):
+        for metric, values in [('capacity_ratio', [0,.5,1]), ('reliability',[0,.5,1]),
+                               ('memory_mb',[0,4096,8192]), ('thermal_c',[65,50,35])]:
+            results=[scoring.score(self.measured(**{metric:v}),1000)['score'] for v in values]
+            self.assertEqual(results,[0,50,100])
+        result = scoring.score(self.measured(reachable=True),1000)
+        self.assertEqual(result['score'],100); self.assertEqual(result['confidence'],20)
+        with self.assertRaises(ValueError): scoring.score(scoring.unknown(),True)
