@@ -14,11 +14,19 @@ Existing activation /workspace/asc-cloud/activate.sh supplies Python3.13.5/Go1.2
 |3D.1b|PUSH/REMOTE VERIFIEDe62d06a0b8ed68538305b6a09007fae0450ddabf;12 targeted PASS|
 |3D.2|PUSH/REMOTE VERIFIED554c992f9f234c2f1dd44efa2c1e70f70cd19e8e;37 targeted PASS|
 |3D.3|PUSH/REMOTE VERIFIED531d91ec7805c14297fa8a70679daaa9330c134e;23 targeted PASS|
-|3D.4a|READY:54 targeted PASS0skip0fail66.001s; all9 actual network/process fault groups; source freeze/push gate follows|
-|3D.4b|NEXT after4a remote proof: fresh full238 Python; acceptance/report only after completion|
+|3D.4a|PUSH/REMOTE VERIFIED50df5d79e1759cf5755d416d53c4bc47cc74e49b;54 targeted/all9 fault groups PASS|
+|3D.4b|RUNNING: fresh full238 Python on frozen50df5d7, started2026-10-25T05:52:00.041412Z; NOT accepted until final summary|
 
-Next: publish/remote-verify3D.0 after document/backup unit validation, then implement
-format/private adapter/streaming engine and fresh pinned owner source. Each checkpoint
+CURRENT NEXT: finish fresh full238 Python regression on frozen source/tests
+50df5d79e1759cf5755d416d53c4bc47cc74e49b, started2026-10-25T05:52:00.041412Z.
+All54 targeted/all9 network faults and Go11/vet/modules/builds already PASS. Do NOT
+reimplement0–3 or claim full acceptance while suite is incomplete. Result/log in
+/workspace/work/phase3d/python-full-result.json and python-full.log; require exit0,
+238PASS0skip0fail and unchanged frozen-source fingerprint. If original run cannot
+be proved complete, rerun exact full command from acceptance; no old PASS reuse.
+After actual full success update acceptance/progress/CODEMAP/related reporting,
+review tracked/index secrets, normal push ONLY feature branch and verify remote.
+Writer recovery remains BLOCKED and cannot be marked accepted. Each checkpoint
 must targeted PASS +docs/CODEMAP +tracked/index secrets audit +normal feature push
 +remote equality before next. Read AGENTS/PHASE3D-PLAN/this/ACCEPTANCE to resume.
 
@@ -189,3 +197,20 @@ NEXT only after source checkpoint normal push/remote match: activate existing
 If interrupted, rerun incomplete full (do NOT reuse old3C/Demo full results).
 No source/test changes during full; reporting docs only afterward. Writer recovery
 still BLOCKED, Android/Windows runtime/independent media/power-cut NOT TESTED.
+
+## Running full regression receipt — source unchanged
+
+50df5d79e1759cf5755d416d53c4bc47cc74e49b normal pushed and advertised feature ref
+matched before full START2026-10-25T05:52:00.041412Z. Core remainsacea2ae and Demo
+c9c2660 unchanged. `python -B -m unittest discover -s tests -v` running in existing
+activated Python3.13.5/Go1.27.3; raw logs/private fixtures outside Git. Full discovery
+238 unique cases. A runner records exact source SHA256s for asc/tests/consensus/
+install/tools and must assert they are unchanged at completion. Only reporting
+Markdown may change during/after full. Final summary/physical gate markers and
+exit0 are required; RUNNING is not PASS. This reporting receipt contains no source
+change and preserves current handoff if the session is interrupted.
+
+108 tracked Python AST PASS,3 operations Bash blocks bash -n PASS (not executed on
+a device), new docs links/fences/whitespace PASS. Full tracked/index156 paths audit
+0findings. Only existing failover RuntimeHandler3-line delegation is changed outside
+new external module; all original Core tests/Go/Storage/3A–3C modules unchanged.

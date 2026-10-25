@@ -25,3 +25,12 @@ No full3D acceptance yet; fresh238-case regression must execute to completion.
 Exact commands, matrices/intermediate failures in PROGRESS; operations in
 [PHASE3D-OPERATIONS.md](PHASE3D-OPERATIONS.md). No source runtime/key/schema import
 exists for writer recovery. Full writable disaster recovery remains BLOCKED.
+
+## Full execution in progress (not acceptance)
+
+Frozen implementation/tests50df5d79e1759cf5755d416d53c4bc47cc74e49b normal pushed/
+remote verified before fresh full238-case run started2026-10-25T05:52:00.041412Z.
+Command `python -B -m unittest discover -s tests -v`; only reporting changes after
+start. Private runner checks immutable source fingerprints. Full final status
+must be recorded after completion; RUNNING/partial markers are not PASS.108 Python
+AST and3 guide Bash syntax blocks PASS; no actual phone/Windows runtime operation.

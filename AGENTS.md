@@ -35,8 +35,9 @@ checkpoint requires targeted PASS/docs/CODEMAP/secrets/normal feature-only push
 and remote verification before next. No reset/force/main merge or Demo changes.
 3D.0/1a/1b/2/3 are normal-pushed/remote verified (see PHASE3D-PROGRESS).3D.4a
 final54 targeted/all9 actual network/process faults and Go11/vet/modules/builds
-PASS; fresh full238 Python/legacy physical gates is next after source freeze
-publication. Do not claim scoped acceptance without completed full results or
+PASS; frozen source50df5d79e1759cf5755d416d53c4bc47cc74e49b is remote verified.
+Fresh full238 Python/legacy physical gates STARTED2026-10-25T05:52:00.041412Z;
+read current progress/result before resuming. RUNNING is not PASS. Do not claim scoped acceptance without completed full results or
 full writable DR at all. Read current PROGRESS/ACCEPTANCE, not old3C/Demo PASS.
 External independent bytes+metadata, anchored verify, immutable complete bundles,
 resume and isolated READ_ONLY recovery; no source deletions/GC credit. Missing
