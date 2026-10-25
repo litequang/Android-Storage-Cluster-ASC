@@ -1,5 +1,8 @@
 # Phase4.1 progress / account-independent handoff
 
+**COMPLETE: bounded Linux synthetic Phase4.1 ACCEPTED. Android/native/migration/
+Windows runtime NOT TESTED; Core3D writable disaster recovery remains BLOCKED.**
+
 Branch feature/phase4-1-local-engine-quorum-ui from fetched/remote verified
 b9e75779670d5565d05a324751af02e48d2538eb. Initial tree clean, no existing4.1 branch.
 Original Phase4.0/Core/Demo/WIP untouched; no reset/merge/force/history rewrite.
@@ -13,7 +16,7 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 |4.1c.1|PUSH/REMOTE VERIFIEDfb05323708f3147cee1a8e9a4a3093ae39306d9a;28PASS|
 |4.1c.2|PUSH/REMOTE VERIFIED40fb7c788a95434387e53d04065ddf4ca7721202;15PASS+final browser1PASS|
 |4.1d.1|PUSH/REMOTE VERIFIED0a3ea839217156b69209a073f5d836ee1db4452b;38PASS, exact source candidate frozen|
-|4.1d.2|READY: fresh311 Python PASS0skip/fail +11 Go/vet/modules/builds; final docs publication follows|
+|4.1d.2|PUSH/REMOTE VERIFIED38360d1bd3261dba730e9ac7f7e9ca8772a73b40;311 Python/11 Go/full gates PASS|
 
 Read AGENTS then PHASE4-1-PLAN/this/ACCEPTANCE and bridge/threat/Core adapter/app
 contracts. New user authorization supersedes prior4.0 no-bridge/Core-UI language
@@ -227,3 +230,17 @@ verified SDK/emulator/Binder/signature/native lifecycle/Keystore/storage boundar
 then OS/network/storage/device qualification before any migration promise. Do not
 redo4.0/4.1 or merge source branches. Read AGENTS+mandatory docs then4.1 PLAN/
 PROGRESS/ACCEPTANCE/API/native contracts. No unfinished mandatory4.1 Linux gates.
+
+## Final publication receipt
+
+Acceptance/reporting38360d1bd3261dba730e9ac7f7e9ca8772a73b40 normally pushed;
+advertised branch HEAD matched, then independent bare GitHub fetch matched all191
+frozen paths and actual published archive SHA. Original Phase4.0 b9e7577,Core3D
+ca2504f,CoreWIP acea2ae,Demo c9c2660 remain unchanged on GitHub. Source/tests/
+packaged guides/candidate still exact qualified0a3ea83; subsequent commits ONLY
+reporting docs. No source after fresh311/11/fault/build PASS. Tracked/index245
+paths reviewed,0 secret findings; unpacked124-file candidate separately audited.
+This receipt is a docs-only follow-up; latest receipt commit is recorded in Git
+history and verified advertised remote at handoff. Working tree clean after commit.
+No unfinished mandatory Linux4.1 checkpoints; do not redo phases or start4.2 without
+its own task. Operational/API/native/rollback contracts linked in acceptance.

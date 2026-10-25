@@ -20,7 +20,7 @@ Normal pushes/advertised remote equality were verified before each next checkpoi
 |4.1c.1 Core/passive observer|fb05323708f3147cee1a8e9a4a3093ae39306d9a|28 PASS,0 skip/fail,62.475s|
 |4.1c.2 shared HTTPS/browser|40fb7c788a95434387e53d04065ddf4ca7721202|15 PASS,0 skip/fail,149.641s; final browser1 PASS54.828s|
 |4.1d.1 exact candidate/upgrade freeze|0a3ea839217156b69209a073f5d836ee1db4452b|38 PASS,0 skip/fail,224.827s|
-|4.1d.2 full qualification/reporting|Git history, docs-only after source freeze|311 fresh Python +11 uncached Go PASS; gates below|
+|4.1d.2 full qualification/reporting|38360d1bd3261dba730e9ac7f7e9ca8772a73b40 (docs-only)|311 fresh Python +11 uncached Go PASS; gates below|
 
 ## Fresh final gates / evidence
 
@@ -126,3 +126,11 @@ acceptance, not copying SQLite/keys/private folders. Android Raft/GC/failover an
 Core3D writable disaster recovery stay locked/BLOCKED. No phones/M51/production/
 SSH/system/Termux:Boot/root/format access performed. No automatic storage approval,
 replica reduction, membership change, recovery writer or fake fencing/quorum.
+
+## Remote receipt
+
+Qualification/reporting38360d1bd3261dba730e9ac7f7e9ca8772a73b40 pushed normally,
+advertised HEAD verified and independently fetched into a new bare repository.
+All191 frozen paths and published archive/checksum matched qualified source.
+Core3D/CoreWIP/Demo/Phase4.0 advertised refs remain exact baselines. Receipt
+follow-ups are docs-only; current final commit is in PHASE4-1-PROGRESS/Git history.
