@@ -406,3 +406,6 @@ invalidates them; durable upload key/job/session/object authority remains in Cor
 
 ### Demo 0.3 -> 0.4 compatibility
 0.4.0 adds dashboard-lite release capability, with identical base STATE_FORMATS and no Catalog/Registry/Manifest/config migration. Optional Controller dashboard/dashboard.json format1 and own CA/leaf/spool are separate from Core identity and included by existing complete-state inventory backup. Exact published0.3 launchers accept compatible0.4 manifests; old0.3 CLI code ignores optional Dashboard directory on rollback, preserving both files written by0.4 and browser identity. No Termux/APK, Raft or unknown-schema migration is implied. Runtime browser sessions/tickets remain volatile, no second database.
+
+### DEMO.4d storage compatibility (no migration)
+Volume record/marker/schema unchanged: persisted root/medium st_dev:st_ino and node/volume IDs remain exact. New POSIX anchor snapshots/descriptors/file identities are operation-local only; no identity regeneration, new schema, database rewrite or medium cloning. Existing immutable objects/uploads/jobs remain unchanged. Exact old-code upgrade/rollback must be separately qualified for0.4.1; rollback can restore Android root-open bug even though schemas are compatible.

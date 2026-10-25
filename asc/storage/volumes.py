@@ -15,6 +15,9 @@ from ..identity import save_private
 from ..probe import _detect_sd_locations
 
 CHUNK = 65536
+POSIX_FD_SUPPORTED = (os.open in os.supports_dir_fd and os.stat in os.supports_dir_fd
+                      and os.stat in os.supports_follow_symlinks and os.unlink in os.supports_dir_fd
+                      and os.scandir in os.supports_fd and getattr(os, 'statvfs', None) in os.supports_fd)
 
 
 def logical_path(value):
@@ -73,6 +76,137 @@ def directory_guard(root):
         yield
 
 
+class _PosixAccess:
+    """Pin an approved root directly: ancestors need stat/search, never read-open.
+
+    Absolute lookup is used ONLY for the approved directory. Its descriptor must
+    match persisted dev/inode before reading anything below it. Every subsequent
+    lookup is no-follow and relative to pinned descriptors. Snapshot/recheck all
+    namespace bindings before and after IO; a renamed root/parent/folder/marker
+    cannot be silently adopted. This is not a sandbox against the owning OS user.
+    """
+    def __init__(self, volume):
+        self.volume, self.fds, self.folders = volume, [], {}
+
+    @staticmethod
+    def identity(info):
+        return info.st_dev, info.st_ino
+
+    @staticmethod
+    def regular(info):
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+            raise StorageError('unsafe_path', 403)
+
+    @staticmethod
+    def marker_identity(info):
+        return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns, info.st_nlink)
+
+    def opened(self, path, flags, **kwargs):
+        fd = os.open(path, flags, **kwargs)
+        self.fds.append(fd)
+        return fd
+
+    def __enter__(self):
+        try:
+            if (not POSIX_FD_SUPPORTED or not getattr(os, 'O_NOFOLLOW', 0) or not getattr(os, 'O_DIRECTORY', 0)
+                    or not self.volume.root.is_absolute() or '..' in self.volume.root.parts):
+                raise StorageError('safe_volume_access_unavailable', 503)
+            root = self.volume.root
+            self.paths = {}
+            for path in [*reversed(root.parents), root, root / 'staging', root / 'objects']:
+                try:
+                    info = path.lstat()
+                except FileNotFoundError:
+                    raise StorageError('volume_unavailable', 503) from None
+                if stat.S_ISLNK(info.st_mode) or not stat.S_ISDIR(info.st_mode):
+                    raise StorageError('unsafe_path', 403)
+                self.paths[path] = self.identity(info)
+            flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+            self.root = self.opened(root, flags)
+            info = os.fstat(self.root)
+            if f'{info.st_dev}:{info.st_ino}' != self.volume.record['medium']:
+                raise StorageError('volume_identity_changed', 409)
+            for folder in ('staging', 'objects'):
+                fd = self.opened(folder, flags, dir_fd=self.root)
+                if self.identity(os.fstat(fd)) != self.paths[root / folder]:
+                    raise StorageError('volume_identity_changed', 409)
+                self.folders[folder] = fd
+            marker = root / '.asc-volume.json'
+            no_links(marker)
+            try:
+                before = marker.lstat()
+            except FileNotFoundError:
+                raise StorageError('volume_identity_changed', 409) from None
+            self.regular(before)
+            if before.st_size > 4096:
+                raise StorageError('volume_identity_changed', 409)
+            try:
+                self.marker = self.opened('.asc-volume.json', os.O_RDONLY | os.O_NOFOLLOW | getattr(os, 'O_NONBLOCK', 0), dir_fd=self.root)
+            except FileNotFoundError:
+                raise StorageError('volume_identity_changed', 409) from None
+            info = os.fstat(self.marker)
+            self.regular(info)
+            self.marker_info = self.marker_identity(info)
+            if self.marker_info != self.marker_identity(before):
+                raise StorageError('volume_identity_changed', 409)
+            raw = bytearray()
+            while len(raw) <= 4096:
+                chunk = os.read(self.marker, 4097 - len(raw))
+                if not chunk:
+                    break
+                raw.extend(chunk)
+            try:
+                data = json.loads(raw.decode('utf-8'))
+            except (ValueError, UnicodeError):
+                raise StorageError('volume_identity_changed', 409) from None
+            expected = {'version': 1, 'volume_id': self.volume.record['volume_id'], 'node_id': self.volume.record['node_id']}
+            if len(raw) > 4096 or not isinstance(data, dict) or type(data.get('version')) is not int or data != expected:
+                raise StorageError('volume_identity_changed', 409)
+            self.validate()
+            return self
+        except FileNotFoundError:
+            self.close()
+            raise StorageError('volume_unavailable', 503) from None
+        except BaseException:
+            self.close()
+            raise
+
+    def validate(self):
+        for path, expected in self.paths.items():
+            try:
+                info = path.lstat()
+            except FileNotFoundError:
+                raise StorageError('volume_identity_changed', 409) from None
+            if not stat.S_ISDIR(info.st_mode) or self.identity(info) != expected:
+                raise StorageError('volume_identity_changed', 409)
+        try:
+            info = os.stat('.asc-volume.json', dir_fd=self.root, follow_symlinks=False)
+        except FileNotFoundError:
+            raise StorageError('volume_identity_changed', 409) from None
+        if (not stat.S_ISREG(info.st_mode) or self.marker_identity(info) != self.marker_info
+                or self.marker_identity(os.fstat(self.marker)) != self.marker_info):
+            raise StorageError('volume_identity_changed', 409)
+        for name, fd in self.folders.items():
+            try:
+                info = os.stat(name, dir_fd=self.root, follow_symlinks=False)
+            except FileNotFoundError:
+                raise StorageError('volume_identity_changed', 409) from None
+            if not stat.S_ISDIR(info.st_mode) or self.identity(info) != self.identity(os.fstat(fd)):
+                raise StorageError('volume_identity_changed', 409)
+
+    def close(self):
+        for fd in reversed(self.fds):
+            os.close(fd)
+        self.fds.clear()
+
+    def __exit__(self, kind, *_):
+        try:
+            if kind is None:
+                self.validate()
+        finally:
+            self.close()
+
+
 class LocalVolume:
     """Filesystem adapter seam; SAF must implement equivalent semantics, not raw paths."""
     def __init__(self, record):
@@ -80,6 +214,9 @@ class LocalVolume:
         self.root = Path(record['root'])
 
     def check(self):
+        if os.name != 'nt':
+            with _PosixAccess(self):
+                return
         if not self.root.is_dir():
             raise StorageError('volume_unavailable', 503)
         no_links(self.root)
@@ -102,8 +239,10 @@ class LocalVolume:
             raise StorageError('volume_identity_changed', 409) from None
 
     def _parts(self, relative):
+        if not isinstance(relative, str):
+            raise StorageError('unsafe_path', 403)
         parts = PurePosixPath(relative).parts
-        if (len(parts) != 2 or parts[0] not in ('staging', 'objects') or
+        if (len(parts) != 2 or '/'.join(parts) != relative or parts[0] not in ('staging', 'objects') or
                 not parts[1] or any(c not in 'abcdefghijklmnopqrstuvwxyz0123456789-.' for c in parts[1]) or
                 parts[1] in ('.', '..')):
             raise StorageError('unsafe_path', 403)
@@ -112,6 +251,22 @@ class LocalVolume:
     @contextmanager
     def open(self, relative, create=False):
         folder, name = self._parts(relative)
+        if os.name != 'nt':
+            with _PosixAccess(self) as access:
+                flags = (os.O_WRONLY | os.O_CREAT | os.O_EXCL) if create else os.O_RDONLY
+                fd = os.open(name, flags | os.O_NOFOLLOW | getattr(os, 'O_NONBLOCK', 0), 0o600, dir_fd=access.folders[folder])
+                try:
+                    info = os.fstat(fd)
+                    access.regular(info)
+                    current = os.stat(name, dir_fd=access.folders[folder], follow_symlinks=False)
+                    if access.identity(current) != access.identity(info):
+                        raise StorageError('unsafe_path', 403)
+                    access.validate()
+                    with os.fdopen(fd, 'wb' if create else 'rb', closefd=False) as stream:
+                        yield stream
+                finally:
+                    os.close(fd)
+            return
         self.check()
         with directory_guard(self.root):
             self.check()
@@ -139,23 +294,6 @@ class LocalVolume:
                         raise PermissionError(13, 'storage permission denied')
                     raise StorageError('file_unavailable', 503)
                 fd = msvcrt.open_osfhandle(handle, flags & ~(os.O_CREAT | os.O_EXCL) | os.O_BINARY)
-            else:
-                # Walk every component by descriptor; no symlink parent traversal.
-                parent = os.open(self.root.anchor, os.O_RDONLY | os.O_DIRECTORY)
-                try:
-                    for part in self.root.parts[1:]:
-                        child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent)
-                        os.close(parent)
-                        parent = child
-                    info = os.fstat(parent)
-                    if f'{info.st_dev}:{info.st_ino}' != self.record['medium']:
-                        raise StorageError('volume_identity_changed', 409)
-                    child = os.open(folder, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent)
-                    os.close(parent)
-                    parent = child
-                    fd = os.open(name, flags | os.O_NOFOLLOW, 0o600, dir_fd=parent)
-                finally:
-                    os.close(parent)
             try:
                 info = os.fstat(fd)
                 if (not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or
@@ -166,50 +304,73 @@ class LocalVolume:
             finally:
                 os.close(fd)
 
-    def remove_staging(self, relative):
+    def remove_staging(self, relative, *, expected_identity=None):
         folder, name = self._parts(relative)
         if folder != 'staging':
             raise StorageError('deletion_forbidden', 403)
+        if os.name != 'nt':
+            with _PosixAccess(self) as access:
+                parent = access.folders['staging']
+                try:
+                    info = os.stat(name, dir_fd=parent, follow_symlinks=False)
+                except FileNotFoundError:
+                    return
+                access.regular(info)
+                if expected_identity is not None and access.identity(info) != expected_identity:
+                    raise StorageError('unsafe_path', 403)
+                access.validate()
+                current = os.stat(name, dir_fd=parent, follow_symlinks=False)
+                if access.identity(current) != access.identity(info) or current.st_nlink != 1:
+                    raise StorageError('unsafe_path', 403)
+                os.unlink(name, dir_fd=parent)
+                os.fsync(parent)
+            return
         self.check()
         with directory_guard(self.root):
             self.check()
             target = self.root / folder / name
             no_links(target)
-            if os.name == 'nt':
-                target.unlink(missing_ok=True)
-            else:
-                # Same no-follow walk as open, including the approved root ancestors.
-                parent = os.open(self.root.anchor, os.O_RDONLY | os.O_DIRECTORY)
-                try:
-                    for part in self.root.parts[1:]:
-                        child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent)
-                        os.close(parent)
-                        parent = child
-                    info = os.fstat(parent)
-                    if f'{info.st_dev}:{info.st_ino}' != self.record['medium']:
-                        raise StorageError('volume_identity_changed', 409)
-                    child = os.open(folder, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent)
-                    os.close(parent)
-                    parent = child
-                    try:
-                        os.unlink(name, dir_fd=parent)
-                    except FileNotFoundError:
-                        pass
-                finally:
-                    os.close(parent)
+            if expected_identity is not None and target.exists():
+                info = target.lstat()
+                _PosixAccess.regular(info)
+                if _PosixAccess.identity(info) != expected_identity:
+                    raise StorageError('unsafe_path', 403)
+            target.unlink(missing_ok=True)
+
+    @staticmethod
+    def _folder(folder):
+        if folder not in ('staging', 'objects'):
+            raise StorageError('unsafe_path', 403)
+        return folder
 
     def sync_directory(self, folder):
+        self._folder(folder)
+        if os.name != 'nt':
+            with _PosixAccess(self) as access:
+                os.fsync(access.folders[folder])
+            return True
         self.check()
-        if os.name == 'nt':
-            return None  # No portable directory-fsync promise on Windows/exFAT.
+        return None  # No portable directory-fsync promise on Windows/exFAT.
+
+    @contextmanager
+    def entries(self, folder):
+        self._folder(folder)
+        if os.name != 'nt':
+            with _PosixAccess(self) as access:
+                with os.scandir(access.folders[folder]) as entries:
+                    yield entries
+            return
+        self.check()
+        with directory_guard(self.root), os.scandir(self.root / folder) as entries:
+            yield entries
+
+    def disk_usage(self):
+        if os.name != 'nt':
+            with _PosixAccess(self) as access:
+                return shutil.disk_usage(access.root)  # statvfs(fd), no /proc dependency.
+        self.check()
         with directory_guard(self.root):
-            no_links(self.root / folder)
-            fd = os.open(self.root / folder, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
-            try:
-                os.fsync(fd)
-            finally:
-                os.close(fd)
-        return True
+            return shutil.disk_usage(self.root)
 
     def allocated_files(self):
         """Charge retained/orphan bodies as well as manifest reservations; bounded audit."""
@@ -218,7 +379,7 @@ class LocalVolume:
         with directory_guard(self.root):
             self.check()
             for folder in ('staging', 'objects'):
-                with os.scandir(self.root / folder) as entries:
+                with self.entries(folder) as entries:
                     for entry in entries:
                         count += 1
                         if count > 20256:
@@ -303,21 +464,25 @@ class VolumeManager:
                 volume = LocalVolume(record)
                 volume.check()
                 item['readable'] = True  # The approved identity marker was actually read.
-                space = shutil.disk_usage(volume.root)
+                space = volume.disk_usage()
                 item.update(total_bytes=space.total, free_bytes=space.free, state='online')
                 if probe:
                     relative = 'staging/' + str(uuid.uuid4()) + '.probe'
                     data = b'asc-bounded-storage-probe-v1'
+                    created = None
                     try:
                         with volume.open(relative, create=True) as stream:
+                            created = _PosixAccess.identity(os.fstat(stream.fileno()))
                             stream.write(data); stream.flush(); os.fsync(stream.fileno())
                         with volume.open(relative) as stream:
                             actual = stream.read(len(data) + 1)
                         if hashlib.sha256(actual).digest() != hashlib.sha256(data).digest():
                             raise StorageError('probe_checksum_failed', 503)
-                        item.update(readable=True, writable=True, fsync_tested=True)
+                        volume.sync_directory('staging')
                     finally:
-                        volume.remove_staging(relative)
+                        if created is not None:
+                            volume.remove_staging(relative, expected_identity=created)
+                    item.update(readable=True, writable=True, fsync_tested=True)
             except StorageError as exc:
                 item.update(state='unavailable', last_error=exc.code)
             except OSError as exc:

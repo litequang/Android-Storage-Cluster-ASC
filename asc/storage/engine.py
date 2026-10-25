@@ -100,7 +100,7 @@ class StorageEngine:
         volume.check()
         import shutil
         try:
-            free = shutil.disk_usage(volume.root).free
+            free = volume.disk_usage().free
         except OSError:
             raise StorageError('volume_unavailable', 503) from None
         if free - volume.record['reserve'] < required:
@@ -406,7 +406,7 @@ class StorageEngine:
                     pending = {self._object(row) for row in db.execute('SELECT * FROM uploads WHERE volume_id=?',
                                                                       (record['volume_id'],))}
                 # Scandir does not follow child symlinks; names alone are diagnostic.
-                with os.scandir(volume.root / 'objects') as entries:
+                with volume.entries('objects') as entries:
                     for index, entry in enumerate(entries):
                         if index >= limit:
                             item['truncated'] = True

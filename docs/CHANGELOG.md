@@ -340,3 +340,6 @@ installer checks PASS. Source-only92-file QuickStart includes Dashboard assets,
 manual public-CA trust/owner login,0.3 upgrade and code-only rollback instructions.
 Unchanged base formats/Core guards/branch; final public SHA and receipt recorded
 in DEMO4-ACCEPTANCE/DEMO-TRACK-PROGRESS. Android runtime remains NOT TESTED.
+
+## DEMO.4d.1 — Android-compatible approved-volume anchor (2026-10-25)
+Reproduced old write_denied when only filesystem-root read-open is denied. POSIX adapter now opens only approved root, binds medium/marker/descriptors and checks ancestor/folder replacements before/after no-follow child IO. Capacity/inventory/fsync/cleanup use pinned descriptors. Probe success is reported only after actual write/read/SHA/fsync/owned cleanup; collision/changed/linked files preserved. Windows handle adapter/base formats/IDs unchanged; shared storage files changed on Demo branch only.61 targeted storage/security/sandbox/TLS tests PASS0skip17.030s; no Android/runtime or0.4.1 release claim yet.

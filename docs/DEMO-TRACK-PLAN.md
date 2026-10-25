@@ -113,3 +113,6 @@ Owner requests Dashboard Lite now; old deferral was for first CLI delivery only.
 Follow DEMO4-PLAN: 4a owner-session/trusted-HTTPS backend, 4b responsive Vietnamese
 frontend/real browser tests, 4c exact 0.3 upgrade/rollback/full qualification and new
 checksum package. Same Catalog and immutable-state contracts, Core WIP preserved.
+
+## Authorized DEMO.4d continuation —0.4.1 storage compatibility
+Current owner authorizes Android storage fix, actual synthetic integration and exact0.3/0.4 direct-upgrade qualification/release. Follow DEMO4D-PLAN; previous Core-source-unchanged statements are historical (shared storage adapter correction now authorized on Demo branch), Core WIP unchanged. Preserve all0.3/0.4 packages/UI/state/IDs. Linux synthetic and owner-supplied Android diagnostics must remain separate.

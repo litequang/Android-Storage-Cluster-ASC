@@ -397,3 +397,9 @@ PASS0skip incl all8 Linux GC physical gates,11 fresh Go/vet/modules/builds PASS,
 releases/asc-demo-alpha-0.4.0.tar.gz has92 regular files incl3 local web assets;
 manifest/SHA and exact0.3 rollback proof in DEMO4-ACCEPTANCE. Source, package and
 publication receipt in DEMO-TRACK-PROGRESS; Android/real CA-install UX NOT TESTED.
+
+## DEMO.4d.1 approved-volume POSIX anchor
+- `asc/storage/volumes.py:_PosixAccess`: direct approved-root O_NOFOLLOW descriptor + persisted dev/inode check, pinned marker/staging/objects and ancestor namespace pre/post rechecks; never open filesystem root. Fail closed without required descriptor primitives; Windows existing handle branch preserved.
+- `LocalVolume.check/open/remove_staging/sync_directory/entries/disk_usage/allocated_files`: child no-follow descriptor IO, measured fd statvfs/scandir/fsync, single-link cleanup and optional expected probe identity. `VolumeManager.inspect`: only owned probe cleanup, success after all actual IO/cleanup, no collision deletion.
+- `asc/storage/engine.py:_space/inventory`: use adapter descriptor-based capacity/inventory; other upload/commit/download/recovery/state/authorization unchanged.
+- `tests/test_android_volumes.py`:13 Linux/Android-like root-open denial, actual file/SHA/fsync/probe cleanup/restart, real unprivileged directory EACCES, root/folder/marker/link swaps/traversal/hardlinks/collision/unsupported-primitives/failure metrics. Linux synthetic only. Plan/handoff: DEMO4D-PLAN / DEMO-TRACK-PROGRESS.

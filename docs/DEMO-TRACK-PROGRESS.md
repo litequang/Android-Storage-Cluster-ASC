@@ -33,7 +33,14 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.4c | PUSHED/REMOTE VERIFIED: aa1a834ddd868275c4c2550f0b2b0c39d9354366; full230 Python/11 Go/all8 Linux gates PASS; downloaded public SHA verified |
 | Demo 0.4 source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
-## Next action
+## Current DEMO.4d next action
+
+New task from clean fetched/remote ef6470d:4d.1 fix implemented,61 targeted PASS;
+normal publication/verification pending before4d.2 runtime/browser faults. Then
+4d.3 exact0.3/0.4 direct upgrades, fresh full qualification/package0.4.1.
+See DEMO4D-PLAN. Historical0.4 evidence below is not0.4.1 qualification.
+
+## Historical0.4 completion / previous next action
 
 DEMO.4 implementation and Linux synthetic qualification are complete from frozen
 956bf8ebb23e57b07d4ec91cefec8d89539a8327. Full230 Python0skip, all8 Linux physical
@@ -452,3 +459,32 @@ checkpoint remains; a later task must not reimplement accepted Core3C or turn on
 Raft/GC/3D. Fetch/preserve work and read AGENTS/current plan/progress/acceptance
 before any new explicitly authorized source task. Normal receipt commit/HEAD is
 identified by Git history; final remote verification follows its push.
+
+## DEMO.4d.1 storage fix — actual evidence / pending publication
+
+Verified clean local/fetched/advertised Demo baseline ef6470d4b91b9c6430591202047ad4c628c9a04a;
+Core remote acea2ae. Ordered mandatory docs + Demo plan/progress/acceptance/QuickStart
+read, actual volume/engine/runtime/GC adapter audited. Root-denied test FAILED on
+old source with exact owner-like readable=true/writable=false/fsync=null/write_denied;
+only os.open('/') denied, actual private marker readable. New descriptor anchor
+never calls open('/'), real private file/probe SHA/fsync/cleanup succeeds with same
+node/volume/medium/marker. No fake write permission or identity reinitialization.
+
+Changed asc/storage/volumes.py, engine.py (space/inventory adapter calls), new
+13-case tests/test_android_volumes.py and contract/plan/progress docs. Shared storage
+change explicitly authorized on Demo branch; Core WIP/other Core logic untouched.
+New helper pins approved root after medium fstat, exact bounded regular marker,
+staging/objects and namespace identities, checks before/after IO, no-follow child
+FDs; true probe metrics only after owned cleanup, collisions preserved. Missing
+POSIX primitives fail closed. Windows adapter preserved; schemas/IDs unchanged.
+
+Actual activated command Python3.13.5:
+`python -B -m unittest tests.test_android_volumes tests.test_storage
+tests.test_gc_sandbox tests.test_gc_authorization tests.test_storage_cluster -v`:
+**61 PASS /0 SKIP /0 FAIL/ERROR,17.030s**. Includes actual unprivileged chmod0500
+fixture EACCES (no system/device permission change), root/folder/marker replacement,
+symlink/hardlink/traversal/collision, real probe/SHA/fsync/unlink and Engine restart,
+failed fsync, security authorization and existing TLS three-node regressions.
+No Android PASS or0.4.1 source-ready claim;4d.2/3 still pending. Rollback: stop/use
+preserved compatible source with NEW full backup, no DB restore; old Android bug
+returns on affected host. All logs/state stay private synthetic workspace only.

@@ -39,6 +39,21 @@ M51/unknown-device guards. Dashboard Lite may follow the first CLI package; no A
 try the tested checksum-verified package on actual ZTE/Bphone/XZ3. Keep all Core
 modules/tests and Core branch intact. Earlier task scope below is historical.
 
+## Current DEMO.4d authorization — Android storage /0.4.1
+
+Owner now authorizes shared storage adapter/engine correction ON DEMO BRANCH from
+verified ef6470d. Follow ordered reads + Demo plan/progress/DEMO4-ACCEPTANCE/
+QuickStart, then DEMO4D-PLAN. Reproduce '/' denial while approved private root is
+readable; preserve identity/no-follow/race/fsync gates, no path/permission bypass.
+Complete4d.1 storage,4d.2 actual synthetic runtime/browser,4d.3 exact published0.3
+AND0.4 direct-upgrade/backup/rollback/full qualification/package with each targeted
+PASS/docs/secrets/normal push/remote verification before next. Old Core-source-
+unchanged reports are historical; do not push Core WIP or change other Core logic.
+Preserve published archives/state/IDs/TLS/UI; no phone/M51/production/GC/Raft/
+failover/3D access or activation. Android diagnostics supplied by owner do not
+qualify the new runtime; only owner later tests ZTE/Bphone. Old-source rollback
+may restore original Android write_denied bug; never recreate volume/identity.
+
 ## Current DEMO.4 authorization — Dashboard Lite / 0.4.0
 
 Owner explicitly authorizes DEMO.4a backend, 4b frontend, 4c compatible QuickStart
