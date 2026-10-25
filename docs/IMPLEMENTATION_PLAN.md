@@ -137,3 +137,12 @@ Phase4.0 bounded Linux synthetic foundation now ACCEPTED on frozen4d1758d,
 287 fresh Python/all old faults and11 Go/vet/modules/builds PASS. See current
 PHASE4-ACCEPTANCE/PROGRESS. Broader app/Core quorum UI/migration/device work remains
 future Phase4.1+, Core3D writable recovery BLOCKED; no whole Demo branch merge.
+
+## Phase4.1 bounded foundation — Linux synthetic ACCEPTED
+See PHASE4-1-ACCEPTANCE for frozen source/candidate and311 fresh Python/11 Go/full
+fault/build qualification. Same-UID private bridge +existing enrollment/owned Demo
+Node lifecycle; explicit Core read-only owner gateway shares Dashboard, no second
+Catalog/Storage. Phase4.0/Core3A–3D preserved, no whole-branch merge. Next4.2:
+ANDROID-APP-CONTRACT verified SDK/Binder/native lifecycle/Keystore/SAF/network/Doze/
+OS-death gates then owner-operated devices. No APK/Termux migration/Android runtime
+or writable disaster recovery acceptance; no copying state to convert authority.

@@ -553,3 +553,10 @@ Android and writable DR remain NOT ACCEPTED.
 - demo/package.py: public bridge/Core/app/operator guides and capabilities in deterministic124-file source-only candidate; private material excluded, prior archives unchanged.
 - observability/client.py RecoveryObserver expected_epoch: gateway explicit epoch binding checked against anchored staged manifest; mismatch UNKNOWN, never activation.
 - candidates/0.4.3-dev +SHA: source-only Linux qualification input, not APK/Android release. PHASE4-1-OPERATIONS owns compatible upgrade/use/rollback.
+
+## Phase4.1 final qualification
+Frozen0a3ea839217156b69209a073f5d836ee1db4452b:311 fresh Python/all legacy+new faults PASS0skip/fail;11
+uncached Go/vet/module verification/builds PASS. Acceptance owns exact source/
+archive/commands/evidence and limits; progress owns handoff/receipts. Reporting
+docs only after full, no source/test/packaged guide/archive drift. Linux synthetic
+bridge/Core read-only only; Android/native migration/writable DR remain unqualified.

@@ -471,3 +471,10 @@ base formats, immutable original packages and separate private control exclusion
 Exact0.4.2 upgrade/new-state code rollback test includes installed bridge/identity
 preservation and pending both directions. Recovery observer binds expected epoch,
 wrong epoch remains UNKNOWN. Android runtime/APK/migration and writable DR blocked.
+
+## Phase4.1 — Linux synthetic foundation accepted
+Frozen0a3ea839217156b69209a073f5d836ee1db4452b,311 fresh Python PASS0skip/fail incl all original faults,
+11 uncached Go/vet/modules/builds PASS. Authenticated local bridge/owned lifecycle,
+existing durable Quick Join and shared read-only Core Dashboard qualified; exact
+0.4.2->0.4.3 source candidate upgrade/NEW-state code rollback. Candidate only,
+Android/native/migration not tested, writable disaster recovery still BLOCKED.

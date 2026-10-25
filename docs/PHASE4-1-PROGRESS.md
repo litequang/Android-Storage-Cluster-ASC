@@ -13,7 +13,7 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 |4.1c.1|PUSH/REMOTE VERIFIEDfb05323708f3147cee1a8e9a4a3093ae39306d9a;28PASS|
 |4.1c.2|PUSH/REMOTE VERIFIED40fb7c788a95434387e53d04065ddf4ca7721202;15PASS+final browser1PASS|
 |4.1d.1|PUSH/REMOTE VERIFIED0a3ea839217156b69209a073f5d836ee1db4452b;38PASS, exact source candidate frozen|
-|4.1d.2|RUNNING: Go11/vet/modules/builds PASS; fresh full311 Python in progress, NOT ACCEPTED|
+|4.1d.2|READY: fresh311 Python PASS0skip/fail +11 Go/vet/modules/builds; final docs publication follows|
 
 Read AGENTS then PHASE4-1-PLAN/this/ACCEPTANCE and bridge/threat/Core adapter/app
 contracts. New user authorization supersedes prior4.0 no-bridge/Core-UI language
@@ -207,3 +207,23 @@ Independent new bare fetch verified all191 frozen paths and published archive
 SHA96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04; protected
 Phase4.0/Core3D/CoreWIP/Demo remote refs still exact original baselines. This
 reporting-only handoff records partial running results, not a completed checkpoint.
+
+## 4.1d.2 fresh final Linux qualification
+
+d.1 pushed/remote matched0a3ea839217156b69209a073f5d836ee1db4452b BEFORE full gate. Fresh source unchanged
+2026-10-25T13:59:24.049377+00:00 ->2026-10-25T14:29:25.438277+00:00:311PASS0SKIP0FAIL0ERROR
+1801.144s, all legacy/new faults including3D9/9.11 uncached Go
+PASS; vet/modules andLinux/Windows/Android builds PASS (latter compile only).
+All 191 frozen source/test/packaged-guide/archive paths unchanged,
+exact candidate rebuild/hash/secrets inventory PASS; original published archives
+and27 Core tests unchanged. No retries/skip/weakening to obtain this full PASS.
+See PHASE4-1-ACCEPTANCE for actual gates/limits, PHASE4-1-OPERATIONS for private
+use/upgrade/backup/code rollback. Qualified only bounded Linux synthetic foundation;
+Android/native/cross-UID/migration/Windows runtime NOT TESTED, writable DR BLOCKED.
+Reporting docs only afterward; final commit/normal remote receipt follows.
+
+Next work is Phase4.2, separately authorized: ANDROID-APP-CONTRACT concrete order,
+verified SDK/emulator/Binder/signature/native lifecycle/Keystore/storage boundaries,
+then OS/network/storage/device qualification before any migration promise. Do not
+redo4.0/4.1 or merge source branches. Read AGENTS+mandatory docs then4.1 PLAN/
+PROGRESS/ACCEPTANCE/API/native contracts. No unfinished mandatory4.1 Linux gates.

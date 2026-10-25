@@ -25,6 +25,19 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
+## Phase4.1 completed handoff — Linux synthetic only
+
+Qualified frozen source/tests/packaged guides/candidate 0a3ea839217156b69209a073f5d836ee1db4452b; fresh311
+Python PASS0skip/fail and all old/new fault groups,11 uncached Go/vet/modules/
+builds PASS. Final documentation-only commits follow that source freeze; do not
+rewrite archives or relabel cross-build as runtime. Read PHASE4-1-PLAN/PROGRESS/
+ACCEPTANCE, LOCAL-ENGINE-BRIDGE, CORE-QUORUM-DASHBOARD, ANDROID-APP-CONTRACT and
+PHASE4-1-OPERATIONS after mandatory reads. Feature branch remains separate;
+Phase4.0/Core/Demo/WIP unchanged. No mandatory4.1 Linux gate outstanding.
+Next4.2 requires explicit task and verified Android native/toolchain/device gates.
+Android/cross-UID/Keystore/SAF/Doze/migration/Windows runtime NOT TESTED, Core3D
+writable DR BLOCKED; no phone/M51/production/system access or guard bypass.
+
 ## Current Phase4.1 authorization — private bridge / read-only Core adapter
 
 Owner authorizes feature/phase4-1-local-engine-quorum-ui from verified Phase4.0
