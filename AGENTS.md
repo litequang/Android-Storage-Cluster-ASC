@@ -36,7 +36,9 @@ and remote verification before next. No reset/force/main merge or Demo changes.
 3D.0/1a/1b/2/3/4a are normal-pushed/remote verified (PHASE3D-PROGRESS).
 Frozen source/tests50df5d79e1759cf5755d416d53c4bc47cc74e49b: fresh full238 Python
 PASS0skip/all original faults +all9 new3D groups;54 targeted and Go11/vet/modules/
-builds PASS. Only reporting follows; check final receipt for advertised remote.
+builds PASS. Acceptance normal-pushed/remote+fresh-fetch verified at
+f4dae0bcdf0fb9343f14eba00c0a05f223978588; published source fingerprints match full.
+Only final receipt reporting follows; no source drift.
 External backup/anchored verify/passive recovery Linux scope ACCEPTED, Phase3D
 PARTIALLY COMPLETE; full writable DR NOT ACCEPTED/BLOCKED. No unfinished source
 gate after final report remote proof. Next separate platform/authority qualification,

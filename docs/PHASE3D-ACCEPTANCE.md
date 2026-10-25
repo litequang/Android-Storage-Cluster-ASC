@@ -182,3 +182,14 @@ Only source/test additions and reporting are public; ignore rules are not the so
 secret defense. Final normal feature push and advertised ref proof follow final
 tracked/index review; next action is separate operator/platform/writer qualification,
 not redo3A–3C or silently enable production recovery.
+
+
+## Verified GitHub receipt
+
+Acceptance publication **f4dae0bcdf0fb9343f14eba00c0a05f223978588** normal-pushed to
+feature/phase3d-external-dr; advertised ref and fresh explicit FETCH_HEAD equal
+publication commit at **2026-10-25T06:17:07.903358+00:00**. Published source/tests match
+full-tested50df5d7 fingerprints; original Coreacea2ae and Demo c9c2660 refs unchanged.
+No private backup/runtime artifact published. Following receipt commit is reporting
+only; identify its own hash through Git history. All scoped mandatory source gates
+are complete; full writable DR/platform/media qualification remains blocked/unrun.

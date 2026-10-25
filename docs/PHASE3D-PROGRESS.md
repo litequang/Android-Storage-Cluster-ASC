@@ -15,14 +15,15 @@ Existing activation /workspace/asc-cloud/activate.sh supplies Python3.13.5/Go1.2
 |3D.2|PUSH/REMOTE VERIFIED554c992f9f234c2f1dd44efa2c1e70f70cd19e8e;37 targeted PASS|
 |3D.3|PUSH/REMOTE VERIFIED531d91ec7805c14297fa8a70679daaa9330c134e;23 targeted PASS|
 |3D.4a|PUSH/REMOTE VERIFIED50df5d79e1759cf5755d416d53c4bc47cc74e49b;54 targeted/all9 fault groups PASS|
-|3D.4b|COMPLETE Linux scoped qualification:238PASS0skip0fail1403.864s; reporting push/remote receipt follows|
+|3D.4b|PUSH/REMOTE VERIFIEDf4dae0bcdf0fb9343f14eba00c0a05f223978588; fresh238PASS0skip0fail1403.864s, scoped Linux acceptance|
 
 CURRENT NEXT: mandatory external-backup/verify/read-only-stage Linux source gates
 COMPLETE on frozen50df5d79e1759cf5755d416d53c4bc47cc74e49b: **238PASS0SKIP0FAIL1403.864s**,
 all9 new groups +all original faults PASS; Go11/vet/modules/builds and final54 target
-PASS. See final acceptance/operations/receipt below. Only final reporting normal
-push/remote verification remains before publication is synchronized. After its
-verified receipt, no unfinished mandatory SOURCE gate in this scoped delivery.
+PASS. Final acceptance normally pushed/remote verified atf4dae0bcdf0fb9343f14eba00c0a05f223978588;
+fresh explicit fetch matches and source fingerprint equals full-tested50df5d7.
+Publication synchronized; receipt below. No unfinished mandatory SOURCE gate in
+this scoped delivery.
 Phase3D is PARTIALLY COMPLETE: writable disaster recovery remains BLOCKED, not
 accepted. Next is separately authorized real-media/platform/authority recovery
 qualification; do NOT reimplement0–3 or create fake writer/quorum/epoch. Every
@@ -236,3 +237,30 @@ pending upstream recovery/old-cluster fencing/identity credential recovery. No
 Windows/Android runtime/real device/independent media/power-cut/production claim.
 No next mandatory source test remains after final report push/remote verification;
 its own commit/receipt is identified in Git history and following receipt.
+
+
+## Final GitHub publication receipt — COMPLETE scoped source handoff
+
+3D.4b acceptance **f4dae0bcdf0fb9343f14eba00c0a05f223978588** normal-pushed to
+feature/phase3d-external-dr. Advertised ref equals local HEAD; independent explicit
+`git fetch origin feature/phase3d-external-dr` FETCH_HEAD matches. Verified
+**2026-10-25T06:17:07.903358+00:00**. Published source/tests/Go match exact full-tested
+50df5d79e1759cf5755d416d53c4bc47cc74e49b SHA256 fingerprint, no source drift.
+Core WIP **acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c**, Demo
+**c9c2660b5aad9fe347cb0b216f0d691144f74caa** advertised unchanged.
+Only this feature branch pushed; no merge/force/reset/history rewrite. All
+checkpoints individually saved/verified before next; this final receipt only
+changes reporting. Its own hash is available through Git history/final response.
+
+- [Published actual acceptance](https://github.com/litequang/Android-Storage-Cluster-ASC/blob/f4dae0bcdf0fb9343f14eba00c0a05f223978588/docs/PHASE3D-ACCEPTANCE.md)
+- [Published operator CLI/format/upgrade/rollback guide](https://github.com/litequang/Android-Storage-Cluster-ASC/blob/f4dae0bcdf0fb9343f14eba00c0a05f223978588/docs/PHASE3D-OPERATIONS.md)
+
+Final238 Python0skip0fail +54 targeted +all9 new/all original faults +Go11/vet/
+module/build gates PASS; Windows/Android build only. Private state/backups/keys/
+logs/binaries excluded,156 tracked/index paths reviewed0findings. Phase3D remains
+**PARTIALLY COMPLETE: Linux external backup/verify/read-only staging ACCEPTED; full
+writable disaster recovery NOT ACCEPTED/BLOCKED**. No pending source/release gate
+for scoped handoff. Next task must separately qualify real independent media/
+platforms and upstream recovery/old-cluster fencing/identity keys before any writer.
+Never launch runtime on staging, restore staleDB, reinitialize voters, access
+phones/M51/production or enable GC/membership/3D-adjacent Dashboard/remote access.
