@@ -324,3 +324,10 @@ export private authority hashes or read retained versions; only owner explicit
 backup scope can do so. Read grants are current generation/approval/exact object
 and expire under existing nonce-bound introspection. Captured hashes/IDs never
 become credentials. Existing single-writer/Demo APIs are not expanded.
+
+External CLI uses only a bounded existing private owner endpoint/bootstrap file,
+no raw secret flags or exception strings. Linux desktop only; getprop/Termux/Android
+refused rather than adding a device guard bypass. Local archive verification
+requires separately trusted manifest SHA and reports known-history rollback floor;
+no automatic credential/Leader revival. Operators still need privacy/encryption
+for any future untrusted/public provider; current adapter rejects public roots.

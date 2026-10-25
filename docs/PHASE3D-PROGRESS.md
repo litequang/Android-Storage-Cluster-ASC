@@ -11,8 +11,8 @@ Existing activation /workspace/asc-cloud/activate.sh supplies Python3.13.5/Go1.2
 |---|---|
 |3D.0|PUSH/REMOTE VERIFIED08d36d041f009a9417bc300157d9cb0526130818;20 backup units PASS|
 |3D.1a|PUSH/REMOTE VERIFIED86d11056a00fbbb4d52a809a4cbf236a8c21b4f5;35 targeted PASS|
-|3D.1b|READY:12 targeted PASS0skip0fail12.663s incl actual three-voter/TLS; push gate follows|
-|3D.2|NOT STARTED|
+|3D.1b|PUSH/REMOTE VERIFIEDe62d06a0b8ed68538305b6a09007fae0450ddabf;12 targeted PASS|
+|3D.2|READY:37 targeted PASS0skip0fail0.467s; anchored verify/inventory/retention/CLI; push gate follows|
 |3D.3|NOT STARTED|
 |3D.4|NOT STARTED|
 
@@ -80,3 +80,27 @@ Unit authority fakes remain labelled; this separate integration actually uses Go
 Barrier/CAS/storage online nonce authorization. Original Linux runtime guard stays
 unchanged; existing private synthetic launcher supplies its test-only profile.
 Next after normal push/remote match:3D.2 anchored verification/list/retention/CLI.
+
+## 3D.2 verification / retention / operator entrypoint
+
+1b pushed/remote matched e62d06a before2. Added verify.py: trusted manifest SHA,
+strict metadata/manifest/complete coverage, all object SHA/readback and byte/count,
+point-in-time verified_at, known-index STALE even when integrity passes. Missing/
+corrupt content CORRUPT; unsafe/inaccessible/busy/replaced IO UNKNOWN, never0.
+Inventory is explicitly COMPLETE_UNVERIFIED without trusted anchor/full hash.
+retention_preview returns no candidates/delete implementation, holds every backup
+including UNKNOWN/last valid. No GC credit. CLI init/create/resume/list/verify/
+retention-preview is local Linux development only, rejects getprop/Android/Termux,
+reads bounded private existing owner bootstrap (normal JSON, duplicate keys denied),
+uses existing pinned owner discovery, and prints no exception/path/token text.
+New PHASE3D-OPERATIONS explains exact commands/coverage/witnesses/upgrade/rollback.
+
+`python -B -m unittest tests.test_external tests.test_external_verify
+ tests.test_backup.BackupStateTests -v`: **37PASS0SKIP0FAIL0.467s** incl6 new
+verification/CLI cases and11 filesystem +20 old backup units. Tampered manifest
+with recomputed self-receipt still rejected against independent trusted digest;
+metadata mismatch, missing/corrupt/extra object, real permission denial, unanchored
+inventory, newer-history floor, INCOMPLETE and nondeleting last-backup retention.
+Initial collected48 included an imported duplicate TestCase; changed import to
+module-only helper reuse, final37 are unique. No product/test assertion weakened.
+Next after push/remote:3D.3 actual isolated read-only staging/resume/integrity.

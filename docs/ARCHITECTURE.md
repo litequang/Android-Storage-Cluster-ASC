@@ -317,3 +317,9 @@ transport labels cannot alter source checkpoint. Owner client streams candidates
 over pinned Storage HTTPS and retries only its unpublished private partial. Final
 current quorum check gates new COMPLETE; completed archives remain historical.
 No backup code runs in Raft apply or mutates source content/pins/history.
+
+3D.2 offline verification needs an independently trusted manifest digest; local
+completion/self-hash alone is not authenticity. Same-cluster minimum known index
+adds a historical rollback floor, not proof of newest history. Verification is
+time-stamped and rehashes all bodies; list stays COMPLETE_UNVERIFIED. Retention
+is non-destructive preview only; no completed backup is removed or used as GC credit.

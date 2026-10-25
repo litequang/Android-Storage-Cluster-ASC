@@ -347,3 +347,9 @@ trusted manifest anchor and passive read-only recovery, no writer reconstruction
   consumes exact nested capture and fresh scoped TLS streams/final quorum check.
   test_external_cluster uses original real3-voter/cohost fixture without inheriting
   old test cases; no GC capabilities or extra live data source.
+
+-3D.2 external/verify.py: anchored point-in-time full-byte verification, explicit
+  STALE/UNKNOWN/CORRUPT/INCOMPLETE, untrusted inventory and locked retention preview.
+  external/cli.py: guarded Linux-development private owner bootstrap entrypoint;
+  test_external_verify.py tests actual tampering/permissions/CLI, module helper
+  reuse avoids duplicate testcase collection. PHASE3D-OPERATIONS owns commands.

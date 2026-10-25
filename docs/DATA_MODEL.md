@@ -369,3 +369,9 @@ known exact two-link .part/.blob crash is proved by inode+SHA before partial unl
 No completed object or source byte is deleted/replaced. Manifest/metadata/status
 must validate; init interruption before durable capture may remain INCOMPLETE for
 operator review. Base schemas and old code compatibility remain unchanged.
+
+External VERIFY is returned evidence (verified_at/checked_at/integrity/coverage/
+known-index floor), not a permanent mutable archive state. Stale integrity-valid
+backup reports STALE; inaccessible values UNKNOWN/null. No schema/receipt change
+or last-verified retention deletion authority. Manifest SHA must be retained
+separately; a rehashed corrupt store cannot replace the trusted anchor.

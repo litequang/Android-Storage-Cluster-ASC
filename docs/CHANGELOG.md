@@ -287,3 +287,7 @@
   final authority check; PinnedSource reuses scoped TLS/hash streams. Real3-voter
   target12PASS0skip incl exact old/new bytes/lifecycle/owner/pinning. Full fault
   acceptance still pending; no writer recovery/Android authorization.
+
+-3D.2: add anchored offline full-byte/metadata verification with measured coverage,
+  stale index floor and UNKNOWN semantics; inventory/retention-only preview and
+  private guarded Linux CLI.37 unique targeted PASS0skip; full acceptance pending.

@@ -333,3 +333,10 @@ recompute the anchor to relabel success. IO/ENOSPC/source/quorum errors leave wo
 INCOMPLETE; restore correct media/authority and resume same Backup ID after review.
 Initialization interrupted before complete capture may need a new backup, retaining
 incomplete old evidence. No automatic external retention deletion or writer recovery.
+
+External CLI exit1/UNKNOWN means unavailable/untrusted evidence, not an empty
+backup. CORRUPT requires retaining and reviewing data, not recomputing its trusted
+anchor. STALE preserves valid old bytes but fails a newer operator-known index
+floor. COMPLETE_UNVERIFIED listing is not verification. VERIFIED can age/corrupt
+after its timestamp. external platform refusal is intentional for Android/M51;
+no flag enables phone operation. Retention-preview always holds and cannot delete.
