@@ -335,3 +335,9 @@ handoff on feature/phase3d-external-dr from Core acea2ae.3D.0 is architecture on
 no new runtime path yet. Existing backup is in-cluster and is not external DR.
 ADR-055/056 require exact projection+all-version bytes, private separate store,
 trusted manifest anchor and passive read-only recovery, no writer reconstruction.
+
+-3D.1a asc/external/{format,local,engine}.py: strict full-runtime/all-version
+  manifest, private no-follow POSIX local store, streaming SHA/fsync/readback,
+  atomic no-replace per-object publication, durable resume/final complete check.
+  tests/test_external.py owns actual filesystem safety/crash tests with explicit
+  fake source authority; actual quorum/TLS acceptance remains separate.

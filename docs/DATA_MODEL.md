@@ -353,3 +353,19 @@ Linux 3C.5 structural-validation reuse is memory-only: two successfully validate
 exact immutable canonical Catalog byte strings, each <=2 MiB. Native JSON type
 checks avoid representation aliases; caller dictionaries and failed inputs are
 not cached. No persisted schema, receipt, manifest, journal or authority change.
+
+## Phase 3D external local format1
+
+Separate operator-private store.json {format:1,store_id UUID,kind}, working/ and
+completed/ directories. Each UUID bundle: canonical manifest.json, exact canonical
+runtime2 metadata.json, objects/<global-file-UUID>.blob, then complete.json binding
+manifest SHA/objects/bytes. Manifest binds capture cluster/epoch/index/term/authority,
+control/Catalog revisions/digest, metadata SHA and ALL version descriptors, with
+writer_recovery_supported=false/secrets_included=false. This excludes raw keys/
+tokens, not sensitive hash/name/profile/endpoint metadata. Never publish backups.
+Per-object <global-ID>.part is transaction-owned temporary data; retry can replace
+only that exact private partial. Atomic hardlink publication refuses overwrite;
+known exact two-link .part/.blob crash is proved by inode+SHA before partial unlink.
+No completed object or source byte is deleted/replaced. Manifest/metadata/status
+must validate; init interruption before durable capture may remain INCOMPLETE for
+operator review. Base schemas and old code compatibility remain unchanged.

@@ -306,3 +306,15 @@ Mutation, history/hash/materialization mismatches and invalid Python type aliase
 must fail. Runtime identity/extensions, hashes, quorum, term, references, streamed
 survivors and final nonce checks still run. No time budget or real-device lock is
 relaxed to obtain physical PASS.
+
+## Phase 3D private external boundary
+
+Local external stores must be explicitly initialized empty0700 operator-owned
+roots, outside Git and all declared source HOME/volume ancestors/descendants.
+All files0600, descriptor/no-follow/single-link checks, pinned directory identities
+and exclusive OS lock. Trusted owning OS account remains required; not protection
+against a malicious privileged administrator. Same-host directories simulate only.
+SHA must be anchored separately by trusted operator; self-hash is not authenticity.
+No encryption is invented; plaintext sensitive metadata/bytes cannot go to public
+storage. No raw key/token/config/Raft database is exported. External verification
+never supplies GC credit or permission to restore active state/old credentials.

@@ -273,3 +273,12 @@
   compile-only. Ordinary/runtime/real-device GC remains locked, with no production,
   Android, hardware power-cut, Phase 3D or Dashboard qualification/deployment.
   Source version remains 0.10.0 development; no release tag or installer change.
+
+## Phase 3D.1a — external local archive engine (development)
+
+- Add separate versioned private POSIX external store/all-version manifest and
+  bounded streaming SHA/fsync/readback transaction, durable same-ID object resume,
+  immutable complete bundles and source final authority interface. No live source
+  schema/Engine/GC/membership change; actual quorum/TLS integration follows1b.
+- Actual filesystem target35PASS0skip incl11 new external cases; full qualification
+  pending. No Windows/Android/production/writable DR claim; see PHASE3D documents.

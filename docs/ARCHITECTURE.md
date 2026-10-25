@@ -300,3 +300,13 @@ document, authority, time-dependent evidence or grant is cached. Changed bytes
 validate again, including history/materialization checks. All other runtime
 validation, digest verification, fresh quorum/nonce and streamed-proof gates remain
 per-operation. Callback/local time budgets are unchanged.
+
+## Phase 3D external archives (separate feature branch)
+
+External BackupEngine consumes a source capture/stream/revalidate interface. Private
+LocalStore pins approved destination descriptors and owns one exclusive store lock;
+immutable capture and all Catalog version bytes live outside source state/volumes.
+64KiB streams hash/fsync/readback before no-replace publication; complete replay
+rehashes rather than trusting progress. Only a current source authority final gate
+can publish new COMPLETE. Base runtime/registry/manifest/GC remain unchanged.
+Offline recovery is planned as passive READ_ONLY data staging, never a writer.

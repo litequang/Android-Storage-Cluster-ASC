@@ -321,3 +321,15 @@ reprepare stale exact plans and obtain new proofs, preserving the 10s callback a
 250ms local budgets. Never clear history or extend freshness limits to get PASS.
 Synthetic-only pause/crash/stack controls live in tests/gc_fixture.py, not runtime
 config or product endpoints.
+
+## Phase 3D external archive diagnostics
+
+external_destination_overlaps_source / unsafe_external_path: choose an explicitly
+private empty external root outside every source HOME/volume and Git, no symlinks/
+hardlinks; never change system permissions or bypass checks. external_store_busy:
+wait for owning operation; don't remove lock. external_object_corrupt /
+external_snapshot_mismatch: preserve archive and source; do not overwrite bytes or
+recompute the anchor to relabel success. IO/ENOSPC/source/quorum errors leave working
+INCOMPLETE; restore correct media/authority and resume same Backup ID after review.
+Initialization interrupted before complete capture may need a new backup, retaining
+incomplete old evidence. No automatic external retention deletion or writer recovery.
