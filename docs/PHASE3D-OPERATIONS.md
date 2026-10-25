@@ -68,13 +68,37 @@ before durable metadata+manifest requires review/new capture, preserve old evide
 
 ## Recovery staging
 
-Implemented in3D.3; follow the exact staged entrypoint/accepted results when present.
 Only a NEW isolated empty private root is permitted, separate from external store
-and all active state/volumes. No automatic Controller/Storage/worker start, no new
-Raft epoch/quorum/Leader, no SQLite/Raft log import or old credentials resurrection.
-No full writable disaster recovery claim; upstream recovery/old-cluster fencing/
-identity re-enrollment is a separate BLOCKER. Never use old backup to overwrite
-newer live state. Preserve the latest-known external authority witness separately.
+and all active state/volumes. Entire anchored backup verified BEFORE destination
+mutation, then source/staged full-byte recheck before READY. Existing intent may
+resume only the exact backup/anchor/cluster/index-floor; a changed intent fails.
+
+```sh
+ASC_RECOVERY=/absolute/private/new-isolated-recovery
+mkdir -m 700 "$ASC_RECOVERY"
+python -B -m asc.external.cli stage --store "$ASC_EXTERNAL" \
+  --backup-id "$ASC_BACKUP_ID" --expected-sha256 "$ASC_TRUSTED_MANIFEST_SHA" \
+  --destination "$ASC_RECOVERY" --source-root "$ASC_SOURCE_HOME" \
+  --cluster-id "$ASC_EXPECTED_CLUSTER" --minimum-index "$ASC_MINIMUM_KNOWN_INDEX"
+python -B -m asc.external.cli stage-verify --destination "$ASC_RECOVERY" \
+  --expected-sha256 "$ASC_TRUSTED_MANIFEST_SHA"
+```
+
+Success is VERIFIED_RECOVERY_STAGING, writer_authority=false and
+credentials_restored=false. RECOVERY_READ_ONLY.json is the immutable intent;
+READY.json is a completed integrity receipt. metadata.json is the EXACT captured
+runtime projection with original Cluster/Node/Volume/File/version IDs, history,
+pins, trust hashes and job evidence; objects/<global-file-ID>.blob are portable
+verified bytes. Historical physical locations are not new live manifests. Re-read
+metadata privately to map original logical path/version to global file ID; never
+interpret a label as an extraction path. All versions have separate global IDs.
+
+No automatic Controller/Storage/worker start, Raft epoch/quorum/Leader, SQLite/log
+import, volume marker recreation or old credential resurrection. Do not point any
+ASC runtime at this staging root. No full writable disaster recovery claim;
+upstream recovery/old-cluster fencing/identity re-enrollment is a separate BLOCKER.
+Never use an old backup to overwrite newer state. Lost latest external witness
+means freshness/zero data loss cannot be proved even when every byte verifies.
 
 ## Upgrade / rollback / scope
 

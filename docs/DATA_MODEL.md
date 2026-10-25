@@ -375,3 +375,12 @@ known-index floor), not a permanent mutable archive state. Stale integrity-valid
 backup reports STALE; inaccessible values UNKNOWN/null. No schema/receipt change
 or last-verified retention deletion authority. Manifest SHA must be retained
 separately; a rehashed corrupt store cannot replace the trusted anchor.
+
+Recovery format1: RECOVERY_READ_ONLY.json binds backup UUID/trusted manifest SHA/
+cluster/source index/operator minimum index with writer_authority=false and
+credentials_restored=false. Exact original metadata.json/manifest.json and
+objects/<global-ID>.blob preserve original historical relationships, not physical
+medium adoption. READY.json binds intent SHA/manifest SHA/object count/bytes after
+complete independent readback. No registry/manifest/Raft DB/config/key is created.
+Interrupted same-intent resume never resets IDs/known-history floor or overwrites
+a completed object; corrupt/foreign state held. No base schema migration.

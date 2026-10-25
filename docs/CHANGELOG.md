@@ -291,3 +291,8 @@
 -3D.2: add anchored offline full-byte/metadata verification with measured coverage,
   stale index floor and UNKNOWN semantics; inventory/retention-only preview and
   private guarded Linux CLI.37 unique targeted PASS0skip; full acceptance pending.
+
+-3D.3: isolated read-only recovery staging and stage-verify, full anchor/schema/
+  byte checks before and after copy, exact IDs/history/intent-preserving resume,
+  newer-history floor and nonempty active-state refusal.23 targeted PASS0skip.
+  Writer/credential/quorum recovery deliberately unavailable, full faults pending.

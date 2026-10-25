@@ -340,3 +340,11 @@ anchor. STALE preserves valid old bytes but fails a newer operator-known index
 floor. COMPLETE_UNVERIFIED listing is not verification. VERIFIED can age/corrupt
 after its timestamp. external platform refusal is intentional for Android/M51;
 no flag enables phone operation. Retention-preview always holds and cannot delete.
+
+external_backup_stale: do not lower the known required index to accept lost newer
+history; retain old bytes and find newer trusted backup. external_recovery_intent_
+conflict/nonempty destination: preserve existing state; choose genuinely NEW
+isolated destination, not a live cluster. Interrupted staging can resume exact
+original command; READY absent means not verified complete. NEVER run Controller
+on staging or restore old DB/config/credentials to grant writer. Missing authority
+recovery/fencing is an explicit blocker, not an installer error to bypass.

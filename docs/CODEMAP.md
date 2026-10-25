@@ -353,3 +353,9 @@ trusted manifest anchor and passive read-only recovery, no writer reconstruction
   external/cli.py: guarded Linux-development private owner bootstrap entrypoint;
   test_external_verify.py tests actual tampering/permissions/CLI, module helper
   reuse avoids duplicate testcase collection. PHASE3D-OPERATIONS owns commands.
+
+-3D.3 external/recovery.py: full anchored source validation before new passive
+  READ_ONLY intent, streamed exact metadata/body staging, same-intent crash resume,
+  final source+staged integrity and non-authoritative READY receipt. stage-verify
+  uses existing shared lock and does not modify data. CLI stage/stage-verify routes;
+  test_external_recovery covers real IO/IDs/no live configs/overwrite/floor/links.

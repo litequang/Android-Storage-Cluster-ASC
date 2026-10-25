@@ -12,8 +12,8 @@ Existing activation /workspace/asc-cloud/activate.sh supplies Python3.13.5/Go1.2
 |3D.0|PUSH/REMOTE VERIFIED08d36d041f009a9417bc300157d9cb0526130818;20 backup units PASS|
 |3D.1a|PUSH/REMOTE VERIFIED86d11056a00fbbb4d52a809a4cbf236a8c21b4f5;35 targeted PASS|
 |3D.1b|PUSH/REMOTE VERIFIEDe62d06a0b8ed68538305b6a09007fae0450ddabf;12 targeted PASS|
-|3D.2|READY:37 targeted PASS0skip0fail0.467s; anchored verify/inventory/retention/CLI; push gate follows|
-|3D.3|NOT STARTED|
+|3D.2|PUSH/REMOTE VERIFIED554c992f9f234c2f1dd44efa2c1e70f70cd19e8e;37 targeted PASS|
+|3D.3|READY:23 targeted PASS0skip0fail0.460s; passive isolated recovery/resume; push gate follows|
 |3D.4|NOT STARTED|
 
 Next: publish/remote-verify3D.0 after document/backup unit validation, then implement
@@ -104,3 +104,26 @@ inventory, newer-history floor, INCOMPLETE and nondeleting last-backup retention
 Initial collected48 included an imported duplicate TestCase; changed import to
 module-only helper reuse, final37 are unique. No product/test assertion weakened.
 Next after push/remote:3D.3 actual isolated read-only staging/resume/integrity.
+
+## 3D.3 passive disaster recovery staging
+
+2 pushed/remote matched554c992 before3. Added external/recovery.py plus stage/
+stage-verify CLI. Require separately trusted manifest SHA, expected cluster and
+operator minimum-known-index plus separate explicitly private empty recovery root.
+Full backup verified before any destination mutation; no nonempty active root
+adoption (even an extra lock is not written on refusal). Durable READ_ONLY intent,
+exact metadata/manifest and streamed/fsynced portable objects preserve historical
+IDs/version/pins/jobs/hashes; full readback/source reverify before READY. Retry
+requires exact original intent/floor, rehashes retained objects and never rewrites
+completed data. Shared-lock stage-verify is read-only. No live config/DB/Raft log/
+volume marker/credential/key restoration/worker/server; writer_authority=false.
+Missing identity/authority metadata, changed intent, stale/newer floor, corrupt
+source/stage, symlink or source/store overlap fails. Stage is NOT a writable cluster.
+
+`python -B -m unittest tests.test_external tests.test_external_verify
+ tests.test_external_recovery -v`: **23PASS0SKIP0FAIL0.460s** incl6 new actual IO
+stage/resume/identity/CLI cases. Interrupted after first object retains its inode,
+retries finish two exact bodies, foreign intent/nonempty active state remains
+unchanged; modified staged authority cannot verify. Full/new actual network fault
+matrix and fresh full regression still pending3D.4; no full DR/Android claim.
+Next after normal push/remote equality:3D.4 faults/final safety/Go/full regression.

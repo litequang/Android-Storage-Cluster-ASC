@@ -323,3 +323,9 @@ completion/self-hash alone is not authenticity. Same-cluster minimum known index
 adds a historical rollback floor, not proof of newest history. Verification is
 time-stamped and rehashes all bodies; list stays COMPLETE_UNVERIFIED. Retention
 is non-destructive preview only; no completed backup is removed or used as GC credit.
+
+3D.3 recovery is a passive data bundle on a NEW isolated empty root, not an ASC
+HOME/volume. Exact captured projection and global-ID portable bodies plus READ_ONLY
+intent/READY integrity receipt preserve history without constructing authority.
+No runtime import/bootstrap/migration/credential reuse or server launch exists.
+Full writable recovery remains blocked pending upstream library/fencing review.

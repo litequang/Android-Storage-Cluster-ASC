@@ -331,3 +331,11 @@ refused rather than adding a device guard bypass. Local archive verification
 requires separately trusted manifest SHA and reports known-history rollback floor;
 no automatic credential/Leader revival. Operators still need privacy/encryption
 for any future untrusted/public provider; current adapter rejects public roots.
+
+Recovery staging requires anchored full source verification, expected cluster and
+minimum-known index BEFORE new destination mutation; separate source/store roots,
+new private empty root and fixed generated object names. Durable READ_ONLY intent
+is passive data only. No restored tokens/private keys, fake epoch/quorum/Leader,
+Raft log edit or active SQLite import. A lost authority/latest witness cannot be
+replaced by a manifest self-hash. Same-intent retry binds floor; stage-verify checks
+all hashes through shared existing lock without creating config/identity.
