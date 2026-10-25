@@ -1,4 +1,4 @@
-plugins { id("com.android.application"); id("org.jetbrains.kotlin.android") }
+plugins { id("com.android.application"); id("org.jetbrains.kotlin.android"); id("com.chaquo.python") }
 android {
     namespace = "org.asc.foundation"
     compileSdk = 35
@@ -6,6 +6,7 @@ android {
         applicationId = "org.asc.foundation"
         minSdk = 26
         targetSdk = 35
+        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
         versionCode = 1
         versionName = "0.1.0-foundation"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -20,3 +21,18 @@ dependencies {
     androidTestImplementation("androidx.test:core:1.6.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
 }
+
+// Copy ONLY canonical public Core Python into generated build assets. No fork,
+// tests, private state, source mutation or Termux files enter the APK.
+val syncAscSources by tasks.registering(Sync::class) {
+    from(rootProject.projectDir.parentFile.resolve("asc")) { include("**/*.py"); into("asc") }
+    into(layout.buildDirectory.dir("generated/asc-python"))
+}
+chaquopy {
+    defaultConfig {
+        version = "3.13"
+        buildPython(System.getenv("ASC_ANDROID_BUILD_PYTHON") ?: "python3.13")
+    }
+    sourceSets { getByName("main") { srcDir(layout.buildDirectory.dir("generated/asc-python")) } }
+}
+tasks.matching { it.name.contains("Python") }.configureEach { dependsOn(syncAscSources) }

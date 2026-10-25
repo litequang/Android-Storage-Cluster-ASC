@@ -25,3 +25,9 @@ qualification remains mandatory before any runtime/Node claim. Full scope NOT AC
 PASS47.602s;7 JVM PASS/build PASS. Actual private own-UID Binder/consent/denial
 and Activity launch only. Native Node/embedded Engine/Keystore/storage/enrollment/
 foreign caller/lifecycle/network/upgrade/full final gates remain PENDING.
+
+4.2b.2 actual API35:5 instrumentation PASS27.733s,7 JVM PASS,3 Linux adapter
+PASS0.166s. Real canonical StorageEngine stream/commit/SHA/fsync/restart proven
+without Core edits/guard bypass. First unsafe_path failure retained in progress;
+new-root canonical Context selection fixed. Native Node/Quick Join/TLS identity/
+agent/FGS provider still BLOCKED; library proof does not authorize runtime.

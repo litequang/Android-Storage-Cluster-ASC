@@ -8,8 +8,8 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 | Checkpoint | State |
 |---|---|
 |4.2a|PUSH/REMOTE VERIFIED8667923 +audit follow-up a6e4d7e; build tools PASS; emulator35 now booted|
-|4.2b.1|READY:7 JVM +4 actual Android instrumentation PASS; native Binder foundation|
-|4.2b.2|NOT STARTED: embedded canonical Python Engine qualification|
+|4.2b.1|PUSH/REMOTE VERIFIED677e28ac5cff008e4b869847ac6c39bb51d71266;7 JVM/4 Android PASS|
+|4.2b.2|READY:7 JVM/3 Linux adapter/5 Android PASS; actual local Core library, Node runtime BLOCKED|
 |4.2c|NOT STARTED|
 |4.2d|NOT STARTED|
 |4.2e|NOT STARTED|
@@ -72,3 +72,26 @@ NOT native Node/engine/enrollment acceptance. Cross-UID attacker still futuregat
 No KVM/phones/M51/Termux/system changes. a emulator earlier pending status now
 superseded by observed boot +actual4 tests, not a build-based inference.
 Next b.2 ONLY after normal commit/push/remote: embedded original Engine investigation.
+
+## 4.2b.2 embedded canonical Python Engine
+
+b.1 pushed/remote matched677e28a BEFORE b.2. Chaquopy16.1/Python3.13 copies only
+existing Core public Python into generated APK assets; x86_64/arm64 ABIs. No asc/
+source edit/fork/second Kotlin Engine. Native info imports actual SSL/SQLite/Core;
+internal instrumentation does fresh synthetic direct existing Engine I/O/restart,
+not a joined Node/network service. Existing/root/link refusal gets Linux actualI/O
+coverage. Initial5-test Android run had1 real unsafe_path failure: Context path
+/data/user/0 alias fails Core no_links. Fixed TEST approved new root selection to
+trusted Context.canonicalFile BEFORE registration; no Core guard/marker change.
+
+Final assembleDebug/testDebugUnitTest/assembleDebugAndroidTest BUILD PASS21s,
+7 JVM PASS.3 actual Linux adapter tests PASS0skip/fail0.166s. Both APKs installed
+on owned API35 emulator; **5 actual Android instrumentation PASS27.733s** incl
+real Python Engine stream/commit/download SHA/verify/fsync/manifest restart. No
+native Node or network enrollment claim. See ANDROID-ENGINE-INTEGRATION for exact
+blocker: missing reviewed native in-process TLS identity/enrollment/agent/lifecycle
+provider replacing old CLI/HOME/subprocess/OpenSSL assumptions; NEVER monkeypatch
+or bypass those guards. Node start/Quick Join stay explicit unsupported. FGS/
+notification/background Node remains BLOCKED, not idle fake service.
+Next c only after normal commit/push/remote match: app Keystore/private probe/draft
+foundation. Draft !=Core enrollment, local probe !=approved cluster Storage Node.

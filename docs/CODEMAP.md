@@ -573,3 +573,9 @@ bridge/Core read-only only; Android/native migration/writable DR remain unqualif
 - EngineService.kt: exported=false/signature permission and per-call UID/signature, consent, honest FOUNDATION/UNKNOWN/unsupported runtime, no automatic identity/lifecycle.
 - MainActivity: explicit local consent and private binding/status; no browser/backend/Termux state.
 - RequestPolicyTest/BinderTest: JVM denial/validation and actual Android consent/version/runtime refusal gates; no mock online success.
+
+## Phase4.2b.2 embedded canonical Core library
+- Gradle syncAscSources/Chaquopy: allowlisted public Core .py to generated APK assets, pinned Python3.13/16.1, no source fork or state copy.
+- EmbeddedEngine.kt/native_engine.py: actual library info +internal fresh synthetic I/O/commit/restart proof, no Node runtime API.
+- EmbeddedEngineTest/test_native_engine_adapter.py: real Android +Linux I/O/root/link refusal, preserved core guards and private Context canonical approval.
+- ANDROID-ENGINE-INTEGRATION owns current native runtime blocker and future explicit-context provider boundary.

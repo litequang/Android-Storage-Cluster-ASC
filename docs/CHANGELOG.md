@@ -488,3 +488,9 @@ consensus or recovery authority. Emulator/Engine qualification remains separate.
 Own UID/signature+explicit local consent, version1 bounded validation and honest
 FOUNDATION/UNKNOWN. No native Node launch/enrollment or second storage backend.
 Actual Android instrumentation gate is separate from JVM policy/build evidence.
+
+## Phase4.2b.2 — actual existing Engine on Android sandbox
+Pinned embedded Python/Core library passes real API35 stream/commit/SHA/fsync/
+manifest restart. Core no-links correctly held alias Context path; approve NEW
+canonical private root before test registration, no guard weakening. Local library
+proof only; native Node/enrollment/TLS/agent/FGS remain blocked by provider contract.
