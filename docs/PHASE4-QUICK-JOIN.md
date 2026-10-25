@@ -18,9 +18,12 @@ Phase4 final candidate archive/upgrade evidence is pending until4.0c.
    verified (`dashboard-trust`); never bypass HTTPS errors. Obtain a Dashboard
    login code using `ascdemo --state "$HOME/.asc-demo" dashboard-code` in another
    Controller terminal. This is a LOGIN code, not a node enrollment code.
-2. Owner-session API below creates a separate one-use NODE code,600s. Quick Join
-   UI is the next checkpoint; until then retain the existing `pair` CLI or use a
-   trusted same-origin session client. Do not put either code in URLs/logs/history.
+2. In Dashboard open **Ghép điện thoại**, select **Tạo mã ghép node một lần**.
+   It creates a separate one-use NODE code,600s. Compare the lifecycle Controller
+   origin/full PIN/Cluster ID displayed there with the node. Do not put either
+   code in URLs/logs/history. The page polls actual registration and shows
+   pending storage approval separately; it cannot approve a node. On offline,
+   logout or page close the code is cleared; reload does not restore tracking.
 3. A new approved node needs explicit Demo init first. Do NOT init an existing
    initialized device again or copy someone else's state. Example ONLY for a
    new synthetic/private test installation (replace private LAN IP):

@@ -428,3 +428,10 @@ explicit supported Demo mode before secret submission. Hidden code input and
 redacted structured errors preserve pending retry identity. No shared password,
 auto storage permission, failure domain inference or recovery writer. M51/unknown
 model guards remain. Missing initialized state and recovery staging fail closed.
+
+Phase4 owner UI retains pairing grant only in live DOM/RAM. It never writes that
+grant, owner login code or node credentials to local/session storage or URLs.
+Offline/logout/pagehide clear the code; generation guards discard delayed replies
+from an earlier session/request. A code cleared from UI may still be valid at
+Controller until used/expired; no false revocation guarantee. Existing upload
+idempotency metadata in sessionStorage is unchanged and contains no auth grant.

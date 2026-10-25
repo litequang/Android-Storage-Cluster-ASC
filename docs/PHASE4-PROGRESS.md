@@ -9,8 +9,8 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 |---|---|
 |4.0a|PUSH/REMOTE VERIFIED5d15cb71dc07e0e31b7b9da68e4aea85178e3847;16 targeted PASS|
 |4.0b.1|PUSH/REMOTE VERIFIED4646f68b7e7e60d924a6beb25de93dcd2e597448;95PASS|
-|4.0b.2a|READY: backend/guided CLI31PASS; push gate follows|
-|4.0b.2b|NOT STARTED: owner UI/browser|
+|4.0b.2a|PUSH/REMOTE VERIFIEDb96e4be43dd1228c025cb0305fd7372b559b9fb3;31PASS|
+|4.0b.2b|READY:17 targeted PASS; normal push gate follows|
 |4.0c|NOT STARTED: exact04.1 candidate upgrade/rollback +fresh full qualification|
 
 Read AGENTS in mandatory order, then3D acceptance/progress and Demo4D acceptance/
@@ -90,3 +90,27 @@ expiry/new-code same operation, pin/cluster/quorum refusal, session isolation/
 CSRF/global32 bounds, no auto-storage, existing identity and setup/device guards.
 Full qualification/candidate upgrade and owner UI still pending. Next only after
 normal feature push/remote equality:4.0b.2b. Guide PHASE4-QUICK-JOIN.md.
+
+## 4.0b.2b existing Dashboard Quick Join UI
+
+b.2a normal-pushed/remote matchedb96e4be BEFORE UI changes. Same Vietnamese
+mobile Dashboard now has Ghép điện thoại tab. Owner creates code and sees actual
+registration plus separate storage approval/domain. No second UI/runtime or
+approval control. Full Controller lifecycle origin/pin/cluster displayed; code
+DOM/RAM only, cleared on non-waiting evidence/offline/logout/pagehide. Generation
+guards discard old POST/poll replies after logout/disconnect. No auth grant in
+persistent browser storage or URL. Logout/reload does not claim code revocation.
+
+First browser gate failed in TEST delay hook because Playwright route.fetch has
+a separate CA trust store. Fixed test to delay delivery AFTER Chromium validated
+the actual TLS response; no TLS bypass, fake success or product fault flag.
+Single corrected case PASS9.610s; fresh final command:
+`python -B -m unittest tests.test_quick_join_browser
+ tests.test_demo_dashboard_browser tests.test_demo_dashboard tests.test_quick_join -v`
+**17PASS0SKIP0FAIL95.116s**. Actual trusted Chromium new mobile wizard ->actual CLI
+node registered/unapproved, no persistent grants, offline clear and delayed reply
+race PASS. Existing browser upload/two domains/SHA/node fallback/XSS/Controller
+outage PASS, all backend/security cases PASS. Manual screenshot390px inspected,
+no overflow; local screenshot contains no code and is not published. Node JS
+syntax checks and diff whitespace PASS. Candidate upgrade/full qualification
+still pending. Next only after feature push/remote equality:4.0c.

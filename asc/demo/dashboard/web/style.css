@@ -77,3 +77,11 @@ dialog::backdrop { background: #152f3d88; }
 footer { max-width: 1120px; padding: 24px 20px 32px; margin: auto; font-size: 11px; color: #78909b; border-top: 1px solid #dce5e9; }
 @media(min-width: 760px) { .summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .node-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tabs { justify-content: flex-start; } .tab { flex: 0 1 170px; } }
 @media(max-width: 380px) { main { padding: 22px 14px; } .panel { padding: 17px; } .login-panel { margin-top: 15px; } .heading-actions { flex-wrap: wrap; } .summary-card { padding: 13px; } }
+
+/* Quick Join uses existing mobile layout and text-only public bindings. */
+.pair-bindings { margin: 1rem 0; }
+.pair-bindings dt { color: var(--muted); margin-top: .8rem; }
+.pair-bindings dd { margin: .25rem 0; overflow-wrap: anywhere; font-family: monospace; }
+#pair-code { font-size: 1.15rem; overflow-wrap: anywhere; user-select: all; }
+#pair-registration { overflow-wrap: anywhere; }
+.tabs { flex-wrap: wrap; }

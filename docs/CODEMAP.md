@@ -494,3 +494,11 @@ progress. No QuickJoin implementation yet; historical source status above retain
 - asc/cli.py:_enroll: optional expected-cluster-id guard, existing pending format unchanged. asc/demo/state.py rejects recovery staging before init/inspection.
 - tests/test_quick_join.py:9 actual TLS/CLI/one-use/concurrency/ACK/restart/security/identity/device cases. Historical release tests use exact published04.1 fixture; old assertions retained.
 - docs/PHASE4-QUICK-JOIN.md: source-candidate CLI/API contract and operator limits; UI/candidate final qualification pending.
+
+## Phase4.0b.2b owner UI
+Existing Dashboard web/index.html/app.js/style.css adds Ghép điện thoại tab;
+same request/session facade. One-use code only DOM/RAM, generation guards discard
+old async replies; offline/logout/pagehide clears it. No node approval action.
+tests/browser/quick_join.cjs +test_quick_join_browser.py: trusted actual Chromium
+owner create ->real CLI registration, pending approval,390px layout, no persistent
+codes/secret URLs, offline clearing and delayed successful POST after logout.

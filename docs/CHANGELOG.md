@@ -410,3 +410,10 @@ Guided local quick-join validates pin/cluster/mode, preserves pending/identity,
 refuses recovery staging and never approves storage.31 targeted Linux synthetic
 PASS; UI and exact candidate upgrade/full qualification pending. Historical04.1
 archive fixtures/assertions preserved. No public Android release/acceptance.
+
+## Phase4.0b.2b — Quick Join owner page
+Vietnamese mobile Dashboard reuses existing HTTPS owner session/backend, shows
+full lifecycle pin/cluster and separate registration/storage permission. No
+browser node credentials or auto-approval. Codes clear on use/non-waiting state,
+offline/logout/pagehide; stale async results cannot repaint them. Test-only delayed
+response preserves real Chromium certificate validation; no TLS-error bypass.

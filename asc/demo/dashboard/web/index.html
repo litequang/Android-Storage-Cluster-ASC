@@ -34,6 +34,7 @@
       <button class="tab selected" data-tab="overview" aria-selected="true">Tổng quan</button>
       <button class="tab" data-tab="nodes" aria-selected="false">Điện thoại</button>
       <button class="tab" data-tab="files" aria-selected="false">File Manager</button>
+      <button class="tab" data-tab="quick-join" aria-selected="false">Ghép điện thoại</button>
     </nav>
     <section id="overview" class="tab-panel">
       <div id="summary" class="summary-grid"></div>
@@ -43,6 +44,28 @@
     <section id="nodes" class="tab-panel" hidden>
       <div class="section-heading"><h2>Điện thoại &amp; volume</h2><span class="muted">Phê duyệt và miền lỗi giữ ở CLI</span></div>
       <div id="node-list" class="node-grid"></div>
+    </section>
+    <section id="quick-join" class="tab-panel" hidden>
+      <section class="panel">
+        <h2>Ghép điện thoại mới</h2>
+        <p>Chỉ dùng cho node Demo đã cài và khởi tạo trong vùng thử nghiệm riêng. Kiểm tra thiết bị được phép trước khi ghép.</p>
+        <button id="pair-create" class="button primary" type="button" disabled>Tạo mã ghép node một lần</button>
+        <p id="pair-status" role="status" aria-live="polite">Chưa tạo mã ghép.</p>
+        <div id="pair-details" hidden>
+          <p>Mã NODE dưới đây khác mã đăng nhập Dashboard. Không đưa mã vào URL, lịch sử lệnh hoặc log.</p>
+          <p>Mã ghép node: <code id="pair-code"></code></p>
+          <dl class="pair-bindings">
+            <dt>Controller HTTPS (cổng lifecycle)</dt><dd id="pair-origin"></dd>
+            <dt>SHA-256 PIN — so sánh đầy đủ trên node</dt><dd id="pair-pin"></dd>
+            <dt>Cluster ID — so sánh trên node</dt><dd id="pair-cluster"></dd>
+            <dt>Hết hạn theo giờ Controller</dt><dd id="pair-expiry"></dd>
+          </dl>
+          <p>Trên node đã khởi tạo, chạy <code>ascdemo quick-join</code> với đúng private state; nhập origin, PIN, Cluster ID và tên node theo hướng dẫn, rồi nhập mã khi được hỏi ẩn. Giữ pending context nếu mất kết nối; retry cùng lệnh. Không khởi tạo lại node đã có identity.</p>
+          <p id="pair-registration"></p>
+        </div>
+        <p class="muted">Đăng ký không tự cấp quyền lưu trữ. Owner vẫn phải kiểm tra volume và xác nhận miền lỗi độc lập bằng CLI. Hai volume trên một điện thoại không phải hai miền lỗi.</p>
+        <p class="muted">Đăng xuất, tải lại hoặc mất kết nối sẽ ẩn mã và bỏ theo dõi trên trang; mã chưa dùng có thể còn hiệu lực đến hết hạn. Đây không phải thao tác thu hồi mã.</p>
+      </section>
     </section>
     <section id="files" class="tab-panel" hidden>
       <section class="panel upload-panel">

@@ -2,7 +2,11 @@
 (() => {
   const $ = id => document.getElementById(id);
   const model = { csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null };
+  const pairing = { generation: 0, ticket: null, timer: null, creating: false, polling: false };
   const messages = {
+    pairing_limit: 'Đã đạt giới hạn mã đang theo dõi (8/phiên, 32/Controller). Đợi hoặc kiểm tra các mã đã tạo.',
+    pairing_not_found: 'Không còn bằng chứng theo dõi trong phiên này. Không suy ra mã đã bị thu hồi.',
+    unsupported_runtime: 'Quick Join chỉ hỗ trợ Demo single-writer đã xác minh.',
     login_rejected: 'Mã không hợp lệ, đã dùng hoặc đã hết hạn. Lấy mã mới từ Controller.',
     login_required: 'Phiên đã hết hạn. Đăng nhập lại bằng mã một lần.',
     insufficient_capacity: 'Không đủ dung lượng hoặc chưa có hai điện thoại độc lập đủ điều kiện. Chưa xác nhận upload.',
@@ -51,6 +55,8 @@
   function notice(text) { $('notice').textContent = text; $('notice').hidden = !text; }
   function connection(ok) {
     model.connected = ok;
+    if (!ok) clearPairing('Mất kết nối: mã đã ẩn, đăng ký và quyền lưu trữ UNKNOWN.');
+    pairingButton();
     if (!ok && $('details').open) $('details').close();
     $('connection').textContent = ok ? 'Controller online' : 'Controller UNKNOWN';
     $('connection').className = 'badge ' + (ok ? 'good' : 'unknown');
@@ -59,6 +65,7 @@
   }
   function loginView(clear = true) {
     model.csrf = null; model.connected = false; model.state = null;
+    clearPairing('Đăng nhập lại để tạo mã ghép. Mã cũ chưa dùng có thể vẫn còn hiệu lực.');
     $('application').hidden = true; $('login-panel').hidden = false; $('logout').hidden = true;
     $('summary').replaceChildren(); $('node-list').replaceChildren(); $('file-list').replaceChildren();
     if ($('details').open) $('details').close();
@@ -87,6 +94,58 @@
       connection(false); notice('Mất kết nối Controller. Dữ liệu dưới đây là bản xem cũ; trạng thái bảo vệ chưa xác minh lại.');
       throw new APIError('core_unavailable', 0);
     } finally { clearTimeout(timer); }
+  }
+  function pairingButton() {
+    $('pair-create').disabled = !model.csrf || !model.connected || pairing.creating;
+  }
+  function clearPairing(message = 'Chưa tạo mã ghép.') {
+    pairing.generation += 1;
+    if (pairing.timer) clearInterval(pairing.timer);
+    pairing.timer = null; pairing.ticket = null; pairing.creating = false; pairing.polling = false;
+    for (const id of ['pair-code', 'pair-origin', 'pair-pin', 'pair-cluster', 'pair-expiry', 'pair-registration']) $(id).textContent = '';
+    $('pair-details').hidden = true; $('pair-status').textContent = message; delete $('pair-status').dataset.state; pairingButton();
+  }
+  async function pollPairing(generation) {
+    if (generation !== pairing.generation || !pairing.ticket || pairing.polling || !model.connected || !model.csrf) return;
+    pairing.polling = true;
+    try {
+      const value = await request('/api/v1/quick-join/pairings/' + encodeURIComponent(pairing.ticket), { timeout: 10000 });
+      if (generation !== pairing.generation || !model.csrf || !model.connected) return;
+      const states = { waiting: 'Đang chờ node nhập mã.', expired: 'Mã đã hết hạn. Chưa xác nhận đăng ký.',
+        registered: 'Node đã đăng ký. Kiểm tra riêng quyền lưu trữ bên dưới.',
+        revoked: 'Node đã bị thu hồi quyền. Không xác nhận sẵn sàng lưu trữ.', unknown: 'Trạng thái đăng ký UNKNOWN. Chưa đủ bằng chứng.' };
+      $('pair-status').textContent = states[value.state] || states.unknown;
+      $('pair-status').dataset.state = value.state in states ? value.state : 'unknown';
+      if (value.state !== 'waiting') $('pair-code').textContent = '';
+      const approval = value.state === 'registered' ?
+        value.storage_approved === true ? 'Đã có phê duyệt lưu trữ từ owner; miền lỗi: ' + (value.failure_domain || 'UNKNOWN') :
+        value.storage_approved === false ? 'CHƯA phê duyệt lưu trữ / miền lỗi. Owner phải kiểm tra và approve bằng CLI.' : 'Quyền lưu trữ / miền lỗi UNKNOWN.' : 'Quyền lưu trữ chưa xác minh.';
+      $('pair-registration').textContent = (value.node_id ? 'Node ID: ' + value.node_id + '. ' : '') + approval;
+    } catch (error) {
+      if (generation === pairing.generation) clearPairing(error.message);
+    } finally { if (generation === pairing.generation) pairing.polling = false; }
+  }
+  async function createPairing() {
+    if (!model.csrf || !model.connected || pairing.creating) return;
+    clearPairing('Đang yêu cầu mã từ Controller; chưa xác nhận tạo thành công.');
+    const generation = pairing.generation;
+    pairing.creating = true; pairingButton();
+    try {
+      const value = await request('/api/v1/quick-join/pairings', { method: 'POST', json: {}, timeout: 10000 });
+      if (generation !== pairing.generation || !model.csrf || !model.connected) return;
+      if (value.quick_join_version !== 1 || value.runtime !== 'single-writer-demo' || value.storage_auto_approval !== false) throw new APIError('unsupported_runtime', 403);
+      pairing.ticket = value.pairing_id;
+      $('pair-code').textContent = value.code;
+      $('pair-origin').textContent = value.controller; $('pair-pin').textContent = value.pin;
+      $('pair-cluster').textContent = value.cluster_id; $('pair-expiry').textContent = date(value.expires_at);
+      $('pair-details').hidden = false;
+      $('pair-status').textContent = 'Đã tạo mã một lần, tối đa 10 phút. Chưa có node đăng ký.';
+      $('pair-status').dataset.state = 'waiting';
+      await pollPairing(generation);
+      if (generation === pairing.generation) pairing.timer = setInterval(() => { void pollPairing(generation); }, 2000);
+    } catch (error) {
+      if (generation === pairing.generation) clearPairing(error.message);
+    } finally { if (generation === pairing.generation) { pairing.creating = false; pairingButton(); } }
   }
   function activate() {
     $('application').hidden = false; $('login-panel').hidden = true; $('logout').hidden = false;
@@ -283,12 +342,15 @@
     finally { $('login-button').disabled = false; }
   });
   $('logout').addEventListener('click', async () => {
+    clearPairing('Mã đã ẩn; đăng xuất không tự thu hồi mã node chưa dùng.');
     try { await request('/api/logout', { method: 'POST', json: {} });
       model.pending = null;
       try { sessionStorage.removeItem('asc-demo-pending-upload'); } catch (_) { /* no auth storage */ }
       loginView(); notice('');
     } catch (error) { notice(error.message); }
   });
+  window.addEventListener('pagehide', () => { clearPairing('Trang đã đóng: theo dõi đã bỏ, không tự thu hồi mã.'); });
+  $('pair-create').addEventListener('click', () => { void createPairing(); });
   $('refresh').addEventListener('click', () => { void reload(true); });
   $('upload-form').addEventListener('submit', upload);
   $('file-input').addEventListener('change', () => { const file = $('file-input').files[0]; if (file) $('logical-path').value = file.name; });
