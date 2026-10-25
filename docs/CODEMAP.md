@@ -418,3 +418,10 @@ plus separately executed new ancestor1PASS; see progress for precise provenance.
 - `asc/demo/__init__.py`:0.4.1-alpha/android-volume-anchor capability, identical base formats. `package.py` includes dedicated public docs/DEMO-ZTE-0.4.1.md as93rd member; all Dashboard assets kept.
 - `tests/test_demo_release_upgrade.py`: shared no-test fixture with two concrete exact published03/04 archive cases. Both exercise OLD installed backup/verify/stage/preflight/activate and NEW runtime under test-only root denial; existing04 browser CA and assets retained. New-state rollback checks old root-denial defect honestly, then baseline Linux old-code reads BOTH old+new files with all identities/credentials/media unchanged.
 - `docs/DEMO-ZTE-0.4.1.md`: owner copyable existing-ZTE0.3 stop/backup/identity hashes/verified download/old-launcher activation/real status/trusted Dashboard/Bphone/replica/SHA/backup-before-rollback commands; no ZTE reinit or old-DB restore. General QuickStart/pilot updated, old archives unchanged. Qualification: DEMO4D-ACCEPTANCE, not historical0.4 report.
+
+DEMO.4d.3b final Linux qualification: frozen dae8e7a source/tests/packaged guides,
+246 Python PASS0skip/all8 physical faults,11 fresh Go/vet/modules/builds,38 targeted
+and3 exact-archive installer checks PASS.0.4.1 public source-only archive93 regular
+files incl dedicated existing-ZTE guide; SHA/source/full evidence in DEMO4D-ACCEPTANCE,
+normal publication receipt/next owner-only pilot in DEMO-TRACK-PROGRESS. Shared Core
+changes limited to volumes.py and engine.py on Demo branch; Core WIP unchanged.

@@ -349,3 +349,13 @@ Test-only root denial now exercises real Controller+Dashboard/two-node TLS runti
 
 ## DEMO.4d.3 —0.4.1 compatibility/package candidate
 0.4.1-alpha adds Android volume anchor capability, unchanged schemas/identities and all Dashboard0.4 assets. Exact published0.3/0.4 direct-upgrade tests run backup/verify/stage/preflight/upgrade/new runtime under root-open denial; preserve credentials/pins/media/browser CA and old/new files. Code-only rollback uses NEW backup, honestly restores old Android defect; baseline Linux checks preserved files. Dedicated existing-ZTE copyable guide is packaged. Final fresh full/Go/fault/public SHA gates remain in DEMO4D-ACCEPTANCE; Android not qualified.
+
+## DEMO.4d.3b —0.4.1 Linux synthetic accepted (2026-10-25)
+Fresh246 Python PASS0skip/all8 Linux physical gates;11 uncached Go/vet/modules/
+Linux+Android cross-build PASS,38 targeted +3 exact-archive installer PASS.93-member
+source-only QuickStart0.4.1 keeps Dashboard and fixes approved-volume access without
+opening '/', preserves formats/IDs/media; exact03/04 direct upgrades and new-state
+code rollback proved with real TLS/bytes. Dedicated existing-ZTE copyable guide
+included. Old packages unchanged; SHA/publication receipt in progress/acceptance.
+Android0.4.1 NOT TESTED; downgrade still returns original Android defect. No Core
+WIP push/Raft/GC/failover/production activation or phone access.

@@ -31,15 +31,27 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.4b | PUSHED/REMOTE VERIFIED: 8e4661bbccc9c6b11e451e414907d190a55a799c; 21 targeted PASS |
 | DEMO.4c.1 | PUSHED/REMOTE VERIFIED: 956bf8ebb23e57b07d4ec91cefec8d89539a8327; 22 targeted PASS |
 | DEMO.4c | PUSHED/REMOTE VERIFIED: aa1a834ddd868275c4c2550f0b2b0c39d9354366; full230 Python/11 Go/all8 Linux gates PASS; downloaded public SHA verified |
-| Demo 0.4 source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
+| Demo 0.4 source-ready (historical) | YES: Linux synthetic only; Android runtime NOT TESTED |
+| DEMO.4d.1 storage | PUSHED/REMOTE VERIFIED5050a7912baa58b51d1bf020c758aeb52f97918f;61 targeted PASS |
+| DEMO.4d.2 integration | PUSHED/REMOTE VERIFIED72bc61d6c8445e4bc161dc9037515b90b26c269f;36+1 targeted PASS |
+| DEMO.4d.3a source freeze | PUSHED/REMOTE VERIFIEDdae8e7ad8b9661b6ca4b7b6f2344652e8c2913e6;38 targeted PASS |
+| DEMO.4d.3b release | Full246/Go11/all8 Linux gates PASS; final publication/remote receipt follows |
+| Demo0.4.1 source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Current DEMO.4d next action
 
-New task from clean fetched/remote ef6470d:4d.1 PUSHED/REMOTE VERIFIED
-5050a7912baa58b51d1bf020c758aeb52f97918f,61 targeted PASS.4d.2 runtime/browser
-PUSHED/REMOTE VERIFIED72bc61d6c8445e4bc161dc9037515b90b26c269f;36+1 tests PASS. Then
-4d.3 exact0.3/0.4 direct upgrades, fresh full qualification/package0.4.1.
-See DEMO4D-PLAN. Historical0.4 evidence below is not0.4.1 qualification.
+0.4.1 Linux synthetic qualification complete on frozen source/tests/packaged guides
+ dae8e7ad8b9661b6ca4b7b6f2344652e8c2913e6: **246 Python PASS0skip**, all8 Linux
+physical gates PASS,38 targeted +3 exact-archive installer checks PASS;11 fresh
+Go/vet/modules/Linux build/Android cross-build PASS. Both exact published0.3 and0.4
+direct upgrade/code rollback paths tested; all identities/old+new bytes retained.
+Normal final archive push/remote/public download-SHA receipt is below; finish its
+verification before owner uses package. Then OWNER alone follows DEMO-ZTE-0.4.1
+(existing initialized ZTE0.3; no init/join/storage-init again), General QuickStart,
+and fills actual phone pilot. Android0.4.1/real browser trust/SD/Doze/production
+NOT TESTED. Old source rollback restores Android bug, not working storage service.
+No pending mandatory source gate remains after verified final publication. Codex
+must not access phones/M51/production or enable GC/Raft/3D. Core WIP remains acea2ae.
 
 ## Historical0.4 completion / previous next action
 
@@ -567,3 +579,53 @@ Next only after normal push/remote verify: fresh full suite, Go/vet/module/Linux
 Android cross-build (not runtime), exact93-member archive install/secrets/rebuild,
 final acceptance/publication/immutable GitHub download/SHA. If interrupted, resume
 from this commit/AGENTS/current progress/DEMO4D-ACCEPTANCE, not old0.4 full results.
+
+## DEMO.4d.3b full qualification — running handoff
+
+Frozen source/tests/packaged guides dae8e7ad8b9661b6ca4b7b6f2344652e8c2913e6 normally
+pushed/advertised remote verified before full. Candidate manifest matches all
+source/guides;115 tracked Python AST PASS, fault launcher excluded from package.
+Only shared Core changes against acea2ae are storage/volumes.py and engine.py;
+Core tests/Go/other Core logic unchanged, WIP still acea2ae. Fresh Go1.27.3 11
+uncached PASS (consensus24.114s/launcher0.004s), vet PASS, modules verified, Linux
+AMD64/AndroidARM64 builds PASS (cross-build only). Full246 Python now running,
+/workspace/work/demo4d3-final/python-full.log; if no completion evidence, rerun fresh.
+Do not mark0.4.1 qualified/publish candidate until full/fault/package gates complete.
+No source/test/packaged-guide changes during the full run; reporting docs only.
+
+## DEMO.4d.3b — final actual Linux acceptance / locally qualified archive
+
+Fresh activated `python -B -m unittest discover -s tests -v`: **246 PASS /0 SKIP /
+0 FAIL/ERROR,1428.854s**, started2026-10-25T01:15:38.556975Z, completed01:39:27.579046Z.
+Frozen source/tests/guides dae8e7a unchanged during/after full; only reporting/public
+archive/SHA files follow. All eight Linux physical01–08 gates actually PASS plus
+legacy real network unlink/lost TLS ACK/retry/journal, quorum/term/stale callback,
+crash/all-process replay/last readable copy/version/snapshot/trash/backup references.
+No skip, fake success, timeout relaxation, guard removal or test weakening. All
+Core/old Demo regression cases retained. Final38 targeted PASS149.451s, exact final
+archive3 installer PASS1.749s; deterministic post-full rebuild byte-identical.
+Fresh Go11 uncached PASS (24.114s/0.004s), vet/modules/LinuxAMD64 and AndroidARM64
+cross-build PASS; no Android binary runtime.115 tracked Python AST, shell/JS/ZTE
+Bash syntax PASS; Windows runtime not rerun on Linux.
+
+Qualified new `releases/asc-demo-alpha-0.4.1.tar.gz`175301bytes/93regular public
+members. SHA-256 **74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1**,
+release ID **d022f29cb5d4f53835acf5a130a45fb921be73b875cdccaed8e9504e979ab08f**.
+No private state/token/key/cert/database/object/log/profile/build/test hook in
+unpacked public package; secret/link/special-path review0findings. Both old0.3 and
+0.4 archives/checksums still independently PASS and unchanged. No source/packaged
+guide edits after full. New source capability android-volume-anchor, all base
+formats/IDs/credentials/media +Dashboard assets/04 CA preserved. Shared Core
+source edits ONLYstorage/volumes.py and engine.py ONDEMO branch explicitly
+requested; Core WIP/consensus/GC/other Core source/original Core tests/Go unchanged.
+
+All mandatory source gates now PASS. Normal release push, advertised remote match,
+immutable GitHub archive+checksum download/re-hash follow next; until receipt,
+locally qualified archive is not yet verified published. Owner guide is packaged
+DEMO-ZTE-0.4.1: old0.3 launcher backup/verify/stage/preflight/upgrade, private identity
+cmp, stopped-node storage-status actual writable/fsync, trusted HTTPS Dashboard,
+Bphone second domain/upload/two replicas/SHA/fallback/restart, new-backup code-only
+rollback. Do NOT reinitialize ZTE or restore old DB. Old03/04 code rollback brings
+original Android write_denied back (tested), keep state/service stopped if needed.
+Android0.4.1/real-device trust/fsync/SD/Doze/power-cut/production NOT TESTED; owner
+alone executes ZTE/Bphone checklist, Codex has source/Linux-synthetic scope only.

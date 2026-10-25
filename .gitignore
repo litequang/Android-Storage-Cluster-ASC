@@ -141,3 +141,6 @@ raft-state/
 
 # Qualified Dashboard Lite public source-only package; reviewed unpacked contents.
 !/releases/asc-demo-alpha-0.4.0.tar.gz
+
+# Qualified Android storage fix + Dashboard public source-only package.
+!/releases/asc-demo-alpha-0.4.1.tar.gz
