@@ -29,3 +29,9 @@ Core observer delegation is bounded/read-only. New0.4.2->candidate test includes
 pending two ways/installed bridge/private control/new bytes/code rollback. This
 is NOT Android acceptance or a public release. No adb/sdkmanager/gradle on PATH;
 no APK skeleton/toolchain/runtime qualification. Full311 unique cases pending.
+
+Final Go gate now actually PASS:11 uncached tests, vet/module verification,
+Linux/Windows/Android builds (latter compile-only). Fresh full311 Python RUNNING
+from frozen0a3ea83 since2026-10-25T13:59:24Z. NOT ACCEPTED until the process exits
+successfully and all mandatory gates/source fingerprint are verified. Independent
+bare GitHub fetch already matched191 frozen paths and published candidate SHA.

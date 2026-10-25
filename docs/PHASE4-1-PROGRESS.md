@@ -12,8 +12,8 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 |4.1b.2|PUSH/REMOTE VERIFIED182d366a53548ab08364edb9ad23f5bf64a35ff7;19PASS|
 |4.1c.1|PUSH/REMOTE VERIFIEDfb05323708f3147cee1a8e9a4a3093ae39306d9a;28PASS|
 |4.1c.2|PUSH/REMOTE VERIFIED40fb7c788a95434387e53d04065ddf4ca7721202;15PASS+final browser1PASS|
-|4.1d.1|READY:38 targeted PASS0skip/fail224.827s; source freeze/push gate follows|
-|4.1d.2|NOT STARTED: fresh full311 Python/Go/fault/build acceptance|
+|4.1d.1|PUSH/REMOTE VERIFIED0a3ea839217156b69209a073f5d836ee1db4452b;38PASS, exact source candidate frozen|
+|4.1d.2|RUNNING: Go11/vet/modules/builds PASS; fresh full311 Python in progress, NOT ACCEPTED|
 
 Read AGENTS then PHASE4-1-PLAN/this/ACCEPTANCE and bridge/threat/Core adapter/app
 contracts. New user authorization supersedes prior4.0 no-bridge/Core-UI language
@@ -188,3 +188,22 @@ exact rebuilt124-file candidate, installed bridge/new-state rollback; no weakene
 gates. Tracked/index secret review245paths0findings, package separately audited.
 Source/tests/packaged guides/candidate now frozen; NEXT only after normal push/
 remote verification:4.1d.2 fresh full311 Python and Go/build/fault final reporting.
+
+## Running final gate / interruption handoff
+
+Source freeze0a3ea839217156b69209a073f5d836ee1db4452b was normally pushed and
+advertised remote matched BEFORE final qualification. Go mod verify/vet and11
+uncached Go tests PASS, Linux/Windows/Android builds PASS (cross-build only for
+latter two). Full command python -B -m unittest discover -s tests -v -f started
+2026-10-25T13:59:24.049377+00:00; still RUNNING at this handoff, NOT ACCEPTED.
+12/12 Phase3A,20/20 Phase2B,9/9 Phase3D and3/3 GC network faults already PASS;
+Linux physical faults still executing. No current FAIL/SKIP, not final full proof.
+Private logs/status/frozen SHA inventory under /workspace/work/phase4-1, runner
+run-full.py/result python-full-result.json. If environment/session lost, do NOT
+infer full PASS; rerun fresh final gates on unchanged frozen source and record
+actual results before acceptance. No source/test/packaged-guide/candidate changes.
+
+Independent new bare fetch verified all191 frozen paths and published archive
+SHA96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04; protected
+Phase4.0/Core3D/CoreWIP/Demo remote refs still exact original baselines. This
+reporting-only handoff records partial running results, not a completed checkpoint.
