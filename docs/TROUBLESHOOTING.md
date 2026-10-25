@@ -385,3 +385,6 @@ The owner reported '/' OPEN_FAILED EACCES but ASC volume/staging OPEN_OK on init
 
 ### Demo0.4.1 owner storage-status
 After upgrading existing source, stop the local Storage Node (Controller can remain up), then `ascdemo storage-status`. It reads the existing config/manifest/volume and actually probes only its private staging. Require writable=true, fsync_tested=true, online and last_error=null; UNKNOWN/false is not ready. Running node returns refusal due ownership: Ctrl+C owning terminal, never remove locks. No init/join/storage-init is needed for an existing node/volume. Restart original node afterward, retaining all IDs/pins/bytes.
+
+### Existing ZTE0.3 direct0.4.1 upgrade
+Use DEMO-ZTE-0.4.1 copyable owner guide and trusted publication SHA. Stop foregrounds, old launcher complete backup/readback, stage/preflight/upgrade to immutable new release with another NEW backup. Compare private identity snapshot, stopped-node storage-status actual writable/fsync, then original Controller+Node. Do not install over prefix or init/join/storage-init existing ZTE. Both0.3 and0.4 direct routes tested from exact archives. Rollback is data-preserving code selection with NEW backup, but restores original Android bug on affected host: keep storage stopped/review, never clear markers/old database to make it run.

@@ -409,3 +409,6 @@ invalidates them; durable upload key/job/session/object authority remains in Cor
 
 ### DEMO.4d storage compatibility (no migration)
 Volume record/marker/schema unchanged: persisted root/medium st_dev:st_ino and node/volume IDs remain exact. New POSIX anchor snapshots/descriptors/file identities are operation-local only; no identity regeneration, new schema, database rewrite or medium cloning. Existing immutable objects/uploads/jobs remain unchanged. Exact old-code upgrade/rollback must be separately qualified for0.4.1; rollback can restore Android root-open bug even though schemas are compatible.
+
+### Demo0.4.1 exact published-package compatibility
+Adds release capability android-volume-anchor but retains all base formats and0.4 optional Dashboard state1. Exact0.3/0.4 installed launchers accept compatible0.4.1 manifest; no schema migration. Tests explicitly backup/verify/stage/preflight/upgrade with root open denied, retain core and existing04 browser identities and data, write new file, make NEW backup then select old code over new state. Old Android root-open defect is retained on downgrade and is not called functional Android rollback. Old/new bytes still read under baseline Linux proving schema compatibility; no database restore or medium/state rewrite.

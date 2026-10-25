@@ -37,7 +37,7 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 
 New task from clean fetched/remote ef6470d:4d.1 PUSHED/REMOTE VERIFIED
 5050a7912baa58b51d1bf020c758aeb52f97918f,61 targeted PASS.4d.2 runtime/browser
-implemented, final targeted/publication pending. Then
+PUSHED/REMOTE VERIFIED72bc61d6c8445e4bc161dc9037515b90b26c269f;36+1 tests PASS. Then
 4d.3 exact0.3/0.4 direct upgrades, fresh full qualification/package0.4.1.
 See DEMO4D-PLAN. Historical0.4 evidence below is not0.4.1 qualification.
 
@@ -526,3 +526,44 @@ Changed files: Demo CLI local status, tests/android_root_denial.py (not packaged
 tests/test_demo_android_storage.py, extra ancestor case in test_android_volumes.py,
 CODEMAP/protocol/security/troubleshooting/changelog/progress. Normal Demo-only
 publication/secrets/remote review now; no0.4.1 final-release claim until4d.3.
+
+## DEMO.4d.3 preparation / exact archives
+
+4d.2 normal push/remote matched72bc61d6c8445e4bc161dc9037515b90b26c269f before4d.3;
+Core WIP acea2ae. Current0.4.1-alpha capability android-volume-anchor, unchanged
+base formats + preserved Dashboard assets. Exact published0.3 and0.4 archives
+(checksum verified) create/populate original clusters, old installed launchers make
+and verify full private backups/stage/preflight/activate under root-open denial;
+new0.4.1 reads old file via trusted Dashboard and writes a second two-copy file.
+Node/Cluster/installation/volume IDs, credentials/PINs/keys/certs/medium preserved;
+existing04 browser private CA/config/assets kept. NEW backup precedes code rollback.
+Old source under root denial reproduces write_denied/denies new upload, explicitly
+NOT a functional Android downgrade claim. Baseline Linux old code then reads both
+old+new files/SHA, proving no stale DB restore/data loss.2 cases PASS36.243s; after
+final test-label/guide packaging refinement,2upgrades+3installer5PASS37.956s.
+Final combined38 targeted run follows source/packaged-guide freeze.
+
+Candidate93regular members175301bytes, release
+ d022f29cb5d4f53835acf5a130a45fb921be73b875cdccaed8e9504e979ab08f,
+SHA74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1.
+Unpacked contents0 secret/private-path/link/special findings; owner ZTE guide bash
+blocks syntax PASS only, no phone execution. Old0.3/0.4 archives preserved. Candidate
+not published/qualified until final full246 Python, Go/vet/modules/build/fault and
+exact public archive checks. DEMO4D-ACCEPTANCE remains PENDING. Do not reuse0.4 PASS.
+
+## DEMO.4d.3a — frozen0.4.1 source/guide targeted checkpoint
+
+Final activated command `python -B -m unittest tests.test_android_volumes
+tests.test_demo_android_storage tests.test_demo_dashboard tests.test_demo_dashboard_browser
+tests.test_demo_installer tests.test_demo_lan tests.test_demo_upgrade
+tests.test_demo_release_upgrade -v`: **38 PASS /0 SKIP /0 FAIL/ERROR,149.451s**.
+Includes14 Android-like volume tests, actual root-denied Controller/Storage/Dashboard
+integration, existing real Chromium/TLS/security/fault/installer/installed upgrade
+regressions and BOTH exact03/04 direct upgrades. Source/packaged owner guides frozen
+at this checkpoint. Split4d.3 into source-targeted3a and full/publication3b so GitHub
+retains source even if long full run is interrupted. Full246 Python/Go/all Linux
+physical faults/package publication still pending; no0.4.1 source-ready claim.
+Next only after normal push/remote verify: fresh full suite, Go/vet/module/Linux+
+Android cross-build (not runtime), exact93-member archive install/secrets/rebuild,
+final acceptance/publication/immutable GitHub download/SHA. If interrupted, resume
+from this commit/AGENTS/current progress/DEMO4D-ACCEPTANCE, not old0.4 full results.

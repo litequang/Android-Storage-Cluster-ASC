@@ -49,6 +49,10 @@ Complete4d.1 storage,4d.2 actual synthetic runtime/browser,4d.3 exact published0
 AND0.4 direct-upgrade/backup/rollback/full qualification/package with each targeted
 PASS/docs/secrets/normal push/remote verification before next. Old Core-source-
 unchanged reports are historical; do not push Core WIP or change other Core logic.
+4d.1 remote5050a79 (61PASS),4d.2 remote72bc61d (36+1PASS). Current4d.3
+status in DEMO4D-ACCEPTANCE/progress; exact03/04 upgrade tests implemented, final
+full/package gates pending. Follow dedicated DEMO-ZTE-0.4.1 owner guide after
+qualified publication; code downgrade brings old Android defect back.
 Preserve published archives/state/IDs/TLS/UI; no phone/M51/production/GC/Raft/
 failover/3D access or activation. Android diagnostics supplied by owner do not
 qualify the new runtime; only owner later tests ZTE/Bphone. Old-source rollback

@@ -7,7 +7,7 @@ có thể thêm Sony XZ3. Tuyệt đối không cài M51/thiết bị production
 Không root, format, thay Termux hiện hữu, Termux:Boot, public port/Cloudflare, APK,
 Raft/failover tự động, giảm replica hoặc physical GC.
 
-**Đã có Demo 0.3.0?** Không chạy `install` của gói mới lên prefix cũ. Giữ state,
+**Đã có Demo 0.3.0 hoặc 0.4.0?** Không chạy `install` của gói mới lên prefix cũ. Giữ state,
 code cũ, dừng toàn cụm và làm mục **6a** để stage/upgrade tương thích. Các bước
 install/init dưới đây dành cho cài MỚI; không init lại cụm đang có.
 
@@ -18,19 +18,19 @@ Dùng Termux từ nguồn chính thức còn được hỗ trợ. Không uninsta
 kiểm tra, không chạy pkg install/upgrade và không đổi quyền hệ thống. Runtime đã
 kiểm thử bằng Python 3.13.5; Android runtime phải thử riêng. Không cần Go/sidecar.
 
-Tải `releases/asc-demo-alpha-0.4.0.tar.gz` và file `.sha256` cạnh nó từ CÙNG commit
+Tải `releases/asc-demo-alpha-0.4.1.tar.gz` và file `.sha256` cạnh nó từ CÙNG commit
 đã xác minh trên nhánh `feature/android-demo-alpha`. Chỉ dùng khi báo cáo
-`docs/DEMO4-ACCEPTANCE.md` tại commit chứa gói ghi đủ Linux PASS và SHA khớp.
+`docs/DEMO4D-ACCEPTANCE.md` tại commit chứa gói ghi đủ Linux PASS và SHA khớp.
 Không dùng archive installer-preview 0.1.0 để chạy cụm. Kiểm tra digest công bố từ
 checkpoint tin cậy; checksum cạnh archive không thay thế xác thực nguồn tải.
 
 ```sh
 # Chạy trong thư mục chứa archive và file checksum.
-sha256sum -c asc-demo-alpha-0.4.0.tar.gz.sha256
+sha256sum -c asc-demo-alpha-0.4.1.tar.gz.sha256
 # Tạo thư mục giải nén MỚI, ngoài state/source đang dùng; không ghi đè thư mục cũ.
-mkdir "$HOME/asc-demo-unpack-0.4.0"
-tar -xzf asc-demo-alpha-0.4.0.tar.gz -C "$HOME/asc-demo-unpack-0.4.0"
-cd "$HOME/asc-demo-unpack-0.4.0/asc-demo-alpha"
+mkdir "$HOME/asc-demo-unpack-0.4.1"
+tar -xzf asc-demo-alpha-0.4.1.tar.gz -C "$HOME/asc-demo-unpack-0.4.1"
+cd "$HOME/asc-demo-unpack-0.4.1/asc-demo-alpha"
 sh scripts/demo-alpha.sh preflight
 sh scripts/demo-alpha.sh install --dry-run
 sh scripts/demo-alpha.sh install
@@ -244,28 +244,30 @@ backup, quay lại pointer code cũ, không restore data. Nếu bị từ chối
 thư mục và nhờ review; không xóa journal/khóa hay sửa DB để ép chạy. Gói/code hỏng có
 thể cần mở đúng release cũ còn nguyên vẹn; không có recovery tự động qua Internet.
 
-## 6a. Cập nhật tương thích 0.3.0 → 0.4.0
+## 6a. Cập nhật tương thích 0.3.0 hoặc 0.4.0 → 0.4.1
 
-Linux synthetic đã kiểm thử **đúng gói 0.3.0 đã phát hành**, không giả version.
+Linux synthetic kiểm thử **đúng archive 0.3.0 và 0.4.0 đã phát hành**, không giả version.
 Android chưa nghiệm thu; owner thực hiện trên điện thoại thử nghiệm, file bỏ được.
 
-1. Xác minh SHA gói 0.4.0 từ commit tin cậy và giải nén vào thư mục MỚI ở mục 1;
+1. Xác minh SHA gói 0.4.1 từ commit tin cậy và giải nén vào thư mục MỚI ở mục 1;
    bỏ qua hai lệnh install nếu prefix 0.3.0 đã tồn tại. Giữ nguyên launcher/prefix,
    root/Node ID/Cluster ID/volume và khóa cũ, không chạy init/join để thay identity.
+   ZTE đã có0.3 và lỗi write_denied: dùng hướng dẫn lệnh [DEMO-ZTE-0.4.1](DEMO-ZTE-0.4.1.md).
 2. Dừng toàn cụm. Mỗi điện thoại: dùng **launcher 0.3.0 hiện có** chạy backup và
-   verify-backup; `stage "$HOME/asc-demo-unpack-0.4.0/asc-demo-alpha"`, ghi release_id
+   verify-backup; `stage "$HOME/asc-demo-unpack-0.4.1/asc-demo-alpha"`, ghi release_id
    trả về; upgrade-preflight rồi upgrade với thư mục backup MỚI như mục 6. Không
    truyền literal NEW_RELEASE_ID; thay bằng digest thật. Controller trước, nodes sau.
-   `ascdemo diagnose` phải báo 0.4.0-alpha. State formats giữ nguyên; không migration.
-3. Trên Controller vẫn đang dừng (kể cả node cohost), dashboard-init/trust như mục 2,
+   `ascdemo diagnose` phải báo 0.4.1-alpha. State formats giữ nguyên; không migration.
+3. Khi Node đang dừng, `ascdemo storage-status` phải xác nhận writable=true/fsync_tested=true.
+   Trên Controller vẫn đang dừng (kể cả node cohost), dashboard-init/trust như mục 2,
    rồi khởi động Controller --dashboard và nodes. Browser client thực hiện mục 5a;
    kiểm tra file cũ, hai replica và SHA trước khi thêm file mới. Backup tương lai bao
    gồm CA/keys Dashboard; không đưa backup lên Git/cloud công khai.
-4. Rollback: dừng toàn cụm; **backup MỚI từ state hiện tại 0.4.0**; dùng rollback về
+4. Rollback: dừng toàn cụm; **backup MỚI từ state hiện tại 0.4.1**; dùng rollback về
    release_id 0.3.0 đã giữ trong prefix, Controller rồi từng node. Khởi động 0.3.0
    **không `--dashboard`**. 0.3.0 chạy CLI trên state có thêm optional dashboard dir;
    giữ certs/keys/bytes/file mới, không restore DB 0.3.0 hoặc xóa dashboard dir.
-   Kiểm tra download cả file cũ và file tạo bằng 0.4.0, SHA và identity. Đây là code
+   Kiểm tra download cả file cũ và file tạo bằng 0.4.1, SHA và identity. Đây là code
    rollback tương thích, không data recovery/migration hoặc rolling mixed-version.
 
 ## 7. Chẩn đoán đã loại bỏ bí mật
@@ -280,3 +282,7 @@ không xuất token/code, endpoint/IP, model profile, khóa/cert, logical filena
 `pair`. Nếu validation chặn diagnose, chỉ gửi thông báo lỗi chung và checkpoint đang
 sử dụng; không dump environment/state. Không chia sẻ mã dashboard-code, cookie, CA private key hoặc browser profile/HAR.
 Chỉ gửi lỗi chung và diagnose đã xem lại; không chụp dữ liệu/mã đăng nhập nhạy cảm.
+
+Bản0.4.1 sửa POSIX volume anchor; không cần init/join/storage-init lại volume đã có.
+Rollback0.3/0.4 tương thích schema nhưng mang lại lỗi root-open trên Android bị ảnh hưởng;
+không coi rollback là khôi phục storage hoạt động trên điện thoại đó. Xem DEMO-ZTE-0.4.1.

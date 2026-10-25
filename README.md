@@ -75,3 +75,5 @@ runtime is a separate owner pilot; no Raft/GC/M51/production qualification is im
 ## Dashboard Lite — Demo 0.4.0
 
 DEMO.4 adds a Vietnamese responsive LAN browser view, upload/two replicas and SHA-verified download through the existing Demo Controller. Current qualification: [DEMO4-ACCEPTANCE](docs/DEMO4-ACCEPTANCE.md); follow [QuickStart](docs/DEMO-QUICKSTART.md) for explicit trusted HTTPS/owner login and stopped0.3 upgrade/rollback. Use only a published checksum-verified package after final Linux PASS; Android runtime is NOT TESTED. Core/Raft/GC guards remain unchanged.
+
+DEMO.4d /0.4.1 Android storage continuation: [current qualification](docs/DEMO4D-ACCEPTANCE.md), [existing ZTE0.3 upgrade commands](docs/DEMO-ZTE-0.4.1.md), [handoff](docs/DEMO-TRACK-PROGRESS.md). Only use a checksum-verified published package after final Linux PASS; Android runtime remains owner-only acceptance.

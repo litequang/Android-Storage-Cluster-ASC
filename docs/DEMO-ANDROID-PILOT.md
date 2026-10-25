@@ -7,7 +7,7 @@ Never Samsung M51, production hosting, unknown-device overrides, root/format/GC,
 public management ports, Termux:Boot or uncontrolled power-cut/SD removal.
 
 Read DEMO-QUICKSTART.md first; record the package SHA and release/content ID from
-DEMO4-ACCEPTANCE.md. ZTE/Bphone are the initial two-phone pilot. Sony is optional.
+DEMO4D-ACCEPTANCE.md. ZTE/Bphone are the initial two-phone pilot. Sony is optional.
 No Android PASS is claimed by this blank form or by a Go cross-build.
 
 | Observation | ZTE V40 | Bphone A40 | Sony XZ3 (optional) |
@@ -88,3 +88,13 @@ state/fallback/new-upload refusal; stop Controller and verify no new writer. Tes
 logout/session expiry, desktop/mobile layout and repeat after stopped compatible
 upgrade/code rollback. Keep original identities and both old/new files. No public
 port/tunnel or TLS exception. Linux Chromium success does not prefill any result.
+
+## DEMO.4d /0.4.1 — owner-supplied issue, new fix NOT TESTED on phones
+
+Owner reported ZTE9045 Android11 ARM64 Termux0.3: private volume/staging accessible,
+root open denied, readable=true/writable=false/fsync=null/write_denied. This is NOT
+a0.4.1 PASS. Follow DEMO-ZTE-0.4.1 for existing-state upgrade, preserve identities;
+record actual writable/fsync=true, unchanged volume medium/IDs, two-phone files/SHA,
+Dashboard trust and old/new-data retention. Both direct0.3/0.4 upgrade paths are
+Linux synthetic only until owner executes them. Old-code rollback restores bug on
+affected Android; do not erase identity or restore old metadata to hide it.

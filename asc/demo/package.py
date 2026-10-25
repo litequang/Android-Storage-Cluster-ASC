@@ -61,7 +61,7 @@ def build(source, output):
     # Public source allowlist only. Private state, binaries and build outputs never enter.
     names = [p.relative_to(source).as_posix() for p in (source / 'asc').rglob('*.py')]
     names += [p.relative_to(source).as_posix() for p in (source / 'asc/demo/dashboard/web').glob('*') if p.suffix in ('.html', '.css', '.js')]
-    names += ['scripts/demo-alpha.sh', 'docs/DEMO-QUICKSTART.md', 'docs/DEMO-ANDROID-PILOT.md']
+    names += ['scripts/demo-alpha.sh', 'docs/DEMO-QUICKSTART.md', 'docs/DEMO-ANDROID-PILOT.md', 'docs/DEMO-ZTE-0.4.1.md']
     files = {}
     for name in sorted(names):
         p = source / name

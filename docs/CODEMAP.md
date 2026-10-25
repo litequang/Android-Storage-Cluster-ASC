@@ -413,3 +413,8 @@ DEMO.4d.2 additional ancestor race verifies a symlink back to the same approved
 root inode still fails namespace binding, without touching the original bytes.
 Current AndroidVolumeTests has14cases; historical4d.1 had13. Final combined36PASS
 plus separately executed new ancestor1PASS; see progress for precise provenance.
+
+## DEMO.4d.3 compatible0.4.1 release candidate
+- `asc/demo/__init__.py`:0.4.1-alpha/android-volume-anchor capability, identical base formats. `package.py` includes dedicated public docs/DEMO-ZTE-0.4.1.md as93rd member; all Dashboard assets kept.
+- `tests/test_demo_release_upgrade.py`: shared no-test fixture with two concrete exact published03/04 archive cases. Both exercise OLD installed backup/verify/stage/preflight/activate and NEW runtime under test-only root denial; existing04 browser CA and assets retained. New-state rollback checks old root-denial defect honestly, then baseline Linux old-code reads BOTH old+new files with all identities/credentials/media unchanged.
+- `docs/DEMO-ZTE-0.4.1.md`: owner copyable existing-ZTE0.3 stop/backup/identity hashes/verified download/old-launcher activation/real status/trusted Dashboard/Bphone/replica/SHA/backup-before-rollback commands; no ZTE reinit or old-DB restore. General QuickStart/pilot updated, old archives unchanged. Qualification: DEMO4D-ACCEPTANCE, not historical0.4 report.

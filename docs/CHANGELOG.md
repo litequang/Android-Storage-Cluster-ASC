@@ -346,3 +346,6 @@ Reproduced old write_denied when only filesystem-root read-open is denied. POSIX
 
 ## DEMO.4d.2 — actual root-denied Demo runtime / local volume status
 Test-only root denial now exercises real Controller+Dashboard/two-node TLS runtime with measured probes, two independent synthetic replicas, SHA/fallback/offline/restart. `ascdemo storage-status` reuses stopped-node Engine probe with existing device/state/ownership guards; no initialization or network API added. Normal Dashboard/Chromium regression is rerun. Linux synthetic only;0.4.1 release/full qualification follows4d.3.
+
+## DEMO.4d.3 —0.4.1 compatibility/package candidate
+0.4.1-alpha adds Android volume anchor capability, unchanged schemas/identities and all Dashboard0.4 assets. Exact published0.3/0.4 direct-upgrade tests run backup/verify/stage/preflight/upgrade/new runtime under root-open denial; preserve credentials/pins/media/browser CA and old/new files. Code-only rollback uses NEW backup, honestly restores old Android defect; baseline Linux checks preserved files. Dedicated existing-ZTE copyable guide is packaged. Final fresh full/Go/fault/public SHA gates remain in DEMO4D-ACCEPTANCE; Android not qualified.
