@@ -33,12 +33,14 @@ IMPLEMENTATION_PLAN, PHASE3A/3B acceptance and PHASE3C plan/progress/acceptance,
 then PHASE3D-PLAN/PROGRESS/ACCEPTANCE. Implement3D.0/1/2/3/4 sequentially; each
 checkpoint requires targeted PASS/docs/CODEMAP/secrets/normal feature-only push
 and remote verification before next. No reset/force/main merge or Demo changes.
-3D.0/1a/1b/2/3 are normal-pushed/remote verified (see PHASE3D-PROGRESS).3D.4a
-final54 targeted/all9 actual network/process faults and Go11/vet/modules/builds
-PASS; frozen source50df5d79e1759cf5755d416d53c4bc47cc74e49b is remote verified.
-Fresh full238 Python/legacy physical gates STARTED2026-10-25T05:52:00.041412Z;
-read current progress/result before resuming. RUNNING is not PASS. Do not claim scoped acceptance without completed full results or
-full writable DR at all. Read current PROGRESS/ACCEPTANCE, not old3C/Demo PASS.
+3D.0/1a/1b/2/3/4a are normal-pushed/remote verified (PHASE3D-PROGRESS).
+Frozen source/tests50df5d79e1759cf5755d416d53c4bc47cc74e49b: fresh full238 Python
+PASS0skip/all original faults +all9 new3D groups;54 targeted and Go11/vet/modules/
+builds PASS. Only reporting follows; check final receipt for advertised remote.
+External backup/anchored verify/passive recovery Linux scope ACCEPTED, Phase3D
+PARTIALLY COMPLETE; full writable DR NOT ACCEPTED/BLOCKED. No unfinished source
+gate after final report remote proof. Next separate platform/authority qualification,
+not redo3A–3C or create a writer. Android/Windows runtime/real media NOT TESTED.
 External independent bytes+metadata, anchored verify, immutable complete bundles,
 resume and isolated READ_ONLY recovery; no source deletions/GC credit. Missing
 writer/fencing/identity recovery proof => explicit partial scope, never new epoch,

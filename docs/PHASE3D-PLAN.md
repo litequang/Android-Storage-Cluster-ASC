@@ -125,3 +125,13 @@ state/witnesses/bytes and matching source before upgrade. Code rollback keeps al
 new external stores/staging separately; old code ignores them. Never restore an old
 DB over current state, erase backup/retirement fences, edit Raft logs/terms, or
 restart old unfenced clusters. No device/system/production operation in this task.
+
+## Final scoped outcome
+
+3D.0/1a/1b/2/3/4a complete/pushed; final fresh238 Python0skip/0fail/all original
+physical and9 new fault groups PASS on frozen50df5d7;54 targeted/Go11/vet/modules/
+builds PASS. See acceptance/progress for exact counts/times/commands and final
+normal publication receipt. External backup/verify/read-only recovery staging is
+accepted for Linux synthetic. Phase3D PARTIALLY COMPLETE; full writable disaster
+recovery remains blocked by authority/fencing/identity recovery qualification.
+No device/Windows runtime/real-media/production claim or safety unlock.

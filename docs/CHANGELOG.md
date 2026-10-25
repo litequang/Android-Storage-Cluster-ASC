@@ -302,3 +302,9 @@
   nine-group Raft/TLS/process/IO fault matrix plus exact baseline schema and real
   recovery-child crash/resume. Final54 targeted/Go11/vet/modules/builds PASS; full
   fresh238 regression pending. No Android/Windows runtime/full writer DR claim.
+
+-3D.4b final fresh Linux qualification on50df5d7:238 Python PASS0SKIP0FAIL,
+  1403.864s;54 targeted/all9 new fault groups and all retained Core faults PASS.
+  Go11/vet/modules/Linux build PASS; Windows/Android compile-only. External
+  backup/anchored verify/isolated read-only staging accepted for Linux synthetic;
+  Phase3D PARTIALLY COMPLETE, full writable DR NOT ACCEPTED/BLOCKED.

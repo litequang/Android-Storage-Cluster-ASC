@@ -15,20 +15,18 @@ Existing activation /workspace/asc-cloud/activate.sh supplies Python3.13.5/Go1.2
 |3D.2|PUSH/REMOTE VERIFIED554c992f9f234c2f1dd44efa2c1e70f70cd19e8e;37 targeted PASS|
 |3D.3|PUSH/REMOTE VERIFIED531d91ec7805c14297fa8a70679daaa9330c134e;23 targeted PASS|
 |3D.4a|PUSH/REMOTE VERIFIED50df5d79e1759cf5755d416d53c4bc47cc74e49b;54 targeted/all9 fault groups PASS|
-|3D.4b|RUNNING: fresh full238 Python on frozen50df5d7, started2026-10-25T05:52:00.041412Z; NOT accepted until final summary|
+|3D.4b|COMPLETE Linux scoped qualification:238PASS0skip0fail1403.864s; reporting push/remote receipt follows|
 
-CURRENT NEXT: finish fresh full238 Python regression on frozen source/tests
-50df5d79e1759cf5755d416d53c4bc47cc74e49b, started2026-10-25T05:52:00.041412Z.
-All54 targeted/all9 network faults and Go11/vet/modules/builds already PASS. Do NOT
-reimplement0–3 or claim full acceptance while suite is incomplete. Result/log in
-/workspace/work/phase3d/python-full-result.json and python-full.log; require exit0,
-238PASS0skip0fail and unchanged frozen-source fingerprint. If original run cannot
-be proved complete, rerun exact full command from acceptance; no old PASS reuse.
-After actual full success update acceptance/progress/CODEMAP/related reporting,
-review tracked/index secrets, normal push ONLY feature branch and verify remote.
-Writer recovery remains BLOCKED and cannot be marked accepted. Each checkpoint
-must targeted PASS +docs/CODEMAP +tracked/index secrets audit +normal feature push
-+remote equality before next. Read AGENTS/PHASE3D-PLAN/this/ACCEPTANCE to resume.
+CURRENT NEXT: mandatory external-backup/verify/read-only-stage Linux source gates
+COMPLETE on frozen50df5d79e1759cf5755d416d53c4bc47cc74e49b: **238PASS0SKIP0FAIL1403.864s**,
+all9 new groups +all original faults PASS; Go11/vet/modules/builds and final54 target
+PASS. See final acceptance/operations/receipt below. Only final reporting normal
+push/remote verification remains before publication is synchronized. After its
+verified receipt, no unfinished mandatory SOURCE gate in this scoped delivery.
+Phase3D is PARTIALLY COMPLETE: writable disaster recovery remains BLOCKED, not
+accepted. Next is separately authorized real-media/platform/authority recovery
+qualification; do NOT reimplement0–3 or create fake writer/quorum/epoch. Every
+checkpoint requires targeted PASS/docs/secrets/normal feature push/remote proof.
 
 Contract: full runtime projection +EVERY Catalog version's bytes, independent private
 store, trusted out-of-band manifest digest, no source deletion/GC credit, read-only
@@ -214,3 +212,27 @@ change and preserves current handoff if the session is interrupted.
 a device), new docs links/fences/whitespace PASS. Full tracked/index156 paths audit
 0findings. Only existing failover RuntimeHandler3-line delegation is changed outside
 new external module; all original Core tests/Go/Storage/3A–3C modules unchanged.
+
+
+## 3D.4b final fresh Linux qualification — actual result
+
+Frozen 50df5d79e1759cf5755d416d53c4bc47cc74e49b, normal pushed/remote verified before full.
+Fresh `python -B -m unittest discover -s tests -v`: **238PASS /0SKIP /0FAIL/ERROR,
+1403.864s**. Started2026-10-25T05:52:00.041412+00:00, completed2026-10-25T06:15:24.035413+00:00.
+Recorded source fingerprints UNCHANGED; only reporting Markdown during/after full.
+All30 new tests +208 retained Core cases execute; all9 Phase3D network/process
+groups, real stage-child exit91/resume and original12/20/7/3/3/8 fault groups PASS.
+Fresh Go11 uncached/vet/modules/Linux build PASS; Windows/Android cross-build only.
+108 Python AST/3 guide Bash syntax/docs checks PASS; tracked/index156paths0findings.
+Exact baseline source validates current captured metadata without schema mutation.
+All formats, Node/Cluster/Volume/File/version history, retained pins/source bytes
+and original Core tests/Go/device/GC guards preserved. No secret/private backup
+artifact is public. Exact commands/matrix/failures/format/risks/rollback now in
+PHASE3D-ACCEPTANCE; copyable commands in PHASE3D-OPERATIONS.
+
+Scoped Linux external backup/verification/VERIFIED_RECOVERY_STAGING ACCEPTED.
+**Phase3D PARTIALLY COMPLETE; full writable disaster recovery NOT ACCEPTED/BLOCKED**
+pending upstream recovery/old-cluster fencing/identity credential recovery. No
+Windows/Android runtime/real device/independent media/power-cut/production claim.
+No next mandatory source test remains after final report push/remote verification;
+its own commit/receipt is identified in Git history and following receipt.

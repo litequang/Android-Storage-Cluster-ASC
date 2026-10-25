@@ -368,3 +368,8 @@ trusted manifest anchor and passive read-only recovery, no writer reconstruction
   test_external_compatibility.py: exact baseline source schema roundtrip and
   unqualified platform refusal; recovery tests additionally kill real stage child.
   Strict native manifest/completion JSON and Backup ID checks prevent alias/relabel.
+
+- Final3D.4b on frozen50df5d7:238 Python PASS0skip0fail1403.864s,54 targeted,
+  all9 new +all original physical faults, Go11/vet/modules/builds PASS. Scoped
+  external backup/verify/read-only staging accepted; Phase3D PARTIALLY COMPLETE,
+  writable disaster recovery BLOCKED. Exact source/commands/limits in acceptance.
