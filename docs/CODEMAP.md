@@ -380,3 +380,110 @@ and independent checkpoint handoff.4.0a documentation only; no module port yet.
 Registry/server/CLI/client/identity/Catalog/StorageHTTP/manifest/Go identical across
 refs; approved-root storage patch requires separate port+qualification. Preserve
 external3D module/handler/tests and all old guards; ADR062 defines source vs state.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Android Demo Alpha audit / separate track
+
+Branch `feature/android-demo-alpha` from acea2ae. Audit/reuse boundaries, staged
+checkpoint contract and upgrade design: DEMO-TRACK-PLAN.md; durable current handoff:
+DEMO-TRACK-PROGRESS.md. No Demo implementation at DEMO.0. Reuse single-writer
+Registry/CatalogService/StorageRuntime and existing guards; preserve all Core paths.
+
+## Android Demo installer (DEMO.1)
+- `asc/demo/installer.py`: read-only device/dependency preflight, private path checks, immutable source installation, separately verified launcher; no Core state adoption.
+- `asc/demo/package.py`: deterministic public-source allowlist archive, per-file inventory/content SHA and release identity verification.
+- `asc/demo/cli.py`, `scripts/demo-alpha.sh`: separate guarded Demo entry point; installer/preflight only at this checkpoint.
+- `tests/test_demo_installer.py`: extracted package execution, deterministic checksums/tampering, dry-run/rerun/state retention, dependency/M51/unknown/unmarked/symlink refusal.
+- `docs/DEMO-QUICKSTART.md`, `releases/`: owner installer preview and adjacent checksum.
+
+## Android Demo LAN (DEMO.2)
+- `asc/demo/state.py`: dedicated Demo marker format 1, exact read-only Core registry/manifest/cache compatibility, Raft/legacy/missing identity refusal, RFC1918/loopback-only IPv4 origin checks.
+- `asc/demo/lan.py`: DemoCatalog two-domain measured upload gate, restricted Core HTTP handler, explicit-bind ControllerRuntime, isolated Core-HOME node process/StorageRuntime/heartbeats; owner Core ClusterClient transfer and bounded protection reporting.
+- `asc/demo/cli.py`: init/join/storage-init/run-controller/run-node/pair/approve/nodes/files/replicas/upload/download; no policy reduction, whole-volume grants, Raft or GC commands.
+- `tests/test_demo_lan.py`: actual subprocess CLI/controller/two synthetic phone nodes, TLS/SHA/fallback/Controller loss, domain/capacity/missing volume/guard/schema/attached-state refusal.
+
+## Demo upgrade-safe source (DEMO.3a)
+- `asc/demo/upgrade.py`: prefix/state binding, stopped lifecycle locks, complete private state+approved-volume inventory/copy/readback, exact release compatibility, immutable staging, journaled activation/code rollback, interrupted activation recovery, whitelist diagnostics. No automatic schema/data restore.
+- `asc/demo/installer.py`: private code-prefix ancestor validation differs from private state root; installed source remains immutable.
+- `asc/demo/cli.py`: backup/verify-backup/stage/upgrade-preflight/upgrade/rollback/recover-upgrade/diagnose; node re-exec resolves its verified installed source.
+- `tests/test_demo_upgrade.py`: inherited LAN fault gates run via installed launchers, plus backup/external-volume/mutation/crash/upgrade/code-rollback/identity and diagnostics tests.
+- `docs/DEMO-QUICKSTART.md`: final owner manual CLI workflow, archive README source, limitations and manual stopped cluster sequence.
+
+Demo final qualification/package evidence is recorded in `docs/DEMO-TRACK-ACCEPTANCE.md`;
+README / README-VI link the separate Demo plan/progress/owner workflow. Public package
+contains source only, all Core Python retained; no Go sidecar/runtime/private data.
+`docs/DEMO-ANDROID-PILOT.md` is the blank owner-only device acceptance checklist and
+installer-preview prefix handoff; no phone result is prefilled by Cloud tests.
+
+DEMO.3a.1: `asc/demo/locks.py` validates no links/regular/single-link/inode identity
+before writing coordination files, opens with O_NOFOLLOW on Linux and reuses Core
+OS lock primitives. All Demo lifecycle/source operations use private_lock; state
+preflight checks internal engine/worker coordination files before Core constructors.
+Final synthetic regression in test_demo_upgrade.py proves symlink/hardlink refusal
+leaves outside empty test-owned bytes unchanged. Core runtime.py is unchanged.
+Qualified Demo 0.3.0: releases/asc-demo-alpha-0.3.0.tar.gz + .sha256, 83 source/doc/
+manifest members. Final acceptance/AGENTS/progress identify aaf7d16 implementation,
+222 Python/11 Go evidence, publication receipt and owner-only Android pilot limits.
+
+## DEMO.4a Dashboard backend
+- `asc/demo/dashboard/tls.py`: explicit stopped setup/load/export/public_info for separate private CA + IP SAN browser HTTPS; original Core/node keys unchanged.
+- `dashboard/auth.py`: bounded in-memory hashed one-use grants and owner sessions/CSRF; restart invalidates all browser credentials.
+- `dashboard/views.py`: whitelisted Registry/Catalog node/volume/file/replica projections; measured freshness/nulls, owner domain counts, pending reservations and conservative shared-domain free-space aggregation.
+- `dashboard/http.py`: exact same-origin browser routes, cookie/CSRF/Host/Origin/rates, one private bounded spool/transfer, actual byte/SHA counters, existing pinned ClusterClient upload/download/fallback. No node approval/policy/delete route.
+- `dashboard/runtime.py`: optional second HTTPS listener in Controller process, same Catalog/service/lifecycle.
+- `demo/lan.py`: explicit dashboard-enabled ControllerRuntime and pinned owner-only login-code route; `demo/cli.py`: dashboard-init/trust/code, run-controller --dashboard. `state.py` checks completed optional Dashboard format before writable Core open.
+- `tests/test_demo_dashboard.py`: session unit bounds + real CA/SAN HTTPS/storage/auth/byte/domain/fallback/refusal tests. Current contract: DEMO4-PLAN; actual handoff: DEMO-TRACK-PROGRESS.
+
+## DEMO.4b local browser frontend
+- `asc/demo/dashboard/web/{index.html,style.css,app.js}`: same-origin Vietnamese responsive overview/nodes/volumes/files/replica dialog, one-use login, CSRF fetch, observed server byte counters, session-local nonsecret retry key, WebCrypto SHA verification before new download. All dynamic text uses DOM textContent; no CDN, browser Core token, service worker or offline writes.
+- `asc/demo/package.py`: source allowlist includes exactly local HTML/CSS/JS Dashboard assets and manifest hashes; installed-tree verification still covers every asset.
+- `dashboard/views.py`: retain approved volume IDs with UNKNOWN metrics when no fresh probe exists; aggregate protection counts UNKNOWN when the 256-file preview is truncated.
+- `tests/test_demo_dashboard_browser.py` + `tests/browser/demo_dashboard.cjs`: actual packaged source + Chromium with isolated NSS public-CA trust, no TLS bypass; login/upload/physical two-node bytes/download SHA after real node stop, XSS/mobile/offline/session gates. Requires Node+Playwright/Chromium/certutil; missing prerequisites FAIL explicitly, never skip a security gate. Screenshots are private local test artifacts, not release contents.
+
+## DEMO.4c compatible 0.4.0 source/package
+- `asc/demo/__init__.py`: 0.4.0-alpha plus dashboard-lite capability; base STATE_FORMATS unchanged (demo1/registry4/manifest1/metadata1/config1/wire1).
+- `tests/test_demo_release_upgrade.py`: exact checksum-pinned published 0.3.0 archive installs/populates two nodes; OLD installed launcher stages/upgrades current source; trusted Dashboard serves old bytes, new source writes a second file, then NEW complete backup/code-only rollback runs OLD immutable 0.3 code over actual new state. Verifies IDs/cluster/pins/certs/volume bytes, both file downloads, preserved/backed-up Dashboard private identity and unchanged schema.
+- `docs/DEMO-QUICKSTART.md` and `DEMO-ANDROID-PILOT.md`: 0.4 package, manual owner public-CA trust/browser workflow, explicit stopped 0.3 upgrade/rollback and blank phone evidence. No old installer overwrite or Android acceptance claim.
+
+DEMO.4c final qualification: frozen956bf8e source/tests/packaged guides;230 Python
+PASS0skip incl all8 Linux GC physical gates,11 fresh Go/vet/modules/builds PASS,
+22 targeted +3 exact-archive installer checks PASS. Qualified source-only0.4 archive
+releases/asc-demo-alpha-0.4.0.tar.gz has92 regular files incl3 local web assets;
+manifest/SHA and exact0.3 rollback proof in DEMO4-ACCEPTANCE. Source, package and
+publication receipt in DEMO-TRACK-PROGRESS; Android/real CA-install UX NOT TESTED.
+
+## DEMO.4d.1 approved-volume POSIX anchor
+- `asc/storage/volumes.py:_PosixAccess`: direct approved-root O_NOFOLLOW descriptor + persisted dev/inode check, pinned marker/staging/objects and ancestor namespace pre/post rechecks; never open filesystem root. Fail closed without required descriptor primitives; Windows existing handle branch preserved.
+- `LocalVolume.check/open/remove_staging/sync_directory/entries/disk_usage/allocated_files`: child no-follow descriptor IO, measured fd statvfs/scandir/fsync, single-link cleanup and optional expected probe identity. `VolumeManager.inspect`: only owned probe cleanup, success after all actual IO/cleanup, no collision deletion.
+- `asc/storage/engine.py:_space/inventory`: use adapter descriptor-based capacity/inventory; other upload/commit/download/recovery/state/authorization unchanged.
+- `tests/test_android_volumes.py`:13 Linux/Android-like root-open denial, actual file/SHA/fsync/probe cleanup/restart, real unprivileged directory EACCES, root/folder/marker/link swaps/traversal/hardlinks/collision/unsupported-primitives/failure metrics. Linux synthetic only. Plan/handoff: DEMO4D-PLAN / DEMO-TRACK-PROGRESS.
+
+## DEMO.4d.2 root-denied runtime / owner probe
+- `asc/demo/cli.py:storage-status`: reuse existing StorageEngine.capabilities on the enrolled node home under Demo operation + node agent ownership, validated installed prefix/state/schema. No initialization, config change, network route or identity recreation; running node refuses local inspection. Owner can confirm real read/write/fsync after upgrading before restarting that node.
+- `tests/android_root_denial.py`: non-packaged child-only syscall fault wrapper; denies '/' and delegates all other actual OS IO, retaining real dir_fd capability metadata. Sets no product feature/permission bypass.
+- `tests/test_demo_android_storage.py`: Controller/Dashboard+two actual enrolled pinned-TLS nodes under root denial, real probe/SHA/fsync/physical replicas, stopped-node fallback/restart/identity preservation and new stopped-node status/M51/unknown guard checks. Existing browser/API regressions remain intact.
+
+DEMO.4d.2 additional ancestor race verifies a symlink back to the same approved
+root inode still fails namespace binding, without touching the original bytes.
+Current AndroidVolumeTests has14cases; historical4d.1 had13. Final combined36PASS
+plus separately executed new ancestor1PASS; see progress for precise provenance.
+
+## DEMO.4d.3 compatible0.4.1 release candidate
+- `asc/demo/__init__.py`:0.4.1-alpha/android-volume-anchor capability, identical base formats. `package.py` includes dedicated public docs/DEMO-ZTE-0.4.1.md as93rd member; all Dashboard assets kept.
+- `tests/test_demo_release_upgrade.py`: shared no-test fixture with two concrete exact published03/04 archive cases. Both exercise OLD installed backup/verify/stage/preflight/activate and NEW runtime under test-only root denial; existing04 browser CA and assets retained. New-state rollback checks old root-denial defect honestly, then baseline Linux old-code reads BOTH old+new files with all identities/credentials/media unchanged.
+- `docs/DEMO-ZTE-0.4.1.md`: owner copyable existing-ZTE0.3 stop/backup/identity hashes/verified download/old-launcher activation/real status/trusted Dashboard/Bphone/replica/SHA/backup-before-rollback commands; no ZTE reinit or old-DB restore. General QuickStart/pilot updated, old archives unchanged. Qualification: DEMO4D-ACCEPTANCE, not historical0.4 report.
+
+DEMO.4d.3b final Linux qualification: frozen dae8e7a source/tests/packaged guides,
+246 Python PASS0skip/all8 physical faults,11 fresh Go/vet/modules/builds,38 targeted
+and3 exact-archive installer checks PASS.0.4.1 public source-only archive93 regular
+files incl dedicated existing-ZTE guide; SHA/source/full evidence in DEMO4D-ACCEPTANCE,
+normal publication receipt/next owner-only pilot in DEMO-TRACK-PROGRESS. Shared Core
+changes limited to volumes.py and engine.py on Demo branch; Core WIP unchanged.
+
+## Phase4.0b.1 reviewed port actual state
+Allowlisted asc/demo modules/assets/installer/upgrade/launcher and test fixtures
+now reuse existing common Core services. Shared storage volumes.py/engine.py match
+reviewed Demo c9c2660; external3D modules/handler/Go and original Core tests unchanged.
+95 targeted integration cases PASS; exact provenance and artifact checks in Phase4
+progress. No QuickJoin implementation yet; historical source status above retained.

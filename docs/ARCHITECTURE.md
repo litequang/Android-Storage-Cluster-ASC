@@ -336,3 +336,79 @@ implementation; no provider silently falls back. Future NAS/S3/cloud must supply
 independently reviewed credentials/privacy/conditional publication and recovery
 semantics, not emulate POSIX handles. Exact baseline source can validate/roundtrip
 current captured schema; archives are additive and do not alter live base formats.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Demo Track immutable installer boundary
+DEMO.1 installs a public source-only release under a dedicated private code prefix;
+private Core/Demo state is never adopted or initialized by installation. A content
+SHA identifies each release, with a strictly verified inventory. The stable launcher
+verifies bytes with stdlib before importing release code and runs Python without
+bytecode writes. Explicit stopped upgrades are deferred to DEMO.3. No new network
+runtime is delivered by the installer preview.
+
+## Demo single-writer LAN boundary (DEMO.2)
+A Demo Controller may cohost an enrolled Storage Node in a different private home:
+<state>/controller versus <state>/node. It retains one fixed metadata writer with
+Core registry 4; no failover bootstrap, consensus state or advanced Core extension
+is adopted. ControllerRuntime binds explicit private IPv4 with Core pinned HTTPS,
+Catalog jobs and byte proofs. Node runs Core StorageRuntime and agent_once in its
+own process with ASC_HOME set before import, retaining OS engine/agent locks.
+Demo lifecycle operation lock serializes setup/startup with future stopped upgrades.
+Two identities on one physical phone MUST use the same owner-approved domain label.
+New files require two independently labeled, fresh actually writable domains with
+Core double-copy capacity; race/outage may leave retained incomplete jobs. CLI only
+reports protected=true after two available verified domains; downloads may use one
+readable copy while Controller is up. All node requests still introspect Controller
+for grants; its outage denies new authority rather than selecting another writer.
+
+## Demo stopped upgrade boundary (DEMO.3a)
+An installed prefix binds exactly one dedicated Demo root. Setup/runtime rechecks
+binding and PREPARED upgrade journal inside lifecycle startup fencing; activation
+holds root operation plus controller/catalog-worker/agent/storage-engine OS locks.
+No activation proceeds with any local runtime running. Candidate source is verified
+and staged immutably, requires exact native integer formats and installer/LAN/
+upgrade-safe capabilities; old installer-only releases cannot run initialized state.
+Complete private state plus every approved original medium is inventoried, copied,
+fsynced and independently hashed before atomic source selection. Changes during
+copy, missing medium, links or unknown formats fail closed. PREPARED journal and
+atomic pointer are separate durable writes; interrupted activation blocks startup
+until explicit recovery verifies unchanged state+backup and selects old compatible
+code. No DB/byte restore or implicit migration. Multi-phone upgrades require owner
+stop-all/backup/change/start Controller then nodes; mixed versions not qualified.
+
+Demo coordination-file hardening (DEMO.3a.1): Demo wraps the Core OS lock primitives
+with an O_NOFOLLOW regular/single-link/inode-checked opener before any marker write.
+Do not call Core foreground_lock directly from Demo. State preflight validates
+existing internal Core worker/engine lock paths before invoking those constructors.
+No Core runtime/schema is changed; existing immutable source/state boundaries hold.
+
+## DEMO.4a optional browser facade
+Dashboard listener is opt-in inside the existing Controller process/OS lifetime;
+Core Catalog/worker and pinned metadata/Storage clients remain the sole storage
+logic. Browser port uses its own private CA/leaf with IP SAN; Core/node TLS pins
+and identities never change. Owner manually trusts public CA after SHA comparison.
+Pinned local owner CLI mints a one-use login grant, redeemed for a bounded RAM-only
+HttpOnly/Secure/SameSite session; restart clears grants/sessions. Browser never sees
+Core admin/node/transfer bearer or key. Exact Host/Origin/CSRF and local CSP protect
+browser routes. Node administration is read-only; domain approval stays CLI.
+One bounded private temporary spool relays upload/download via existing Core client,
+with actual received counts/full SHA and conservative protection from Core replica
+counts. Unknown/stale metrics remain null; duplicate domains do not create copies.
+No second Catalog, election, deletion, GC or public endpoint. Default runtime keeps
+Dashboard disabled. Optional completed Dashboard config is versioned independently;
+root/base schemas unchanged so old CLI-only 0.3.0 can ignore this feature safely.
+
+### DEMO.4b browser client
+Controller serves three local immutable release assets. Browser holds only owner session cookie/CSRF, whitelisted Catalog views and selected test file bytes; Core grants/keys stay in Controller. Fetch upload progress uses backend-observed counts, protection uses Core domain/readability results. Download buffers at most the Dashboard limit, rechecks SHA with WebCrypto then requests a new browser download (no filesystem overwrite API). On connection failure cached protection is UNKNOWN and writes/download actions disable. No second persistence authority, cloud dependency, offline write queue or PWA service worker.
+
+## DEMO.4d POSIX storage anchor
+Android may deny read-open of '/' while allowing search/stat and direct access to approved private volume. Replace system-root descriptor traversal with direct open of the approved root ONLY, checked against persisted medium dev/inode before child reads. Ancestor lstat snapshots and pinned marker/root/subdirectories are revalidated around IO; all actual child IO/scandir/statvfs/fsync/unlink stays relative to descriptors. No full-path child-file fallback or identity/schema rewrite. Windows existing handle route stays separate. Probe success follows real IO/SHA/fsync and owned cleanup. GC's distinct synthetic-only executor/authority protocol remains locked and unchanged.
+
+## Phase4.0b.1 source convergence, modes remain separate
+Reviewed Demo modules and approved-root adapter now coexist with intact Core3D
+external backup/recovery in this feature tree. No state migration/authority change:
+Demo keeps marked single-writer and refuses Core quorum/advanced state; external
+module CLI/RuntimeHandler remain their own guarded development scope. Shared base
+Registry/Catalog/Storage services remain sole implementations. Historical Demo doc
+extensions above do not supersede current Phase4 plan/progress/acceptance.

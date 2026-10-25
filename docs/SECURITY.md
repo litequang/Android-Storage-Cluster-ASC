@@ -347,3 +347,73 @@ private input. Fault controls are test subprocess wrappers only; no product
 crash/partition/GC/authority enable switch. Stale isolated Controller actual upload
 is denied; no ghost file. Physical ENOSPC is fault-injected at real fsync, not
 claimed as a full-device test. Existing Core device/runtime/GC guards unchanged.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Demo installer preview
+Use the archive SHA from a trusted verified checkpoint before extraction. A self-
+contained manifest detects corruption but is not a publisher signature. Installer
+checks existing device/M51/unknown/dependency guards before any writes; no pkg or
+system changes. Source/private paths stay in dedicated private HOME subdirectories
+without symlinks. A mismatched existing source/launcher is preserved and refused.
+Packages contain allowlisted public source only; inspect unpacked files before Git
+publication. No cluster-ready or Android-runtime claim follows installer tests.
+
+## Demo LAN safety (DEMO.2)
+One Controller grants all writes; no fallback/election authority exists on nodes.
+TLS pinning remains mandatory, and old node tokens cannot authorize owner routes.
+All setup/runtime mutations recheck device/dependency guards. Root/controller/node
+state compatibility is read-only checked before writable Core constructors. Existing
+Core ~/.asc, Raft and advanced extension state is never adopted. Two phone labels
+are an owner trust decision, not hardware attestation: never give separate labels
+to two volumes/identities on the same phone. Node storage requires fresh per-request
+pinned Controller introspection, including when a grant predates Controller loss.
+Physical GC has no attached executor/discovery and remains locked; no Demo deletion
+command or policy reduction route exists. LAN is trusted pilot scope, not production.
+
+## Demo upgrade and diagnostic controls (DEMO.3a)
+Stopped local OS locks plus operation fencing prevent runtime/activation races;
+source prefix is bound to one marked root. Active and candidate releases must pass
+full inventories before activation. Full private backups require actual approved
+original volume markers and sufficient measured capacity, reject symlink/hardlink/
+special files, and verify copy/source checksums; retain partial failure for review.
+Backup contains identities/secrets and uses private 0700 directories / 0600 files.
+Never publish it or restore an older DB over current objects. Source rollback does
+not change state. A PREPARED journal blocks runtime, including a startup that raced
+with activation; explicit recovery refuses if state or backup has changed. These
+are Linux synthetic fault guarantees, not Android power-cut qualification. Diagnostics
+whitelist status/counts/capacity only; no arbitrary error/config/profile/log dump.
+
+DEMO.3a.1 corrects an existing-lock symlink hazard reproduced after initial full
+qualification: Core foreground_lock can write its empty-file marker before later
+backup path rejection. Demo now uses a separate O_NOFOLLOW/regular/single-link/
+inode-bound opener BEFORE writes and reuses Core OS locks, preserving Core source.
+Preflight also rejects linked Core engine/worker lock files. Fresh hardened full
+qualification supersedes the first candidate; old preview is historical, not a
+recommended install. Source/state remain private to the owner; no hostile co-owner
+filesystem mutation or Android power-cut qualification is claimed.
+
+## DEMO.4a browser boundary
+HTTPS uses separate private browser CA/IP SAN, explicit manual public-CA trust after
+out-of-band SHA, never click-through/insecure HTTP/TLS flags. Codex touches only
+isolated synthetic trust profiles. CA/leaf private keys stay in private state; Core
+and node certs/pins preserved. No shared/default password: pinned owner CLI produces
+one-use high-entropy 5-minute grant, exchanged for RAM-only 30-minute host cookie
+Secure/HttpOnly/SameSite=Strict and per-session CSRF. Exact Host/Origin/Sec-Fetch,
+CSRF, no CORS, strict local CSP/frame denial/no-store, bounded login/auth budgets,
+workers/metadata/transfers. Browser never receives Core admin/node/transfer secrets.
+One private temporary spool <=32 MiB, exact framing/deadline, SHA before forwarding,
+existing Core idempotent jobs/placement/byte proof/fallback. Authorized input receipt
+is not checksum proof or replica protection. Download fully verifies before output;
+no arbitrary host path or overwrite. Node approval remains CLI; no policy/GC/delete
+route. Errors/logs suppress untrusted inputs and exceptions. Runtime defaults off;
+no public/real-device/Android acceptance, Root schema/consensus/GC change follows.
+
+### Dashboard frontend / real browser gate (DEMO.4b)
+Every dynamic node/file/error value is rendered as text; no innerHTML/eval or third-party code. CSP remains same-origin with no inline script. Only idempotency metadata (logical path, size, SHA, random request key) may reside in sessionStorage; no owner/node token or cookie is readable by JavaScript. The chosen file is hashed before upload; download is hashed before Blob/new-download, user chooses destination. Retry retains original Core key until confirmed protected, never retries under a silently new key for the same pending file. Offline cache is explicitly stale/UNKNOWN. Synthetic Chromium checks trusted public CA (isolated NSS), rejects untrusted TLS, XSS literal filename, HttpOnly cookie/logout, distinct domains, actual node outage and browser network disconnection. This does not qualify Chrome Android runtime or owner CA-install UX.
+
+### DEMO.4d scoped filesystem access
+Only approved-root directory absolute open is allowed by the new adapter, O_DIRECTORY|O_NOFOLLOW then exact persisted medium fstat before marker/data. No opening '/', no absolute child body open, no permission/SELinux/identity bypass. No-follow relative children, regular/single-link marker/body, bounded marker schema, pinned folders and ancestor/root/folder/marker pre/post identity checks retain scope under symlink/replacement faults. Capacity/inventory use those descriptors. Unknown POSIX support fails closed. Probe collisions are preserved; owned cleanup requires original observed file identity and never unlinks objects. Real private-directory EACCES and fsync failure remain denial/unknown, not fabricated writable evidence. Existing private-account trust and final-syscall race limitations remain; metadata/physical publication is not atomic. GC capability/platform/authorization locks, Core WIP, TLS and M51/unknown guards are unchanged.
+
+### DEMO.4d.2 synthetic integration / local status
+Root-open denial lives only in tests/android_root_denial.py (not packaged); its Python wrapper preserves underlying actual dir_fd-support metadata rather than falsely pretending a different OS. No product mock/capability override. Real Controller/Storage/TLS/probe/bytes and authorization run unchanged. New Demo storage-status honors device/state/prefix and local ownership guards before reusing actual Engine probe, never creates volume/identity. Live node ownership/M51/unknown refusal is tested; old-certificate/browser TLS gates are rerun normally.

@@ -384,3 +384,64 @@ medium adoption. READY.json binds intent SHA/manifest SHA/object count/bytes aft
 complete independent readback. No registry/manifest/Raft DB/config/key is created.
 Interrupted same-intent resume never resets IDs/known-history floor or overwrites
 a completed object; corrupt/foreign state held. No base schema migration.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Demo source package format 1 (DEMO.1)
+`release.json` records format=1, version, capabilities, exact state_formats, a mapping
+of relative public source paths to SHA-256, and release_id=SHA256(canonical sorted
+compact JSON of every field except release_id). No links/special/unlisted/missing
+files are accepted. Prefix install.json format=1 selects releases/<release_id>;
+source and launcher are exclusive-create/verify-on-rerun. No private identity/schema
+is created or migrated by install. Preview capability is installer only.
+
+## Demo private state format 1 (DEMO.2)
+<state>/demo.json contains exactly format, track=android-demo-alpha,
+mode=single-writer-demo, role=controller|node, stable installation_id, state_formats
+(demo1/registry4/manifest1/metadata1/config1/wire1), explicit host and port.
+Controller identity/certs/registry live in controller/, enrolled identity/certs/
+manifest/cache in node/. Core schemas are reused unchanged. An unmarked existing
+root, unknown version, consensus/extension state, missing registry/node identity or
+mismatched node/cluster is refused before Core constructors can create/migrate it.
+Internal file data is the dedicated node/data root; explicitly approved SD adapters
+still require the existing Termux app-folder and UUID/medium checks. Repeated setup
+with identical parameters verifies rather than replaces identities/volume markers.
+
+## Demo backup/activation format 1 (DEMO.3a)
+Prefix state-binding.json records format, absolute private root, installation UUID.
+It never includes Controller/node credentials. install.json remains format/release_id.
+upgrade-journal.json records format, status PREPARED|COMPLETED|RECOVERED_OLD_CODE,
+action, installation UUID, old/new release IDs, private backup path and backup digest.
+PREPARED denies runtime even after the new pointer was persisted.
+Private backup-complete.json records format=1, installation UUID, exact formats,
+selected release ID, source label/root map, entries (directories plus file size/SHA)
+and SHA256(canonical body excluding backup_sha256). state/ contains all stopped
+private state/bodies; external volumes use volume-<UUID>/, preserving empty directories.
+Only known OS coordination lock files are excluded. Completion follows source
+stability and copied readback verification; failed copies stay incomplete. Backup
+is private and is never part of a public package. No schema restore/migrator exists.
+
+Demo coordination files keep Core's empty-or-one-space convention and OS locks; no
+state/schema migration in DEMO.3a.1. Existing linked/nonregular/multi-link or unexpected
+coordination files are refused/preserved before writes; never auto-delete a lock.
+
+## Optional Dashboard state 1 (DEMO.4a)
+Base Demo/registry/manifest/cache/wire formats unchanged. Private dashboard/ holds
+CA key/public certificate, separate leaf key/cert, empty bounded ephemeral spool/
+and dashboard.json exactly format=1, host (existing Controller IP), distinct port,
+max_upload_bytes<=32 MiB. No key/cert regeneration over existing/partial state.
+Completed optional config is checked before new writable Core open; partial state
+without config is retained, never adopted into a running Dashboard. Old 0.3.0 can
+ignore optional directory in CLI-only mode; complete stopped backups include it.
+Login grant hashes/expiry, session hashes/CSRF/expiry and transfer ticket/status/
+actual bytes live only in bounded RAM, never a second persistent Catalog. Restart
+invalidates them; durable upload key/job/session/object authority remains in Core.
+
+### Demo 0.3 -> 0.4 compatibility
+0.4.0 adds dashboard-lite release capability, with identical base STATE_FORMATS and no Catalog/Registry/Manifest/config migration. Optional Controller dashboard/dashboard.json format1 and own CA/leaf/spool are separate from Core identity and included by existing complete-state inventory backup. Exact published0.3 launchers accept compatible0.4 manifests; old0.3 CLI code ignores optional Dashboard directory on rollback, preserving both files written by0.4 and browser identity. No Termux/APK, Raft or unknown-schema migration is implied. Runtime browser sessions/tickets remain volatile, no second database.
+
+### DEMO.4d storage compatibility (no migration)
+Volume record/marker/schema unchanged: persisted root/medium st_dev:st_ino and node/volume IDs remain exact. New POSIX anchor snapshots/descriptors/file identities are operation-local only; no identity regeneration, new schema, database rewrite or medium cloning. Existing immutable objects/uploads/jobs remain unchanged. Exact old-code upgrade/rollback must be separately qualified for0.4.1; rollback can restore Android root-open bug even though schemas are compatible.
+
+### Demo0.4.1 exact published-package compatibility
+Adds release capability android-volume-anchor but retains all base formats and0.4 optional Dashboard state1. Exact0.3/0.4 installed launchers accept compatible0.4.1 manifest; no schema migration. Tests explicitly backup/verify/stage/preflight/upgrade with root open denied, retain core and existing04 browser identities and data, write new file, make NEW backup then select old code over new state. Old Android root-open defect is retained on downgrade and is not called functional Android rollback. Old/new bytes still read under baseline Linux proving schema compatibility; no database restore or medium/state rewrite.

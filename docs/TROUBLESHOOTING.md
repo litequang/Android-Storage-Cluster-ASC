@@ -354,3 +354,72 @@ not relabel an early rejected transfer as a fault-boundary success. Preserve sam
 Backup ID, wait for measured approved sources and retry; final quorum gate remains
 mandatory. Process-crash qualification requires actual exit91 and retained inode/
 intent, not a timeout or exception. Full3D regression is separate from targeted PASS.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Demo installer preview refusal
+Run `sh scripts/demo-alpha.sh preflight` for read-only dependency/device/SD status.
+Missing or non-working OpenSSL/Python/pkg requires owner review/manual preparation;
+no automatic installation occurs. Protected/unknown devices have no override.
+Checksum, existing unmarked prefix, modified source or symlink refusal means stop
+and preserve directories; do not delete identities or overwrite source. An exact
+package rerun resumes a partial code install. Different releases need a later
+explicit stopped upgrade, never an installer overwrite.
+
+## Demo LAN incomplete replication / offline media
+Use `replicas FILE_ID` to request fresh reconciliation and display verified/available
+counts. Upload exit 4 means protection incomplete: preserve bytes/jobs and retry the
+same key and identical file, not a new logical overwrite. Missing/offline/changed
+volume or one eligible domain denies a new upload. Restore the original medium and
+marker; never substitute its directory or treat free-space estimates as write proof.
+Controller outage denies both metadata writes and node operation authorization;
+keep existing state and restart that Controller manually. Do not promote a node.
+Explicit bind requires the phone's private Wi-Fi IPv4 (same isolated LAN); wildcard,
+public, link-local and hostname inputs are refused. Pin mismatch always means stop
+and verify the correct Controller certificate out of band, never switch to HTTP.
+
+## Demo activation interrupted / incompatible state
+Stop every local foreground before backup/upgrade/rollback. A lock conflict leaves
+pointer/state intact; do not remove lock files or kill guessed PIDs. Unknown format,
+installer-only candidate, missing medium, source mutation, checksum mismatch, links
+or insufficient backup space means preserve state and resolve the cause. A failed
+backup has no backup-complete.json and is never valid recovery evidence. PREPARED
+journal blocks startup: recover-upgrade verifies unchanged current state against its
+complete backup and selects old compatible code only. It never restores old bytes/
+DB. If code integrity prevents launcher execution, retain old release/package and
+seek review, not network bypass or identity regeneration. Controlled multi-node
+upgrade uses stop-all; mixed-version/rolling/endpoint/schema migrations unqualified.
+
+Existing Demo installer-preview 0.1.0 code is intentionally retained/refused as an
+implicit upgrade target. For the first final Alpha install use a NEW code prefix
+and launcher function as described in DEMO-ANDROID-PILOT.md; preview created no
+cluster identity. Never delete existing private state to make installation pass.
+Owner Android observations belong in the blank pilot record; Cloud PASS does not
+populate it. Unknown/M51/real production operations remain prohibited for Codex.
+
+## DEMO.4 browser backend
+Dashboard is optional: stop local foregrounds before dashboard-init, then explicitly
+run-controller --dashboard. A port/config/partial-key conflict preserves state;
+never delete keys or alter versions to make startup pass. Original CLI-only mode
+can run without a completed Dashboard config. Export only public CA to a NEW HOME
+file via dashboard-trust, compare SHA and manually trust it on owner browser device.
+Untrusted CA/wrong IP SAN must fail; no click-through/HTTP fallback. dashboard-code
+requires running Dashboard + pinned Core owner admin; one code expires in five
+minutes and replacement invalidates prior code. Session lasts thirty minutes and
+restart/logout invalidates it. Re-login rather than copying admin/node credentials.
+Backend 202 means copies pending, never protected; preserve same idempotency key/file.
+Byte receipt and checksum/protection differ. Browser transfers max 32 MiB, one at a
+time; larger file uses existing CLI. Unknown capacity and shared-domain ambiguity
+stay UNKNOWN. UI/browser/Android qualification is separate; see current progress.
+
+### DEMO.4b browser behavior
+Open only the exact IP SAN HTTPS URL after verifying/trusting public Dashboard CA. Missing WebCrypto or certificate error blocks login; do not bypass TLS. Node approval/domain confirmation remains CLI. Upload button requires live Controller; max 32 MiB by default. Pending upload is not protected: keep original file and retry same bytes/path in the same tab to reuse key. Download verifies SHA before offering browser save; Controller byte progress alone never proves two replicas. UNKNOWN after disconnect is intentional; reconnect then use Cập nhật kiểm tra. Browser regression prerequisites: Node with Playwright, Chromium, certutil; tests import only synthetic public CA in an isolated HOME, no system trust modification.
+
+### Android11 Termux: readable but write_denied with accessible private volume
+The owner reported '/' OPEN_FAILED EACCES but ASC volume/staging OPEN_OK on initialized ZTE9045 Demo0.3. Old LocalVolume.open/remove_staging read-open '/' before descending; check() could read private marker directly, producing exactly readable=true/writable=false/fsync=null. Linux regression reproduces it. DEMO.4d anchors directly at approved root with full identity/no-follow checks, no root/SELinux/system-permission changes. Real EACCES is still denied; safe_volume_access_unavailable requires supported descriptor primitives, never insecure fallback. Missing/changed marker/media requires preserve/review, not reinit. Wait for qualified0.4.1 upgrade guide; do not overwrite old release/state. Android runtime fix still needs owner confirmation writable=true/fsync_tested=true. Old-code rollback retains the original root-open bug on affected Android.
+
+### Demo0.4.1 owner storage-status
+After upgrading existing source, stop the local Storage Node (Controller can remain up), then `ascdemo storage-status`. It reads the existing config/manifest/volume and actually probes only its private staging. Require writable=true, fsync_tested=true, online and last_error=null; UNKNOWN/false is not ready. Running node returns refusal due ownership: Ctrl+C owning terminal, never remove locks. No init/join/storage-init is needed for an existing node/volume. Restart original node afterward, retaining all IDs/pins/bytes.
+
+### Existing ZTE0.3 direct0.4.1 upgrade
+Use DEMO-ZTE-0.4.1 copyable owner guide and trusted publication SHA. Stop foregrounds, old launcher complete backup/readback, stage/preflight/upgrade to immutable new release with another NEW backup. Compare private identity snapshot, stopped-node storage-status actual writable/fsync, then original Controller+Node. Do not install over prefix or init/join/storage-init existing ZTE. Both0.3 and0.4 direct routes tested from exact archives. Rollback is data-preserving code selection with NEW backup, but restores original Android bug on affected host: keep storage stopped/review, never clear markers/old database to make it run.

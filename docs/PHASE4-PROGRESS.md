@@ -7,8 +7,8 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 
 |Checkpoint|State|
 |---|---|
-|4.0a|READY:16 targeted PASS0skip0fail0.173s; docs/whitespace checks PASS; normal push gate follows|
-|4.0b.1|NEXT after4a remote proof: selective Demo/storage port +targeted compatibility|
+|4.0a|PUSH/REMOTE VERIFIED5d15cb71dc07e0e31b7b9da68e4aea85178e3847;16 targeted PASS|
+|4.0b.1|READY: selective port95PASS0skip0fail290.653s; normal push gate follows|
 |4.0b.2|NOT STARTED: owner Dashboard +guided CLI, may split backend/UI|
 |4.0c|NOT STARTED: exact04.1 candidate upgrade/rollback +fresh full qualification|
 
@@ -35,3 +35,29 @@ already available. Keep inherited proxy/trust, stop on proxy:8080 errors.
  tests.test_lifecycle.DeviceSafetyTests tests.test_external_compatibility -v:
 16PASS0SKIP0FAIL0.173s. No source edits. Plan/fences/links +git diff --check PASS;
 normal feature push/remote receipt recorded next checkpoint.
+
+## 4.0b.1 selective compatible port
+
+4a normal-pushed/remote matched5d15cb7 BEFORE source port. Exact allowlist46 new
+public paths from Demo c9c2660:17 Demo source/assets,10 historical Demo docs,
+8 old archive/checksum files, launcher and10 test/helper/browser files. ONLY shared
+source overwritten: reviewed volumes.py/engine.py Android anchor patch. Registry/
+server/CLI/client/identity/Catalog/StorageHTTP/manifest/Go common bytes unchanged;
+Core3D external modules and RuntimeHandler byte-identical to ca2504f. All original
+Core tests unchanged. No merge/cherry-pick of an entire branch or state adoption.
+Common docs retain Core3D sections, append reviewed historical Demo extensions;
+Demo ADR055/056 map060/061, Core055/056 external meaning preserved,057–059 imported.
+
+Actual command: `python -B -m unittest tests.test_android_volumes
+ tests.test_demo_android_storage tests.test_demo_dashboard tests.test_demo_dashboard_browser
+ tests.test_demo_installer tests.test_demo_lan tests.test_demo_upgrade
+ tests.test_demo_release_upgrade tests.test_external tests.test_external_verify
+ tests.test_external_recovery tests.test_external_compatibility tests.test_external_cluster
+ tests.test_external_faults tests.test_gc_sandbox tests.test_gc_authorization -v`:
+**95PASS0SKIP0FAIL290.653s**. Actual browser/CA/bytes, exact03/04 upgrades/rollback,
+all9 actual3D faults +recovery child crash, root-denied volumes and sandbox/GC auth
+units PASS together.4 archived packages/SHA/unpacked path audits PASS; port hashes
+match pinned Demo bytes. Prototype package version remains historical0.4.1-alpha
+ONLY for this compatibility checkpoint (source ID differs because Core3D is kept);
+not republished or claimed as original released0.4.1. Next b.2 candidate0.4.2-dev.
+Next only after normal push/remote equality:Quick Join backend/CLI then UI/browser.

@@ -213,3 +213,36 @@ registration and owner-session Dashboard; no new Catalog/Storage/auth DB. No nat
 app/state migration or writable DR is implied. Candidate only, actual Android
 qualification deferred. Imported historical Demo ADR055/056 map to canonical
 ADR060/061; existing Core055/056 keep external/DR meaning, Demo057–059 are available.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+- ADR-060 (imported Demo ADR-055): keep independently versioned immutable Demo code and marked
+  state separate from Core/private legacy state. Reuse single-writer registry 4,
+  Catalog transfer/proof/fallback and local manifest 1 with explicit private LAN
+  binds; isolate Controller and enrolled node homes on a cohosted phone. Do not
+  remove Android Raft guards. Exactly two owner-approved physical domains and
+  measured double-copy capacity gate a new upload; report interruption/degradation
+  honestly. No implicit migration, policy reduction, whole-volume grant or GC path.
+
+- ADR-061 (imported Demo ADR-056): reuse Core OS _lock/_unlock primitives through a
+  Demo-specific no-follow regular/single-link/inode opener. Reusing foreground_lock
+  as a whole was unsafe for an existing symlink because its empty marker write
+  precedes later path checks. Preserve Core source; reject unexpected coordination
+  files and linked internal worker/engine locks before any Demo operation/constructor.
+  Do not unlink/replace a suspicious lock to make startup pass. Fresh hardened
+  targeted/full qualification supersedes the initial package candidate.
+
+- ADR-057 (DEMO.4): browser trust uses separate explicit private CA/IP-SAN listener
+  in the same Controller process, preserving all Core/node certificate pins. Never
+  instruct a browser to bypass TLS errors. Owner CLI issues one-use RAM grants;
+  browser gets scoped HttpOnly/Secure/SameSite session + CSRF, not Core credentials.
+  Keep node approval CLI-only. Reuse Catalog and pinned ClusterClient for bounded
+  private spooled transfers; received bytes/SHA/protection are separate facts.
+  Root/base schemas unchanged; optional Dashboard format is independently validated,
+  backed up and ignored by compatible old CLI-only source after stopped rollback.
+
+## ADR-058 — 0.4 optional Dashboard state, exact published-package rollback
+Keep every base state format unchanged and browser state optional/independent. Add dashboard-lite capability without changing existing required CLI capabilities, allowing exact old0.3 stager to verify/activate0.4. Test both old and new code/bytes rather than relabeling current code as0.3. Rollback makes NEW full state+volume backup, selects preserved old code, ignores optional Dashboard and keeps new file bytes/catalog; never restores stale DB. Browser TLS/CA import stays explicit owner procedure; no installer trust-store mutation. Mixed live versions/rolling update remain unsupported.
+
+## ADR-059 — approved-root descriptor anchor without filesystem-root read permission
+Use the already approved volume dev/inode and exact node/volume marker as the POSIX anchor. Absolute lookup opens only that directory; no-follow child descriptors plus namespace snapshots/rechecks prevent adoption or redirection to swapped roots/ancestors/folders/markers. Reading/lstat metadata of ancestors does not require opening/listing them. This is equivalent scoped access within the trusted private OS account, not a sandbox against a malicious privileged co-owner or a claim of atomic filesystem+DB/power-cut durability. Missing descriptor primitives fail closed, with no unsafe absolute-child fallback. Preserve marker/formats/IDs; share this fix in Demo branch only, leave Core WIP unchanged. Measured probe truth follows cleanup; random name collision is preserved, never deleted.

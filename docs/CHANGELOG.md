@@ -308,3 +308,98 @@
   Go11/vet/modules/Linux build PASS; Windows/Android compile-only. External
   backup/anchored verify/isolated read-only staging accepted for Linux synthetic;
   Phase3D PARTIALLY COMPLETE, full writable DR NOT ACCEPTED/BLOCKED.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Android Demo Alpha — separate track (not source-ready yet)
+
+- DEMO.0: audit/reuse plan and upgrade contract on feature/android-demo-alpha from
+  acea2ae, with account-independent progress. No runtime code/device/GC unlock;
+  preserve Core branch, source, tests and historical qualification.
+
+### Demo Track DEMO.1 — installer preview
+Separate guarded Android preflight, immutable source-only package with per-file and
+archive SHA-256, read-only dry-run and state-preserving rerun. Stable launcher verifies
+before import and disables bytecode. Linux synthetic qualification only; no LAN
+cluster/runtime/upgrade readiness yet. Existing Core installer/guards unchanged.
+
+### Demo Track DEMO.2 — restricted single-writer LAN CLI
+Dedicated marked state and exact read-only schema checks; separate Controller/node
+homes permit Controller phone storage. Explicit private IPv4 TLS binds, Core durable
+enrollment and owner domain approval, measured two-copy upload, SHA verification,
+replica reporting and download fallback reuse existing engines. Controller loss
+fails closed; missing volume/domain/capacity/pin/unknown schema/attached state and
+M51/unknown runtime guards tested on Linux synthetic. No Android runtime qualification,
+upgrade readiness, Raft, reduction, GC or Dashboard claim.
+
+### Demo Track DEMO.3a — stopped upgrade, backup and identity preservation
+Version 0.3.0-alpha adds prefix/state binding, complete verified private backup
+including external approved volumes/empty directories, exact-format compatibility,
+immutable staging, journaled source activation/code rollback and explicit interrupted
+activation recovery. Stable IDs/keys/pins/bytes retained; no schema/data restore or
+background updater. Diagnostic output uses a status whitelist. Installed-source
+tests caught/fixed prefix ancestry and node re-exec issues; compatibility permits
+Core's existing catalog inventory cursor while rejecting consensus/advanced state.
+Final source-ready status waits for fresh full qualification and checksum package.
+
+### Demo Track DEMO.3a.1 — refuse linked coordination files before writes
+Final review reproduced a symlinked lifecycle lock changing an outside empty
+synthetic file before backup refusal. New Demo-only no-follow/regular/single-link/
+inode validation precedes any lock marker write; internal Core lock preflight and
+symlink/hardlink regression added. Core unchanged. Initial 221-case full PASS is
+retained as provenance; a fresh hardened full run is required. Installer preview
+retired from recommended installs; final candidate includes blank Android pilot.
+
+### Demo Track DEMO.3b — 0.3.0 source-ready, Linux synthetic only
+Final hardened fresh full 222 Python PASS/0 skips, 14 targeted PASS, all eight Linux
+physical gates and unchanged-source 11 uncached Go/vet/modules/builds PASS. Qualified
+83-member source-only QuickStart archive + SHA, owner README/pilot and full handoff
+published on separate Demo branch. No Android/runtime/real SD/production acceptance,
+APK, GC/Raft enablement, Phase 3D or Dashboard. Core source/tests and WIP preserved.
+
+### DEMO.4a — optional trusted-HTTPS owner-session backend
+Separate browser CA/IP SAN preserving Core/node TLS, one-use owner login/session/CSRF,
+read-only node/volume/file/replica views with UNKNOWN/domain safeguards, bounded
+private upload/download spool through existing Catalog/client/SHA/fallback. CLI-only
+node approval, no second Catalog/schema migration, policy/delete/GC/public access.
+35 targeted tests PASS on Linux synthetic; frontend/new package/Android not accepted.
+
+## DEMO.4b — Dashboard Lite frontend (2026-10-25)
+Vietnamese mobile-first overview, node/approved-volume details, file upload and SHA-verified browser download, per-replica status and honest degraded/UNKNOWN states. Core jobs/idempotency and fallback reused. Local packaged assets, no CDN/token-in-JS/delete/approval controls. Actual Chromium trusted-CA integration passes with two synthetic phone processes, first node stopped before download, XSS literal filename and mobile/offline gates. Android runtime remains NOT TESTED; 0.4.0 package awaits 4c qualification.
+
+## DEMO.4c — 0.4.0-alpha compatible QuickStart candidate (2026-10-25)
+Release capability dashboard-lite; unchanged base formats. QuickStart now covers separate trusted HTTPS browser listener, owner one-use login and stopped 0.3.0 upgrade/code rollback. Exact published0.3 package upgrade/new-state rollback test passes with preserved identities, browser CA and old/new bytes; final full regression/public artifact qualification is recorded separately in DEMO4-ACCEPTANCE. Android/runtime/CA-install UX remains NOT TESTED.
+
+## DEMO.4c — 0.4.0 Linux source-ready qualification (2026-10-25)
+Final fresh230 Python PASS0skip incl all8 physical fault gates;11 uncached Go tests,
+vet/modules/Linux build/Android cross-build PASS.22 targeted and3 exact-archive
+installer checks PASS. Source-only92-file QuickStart includes Dashboard assets,
+manual public-CA trust/owner login,0.3 upgrade and code-only rollback instructions.
+Unchanged base formats/Core guards/branch; final public SHA and receipt recorded
+in DEMO4-ACCEPTANCE/DEMO-TRACK-PROGRESS. Android runtime remains NOT TESTED.
+
+## DEMO.4d.1 — Android-compatible approved-volume anchor (2026-10-25)
+Reproduced old write_denied when only filesystem-root read-open is denied. POSIX adapter now opens only approved root, binds medium/marker/descriptors and checks ancestor/folder replacements before/after no-follow child IO. Capacity/inventory/fsync/cleanup use pinned descriptors. Probe success is reported only after actual write/read/SHA/fsync/owned cleanup; collision/changed/linked files preserved. Windows handle adapter/base formats/IDs unchanged; shared storage files changed on Demo branch only.61 targeted storage/security/sandbox/TLS tests PASS0skip17.030s; no Android/runtime or0.4.1 release claim yet.
+
+## DEMO.4d.2 — actual root-denied Demo runtime / local volume status
+Test-only root denial now exercises real Controller+Dashboard/two-node TLS runtime with measured probes, two independent synthetic replicas, SHA/fallback/offline/restart. `ascdemo storage-status` reuses stopped-node Engine probe with existing device/state/ownership guards; no initialization or network API added. Normal Dashboard/Chromium regression is rerun. Linux synthetic only;0.4.1 release/full qualification follows4d.3.
+
+## DEMO.4d.3 —0.4.1 compatibility/package candidate
+0.4.1-alpha adds Android volume anchor capability, unchanged schemas/identities and all Dashboard0.4 assets. Exact published0.3/0.4 direct-upgrade tests run backup/verify/stage/preflight/upgrade/new runtime under root-open denial; preserve credentials/pins/media/browser CA and old/new files. Code-only rollback uses NEW backup, honestly restores old Android defect; baseline Linux checks preserved files. Dedicated existing-ZTE copyable guide is packaged. Final fresh full/Go/fault/public SHA gates remain in DEMO4D-ACCEPTANCE; Android not qualified.
+
+## DEMO.4d.3b —0.4.1 Linux synthetic accepted (2026-10-25)
+Fresh246 Python PASS0skip/all8 Linux physical gates;11 uncached Go/vet/modules/
+Linux+Android cross-build PASS,38 targeted +3 exact-archive installer PASS.93-member
+source-only QuickStart0.4.1 keeps Dashboard and fixes approved-volume access without
+opening '/', preserves formats/IDs/media; exact03/04 direct upgrades and new-state
+code rollback proved with real TLS/bytes. Dedicated existing-ZTE copyable guide
+included. Old packages unchanged; SHA/publication receipt in progress/acceptance.
+Android0.4.1 NOT TESTED; downgrade still returns original Android defect. No Core
+WIP push/Raft/GC/failover/production activation or phone access.
+
+## Phase4.0b.1 — selective integration (not Android accepted)
+Port reviewed Demo0.4.1 source/assets/installer/upgrade/tests/historical public
+archives plus approved-root Android volume patch into Core3D feature baseline.
+Keep Core3D external backup/recovery/guards, no merge/schema/state change.95
+combined targeted PASS0skip0fail incl actual browser, exact historical upgrade,
+all9 external faults and local GC/storage checks. Full new integration pending.

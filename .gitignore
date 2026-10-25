@@ -140,3 +140,9 @@ external-backups/
 recovery-staging/
 RECOVERY_READ_ONLY.json
 READY.json
+
+# Preserved verified public SOURCE-only Demo archives, not private backups.
+!/releases/asc-demo-alpha-installer-0.1.0.tar.gz
+!/releases/asc-demo-alpha-0.3.0.tar.gz
+!/releases/asc-demo-alpha-0.4.0.tar.gz
+!/releases/asc-demo-alpha-0.4.1.tar.gz
