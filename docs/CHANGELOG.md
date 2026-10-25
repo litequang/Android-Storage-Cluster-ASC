@@ -329,3 +329,6 @@ node approval, no second Catalog/schema migration, policy/delete/GC/public acces
 
 ## DEMO.4b — Dashboard Lite frontend (2026-10-25)
 Vietnamese mobile-first overview, node/approved-volume details, file upload and SHA-verified browser download, per-replica status and honest degraded/UNKNOWN states. Core jobs/idempotency and fallback reused. Local packaged assets, no CDN/token-in-JS/delete/approval controls. Actual Chromium trusted-CA integration passes with two synthetic phone processes, first node stopped before download, XSS literal filename and mobile/offline gates. Android runtime remains NOT TESTED; 0.4.0 package awaits 4c qualification.
+
+## DEMO.4c — 0.4.0-alpha compatible QuickStart candidate (2026-10-25)
+Release capability dashboard-lite; unchanged base formats. QuickStart now covers separate trusted HTTPS browser listener, owner one-use login and stopped 0.3.0 upgrade/code rollback. Exact published0.3 package upgrade/new-state rollback test passes with preserved identities, browser CA and old/new bytes; final full regression/public artifact qualification is recorded separately in DEMO4-ACCEPTANCE. Android/runtime/CA-install UX remains NOT TESTED.

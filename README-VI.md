@@ -543,3 +543,7 @@ không dùng main. Xem [kế hoạch](docs/DEMO-TRACK-PLAN.md),
 và [QuickStart ZTE/Bphone](docs/DEMO-QUICKSTART.md). Chỉ dùng gói có checksum từ
 checkpoint đã đủ Linux PASS; runtime Android do chủ dự án thử riêng. Đây là CLI
 single-writer LAN với private state riêng, không bật Android Raft/GC hay đụng M51.
+
+## Dashboard Lite — Demo 0.4.0
+
+Dashboard tiếng Việt responsive, upload/hai replica và download kiểm SHA qua Controller Demo hiện có. Xem [nghiệm thu hiện tại](docs/DEMO4-ACCEPTANCE.md), [QuickStart](docs/DEMO-QUICKSTART.md) mục 5a cho HTTPS/CA/mã owner và mục 6a nâng cấp từ0.3/rollback có backup mới. Chỉ dùng gói đã công bố checksum sau Linux PASS; Android vẫn CHƯA KIỂM THỬ. Không bật Raft/GC hoặc thay nhánh Core.

@@ -7,7 +7,7 @@ Never Samsung M51, production hosting, unknown-device overrides, root/format/GC,
 public management ports, Termux:Boot or uncontrolled power-cut/SD removal.
 
 Read DEMO-QUICKSTART.md first; record the package SHA and release/content ID from
-DEMO-TRACK-ACCEPTANCE.md. ZTE/Bphone are the initial two-phone pilot. Sony is optional.
+DEMO4-ACCEPTANCE.md. ZTE/Bphone are the initial two-phone pilot. Sony is optional.
 No Android PASS is claimed by this blank form or by a Go cross-build.
 
 | Observation | ZTE V40 | Bphone A40 | Sony XZ3 (optional) |
@@ -18,6 +18,9 @@ No Android PASS is claimed by this blank form or by a Go cross-build.
 | Optional approved SD app-folder / unavailable state | NOT TESTED | NOT TESTED | NOT TESTED |
 | Enrollment / pinned TLS / heartbeat | NOT TESTED | NOT TESTED | NOT TESTED |
 | Same-package reinstall preserves identities | NOT TESTED | NOT TESTED | NOT TESTED |
+| Verified public Dashboard CA trust / HTTPS / owner login | NOT TESTED | NOT TESTED | NOT TESTED |
+| Dashboard mobile UI / upload / two replicas / download SHA | NOT TESTED | NOT TESTED | NOT TESTED |
+| 0.3.0 → 0.4.0 upgrade and old-code/new-state rollback | NOT TESTED | NOT TESTED | NOT TESTED |
 | Foreground stop/restart retains state | NOT TESTED | NOT TESTED | NOT TESTED |
 | Private stopped backup + readback verification | NOT TESTED | NOT TESTED | NOT TESTED |
 | Future qualified compatible source upgrade/code rollback | NOT TESTED | NOT TESTED | NOT TESTED |
@@ -42,9 +45,9 @@ No Android PASS is claimed by this blank form or by a Go cross-build.
 6. Stop all foreground processes. Backup each phone into a NEW private directory
    with sufficient actual free space; verify it. Reinstall the exact same package:
    keys/IDs/pins/volume markers/file bytes must remain unchanged after restart.
-7. Real-phone code upgrade/rollback remains NOT TESTED until there is a second
-   independently qualified compatible release. Do not edit manifests/source to invent
-   one. Linux synthetic candidate/crash evidence is not Android upgrade acceptance.
+7. Real-phone 0.3.0 -> 0.4.0 upgrade/code rollback remains NOT TESTED. Only use
+   both independently qualified packages and follow QuickStart 6a. Do not edit
+   manifests/source to invent a compatible release. Linux synthetic candidate/crash evidence is not Android upgrade acceptance.
 8. If optional SD is inaccessible, record UNKNOWN/unavailable and use internal.
    Do not remove active media, format, alter permissions, rewrite a marker, or test
    destructive GC. Any future removal/power-cut qualification needs a separate plan.
@@ -62,9 +65,9 @@ cluster. If its code prefix already exists, do not overwrite/delete it. From the
 verified final unpacked package, select a NEW code prefix instead:
 
 ```sh
-sh scripts/demo-alpha.sh install --prefix "$HOME/.local/share/asc-demo-alpha-0.3" --dry-run
-sh scripts/demo-alpha.sh install --prefix "$HOME/.local/share/asc-demo-alpha-0.3"
-ascdemo() { sh "$HOME/.local/share/asc-demo-alpha-0.3/bin/asc-demo" "$@"; }
+sh scripts/demo-alpha.sh install --prefix "$HOME/.local/share/asc-demo-alpha-0.4" --dry-run
+sh scripts/demo-alpha.sh install --prefix "$HOME/.local/share/asc-demo-alpha-0.4"
+ascdemo() { sh "$HOME/.local/share/asc-demo-alpha-0.4/bin/asc-demo" "$@"; }
 ```
 
 Then follow QuickStart using this function in each terminal. Existing `.asc-demo`
@@ -73,3 +76,15 @@ it to work around a refusal. The complete Core `.asc` remains untouched. Future
 compatible initialized Demo upgrades use stage/upgrade with a full stopped backup,
 not a fresh installer overwrite. This exception changes only source-prefix selection,
 not identity or schema migration.
+
+## DEMO.4 owner browser pilot (all NOT TESTED on phones)
+
+Follow QuickStart 5a and 6a. Verify public CA fingerprint outside browser, then
+owner imports only that CA. TLS warning/wrong IP/untrusted CA must block login.
+Use one-use dashboard-code, never node/admin token. Record overview UNKNOWN handling,
+node/volume details, actual small upload, distinct phones/domains and two replicas,
+browser download plus independent SHA comparison. Stop a node and verify degraded
+state/fallback/new-upload refusal; stop Controller and verify no new writer. Test
+logout/session expiry, desktop/mobile layout and repeat after stopped compatible
+upgrade/code rollback. Keep original identities and both old/new files. No public
+port/tunnel or TLS exception. Linux Chromium success does not prefill any result.

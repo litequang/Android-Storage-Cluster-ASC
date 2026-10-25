@@ -28,8 +28,8 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.3a.1 | PUSHED/REMOTE VERIFIED: aaf7d163fbac032bb31a033efe2ebb21406509bf |
 | DEMO.3b | PUSHED/REMOTE VERIFIED: 52850b9072241ab4bb7643b06127965d25d96904 |
 | DEMO.4a | PUSHED/REMOTE VERIFIED: 5db17aef375b5ebfd03ce680a3b0a52c3a993f99; 35 targeted PASS |
-| DEMO.4b | 21 targeted PASS incl. real Chromium; publication review |
-| DEMO.4c | NOT STARTED, 0.4.0 NOT QUALIFIED |
+| DEMO.4b | PUSHED/REMOTE VERIFIED: 8e4661bbccc9c6b11e451e414907d190a55a799c; 21 targeted PASS |
+| DEMO.4c | IN PROGRESS: exact 0.3 upgrade/rollback PASS; fresh full/package gates pending |
 | Demo source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Next action
@@ -38,8 +38,7 @@ Current owner request explicitly starts DEMO.4 from fetched/verified local+remot
 2d19eb06cee1b6bede0fbafac9d4704704c039a9, clean tree. 0.3.0 archive SHA checked
 again PASS. Ordered mandatory docs and all Demo handoff docs read, relevant runtime/
 Catalog/client/state/installer source audited. DEMO4-PLAN records current contract.
-4a is published and remote verified; finish/publish 4b real frontend/browser integration, then
-4c exact 0.3.0 compatibility/full qualification/new archive. Do not mark 0.4.0 ready
+4a/4b are published and remote verified; 4c now tests exact 0.3.0 compatibility/full qualification/new archive. Do not mark 0.4.0 ready
 from 0.3's historical PASS. All source/Linux synthetic only; no phones/production.
 
 Known gaps: old installer has fixed destination/version-only comparison; old
@@ -340,3 +339,35 @@ fault gate was skipped or TLS weakened.
 full regression/package proof. Android/browser CA-install UX NOT TESTED. Rollback:
 stop Controller, launch without --dashboard, retain all private state and bytes;
 code rollback requires stopped cluster and NEW complete private backup.
+
+## DEMO.4c.1 — compatible 0.4 source/guide checkpoint
+
+4b normal push/advertised remote matched 8e4661bbccc9c6b11e451e414907d190a55a799c
+before this checkpoint. Bumped source to0.4.0-alpha/dashboard-lite capability;
+base state formats unchanged. Added exact published0.3 install/upgrade/new-state
+old-code rollback test and updated QuickStart/blank owner pilot. Packaged sources
+and two guides are frozen for full acceptance. Split 4c into this independently
+resumeable targeted checkpoint and final 4c qualification/publication; no public
+0.4 archive or source-ready claim yet.
+
+Final targeted command: `python -B -m unittest tests.test_demo_dashboard
+tests.test_demo_dashboard_browser tests.test_demo_release_upgrade
+tests.test_demo_installer tests.test_demo_lan tests.test_demo_upgrade -v`:
+**22 PASS / 0 SKIP / 0 FAIL/ERROR, 119.508s**. Syntax/shell/JS checks PASS.
+Exact0.3 test also ran independently:1 PASS14.810s. Initial new-test helper shadowed
+Python's http module; renamed helper before PASS, no product bypass. Old archive
+SHA unchanged and checked at runtime. Old launcher stages/upgrades new release,
+new code reads/writes real bytes, old code reads BOTH old/new files after rollback;
+all IDs/keys/pins/certs/cluster/schema/browser private backup preservation pass.
+
+Private candidate (NOT published yet):92 regular source/asset/guide/manifest files,
+168292 bytes, release84849e9f1c269db1168d3adfa4f71fc0f720f92c5da63143c6d00811b9590277,
+SHAb9e186589bb4f5c698c7df2250f94ec32ce1e6e2acb41cf3923ade9e706a29f1.
+Unpacked public-content/path secret audit0 findings; full manifest matches frozen
+source/guides. Historical0.3 archive retained. Final full230 Python + Go/vet/modules/
+builds and exact-package install/public checksum remote proof remain PENDING.
+Do not mark0.4 SOURCE-READY from these targeted results. If interrupted, fetch and
+read AGENTS/DEMO4-PLAN/DEMO-TRACK-PROGRESS/DEMO4-ACCEPTANCE, preserve work, rebuild
+candidate deterministically and finish remaining fresh full gates, then publish.
+Rollback is CLI-only mode or stopped code-only0.3 with NEW complete private backup;
+never stale DB restore, identity recreation or deletion of optional Dashboard state.

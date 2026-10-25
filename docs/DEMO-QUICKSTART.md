@@ -7,6 +7,10 @@ có thể thêm Sony XZ3. Tuyệt đối không cài M51/thiết bị production
 Không root, format, thay Termux hiện hữu, Termux:Boot, public port/Cloudflare, APK,
 Raft/failover tự động, giảm replica hoặc physical GC.
 
+**Đã có Demo 0.3.0?** Không chạy `install` của gói mới lên prefix cũ. Giữ state,
+code cũ, dừng toàn cụm và làm mục **6a** để stage/upgrade tương thích. Các bước
+install/init dưới đây dành cho cài MỚI; không init lại cụm đang có.
+
 ## 1. Chuẩn bị và xác minh gói
 
 Dùng Termux từ nguồn chính thức còn được hỗ trợ. Không uninstall/reinstall Termux
@@ -14,19 +18,19 @@ Dùng Termux từ nguồn chính thức còn được hỗ trợ. Không uninsta
 kiểm tra, không chạy pkg install/upgrade và không đổi quyền hệ thống. Runtime đã
 kiểm thử bằng Python 3.13.5; Android runtime phải thử riêng. Không cần Go/sidecar.
 
-Tải `releases/asc-demo-alpha-0.3.0.tar.gz` và file `.sha256` cạnh nó từ CÙNG commit
+Tải `releases/asc-demo-alpha-0.4.0.tar.gz` và file `.sha256` cạnh nó từ CÙNG commit
 đã xác minh trên nhánh `feature/android-demo-alpha`. Chỉ dùng khi báo cáo
-`docs/DEMO-TRACK-ACCEPTANCE.md` tại commit chứa gói ghi đủ Linux PASS và SHA khớp.
+`docs/DEMO4-ACCEPTANCE.md` tại commit chứa gói ghi đủ Linux PASS và SHA khớp.
 Không dùng archive installer-preview 0.1.0 để chạy cụm. Kiểm tra digest công bố từ
 checkpoint tin cậy; checksum cạnh archive không thay thế xác thực nguồn tải.
 
 ```sh
 # Chạy trong thư mục chứa archive và file checksum.
-sha256sum -c asc-demo-alpha-0.3.0.tar.gz.sha256
+sha256sum -c asc-demo-alpha-0.4.0.tar.gz.sha256
 # Tạo thư mục giải nén MỚI, ngoài state/source đang dùng; không ghi đè thư mục cũ.
-mkdir "$HOME/asc-demo-unpack-0.3.0"
-tar -xzf asc-demo-alpha-0.3.0.tar.gz -C "$HOME/asc-demo-unpack-0.3.0"
-cd "$HOME/asc-demo-unpack-0.3.0/asc-demo-alpha"
+mkdir "$HOME/asc-demo-unpack-0.4.0"
+tar -xzf asc-demo-alpha-0.4.0.tar.gz -C "$HOME/asc-demo-unpack-0.4.0"
+cd "$HOME/asc-demo-unpack-0.4.0/asc-demo-alpha"
 sh scripts/demo-alpha.sh preflight
 sh scripts/demo-alpha.sh install --dry-run
 sh scripts/demo-alpha.sh install
@@ -58,7 +62,10 @@ Không mở port management ra Internet. IP/pin đã lưu không tự đổi; n�
 
 ```sh
 ascdemo init --role controller --host 192.168.1.20
-ascdemo run-controller
+# Chỉ lúc Controller VÀ Storage Node tại root này đều đang dừng:
+ascdemo dashboard-init --port 8444
+ascdemo dashboard-trust --out "$HOME/asc-demo-dashboard-ca.crt"
+ascdemo run-controller --dashboard
 ```
 
 Giữ terminal foreground này. Mở terminal ZTE khác, định nghĩa lại ascdemo:
@@ -148,6 +155,52 @@ node độc lập có khả năng ghi. Khi Controller mất, node không tự th
 metadata và authorization thao tác mới bị từ chối. Không có offline-write/failover.
 Giữ các byte và khởi động lại chính Controller cũ, rồi nodes, reconcile qua replicas.
 
+## 5a. Dashboard trên Chrome Android và PC
+
+Dashboard dùng `https://192.168.1.20:8444` (thay đúng IP đã init). HTTPS có CA riêng,
+không thay certificate/pin của Core hoặc Node. Trước khi mở bằng trình duyệt:
+
+1. Trên Controller, giữ kín toàn bộ `~/.asc-demo`; chỉ chuyển **file public**
+   `$HOME/asc-demo-dashboard-ca.crt` vừa export cho thiết bị trình duyệt qua kênh
+   owner kiểm soát (ví dụ USB). Không chuyển ca.key/server.key, config, backup,
+   node/admin token hay cả thư mục dashboard. Nếu export lần nữa, dùng tên MỚI.
+2. Đối chiếu SHA-256 certificate ngoài luồng với `ca_sha256` từ dashboard-init/trust.
+   Có thể tính fingerprint của public file: `openssl x509 -in
+   "$HOME/asc-demo-dashboard-ca.crt" -noout -fingerprint -sha256`. Bỏ dấu hai chấm
+   và so toàn bộ hex; đây là fingerprint DER certificate, khác SHA của file PEM/gói.
+3. Chủ dự án tự cài CA **đã xác minh** vào trust store người dùng của client. Trên
+   Android thường ở Settings → Security → Encryption & credentials → Install a
+   certificate → CA certificate (tên menu tùy hãng); trên PC dùng chức năng import
+   trusted CA của browser/OS cho tài khoản thử nghiệm. Không cài private key, không
+   thay system trust từ installer. Nếu chính sách thiết bị/browser không cho tin CA,
+   giữ CLI và ghi blocker; không click bỏ qua certificate error, dùng HTTP hoặc cờ
+   tắt kiểm tra TLS. Cloud chỉ thử NSS profile cách ly của Chromium Linux; giao diện
+   cài CA/Chrome Android/PC thật vẫn cần owner nghiệm thu. Xóa CA thử nghiệm khỏi
+   client khi kết thúc pilot nếu không dùng; giữ private identity gốc cho nâng cấp.
+4. Controller chạy `ascdemo run-controller --dashboard`; Storage Nodes chạy như trên.
+   Terminal owner khác chạy `ascdemo dashboard-code` và mở đúng `url` HTTPS trả về.
+   Nhập mã dùng **một lần**, hiệu lực 5 phút; không gửi mã/ảnh terminal vào log/chat.
+   Mã mới vô hiệu mã chờ cũ. Cookie owner 30 phút, restart làm hết mọi phiên; không
+   nhập admin/node token vào trình duyệt. Không mở port/router/tunnel Internet.
+5. Tổng quan hiển thị số đo thực; UNKNOWN giữ nguyên. Điện thoại → Xem chi tiết cho
+   node/volume/heartbeat. Ghép/phê duyệt node và xác nhận domain vẫn qua CLI mục 3–4.
+   File Manager → chọn file bỏ được, đặt tên trong cụm MỚI, Upload. Mặc định tối đa
+   32 MiB/file trong Dashboard (CLI dành cho file lớn hơn). Byte progress chỉ là số
+   Controller đã nhận; chờ **Đủ hai bản sao** rồi mở **Bản sao & SHA** kiểm tra hai
+   node/domain. Chưa đủ replica thì chưa protected; giữ file gốc và retry cùng
+   file/tên trong tab để giữ key. Không xóa state/job hoặc đổi tên để ép thành công.
+6. Tải xuống: backend và browser đều so SHA trước khi browser lưu bản tải mới.
+   So thêm `sha256sum` file gốc và bản tải nếu có công cụ; trên PC có thể dùng
+   `Get-FileHash -Algorithm SHA256`. Không suy diễn popup save đã thành công nếu
+   browser từ chối lưu. Không tự ghi đè dữ liệu gốc; browser quyết định đường dẫn.
+   Dừng một node: Cập nhật kiểm tra báo thiếu replica, download từ bản còn tốt;
+   upload mới thiếu hai domain bị từ chối. Mất Controller/kết nối → UNKNOWN, không
+   tự failover. Đăng xuất khi xong; Ctrl+C dừng dịch vụ theo mục 6.
+
+Không PWA/offline-write/background sync hoặc auto-update. Giao diện dùng assets
+cục bộ, không CDN/cloud. Dashboard không có xóa, giảm replica, GC hay node approve.
+Nếu chỉ cần CLI, chạy Controller không có `--dashboard`, giữ nguyên private files.
+
 ## 6. Dừng, backup, nâng cấp và rollback
 
 Ctrl+C trong các terminal node trước, Controller sau; không kill PID đoán mò, không
@@ -191,6 +244,30 @@ backup, quay lại pointer code cũ, không restore data. Nếu bị từ chối
 thư mục và nhờ review; không xóa journal/khóa hay sửa DB để ép chạy. Gói/code hỏng có
 thể cần mở đúng release cũ còn nguyên vẹn; không có recovery tự động qua Internet.
 
+## 6a. Cập nhật tương thích 0.3.0 → 0.4.0
+
+Linux synthetic đã kiểm thử **đúng gói 0.3.0 đã phát hành**, không giả version.
+Android chưa nghiệm thu; owner thực hiện trên điện thoại thử nghiệm, file bỏ được.
+
+1. Xác minh SHA gói 0.4.0 từ commit tin cậy và giải nén vào thư mục MỚI ở mục 1;
+   bỏ qua hai lệnh install nếu prefix 0.3.0 đã tồn tại. Giữ nguyên launcher/prefix,
+   root/Node ID/Cluster ID/volume và khóa cũ, không chạy init/join để thay identity.
+2. Dừng toàn cụm. Mỗi điện thoại: dùng **launcher 0.3.0 hiện có** chạy backup và
+   verify-backup; `stage "$HOME/asc-demo-unpack-0.4.0/asc-demo-alpha"`, ghi release_id
+   trả về; upgrade-preflight rồi upgrade với thư mục backup MỚI như mục 6. Không
+   truyền literal NEW_RELEASE_ID; thay bằng digest thật. Controller trước, nodes sau.
+   `ascdemo diagnose` phải báo 0.4.0-alpha. State formats giữ nguyên; không migration.
+3. Trên Controller vẫn đang dừng (kể cả node cohost), dashboard-init/trust như mục 2,
+   rồi khởi động Controller --dashboard và nodes. Browser client thực hiện mục 5a;
+   kiểm tra file cũ, hai replica và SHA trước khi thêm file mới. Backup tương lai bao
+   gồm CA/keys Dashboard; không đưa backup lên Git/cloud công khai.
+4. Rollback: dừng toàn cụm; **backup MỚI từ state hiện tại 0.4.0**; dùng rollback về
+   release_id 0.3.0 đã giữ trong prefix, Controller rồi từng node. Khởi động 0.3.0
+   **không `--dashboard`**. 0.3.0 chạy CLI trên state có thêm optional dashboard dir;
+   giữ certs/keys/bytes/file mới, không restore DB 0.3.0 hoặc xóa dashboard dir.
+   Kiểm tra download cả file cũ và file tạo bằng 0.4.0, SHA và identity. Đây là code
+   rollback tương thích, không data recovery/migration hoặc rolling mixed-version.
+
 ## 7. Chẩn đoán đã loại bỏ bí mật
 
 ```sh
@@ -201,5 +278,5 @@ Xem lại trước khi chia sẻ: diagnostic chỉ gồm version/mode/health/cou
 không xuất token/code, endpoint/IP, model profile, khóa/cert, logical filename,
 đường dẫn hoặc DB/log thô. Không gửi controller.json/node.json, backup hay terminal
 `pair`. Nếu validation chặn diagnose, chỉ gửi thông báo lỗi chung và checkpoint đang
-sử dụng; không dump environment/state. Không có Dashboard trong gói CLI đầu tiên;
-DEMO.4 được hoãn theo ưu tiên đưa engine lên điện thoại trước.
+sử dụng; không dump environment/state. Không chia sẻ mã dashboard-code, cookie, CA private key hoặc browser profile/HAR.
+Chỉ gửi lỗi chung và diagnose đã xem lại; không chụp dữ liệu/mã đăng nhập nhạy cảm.

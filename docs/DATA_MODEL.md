@@ -403,3 +403,6 @@ ignore optional directory in CLI-only mode; complete stopped backups include it.
 Login grant hashes/expiry, session hashes/CSRF/expiry and transfer ticket/status/
 actual bytes live only in bounded RAM, never a second persistent Catalog. Restart
 invalidates them; durable upload key/job/session/object authority remains in Core.
+
+### Demo 0.3 -> 0.4 compatibility
+0.4.0 adds dashboard-lite release capability, with identical base STATE_FORMATS and no Catalog/Registry/Manifest/config migration. Optional Controller dashboard/dashboard.json format1 and own CA/leaf/spool are separate from Core identity and included by existing complete-state inventory backup. Exact published0.3 launchers accept compatible0.4 manifests; old0.3 CLI code ignores optional Dashboard directory on rollback, preserving both files written by0.4 and browser identity. No Termux/APK, Raft or unknown-schema migration is implied. Runtime browser sessions/tickets remain volatile, no second database.

@@ -51,6 +51,9 @@ admin/node/key in browser, no Dashboard approval unless separately proved (curre
 design read-only node admin). Preserve 0.3.0 compatibility/IDs/keys/volumes and test
 exact old package upgrade/rollback. Full Python/Go and checksum package before final
 source-ready. Old Dashboard deferral below is historical, superseded by this task.
+DEMO.4a is remote-verified 5db17ae, DEMO.4b remote-verified 8e4661b. Current
+DEMO.4c full qualification/package status lives in DEMO-TRACK-PROGRESS and
+DEMO4-ACCEPTANCE; do not reuse historical0.3 PASS as current evidence.
 No real phone/M51/production/boot/system packages, Raft/GC/reduction/3D/public access
 or consensus change. Browser integration uses isolated trusted-CA synthetic profile;
 never disable TLS validation to claim PASS. Android runtime remains NOT TESTED.

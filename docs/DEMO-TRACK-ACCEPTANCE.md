@@ -1,5 +1,7 @@
 # ASC Demo Alpha 0.3.0 acceptance — DEMO.3b
 
+Historical0.3 report preserved. Current Dashboard0.4 qualification: [DEMO4-ACCEPTANCE.md](DEMO4-ACCEPTANCE.md); do not infer0.4 PASS from this report.
+
 **SOURCE-READY / ACCEPTED for Linux synthetic qualification only.**
 **Android runtime, real SD, Doze, power-cut, 24/7 and production: NOT TESTED / NOT QUALIFIED.**
 

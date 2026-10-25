@@ -212,3 +212,6 @@ ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telem
   private spooled transfers; received bytes/SHA/protection are separate facts.
   Root/base schemas unchanged; optional Dashboard format is independently validated,
   backed up and ignored by compatible old CLI-only source after stopped rollback.
+
+## ADR-058 — 0.4 optional Dashboard state, exact published-package rollback
+Keep every base state format unchanged and browser state optional/independent. Add dashboard-lite capability without changing existing required CLI capabilities, allowing exact old0.3 stager to verify/activate0.4. Test both old and new code/bytes rather than relabeling current code as0.3. Rollback makes NEW full state+volume backup, selects preserved old code, ignores optional Dashboard and keeps new file bytes/catalog; never restores stale DB. Browser TLS/CA import stays explicit owner procedure; no installer trust-store mutation. Mixed live versions/rolling update remain unsupported.
