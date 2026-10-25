@@ -451,3 +451,10 @@ Only owned configured Demo Node lifecycle, retained supervisor/PDEATHSIG fence,
 exact known socket crash recovery and verified installed launcher bridge commands.
 Actual lost enrollment response +bridge SIGKILL retains same Core operation/Node.
 19 targeted PASS0skip/fail; no Android acceptance, Controller/Raft start or PID kill.
+
+## Phase4.1c.1 — read-only Core and passive recovery observation
+Owner GET-only sanitized Core endpoint, actual Barrier/identity/term evidence,
+policy1/2/3 counts/jobs/historical verified backup and explicit UNKNOWN. Pinned
+three-controller collector and full-byte passive-stage view, always no writer.
+28 targeted PASS0skip/fail including actual partition/loss/heal/TLS and retained
+Core external/metadata/GC gates. HTTPS shared Dashboard UI still c.2 pending.

@@ -1,6 +1,7 @@
 # Core quorum Dashboard adapter v1
 
-4.1a architecture contract; implemented status in PHASE4-1-PROGRESS/ACCEPTANCE.
+4.1c.1 implements Core observation endpoint/pinned collector/passive recovery
+view. HTTPS gateway/shared browser UI follows c.2; status in Phase4.1 progress.
 Explicit mode core-quorum, separate private gateway config/bootstrap and browser
 TLS identity. Reuse Dashboard Sessions/HTTPS/security handler/local assets; retain
 Demo single-writer upload/Quick Join in its own mode. No second Catalog/engine.
@@ -40,3 +41,31 @@ Partition/quorum/Controller loss, stale Leader, mode mismatch/TLS/wrong identity
 reconnect/cache floors and session/CSRF/browser tests are acceptance gates. Every
 view is read_only=true/writer_authority=false, even ONLINE. Core3D writable DR is
 BLOCKED. No writable restore/GC/failover/runtime activation on Android is added.
+
+## Implemented Core observation shape / semantics
+
+Owner-only GET /cluster/v1/observability?consistency=local|strong returns
+observer_version1/read_only=true/writer_authority=false, whitelisted existing
+Dashboard-shaped nodes/volumes/files/counts/capacity, runtime checkpoint/index/term/
+control revision/epoch, Controller role/voter-process observation, bounded jobs and
+backup snapshot/job states. Backup VERIFIED retains verified_at/source index and
+is historical. External archive without configured verification stays UNKNOWN.
+Local/stale views make available/protected/capacity availability null; known old
+IDs/history remain visible. No response contains the raw projection/credential
+hashes/node tokens/grants/source paths. Server delegates only this path; POST403.
+
+Observer(cluster,epoch,three explicitly pinned owner endpoints,minimum_index) calls
+only GETs, bounded3 concurrent requests and exact identity/mode/version/floor checks.
+All endpoint strong-read attempts must fail before QUORUM UNAVAILABLE is reported;
+one valid majority remains observable during1/2 partition. No quorum is inferred
+from counting online processes. Leader confirmation needs Barrier +stable actual
+role/term +committed authority binding, still NO writer capability. An unreachable
+Controller is OFFLINE but its voter process UNKNOWN until observed. Remembered
+index floor is RAM +operator minimum; restart does not prove globally newest history.
+
+RecoveryObserver(root,trusted_manifest_SHA,expected_cluster,minimum_index) holds an
+existing shared stage lock and uses Core3D full-byte anchored verification, then
+same sanitized projection. Valid stage =>RECOVERY READ-ONLY, credentials/writer=false;
+corruption/wrong anchor/floor/missing bytes=>UNKNOWN, never a healthy recovered cluster.
+Disposable existing Core SQL workspace is query_only and in RAM solely to reuse
+Catalog/Views logic; it is not a second persistent Catalog or authority fallback.

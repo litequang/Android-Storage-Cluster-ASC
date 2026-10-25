@@ -9,8 +9,9 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 |---|---|
 |4.1a|PUSH/REMOTE VERIFIED5c26ccf92337ddf2026702a1f8310d4f07b2d689;14PASS|
 |4.1b.1|PUSH/REMOTE VERIFIEDfca0c37349ec65ce62220da52f9c1e8d4b6ae632;21PASS|
-|4.1b.2|READY:19 targeted PASS0skip/fail74.287s; normal push gate follows|
-|4.1c|NOT STARTED: Core read-only observer/gateway/shared UI and actual faults|
+|4.1b.2|PUSH/REMOTE VERIFIED182d366a53548ab08364edb9ad23f5bf64a35ff7;19PASS|
+|4.1c.1|READY:28 targeted PASS0skip/fail62.475s; normal push gate follows|
+|4.1c.2|NOT STARTED: shared HTTPS/session/assets read-only Core gateway/browser|
 |4.1d|NOT STARTED: app contract qualification/exact upgrade/full regression|
 
 Read AGENTS then PHASE4-1-PLAN/this/ACCEPTANCE and bridge/threat/Core adapter/app
@@ -92,3 +93,34 @@ untouched, parent SIGKILL/lock release/socket restart/historical no-autostart,
 installed verified source/root binding, enrollment loss/security/installer gates.
 No Android/cross-UID/real power-cut acceptance. Next only after push/remote match:
 4.1c.1 sanitized Core GET observer and pinned read-only gateway adapter.
+
+## 4.1c.1 Core sanitized observation / explicit pinned adapter
+
+b.2 pushed/remote matched182d366 BEFORE c.1. Only existing Core change:3-line
+GET-observer delegation before readiness routing. New owner-only /cluster/v1/
+observability?consistency=local|strong calls Runtime.view Barrier, NOT ensure_ready/
+operation/commit/takeover. Reuses existing disposable prepare_registry/Catalog/
+Dashboard Views with SQLite query_only for sanitized public aggregation, never
+opens live original registry or adds a persistent Catalog. Policy1/2/3 protection,
+three-controller/voter-process observations, jobs, historical VERIFIED backup/time
+and externally UNKNOWN evidence. No raw token/hash/private profile exposed.
+Pinned explicit cluster/epoch/Controller IDs/static3 endpoints; no redirects or
+mode/SQL fallback. Offline cache downgrades availability/protection, no writer.
+RecoveryObserver verifies existing exact anchored staged bytes under shared lock,
+reports RECOVERY READ-ONLY without configs/keys/runtime activation.
+
+Initial tests found missing recovery projection import and shared class fixture
+reuse; fixed helper fixtures without test duplication. Adding real enabled snapshot
+coverage caught nested manifest created_at (not top-level); projection now carries
+source index/verified_at from original record. A quorum test incorrectly called
+partition(i) repeatedly (each resets all split groups, leaving a valid majority).
+Fixed to ONE actual three-island split, unchanged strict assertion; no Raft change,
+no weakened gate. Final `python -B -m unittest tests.test_observability
+ tests.test_external_cluster tests.test_failover.RuntimeStateTests
+ tests.test_runtime_validation tests.test_gc_authorization -v`:
+**28PASS0SKIP0FAIL62.475s**. Includes real TLS3-voter stale Leader/all-island quorum
+loss/heal/Controller kill/rejoin; actual3 independent stored replicas and VERIFIED
+snapshot, node-owner auth/pin rejection, original registry byte preservation,
+unit no-takeover fake-hint boundary, actual passive stage readback/corruption denial,
+existing external capture/metadata envelopes/native validation/GC authorization.
+Core gateway/browser UI still c.2 pending. Next only after normal push/remote match.

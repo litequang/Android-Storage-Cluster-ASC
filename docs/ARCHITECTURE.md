@@ -431,3 +431,10 @@ route. Node lifecycle only owned child, no Controller/Core writer launch. Separa
 Core observer uses strong Runtime.view Barrier, never ensure_ready/takeover, and
 existing Dashboard security/assets in explicit read-only mode. No Catalog/schema
 migration or recovery writer. See PHASE4-1-PLAN and dedicated threat/API/app contracts.
+
+Phase4.1c.1 reuses existing Runtime.view(strong=True) without readiness/takeover.
+Public aggregation uses existing disposable prepared SQL with query_only +same
+Catalog/Views, not a persistent database/live registry fallback. Explicit pinned
+collector and separately configured passive-stage verifier provide read-only
+observations only; writer_authority always false. Source authority/schema/Engine,
+3D recovery writer and static membership remain unchanged.

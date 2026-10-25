@@ -451,3 +451,11 @@ Controller/Core start. Bridge SIGKILL releases Node locks and retains bytes; thi
 is Linux process-death evidence, not Android/physical power loss. Socket recovery
 requires exclusive owner lock/private exact app+inode receipt/refused connection;
 unknown/live/link endpoints stay untouched. Installed source/root binding retained.
+
+Phase4.1 Core observer authenticates owner BEFORE Runtime access; POST denied
+before readiness. Actual Barrier/stable role+term/committed binding needed for
+Leader confirmation; even then no writer authority. API whitelists records, never
+raw projection/token hashes/keys/run grants. Old/unknown snapshots make current
+availability/protection UNKNOWN. All configured reads failing, not process counts,
+defines quorum-read unavailability. Passive recovery only after existing shared-
+lock full-byte anchored check; corruption UNKNOWN, no runtime/config/key creation.

@@ -164,6 +164,9 @@ class RuntimeHandler(Handler):
         runtime = self.server.catalog.runtime
         parsed = urlsplit(self.path)
         try:
+            from ..observability.http import handle as observe_handle
+            if observe_handle(self, parsed):
+                return
             from ..external.http import handle as external_handle
             if external_handle(self, parsed):
                 return

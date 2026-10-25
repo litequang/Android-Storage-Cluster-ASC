@@ -534,3 +534,9 @@ Android and writable DR remain NOT ACCEPTED.
 - bridge/service.py Runtime: exact private socket crash receipt recovery under exclusive OS lock, no foreign/live unlink. bridge/private.py atomic owned receipt publication.
 - bridge/cli.py register/execute_demo and demo/cli.py: verified installed launcher commands with root/prefix binding; local app scopes distinct from owner/node credentials.
 - tests/test_bridge_lifecycle.py:4 actual TLS/bytes/start/stop/parent SIGKILL/socket recovery/installed source/enrollment-commit crash tests. Linux parent-thread regression caught and fixed.
+
+## Phase4.1c.1 Core observer
+- asc/observability/core.py: existing validated prepared registry/Catalog/Views read-only public projection, policy counts/jobs/backup history/UNKNOWN; observe uses only Runtime.view +status, never ensure_ready/commit.
+- observability/http.py +3-line failover/service.py delegation: owner GET /cluster/v1/observability, POST denial before readiness side effects, exact own response envelope.
+- observability/client.py Observer: fixed pinned identities/epoch/static3/floor, bounded GET collector/no legacy fallback, stale availability downgrade. RecoveryObserver: existing full-byte verified passive stage only.
+- tests/test_observability.py: separate no-test helper +actual TLS API/partition/takeover classes, no duplicate fixture test inheritance; source/secret/read-only/policy3/verified backup/passive corruption gates.

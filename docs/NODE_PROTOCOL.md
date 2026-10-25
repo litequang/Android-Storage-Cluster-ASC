@@ -496,3 +496,13 @@ UID plus distinct app grant/scopes; bounded newline frames/secret-safe responses
 Reads fresh; same-ID binding/code-hash checks and FULL receipt replay. Code may be
 omitted on resume while original pending/receipt retains operation. No enrollment
 wire or browser API changes; no lifecycle implementation yet.
+
+## Phase4.1c.1 read-only Core observation API
+Owner-admin GET /cluster/v1/observability?consistency=local|strong only; other
+methods403 read_only_observer before runtime readiness. observer_version1,
+read_only=true/writer_authority=false; nodes/volumes/files/policy protection/jobs/
+backup timestamps, runtime checkpoint and actual Barrier evidence. No raw private
+projection/hash/token/grant. No ensure_ready/takeover/CAS. Follower/failed strong
+read returns explicit stale/null availability; gateway must check all provisioned
+identities and never infer quorum from roles alone. Full contract in
+CORE-QUORUM-DASHBOARD; no Core browser gateway route before c.2.
