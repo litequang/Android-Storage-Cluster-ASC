@@ -478,3 +478,8 @@ Frozen0a3ea839217156b69209a073f5d836ee1db4452b,311 fresh Python PASS0skip/fail i
 existing durable Quick Join and shared read-only Core Dashboard qualified; exact
 0.4.2->0.4.3 source candidate upgrade/NEW-state code rollback. Candidate only,
 Android/native/migration not tested, writable disaster recovery still BLOCKED.
+
+## Phase4.2a — Android toolchain/Kotlin foundation (qualification pending)
+Separate feature from accepted4.1, isolated verified toolchain, pinned Gradle/Kotlin
+Android project, explicit FOUNDATION/UNKNOWN screen. No native Node/Termux adoption,
+consensus or recovery authority. Emulator/Engine qualification remains separate.

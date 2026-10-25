@@ -25,6 +25,22 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
+## Current Phase4.2 authorization — Android native foundation
+
+Owner authorizes feature/phase4-2-android-native from verifiedf42fffe Phase4.1.
+After mandatory ordered reads, read PHASE4-1 PLAN/PROGRESS/ACCEPTANCE, LOCAL-ENGINE-
+BRIDGE, CORE-QUORUM-DASHBOARD, ANDROID-APP-CONTRACT, PHASE4-1-OPERATIONS then current
+PHASE4-2 documents. Implement toolchain/private native Binder/Keystore/storage/UI/
+emulator qualification sequentially; targeted/docs/secrets/normal push/remote each.
+Additional tools permitted ONLY workspace development dirs, not system environment.
+No redo4.0/4.1, whole merge/reset/force or original branch modification. Reuse existing
+Core Engine/Catalog/Registry/enrollment; native app UID is NOT Termux. No copying
+keys/DB/markers, guard monkeypatch or fake native Node. Actual engine/emulator proof
+required; absent provider FOUNDATION/BLOCKED, not mock success. Only task-owned
+emulator/ADB, never phones/M51/production/SSH/system/Boot/root/format. Android Raft/
+GC/failover/approval/writable DR stay locked. Migration separate/unimplemented.
+Full applicable Python/Go/Android/fault/security/package gates before acceptance.
+
 ## Phase4.1 completed handoff — Linux synthetic only
 
 Qualified frozen source/tests/packaged guides/candidate 0a3ea839217156b69209a073f5d836ee1db4452b; fresh311

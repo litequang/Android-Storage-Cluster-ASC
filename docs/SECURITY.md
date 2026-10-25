@@ -467,3 +467,9 @@ session; browser receives no Core owner token/bridge app grant. Explicit local
 one-use login issuance only; no shared password or public issuance route. Gateway
 private root/keys/bootstrap cannot nest within existing engine/volume/recovery;
 Linux host guard remains, no Android runtime bypass. Trust public CA SHA separately.
+
+Phase4.2 developer toolchain/signing/SDK/cache stay in workspace outside Git.
+Official SHA pins+HTTPS and initial Maven checksum inventory, no system/proxy/CA
+mutation. Initial Kotlin APK is FOUNDATION; build is not native Node/emulator proof.
+App backups disabled, cleartext disabled; no management IPC in toolchain checkpoint.
+Private emulator/ADB only, never phones or USB/M51. Debug signer is not production.

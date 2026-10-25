@@ -560,3 +560,9 @@ uncached Go/vet/module verification/builds PASS. Acceptance owns exact source/
 archive/commands/evidence and limits; progress owns handoff/receipts. Reporting
 docs only after full, no source/test/packaged guide/archive drift. Linux synthetic
 bridge/Core read-only only; Android/native migration/writable DR remain unqualified.
+
+## Phase4.2a isolated native toolchain/project
+- android/ settings/build/app Gradle Kotlin project: pinned AGP8.9.2/Kotlin2.2.20/API35, own application ID, no Core state/runtime adoption.
+- Contract.kt: version1 refusal/UNKNOWN contract; MainActivity: explicit FOUNDATION/unsupported Engine only.
+- ContractTest/LaunchTest: JVM version/UNKNOWN checks and actual Android launch gate (no emulator result implied).
+- PHASE4-2-PLAN/PROGRESS/ACCEPTANCE own serial checkpoints, toolchain evidence and native runtime blockers.

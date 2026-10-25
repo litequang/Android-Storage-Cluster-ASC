@@ -449,3 +449,10 @@ cookies are unique per private gateway root, not separated merely by TCP port.
 Anchored recovery view binds expected cluster/epoch/history floor and verifies
 whole bytes each read, never writer/credential activation. Source-only0.4.3-dev
 keeps base formats; bridge/gateway roots live outside existing engine/volumes.
+
+## Phase4.2 native foundation boundary
+Separate Kotlin application org.asc.foundation, own Android UID/private data and
+version independent of Core0.4.3 candidate. Same Core Engine remains canonical;
+initial UI has FOUNDATION/UNKNOWN, no node identity/runtime/source state adoption.
+Private native Binder/Keystore/embedded engine qualification requires actual gates;
+no Termux UID sharing, copied DB/keys/markers or Android recovery writer.

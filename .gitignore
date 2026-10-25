@@ -156,3 +156,12 @@ client.json
 gateway.json
 socket.json
 !/candidates/asc-demo-alpha-0.4.3-dev.tar.gz
+
+# Android development caches/artifacts/private signing material (workspace only).
+.gradle/
+local.properties
+*.apk
+*.aab
+*.jks
+*.keystore
+/android/.kotlin/
