@@ -141,3 +141,15 @@ Use an existing private build directory. Browser gate requires local Node Playwr
 Chromium and certutil; missing tools FAIL explicitly, never skip/bypass TLS.
 Cloud tests do not install/change system packages/trust/phones. Full logs/builds/
 profiles/state remain private test artifacts; only sanitized results are published.
+
+## Verified publication receipt
+
+Published/normal pushed commit **aa1a834ddd868275c4c2550f0b2b0c39d9354366**,
+advertised Demo remote matches; Core WIP remains acea2ae. On2026-10-25 at
+00:35:23.350831Z independently downloaded archive AND checksum from immutable
+GitHub raw commit over normal HTTPS with inherited proxy/CA.168292bytes byte-identical,
+computed SHA matches adjacent file and qualified archive:
+`b9e186589bb4f5c698c7df2250f94ec32ce1e6e2acb41cf3923ade9e706a29f1`.
+Links/complete checkpoint handoff are in DEMO-TRACK-PROGRESS. This receipt is
+docs-only; frozen956bf8e code/tests/packaged guides/public archive unchanged. No
+pending mandatory source gate remains. Android remains NOT TESTED/owner-only pilot.

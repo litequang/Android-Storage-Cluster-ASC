@@ -30,7 +30,7 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.4a | PUSHED/REMOTE VERIFIED: 5db17aef375b5ebfd03ce680a3b0a52c3a993f99; 35 targeted PASS |
 | DEMO.4b | PUSHED/REMOTE VERIFIED: 8e4661bbccc9c6b11e451e414907d190a55a799c; 21 targeted PASS |
 | DEMO.4c.1 | PUSHED/REMOTE VERIFIED: 956bf8ebb23e57b07d4ec91cefec8d89539a8327; 22 targeted PASS |
-| DEMO.4c | Full 230 Python/11 Go/all 8 Linux fault gates PASS; final package publication/remote review |
+| DEMO.4c | PUSHED/REMOTE VERIFIED: aa1a834ddd868275c4c2550f0b2b0c39d9354366; full230 Python/11 Go/all8 Linux gates PASS; downloaded public SHA verified |
 | Demo 0.4 source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Next action
@@ -39,8 +39,8 @@ DEMO.4 implementation and Linux synthetic qualification are complete from frozen
 956bf8ebb23e57b07d4ec91cefec8d89539a8327. Full230 Python0skip, all8 Linux physical
 fault gates and11 Go/vet/modules/builds PASS; exact0.3 upgrade/old-code new-state
 rollback and final archive installer PASS. Final0.4 archive/SHA/receipt are below;
-complete normal publication/remote verification before owner uses it. Then owner
-alone follows DEMO-QUICKSTART (5a browser/CA,6a stopped0.3 upgrade/rollback) and fills
+normal publication/remote verification and immutable GitHub download/SHA have
+completed successfully. Next, owner alone follows DEMO-QUICKSTART (5a browser/CA,6a stopped0.3 upgrade/rollback) and fills
 DEMO-ANDROID-PILOT with actual ZTE/Bphone observations. No Android or manual client
 CA-install UX PASS is implied. Codex remains source/Linux-synthetic only. No pending
 mandatory source gate remains after verified publication; do not redevelop Core3C.
@@ -423,3 +423,32 @@ DB restore or identity recreation. QuickStart6/6a gives exact commands. Android,
 actual client trust UX, SD/Doze/power-cut/24x7/production NOT TESTED. Final normal
 Demo push/advertised remote/artifact download receipt follows below; until that
 receipt the package is locally qualified, not yet verified published on GitHub.
+
+## Final 0.4.0 GitHub publication receipt — 2026-10-25 UTC
+
+**DEMO.4a/4b/4c complete;0.4.0 SOURCE-READY for Linux synthetic only.**
+Normal Demo push succeeded; advertised remote SHA exactly matched publication
+commit **aa1a834ddd868275c4c2550f0b2b0c39d9354366**. Core advertised WIP remains
+acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c. No force/main/Core write or history edit.
+Both public archive and adjacent checksum downloaded over normally verified HTTPS
+from raw.githubusercontent.com at immutable publication commit,2026-10-25
+00:35:23.350831Z. Downloaded168292bytes exactly match local qualified archive;
+adjacent checksum matches; independently computed SHA-256:
+**b9e186589bb4f5c698c7df2250f94ec32ce1e6e2acb41cf3923ade9e706a29f1**.
+Inherited proxy/CA stayed unchanged; no network bypass. Tracked/index174paths and
+actual unpacked92-file public archive reviewed:0 secret/private-path findings.
+
+- [Published QuickStart0.4.0 archive](https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/aa1a834ddd868275c4c2550f0b2b0c39d9354366/releases/asc-demo-alpha-0.4.0.tar.gz)
+- [Published SHA-256 file](https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/aa1a834ddd868275c4c2550f0b2b0c39d9354366/releases/asc-demo-alpha-0.4.0.tar.gz.sha256)
+- Source/tests/packaged guides remain frozen956bf8e; this receipt changes reporting
+  docs only, no source/test/package byte changes or new mandatory code gate.
+
+Use owner QuickStart5a (manual public-CA verification/trust, Controller --dashboard,
+fresh dashboard-code, browser upload/replica/SHA) and6a (stopped upgrade from0.3.0,
+NEW complete backup/code rollback). Android/real-device CA/browser/SD/Doze/power-cut/
+24x7/production remain NOT TESTED. Owner alone records actual ZTE/Bphone pilot;
+Codex must not SSH/install/test any phone or M51. No outstanding mandatory source
+checkpoint remains; a later task must not reimplement accepted Core3C or turn on
+Raft/GC/3D. Fetch/preserve work and read AGENTS/current plan/progress/acceptance
+before any new explicitly authorized source task. Normal receipt commit/HEAD is
+identified by Git history; final remote verification follows its push.

@@ -1,6 +1,6 @@
 # ASC Android Demo Alpha — independent Demo Track
 
-Status: DEMO.0–4 / 0.4.0 SOURCE-READY, accepted Linux synthetic only; final normal publication receipt in progress. See DEMO4-ACCEPTANCE and progress. Android runtime NOT TESTED.
+Status: DEMO.0–4 / 0.4.0 SOURCE-READY, accepted Linux synthetic only; normal publication/immutable GitHub download/SHA verified. See DEMO4-ACCEPTANCE and progress. Android runtime NOT TESTED.
 Date: 2026-10-25 UTC. Branch: `feature/android-demo-alpha`.
 Verified Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c` on
 `wip/phase2a-raft-qualification`; never use main or publish Demo commits to Core.
