@@ -54,6 +54,12 @@ source-ready. Old Dashboard deferral below is historical, superseded by this tas
 DEMO.4a is remote-verified 5db17ae, DEMO.4b remote-verified 8e4661b. Current
 DEMO.4c full qualification/package status lives in DEMO-TRACK-PROGRESS and
 DEMO4-ACCEPTANCE; do not reuse historical0.3 PASS as current evidence.
+DEMO.4c final Linux qualification now PASS: frozen956bf8e source/packaged guides,
+230 Python0skip/all8 physical fault gates,11 Go/vet/modules/builds,22 targeted and
+3 exact-archive installer checks. Read DEMO4-ACCEPTANCE and final publication receipt
+in DEMO-TRACK-PROGRESS;0.4 QuickStart source-only, Android/real browser CA trust UX
+NOT TESTED. Next step after verified publication is owner-only pilot, no pending
+source gate/reimplementation. Preserve0.3 archive and exact upgrade/code rollback.
 No real phone/M51/production/boot/system packages, Raft/GC/reduction/3D/public access
 or consensus change. Browser integration uses isolated trusted-CA synthetic profile;
 never disable TLS validation to claim PASS. Android runtime remains NOT TESTED.

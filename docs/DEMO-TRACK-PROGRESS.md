@@ -29,17 +29,21 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.3b | PUSHED/REMOTE VERIFIED: 52850b9072241ab4bb7643b06127965d25d96904 |
 | DEMO.4a | PUSHED/REMOTE VERIFIED: 5db17aef375b5ebfd03ce680a3b0a52c3a993f99; 35 targeted PASS |
 | DEMO.4b | PUSHED/REMOTE VERIFIED: 8e4661bbccc9c6b11e451e414907d190a55a799c; 21 targeted PASS |
-| DEMO.4c | IN PROGRESS: exact 0.3 upgrade/rollback PASS; fresh full/package gates pending |
-| Demo source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
+| DEMO.4c.1 | PUSHED/REMOTE VERIFIED: 956bf8ebb23e57b07d4ec91cefec8d89539a8327; 22 targeted PASS |
+| DEMO.4c | Full 230 Python/11 Go/all 8 Linux fault gates PASS; final package publication/remote review |
+| Demo 0.4 source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Next action
 
-Current owner request explicitly starts DEMO.4 from fetched/verified local+remote
-2d19eb06cee1b6bede0fbafac9d4704704c039a9, clean tree. 0.3.0 archive SHA checked
-again PASS. Ordered mandatory docs and all Demo handoff docs read, relevant runtime/
-Catalog/client/state/installer source audited. DEMO4-PLAN records current contract.
-4a/4b are published and remote verified; 4c now tests exact 0.3.0 compatibility/full qualification/new archive. Do not mark 0.4.0 ready
-from 0.3's historical PASS. All source/Linux synthetic only; no phones/production.
+DEMO.4 implementation and Linux synthetic qualification are complete from frozen
+956bf8ebb23e57b07d4ec91cefec8d89539a8327. Full230 Python0skip, all8 Linux physical
+fault gates and11 Go/vet/modules/builds PASS; exact0.3 upgrade/old-code new-state
+rollback and final archive installer PASS. Final0.4 archive/SHA/receipt are below;
+complete normal publication/remote verification before owner uses it. Then owner
+alone follows DEMO-QUICKSTART (5a browser/CA,6a stopped0.3 upgrade/rollback) and fills
+DEMO-ANDROID-PILOT with actual ZTE/Bphone observations. No Android or manual client
+CA-install UX PASS is implied. Codex remains source/Linux-synthetic only. No pending
+mandatory source gate remains after verified publication; do not redevelop Core3C.
 
 Known gaps: old installer has fixed destination/version-only comparison; old
 controller-run binds wildcard; one ASC_HOME cannot cohost Controller and enrolled
@@ -371,3 +375,51 @@ read AGENTS/DEMO4-PLAN/DEMO-TRACK-PROGRESS/DEMO4-ACCEPTANCE, preserve work, rebu
 candidate deterministically and finish remaining fresh full gates, then publish.
 Rollback is CLI-only mode or stopped code-only0.3 with NEW complete private backup;
 never stale DB restore, identity recreation or deletion of optional Dashboard state.
+
+## DEMO.4c final qualification — running handoff
+
+DEMO.4c.1 was normally pushed; advertised remote matched
+956bf8ebb23e57b07d4ec91cefec8d89539a8327 before final qualification. Core WIP
+remains acea2ae. Fresh Go1.27.3:11 top-level PASS (uncached, consensus20.037s,
+launcher0.003s), go vet PASS, go mod verify all modules verified, LinuxAMD64 build
+PASS and AndroidARM64 cross-build PASS (not launched/not runtime evidence).
+Full Python230 cases now running from frozen956bf8e source/guides, no test changes
+or physical-fault timing changes. If interrupted, full gates remain incomplete
+until actual successful completion is recorded. Final archive stays private until
+full PASS/exact-package verification; no0.4 source-ready claim yet.
+
+## DEMO.4c — final Linux qualification / public package
+
+Frozen source/tests/packaged guides956bf8e unchanged throughout full run. Fresh
+`python -B -m unittest discover -s tests -v`: **230 PASS /0SKIP /0FAIL/ERROR,
+1422.631s**, started2026-10-25T00:09:53.910328Z, completed00:33:36.679822Z.
+All8 named Linux physical gates01–08 actually PASS, plus legacy lost-TLS-ACK unlink,
+quorum/Leader loss, Phase3A history/snapshot/backup/restore,3B insights, replication,
+Core consensus/failover/distributed/storage/installer/lifecycle. No skip, fake
+success, guard removal, timeout relaxation or test weakening. Final22 targeted
+PASS119.508s, exact final artifact3 installer PASS1.697s. Go11 fresh uncached PASS,
+vet/modules and LinuxAMD64/AndroidARM64 builds PASS; Android cross-build only.
+
+Final archive92regular source/asset/guide/manifest files,168292bytes. Release ID
+84849e9f1c269db1168d3adfa4f71fc0f720f92c5da63143c6d00811b9590277.
+SHA-256 **b9e186589bb4f5c698c7df2250f94ec32ce1e6e2acb41cf3923ade9e706a29f1**.
+Full-tested source reproduced byte-identical archive after full PASS; every manifest
+file matches frozen source/guide;112 tracked Python AST/shell/JS syntax PASS.
+Unpacked public artifact review0 secret/private-path/link/special-file findings;
+old0.3 archive/checksum still PASS and unchanged. Read DEMO4-ACCEPTANCE for exact
+commands, source/file ownership, browser/upgrade evidence, limits and rollback.
+
+Actual features: owner one-use login on trusted private-LAN HTTPS, Vietnamese mobile
+Dashboard overview/nodes/volumes/files/replicas,32MiB upload with real observed byte
+counts and Core replicated_2 jobs/key/SHA, safe new-download SHA/fallback, UNKNOWN
+for stale/missing data/offline Controller. Core secrets stay server-side, no second
+Catalog. Node approval/domain remains CLI. No Raft/failover/GC/reduction/3D/phone
+access; runtime guards and Core source/tests/Go/WIP remain intact.
+
+Rollback preserves state/identities/old+new bytes: stopped full cluster, NEW complete
+private state+approved-volume backup, select preserved compatible0.3 release and
+restart CLI-only (without --dashboard), keep optional Dashboard CA/keys. No stale
+DB restore or identity recreation. QuickStart6/6a gives exact commands. Android,
+actual client trust UX, SD/Doze/power-cut/24x7/production NOT TESTED. Final normal
+Demo push/advertised remote/artifact download receipt follows below; until that
+receipt the package is locally qualified, not yet verified published on GitHub.

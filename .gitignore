@@ -138,3 +138,6 @@ raft-state/
 !/releases/asc-demo-alpha-installer-0.1.0.tar.gz
 # Qualified public Demo Alpha source-only package; private data remains forbidden.
 !/releases/asc-demo-alpha-0.3.0.tar.gz
+
+# Qualified Dashboard Lite public source-only package; reviewed unpacked contents.
+!/releases/asc-demo-alpha-0.4.0.tar.gz

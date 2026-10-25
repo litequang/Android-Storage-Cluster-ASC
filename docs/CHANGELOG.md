@@ -332,3 +332,11 @@ Vietnamese mobile-first overview, node/approved-volume details, file upload and 
 
 ## DEMO.4c — 0.4.0-alpha compatible QuickStart candidate (2026-10-25)
 Release capability dashboard-lite; unchanged base formats. QuickStart now covers separate trusted HTTPS browser listener, owner one-use login and stopped 0.3.0 upgrade/code rollback. Exact published0.3 package upgrade/new-state rollback test passes with preserved identities, browser CA and old/new bytes; final full regression/public artifact qualification is recorded separately in DEMO4-ACCEPTANCE. Android/runtime/CA-install UX remains NOT TESTED.
+
+## DEMO.4c — 0.4.0 Linux source-ready qualification (2026-10-25)
+Final fresh230 Python PASS0skip incl all8 physical fault gates;11 uncached Go tests,
+vet/modules/Linux build/Android cross-build PASS.22 targeted and3 exact-archive
+installer checks PASS. Source-only92-file QuickStart includes Dashboard assets,
+manual public-CA trust/owner login,0.3 upgrade and code-only rollback instructions.
+Unchanged base formats/Core guards/branch; final public SHA and receipt recorded
+in DEMO4-ACCEPTANCE/DEMO-TRACK-PROGRESS. Android runtime remains NOT TESTED.

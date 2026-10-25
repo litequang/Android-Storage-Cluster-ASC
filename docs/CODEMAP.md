@@ -390,3 +390,10 @@ manifest members. Final acceptance/AGENTS/progress identify aaf7d16 implementati
 - `asc/demo/__init__.py`: 0.4.0-alpha plus dashboard-lite capability; base STATE_FORMATS unchanged (demo1/registry4/manifest1/metadata1/config1/wire1).
 - `tests/test_demo_release_upgrade.py`: exact checksum-pinned published 0.3.0 archive installs/populates two nodes; OLD installed launcher stages/upgrades current source; trusted Dashboard serves old bytes, new source writes a second file, then NEW complete backup/code-only rollback runs OLD immutable 0.3 code over actual new state. Verifies IDs/cluster/pins/certs/volume bytes, both file downloads, preserved/backed-up Dashboard private identity and unchanged schema.
 - `docs/DEMO-QUICKSTART.md` and `DEMO-ANDROID-PILOT.md`: 0.4 package, manual owner public-CA trust/browser workflow, explicit stopped 0.3 upgrade/rollback and blank phone evidence. No old installer overwrite or Android acceptance claim.
+
+DEMO.4c final qualification: frozen956bf8e source/tests/packaged guides;230 Python
+PASS0skip incl all8 Linux GC physical gates,11 fresh Go/vet/modules/builds PASS,
+22 targeted +3 exact-archive installer checks PASS. Qualified source-only0.4 archive
+releases/asc-demo-alpha-0.4.0.tar.gz has92 regular files incl3 local web assets;
+manifest/SHA and exact0.3 rollback proof in DEMO4-ACCEPTANCE. Source, package and
+publication receipt in DEMO-TRACK-PROGRESS; Android/real CA-install UX NOT TESTED.
