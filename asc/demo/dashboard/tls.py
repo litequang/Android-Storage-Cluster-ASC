@@ -68,24 +68,7 @@ def setup(root, port=8444, max_upload=MAX_UPLOAD):
                 raise ValueError('existing browser identity/configuration retained')
             return public_info(root, cfg)
         ensure_private_home(home)
-        ca_key, ca_cert = home / 'ca.key', home / 'ca.crt'
-        key, cert = home / 'server.key', home / 'server.crt'
-        # New private directory only; interrupted/partial state is never overwritten on retry.
-        with tempfile.TemporaryDirectory(prefix='.csr-', dir=home) as directory:
-            directory = Path(directory)
-            extensions = directory / 'leaf.ext'
-            extensions.write_text('basicConstraints=critical,CA:FALSE\nkeyUsage=critical,digitalSignature,keyEncipherment\nextendedKeyUsage=serverAuth\nsubjectAltName=IP:' + marker['host'] + '\n')
-            openssl('req', '-x509', '-newkey', 'rsa:2048', '-sha256', '-nodes', '-days', '730',
-                    '-subj', '/CN=ASC Demo Browser CA', '-keyout', ca_key, '-out', ca_cert,
-                    '-addext', 'basicConstraints=critical,CA:TRUE,pathlen:0',
-                    '-addext', 'keyUsage=critical,keyCertSign,cRLSign')
-            openssl('req', '-new', '-newkey', 'rsa:2048', '-sha256', '-nodes', '-subj', '/CN=ASC Demo Dashboard',
-                    '-keyout', key, '-out', directory / 'leaf.csr')
-            openssl('x509', '-req', '-in', directory / 'leaf.csr', '-CA', ca_cert, '-CAkey', ca_key,
-                    '-set_serial', '0x' + os.urandom(16).hex(), '-days', '365', '-sha256',
-                    '-extfile', extensions, '-out', cert)
-        for name in FILES:
-            os.chmod(home / name, 0o600)
+        generate_identity(home,marker['host'])
         (home / 'spool').mkdir(mode=0o700)
         cfg = {'format': 1, 'host': marker['host'], 'port': port, 'max_upload_bytes': max_upload}
         save_private(home / 'dashboard.json', cfg)
@@ -112,3 +95,28 @@ def export_ca(root, output):
         stream.flush()
         os.fsync(stream.fileno())
     return dict(public_info(root, cfg), exported_public_ca=True)
+
+
+def generate_identity(home,host,label='ASC Demo'):
+    """Shared explicit NEW browser identity utility, not a Demo state adapter."""
+    home=Path(home);no_links(home)
+    if any((home/name).exists() or (home/name).is_symlink() for name in FILES):
+        raise ValueError('existing/partial browser identity retained')
+    ca_key, ca_cert = home / 'ca.key', home / 'ca.crt'
+    key, cert = home / 'server.key', home / 'server.crt'
+    # New private directory only; interrupted/partial state is never overwritten on retry.
+    with tempfile.TemporaryDirectory(prefix='.csr-', dir=home) as directory:
+        directory = Path(directory)
+        extensions = directory / 'leaf.ext'
+        extensions.write_text('basicConstraints=critical,CA:FALSE\nkeyUsage=critical,digitalSignature,keyEncipherment\nextendedKeyUsage=serverAuth\nsubjectAltName=IP:' + host + '\n')
+        openssl('req', '-x509', '-newkey', 'rsa:2048', '-sha256', '-nodes', '-days', '730',
+                '-subj', '/CN='+label+' Browser CA', '-keyout', ca_key, '-out', ca_cert,
+                '-addext', 'basicConstraints=critical,CA:TRUE,pathlen:0',
+                '-addext', 'keyUsage=critical,keyCertSign,cRLSign')
+        openssl('req', '-new', '-newkey', 'rsa:2048', '-sha256', '-nodes', '-subj', '/CN='+label+' Dashboard',
+                '-keyout', key, '-out', directory / 'leaf.csr')
+        openssl('x509', '-req', '-in', directory / 'leaf.csr', '-CA', ca_cert, '-CAkey', ca_key,
+                '-set_serial', '0x' + os.urandom(16).hex(), '-days', '365', '-sha256',
+                '-extfile', extensions, '-out', cert)
+    for name in FILES:
+        os.chmod(home / name, 0o600)

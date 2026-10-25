@@ -34,6 +34,7 @@ class Rejected(Exception):
 
 
 class DashboardAPI:
+    mode = 'single-writer-demo'
     def __init__(self, root, cfg, service, client, cluster_name):
         self.root, self.cfg, self.service, self.client = Path(root), cfg, service, client
         self.origin = f"https://{cfg['host']}:{cfg['port']}"
@@ -144,8 +145,9 @@ class DashboardHandler(Handler):
     def auth(self, csrf=True):
         if self._rate('auth'):
             return None
+        cookie_name = getattr(self.server.api,'cookie_name',COOKIE)
         headers = self.headers.get_all('Cookie', [])
-        if len(headers) != 1 or len(headers[0]) > 4096 or len(re.findall(r'(?:^|;)\s*' + re.escape(COOKIE) + '=', headers[0])) != 1:
+        if len(headers) != 1 or len(headers[0]) > 4096 or len(re.findall(r'(?:^|;)\s*' + re.escape(cookie_name) + '=', headers[0])) != 1:
             self.server.limiter.blocked('auth', self.client_address[0], consume=True)
             raise Rejected(401, 'login_required')
         parsed = SimpleCookie()
@@ -154,7 +156,7 @@ class DashboardHandler(Handler):
         except CookieError:
             self.server.limiter.blocked('auth', self.client_address[0], consume=True)
             raise Rejected(401, 'login_required') from None
-        cookie = parsed[COOKIE].value if COOKIE in parsed else ''
+        cookie = parsed[cookie_name].value if cookie_name in parsed else ''
         values = self.headers.get_all('X-ASC-CSRF', [])
         if csrf and len(values) != 1:
             self.server.limiter.blocked('auth', self.client_address[0], consume=True)
@@ -237,6 +239,8 @@ class DashboardHandler(Handler):
 
     def _route(self):
         api = self.server.api
+        cookie_name = getattr(api,'cookie_name',COOKIE)
+        if api.mode not in ('single-writer-demo','core-quorum','recovery-read-only'):raise Rejected(503,'unsupported_runtime')
         parsed = urlsplit(self.path)
         if parsed.scheme or parsed.netloc or parsed.query or parsed.fragment or '%' in parsed.path or '\\' in parsed.path or any(p == '..' for p in parsed.path.split('/')):
             raise Rejected(400, 'bad_request')
@@ -253,7 +257,7 @@ class DashboardHandler(Handler):
                 raise Rejected(401, 'login_rejected')
             cookie, session = result
             return self._json(200, {'authenticated': True, 'csrf': session['csrf'], 'expires_in': SESSION_TTL},
-                              (('Set-Cookie', COOKIE + '=' + cookie + '; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=' + str(SESSION_TTL)),))
+                              (('Set-Cookie', cookie_name + '=' + cookie + '; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=' + str(SESSION_TTL)),))
         # Fixed, public, local assets only. No filesystem path is derived from the request.
         assets = {'/': ('index.html', 'text/html; charset=utf-8'), '/assets/app.js': ('app.js', 'text/javascript; charset=utf-8'),
                   '/assets/style.css': ('style.css', 'text/css; charset=utf-8')}
@@ -269,21 +273,29 @@ class DashboardHandler(Handler):
             raw = target.read_bytes()
             self._headers(200, mime, len(raw)); self.wfile.write(raw)
             return
+        if path == '/api/mode' and method == 'GET':
+            return self._json(200,{'mode':api.mode,'read_only':api.mode!='single-writer-demo'})
         if path == '/api/session' and method == 'GET':
             authenticated = self.auth(csrf=False)
             if authenticated is None:
                 return
-            return self._json(200, {'authenticated': True, 'csrf': authenticated[2]['csrf'], 'max_upload_bytes': api.cfg['max_upload_bytes']})
+            return self._json(200, {'authenticated': True, 'csrf': authenticated[2]['csrf'], 'max_upload_bytes': api.cfg['max_upload_bytes'],'mode':api.mode,'read_only':api.mode!='single-writer-demo'})
         authenticated = self.auth()
         if authenticated is None:
             return
         if path == '/api/logout' and method == 'POST':
             if self.body_json() != {}:
                 raise Rejected(400, 'bad_request')
-            api.pairings.forget(authenticated[1])
+            if api.pairings is not None:api.pairings.forget(authenticated[1])
             api.sessions.logout(authenticated[0])
             return self._json(200, {'authenticated': False},
-                              (('Set-Cookie', COOKIE + '=; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'),))
+                              (('Set-Cookie', cookie_name + '=; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'),))
+        if api.mode != 'single-writer-demo':
+            if path=='/api/state' and method=='GET':return self._json(200,api.views.state())
+            pieces=path.strip('/').split('/')
+            if method=='GET' and len(pieces)==3 and pieces[:2]==['api','files']:
+                return self._json(200,api.views.file(pieces[2]))
+            raise Rejected(403,'read_only_mode')
         if path == '/api/v1/quick-join/pairings' and method == 'POST':
             if self.body_json() != {}:raise Rejected(400,'bad_request')
             return self._json(201,api.pairings.create(authenticated[1],authenticated[2]['expires']))

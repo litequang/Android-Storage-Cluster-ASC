@@ -10,14 +10,14 @@
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><span class="brand-mark">ASC</span><div><strong>Dashboard Lite</strong><small>Demo Alpha · LAN riêng</small></div></div>
+  <div class="brand"><span class="brand-mark">ASC</span><div><strong>Dashboard Lite</strong><small id="runtime-label">ASC · LAN riêng</small></div></div>
   <button id="logout" class="button subtle" hidden>Đăng xuất</button>
 </header>
 <main>
   <section id="login-panel" class="login-panel panel">
     <span class="eyebrow">Cụm lưu trữ cá nhân</span>
     <h1>Đăng nhập chủ cụm</h1>
-    <p>Dùng mã một lần từ <code>ascdemo dashboard-code</code> trên Controller. Mỗi mã có hiệu lực 5 phút.</p>
+    <p id="login-method">Đang xác minh chế độ Dashboard…</p>
     <form id="login-form">
       <label for="login-code">Mã đăng nhập một lần</label>
       <input id="login-code" name="code" type="password" autocomplete="one-time-code" required minlength="16" maxlength="128" spellcheck="false">
@@ -38,6 +38,7 @@
     </nav>
     <section id="overview" class="tab-panel">
       <div id="summary" class="summary-grid"></div>
+      <section id="core-observation" class="panel" hidden><h2>Core · Quan sát chỉ đọc</h2><p id="core-status" role="status"></p><div id="controller-list" class="node-grid"></div><h3>Replication jobs</h3><ul id="core-jobs"></ul><h3>Backup / Recovery</h3><ul id="core-backups"></ul><p class="muted">Một Leader flag hoặc heartbeat không phải quyền ghi. Observer không cấp writer authority.</p></section>
       <section class="panel"><h2>Cần chú ý</h2><ul id="warnings" class="warnings"></ul></section>
       <p class="muted">Dung lượng là số đo theo quota, reserve và công việc đang chờ. Upload cần đủ chỗ trên hai điện thoại độc lập; tổng dung lượng không phải kích thước file tối đa.</p>
     </section>
@@ -68,7 +69,7 @@
       </section>
     </section>
     <section id="files" class="tab-panel" hidden>
-      <section class="panel upload-panel">
+      <section id="upload-panel" class="panel upload-panel">
         <h2>Thêm file</h2><p id="upload-limit" class="muted">Đang xác minh giới hạn…</p>
         <form id="upload-form">
           <label for="file-input">Chọn file thử nghiệm</label><input id="file-input" type="file" required>

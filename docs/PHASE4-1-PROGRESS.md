@@ -10,8 +10,8 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 |4.1a|PUSH/REMOTE VERIFIED5c26ccf92337ddf2026702a1f8310d4f07b2d689;14PASS|
 |4.1b.1|PUSH/REMOTE VERIFIEDfca0c37349ec65ce62220da52f9c1e8d4b6ae632;21PASS|
 |4.1b.2|PUSH/REMOTE VERIFIED182d366a53548ab08364edb9ad23f5bf64a35ff7;19PASS|
-|4.1c.1|READY:28 targeted PASS0skip/fail62.475s; normal push gate follows|
-|4.1c.2|NOT STARTED: shared HTTPS/session/assets read-only Core gateway/browser|
+|4.1c.1|PUSH/REMOTE VERIFIEDfb05323708f3147cee1a8e9a4a3093ae39306d9a;28PASS|
+|4.1c.2|READY:15 targeted PASS0skip/fail149.641s; final browser1PASS54.828s; normal push gate follows|
 |4.1d|NOT STARTED: app contract qualification/exact upgrade/full regression|
 
 Read AGENTS then PHASE4-1-PLAN/this/ACCEPTANCE and bridge/threat/Core adapter/app
@@ -124,3 +124,31 @@ snapshot, node-owner auth/pin rejection, original registry byte preservation,
 unit no-takeover fake-hint boundary, actual passive stage readback/corruption denial,
 existing external capture/metadata envelopes/native validation/GC authorization.
 Core gateway/browser UI still c.2 pending. Next only after normal push/remote match.
+
+## 4.1c.2 shared HTTPS/session/assets Core UI
+
+c.1 pushed/remote matchedfb05323 BEFORE c.2. Dedicated Linux-only private Core
+quorum or passive-recovery gateway, separate TLS identity and unique root cookie
+namespace, explicit source/cluster/epoch/floor. Same Dashboard handler/Sessions/
+CA factory/assets, explicit mode before dispatch. Only authenticated Core GET
+state/file-detail; all writes/download/runtime/approval/GC/recovery activation403.
+Default loopback, explicit private LAN only; original platform guards retained.
+UI shows actual Barrier/checkpoint/controllers/voter observations/jobs/backup and
+policy1/2/3. Nulls remain UNKNOWN, no Core upload/Quick Join. Never browser tokens.
+
+First browser run failed after reconnect because unscoped badge locator matched
+both file row and retained closed detail dialog; stage-only secret-safe diagnostic
+confirmed reconnect-protection. Scope to visible file row, preserve actual strong
+policy3/quorum-loss/heal assertions; no timeout/assertion weakening. Also close
+replica dialog when strong quorum evidence is lost; empty Core list gives no upload
+instruction. Actual3-voter transport faults, CA-trusted Chromium at390px, XSS/no
+persistent code/no mutation requests; server auth/TLS/CSRF/mode/forbidden paths and
+full-byte passive-stage preservation PASS. Existing Demo browser upload/SHA/fallback
+and Quick Join regression retained. Combined command:
+`python -B -m unittest tests.test_observer_gateway tests.test_observability
+ tests.test_demo_dashboard tests.test_demo_dashboard_browser
+ tests.test_quick_join_browser -v`:**15PASS0SKIP0FAIL149.641s**.
+Final browser repeat covers final dialog/empty-state text change:1PASS0skip/fail54.828s.
+No Android/native/cross-UID/production or writable DR acceptance. Next checkpoint
+only after normal push/remote equality:4.1d exact archive compatibility and fresh
+full qualification/source-only candidate (not Android release).

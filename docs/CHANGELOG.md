@@ -458,3 +458,9 @@ policy1/2/3 counts/jobs/historical verified backup and explicit UNKNOWN. Pinned
 three-controller collector and full-byte passive-stage view, always no writer.
 28 targeted PASS0skip/fail including actual partition/loss/heal/TLS and retained
 Core external/metadata/GC gates. HTTPS shared Dashboard UI still c.2 pending.
+
+## Phase4.1c.2 — shared Core read-only HTTPS/browser gateway
+Reuses owner sessions, TLS generator/security handler and responsive Demo assets
+with explicit mode isolation and unique cookie scope. Core policy3/Controller/
+quorum/jobs/historical backup views; no storage/runtime/authority mutation. Real
+Chromium transport-partition/reconnect and existing Demo browser regression gates.

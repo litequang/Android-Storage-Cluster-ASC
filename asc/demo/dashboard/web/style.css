@@ -85,3 +85,5 @@ footer { max-width: 1120px; padding: 24px 20px 32px; margin: auto; font-size: 11
 #pair-code { font-size: 1.15rem; overflow-wrap: anywhere; user-select: all; }
 #pair-registration { overflow-wrap: anywhere; }
 .tabs { flex-wrap: wrap; }
+
+#core-observation { overflow-wrap: anywhere; }

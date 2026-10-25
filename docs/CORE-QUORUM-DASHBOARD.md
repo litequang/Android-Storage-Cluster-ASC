@@ -1,7 +1,7 @@
 # Core quorum Dashboard adapter v1
 
 4.1c.1 implements Core observation endpoint/pinned collector/passive recovery
-view. HTTPS gateway/shared browser UI follows c.2; status in Phase4.1 progress.
+view and c.2 shared HTTPS browser gateway; status in Phase4.1 progress.
 Explicit mode core-quorum, separate private gateway config/bootstrap and browser
 TLS identity. Reuse Dashboard Sessions/HTTPS/security handler/local assets; retain
 Demo single-writer upload/Quick Join in its own mode. No second Catalog/engine.
@@ -69,3 +69,31 @@ same sanitized projection. Valid stage =>RECOVERY READ-ONLY, credentials/writer=
 corruption/wrong anchor/floor/missing bytes=>UNKNOWN, never a healthy recovered cluster.
 Disposable existing Core SQL workspace is query_only and in RAM solely to reuse
 Catalog/Views logic; it is not a second persistent Catalog or authority fallback.
+
+## Implemented shared gateway (4.1c.2)
+
+`python -B -m asc.observability.gateway --root <NEW-private-root> init` accepts
+exactly one explicit source: private Core bootstrap plus cluster/epoch, or anchored
+recovery staging. Default loopback8445, optional explicit private numeric LAN IP.
+Linux host guard excludes Android/Termux; dedicated root cannot be inside engine,
+volume/recovery/source ancestry. New private TLS identity is a gateway identity,
+never a new Node/Cluster. Existing engine/source roots remain separate/unmodified.
+Bootstrap format: `{cluster_id,controllers:[{node_id,origin,pin,token},...]}`;
+exactly three authenticated existing voter endpoints, stored0600 only. No automatic
+credential export/discovery. Browser receives only sanitized owner session views.
+
+`... serve --issue-login-code` explicitly issues one short-lived one-use owner
+login code to the private foreground operator terminal. Never redirect it to public
+logs. Restart revokes RAM sessions and permits a fresh explicit code; no permanent
+password/default credential or public code-issuance endpoint. Verify `info` public
+CA SHA independently and trust only public CA, never skip TLS errors. Cookie namespace
+is unique per gateway, separate from Demo even on the same host/different port.
+
+Shared DashboardHandler/assets enforce mode BEFORE routing. Public /api/mode has
+only mode/read_only. Authenticated GET /api/state and /api/files/<UUID> are the only
+Core data operations; authenticated login/logout retain Origin/CSRF/session controls.
+Other mutations and downloads403 server-side. Core refresh uses GET and never calls
+Demo /refresh. Existing Demo upload/download/Quick Join remain in Demo mode only.
+Core UI shows policy1/2/3, source checkpoint/barrier, controllers/voters, jobs and
+historical backup. UNKNOWN remains UNKNOWN; no transfer percentage/protection/writer
+is fabricated. Browser never owns local bridge scopes or private source credentials.

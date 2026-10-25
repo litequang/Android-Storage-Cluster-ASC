@@ -459,3 +459,11 @@ raw projection/token hashes/keys/run grants. Old/unknown snapshots make current
 availability/protection UNKNOWN. All configured reads failing, not process counts,
 defines quorum-read unavailability. Passive recovery only after existing shared-
 lock full-byte anchored check; corruption UNKNOWN, no runtime/config/key creation.
+
+Phase4.1 Core HTTPS gateway reuses owner Sessions/Host/Origin/CSRF/CSP/TLS, with
+unique cookie name per gateway (cookies do not isolate ports). No fallback between
+Demo/Core/recovery. All Core mutation and byte-download routes403 even with owner
+session; browser receives no Core owner token/bridge app grant. Explicit local
+one-use login issuance only; no shared password or public issuance route. Gateway
+private root/keys/bootstrap cannot nest within existing engine/volume/recovery;
+Linux host guard remains, no Android runtime bypass. Trust public CA SHA separately.

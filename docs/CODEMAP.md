@@ -540,3 +540,10 @@ Android and writable DR remain NOT ACCEPTED.
 - observability/http.py +3-line failover/service.py delegation: owner GET /cluster/v1/observability, POST denial before readiness side effects, exact own response envelope.
 - observability/client.py Observer: fixed pinned identities/epoch/static3/floor, bounded GET collector/no legacy fallback, stale availability downgrade. RecoveryObserver: existing full-byte verified passive stage only.
 - tests/test_observability.py: separate no-test helper +actual TLS API/partition/takeover classes, no duplicate fixture test inheritance; source/secret/read-only/policy3/verified backup/passive corruption gates.
+
+## Phase4.1c.2 shared read-only browser gateway
+- observability/gateway.py: explicit Linux-only private gateway/CA/source config, loopback HTTPS by default, no engine lifecycle; unique session cookie per root.
+- demo/dashboard/http.py: explicit mode routing before Demo mutation paths, authenticated Core GET-only state/detail; existing Sessions/CSRF/security headers reused.
+- dashboard/tls.py generate_identity: shared no-overwrite TLS creation, existing Demo default preserved.
+- dashboard/web assets: same mobile-first UI, Core controllers/quorum/jobs/backup and policy counts; no Core writes/download/Quick Join.
+- tests/test_observer_gateway.py +browser/core_observer.cjs: actual trusted Chromium/Core3-voter transport partition/heal, policy3, server-side denial and passive verified stage.

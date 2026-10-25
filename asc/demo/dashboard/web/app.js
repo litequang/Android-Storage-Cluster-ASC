@@ -1,12 +1,13 @@
 'use strict';
 (() => {
   const $ = id => document.getElementById(id);
-  const model = { csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null };
+  const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null };
   const pairing = { generation: 0, ticket: null, timer: null, creating: false, polling: false };
   const messages = {
     pairing_limit: 'Đã đạt giới hạn mã đang theo dõi (8/phiên, 32/Controller). Đợi hoặc kiểm tra các mã đã tạo.',
     pairing_not_found: 'Không còn bằng chứng theo dõi trong phiên này. Không suy ra mã đã bị thu hồi.',
     unsupported_runtime: 'Quick Join chỉ hỗ trợ Demo single-writer đã xác minh.',
+    read_only_mode: 'Chế độ Core chỉ quan sát; thao tác thay đổi bị từ chối phía server.',
     login_rejected: 'Mã không hợp lệ, đã dùng hoặc đã hết hạn. Lấy mã mới từ Controller.',
     login_required: 'Phiên đã hết hạn. Đăng nhập lại bằng mã một lần.',
     insufficient_capacity: 'Không đủ dung lượng hoặc chưa có hai điện thoại độc lập đủ điều kiện. Chưa xác nhận upload.',
@@ -58,7 +59,7 @@
     if (!ok) clearPairing('Mất kết nối: mã đã ẩn, đăng ký và quyền lưu trữ UNKNOWN.');
     pairingButton();
     if (!ok && $('details').open) $('details').close();
-    $('connection').textContent = ok ? 'Controller online' : 'Controller UNKNOWN';
+    $('connection').textContent = model.readOnly ? (ok ? 'Gateway online' : 'Gateway UNKNOWN') : ok ? 'Controller online' : 'Controller UNKNOWN';
     $('connection').className = 'badge ' + (ok ? 'good' : 'unknown');
     $('upload-button').disabled = !ok || model.uploading;
     if (model.state) render(model.state);
@@ -96,7 +97,7 @@
     } finally { clearTimeout(timer); }
   }
   function pairingButton() {
-    $('pair-create').disabled = !model.csrf || !model.connected || pairing.creating;
+    $('pair-create').disabled = !model.csrf || !model.connected || model.readOnly || pairing.creating;
   }
   function clearPairing(message = 'Chưa tạo mã ghép.') {
     pairing.generation += 1;
@@ -126,7 +127,7 @@
     } finally { if (generation === pairing.generation) pairing.polling = false; }
   }
   async function createPairing() {
-    if (!model.csrf || !model.connected || pairing.creating) return;
+    if (!model.csrf || !model.connected || model.readOnly || pairing.creating) return;
     clearPairing('Đang yêu cầu mã từ Controller; chưa xác nhận tạo thành công.');
     const generation = pairing.generation;
     pairing.creating = true; pairingButton();
@@ -147,6 +148,39 @@
       if (generation === pairing.generation) clearPairing(error.message);
     } finally { if (generation === pairing.generation) { pairing.creating = false; pairingButton(); } }
   }
+  function applyMode(value) {
+    if (!['single-writer-demo', 'core-quorum', 'recovery-read-only'].includes(value.mode) || value.read_only !== (value.mode !== 'single-writer-demo')) throw new APIError('unsupported_runtime', 503);
+    model.mode = value.mode; model.readOnly = value.read_only;
+    $('runtime-label').textContent = model.readOnly ? 'Core · Quan sát chỉ đọc' : 'Demo Alpha · LAN riêng';
+    $('login-method').textContent = model.readOnly ?
+      'Dùng mã một lần được operator chủ gateway tạo qua serve --issue-login-code. Xác minh CA/URL trước khi nhập; mã hiệu lực 5 phút.' :
+      'Dùng mã một lần từ ascdemo dashboard-code trên Controller. Mỗi mã có hiệu lực 5 phút.';
+    $('upload-panel').hidden = model.readOnly;
+    document.querySelector('[data-tab="quick-join"]').hidden = model.readOnly;
+    $('core-observation').hidden = !model.readOnly;
+    $('refresh').textContent = model.readOnly ? 'Đọc trạng thái' : 'Cập nhật kiểm tra';
+    pairingButton();
+  }
+  function renderCore(state) {
+    const r = state.runtime;
+    $('connection').textContent = model.connected ? r.state : 'Gateway UNKNOWN';
+    $('connection').className = 'badge ' + (model.connected && r.state === 'ONLINE' ? 'good' : r.state === 'UNKNOWN' ? 'unknown' : 'warn');
+    $('core-status').textContent = r.state + ' · Quorum read: ' + (r.quorum_available === null ? 'UNKNOWN' : r.quorum_available ? 'Đã xác minh barrier tại thời điểm đọc' : 'UNAVAILABLE') +
+      ' · Leader đã xác minh: ' + (r.leader_confirmed ? r.leader_id : 'UNKNOWN') + ' · Checkpoint: ' + count(r.checkpoint?.index) + ' · Chỉ đọc, không writer authority';
+    $('controller-list').replaceChildren(...(r.controllers || []).map(item => {
+      const card = node('article', 'node-card'); card.dataset.controllerId = item.node_id;
+      card.append(node('strong', '', item.node_id), node('p', '', 'Controller: ' + item.state),
+        node('p', '', 'Voter process: ' + item.voter_process), node('p', '', 'Role hint: ' + (item.role || 'UNKNOWN')),
+        node('p', '', 'Leader proof: ' + (item.leader_confirmed ? 'Barrier + term/binding' : 'Chưa xác minh'))); return card;
+    }));
+    $('core-jobs').replaceChildren(...(state.jobs || []).map(j => node('li', '', j.kind + ' · ' + j.state + ' · ' + short(j.job_id))));
+    if (!state.jobs?.length) $('core-jobs').append(node('li', '', r.strong_read_confirmed ? 'Không có job trong quan sát hiện tại.' : 'Jobs UNKNOWN hoặc metadata cũ.'));
+    const backup = state.backup, rows = [];
+    for (const s of backup.snapshots || []) rows.push(node('li', '', 'Snapshot ' + short(s.snapshot_id) + ': ' + s.state + ' (lịch sử) · xác minh ' + date(s.verified_at)));
+    rows.push(node('li', '', 'External backup: ' + backup.external.state + ' · ' + date(backup.external.verified_at)));
+    rows.push(node('li', '', 'Recovery: ' + backup.recovery.state + ' · writer authority: false'));
+    $('core-backups').replaceChildren(...rows);
+  }
   function activate() {
     $('application').hidden = false; $('login-panel').hidden = true; $('logout').hidden = false;
     $('upload-limit').textContent = 'Tối đa ' + amount(model.max) + ' mỗi file trong Dashboard. Chỉ dùng file thử nghiệm bỏ được.';
@@ -154,6 +188,8 @@
   }
   function badge(file) {
     const known = model.connected;
+    if (model.readOnly) return node('span', 'badge ' + (!known || file.protected === null ? 'unknown' : file.protected ? 'good' : 'warn'),
+      !known || file.protected === null ? 'UNKNOWN · cần xác minh' : file.protected ? 'Đạt policy ' + file.desired_replicas + ' miền lỗi' : 'Chưa đạt policy ' + file.desired_replicas + ' miền lỗi');
     return node('span', 'badge ' + (!known || file.protection === 'unknown' ? 'unknown' : file.protected ? 'good' : 'warn'),
       !known ? 'UNKNOWN · dữ liệu cũ' : file.protected ? 'Đủ hai bản sao' : file.protection === 'unknown' ? 'UNKNOWN · cần xác minh' : 'Chưa đủ hai bản sao');
   }
@@ -220,23 +256,25 @@
   function render(state) {
     model.state = state;
     $('cluster-name').textContent = state.cluster.name;
-    $('snapshot-time').textContent = (model.connected ? 'Cập nhật: ' : 'Bản xem cũ: ') + date(state.as_of);
+    $('snapshot-time').textContent = (model.readOnly ? (state.runtime.strong_read_confirmed ? 'Quan sát qua barrier: ' : 'Metadata cũ / chưa xác minh quorum: ') : model.connected ? 'Cập nhật: ' : 'Bản xem cũ: ') + date(state.as_of);
+    if (model.readOnly) { renderCore(state); if (!state.runtime.strong_read_confirmed && $('details').open) $('details').close(); }
     const c = state.counts, capacity = state.capacity;
     $('summary').replaceChildren(
       stat('Điện thoại đã ghép', count(c.paired_nodes), 'Không tính identity Controller riêng'),
-      stat('Online / offline / chưa rõ', model.connected ? c.online + ' / ' + c.offline + ' / ' + c.unknown : 'UNKNOWN', 'Theo heartbeat và nguồn quan sát'),
+      stat('Online / offline / chưa rõ', model.connected ? count(c.online) + ' / ' + count(c.offline) + ' / ' + count(c.unknown) : 'UNKNOWN', 'Theo heartbeat và nguồn quan sát'),
       stat('File trong cụm', count(c.files), 'Các phiên bản bất biến'),
-      stat('File đủ hai bản sao', model.connected ? count(c.protected_files) : 'UNKNOWN', model.connected ? count(c.unprotected_files) + ' file cần kiểm tra' : 'Chưa xác minh kết nối'),
+      stat(model.readOnly ? 'File đạt replica policy' : 'File đủ hai bản sao', model.connected ? count(c.protected_files) : 'UNKNOWN', model.connected ? count(c.unprotected_files) + ' file cần kiểm tra' : 'Chưa xác minh kết nối'),
       stat('Quota được duyệt', amount(capacity.approved_quota_bytes), 'Không phải tổng dung lượng hãng công bố'),
       stat('Đã sử dụng', amount(capacity.used_bytes), 'Số đo từ volume đã duyệt'),
       stat('Khả dụng theo quota / reserve', model.connected ? amount(capacity.available_bytes) : 'UNKNOWN', 'UNKNOWN nếu volume dùng chung chưa xác minh'),
-      stat('Controller', model.connected ? 'Online' : 'UNKNOWN', 'Một writer cố định, không tự failover'));
+      stat('Controller', model.readOnly ? state.runtime.state : model.connected ? 'Online' : 'UNKNOWN', model.readOnly ? 'Quan sát read-only, không cấp quyền ghi' : 'Một writer cố định, không tự failover'));
     const warnings = [];
     if (!model.connected) warnings.push('Không liên lạc được Controller: không xác nhận ghi hoặc trạng thái bảo vệ mới.');
     if (c.offline) warnings.push(c.offline + ' node offline theo heartbeat. Giữ nguyên dữ liệu và identity.');
     if (state.nodes.some(n => n.probe_error)) warnings.push('Có volume/node chưa phản hồi phép kiểm tra lưu trữ.');
     if (c.unprotected_files) warnings.push(c.unprotected_files + ' file chưa xác nhận đủ hai bản sao khả dụng.');
     if (capacity.available_bytes === null) warnings.push('Dung lượng khả dụng UNKNOWN; không suy diễn là 0 hoặc đủ chỗ để upload.');
+    if (model.readOnly && !state.runtime.strong_read_confirmed) warnings.push('Quorum chưa xác minh: availability/protection UNKNOWN; dữ liệu có thể cũ.');
     if (!warnings.length) warnings.push('Chưa ghi nhận cảnh báo tại thời điểm quan sát; đây không phải cam kết bảo vệ dữ liệu production.');
     $('warnings').replaceChildren(...warnings.map(x => node('li', '', x)));
     $('node-list').replaceChildren(...state.nodes.map(item => {
@@ -258,9 +296,9 @@
       const actions = node('div', 'file-actions');
       const view = button('Bản sao & SHA', () => replicas(file.file_id)); view.dataset.action = 'replicas';
       const get = button('Tải xuống', () => download(file)); get.dataset.action = 'download'; get.disabled = !model.connected || file.size > model.max;
-      actions.append(view, get); row.append(info, actions); return row;
+      actions.append(view); if (!model.readOnly) actions.append(get); row.append(info, actions); return row;
     }));
-    if (!state.files.length) $('file-list').append(node('p', 'muted', 'Chưa có file. Upload một file nhỏ để thử hai bản sao.'));
+    if (!state.files.length) $('file-list').append(node('p', 'muted', model.readOnly ? 'Chưa có file trong metadata quan sát.' : 'Chưa có file. Upload một file nhỏ để thử hai bản sao.'));
     if (state.files_truncated) $('file-list').append(node('p', 'error', 'Danh sách bị giới hạn; không coi đây là toàn bộ Catalog.'));
     $('upload-button').disabled = !model.connected || model.uploading;
   }
@@ -268,6 +306,7 @@
     if (!model.csrf || model.polling) return;
     model.polling = true; $('refresh').disabled = true;
     try {
+      probe = probe && !model.readOnly;
       const state = await request(probe ? '/api/refresh' : '/api/state', probe ? { method: 'POST', json: {} } : {});
       model.state = state; connection(true); notice(''); render(state);
     } catch (error) { if (model.csrf) notice(error.message); }
@@ -284,7 +323,7 @@
     return key;
   }
   async function upload(event) {
-    event.preventDefault(); if (model.uploading || !model.connected) return;
+    event.preventDefault(); if (model.readOnly || model.uploading || !model.connected) return;
     const file = $('file-input').files[0], path = $('logical-path').value.trim();
     if (!file || !path) return;
     $('upload-status').className = ''; $('upload-status').textContent = 'Đang tính SHA-256 trước khi gửi…';
@@ -336,7 +375,7 @@
     try {
       const reply = await request('/api/login', { method: 'POST', json: { code: $('login-code').value.trim() }, csrf: false });
       model.csrf = reply.csrf;
-      const session = await request('/api/session', { csrf: false }); model.max = session.max_upload_bytes;
+      const session = await request('/api/session', { csrf: false }); applyMode(session); model.max = session.max_upload_bytes;
       activate(); await reload();
     } catch (error) { $('login-error').textContent = error.message; }
     finally { $('login-button').disabled = false; }
@@ -362,7 +401,7 @@
     if (location.protocol !== 'https:' || !window.isSecureContext || !crypto.subtle) {
       $('login-error').textContent = 'Cần HTTPS được trình duyệt tin cậy. Xác minh CA/IP, không bỏ qua lỗi certificate.'; $('login-button').disabled = true; return;
     }
-    try { const session = await request('/api/session', { csrf: false }); model.csrf = session.csrf; model.max = session.max_upload_bytes; activate(); await reload(); }
+    try { applyMode(await request('/api/mode', { csrf: false })); const session = await request('/api/session', { csrf: false }); applyMode(session); model.csrf = session.csrf; model.max = session.max_upload_bytes; activate(); await reload(); }
     catch (_) { $('login-error').textContent = ''; /* normal first visit requires login */ }
     setInterval(() => { if (model.csrf && !model.uploading) void reload(); }, 10000);
   }
