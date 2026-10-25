@@ -514,3 +514,9 @@ Frozen4d1758d source/candidate:287 Python PASS0skip/fail, all old/Core3D faults;
 PHASE4-PROGRESS owns receipt/next steps; PHASE4-QUICK-JOIN owns qualified upgrade/
 rollback use. No post-full source/test/package-guide drift. Candidate only,
 Android and writable DR remain NOT ACCEPTED.
+
+## Phase4.1a local bridge / quorum observer contracts
+- asc/bridge/contract.py: strict version1 framed JSON/operation/scopes; no arbitrary paths/shell/PID/init/approval/GC.
+- tests/test_bridge_contract.py: malformed/duplicate/type alias/unknown/dangerous operations and secret-safe error boundary.
+- tests/test_phase4_upgrade.py: historical exact04.1->published Phase4.0 fixture pinned, old assertions unchanged;4.1 needs separate exact old-candidate upgrade test.
+- PHASE4-1-PLAN/PROGRESS/ACCEPTANCE own task. LOCAL-ENGINE-BRIDGE/THREAT-MODEL, CORE-QUORUM-DASHBOARD, ANDROID-APP-CONTRACT own IPC/actors/lifecycle/observer/future Android limits.

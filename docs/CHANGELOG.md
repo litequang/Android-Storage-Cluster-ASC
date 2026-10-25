@@ -432,3 +432,9 @@ qualified on frozen4d1758d:287 fresh Python PASS0skip/fail/all Core3A–3D fault
 NEW-state code-only rollback/pending resume qualified. Source candidate0.4.2-dev
 only; no public Android release, APK/Core quorum UI/state migration or writable DR.
 See PHASE4-ACCEPTANCE for full evidence and initial interrupted run disclosure.
+
+## Phase4.1a — architecture and bounded IPC contract
+Separate feature from verified Phase4.0; strict versioned local app IPC contract,
+threat model/Core read-only observer/native app boundaries. No active bridge yet.
+Historical exact Phase4.0 archive regression stays pinned; new source0.4.3-dev,
+unchanged base formats/old packages, not Android release. Qualification pending.

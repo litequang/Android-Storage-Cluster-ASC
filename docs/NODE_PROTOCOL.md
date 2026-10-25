@@ -484,3 +484,9 @@ Then calls the unchanged Core join/retry wire contract. No code in CLI arguments
 Expected Cluster ID check uses the existing pending expected_cluster_id field;
 no new wire/config/schema. Registration is not owner storage/domain approval.
 Native/local-engine bridge and Core quorum mode remain future qualification.
+
+## Phase4.1 contract routing
+LOCAL-ENGINE-BRIDGE defines version1 authenticated same-UID UDS frames (not browser
+HTTP); existing enrollment wire unchanged. CORE-QUORUM-DASHBOARD defines planned
+owner-only read-only observation endpoint and explicit browser mode. No writer,
+PID/path/shell, membership/recovery/GC/approval protocol is authorized.

@@ -25,6 +25,25 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
+## Current Phase4.1 authorization — private bridge / read-only Core adapter
+
+Owner authorizes feature/phase4-1-local-engine-quorum-ui from verified Phase4.0
+b9e75779670d5565d05a324751af02e48d2538eb. Do not redo4.0/3A–3D or merge whole
+branches; preserve Phase4.0/Core/Demo/WIP/main. Ordered docs then PHASE4 plan/
+progress/acceptance/Quick Join,3D acceptance/implementation plan and PHASE4-1 docs.
+4.1a architecture/threat/IPC contracts;4.1b same-UID private bridge using existing
+Quick Join/Engine and bounded owned Node lifecycle;4.1c explicit Core read-only
+observer/gateway/shared Dashboard;4.1d app/migration contract and fresh full/Go/
+fault/security/package qualification. Split checkpoints as needed; targeted PASS,
+docs/CODEMAP/secrets/normal feature push+remote before next. No second Catalog/
+Storage/enrollment engine or browser filesystem/process bridge. No real phones/
+M51/production/SSH/system/Boot/root/format, Android Raft/GC/failover, auto approval,
+writer recovery/quorum reconstruction. Distinct APK/Termux UIDs: cross-UID/native
+bridge/migration NOT implemented by Linux UDS; Android acceptance separate. Preserve
+old archives/upgrade/rollback; new source0.4.3-dev not public Android release.
+PHASE4-1-PROGRESS owns current state; previous no-bridge/Core-UI wording below is
+historical, superseded only for this explicit read-only/local task.
+
 ## Current Phase4.0 authorization — Core-first selective integration
 
 Owner authorizes feature/phase4-core-demo-integration from Core3D ca2504f, selecting

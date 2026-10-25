@@ -1,4 +1,4 @@
-"""Exact published04.1 ->candidate ->old code on NEW state, real TLS and bytes."""
+"""Frozen historical04.1 ->published Phase4.0 candidate; 4.1 has separate tests."""
 import contextlib
 import hashlib
 import json
@@ -19,6 +19,15 @@ class Phase4UpgradeTests(historical.PublishedUpgradeFixture):
 
     def command_result(self,root,*args,input=None):
         if not hasattr(self,'candidate_source'):
+            # Preserve the exact already-qualified Phase4.0 transition as history.
+            # New source gets a separate exact0.4.2 ->4.1 qualification, never
+            # relabel it0.4.2 or weaken the old version/byte assertions below.
+            frozen=self.repo/'candidates/asc-demo-alpha-0.4.2-dev.tar.gz'
+            with tarfile.open(frozen) as saved:
+                self.assertTrue(all(m.isfile() and not m.name.startswith('/') and '..' not in m.name.split('/') for m in saved.getmembers()))
+                saved.extractall(self.root/'published-phase40',filter='data')
+            self.archive=frozen
+            self.source=self.root/'published-phase40/asc-demo-alpha'
             self.candidate_source=self.source
             self.candidate_release=verify(self.source)
             # The candidate on GitHub must be EXACTLY the tested current source,

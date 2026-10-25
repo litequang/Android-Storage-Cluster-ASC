@@ -423,3 +423,11 @@ not thereby revoked. The local CLI uses the same Core durable enrollment engine,
 existing pending context and optional expected cluster guard. No additional state
 schema or native/browser node-credential store. Recovery staging is rejected even
 if somebody adds a Demo marker. Core3D authority and modules remain separate.
+
+## Phase4.1 architecture contract
+Private same-UID authenticated UDS/application scope facade reuses existing Demo
+Quick Join/Core Engine in fixed private state; no browser/TCP process/filesystem
+route. Node lifecycle only owned child, no Controller/Core writer launch. Separate
+Core observer uses strong Runtime.view Barrier, never ensure_ready/takeover, and
+existing Dashboard security/assets in explicit read-only mode. No Catalog/schema
+migration or recovery writer. See PHASE4-1-PLAN and dedicated threat/API/app contracts.

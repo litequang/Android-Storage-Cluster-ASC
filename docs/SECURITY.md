@@ -435,3 +435,11 @@ Offline/logout/pagehide clear the code; generation guards discard delayed replie
 from an earlier session/request. A code cleared from UI may still be valid at
 Controller until used/expired; no false revocation guarantee. Existing upload
 idempotency metadata in sessionStorage is unchanged and contains no auth grant.
+
+## Phase4.1 trust model
+Local app authorization is distinct from owner browser session/node token. Same-UID
+UDS+per-app scopes does not expose Termux state to an APK/browser. Fixed roots/ops,
+no raw secret logs/argv/env, bounded retry receipts and owned-child lifecycle.
+Core observation needs actual Barrier/identity/term evidence, supplies no writer.
+Threat/API/native limits: LOCAL-ENGINE-THREAT-MODEL, LOCAL-ENGINE-BRIDGE,
+CORE-QUORUM-DASHBOARD, ANDROID-APP-CONTRACT. No Android/DR authority unlock.

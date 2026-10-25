@@ -258,3 +258,17 @@ wire/schema compatibility. No automatic volumes/storage/domain permission.
 Reject unknown/quorum/recovery modes; Core3D writable recovery stays BLOCKED.
 Native application bridge, Keystore/SAF and single-writer-to-Raft migration need
 separate contracts/tests; this adapter does not implement them.
+
+## ADR064 — Local application bridge without cross-UID assumptions
+Explicit separate app authorization+SO_PEERCRED/private UDS; fixed operations and
+root, durable bounded retry receipts, existing Core enrollment/identity. No TCP/
+browser arbitrary filesystem/process route. Controlled Node child only with actual
+ownership/parent-death fence if supported. Linux same-UID qualification does not
+implement Binder or grant APK access to Termux. No implicit init/approval/migration.
+
+## ADR065 — Core observability is not writer authority
+New sanitized GET view uses existing Runtime.view(strong=True) upstream Barrier;
+never ensure_ready/commit/takeover. Explicit mode/pins/cluster/epoch/Controller ID,
+no Demo SQL fallback. Share existing Dashboard HTTPS/session/assets, server-side
+read-only enforcement and honest UNKNOWN/quorum/recovery states. Never activate
+recovery, change membership, mint GC authority or infer writer from Leader flags.
