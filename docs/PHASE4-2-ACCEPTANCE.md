@@ -36,3 +36,9 @@ agent/FGS provider still BLOCKED; library proof does not authorize runtime.
 PASS (0.202s). Keystore/probe/root/corruption/capacity/realEACCES gates in progress.
 SAF/nativeNode/FGS/network/upgrade/finalfull still unsupported/pending, not PASS.
 Actual key deletion/loss PASS; biometric/hardware invalidation NOT TESTED.
+
+4.2d actual API35:13 instrumentation PASS81.897s +offline1PASS13.375s/reconnect
+1PASS10.946s,6 Python actual adapter/TLS PASS1.288s,7 JVM/build PASS. Public
+Controller GET only, wrong pin/cluster refusal and no enrollment mutation. Native
+UI uses measured sources/UNKNOWN, code clearing/trust guard; actual Node/enrollment/
+cluster observer/FGS remains unsupported. Final e/source freeze/full gates pending.

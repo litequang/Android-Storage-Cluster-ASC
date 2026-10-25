@@ -587,3 +587,9 @@ bridge/Core read-only only; Android/native migration/writable DR remain unqualif
 - EngineService: typed explicit app provision/draft/probe/approval operations, UID/signature/consent first, no cluster storage/failure-domain approval.
 - VaultStorageTest +extended native adapter tests: actual Android Keystore/permission/budget/identity/schema/corrupt bytes/root/SAF and Linux private I/O.
 - ANDROID-NATIVE-STATE owns format/backup/rollback/provider boundaries.
+
+## Phase4.2d native UI/public TLS binding
+- MainActivity: four Vietnamese native pages, actual device/private capability sources, explicit UNKNOWN/no observer, consent/trust/code-clearing/generation guards; encrypted unsent draft, no Node or fake cluster state.
+- native_engine.inspect_controller/EmbeddedEngine: existing Core pinned GET only, expected cluster/mode/schema, no code/token/POST.
+- ControllerBindingTest/NativeUiTest +test_native_controller_binding: actual Android+Linux TLS wrong-pin/cluster/outage/reconnect/no-enrollment and live UI/background secret clearing.
+- Manifest INTERNET/ACCESS_NETWORK_STATE only normal network permissions, no broad storage/camera/boot/FGS. Native0.2.0-foundation versionCode2, own state unchanged.

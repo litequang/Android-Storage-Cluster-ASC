@@ -9,6 +9,7 @@ class EmbeddedEngine(private val context:Context) {
     init { synchronized(EmbeddedEngine::class.java) {
         if(!Python.isStarted())Python.start(AndroidPlatform(context.applicationContext))
     } }
+    fun inspectController(endpoint:String,pin:String,cluster:String):JSONObject=JSONObject(Python.getInstance().getModule("native_engine").callAttr("inspect_controller",endpoint,pin,cluster).toString())
     fun info():JSONObject=JSONObject(Python.getInstance().getModule("native_engine").callAttr("info").toString())
     fun approveProbe(appId:String,quota:Long,reserve:Long):JSONObject=JSONObject(Python.getInstance().getModule("native_engine").callAttr("approve_probe",java.io.File(context.filesDir.canonicalFile,"private-probe-v1").absolutePath,appId,quota,reserve).toString())
     fun volumeStatus(appId:String):JSONObject=JSONObject(Python.getInstance().getModule("native_engine").callAttr("volume_status",java.io.File(context.filesDir.canonicalFile,"private-probe-v1").absolutePath,appId).toString())

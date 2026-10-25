@@ -34,3 +34,16 @@ labeled DRAFT_NOT_SENT, never an enrolled node/approved volume.
 Actual Android/Binder and engine qualification is recorded in PHASE4-2-ACCEPTANCE,
 not inferred from JVM policy tests/builds. Preserve Core3D read-only recovery and
 all Android M51/unknown/runtime guards. No new Catalog/Storage/enrollment authority.
+
+## Additive native foundation operations
+app_provision creates ONLY app Keystore identity after consent, repeat preserves.
+volumes/probe_private_volume/draft_status/save_join_draft use ANDROID-NATIVE-STATE;
+no Node approval/enrollment or arbitrary path. approvePrivateProbe(version,UUID,
+quotaBytes,reserveBytes) is a typed consent+app-identity operation for fixed private
+capability scope, never a global storage approval. engine_info imports actual local
+Core library; not a running Node. check_controller accepts public endpoint/pin/
+expected Cluster UUID, empty name/code/false trust flag and ONLY GETs existing
+pinned /api/v1/info. Matching provided pin is not owner provenance; UI independently
+confirms owner trust before saving draft, no automatic QR trust. All fields remain
+versioned/bounded. Private UI/Service ship atomically in the same APK, no mixed
+prototype-client ABI promise or cross-UID adoption. No raw secret response/log.

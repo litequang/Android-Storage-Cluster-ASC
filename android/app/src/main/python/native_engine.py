@@ -115,3 +115,26 @@ def volume_status(root, app_id):
     except (OSError,StorageError,ValueError,KeyError):
         return json.dumps({'scope':'APP_PRIVATE_PROBE_ONLY','state':'UNKNOWN','volumes':[],
             'writable':None,'fsync_tested':None,'available_bytes':None,'writer_authority':False})
+
+
+def inspect_controller(controller, pin, cluster_id):
+    """Public GET through EXISTING pinned transport; no grant, enrollment or writer."""
+    import time
+    from asc.catalog.common import identifier
+    from asc.demo.state import lan_origin
+    from asc.demo.quickjoin import normalized_pin
+    from asc.client import request_json,ClientError
+    try:
+        lan_origin(controller);normalized_pin(pin);identifier(cluster_id)
+        info=request_json(controller,pin,'GET','/api/v1/info',timeout=10)
+        if info.get('cluster_id')!=cluster_id:raise ValueError('binding_mismatch')
+        if (type(info.get('protocol_version')) is not int or info['protocol_version']!=1 or
+            type(info.get('schema_version')) is not int or info['schema_version']!=4 or
+            info.get('mode')!='single-writer-development' or info.get('raft_enabled') is not False or
+            'retry-safe-enrollment-v1' not in info.get('features',[])):raise ValueError('unsupported_runtime')
+        return json.dumps({'state':'TLS_AND_CLUSTER_MATCH','cluster_id':cluster_id,'mode':info['mode'],
+            'checked_at':int(time.time()),'enrollment_performed':False,'writer_authority':False,
+            'owner_trust_required':True})
+    except (OSError,ClientError,ValueError,KeyError):
+        return json.dumps({'state':'UNKNOWN','error':'controller_binding_unverified','enrollment_performed':False,
+            'writer_authority':False})

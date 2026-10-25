@@ -456,3 +456,9 @@ version independent of Core0.4.3 candidate. Same Core Engine remains canonical;
 initial UI has FOUNDATION/UNKNOWN, no node identity/runtime/source state adoption.
 Private native Binder/Keystore/embedded engine qualification requires actual gates;
 no Termux UID sharing, copied DB/keys/markers or Android recovery writer.
+
+Native4.2d UI is an authenticated private Binder client, not a parallel backend.
+Embedded Core handles local capability probes and pinned public info; no enrollment
+POST/node runtime until explicit-context provider is qualified. Unconfigured native
+Core observer/list/replicas/quorum/recovery UNKNOWN; existing Dashboard remains
+the operational owner UI. Draft!=Core pending, app probe!=cluster storage approval.

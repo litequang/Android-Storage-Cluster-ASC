@@ -36,6 +36,8 @@ class EngineService : Service() {
                     return error("consent_required")
                 val vault=ApplicationVault(this@EngineService)
                 return synchronized(operations) {when(operation) {
+                    "check_controller" -> EmbeddedEngine(this@EngineService).inspectController(controller,pin,clusterId).toString()
+                    "engine_info" -> EmbeddedEngine(this@EngineService).info().toString()
                     "app_provision" -> vault.provision().toString()
                     "save_join_draft" -> vault.saveDraft(requestId,controller,pin,clusterId,name,code).toString()
                     "draft_status" -> vault.draftSummary().toString()

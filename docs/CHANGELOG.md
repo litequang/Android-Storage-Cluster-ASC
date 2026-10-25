@@ -500,3 +500,9 @@ App-owned nonexportable key/encrypted draft with loss/schema hold; original Core
 private-volume probes and honest read-only metrics, capacity/identity/no reinit
 checks.11 actual Android/5 Linux adapter/7 JVM PASS. Probe !=cluster approval,
 SAF/Node enrollment/FGS remain unsupported; no Core state/archive/guard changes.
+
+## Phase4.2d — Vietnamese native UI / real Controller TLS check
+Four foundation pages with actual metrics/explicit unknown providers, consent/
+owner trust and encrypted unsent draft. Existing Core pinned public GET matches
+cluster/mode, no credentials/enrollment/authority.13 Android+offline/reconnect/
+6 Python/7 JVM PASS. Node/observer/SAF/FGS not implemented by UI.

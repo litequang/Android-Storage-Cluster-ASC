@@ -10,8 +10,8 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |4.2a|PUSH/REMOTE VERIFIED8667923 +audit follow-up a6e4d7e; build tools PASS; emulator35 now booted|
 |4.2b.1|PUSH/REMOTE VERIFIED677e28ac5cff008e4b869847ac6c39bb51d71266;7 JVM/4 Android PASS|
 |4.2b.2|PUSH/REMOTE VERIFIED5ac246aa27f78e0c979cd0674f127939331cce26;local Engine PASS, Node BLOCKED|
-|4.2c|READY:7 JVM/5 Linux adapter/11 Android PASS;Keystore/private probe;SAF unsupported|
-|4.2d|NOT STARTED|
+|4.2c|PUSH/REMOTE VERIFIED29c2985c839c6b20a0f6a6f3f4142c38b2f20847;11 Android/5 Linux/7 JVM PASS|
+|4.2d|READY:13 Android +offline1/reconnect1;6 Python/7 JVM PASS; native Foundation UI|
 |4.2e|NOT STARTED|
 
 Tools/logs: /workspace/asc-android-dev (activate.sh), /workspace/work/phase4-2;
@@ -118,3 +118,27 @@ cases; final11 is the checkpoint evidence. No tests weakened/skipped. Native c
 versionCode1 APK retained PRIVATELY for later exact app upgrade test; not a release.
 Node/enrollment/TLS runtime and FGS remain BLOCKED. Next d ONLY after push/remote:
 Vietnamese native UI +public pinned Controller validation, no fake cluster data.
+
+## 4.2d Vietnamese native UI / real pinned Controller validation
+
+c pushed/remote matched29c2985 BEFORE d. Four responsive native pages, real Build/
+RAM/CPU/network/app key/private volume sources, UNKNOWN cluster/replica/quorum/
+recovery without configured authenticated observer. Explicit consent, separate
+application identity vsNode/Cluster, quota/reserve probe, code hidden/no autofill/
+View-state, background clearing and generation guards. Manual public bindings +
+owner trust confirmation, encrypted DRAFT_NOT_SENT only. No Node enrollment/FGS/
+file replicas/second backend or mock online data. App versionCode2/version0.2.0-
+foundation (Core stays0.4.3). Actual Core request_json does ONLY pinned public GET,
+strict mode/cluster/schema; does not send code/grant or grant writer.
+
+First UI build caught incorrect Kotlin trailing-lambda syntax; fixed. First host
+harness used adb shell argument quoting incorrectly, so public fixture write failed;
+fixed one literal run-as command with JSONstdin, no secret argument/shell interpolation.
+No failed run counted as PASS, no gate weakened. Final Gradle build PASS27s,7 JVM;
+6 actual Python TLS/adapter PASS1.288s. Actual API35 instrumentation **13PASS81.897s**
+(incl visible native page/trust gate/background code clearing), actual retained-key
+Controller stopped =>**offline1PASS13.375s**, restarted same registry/cert =>
+**reconnect1PASS10.946s**, no enrollment rows/credentials generated. Wrong TLS pin/
+Cluster ID denied over actual embedded Core transport, public data only.
+Next e only after push/remote: untrusted caller/process death/network/app upgrade,
+final applicable regressions/packaged APK/secrets audit. No production/phone claim.
