@@ -12,7 +12,7 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 |4.0b.2a|PUSH/REMOTE VERIFIEDb96e4be43dd1228c025cb0305fd7372b559b9fb3;31PASS|
 |4.0b.2b|PUSH/REMOTE VERIFIEDed07bbc3640d3f0f89efbafb6545b22fe4514dd3;17PASS|
 |4.0c.1|PUSH/REMOTE VERIFIED4d1758ddac926853ffc43ae9b1aee428ab63bccf; candidate SHA fetched/verified|
-|4.0c.2|RUNNING: fresh full287 Python on frozen4d1758d; no acceptance claim|
+|4.0c.2|NOT ACCEPTED: first full interrupted after3D error; standalone9/9 PASS; fresh full retry required|
 
 Read AGENTS in mandatory order, then3D acceptance/progress and Demo4D acceptance/
 QuickStart where available, then PHASE4-PLAN/this/ACCEPTANCE. Prior plan audit read
@@ -173,3 +173,18 @@ If process/Cloud environment is lost, fresh rerun is needed; do not infer PASS
 from this handoff or partial log. Expected287 unique cases,0 skips required.
 No source changes are pending. After actual full PASS, verify frozen hashes,
 fault groups, secrets and remote, update acceptance and normal-push final report.
+
+## First full failure / diagnostic handoff (no source/test edits)
+
+First full on4d1758d was interrupted after an ERROR in original3D fault matrix
+following group06 (no07–09). Full did NOT PASS; interrupted owned synthetic test
+processes only, exit-2 after519.918s, source fingerprint unchanged. Partial log
+python-full-first-interrupted.log/result preserved privately; original failing
+traceback was not emitted before interruption, so no specific cause is claimed.
+Standalone unchanged `python -B -m unittest tests.test_external_faults -v` then
+**1PASS0SKIP0FAIL57.558s, all9 actual fault groups**. This does not replace full.
+No test/source/timeout/assertion/guard changed, no weakened gate or fake success.
+Next fresh standard full uses unittest fail-fast `discover -s tests -v -f` so a
+repeated failure preserves traceback immediately. PASS still requires all287,
+all original faults and unchanged frozen source/candidate. If failure recurs,
+investigate it before acceptance. Current NOT ACCEPTED; original branches intact.
