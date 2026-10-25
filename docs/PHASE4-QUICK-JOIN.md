@@ -8,7 +8,8 @@ recovery is BLOCKED. Do not run Demo on Core or RECOVERY_READ_ONLY state.
 Use a verified installed candidate and existing DEMO-QUICKSTART for approved LAN,
 Termux/dependencies, device guard, private state and HTTPS CA trust. Do not run on
 M51/unknown models or important data. Cloud tests do not qualify Android runtime.
-Phase4 final candidate archive/upgrade evidence is pending until4.0c.
+Consult PHASE4-ACCEPTANCE and PHASE4-PROGRESS for the actually qualified source,
+archive SHA and upgrade paths. These instructions alone are not acceptance evidence.
 
 ## Owner and node workflow
 
@@ -81,7 +82,85 @@ No schema change; legacy pending format unchanged. Stop every local service and
 make/verify a NEW complete private backup before selecting compatible code.
 Never restore an old database over newer bytes/history. Follow installed
 backup/verify-backup/stage/upgrade-preflight/upgrade/rollback contract from
-DEMO-QUICKSTART. Direct exact0.4.1-to-candidate and new-state code rollback are
-NOT claimed until4.0c evidence is recorded. Old public0.3/0.4/0.4.1 archives and
+DEMO-QUICKSTART. Only use direct exact0.4.1-to-candidate and new-state code rollback when the
+matching4.0c acceptance records the archive/source hash and passing evidence. Old public0.3/0.4/0.4.1 archives and
 checksums remain unchanged. No writable disaster recovery or single-writer/Raft
 migration is supported.
+
+## Controlled code upgrade (already initialized Demo0.4.1 only)
+
+Synthetic qualification does not authorize Cloud installation on phones. Owner
+pilot is separate. Do not install this candidate over Core/Raft/recovery staging.
+Obtain the source-only candidate and trusted expected SHA from the matching Phase4
+acceptance/handoff, not an invented GitHub release URL. Do not use the old released
+0.4.1 download command to obtain0.4.2-dev. Verify before extraction, for example:
+
+```sh
+sha256sum -c asc-demo-alpha-0.4.2-dev.tar.gz.sha256
+mkdir -m 700 asc-phase4-candidate
+# Destination must be a NEW empty approved directory, outside private state.
+tar -xzf asc-demo-alpha-0.4.2-dev.tar.gz -C asc-phase4-candidate
+python3 -B -m asc.demo.package --help
+```
+
+The checksum file must match the independent trusted handoff SHA; merely trusting
+a checksum supplied beside an untrusted archive is insufficient. Package install/
+stage additionally verifies release.json and every file. The Python help command
+above is optional from the checked source tree; it does not install anything.
+
+Stop foreground Controller and Storage Node on every synthetic installation with
+Ctrl+C; wait for exit. Keep identities/data. For EACH installation, use its OLD
+installed launcher and actual state/prefix (examples for the default layout):
+
+```sh
+ASC_STATE="$HOME/.asc-demo"
+ASC_PREFIX="$HOME/.local/share/asc-demo"
+ASC_RUN="$ASC_PREFIX/bin/asc-demo"
+# Choose a NEW backup path on an approved private destination; never overwrite.
+ASC_BEFORE="$HOME/asc-before-phase4-unique"
+sh "$ASC_RUN" --state "$ASC_STATE" backup "$ASC_BEFORE"
+sh "$ASC_RUN" --state "$ASC_STATE" verify-backup "$ASC_BEFORE"
+sh "$ASC_RUN" --state "$ASC_STATE" stage "$PWD/asc-phase4-candidate/asc-demo-alpha"
+```
+
+Read the returned candidate release_id; retain the old installed release_id
+from the private prefix install.json for compatible code rollback. These are code
+hashes, not credentials. Then substitute the checked candidate release ID:
+
+```sh
+ASC_RELEASE='<verified-candidate-release-id>'
+sh "$ASC_RUN" --state "$ASC_STATE" upgrade-preflight "$ASC_RELEASE"
+sh "$ASC_RUN" --state "$ASC_STATE" upgrade "$ASC_RELEASE" \
+  --backup "$HOME/asc-phase4-activation-backup-unique"
+sh "$ASC_RUN" --state "$ASC_STATE" verify-backup "$HOME/asc-phase4-activation-backup-unique"
+sh "$ASC_RUN" --state "$ASC_STATE" diagnose
+```
+
+Do not use candidate `install` to overwrite an existing code prefix or init state
+again. Activation requires stopped services and makes/verifies a NEW backup.
+Upgrade sequentially with all writers stopped, Controller code first then each
+node; no rolling-write availability claim. After all succeed, start Controller
+(with --dashboard if explicitly initialized/trusted), then nodes as before.
+Node ID/Cluster ID/Volume ID/medium/PIN/credentials and pending context stay in
+private state. A preserved pending0.4.1 join can resume with quick-join; no new code
+is required for an already-committed lost ACK. Unknown status remains UNKNOWN.
+
+If compatible code rollback is necessary, stop ALL services again. On each
+installation use current launcher and retained old0.4.1 release ID; make a NEW
+backup of the CURRENT state, including files written after upgrading:
+
+```sh
+ASC_OLD_RELEASE='<retained-exact-0.4.1-release-id>'
+sh "$ASC_RUN" --state "$ASC_STATE" upgrade-preflight "$ASC_OLD_RELEASE"
+sh "$ASC_RUN" --state "$ASC_STATE" rollback "$ASC_OLD_RELEASE" \
+  --backup "$HOME/asc-new-state-before-code-rollback-unique"
+sh "$ASC_RUN" --state "$ASC_STATE" verify-backup "$HOME/asc-new-state-before-code-rollback-unique"
+```
+
+This selects old compatible code and KEEPS new state/bytes; it never restores an
+old database. Unsupported formats/capabilities/absent volume/corrupt backup must
+refuse; preserve everything and inspect redacted diagnose output. Old0.4.1 lacks
+Quick Join wizard but can resume its compatible pending context through existing
+`join --controller ... --pin ... --name ...` and hidden code input. No promise of
+Termux-to-APK, single-writer-to-Raft or writable-DR migration. Do not publish private
+backup/keys/tokens/grants or raw logs when handing off diagnostics.

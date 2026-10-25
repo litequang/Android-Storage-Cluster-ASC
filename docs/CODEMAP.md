@@ -502,3 +502,8 @@ old async replies; offline/logout/pagehide clears it. No node approval action.
 tests/browser/quick_join.cjs +test_quick_join_browser.py: trusted actual Chromium
 owner create ->real CLI registration, pending approval,390px layout, no persistent
 codes/secret URLs, offline clearing and delayed successful POST after logout.
+
+## Phase4.0c.1 exact compatibility candidate
+- tests/test_phase4_upgrade.py: standalone exact04.1 ->persisted candidate byte equality/upgrade; lost actual TLS ACK pending both directions, new-state code-only rollback, IDs/CA/volume/token and old/new SHA preservation. Existing historical03/04->04.1 tests stay exact.
+- asc/demo/package.py: adds only public Phase4 guide and candidate README warning, keeps format1; candidates/ contains deterministic source-only0.4.2-dev and SHA, no release/tag/phone claim.
+- PHASE4-PLAN/PROGRESS/ACCEPTANCE: audit, source freeze/qualification status, next app foundation and authority/migration blockers. Do not edit source/tests/packaged guides/candidate during final full.

@@ -417,3 +417,10 @@ full lifecycle pin/cluster and separate registration/storage permission. No
 browser node credentials or auto-approval. Codes clear on use/non-waiting state,
 offline/logout/pagehide; stale async results cannot repaint them. Test-only delayed
 response preserves real Chromium certificate validation; no TLS-error bypass.
+
+## Phase4.0c.1 — compatibility candidate freeze
+Exact published04.1 ->source candidate0.4.2-dev upgrade and compatible code-only
+rollback over NEW state, pending enrollment both directions PASS with real TLS/
+bytes.13 targeted +1 exact artifact PASS;11 fresh Go/vet/modules/builds PASS.
+No formats/schema change.106-file synthetic source candidate/SHA under candidates;
+no public Android release. Full287 Python and original faults still pending.

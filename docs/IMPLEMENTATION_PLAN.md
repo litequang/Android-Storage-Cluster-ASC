@@ -122,3 +122,13 @@ All 20 fault scenarios PASS with separate temporary processes/volumes; the final
 full regression is 101 tests OK (98 PASS, 3 POSIX skips), with 9 Go tests and both
 Windows/Android ARM64 builds PASS. Original engines and Phase 2A evidence remain
 intact. No real-phone/Android runtime or production acceptance is inferred.
+
+## Phase4.0 integration track — bounded current checkpoint
+Core-first feature/phase4-core-demo-integration, selective compatible Demo modules
+only (no whole Demo merge). Architecture audit and Demo-only Quick Join owner UI/
+local durable adapter implemented; exact04.1 candidate upgrade/new-state rollback
+and pending compatibility targeted PASS. Final fresh qualification pending;
+PHASE4-PLAN/PROGRESS/ACCEPTANCE own status. Core3D external backup/verify/passive
+recovery preserved; writable DR still BLOCKED. Next Phase4 requires explicit
+native/local-engine bridge, Core quorum UI adapter and tested migration/Keystore/
+SAF contracts; no APK or real-device readiness inferred from synthetic candidate.

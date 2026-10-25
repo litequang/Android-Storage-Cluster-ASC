@@ -61,14 +61,14 @@ def build(source, output):
     # Public source allowlist only. Private state, binaries and build outputs never enter.
     names = [p.relative_to(source).as_posix() for p in (source / 'asc').rglob('*.py')]
     names += [p.relative_to(source).as_posix() for p in (source / 'asc/demo/dashboard/web').glob('*') if p.suffix in ('.html', '.css', '.js')]
-    names += ['scripts/demo-alpha.sh', 'docs/DEMO-QUICKSTART.md', 'docs/DEMO-ANDROID-PILOT.md', 'docs/DEMO-ZTE-0.4.1.md']
+    names += ['scripts/demo-alpha.sh', 'docs/DEMO-QUICKSTART.md', 'docs/DEMO-ANDROID-PILOT.md', 'docs/DEMO-ZTE-0.4.1.md', 'docs/PHASE4-QUICK-JOIN.md']
     files = {}
     for name in sorted(names):
         p = source / name
         if not safe_name(name) or p.is_symlink():
             raise ValueError('unsafe package source')
         files[name] = p.read_bytes()
-    files['README.md'] = (source / 'docs/DEMO-QUICKSTART.md').read_bytes()
+    files['README.md'] = ('# ASC source candidate ' + VERSION + '\n\nNot a public Android release. Read docs/PHASE4-QUICK-JOIN.md first for candidate scope,\ntrust, upgrade and rollback. The following historical Demo guide is reference only;\nits released archive examples do not install this candidate.\n\n').encode() + (source / 'docs/DEMO-QUICKSTART.md').read_bytes()
     body = {'format': 1, 'version': VERSION, 'capabilities': CAPABILITIES,
             'state_formats': STATE_FORMATS,
             'files': {name: digest(data) for name, data in files.items()}}

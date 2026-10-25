@@ -451,7 +451,7 @@ No schema/format increment. Optional expected Cluster ID CLI validation reuses
 existing pending expected_cluster_id; operation, enrollment token and retry
 payload remain legacy-compatible. Quick Join session tickets are transient maps
 of owner hash, code hash, cluster, expiry and UUID, never a second Catalog.
-Registry join_codes/enrollment_ops/nodes/catalog_nodes remain authoritative.
+Registry join_codes/enrollments/nodes/catalog_nodes remain authoritative.
 RECOVERY_READ_ONLY markers forbid Demo init/adoption. Candidate code-only rollback
 requires fresh full private backup and compatibility preflight; final exact04.1
 candidate upgrade/rollback qualification is still pending.

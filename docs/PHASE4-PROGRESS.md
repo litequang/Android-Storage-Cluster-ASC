@@ -10,8 +10,9 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 |4.0a|PUSH/REMOTE VERIFIED5d15cb71dc07e0e31b7b9da68e4aea85178e3847;16 targeted PASS|
 |4.0b.1|PUSH/REMOTE VERIFIED4646f68b7e7e60d924a6beb25de93dcd2e597448;95PASS|
 |4.0b.2a|PUSH/REMOTE VERIFIEDb96e4be43dd1228c025cb0305fd7372b559b9fb3;31PASS|
-|4.0b.2b|READY:17 targeted PASS; normal push gate follows|
-|4.0c|NOT STARTED: exact04.1 candidate upgrade/rollback +fresh full qualification|
+|4.0b.2b|PUSH/REMOTE VERIFIEDed07bbc3640d3f0f89efbafb6545b22fe4514dd3;17PASS|
+|4.0c.1|READY: exact candidate/upgrade/security targeted PASS; freeze push follows|
+|4.0c.2|PENDING: fresh full287 Python; source/tests/packaged guide frozen after c.1|
 
 Read AGENTS in mandatory order, then3D acceptance/progress and Demo4D acceptance/
 QuickStart where available, then PHASE4-PLAN/this/ACCEPTANCE. Prior plan audit read
@@ -67,7 +68,7 @@ Next only after normal push/remote equality:Quick Join backend/CLI then UI/brows
 
 b.1 pushed and advertised remote matched4646f68 BEFORE this implementation.
 New Pairings session facade calls existing pinned admin/pair; sole durable state
-remains Registry join_codes/enrollment_ops. Hash-only RAM tickets,600s one-use
+remains Registry join_codes/enrollments. Hash-only RAM tickets,600s one-use
 node grants,8/session32global, owner CSRF/exact origin, no GET secret. Logout/
 restart discards tracking/session, DOES NOT revoke an unconsumed underlying code.
 CLI quick-join executes Core enrollment with ASC_HOME bound before import; pin,
@@ -114,3 +115,46 @@ outage PASS, all backend/security cases PASS. Manual screenshot390px inspected,
 no overflow; local screenshot contains no code and is not published. Node JS
 syntax checks and diff whitespace PASS. Candidate upgrade/full qualification
 still pending. Next only after feature push/remote equality:4.0c.
+
+## 4.0c.1 exact candidate and compatibility freeze
+
+b.2b pushed/remote matcheded07bbc BEFORE compatibility implementation. Added
+one separate exact published04.1 archive ->candidate test (no version-label mock).
+OLD installed backup/verify/stage/preflight/activate; two real pinned TLS replicas,
+old file SHA; OLD pending after actual successful lost ACK resumes with candidate,
+same operation/token/Node ID; candidate writes new file and creates NEW pending;
+NEW full backups then code-only rollback to exact04.1, old code reads BOTH files
+and resumes NEW pending identically. Cluster/Node/Volume/medium/credentials/PIN/
+Dashboard CA bytes retained, no automatic storage approval or schema migration.
+First new-test run caught incorrect test-only Registry table/field names; corrected
+to actual enrollments/enrollment_hash and payload.enrollment_id; source unchanged.
+Docs terminology corrected too. No historical regression weakened.
+
+Actual frozen candidate command `python -B -m unittest tests.test_phase4_upgrade
+ tests.test_demo_installer tests.test_demo_upgrade tests.test_quick_join_browser -v`:
+**13PASS0SKIP0FAIL79.748s**. Includes unsupported-format/capability downgrade,
+missing volume/corrupt backup, interrupted upgrade recovery and device guards.
+Extra exact persisted candidate byte-equality +upgrade test after final assertion:
+**1PASS0SKIP0FAIL19.422s**. New artifact equality checks lock source, not just version.
+Go fresh11PASS, vet/module verification and Linux amd64 build/Windows amd64 and
+Android ARM64 cross-build PASS; source unchanged from Core3D. Neither cross-build
+is runtime acceptance.
+
+Candidate ONLY, not GitHub Release/tag/public Android release: candidates/
+asc-demo-alpha-0.4.2-dev.tar.gz,196386bytes106regular public source/doc/asset files,
+SHA b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3,
+release IDf550f565836b44dc582001e3adabb34e1a594441bdd52dbfff51700b7c1e19c7.
+Deterministic rebuild byte-equal, manifest/file/SHA/path and unpacked secret audit
+PASS0findings. Existing03/04/04.1 archives byte-identical to Demo reference; all27
+original Core test files and entire external/failover/Go source unchanged.
+Packaged README explicitly routes candidate scope to packaged PHASE4-QUICK-JOIN;
+no new formats, schema changes, release URLs or phone installation claims.
+
+NEXT after c.1 normal push/remote equality: fresh `python -B -m unittest discover
+-s tests -v`,287 unique cases (original276 +9 QuickJoin +1 browser +1 archive upgrade).
+Freeze asc/tests/consensus/scripts/install.sh/tools/packaged guides/candidate bytes;
+only reporting docs may change until result. Full physical/network fault gates
+MUST actually pass; do not accept using targeted/historical evidence. Logs under
+/workspace/work/phase4, no private artifacts in GitHub. If interrupted, inspect
+python-full-result.json/process and complete remaining qualification; never claim
+Android or writable DR. Original branches must remain unchanged.
