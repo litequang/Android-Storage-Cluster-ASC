@@ -520,3 +520,10 @@ Android and writable DR remain NOT ACCEPTED.
 - tests/test_bridge_contract.py: malformed/duplicate/type alias/unknown/dangerous operations and secret-safe error boundary.
 - tests/test_phase4_upgrade.py: historical exact04.1->published Phase4.0 fixture pinned, old assertions unchanged;4.1 needs separate exact old-candidate upgrade test.
 - PHASE4-1-PLAN/PROGRESS/ACCEPTANCE own task. LOCAL-ENGINE-BRIDGE/THREAT-MODEL, CORE-QUORUM-DASHBOARD, ANDROID-APP-CONTRACT own IPC/actors/lifecycle/observer/future Android limits.
+
+## Phase4.1b.1 private IPC implementation
+- asc/bridge/private.py: private no-link owner file checks, exclusive config publication and bounded FULL request journal; not an engine DB.
+- asc/bridge/service.py: explicit provision/load, app scopes +actual Linux SO_PEERCRED UDS, eight bounded handlers, fixed mode/root, journal retry/secret-code hash and historical receipts.
+- asc/bridge/engine.py: existing state/installation inode binding, read-only approved volume adapter metrics and pinned Controller reachability, existing Quick Join subprocess via private stdin/ASC_HOME before imports; no identity init/approval/write probe.
+- asc/bridge/cli.py: explicit provision/run/status/hidden-code client; no shell/path/PID operations. Lifecycle unsupported until b.2.
+- tests/test_bridge.py: actual UDS/TLS/engine lost replies/restart/pending/no approval, scopes/peer credentials/frame limits, secret-safe receipts, root/guard/foreign socket/bounds.

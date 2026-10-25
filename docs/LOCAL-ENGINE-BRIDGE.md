@@ -1,6 +1,7 @@
 # Local Engine Bridge API v1
 
-Status: contract in4.1a; implementation/qualification tracked in PHASE4-1-PROGRESS.
+Status:4.1b.1 implements provisioning/private IPC/status/Quick Join; lifecycle still
+operation_not_supported until4.1b.2. Qualification: PHASE4-1-PROGRESS.
 Linux synthetic same-UID native client only, not a browser HTTP API or APK bridge.
 No cross-UID Termux access is claimed. No second Catalog/Storage/enrollment engine.
 
@@ -52,7 +53,9 @@ remains pending explicit owner storage/domain approval; observations may be UNKN
 Read retries sample fresh state, not cached authority. Mutating requests persist
 private FULL journal RECEIVED before dispatch, DONE with sanitized historical result
 after completion.<=256 permanent request records; exhausted journal refuses rather
-than evicting retry identity. Same ID/different app/intent conflicts. Same receipt
+than evicting retry identity. Same ID/different app/public binding or supplied code hash conflicts. A retry may
+omit the original code: existing pending context/receipt is reused; if the first
+worker never saved context, join_code_required asks for the original code. Same receipt
 is historical and tagged replayed, not current process/write authority. Interrupted
 join repeats existing engine operation; a saved identity is not silently replaced.
 No raw code/bearer/token is stored in bridge receipt; Core pending remains sensitive.
@@ -75,3 +78,31 @@ Termux->APK and cross-UID access are BLOCKED. See ANDROID-APP-CONTRACT and threa
 model. Bridge/controller owner browser session/node bearer are separate actors.
 Stop bridge+node and make NEW verified backups before compatible code rollback;
 retain control journal/auth separately, never restore old DB over new bytes.
+
+## Implemented source entry points (4.1b.1)
+
+`python -B -m asc.bridge.cli --control <NEW-private-control> provision --state
+<already-initialized-Demo-root> --allow-join` creates local-app authorization only.
+`--allow-lifecycle` reserves a scope; lifecycle is still unsupported in b.1.
+Run with the same private HOME/device environment, then `... --control <control>
+run`. Native Python client: `asc.bridge.service.call(control,'status')` or
+`call(control,'quick_join',params,request_id)`. Standalone CLI quick-join requires
+public controller/pin/cluster-id/name/request-id flags and hidden code input;
+`--resume` omits code for same binding/ID, `--new-code` needs a NEW request ID.
+No plaintext secret argument/environment or browser endpoint exists.
+
+Control format1 bridge.json binds installation UUID AND original state directory
+device/inode, app ID/hash/scopes and optional installed prefix. client.json holds
+only private local-app authorization, never a node token. requests.sqlite3 schema1
+stores request ID/app/public intent hash/code hash/RECEIVED or DONE/sanitized result.
+No raw code/app/node/admin credential in the journal. Engine pending file still
+contains private enrollment material under existing unchanged format.<=256 records.
+Reads are fresh, mutation receipt replay is tagged historical_receipt=true.
+
+b.1 graceful exit removes only its own exact socket inode; a foreign or stale
+socket is refused/preserved. Crash socket recovery and owned Node lifecycle are
+next b.2 gates, not claimed here. Root replacement/recovery/missing state/M51/
+unknown/malformed/foreign socket/app scope/secret response boundaries tested.
+Local status reads existing manifest/approved adapter and actual free space,
+never constructs a second Engine or probes writable/fsync. Those values remain
+null; ONLINE controller is pinned-info reachability only, writer_authority=false.

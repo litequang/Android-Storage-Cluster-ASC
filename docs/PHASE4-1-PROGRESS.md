@@ -7,8 +7,9 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 
 | Checkpoint | Current state |
 |---|---|
-|4.1a|READY:14 targeted PASS0skip/fail20.014s; normal push gate follows|
-|4.1b|NOT STARTED: private IPC/status/join, then controlled Node lifecycle|
+|4.1a|PUSH/REMOTE VERIFIED5c26ccf92337ddf2026702a1f8310d4f07b2d689;14PASS|
+|4.1b.1|READY:21 targeted PASS0skip/fail94.158s; normal push gate follows|
+|4.1b.2|NOT STARTED: controlled Node lifecycle and real process death|
 |4.1c|NOT STARTED: Core read-only observer/gateway/shared UI and actual faults|
 |4.1d|NOT STARTED: app contract qualification/exact upgrade/full regression|
 
@@ -41,3 +42,27 @@ Phase4.0 upgrade/new-state rollback still executes real TLS/bytes from original
 archive; M51/unknown and original DR platform guards PASS. No active server or
 engine authority added. Security/code/docs reviewed; next only after push/remote:
 4.1b.1 private UDS/status/durable Quick Join using existing engine.
+
+## 4.1b.1 private IPC/status/enrollment
+
+a pushed/remote matched5c26ccf BEFORE b.1. Implemented actual AF_UNIX/peer UID,
+private owner-only root/socket/files, separate app scopes and bounded FULL request
+journal. Existing marked-state/installation directory binding; approved adapter
+read/free-space only, writable/fsync null, no second Engine/DB/approval. Quick Join
+reuses existing worker via fixed argv +secret stdin, prefix/source guards and
+ASC_HOME before import. Same request binding+code-hash checks; codeless resume
+reuses saved pending/receipt. Success replay explicitly historical, not current
+proof. Runtime device guard runs BEFORE private control access.
+
+First target exposed a fixture HOME scope omission and missing-state error-label
+normalization. Corrected test environment and explicit setup_required refusal;
+no filesystem fallback/test weakening. Earlier corrected10PASS27.724s,21PASS89.561s,
+then7 guarded bridge PASS38.763s. Final after code-hash/codeless-resume refinement:
+`python -B -m unittest tests.test_bridge tests.test_bridge_contract
+ tests.test_quick_join -v`:**21PASS0SKIP0FAIL94.158s**. Includes actual lost UDS
+success response/durable replay, lost successful pinned TLS ACK+bridge restart/
+same Core token/operation, no auto storage approval, response/journal secret checks,
+M51/unknown-before-private-access, root replacement, framing/auth/scopes/foreign
+socket/journal bound and all old Quick Join cases. No Android/other-UID runtime
+acceptance. b.1 has graceful restart; hard-crash socket recovery/Node lifecycle
+still b.2 pending. Next only after normal push/remote match:4.1b.2.

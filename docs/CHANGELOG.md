@@ -438,3 +438,10 @@ Separate feature from verified Phase4.0; strict versioned local app IPC contract
 threat model/Core read-only observer/native app boundaries. No active bridge yet.
 Historical exact Phase4.0 archive regression stays pinned; new source0.4.3-dev,
 unchanged base formats/old packages, not Android release. Qualification pending.
+
+## Phase4.1b.1 — authenticated local engine facade
+Private same-UID UDS/app scopes, bounded FULL retries and read-only state/approved
+volume status reuse existing services. Actual Quick Join via existing pinned
+worker, lost ACK/restart/identity and pending-owner-approval reporting; no auto init,
+new Catalog/Engine/approval/lifecycle or browser/Android access. Qualification in
+Phase4.1 progress; base formats and old candidate archives unchanged.

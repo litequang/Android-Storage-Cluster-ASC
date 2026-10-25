@@ -434,3 +434,15 @@ code keeps the same operation. identity_present +unknown confirmation is not a
 claim that Controller is reachable. A lost pairing ticket after logout/restart
 only loses UI tracking; it does not revoke a still-valid Core code. Registered
 node still needs manual storage setup and owner-approved independent domain.
+
+## Phase4.1 local bridge
+Use LOCAL-ENGINE-BRIDGE. setup_required/state_incompatible/recovery_read_only/
+installation_mismatch: preserve original initialized state/identity, no reinit or
+copied markers. application_unauthorized/scope_denied: local-app grant is distinct
+from node/admin; operator provisioning/scopes, never copy a node token. request_id_
+conflict: retain original public binding and code; explicit replacement needs NEW
+bridge request ID but existing Core operation. join_unconfirmed: preserve pending,
+retry same ID/--resume; no duplicate identity. request_limit: journal lifetime bound,
+no unsafe automatic eviction. socket_already_exists: b.1 preserves stale/foreign
+socket; do not unlink a socket/lock blindly. Writable/fsync null is honest read-only
+status, not permission denial and not readiness from process existence.

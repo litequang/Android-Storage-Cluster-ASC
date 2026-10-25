@@ -490,3 +490,9 @@ LOCAL-ENGINE-BRIDGE defines version1 authenticated same-UID UDS frames (not brow
 HTTP); existing enrollment wire unchanged. CORE-QUORUM-DASHBOARD defines planned
 owner-only read-only observation endpoint and explicit browser mode. No writer,
 PID/path/shell, membership/recovery/GC/approval protocol is authorized.
+
+Phase4.1b.1 implements the LOCAL-ENGINE-BRIDGE version1 UDS contract. Actual peer
+UID plus distinct app grant/scopes; bounded newline frames/secret-safe responses.
+Reads fresh; same-ID binding/code-hash checks and FULL receipt replay. Code may be
+omitted on resume while original pending/receipt retains operation. No enrollment
+wire or browser API changes; no lifecycle implementation yet.

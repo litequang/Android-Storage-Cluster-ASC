@@ -455,3 +455,11 @@ Registry join_codes/enrollments/nodes/catalog_nodes remain authoritative.
 RECOVERY_READ_ONLY markers forbid Demo init/adoption. Candidate code-only rollback
 requires fresh full private backup and compatibility preflight; final exact04.1
 candidate upgrade/rollback qualification is still pending.
+
+## Phase4.1 bridge control1 (separate private root)
+bridge.json binds fixed initialized state installation UUID/dev-inode, one app UUID,
+local-app bearer SHA/scopes and optional installed prefix. client.json has the raw
+private app credential only. requests.sqlite3 schema1: request_id/app_id/public
+intent hash/code SHA/RECEIVED or DONE/sanitized historical result,<=256 permanent
+rows. This is not a Catalog/Storage/Node identity database. Engine pending schema,
+base Demo/Core/registry/manifest/cache formats unchanged; no auto init/migration.
