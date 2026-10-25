@@ -45,3 +45,8 @@ alive but ADB not boot-ready; missingKVM, initial parent-reaping/staleAVD and pr
 adb hostname-listener errors diagnosed (use default-loopback tcp:5038). These are
 NOT emulator PASS; actual runtime qualification remains e. Build toolchain permits
 independent native foundation work, never claims a Node. Next b after push/remote.
+
+4.2a source8667923 pushed/remote verified. Publication review caught generated
+Windows gradlew.bat CRLF as trailing whitespace; the shell did not stop before
+commit. Corrected line endings in a NORMAL follow-up (no history rewrite) and
+reran complete tracked/index audit before moving on. No security/test gate weakened.
