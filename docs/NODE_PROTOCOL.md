@@ -449,3 +449,6 @@ GET /api/files/ID/content requires CSRF, verifies existing fallback into private
 before attachment output with X-ASC-SHA256. POST /api/logout {} invalidates session.
 32 MiB maximum browser body/download, one transfer, eight request workers; metadata
 max 8 KiB, no chunked/ambiguous frames. No node approve/policy/delete/GC browser route.
+
+### DEMO.4d.2 owner local probe (no wire change)
+`ascdemo storage-status` requires the existing enrolled/initialized Demo state and stopped local Storage Node; reuses existing capability shape with readable/writable/fsync_tested/state/last_error. Demo prefix binding/compatibility/journal, root operation and agent/engine OS ownership guards apply; Controller may remain running. No data/volume initialization, network authorization change or new HTTP endpoint. Private local owner authority only; M51/unknown still refused before probe.

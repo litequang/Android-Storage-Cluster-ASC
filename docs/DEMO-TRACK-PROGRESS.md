@@ -35,8 +35,9 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 
 ## Current DEMO.4d next action
 
-New task from clean fetched/remote ef6470d:4d.1 fix implemented,61 targeted PASS;
-normal publication/verification pending before4d.2 runtime/browser faults. Then
+New task from clean fetched/remote ef6470d:4d.1 PUSHED/REMOTE VERIFIED
+5050a7912baa58b51d1bf020c758aeb52f97918f,61 targeted PASS.4d.2 runtime/browser
+implemented, final targeted/publication pending. Then
 4d.3 exact0.3/0.4 direct upgrades, fresh full qualification/package0.4.1.
 See DEMO4D-PLAN. Historical0.4 evidence below is not0.4.1 qualification.
 
@@ -488,3 +489,40 @@ failed fsync, security authorization and existing TLS three-node regressions.
 No Android PASS or0.4.1 source-ready claim;4d.2/3 still pending. Rollback: stop/use
 preserved compatible source with NEW full backup, no DB restore; old Android bug
 returns on affected host. All logs/state stay private synthetic workspace only.
+
+## DEMO.4d.2 integration — implementation evidence
+
+4d.1 normal push/advertised remote matched5050a7912baa58b51d1bf020c758aeb52f97918f
+before4d.2. Core WIP still acea2ae. Private test-only launcher denies root open in
+actual Controller/node processes; no product fault flag or identity guard bypass.
+Initial fixture incorrectly made Python's builtin capability introspection see the
+wrapper as lacking dir_fd; corrected only wrapper metadata to advertise the real
+underlying capability it delegates. Original failing assertion retained. Independent
+root-denied runtime test then1PASS7.861s: actual enrolled TLS nodes, measured
+write/read/fsync, two physical domain copies/SHA, Dashboard fallback after actual
+node stop, restart/restored protection/unchanged markers and node credentials.
+
+New local owner storage-status reuses existing capability probe under device/state/
+prefix/operation/agent/engine guards. No initialization or new HTTP route. It refuses
+running node; real stopped-node probe succeeds; new flow also tests M51/unknown
+refusal with free agent ownership so unrelated lock cannot falsely satisfy guard.
+Final combined36-case targeted run then normal push/remote receipt follows.
+No0.4.1 release/full or Android claim yet; exact published0.3 and0.4 upgrade/full
+fault gates/public package remain4d.3. Rollback retains same state/identities, old
+Android root-open defect returns; no DB restore or marker recreation.
+
+DEMO.4d.2 final actual command: `python -B -m unittest tests.test_android_volumes
+tests.test_demo_android_storage tests.test_demo_dashboard tests.test_demo_dashboard_browser
+tests.test_demo_installer tests.test_demo_lan tests.test_demo_upgrade
+tests.test_demo_release_upgrade -v`: **36 PASS /0 SKIP /0 FAIL/ERROR,126.761s**.
+After its suite was loaded, added ancestor-symlink-back-to-SAME-medium race regression
+and ran it separately: **1 PASS /0skip,0.004s**. It proves medium fstat alone is not
+a substitute for ancestor binding. No product change followed the successful run.
+Dashboard real Chromium normal CA trust, auth/CSRF/XSS/mobile/upload/replica/SHA/
+node-offline/Controller-network-offline gates PASS; installer/installed backup/
+upgrade/rollback/security/guards PASS. Root-denied actual runtime uses same services,
+not simulated success. Local status live-node/M51/unknown refusals PASS.
+Changed files: Demo CLI local status, tests/android_root_denial.py (not packaged),
+tests/test_demo_android_storage.py, extra ancestor case in test_android_volumes.py,
+CODEMAP/protocol/security/troubleshooting/changelog/progress. Normal Demo-only
+publication/secrets/remote review now; no0.4.1 final-release claim until4d.3.

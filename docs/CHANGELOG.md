@@ -343,3 +343,6 @@ in DEMO4-ACCEPTANCE/DEMO-TRACK-PROGRESS. Android runtime remains NOT TESTED.
 
 ## DEMO.4d.1 — Android-compatible approved-volume anchor (2026-10-25)
 Reproduced old write_denied when only filesystem-root read-open is denied. POSIX adapter now opens only approved root, binds medium/marker/descriptors and checks ancestor/folder replacements before/after no-follow child IO. Capacity/inventory/fsync/cleanup use pinned descriptors. Probe success is reported only after actual write/read/SHA/fsync/owned cleanup; collision/changed/linked files preserved. Windows handle adapter/base formats/IDs unchanged; shared storage files changed on Demo branch only.61 targeted storage/security/sandbox/TLS tests PASS0skip17.030s; no Android/runtime or0.4.1 release claim yet.
+
+## DEMO.4d.2 — actual root-denied Demo runtime / local volume status
+Test-only root denial now exercises real Controller+Dashboard/two-node TLS runtime with measured probes, two independent synthetic replicas, SHA/fallback/offline/restart. `ascdemo storage-status` reuses stopped-node Engine probe with existing device/state/ownership guards; no initialization or network API added. Normal Dashboard/Chromium regression is rerun. Linux synthetic only;0.4.1 release/full qualification follows4d.3.

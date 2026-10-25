@@ -88,6 +88,18 @@ def execute(args):
                     raise ValueError('existing pinned enrollment differs; preserve identity')
             core_call(root / 'node', ['node-join', '--controller', args.controller, '--pin', args.pin, '--name', args.name])
         return {'enrolled': True, 'identity_preserved': True}
+    if args.command == 'storage-status':
+        from ..storage.runtime import load_config
+        from ..storage.engine import StorageEngine
+        home = root / 'node'
+        with foreground_lock(root, 'demo-operation'), foreground_lock(home, 'agent'):
+            inspect_state(root)
+            if os.environ.get('ASC_DEMO_PREFIX'):
+                upgrade.startup_check(prefix, root)
+            cfg = read_json(home / 'node.json')
+            settings = load_config(home)
+            with StorageEngine(home / 'storage', cfg['node_id'], settings['max_upload'], settings['rate']) as engine:
+                return engine.capabilities()  # Actual scoped probe; existing identities only.
     if args.command == 'storage-init':
         from ..storage.runtime import setup, load_config
         from ..storage.engine import StorageEngine
@@ -184,6 +196,7 @@ def main():
     for field in ('node-id', 'volume-id', 'origin', 'pin', 'domain'):
         approval.add_argument('--' + field, required=True)
     commands.add_parser('nodes')
+    commands.add_parser('storage-status', help='actual volume read/write/fsync probe; stop the local Storage Node first')
     files = commands.add_parser('files')
     files.add_argument('--offset', type=int, default=0)
     replicas = commands.add_parser('replicas')

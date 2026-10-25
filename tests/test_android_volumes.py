@@ -128,6 +128,17 @@ class AndroidVolumeTests(unittest.TestCase):
         self.assertEqual(list(stage.iterdir()), [])
         self.assertEqual(list((self.root / 'old-staging').iterdir()), [])
 
+    def test_ancestor_symlink_swap_back_to_same_medium_is_still_refused(self):
+        # Even a symlink back to the SAME approved inode cannot bypass ancestor
+        # binding: direct root fstat alone would be insufficient for this race.
+        parent = self.root.parent
+        moved = parent.with_name('original-app')
+        def swap():
+            parent.rename(moved); parent.symlink_to(moved, target_is_directory=True)
+        self.swap_on_open(str(self.root), swap, self.create_probe)
+        self.assertEqual(list((moved / 'data/staging').iterdir()), [])
+        self.assertEqual((moved / 'data/.asc-volume.json').read_bytes(), self.marker)
+
     def test_root_replacement_with_cloned_marker_fails_before_body_io(self):
         original_root = self.root.parent / 'original-root'
         def swap():

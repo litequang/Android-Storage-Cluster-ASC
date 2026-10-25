@@ -403,3 +403,13 @@ publication receipt in DEMO-TRACK-PROGRESS; Android/real CA-install UX NOT TESTE
 - `LocalVolume.check/open/remove_staging/sync_directory/entries/disk_usage/allocated_files`: child no-follow descriptor IO, measured fd statvfs/scandir/fsync, single-link cleanup and optional expected probe identity. `VolumeManager.inspect`: only owned probe cleanup, success after all actual IO/cleanup, no collision deletion.
 - `asc/storage/engine.py:_space/inventory`: use adapter descriptor-based capacity/inventory; other upload/commit/download/recovery/state/authorization unchanged.
 - `tests/test_android_volumes.py`:13 Linux/Android-like root-open denial, actual file/SHA/fsync/probe cleanup/restart, real unprivileged directory EACCES, root/folder/marker/link swaps/traversal/hardlinks/collision/unsupported-primitives/failure metrics. Linux synthetic only. Plan/handoff: DEMO4D-PLAN / DEMO-TRACK-PROGRESS.
+
+## DEMO.4d.2 root-denied runtime / owner probe
+- `asc/demo/cli.py:storage-status`: reuse existing StorageEngine.capabilities on the enrolled node home under Demo operation + node agent ownership, validated installed prefix/state/schema. No initialization, config change, network route or identity recreation; running node refuses local inspection. Owner can confirm real read/write/fsync after upgrading before restarting that node.
+- `tests/android_root_denial.py`: non-packaged child-only syscall fault wrapper; denies '/' and delegates all other actual OS IO, retaining real dir_fd capability metadata. Sets no product feature/permission bypass.
+- `tests/test_demo_android_storage.py`: Controller/Dashboard+two actual enrolled pinned-TLS nodes under root denial, real probe/SHA/fsync/physical replicas, stopped-node fallback/restart/identity preservation and new stopped-node status/M51/unknown guard checks. Existing browser/API regressions remain intact.
+
+DEMO.4d.2 additional ancestor race verifies a symlink back to the same approved
+root inode still fails namespace binding, without touching the original bytes.
+Current AndroidVolumeTests has14cases; historical4d.1 had13. Final combined36PASS
+plus separately executed new ancestor1PASS; see progress for precise provenance.
