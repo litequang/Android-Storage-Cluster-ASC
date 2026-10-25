@@ -604,3 +604,5 @@ bridge/Core read-only only; Android/native migration/writable DR remain unqualif
 - ANDROID-NATIVE-IPC/OPERATIONS/PILOT: versioned Binder, developer/owner qualification and honest unsupported Native Node/migration boundaries.
 
 - NetworkReadinessTest: actual default-network precondition; NativeLifecycle waits observed onAvailable before a real loss fault. ControllerBindingTest failure diagnostic emits only public primitive error category. Direct NAT ConnectionRefused remains NOT PASSED; explicit dev-only adb-reverse-loopback qualifies TLS/protocol, never LAN. Tool removes only owned no-rebind mapping, no automatic transport fallback.
+
+Phase4.2 regression fixture: DashboardAPITests.start waits a CA-verified Dashboard TLS handshake separately from Core API readiness; sends no HTTP/cookie before original first-response401/session/key assertions. No runtime/Core change.

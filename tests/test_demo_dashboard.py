@@ -66,6 +66,21 @@ class DashboardAPITests(unittest.TestCase):
         process = subprocess.Popen(['sh', str(self.source / 'scripts/demo-alpha.sh'), '--state', str(root), command, '--dashboard'],
                                    env=self.env, cwd=self.root, stdout=log, stderr=log, text=True)
         self.addCleanup(self.stop, process)
+        # Controller API readiness does not imply this separate TLS listener is up.
+        # Probe ONLY a CA-verified handshake before the first HTTP/session assertion;
+        # never retry/consume an old cookie or accept a transient HTTP200 as readiness.
+        context = ssl.create_default_context(cafile=str(root / 'dashboard/ca.crt'))
+        def dashboard_tls_ready():
+            if process.poll() is not None:
+                self.fail('synthetic dashboard exited before TLS readiness')
+            connection = http.client.HTTPSConnection('127.0.0.1', self.dashboard_port,
+                                                     context=context, timeout=1)
+            try:
+                connection.connect()
+                return True
+            finally:
+                connection.close()
+        self.wait_for(dashboard_tls_ready)
         return process
 
     def setUp(self):

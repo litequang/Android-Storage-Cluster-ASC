@@ -509,3 +509,7 @@ cluster/mode, no credentials/enrollment/authority.13 Android+offline/reconnect/
 
 ## Phase4.2e native qualification foundation (internal debug)
 Added native M51/unknown fence, stable Binder transaction IDs, actual different-signature/UID bind-denial fixture, real default-network fault/code clearing, test-only exact prior-APK upgrade/process-death/downgrade refusal gates and CE/DE backup exclusion. Native Node/enrollment/FGS/Core observer/SAF/migration remain explicitly unsupported; no production or phone acceptance. Qualification receipts and APK inventory follow in PHASE4-2 documents.
+
+Phase4.2e.2a regression fixture hardening: wait CA-verified Dashboard TLS readiness
+independently of Controller API before first HTTP/session request. Preserve401/key/
+CSRF assertions and source/runtime/archives; no authentication retry or test skip.

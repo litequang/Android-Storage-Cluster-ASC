@@ -13,7 +13,8 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |4.2c|PUSH/REMOTE VERIFIED29c2985c839c6b20a0f6a6f3f4142c38b2f20847;11 Android/5 Linux/7 JVM PASS|
 |4.2d|PUSH/REMOTE VERIFIED8b901310da04f33e82165756d5bcd8ac36349d82;13 Android +offline1/reconnect1;6 Python/7 JVM PASS|
 |4.2e.1|PUSH/REMOTE VERIFIED67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a; limited native FOUNDATION/dev TLS only|
-|4.2e.2|RUNNING fresh full Python317; Go/fault/package final receipt pending; NOT ACCEPTED|
+|4.2e.2a|Targeted fixture fix PASS; full attempt1 ERROR recorded; push/remote then fresh317 restart|
+|4.2e.2|PENDING new fresh full Python/Go/fault/package; NOT ACCEPTED|
 
 Tools/logs: /workspace/asc-android-dev (activate.sh), /workspace/work/phase4-2;
 no private state/signing/SDK/cache in Git. Existing Python/Go activate.sh unchanged.
@@ -266,3 +267,22 @@ Go/vet/modverify/Linux-Windows-Android builds, assert all retained fault banners
 recheck frozen hashes and remote APK/protected branches. If interrupted without
 FINISHED/PASS evidence, keep full gate PENDING and run fresh again; never reuse
 old4.1 full311 as a new4.2 full result. Full native Phase4.2 still NOT ACCEPTED.
+
+### Fresh full attempt1 failed — no acceptance inferred
+
+Source67fdd0c first fresh full stopped after76cases/275.808s,1ERROR/0skip:
+Dashboard unknown-capacity/restart session gate ConnectionRefusedError. Frozen
+source unchanged. Core API readiness preceded separate Dashboard TLS listener;
+original fixture probed only Core then immediately queried Dashboard. Fix TEST
+precondition: wait CA-verified TLS handshake on Dashboard, no HTTP request/cookie,
+then keep original FIRST response401 and exact retained key assertions unchanged.
+No production/asc/consensus/archive changes, no weakened security or skipped test.
+Preserved failed log/result privately before a new fresh full. Targeted Dashboard
+suite and strict restart case repeats pending; normal commit/push/remote BEFORE
+restarting full317. Full e.2 remains NOT ACCEPTED.
+
+Fixture targeted final:6 Dashboard PASS29.498s; strict old-session401/restart repeated
+3times PASS20.901s; real trusted-TLS browser upload/mobile/XSS/replicaSHA/offline
+integration1PASS9.671s.0skip/fail/error. No original assertions changed; TLS handshake
+precondition stronger than TCP-listening alone and sends no HTTP/cookie. No runtime/
+Core/native APK/archive change. Normal commit/push/remote before fresh full restart.
