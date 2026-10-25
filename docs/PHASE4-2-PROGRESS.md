@@ -14,7 +14,7 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |4.2d|PUSH/REMOTE VERIFIED8b901310da04f33e82165756d5bcd8ac36349d82;13 Android +offline1/reconnect1;6 Python/7 JVM PASS|
 |4.2e.1|PUSH/REMOTE VERIFIED67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a; limited native FOUNDATION/dev TLS only|
 |4.2e.2a|PUSH/REMOTE VERIFIEDc7dabb041ee06ed27de7077f1ceb7c51f59288a1; targeted6+repeat3+browser1 PASS|
-|4.2e.2|Fresh317Python/11Go/all retained faults PASS; limited FOUNDATION report/package ready; full Phase4.2 NOT ACCEPTED|
+|4.2e.2|PUSH/REMOTE VERIFIEDb5fe3de100a5ae0f7383a0126d80ad82044b5e44;317Python/11Go/62Core faults PASS; full Phase4.2 NOT ACCEPTED|
 
 Tools/logs: /workspace/asc-android-dev (activate.sh), /workspace/work/phase4-2;
 no private state/signing/SDK/cache in Git. Existing Python/Go activate.sh unchanged.
@@ -362,3 +362,14 @@ format1/AES/private probe. Signer remains PRIVATE /workspace/asc-android-dev/use
 debug.keystore; a new account/key cannot update the published APK in place. Never
 put key/password in GitHub or uninstall/clear data to bypass signature/version.
 No real phone/M51/production/system/Termux access performed or authorized for Codex.
+
+### Final payload publication receipt
+
+b5fe3de100a5ae0f7383a0126d80ad82044b5e44 normal push/advertised HEAD/independent
+bare fetch matched. Exact published APK SHAab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705 and all243 frozen inputs matched again; old0.4.3 candidate
+checksum and5 protected branch heads unchanged.303 tracked/index paths reviewed,
+0 findings under bounded scanner/inventory scope. Tree clean before this DOC/receipt
+follow-up, no source/tests/guides/APK changes. Public machine evidence includes that
+verified payload receipt. Final documentation-only feature HEAD follows in Git log;
+normal push/remote check repeats, never force/merge/reset. Full Phase4.2 NOT ACCEPTED
+and remaining4.2 work above still applies; no Node/phone/production readiness claim.

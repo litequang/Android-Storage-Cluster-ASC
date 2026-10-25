@@ -165,5 +165,20 @@
     "writable recovery staging",
     "Termux private-state adoption",
     "uninstall/data-clear/forced downgrade"
-  ]
+  ],
+  "final_payload_publication_receipt": {
+    "published_native_apk_sha256": "ab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705",
+    "branch": "feature/phase4-2-android-native",
+    "remote_head": "b5fe3de100a5ae0f7383a0126d80ad82044b5e44",
+    "independent_bare_fetch": true,
+    "frozen_paths_verified": 243,
+    "published_archive_sha256": "96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04",
+    "protected_refs": {
+      "refs/heads/feature/phase4-1-local-engine-quorum-ui": "f42fffe7aa3fac8884d169bed61d884b0d777b33",
+      "refs/heads/feature/phase4-core-demo-integration": "b9e75779670d5565d05a324751af02e48d2538eb",
+      "refs/heads/feature/phase3d-external-dr": "ca2504fa3bc9f2eef706cdf50ddf6835182ada53",
+      "refs/heads/wip/phase2a-raft-qualification": "acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c",
+      "refs/heads/feature/android-demo-alpha": "c9c2660b5aad9fe347cb0b216f0d691144f74caa"
+    }
+  }
 }
