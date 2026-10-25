@@ -12,7 +12,7 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 |4.0b.2a|PUSH/REMOTE VERIFIEDb96e4be43dd1228c025cb0305fd7372b559b9fb3;31PASS|
 |4.0b.2b|PUSH/REMOTE VERIFIEDed07bbc3640d3f0f89efbafb6545b22fe4514dd3;17PASS|
 |4.0c.1|PUSH/REMOTE VERIFIED4d1758ddac926853ffc43ae9b1aee428ab63bccf; candidate SHA fetched/verified|
-|4.0c.2|PASS: fresh287 Python /0skip/fail; all fault groups; final reporting push follows|
+|4.0c.2|PUSH/REMOTE VERIFIEDf0d9bd1e68354056bee756723ccff0aa78af848f;287PASS0skip/fail, all faults; independent clone/source/SHA verified|
 
 Read AGENTS in mandatory order, then3D acceptance/progress and Demo4D acceptance/
 QuickStart where available, then PHASE4-PLAN/this/ACCEPTANCE. Prior plan audit read
@@ -207,3 +207,21 @@ BLOCKED. See rewritten PHASE4-ACCEPTANCE for actual matrix, upgrade/rollback and
 Next normal push/report verification only; no source edits or repeated full needed
 unless a real new change/failure/concern appears. Future development starts from
 this feature's qualified state; do not redo0–3D or re-merge the whole Demo branch.
+
+## Published acceptance receipt / next work
+
+Acceptance normal-pushed and advertised remote matched **f0d9bd1e68354056bee756723ccff0aa78af848f**.
+Independent NEW bare clone from GitHub at 2026-10-25T11:35:31.785820+00:00 verifies that commit,
+all164 frozen path hashes and published candidate SHA
+b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3 (196386bytes). Tracked/index and unpacked
+candidate security audit0findings; working tree clean at verification. Remote
+Core3D ca2504f, Demo c9c2660 and Core WIP acea2ae unchanged. No whole Demo merge,
+force/main/original-branch push or post-full source/test/packaged-guide change.
+This final receipt changes reporting only; normal push/remote verification follows.
+
+Completed requested4.0a/b/c Linux synthetic foundation, source candidate0.4.2-dev.
+No unfinished implementation for this bounded task. Future4.1 is NEW scope:
+qualified local-engine/native bridge +Core quorum UI adapter, explicit migration/
+Keystore/SAF contracts, then owner-approved real-device qualification. Do not
+reimplement existing Core/Demo or activate writable DR. Operator guide and exact
+upgrade/NEW-state rollback limits: PHASE4-QUICK-JOIN and PHASE4-ACCEPTANCE.

@@ -128,4 +128,8 @@ and a Core quorum UI adapter; Keystore/SAF and Termux-to-APK migration need expl
 contracts and tests. Termux paths/UID/medium/keys cannot be promised portable.
 Single-writer-to-Raft migration and writable DR require separate authority/fencing/
 key-recovery qualification; no recovered writer, synthetic quorum or invented epoch.
-Final acceptance/docs normal push and advertised remote verification follow.
+Acceptance normal-pushed/advertised remote verified at `f0d9bd1e68354056bee756723ccff0aa78af848f`.
+Independent fresh bare clone at 2026-10-25T11:35:31.785820+00:00 matches all164 frozen source/
+test/packaged-guide/candidate hashes and published archive SHA. Original Core3D,
+Demo and Core WIP refs unchanged. Final receipt is reporting-only; final remote
+HEAD is recorded in the operator handoff, not claimed by a self-referential hash.
