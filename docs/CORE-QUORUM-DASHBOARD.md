@@ -63,10 +63,10 @@ role/term +committed authority binding, still NO writer capability. An unreachab
 Controller is OFFLINE but its voter process UNKNOWN until observed. Remembered
 index floor is RAM +operator minimum; restart does not prove globally newest history.
 
-RecoveryObserver(root,trusted_manifest_SHA,expected_cluster,minimum_index) holds an
+RecoveryObserver(root,trusted_manifest_SHA,expected_cluster,minimum_index,expected_epoch=None) holds an
 existing shared stage lock and uses Core3D full-byte anchored verification, then
 same sanitized projection. Valid stage =>RECOVERY READ-ONLY, credentials/writer=false;
-corruption/wrong anchor/floor/missing bytes=>UNKNOWN, never a healthy recovered cluster.
+corruption/wrong anchor/floor/missing bytes or gateway expected-epoch mismatch=>UNKNOWN, never a healthy recovered cluster.
 Disposable existing Core SQL workspace is query_only and in RAM solely to reuse
 Catalog/Views logic; it is not a second persistent Catalog or authority fallback.
 

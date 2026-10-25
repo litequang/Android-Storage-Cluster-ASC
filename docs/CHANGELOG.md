@@ -464,3 +464,10 @@ Reuses owner sessions, TLS generator/security handler and responsive Demo assets
 with explicit mode isolation and unique cookie scope. Core policy3/Controller/
 quorum/jobs/historical backup views; no storage/runtime/authority mutation. Real
 Chromium transport-partition/reconnect and existing Demo browser regression gates.
+
+## Phase4.1d — exact compatibility candidate / app contract qualification
+Source-only0.4.3-dev adds public operator/bridge/Core/native contracts, unchanged
+base formats, immutable original packages and separate private control exclusions.
+Exact0.4.2 upgrade/new-state code rollback test includes installed bridge/identity
+preservation and pending both directions. Recovery observer binds expected epoch,
+wrong epoch remains UNKNOWN. Android runtime/APK/migration and writable DR blocked.

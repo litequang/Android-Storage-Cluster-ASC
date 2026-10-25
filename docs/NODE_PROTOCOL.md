@@ -506,3 +506,12 @@ projection/hash/token/grant. No ensure_ready/takeover/CAS. Follower/failed stron
 read returns explicit stale/null availability; gateway must check all provisioned
 identities and never infer quorum from roles alone. Full contract in
 CORE-QUORUM-DASHBOARD; no Core browser gateway route before c.2.
+
+### Phase4.1 owner gateway mode contract
+Shared browser GET /api/mode exposes only explicit mode/read_only; authenticated
+/api/session adds those fields. Core/recovery modes allow only authenticated GET
+/api/state and /api/files/<UUID>, plus existing secured login/logout. All other
+Core routes403 (including downloads/mutations); Demo routes are unchanged in Demo
+mode. Unique owner cookie per gateway, same Origin/CSRF/CA policies. No browser
+node credentials or local-app authorization. See CORE-QUORUM-DASHBOARD/API contract;
+owner observation never supplies writer capability, even with confirmed Barrier.

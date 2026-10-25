@@ -71,10 +71,12 @@ class Observer:
 
 class RecoveryObserver:
     """Explicit passive stage mode; verify bytes, never activate/import a runtime."""
-    def __init__(self,root,anchor,cluster_id,minimum_index):
+    def __init__(self,root,anchor,cluster_id,minimum_index,expected_epoch=None):
         from pathlib import Path
         from ..external.format import sha
         identifier(cluster_id);sha(anchor)
+        if expected_epoch is not None:identifier(expected_epoch)
+        self.epoch=expected_epoch
         if type(minimum_index) is not int or minimum_index<0:raise ValueError('invalid history floor')
         self.root,self.anchor,self.cluster,self.floor=Path(root),anchor,cluster_id,minimum_index
 
@@ -91,7 +93,8 @@ class RecoveryObserver:
                 try:
                     report=verify_stage_tree(root,self.anchor)
                     manifest,metadata,doc=load(root)
-                    if manifest['cluster_id']!=self.cluster or manifest['source_index']<self.floor:
+                    if (manifest['cluster_id']!=self.cluster or manifest['source_index']<self.floor or
+                            self.epoch is not None and manifest['epoch']!=self.epoch):
                         raise ValueError()
                     view={'document':doc,'state':{'index':manifest['source_index'],'term':manifest['source_term'],
                         'document_sha256':hashlib.sha256(metadata).hexdigest()}}

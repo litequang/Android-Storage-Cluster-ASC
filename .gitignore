@@ -149,3 +149,10 @@ READY.json
 
 # Phase4 source-only synthetic candidate, never an Android release/private backup.
 !/candidates/asc-demo-alpha-0.4.2-dev.tar.gz
+
+# Phase4.1 private local-app/gateway control material (never source).
+bridge.json
+client.json
+gateway.json
+socket.json
+!/candidates/asc-demo-alpha-0.4.3-dev.tar.gz

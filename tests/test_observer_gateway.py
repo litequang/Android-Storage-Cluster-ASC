@@ -145,3 +145,13 @@ class RecoveryGatewayTests(unittest.TestCase):
                 self.assertEqual(self.browser_request('POST','/api/recovery/activate',{})[0],403)
             self.assertEqual(before,{p.relative_to(root):p.read_bytes() for p in root.rglob('*') if p.is_file()})
             self.assertFalse((root/'registry.sqlite3').exists());self.assertFalse((root/'controller.json').exists())
+            # A trusted manifest from another epoch cannot silently satisfy
+            # this explicitly bound gateway, despite matching Cluster ID.
+            cfg=private.read(self.gateway_root/'gateway.json')
+            cfg['epoch']='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'
+            private.replace(self.gateway_root/'gateway.json',cfg)
+            with gateway.Runtime(self.gateway_root) as runtime:
+                self.owner_login(runtime)
+                state=json.loads(self.browser_request('GET','/api/state')[2])
+                self.assertEqual(state['runtime']['state'],'UNKNOWN')
+                self.assertFalse(state['writer_authority'])

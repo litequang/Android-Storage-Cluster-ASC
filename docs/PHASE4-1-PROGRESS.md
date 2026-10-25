@@ -11,8 +11,9 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 |4.1b.1|PUSH/REMOTE VERIFIEDfca0c37349ec65ce62220da52f9c1e8d4b6ae632;21PASS|
 |4.1b.2|PUSH/REMOTE VERIFIED182d366a53548ab08364edb9ad23f5bf64a35ff7;19PASS|
 |4.1c.1|PUSH/REMOTE VERIFIEDfb05323708f3147cee1a8e9a4a3093ae39306d9a;28PASS|
-|4.1c.2|READY:15 targeted PASS0skip/fail149.641s; final browser1PASS54.828s; normal push gate follows|
-|4.1d|NOT STARTED: app contract qualification/exact upgrade/full regression|
+|4.1c.2|PUSH/REMOTE VERIFIED40fb7c788a95434387e53d04065ddf4ca7721202;15PASS+final browser1PASS|
+|4.1d.1|READY:38 targeted PASS0skip/fail224.827s; source freeze/push gate follows|
+|4.1d.2|NOT STARTED: fresh full311 Python/Go/fault/build acceptance|
 
 Read AGENTS then PHASE4-1-PLAN/this/ACCEPTANCE and bridge/threat/Core adapter/app
 contracts. New user authorization supersedes prior4.0 no-bridge/Core-UI language
@@ -152,3 +153,38 @@ Final browser repeat covers final dialog/empty-state text change:1PASS0skip/fail
 No Android/native/cross-UID/production or writable DR acceptance. Next checkpoint
 only after normal push/remote equality:4.1d exact archive compatibility and fresh
 full qualification/source-only candidate (not Android release).
+
+## 4.1d.1 exact source compatibility / source-only candidate freeze
+
+c.2 pushed/remote matched40fb7c7 BEFORE d.1. Added standalone exact published
+Phase4.0 archive ->new source candidate test. Original pending BOTH directions,
+new-state code rollback, old+new download SHA/volume/Node/Cluster/CA/credentials,
+installed private bridge status/root retained and unsupported old API refusal.
+Initial1PASS0skip/fail21.408s; not reused for final frozen source. Final targeted
+combined running after expected-epoch binding hardening. Wrong epoch must remain
+UNKNOWN even when trusted manifest cluster matches; no recovery activation.
+
+Candidate0.4.3-dev SOURCE ONLY,124 public files, deterministic exact source rebuild
+and unpacked secret/path audit PASS. All original archives/candidate0.4.2 immutable;
+all27 original Core test files byte-identical; asc/external and Go unchanged.
+Core existing service change remains only owner observer delegation. Native app/
+Keystore/SAF/Binder/Doze/migration contract +concrete Phase4.2 gates retained; PATH
+probes found no adb/sdkmanager/gradle, no APK/toolchain/runtime claim. Operator
+instructions PHASE4-1-OPERATIONS distinguish private control backup, request retry,
+explicit approved Core endpoints/CA/owner session, unknown evidence and code-only
+rollback; no old database restore. Separate control-root restore not implemented.
+
+Candidate SHA96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04,
+release_id0568d5a91c32ab210fe8c39dc52be5e1862de994bf65ecd501a1e55af019e81f.
+Discovery311 unique cases, no duplicate inherited test IDs. Fresh full required
+AFTER freeze/push; prior287/targeted results never substitute full acceptance.
+
+Final frozen-targeted command `python -B -m unittest tests.test_phase41_upgrade
+ tests.test_bridge tests.test_bridge_contract tests.test_bridge_lifecycle
+ tests.test_observer_gateway tests.test_observability tests.test_quick_join
+ tests.test_runtime_validation tests.test_external_compatibility -v`:
+**38PASS0SKIP0FAIL224.827s**. Includes final expected-epoch mismatch refusal and
+exact rebuilt124-file candidate, installed bridge/new-state rollback; no weakened
+gates. Tracked/index secret review245paths0findings, package separately audited.
+Source/tests/packaged guides/candidate now frozen; NEXT only after normal push/
+remote verification:4.1d.2 fresh full311 Python and Go/build/fault final reporting.

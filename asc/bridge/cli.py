@@ -46,7 +46,7 @@ def main():
         print(json.dumps(result,sort_keys=True));return 0 if result.get('ok',True) else 3
     except Refused as exc:
         print(json.dumps({'ok':False,'error':exc.code}));return 3
-    except (ValueError,OSError,sqlite3.Error,StorageError):
+    except (ValueError,OSError,KeyError,TypeError,sqlite3.Error,StorageError):
         print('{"ok":false,"error":"bridge_refused"}');return 3
     except (KeyboardInterrupt,EOFError):return 3
 

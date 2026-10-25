@@ -84,7 +84,7 @@ retain control journal/auth separately, never restore old DB over new bytes.
 
 `python -B -m asc.bridge.cli --control <NEW-private-control> provision --state
 <already-initialized-Demo-root> --allow-join` creates local-app authorization only.
-`--allow-lifecycle` reserves a scope; lifecycle is still unsupported in b.1.
+`--allow-lifecycle` enables only the scoped owned-Node lifecycle described below.
 Run with the same private HOME/device environment, then `... --control <control>
 run`. Native Python client: `asc.bridge.service.call(control,'status')` or
 `call(control,'quick_join',params,request_id)`. Standalone CLI quick-join requires
@@ -101,8 +101,7 @@ contains private enrollment material under existing unchanged format.<=256 recor
 Reads are fresh, mutation receipt replay is tagged historical_receipt=true.
 
 b.1 graceful exit removes only its own exact socket inode; a foreign or stale
-socket is refused/preserved. Crash socket recovery and owned Node lifecycle are
-next b.2 gates, not claimed here. Root replacement/recovery/missing state/M51/
+socket is refused/preserved. b.2 extends this with exact owned crash receipt recovery and lifecycle below. Root replacement/recovery/missing state/M51/
 unknown/malformed/foreign socket/app scope/secret response boundaries tested.
 Local status reads existing manifest/approved adapter and actual free space,
 never constructs a second Engine or probes writable/fsync. Those values remain

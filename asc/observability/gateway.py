@@ -38,7 +38,7 @@ def init(root,host,port,cluster,epoch,controllers=None,recovery=None,source_root
     if recovery is None:Observer(cluster,epoch,controllers,minimum_index)
     else:
         if type(recovery) is not dict or set(recovery)!={'root','anchor'}:raise ValueError('invalid passive recovery source')
-        separate(root,[Path(recovery['root']),*source_roots]);RecoveryObserver(recovery['root'],recovery['anchor'],cluster,minimum_index)
+        separate(root,[Path(recovery['root']),*source_roots]);RecoveryObserver(recovery['root'],recovery['anchor'],cluster,minimum_index,epoch)
     root.mkdir(mode=0o700);private.directory(root)
     (root/'dashboard').mkdir(mode=0o700)
     generate_identity(root/'dashboard',host,'ASC Core Read-only')
@@ -64,7 +64,7 @@ def load(root):
         if cfg['controllers'] is not None or type(cfg['recovery']) is not dict or set(cfg['recovery'])!={'root','anchor'}:
             raise ValueError('mode source conflict')
         separate(root,[Path(cfg['recovery']['root'])])
-        RecoveryObserver(cfg['recovery']['root'],cfg['recovery']['anchor'],cfg['cluster_id'],cfg['minimum_index'])
+        RecoveryObserver(cfg['recovery']['root'],cfg['recovery']['anchor'],cfg['cluster_id'],cfg['minimum_index'],cfg['epoch'])
     for name in FILES:no_links(root/'dashboard'/name)
     for name in FILES:
         path=root/'dashboard'/name;info=path.stat()
@@ -87,7 +87,7 @@ class API:
         # Different cookie namespace from Demo and other gateway roots on same host.
         self.cookie_name='__Host-ASC-Observer-'+cfg['gateway_id'].replace('-','')
         self.views=(Observer(cfg['cluster_id'],cfg['epoch'],cfg['controllers'],cfg['minimum_index']) if self.mode=='core-quorum' else
-                    RecoveryObserver(cfg['recovery']['root'],cfg['recovery']['anchor'],cfg['cluster_id'],cfg['minimum_index']))
+                    RecoveryObserver(cfg['recovery']['root'],cfg['recovery']['anchor'],cfg['cluster_id'],cfg['minimum_index'],cfg['epoch']))
     def close(self):self.sessions.close()
 
 

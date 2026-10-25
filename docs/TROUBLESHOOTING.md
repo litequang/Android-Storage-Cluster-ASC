@@ -454,3 +454,20 @@ stop original foreground in its terminal; bridge cannot kill it. node_not_config
 no existing node/storage setup, no implicit init. START_REQUESTED/owned process
 ONLINE is not writable/protection proof. After bridge death old start receipt is
 historical and does not auto-start; inspect fresh status, use NEW explicit ID.
+
+### Phase4.1 local bridge / observer
+- setup_required/installation_mismatch/source_selection_mismatch: preserve root,
+  inode, IDs and selected source; never init/copy DB/recreate identity to bypass.
+- application_unauthorized/scope_denied: local app grant is separate from node or
+  owner credentials; use correct private same-UID provisioned control, not browser.
+- request_id_conflict/request_limit: retain journal, same intent/ID on retry; new
+  mutation ID only for explicit new intent.256 retained IDs is a bounded prototype.
+- Unknown/live socket after crash: do not delete socket/locks. Recovery only for
+  exact owned receipt+inode under exclusive lock and actual connection refusal.
+- Core gateway QUORUM UNAVAILABLE/UNKNOWN: no writer proof/GC/automatic repair.
+  Check explicit pinned endpoints/identity/floor; never fall back to Demo SQL.
+- Recovery UNKNOWN with valid bytes: compare trusted cluster AND expected epoch
+  and minimum index/manifest anchor, no metadata edit/activation workaround.
+- Gateway code expired: stop/restart serve --issue-login-code in PRIVATE terminal;
+  this revokes all volatile owner sessions. Never log/publicly share its output.
+Detailed candidate-only use/backup/code rollback: PHASE4-1-OPERATIONS.md.

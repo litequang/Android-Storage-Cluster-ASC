@@ -547,3 +547,9 @@ Android and writable DR remain NOT ACCEPTED.
 - dashboard/tls.py generate_identity: shared no-overwrite TLS creation, existing Demo default preserved.
 - dashboard/web assets: same mobile-first UI, Core controllers/quorum/jobs/backup and policy counts; no Core writes/download/Quick Join.
 - tests/test_observer_gateway.py +browser/core_observer.cjs: actual trusted Chromium/Core3-voter transport partition/heal, policy3, server-side denial and passive verified stage.
+
+## Phase4.1d source candidate / compatibility qualification
+- tests/test_phase41_upgrade.py: exact published0.4.2-dev ->exact rebuilt0.4.3-dev, original pending BOTH directions, identity/volume/CA/credentials, new-state bytes/download after code rollback; installed bridge/private control preserved and old API refuses.
+- demo/package.py: public bridge/Core/app/operator guides and capabilities in deterministic124-file source-only candidate; private material excluded, prior archives unchanged.
+- observability/client.py RecoveryObserver expected_epoch: gateway explicit epoch binding checked against anchored staged manifest; mismatch UNKNOWN, never activation.
+- candidates/0.4.3-dev +SHA: source-only Linux qualification input, not APK/Android release. PHASE4-1-OPERATIONS owns compatible upgrade/use/rollback.

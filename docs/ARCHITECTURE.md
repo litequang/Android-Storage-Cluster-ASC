@@ -438,3 +438,14 @@ Catalog/Views, not a persistent database/live registry fallback. Explicit pinned
 collector and separately configured passive-stage verifier provide read-only
 observations only; writer_authority always false. Source authority/schema/Engine,
 3D recovery writer and static membership remain unchanged.
+
+### Phase4.1 shared UI and source compatibility
+Core read-only gateway is a separate explicit Linux observer, reusing Demo HTTPS,
+CA factory, Sessions/handler/assets with mode-specific routing before mutations.
+It never constructs a live Catalog/Storage/runtime. Core existing RuntimeHandler
+only delegates the owner GET observer; no readiness/takeover path is called.
+Same public UI has policy-aware Core views; Demo writer remains separate. Gateway
+cookies are unique per private gateway root, not separated merely by TCP port.
+Anchored recovery view binds expected cluster/epoch/history floor and verifies
+whole bytes each read, never writer/credential activation. Source-only0.4.3-dev
+keeps base formats; bridge/gateway roots live outside existing engine/volumes.
