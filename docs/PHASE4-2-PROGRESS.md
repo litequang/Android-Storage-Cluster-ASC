@@ -12,8 +12,8 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |4.2b.2|PUSH/REMOTE VERIFIED5ac246aa27f78e0c979cd0674f127939331cce26;local Engine PASS, Node BLOCKED|
 |4.2c|PUSH/REMOTE VERIFIED29c2985c839c6b20a0f6a6f3f4142c38b2f20847;11 Android/5 Linux/7 JVM PASS|
 |4.2d|PUSH/REMOTE VERIFIED8b901310da04f33e82165756d5bcd8ac36349d82;13 Android +offline1/reconnect1;6 Python/7 JVM PASS|
-|4.2e.1|TARGETED PASS for limited native FOUNDATION/dev TLS; native LAN/Node still NOT ACCEPTED; publication receipt follows|
-|4.2e.2|PENDING: fresh full Python/Go/fault/package publication|
+|4.2e.1|PUSH/REMOTE VERIFIED67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a; limited native FOUNDATION/dev TLS only|
+|4.2e.2|RUNNING fresh full Python317; Go/fault/package final receipt pending; NOT ACCEPTED|
 
 Tools/logs: /workspace/asc-android-dev (activate.sh), /workspace/work/phase4-2;
 no private state/signing/SDK/cache in Git. Existing Python/Go activate.sh unchanged.
@@ -247,3 +247,22 @@ Fresh Gradle :app:testDebugUnitTest :app:lintDebug --rerun-tasks after owned emu
 stop: BUILD SUCCESSFUL40s,40tasks actually executed,10JVM/0fail/error/skip. Lint
 0errors21warnings. Exact upgraded identity/marker/bytes/KeyStore/form verified AGAIN
 after the complete Android fault pipeline, PASS. Main APK still unchanged.
+
+### GitHub source freeze / fresh regression start
+
+67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a normal push completed; git ls-remote
+feature/phase4-2-android-native matched EXACTLY before final regression. Tree was
+clean.301 tracked/index paths reviewed,0 secret-pattern/private-path findings;
+APK nested/module/test-class/signature/SHA audit repeated PASS. Original Core/Go/
+archive/packaged4.1 guide diff remains empty. Source/test/tools/Android/project/APK/
+packaged guide hashes frozen in private frozen-source-sha256.json.
+
+Fresh `python -B -m unittest discover -s tests -v -f` actually STARTED
+2026-10-25T19:11:12.270509+00:00 from that verified source commit.317 unique cases
+discovered. No result inferred while RUNNING. Private full log/result under
+/workspace/work/phase4-2; core activation /workspace/asc-cloud/activate.sh.
+Source must not change; final reporting docs only. After PythonPASS run uncached
+Go/vet/modverify/Linux-Windows-Android builds, assert all retained fault banners,
+recheck frozen hashes and remote APK/protected branches. If interrupted without
+FINISHED/PASS evidence, keep full gate PENDING and run fresh again; never reuse
+old4.1 full311 as a new4.2 full result. Full native Phase4.2 still NOT ACCEPTED.
