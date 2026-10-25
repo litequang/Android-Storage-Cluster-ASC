@@ -376,3 +376,6 @@ Backend 202 means copies pending, never protected; preserve same idempotency key
 Byte receipt and checksum/protection differ. Browser transfers max 32 MiB, one at a
 time; larger file uses existing CLI. Unknown capacity and shared-domain ambiguity
 stay UNKNOWN. UI/browser/Android qualification is separate; see current progress.
+
+### DEMO.4b browser behavior
+Open only the exact IP SAN HTTPS URL after verifying/trusting public Dashboard CA. Missing WebCrypto or certificate error blocks login; do not bypass TLS. Node approval/domain confirmation remains CLI. Upload button requires live Controller; max 32 MiB by default. Pending upload is not protected: keep original file and retry same bytes/path in the same tab to reuse key. Download verifies SHA before offering browser save; Controller byte progress alone never proves two replicas. UNKNOWN after disconnect is intentional; reconnect then use Cập nhật kiểm tra. Browser regression prerequisites: Node with Playwright, Chromium, certutil; tests import only synthetic public CA in an isolated HOME, no system trust modification.

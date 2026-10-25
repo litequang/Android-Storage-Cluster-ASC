@@ -360,3 +360,6 @@ counts. Unknown/stale metrics remain null; duplicate domains do not create copie
 No second Catalog, election, deletion, GC or public endpoint. Default runtime keeps
 Dashboard disabled. Optional completed Dashboard config is versioned independently;
 root/base schemas unchanged so old CLI-only 0.3.0 can ignore this feature safely.
+
+### DEMO.4b browser client
+Controller serves three local immutable release assets. Browser holds only owner session cookie/CSRF, whitelisted Catalog views and selected test file bytes; Core grants/keys stay in Controller. Fetch upload progress uses backend-observed counts, protection uses Core domain/readability results. Download buffers at most the Dashboard limit, rechecks SHA with WebCrypto then requests a new browser download (no filesystem overwrite API). On connection failure cached protection is UNKNOWN and writes/download actions disable. No second persistence authority, cloud dependency, offline write queue or PWA service worker.

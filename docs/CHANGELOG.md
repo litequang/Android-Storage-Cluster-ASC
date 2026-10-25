@@ -326,3 +326,6 @@ read-only node/volume/file/replica views with UNKNOWN/domain safeguards, bounded
 private upload/download spool through existing Catalog/client/SHA/fallback. CLI-only
 node approval, no second Catalog/schema migration, policy/delete/GC/public access.
 35 targeted tests PASS on Linux synthetic; frontend/new package/Android not accepted.
+
+## DEMO.4b — Dashboard Lite frontend (2026-10-25)
+Vietnamese mobile-first overview, node/approved-volume details, file upload and SHA-verified browser download, per-replica status and honest degraded/UNKNOWN states. Core jobs/idempotency and fallback reused. Local packaged assets, no CDN/token-in-JS/delete/approval controls. Actual Chromium trusted-CA integration passes with two synthetic phone processes, first node stopped before download, XSS literal filename and mobile/offline gates. Android runtime remains NOT TESTED; 0.4.0 package awaits 4c qualification.

@@ -365,3 +365,6 @@ is not checksum proof or replica protection. Download fully verifies before outp
 no arbitrary host path or overwrite. Node approval remains CLI; no policy/GC/delete
 route. Errors/logs suppress untrusted inputs and exceptions. Runtime defaults off;
 no public/real-device/Android acceptance, Root schema/consensus/GC change follows.
+
+### Dashboard frontend / real browser gate (DEMO.4b)
+Every dynamic node/file/error value is rendered as text; no innerHTML/eval or third-party code. CSP remains same-origin with no inline script. Only idempotency metadata (logical path, size, SHA, random request key) may reside in sessionStorage; no owner/node token or cookie is readable by JavaScript. The chosen file is hashed before upload; download is hashed before Blob/new-download, user chooses destination. Retry retains original Core key until confirmed protected, never retries under a silently new key for the same pending file. Offline cache is explicitly stale/UNKNOWN. Synthetic Chromium checks trusted public CA (isolated NSS), rejects untrusted TLS, XSS literal filename, HttpOnly cookie/logout, distinct domains, actual node outage and browser network disconnection. This does not qualify Chrome Android runtime or owner CA-install UX.

@@ -205,11 +205,12 @@ class DashboardAPITests(unittest.TestCase):
     def test_unknown_capacity_and_restart_invalidate_browser_sessions(self):
         self.http('POST', '/api/refresh', {})
         with contextlib.closing(sqlite3.connect(self.controller / 'controller/registry.sqlite3')) as db, db:
-            db.execute('UPDATE catalog_nodes SET checked_at=0')
+            db.execute("UPDATE catalog_nodes SET checked_at=0,capabilities='{}'")
         status, _, view = self.http('GET', '/api/state')
         self.assertEqual(status, 200)
         for name in ('approved_quota_bytes', 'used_bytes', 'available_bytes'):
             self.assertIsNone(view['capacity'][name])
+        self.assertTrue(all(len(n['volumes']) == 1 for n in view['nodes']))
         self.assertTrue(all(v['free_bytes'] is None for n in view['nodes'] for v in n['volumes']))
         before = {p.name: p.read_bytes() for p in (self.controller / 'dashboard').glob('*.key')}
         self.stop(self.controller_process)

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>ASC · Dashboard Lite</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">ASC</span><div><strong>Dashboard Lite</strong><small>Demo Alpha · LAN riêng</small></div></div>
+  <button id="logout" class="button subtle" hidden>Đăng xuất</button>
+</header>
+<main>
+  <section id="login-panel" class="login-panel panel">
+    <span class="eyebrow">Cụm lưu trữ cá nhân</span>
+    <h1>Đăng nhập chủ cụm</h1>
+    <p>Dùng mã một lần từ <code>ascdemo dashboard-code</code> trên Controller. Mỗi mã có hiệu lực 5 phút.</p>
+    <form id="login-form">
+      <label for="login-code">Mã đăng nhập một lần</label>
+      <input id="login-code" name="code" type="password" autocomplete="one-time-code" required minlength="16" maxlength="128" spellcheck="false">
+      <button id="login-button" class="button primary" type="submit">Mở Dashboard</button>
+    </form>
+    <p id="login-error" class="error" role="alert"></p>
+    <p class="muted">Chỉ đăng nhập khi HTTPS hợp lệ và CA đã được bạn xác minh. Không nhập token của Controller hoặc Node.</p>
+  </section>
+  <section id="application" hidden>
+    <div class="heading"><div><span class="eyebrow">Không gian lưu trữ</span><h1 id="cluster-name">Cụm ASC</h1><p id="snapshot-time" class="muted">Đang tải dữ liệu…</p></div>
+      <div class="heading-actions"><span id="connection" class="badge unknown">UNKNOWN</span><button id="refresh" class="button subtle">Cập nhật kiểm tra</button></div></div>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <nav class="tabs" aria-label="Điều hướng Dashboard">
+      <button class="tab selected" data-tab="overview" aria-selected="true">Tổng quan</button>
+      <button class="tab" data-tab="nodes" aria-selected="false">Điện thoại</button>
+      <button class="tab" data-tab="files" aria-selected="false">File Manager</button>
+    </nav>
+    <section id="overview" class="tab-panel">
+      <div id="summary" class="summary-grid"></div>
+      <section class="panel"><h2>Cần chú ý</h2><ul id="warnings" class="warnings"></ul></section>
+      <p class="muted">Dung lượng là số đo theo quota, reserve và công việc đang chờ. Upload cần đủ chỗ trên hai điện thoại độc lập; tổng dung lượng không phải kích thước file tối đa.</p>
+    </section>
+    <section id="nodes" class="tab-panel" hidden>
+      <div class="section-heading"><h2>Điện thoại &amp; volume</h2><span class="muted">Phê duyệt và miền lỗi giữ ở CLI</span></div>
+      <div id="node-list" class="node-grid"></div>
+    </section>
+    <section id="files" class="tab-panel" hidden>
+      <section class="panel upload-panel">
+        <h2>Thêm file</h2><p id="upload-limit" class="muted">Đang xác minh giới hạn…</p>
+        <form id="upload-form">
+          <label for="file-input">Chọn file thử nghiệm</label><input id="file-input" type="file" required>
+          <label for="logical-path">Tên / đường dẫn trong cụm</label><input id="logical-path" type="text" required maxlength="512" placeholder="demo/tai-lieu.txt" spellcheck="false">
+          <button id="upload-button" class="button primary" type="submit">Upload &amp; tạo hai bản sao</button>
+        </form>
+        <progress id="upload-progress" max="1" value="0" hidden></progress>
+        <p id="upload-bytes" class="muted" aria-live="polite"></p>
+        <p id="upload-status" role="status" aria-live="polite"></p>
+      </section>
+      <div class="section-heading"><h2>File trong cụm</h2><span id="file-count" class="muted">UNKNOWN</span></div>
+      <p id="download-status" role="status" aria-live="polite"></p>
+      <div id="file-list" class="file-list"></div>
+    </section>
+  </section>
+  <dialog id="details"><div class="dialog-heading"><h2 id="details-title">Chi tiết</h2><button id="details-close" class="button subtle" aria-label="Đóng chi tiết">Đóng</button></div><div id="details-body"></div></dialog>
+</main>
+<footer>Linux synthetic đã kiểm thử · Android cần chủ dự án nghiệm thu · Một Controller, không failover tự động · Không xóa vật lý</footer>
+</body>
+</html>

@@ -37,9 +37,9 @@ class Views:
             caps = json.loads(approval['capabilities'] or '{}') if approval else {}
             probe_fresh = current and fresh(approval['checked_at'], 60, at) and approval['last_error'] is None
             volumes = []
-            for v in caps.get('volumes', []):
-                if v.get('volume_id') not in json.loads(approval['volume_ids']):
-                    continue
+            measured_volumes = {v.get('volume_id'): v for v in caps.get('volumes', [])}
+            for volume_id in json.loads(approval['volume_ids']) if approval else []:
+                v = measured_volumes.get(volume_id, {'volume_id': volume_id})
                 measured = probe_fresh and online == 'online' and v.get('state') == 'online'
                 values = {key: known_number(v.get(key)) if measured else None for key in ('quota', 'used_bytes', 'free_bytes', 'reserve')}
                 available = None
@@ -107,6 +107,7 @@ class Views:
                 'counts': {'paired_nodes': len(nodes), 'online': sum(n['online'] == 'online' for n in nodes),
                            'offline': sum(n['online'] == 'offline' for n in nodes), 'unknown': sum(n['online'] == 'unknown' for n in nodes),
                            'files': len(ids) if len(ids) <= 256 else None,
-                           'protected_files': sum(f['protected'] for f in files), 'unprotected_files': sum(not f['protected'] for f in files)},
+                           'protected_files': sum(f['protected'] for f in files) if len(ids) <= 256 else None,
+                           'unprotected_files': sum(not f['protected'] for f in files) if len(ids) <= 256 else None},
                 'capacity': capacity, 'capacity_note': 'shared_filesystem_unknown' if ambiguous else None,
                 'node_approval': 'CLI only; owner confirms physical failure domain'}

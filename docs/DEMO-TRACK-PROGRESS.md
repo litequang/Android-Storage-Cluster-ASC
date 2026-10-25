@@ -1,6 +1,6 @@
 # ASC Demo Track progress / account-independent handoff
 
-Updated: 2026-10-24 UTC.
+Updated: 2026-10-25 UTC.
 Branch: `feature/android-demo-alpha`.
 Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 
@@ -27,8 +27,8 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.3a | PUSHED/REMOTE VERIFIED: 597b3ff52e7ce58dc5d2bf7d505d5c35fe038380 |
 | DEMO.3a.1 | PUSHED/REMOTE VERIFIED: aaf7d163fbac032bb31a033efe2ebb21406509bf |
 | DEMO.3b | PUSHED/REMOTE VERIFIED: 52850b9072241ab4bb7643b06127965d25d96904 |
-| DEMO.4a | Backend implemented; 35 targeted PASS; publication review |
-| DEMO.4b | NOT STARTED, wait for 4a remote verification |
+| DEMO.4a | PUSHED/REMOTE VERIFIED: 5db17aef375b5ebfd03ce680a3b0a52c3a993f99; 35 targeted PASS |
+| DEMO.4b | 21 targeted PASS incl. real Chromium; publication review |
 | DEMO.4c | NOT STARTED, 0.4.0 NOT QUALIFIED |
 | Demo source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
@@ -38,7 +38,7 @@ Current owner request explicitly starts DEMO.4 from fetched/verified local+remot
 2d19eb06cee1b6bede0fbafac9d4704704c039a9, clean tree. 0.3.0 archive SHA checked
 again PASS. Ordered mandatory docs and all Demo handoff docs read, relevant runtime/
 Catalog/client/state/installer source audited. DEMO4-PLAN records current contract.
-Publish/verify completed 4a backend, then 4b real frontend/browser integration, then
+4a is published and remote verified; finish/publish 4b real frontend/browser integration, then
 4c exact 0.3.0 compatibility/full qualification/new archive. Do not mark 0.4.0 ready
 from 0.3's historical PASS. All source/Linux synthetic only; no phones/production.
 
@@ -307,3 +307,36 @@ Chromium 154, Playwright and certutil available for isolated trusted-CA real bro
 restart without --dashboard (CLI-only), preserve optional private Dashboard files.
 Existing source upgrade/code rollback remains stopped + NEW complete private backup.
 Next checkpoint only after 4a normal Demo push and advertised remote SHA match.
+
+## DEMO.4b frontend — actual targeted/browser evidence
+
+4a normal push succeeded; advertised Demo SHA matched
+5db17aef375b5ebfd03ce680a3b0a52c3a993f99 before 4b started. Core still acea2ae.
+4b adds local Vietnamese mobile-first overview/node volume dialog/files/replicas,
+owner code login/logout, exact backend byte progress, safe same-key upload retry,
+WebCrypto download SHA before new browser save, UNKNOWN cache on disconnection.
+Node approval stays CLI; no delete/GC/public API/cloud/CDN/extra database.
+Approved unmeasured volumes keep their IDs with null metrics; truncated totals
+remain UNKNOWN. Package allowlist includes and hashes three local web assets.
+
+Actual final targeted command (Python 3.13.5, Chromium 154.0.8037.57):
+`python -B -m unittest tests.test_demo_dashboard tests.test_demo_dashboard_browser
+tests.test_demo_installer tests.test_demo_lan tests.test_demo_upgrade -v`:
+**21 PASS / 0 SKIP / 0 FAIL/ERROR, 105.743s**; `node --check` PASS.
+Real Chromium uses isolated HOME/NSS trust of only fixture public CA; untrusted
+profile rejects TLS, trusted profile has normal certificate validation (no bypass).
+Actual UI upload produces two distinct approved node/domain copies, literal HTML
+filename cannot execute, Secure/HttpOnly/SameSite cookie is not JS-readable. Parent
+stops the actual first replica node process; UI becomes degraded, fallback browser
+download's saved bytes SHA matches, unsafe new upload refuses, browser network
+loss sets UNKNOWN/disables writes and reconnect/logout works. No external requests
+or page exceptions. Reviewed desktop 1280px and mobile 390px screenshots; no mobile
+horizontal overflow. An initial browser assertion selected two matching SHA labels;
+scoped it to download status; actual saved-byte SHA had already matched. No product
+fault gate was skipped or TLS weakened.
+
+4b ready for normal Demo-only publication after tracked/index secret review.
+0.4.0 is NOT QUALIFIED/PACKAGED until 4c exact published-0.3 upgrade/rollback + fresh
+full regression/package proof. Android/browser CA-install UX NOT TESTED. Rollback:
+stop Controller, launch without --dashboard, retain all private state and bytes;
+code rollback requires stopped cluster and NEW complete private backup.

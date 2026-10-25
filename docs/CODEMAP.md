@@ -379,3 +379,9 @@ manifest members. Final acceptance/AGENTS/progress identify aaf7d16 implementati
 - `dashboard/runtime.py`: optional second HTTPS listener in Controller process, same Catalog/service/lifecycle.
 - `demo/lan.py`: explicit dashboard-enabled ControllerRuntime and pinned owner-only login-code route; `demo/cli.py`: dashboard-init/trust/code, run-controller --dashboard. `state.py` checks completed optional Dashboard format before writable Core open.
 - `tests/test_demo_dashboard.py`: session unit bounds + real CA/SAN HTTPS/storage/auth/byte/domain/fallback/refusal tests. Current contract: DEMO4-PLAN; actual handoff: DEMO-TRACK-PROGRESS.
+
+## DEMO.4b local browser frontend
+- `asc/demo/dashboard/web/{index.html,style.css,app.js}`: same-origin Vietnamese responsive overview/nodes/volumes/files/replica dialog, one-use login, CSRF fetch, observed server byte counters, session-local nonsecret retry key, WebCrypto SHA verification before new download. All dynamic text uses DOM textContent; no CDN, browser Core token, service worker or offline writes.
+- `asc/demo/package.py`: source allowlist includes exactly local HTML/CSS/JS Dashboard assets and manifest hashes; installed-tree verification still covers every asset.
+- `dashboard/views.py`: retain approved volume IDs with UNKNOWN metrics when no fresh probe exists; aggregate protection counts UNKNOWN when the 256-file preview is truncated.
+- `tests/test_demo_dashboard_browser.py` + `tests/browser/demo_dashboard.cjs`: actual packaged source + Chromium with isolated NSS public-CA trust, no TLS bypass; login/upload/physical two-node bytes/download SHA after real node stop, XSS/mobile/offline/session gates. Requires Node+Playwright/Chromium/certutil; missing prerequisites FAIL explicitly, never skip a security gate. Screenshots are private local test artifacts, not release contents.
