@@ -3,6 +3,8 @@ from contextlib import redirect_stdout
 import io
 import json
 from pathlib import Path
+import subprocess
+import sys
 import unittest
 from unittest import mock
 
@@ -87,3 +89,23 @@ class ExternalRecoveryTests(unittest.TestCase):
                 '--source-root',str(self.source_root),'--cluster-id',self.source.doc['cluster_id'],'--minimum-index','100'])
         self.assertEqual(code,0);self.assertFalse(json.loads(out.getvalue())['writer_authority'])
         self.assertEqual(verify_stage(dest,result['manifest_sha256'])['state'],'VERIFIED_RECOVERY_STAGING')
+
+    def test_actual_recovery_process_death_and_normal_cli_same_intent_resume(self):
+        result,dest=self.prepare()
+        args=['stage','--store',str(self.dest),'--backup-id',result['backup_id'],
+            '--expected-sha256',result['manifest_sha256'],'--destination',str(dest),
+            '--source-root',str(self.source_root),'--cluster-id',self.source.doc['cluster_id'],'--minimum-index','100']
+        script=("import os; from asc.external.local import Tree; from asc.external.cli import main; "
+            "original=Tree.publish; "
+            "exec('def crash(self,part,final):\\n original(self,part,final)\\n os._exit(91)'); "
+            "Tree.publish=crash; main()")
+        root=Path(__file__).resolve().parents[1]
+        process=subprocess.run([sys.executable,'-B','-c',script,*args],cwd=root,capture_output=True,timeout=20)
+        self.assertEqual(process.returncode,91,'require actual process death after original durable publication')
+        self.assertFalse((dest/'READY.json').exists())
+        first=next((dest/'objects').glob('*.blob'));inode=first.stat().st_ino
+        retry=subprocess.run([sys.executable,'-B','-m','asc.external.cli',*args],cwd=root,capture_output=True,timeout=20)
+        self.assertEqual(retry.returncode,0)
+        self.assertEqual(json.loads(retry.stdout)['state'],'VERIFIED_RECOVERY_STAGING')
+        self.assertEqual(first.stat().st_ino,inode)
+        self.assertEqual(verify_stage(dest,result['manifest_sha256'])['objects'],2)

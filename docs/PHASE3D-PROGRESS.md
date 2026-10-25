@@ -13,8 +13,9 @@ Existing activation /workspace/asc-cloud/activate.sh supplies Python3.13.5/Go1.2
 |3D.1a|PUSH/REMOTE VERIFIED86d11056a00fbbb4d52a809a4cbf236a8c21b4f5;35 targeted PASS|
 |3D.1b|PUSH/REMOTE VERIFIEDe62d06a0b8ed68538305b6a09007fae0450ddabf;12 targeted PASS|
 |3D.2|PUSH/REMOTE VERIFIED554c992f9f234c2f1dd44efa2c1e70f70cd19e8e;37 targeted PASS|
-|3D.3|READY:23 targeted PASS0skip0fail0.460s; passive isolated recovery/resume; push gate follows|
-|3D.4|NOT STARTED|
+|3D.3|PUSH/REMOTE VERIFIED531d91ec7805c14297fa8a70679daaa9330c134e;23 targeted PASS|
+|3D.4a|READY:54 targeted PASS0skip0fail66.001s; all9 actual network/process fault groups; source freeze/push gate follows|
+|3D.4b|NEXT after4a remote proof: fresh full238 Python; acceptance/report only after completion|
 
 Next: publish/remote-verify3D.0 after document/backup unit validation, then implement
 format/private adapter/streaming engine and fresh pinned owner source. Each checkpoint
@@ -127,3 +128,64 @@ retries finish two exact bodies, foreign intent/nonempty active state remains
 unchanged; modified staged authority cannot verify. Full/new actual network fault
 matrix and fresh full regression still pending3D.4; no full DR/Android claim.
 Next after normal push/remote equality:3D.4 faults/final safety/Go/full regression.
+
+## 3D.4a fault qualification / frozen source handoff
+
+3D.3 normal push/remote matched531d91e before4. Added actual3-voter/TLS fault
+matrix (9 groups), exact baseline source compatibility check, actual recovery
+process exit91/resume and strict native JSON/Backup ID guards. Destination Protocol
+and LocalDirectory adapter now own logical CLI provider boundary; other providers
+must independently qualify equivalent private immutable conditional publication,
+resume/readback, anchoring and no-delete contracts (not pretend POSIX descriptors).
+Local directory inventory streams/caps4096 names; completed-ID mismatch and bool/
+float JSON aliases cannot pass exact canonical checks. CLI fixed error whitelist
+and generic argparse errors never echo private paths/unrecognized secret arguments.
+Private recovery marker ignore rules supplement full tracked/index content audit.
+
+Final frozen target command: `python -B -m unittest tests.test_external
+ tests.test_external_verify tests.test_external_recovery tests.test_external_compatibility
+ tests.test_external_cluster tests.test_external_faults tests.test_backup.BackupStateTests
+ tests.test_failover.RuntimeStateTests -v`: **54PASS0SKIP0FAIL66.001s**.
+All9 actual network/process groups PASS. This includes30 unique new3D tests plus
+20 existing backup units/4 runtime units; full discovery expects238 (208 unchanged
+Core +30 new).16 new Python files AST PASS; all original assertions/tests retained.
+Earlier unique target28PASS106.535s and53PASS125.361s preceded final stricter
+completion/ID/native checks; only final54 is frozen target evidence.
+
+Fault groups:1 exact runtime/all3A–3C extensions, retained versions/snapshot/TRASH;
+2 real source upload during backup => exact earlier point/newer known floor STALE;
+3 actual all-voter partition before final callback denies COMPLETE then same-ID
+resume after heal;4 actual Controller+voter crash/new higher term resume/isolated
+former Leader denies capture/check/actual upload (no ghost file after healing);
+5 actual backup child exit91 after durable object and normal CLI resume retains
+inode/one object perID;6 explicit ENOSPC at actual streamed .part fsync (injected,
+NOT a measured physically full disk), incomplete then same-ID resume;7 real offline
+cohost/corrupt source with third healthy SHA fallback, corrupt/last/pinned bytes
+retained;8 actual pending upload with no bodies => INCOMPLETE;9 total live authority
+loss => exact offline read-only staging, no writer/credentials, historical complete
+replay only. Separate actual recovery-process exit91 +normal CLI same-intent resume
+also PASS, beyond exception-only unit interruption. No product fault/GC flags.
+
+First matrix FAILED1test108.635s: after quorum healing a source was still
+unreadable before intended Controller crash, so no actual crash occurred. Fixture
+now waits for original measured replica readiness, bounds safe same-ID retry of
+early rejected attempts, and REQUIRES actual crash-hook execution +both child
+process handles gone +higher actual term. No early denial is counted as crash.
+Restart control partition is applied only after the stopped test sidecar restarts.
+Corrected9-gate matrix1PASS48.793s, final54 PASS above. No test/guard/budget weakened.
+
+Fresh uncached Go11PASS, vet/modules andLinuxAMD64 build PASS; WindowsAMD64/
+AndroidARM64 cross-build PASS only (not runtime). Logs/results private under
+/workspace/work/phase3d/go-*; source/module tree unchanged from Core baseline.
+Exact old Core acea2ae source archive actually validates/SQL-memory round-trips new
+captured/staged schema without migration; no live old writer/DB restore is tested
+or claimed. Base registry4/manifest1/runtime2/3A–3C formats unchanged. Code rollback
+retains NEW state/bytes/external stores, old source ignores passive archives.
+
+NEXT only after source checkpoint normal push/remote match: activate existing
+/workspace/asc-cloud/activate.sh; run /workspace/work/phase3d/run-full.py or fresh
+`python -B -m unittest discover -s tests -v` on frozen source. Full must finish with
+238 uniquePASS0skip0fail/all original physical gates before scoped acceptance.
+If interrupted, rerun incomplete full (do NOT reuse old3C/Demo full results).
+No source/test changes during full; reporting docs only afterward. Writer recovery
+still BLOCKED, Android/Windows runtime/independent media/power-cut NOT TESTED.

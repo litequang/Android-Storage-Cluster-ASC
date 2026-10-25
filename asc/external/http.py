@@ -1,6 +1,6 @@
 """Small owner-only runtime API. No destination path/restore/write-authority API."""
 from .format import FIELDS, integer, fail
-from ..catalog.common import CatalogError, digest, identifier
+from ..catalog.common import CatalogError, canonical, identifier
 from ..replication.proofs import survivors
 from .. import validation as valid
 
@@ -31,7 +31,7 @@ def handle(handler, parsed):
             with runtime.lock:
                 doc=runtime.ensure_ready()['document']
                 file=next((f for f in doc['catalog']['files'] if f['file_id']==file_id),None)
-                if file is None or descriptor!={k:file[k] for k in FIELDS}:fail('external_source_mismatch')
+                if file is None or canonical(descriptor)!=canonical({k:file[k] for k in FIELDS}):fail('external_source_mismatch')
                 # Owner explicit archive scope includes TRASH/EXPIRED versions;
                 # ordinary user downloads retain their existing lifecycle gate.
                 for replica,node in survivors(doc,file_id):

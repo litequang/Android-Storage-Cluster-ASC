@@ -359,3 +359,12 @@ trusted manifest anchor and passive read-only recovery, no writer reconstruction
   final source+staged integrity and non-authoritative READY receipt. stage-verify
   uses existing shared lock and does not modify data. CLI stage/stage-verify routes;
   test_external_recovery covers real IO/IDs/no live configs/overwrite/floor/links.
+
+-3D.4 external/destination.py declares provider-neutral logical Destination
+  protocol with actual LocalDirectory CLI adapter; local engine remains POSIX,
+  future cloud providers need equivalent conditional/private semantics.
+  test_external_faults.py: actual three-voter/TLS/Controller+backup process death/
+  ENOSPC/offline/corruption/pending/total-authority-loss matrix, nine groups.
+  test_external_compatibility.py: exact baseline source schema roundtrip and
+  unqualified platform refusal; recovery tests additionally kill real stage child.
+  Strict native manifest/completion JSON and Backup ID checks prevent alias/relabel.

@@ -296,3 +296,9 @@
   byte checks before and after copy, exact IDs/history/intent-preserving resume,
   newer-history floor and nonempty active-state refusal.23 targeted PASS0skip.
   Writer/credential/quorum recovery deliberately unavailable, full faults pending.
+
+-3D.4a: provider logical interface, strict manifest/completion native JSON/ID
+  validation, bounded filesystem inventory and nonreflecting CLI errors; actual
+  nine-group Raft/TLS/process/IO fault matrix plus exact baseline schema and real
+  recovery-child crash/resume. Final54 targeted/Go11/vet/modules/builds PASS; full
+  fresh238 regression pending. No Android/Windows runtime/full writer DR claim.

@@ -133,3 +133,10 @@ failover*.json
 bootstrap*.json
 raft-state/
 *.enrolled
+
+# Private external DR archive/recovery markers (still audit tracked/index blobs)
+.asc-external*/
+external-backups/
+recovery-staging/
+RECOVERY_READ_ONLY.json
+READY.json

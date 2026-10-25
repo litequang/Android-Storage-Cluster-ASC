@@ -1,8 +1,7 @@
 """Owner-pinned network source; frozen metadata is never storage authority."""
 from contextlib import contextmanager
 import time
-from .format import FIELDS, fail, validate
-from ..catalog.common import canonical, digest
+from .format import fail
 from ..catalog.transport import source_stream
 from ..storage.client import StorageClient
 

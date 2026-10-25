@@ -62,3 +62,12 @@ only, with zero physical deletions and no apply command. Permanent receipt/runti
 limits still apply. Plan/progress: docs/PHASE3B-PLAN.md and PHASE3B-PROGRESS.md.
 
 Phase 3B exact new Cloud results/limits: [PHASE3B-ACCEPTANCE.md](docs/PHASE3B-ACCEPTANCE.md). Windows runtime and real-device execution remain separate.
+
+
+Phase3D development on `feature/phase3d-external-dr`: external private backup,
+anchored verify and isolated read-only recovery. See
+[operator commands](docs/PHASE3D-OPERATIONS.md),
+[plan](docs/PHASE3D-PLAN.md), [progress](docs/PHASE3D-PROGRESS.md) and
+[actual qualification/blockers](docs/PHASE3D-ACCEPTANCE.md).
+No writable disaster recovery/phone/production qualification; Core WIP and Demo
+branches remain separate. Do not start a runtime on recovery staging.

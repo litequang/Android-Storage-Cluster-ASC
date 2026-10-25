@@ -83,12 +83,12 @@ def validate(manifest, metadata):
         integer(manifest['source_index'], 1); integer(manifest['source_term'], 1)
         if (manifest['metadata_sha256'] != digest(doc) or
                 manifest['cluster_id'] != doc['cluster_id'] or manifest['epoch'] != doc['epoch'] or
-                manifest['source_authority'] != doc['authority'] or
+                canonical(manifest['source_authority']) != canonical(doc['authority']) or
                 doc['authority']['term'] > manifest['source_term'] or
                 manifest['control_revision'] != doc['revision'] or
                 manifest['catalog_revision'] != doc['catalog']['revision'] or
                 manifest['catalog_digest'] != doc['catalog']['head_digest'] or
-                manifest['files'] != descriptors(doc) or len(canonical(manifest)) > MAX_MANIFEST):
+                canonical(manifest['files']) != canonical(descriptors(doc)) or len(canonical(manifest)) > MAX_MANIFEST):
             fail('external_snapshot_mismatch')
         return doc
     except (KeyError, TypeError, ValueError, AttributeError):

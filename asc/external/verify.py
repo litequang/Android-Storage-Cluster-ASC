@@ -2,7 +2,7 @@
 import time
 from .engine import load, check_all, complete_receipt
 from .format import decode, fail, integer, sha
-from ..catalog.common import CatalogError, digest, identifier, now
+from ..catalog.common import CatalogError, canonical, digest, identifier, now
 
 
 def verify_tree(tree, backup_id, expected_sha256, minimum_index=0, cluster_id=None):
@@ -12,7 +12,7 @@ def verify_tree(tree, backup_id, expected_sha256, minimum_index=0, cluster_id=No
     if cluster_id is not None and manifest['cluster_id']!=cluster_id:fail('external_source_identity_mismatch')
     if tree.names()!=['complete.json','manifest.json','metadata.json','objects']:
         fail('external_incomplete')
-    if decode(tree.read('complete.json',4096),4096)!=complete_receipt(manifest):fail('external_completion_mismatch')
+    if tree.read('complete.json',4096)!=canonical(complete_receipt(manifest)):fail('external_completion_mismatch')
     check_all(tree,manifest)
     return manifest,metadata,doc
 
@@ -64,7 +64,7 @@ def inventory(store):
                             with directory.sub(name) as tree:
                                 manifest,_,_=load(tree)
                                 if manifest['backup_id']!=name:fail('external_snapshot_mismatch')
-                                if folder=='completed' and decode(tree.read('complete.json',4096),4096)!=complete_receipt(manifest):fail()
+                                if folder=='completed' and tree.read('complete.json',4096)!=canonical(complete_receipt(manifest)):fail()
                                 entries.append({'backup_id':name,'state':default,'manifest_sha256':digest(manifest),
                                     'captured_at':manifest['created_at'],'source_index':manifest['source_index'],
                                     'objects_expected':len(manifest['files']),'trusted_anchor':False})

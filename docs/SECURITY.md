@@ -339,3 +339,11 @@ is passive data only. No restored tokens/private keys, fake epoch/quorum/Leader,
 Raft log edit or active SQLite import. A lost authority/latest witness cannot be
 replaced by a manifest self-hash. Same-intent retry binds floor; stage-verify checks
 all hashes through shared existing lock without creating config/identity.
+
+External completion and descriptors compare exact canonical native JSON; bool/
+float aliases and mismatched bundle UUID cannot relabel a completed archive.
+Bounded scandir stops at4096 entries. CLI parser/error whitelist avoid reflecting
+private input. Fault controls are test subprocess wrappers only; no product
+crash/partition/GC/authority enable switch. Stale isolated Controller actual upload
+is denied; no ghost file. Physical ENOSPC is fault-injected at real fsync, not
+claimed as a full-device test. Existing Core device/runtime/GC guards unchanged.

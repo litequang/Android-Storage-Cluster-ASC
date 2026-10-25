@@ -68,8 +68,10 @@ class BackupEngine:
         with self.store.open(source_roots) as root, root.sub('completed') as done, root.sub('working') as work:
             if done.exists(backup_id):
                 with done.sub(backup_id) as job:
-                    manifest,_,_=load(job);check_all(job,manifest)
-                    if decode(job.read('complete.json',4096),4096)!=complete_receipt(manifest):fail()
+                    manifest,_,_=load(job)
+                    if manifest['backup_id']!=backup_id:fail('external_snapshot_mismatch')
+                    check_all(job,manifest)
+                    if job.read('complete.json',4096)!=canonical(complete_receipt(manifest)):fail()
                     os.fsync(done.fd);os.fsync(work.fd)
                     return self._result(manifest,started,True)
             with work.sub(backup_id) as job:

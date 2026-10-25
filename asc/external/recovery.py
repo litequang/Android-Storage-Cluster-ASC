@@ -46,13 +46,13 @@ def verify_stage_tree(root,expected_sha256):
     manifest,metadata,doc=load(root)
     if (digest(manifest)!=sha(expected_sha256) or intent['manifest_sha256']!=expected_sha256 or
             intent['backup_id']!=manifest['backup_id'] or intent['cluster_id']!=manifest['cluster_id'] or
-            intent['source_index']!=manifest['source_index'] or
+            integer(intent['source_index'],1)!=manifest['source_index'] or
             manifest['source_index']<integer(intent['minimum_index'])):fail('external_recovery_intent_conflict')
     check_all(root,manifest)
     if root.names()!=['READY.json','RECOVERY_READ_ONLY.json','manifest.json','metadata.json','objects','owner.lock']:
         fail('external_recovery_incomplete')
     expected=ready_receipt(intent,manifest)
-    if decode(root.read('READY.json',4096),4096)!=expected:fail('external_recovery_incomplete')
+    if root.read('READY.json',4096)!=canonical(expected):fail('external_recovery_incomplete')
     return expected
 
 

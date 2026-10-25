@@ -348,3 +348,9 @@ isolated destination, not a live cluster. Interrupted staging can resume exact
 original command; READY absent means not verified complete. NEVER run Controller
 on staging or restore old DB/config/credentials to grant writer. Missing authority
 recovery/fencing is an explicit blocker, not an installer error to bypass.
+
+After quorum recovery, readiness/placement probes can still be unavailable; do
+not relabel an early rejected transfer as a fault-boundary success. Preserve same
+Backup ID, wait for measured approved sources and retry; final quorum gate remains
+mandatory. Process-crash qualification requires actual exit91 and retained inode/
+intent, not a timeout or exception. Full3D regression is separate from targeted PASS.

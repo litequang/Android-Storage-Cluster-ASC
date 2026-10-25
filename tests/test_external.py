@@ -140,7 +140,7 @@ class ExternalBackupTests(unittest.TestCase):
 
     def test_snapshot_mismatch_future_format_and_changed_metadata_rejected(self):
         manifest,metadata=capture(self.source.capture(),uid(),10)
-        for mutation in (lambda m:m.update(format=2),lambda m:m['files'].pop(),lambda m:m.update(source_index=True),lambda m:m.update(metadata_sha256='0'*64)):
+        for mutation in (lambda m:m.update(format=2),lambda m:m['files'].pop(),lambda m:m.update(source_index=True),lambda m:m.update(metadata_sha256='0'*64),lambda m:m['files'][0].update(version=float(m['files'][0]['version']))):
             changed=copy.deepcopy(manifest);mutation(changed)
             with self.subTest(changed=changed['format']),self.assertRaises(CatalogError):validate(changed,metadata)
         with self.assertRaises(CatalogError):validate(manifest,metadata+b'\n')
@@ -175,3 +175,20 @@ class ExternalBackupTests(unittest.TestCase):
         self.engine.resume(self.source,backup_id,self.roots)
         self.assertEqual(len(list((self.dest/'completed'/backup_id/'objects').iterdir())),2)
         self.assertTrue(all(p.stat().st_nlink==1 for p in (self.dest/'completed'/backup_id/'objects').iterdir()))
+
+    def test_empty_catalog_is_measured_complete_not_unknown(self):
+        reg=state.MemoryRegistry(uid());self.addCleanup(reg.db.close)
+        self.source.doc=state.export(reg.db,1,{'node_id':'empty-voter','term':4})
+        result=self.engine.create(self.source,self.roots)
+        self.assertEqual((result['objects'],result['bytes']),(0,0))
+        self.assertEqual(result['state'],'COMPLETE')
+
+    def test_complete_backup_id_and_native_completion_types_cannot_alias(self):
+        result=self.engine.create(self.source,self.roots)
+        folder=self.dest/'completed'/result['backup_id']
+        renamed=uid();folder.rename(self.dest/'completed'/renamed)
+        with self.assertRaises(CatalogError):self.engine.resume(self.source,renamed,self.roots)
+        (self.dest/'completed'/renamed).rename(folder)
+        receipt=json.loads((folder/'complete.json').read_bytes());receipt['format']=True
+        (folder/'complete.json').write_bytes(canonical(receipt))
+        with self.assertRaises(CatalogError):self.engine.resume(self.source,result['backup_id'],self.roots)

@@ -78,8 +78,11 @@ class Tree:
 
     def names(self):
         self.check()
-        names = os.listdir(self.fd)
-        if len(names) > 4096: fail('external_entry_limit', 429)
+        names=[]
+        with os.scandir(self.fd) as entries:
+            for entry in entries:
+                if len(names)>=4096:fail('external_entry_limit',429)
+                names.append(entry.name)
         self.check(); return sorted(names)
 
     def exists(self, name):

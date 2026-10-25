@@ -534,3 +534,12 @@ Thiếu dữ liệu vẫn UNKNOWN; lịch sử có giới hạn, khoảng trốn
 khi tiếp tục từ tài khoản khác. Lệnh chủ sở hữu ở README.md. Mọi checkpoint phải
 push và xác minh trên nhánh WIP trước bước kế tiếp. Kết quả Cloud không thay thế
 nghiệm thu Windows/Android thực tế; không thay đổi quorum hay triển khai production.
+
+
+Phase3D development on `feature/phase3d-external-dr`: external private backup,
+anchored verify and isolated read-only recovery. See
+[operator commands](docs/PHASE3D-OPERATIONS.md),
+[plan](docs/PHASE3D-PLAN.md), [progress](docs/PHASE3D-PROGRESS.md) and
+[actual qualification/blockers](docs/PHASE3D-ACCEPTANCE.md).
+No writable disaster recovery/phone/production qualification; Core WIP and Demo
+branches remain separate. Do not start a runtime on recovery staging.

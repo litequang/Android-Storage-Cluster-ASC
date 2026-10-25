@@ -329,3 +329,10 @@ HOME/volume. Exact captured projection and global-ID portable bodies plus READ_O
 intent/READY integrity receipt preserve history without constructing authority.
 No runtime import/bootstrap/migration/credential reuse or server launch exists.
 Full writable recovery remains blocked pending upstream library/fencing review.
+
+The logical Destination protocol owns initialize/create/resume/inventory/verify/
+retention-preview/stage. LocalDirectory dispatches to qualified POSIX transaction
+implementation; no provider silently falls back. Future NAS/S3/cloud must supply
+independently reviewed credentials/privacy/conditional publication and recovery
+semantics, not emulate POSIX handles. Exact baseline source can validate/roundtrip
+current captured schema; archives are additive and do not alter live base formats.

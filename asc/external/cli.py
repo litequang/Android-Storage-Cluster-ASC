@@ -5,12 +5,11 @@ import os
 from pathlib import Path
 import shutil
 import sys
-from .engine import BackupEngine
-from .local import LocalStore, Tree
+from .local import Tree
 from .source import PinnedSource
-from .verify import inventory, verify, retention_preview
-from .recovery import stage, verify_stage
-from .format import decode, fail
+from .destination import LocalDirectory
+from .recovery import verify_stage
+from .format import fail
 from ..catalog.client import ClusterClient
 from ..catalog.common import CatalogError
 from ..client import ClientError
@@ -39,8 +38,22 @@ def owner_client(path):
     return ClusterClient(cluster_id=cfg['cluster_id'],controllers=cfg['controllers'])
 
 
+class PrivateParser(argparse.ArgumentParser):
+    def error(self,message):
+        self.exit(2,'Invalid external command; use --help.\n')
+
+
+SAFE_ERRORS={'unsafe_external_path','external_destination_overlaps_source',
+    'external_destination_not_empty','external_store_busy','external_recovery_busy',
+    'external_backup_stale','external_recovery_intent_conflict','external_recovery_destination_not_empty',
+    'external_source_unavailable','external_source_mismatch','external_snapshot_mismatch',
+    'external_object_corrupt','external_filesystem_unsupported','external_platform_not_qualified',
+    'external_directory_changed','external_file_changed','external_entry_limit',
+    'invalid_external_owner_config','external_source_identity_mismatch','external_source_roots_required'}
+
+
 def main(argv=None):
-    parser=argparse.ArgumentParser(description='ASC private external data backup; recovery never grants writer authority')
+    parser=PrivateParser(description='ASC private external data backup; recovery never grants writer authority')
     commands=parser.add_subparsers(dest='action',required=True)
     for name in ('init','create','resume','list','verify','retention-preview','stage','stage-verify'):
         p=commands.add_parser(name)
@@ -60,23 +73,24 @@ def main(argv=None):
         host_guard()
         if args.action=='stage-verify':
             print(json.dumps(verify_stage(args.destination,args.expected_sha256),sort_keys=True));return 0
-        store=LocalStore(args.store)
+        adapter=LocalDirectory(args.store)
         if args.action=='init':
-            LocalStore.initialize(args.store,args.source_root);result={'state':'INITIALIZED','format':1}
+            adapter.initialize(args.source_root);result={'state':'INITIALIZED','format':1}
         elif args.action in ('create','resume'):
-            source=PinnedSource(owner_client(args.owner_config));engine=BackupEngine(store)
+            source=PinnedSource(owner_client(args.owner_config))
             roots=[*args.source_root,str(Path(args.owner_config).parent)]
-            result=engine.create(source,roots) if args.action=='create' else engine.resume(source,args.backup_id,roots)
+            result=adapter.create(source,roots) if args.action=='create' else adapter.resume(source,args.backup_id,roots)
         elif args.action=='stage':
-            result=stage(store,args.backup_id,args.expected_sha256,args.destination,args.source_root,args.cluster_id,args.minimum_index)
-        elif args.action=='list':result=inventory(store)
-        elif args.action=='retention-preview':result=retention_preview(store)
-        else:result=verify(store,args.backup_id,args.expected_sha256,args.minimum_index,args.cluster_id)
+            result=adapter.stage(args.backup_id,args.expected_sha256,args.destination,args.source_root,args.cluster_id,args.minimum_index)
+        elif args.action=='list':result=adapter.inventory()
+        elif args.action=='retention-preview':result=adapter.retention_preview()
+        else:result=adapter.verify(args.backup_id,args.expected_sha256,args.minimum_index,args.cluster_id)
         print(json.dumps(result,sort_keys=True))
         return 0 if result.get('state') not in ('UNKNOWN','INCOMPLETE','CORRUPT','STALE') else 1
-    except (CatalogError,ClientError,OSError,ValueError,KeyError,TypeError):
+    except (CatalogError,ClientError,OSError,ValueError,KeyError,TypeError) as exc:
         # Never print exception strings, private paths, keys, endpoint credentials.
-        print(json.dumps({'state':'FAILED','error':'external_operation_failed','writer_recovery_supported':False}))
+        label=exc.code if isinstance(exc,CatalogError) and exc.code in SAFE_ERRORS else 'external_operation_failed'
+        print(json.dumps({'state':'FAILED','error':label,'writer_recovery_supported':False}))
         return 1
 
 
