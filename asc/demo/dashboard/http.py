@@ -20,6 +20,7 @@ from ...storage.errors import StorageError
 from ...storage.volumes import no_links
 from .auth import COOKIE, SESSION_TTL, GRANT_TTL, Sessions
 from .views import Views
+from ..pairing import Pairings, PairingError
 
 CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
 ERRORS = {'no_eligible_storage': 'insufficient_capacity', 'logical_version_exists': 'file_exists',
@@ -38,6 +39,7 @@ class DashboardAPI:
         self.origin = f"https://{cfg['host']}:{cfg['port']}"
         self.sessions = Sessions()
         self.views = Views(service, cluster_name)
+        self.pairings = Pairings(root,service,client)
         self.lock = threading.Lock()
         self.tickets = {}
         self.transfers = threading.BoundedSemaphore(1)
@@ -102,6 +104,7 @@ class DashboardAPI:
 
     def close(self):
         self.sessions.close()
+        self.pairings.close()
         with self.lock:
             self.tickets.clear()
 
@@ -277,9 +280,16 @@ class DashboardHandler(Handler):
         if path == '/api/logout' and method == 'POST':
             if self.body_json() != {}:
                 raise Rejected(400, 'bad_request')
+            api.pairings.forget(authenticated[1])
             api.sessions.logout(authenticated[0])
             return self._json(200, {'authenticated': False},
                               (('Set-Cookie', COOKIE + '=; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'),))
+        if path == '/api/v1/quick-join/pairings' and method == 'POST':
+            if self.body_json() != {}:raise Rejected(400,'bad_request')
+            return self._json(201,api.pairings.create(authenticated[1],authenticated[2]['expires']))
+        if path.startswith('/api/v1/quick-join/pairings/') and method == 'GET':
+            pairing_id=path.removeprefix('/api/v1/quick-join/pairings/')
+            return self._json(200,api.pairings.status(pairing_id,authenticated[1]))
         if path == '/api/state' and method == 'GET':
             return self._json(200, api.views.state())
         if path == '/api/refresh' and method == 'POST':
@@ -311,7 +321,7 @@ class DashboardHandler(Handler):
         self._response_started = False
         try:
             self._route()
-        except Rejected as exc:
+        except (Rejected,PairingError) as exc:
             if not self._response_started:
                 self._json(exc.status, {'error': exc.code})
         except ClientError as exc:

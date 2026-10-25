@@ -412,3 +412,14 @@ Demo keeps marked single-writer and refuses Core quorum/advanced state; external
 module CLI/RuntimeHandler remain their own guarded development scope. Shared base
 Registry/Catalog/Storage services remain sole implementations. Historical Demo doc
 extensions above do not supersede current Phase4 plan/progress/acceptance.
+
+## Phase4.0 Quick Join foundation
+The marked Demo single-writer Controller owns the existing Dashboard facade.
+Pairings explicitly requires DemoCatalog and matching local Registry/cluster/TLS
+binding; unknown/quorum modes have no SQL fallback. Existing admin/pair issues
+600s one-use grants, Registry is the sole durable enrollment authority. Session
+tracking is bounded hash-only RAM and is lost on logout/restart; live grants are
+not thereby revoked. The local CLI uses the same Core durable enrollment engine,
+existing pending context and optional expected cluster guard. No additional state
+schema or native/browser node-credential store. Recovery staging is rejected even
+if somebody adds a Demo marker. Core3D authority and modules remain separate.

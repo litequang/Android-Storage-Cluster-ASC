@@ -56,8 +56,15 @@ def read_db(path, version, inspect=None):
         db.close()
 
 
+def reject_recovery(root):
+    for home in (Path(root),Path(root)/'controller',Path(root)/'node'):
+        if (home/'RECOVERY_READ_ONLY.json').exists() or (home/'RECOVERY_READ_ONLY.json').is_symlink():
+            raise ValueError('recovery staging is read-only; no runtime or identity initialization')
+
+
 def inspect_state(root):
     root = private_path(root)
+    reject_recovery(root)
     marker = read_json(root / 'demo.json')
     if (set(marker) != {'format', 'track', 'mode', 'role', 'installation_id', 'state_formats', 'host', 'port'}
             or type(marker['format']) is not int or marker['format'] != 1
@@ -133,6 +140,7 @@ def inspect_state(root):
 
 def initialize(root, role, host, port):
     root = private_path(root)
+    reject_recovery(root)
     host = lan_host(host)
     if role not in ('controller', 'node') or type(port) is not int or not 1024 <= port <= 65535:
         raise ValueError('invalid Demo setup')

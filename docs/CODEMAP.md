@@ -487,3 +487,10 @@ now reuse existing common Core services. Shared storage volumes.py/engine.py mat
 reviewed Demo c9c2660; external3D modules/handler/Go and original Core tests unchanged.
 95 targeted integration cases PASS; exact provenance and artifact checks in Phase4
 progress. No QuickJoin implementation yet; historical source status above retained.
+
+## Phase4.0b.2a Quick Join foundation
+- asc/demo/pairing.py: DemoCatalog-only owner session facade, existing pinned admin/pair and read-only Registry evidence; hash-only bounded RAM tracking, no new database.
+- asc/demo/quickjoin.py: guided local subprocess adapter to Core enrollment, pin/cluster/mode checks, redacted states and same durable retry operation; no auto-approval.
+- asc/cli.py:_enroll: optional expected-cluster-id guard, existing pending format unchanged. asc/demo/state.py rejects recovery staging before init/inspection.
+- tests/test_quick_join.py:9 actual TLS/CLI/one-use/concurrency/ACK/restart/security/identity/device cases. Historical release tests use exact published04.1 fixture; old assertions retained.
+- docs/PHASE4-QUICK-JOIN.md: source-candidate CLI/API contract and operator limits; UI/candidate final qualification pending.

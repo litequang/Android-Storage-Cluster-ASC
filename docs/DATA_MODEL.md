@@ -445,3 +445,13 @@ Volume record/marker/schema unchanged: persisted root/medium st_dev:st_ino and n
 
 ### Demo0.4.1 exact published-package compatibility
 Adds release capability android-volume-anchor but retains all base formats and0.4 optional Dashboard state1. Exact0.3/0.4 installed launchers accept compatible0.4.1 manifest; no schema migration. Tests explicitly backup/verify/stage/preflight/upgrade with root open denied, retain core and existing04 browser identities and data, write new file, make NEW backup then select old code over new state. Old Android root-open defect is retained on downgrade and is not called functional Android rollback. Old/new bytes still read under baseline Linux proving schema compatibility; no database restore or medium/state rewrite.
+
+## Phase4.0 compatibility
+No schema/format increment. Optional expected Cluster ID CLI validation reuses
+existing pending expected_cluster_id; operation, enrollment token and retry
+payload remain legacy-compatible. Quick Join session tickets are transient maps
+of owner hash, code hash, cluster, expiry and UUID, never a second Catalog.
+Registry join_codes/enrollment_ops/nodes/catalog_nodes remain authoritative.
+RECOVERY_READ_ONLY markers forbid Demo init/adoption. Candidate code-only rollback
+requires fresh full private backup and compatibility preflight; final exact04.1
+candidate upgrade/rollback qualification is still pending.

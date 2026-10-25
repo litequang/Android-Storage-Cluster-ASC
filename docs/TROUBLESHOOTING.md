@@ -423,3 +423,14 @@ After upgrading existing source, stop the local Storage Node (Controller can rem
 
 ### Existing ZTE0.3 direct0.4.1 upgrade
 Use DEMO-ZTE-0.4.1 copyable owner guide and trusted publication SHA. Stop foregrounds, old launcher complete backup/readback, stage/preflight/upgrade to immutable new release with another NEW backup. Compare private identity snapshot, stopped-node storage-status actual writable/fsync, then original Controller+Node. Do not install over prefix or init/join/storage-init existing ZTE. Both0.3 and0.4 direct routes tested from exact archives. Rollback is data-preserving code selection with NEW backup, but restores original Android bug on affected host: keep storage stopped/review, never clear markers/old database to make it run.
+
+## Phase4.0 Quick Join diagnostics
+Use PHASE4-QUICK-JOIN.md. setup_required means explicit approved Demo init is
+missing; never copy Core/recovery state to bypass it. tls_pin_mismatch or
+cluster_mismatch requires independently rechecking the owner endpoint/pin/cluster,
+not bypassing TLS or deleting identity. resume_required preserves pending; retry
+the same command. Expired/rejected grant: explicit --new-code with a fresh owner
+code keeps the same operation. identity_present +unknown confirmation is not a
+claim that Controller is reachable. A lost pairing ticket after logout/restart
+only loses UI tracking; it does not revoke a still-valid Core code. Registered
+node still needs manual storage setup and owner-approved independent domain.

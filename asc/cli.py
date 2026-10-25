@@ -177,11 +177,17 @@ def _read_path(path):
 
 def _enroll(args, repair=False):
     _must_not_protected('node re-pair' if repair else 'node enrollment')
+    expected_cluster = getattr(args, 'expected_cluster_id', None)
+    if expected_cluster is not None:
+        from .catalog.common import identifier
+        identifier(expected_cluster)
     ensure_private_home(HOME)
     # Reinstall is read-only for an enrolled node, even while its agent holds the lock.
     if (not repair and (HOME / 'node.json').exists() and
             not (HOME / 'enrollment_pending.json').exists() and not (HOME / 'controller.json').exists()):
-        _read_path(HOME / 'node.json')
+        saved = _read_path(HOME / 'node.json')
+        if expected_cluster is not None and saved['cluster_id'] != expected_cluster:
+            raise ClientError('Cluster ID mismatch; identity retained',409,'cluster_mismatch')
         print('Already joined. Existing identity preserved; no duplicate enrollment.')
         print('Use status; if credential rejected, use explicit node-repair with a targeted admin code.')
         return
@@ -190,6 +196,8 @@ def _enroll(args, repair=False):
             raise ValueError('controller identity exists; refusing node enrollment')
         node_path = HOME / 'node.json'
         current = _read_path(node_path) if node_path.exists() else None
+        if expected_cluster is not None and current and current['cluster_id'] != expected_cluster:
+            raise ClientError('Cluster ID mismatch; identity retained',409,'cluster_mismatch')
         if current and not repair:
             pending_path = HOME / 'enrollment_pending.json'
             if pending_path.exists():
@@ -243,6 +251,8 @@ def _enroll(args, repair=False):
             pending_path.rename(HOME / ('enrollment_abandoned-' + uuid.uuid4().hex + '.json'))
         if pending_path.exists():
             pending = _read_path(pending_path)
+            if expected_cluster is not None and pending['expected_cluster_id'] != expected_cluster:
+                raise ClientError('Cluster ID mismatch; pending retained',409,'cluster_mismatch')
             if (pending['controller'] != origin or pending['pin'] != pin or
                     pending.get('target_node_id') != target or pending.get('cluster_id') != cluster or
                     controllers and pending.get('controllers') != controllers):
@@ -256,6 +266,8 @@ def _enroll(args, repair=False):
             print('Retrying saved enrollment operation; no new identity generated.')
         else:
             info = enrollment_request('GET', '/api/v1/info')
+            if expected_cluster is not None and info['cluster_id'] != expected_cluster:
+                raise ClientError('Cluster ID mismatch; enrollment refused',409,'cluster_mismatch')
             if 'retry-safe-enrollment-v1' not in info.get('features', []):
                 raise ValueError('upgrade controller to Phase 1.1 before new enrollment; existing v0.4 heartbeats remain supported')
             if cluster and info['cluster_id'] != cluster:
@@ -436,6 +448,7 @@ def main():
         a.add_argument('--name')
         a.add_argument('--sd-test', action='store_true')
         a.set_defaults(node_id=None, cluster_id=None)
+        a.add_argument('--expected-cluster-id', help='Optional trusted owner cluster binding; preserves pending format')
         a.add_argument('--new-code', action='store_true', help='Explicitly replace a pending grant; preserve recovery state')
         if command == 'node-repair':
             a.add_argument('--node-id', help='Required only when private identity was lost')

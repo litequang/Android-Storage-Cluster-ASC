@@ -1,4 +1,4 @@
-"""Exact published0.3/0.4 ->0.4.1 under root denial; old-code/new-state rollback."""
+"""Frozen historical exact03/04 ->published04.1 regression; candidate has separate tests."""
 import contextlib
 import hashlib
 import http.client
@@ -37,8 +37,16 @@ class PublishedUpgradeFixture(unittest.TestCase):
         # First call is before old Controller/state creation. Both phones are
         # installed and populated by EXACT archived0.3/0.4 code, not a version label.
         if not hasattr(self, 'new_source'):
-            self.new_source = self.source
-            self.new_release = verify(self.new_source)
+            # These historical version/asset assertions remain exact. Do not
+            # relabel candidate code04.1 or weaken its old byte-identity gate.
+            frozen_archive=self.repo/'releases/asc-demo-alpha-0.4.1.tar.gz'
+            self.assertEqual(hashlib.sha256(frozen_archive.read_bytes()).hexdigest(),
+                '74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1')
+            with tarfile.open(frozen_archive) as saved:
+                self.assertTrue(all(m.isfile() and not m.name.startswith('/') and '..' not in m.name.split('/') for m in saved.getmembers()))
+                saved.extractall(self.root/'exact-published-0.4.1',filter='data')
+            self.new_source=self.root/'exact-published-0.4.1/asc-demo-alpha'
+            self.new_release=verify(self.new_source)
             archive = self.repo / ('releases/asc-demo-alpha-' + self.old_version + '.tar.gz')
             self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(),
                              self.old_sha)

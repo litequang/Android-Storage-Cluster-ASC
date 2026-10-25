@@ -403,3 +403,10 @@ archives plus approved-root Android volume patch into Core3D feature baseline.
 Keep Core3D external backup/recovery/guards, no merge/schema/state change.95
 combined targeted PASS0skip0fail incl actual browser, exact historical upgrade,
 all9 external faults and local GC/storage checks. Full new integration pending.
+
+## Phase4.0b.2a — source candidate0.4.2-dev
+Owner-authenticated session-bound pairing API reuses existing Core one-use grants.
+Guided local quick-join validates pin/cluster/mode, preserves pending/identity,
+refuses recovery staging and never approves storage.31 targeted Linux synthetic
+PASS; UI and exact candidate upgrade/full qualification pending. Historical04.1
+archive fixtures/assertions preserved. No public Android release/acceptance.

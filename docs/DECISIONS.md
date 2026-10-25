@@ -246,3 +246,15 @@ Keep every base state format unchanged and browser state optional/independent. A
 
 ## ADR-059 — approved-root descriptor anchor without filesystem-root read permission
 Use the already approved volume dev/inode and exact node/volume marker as the POSIX anchor. Absolute lookup opens only that directory; no-follow child descriptors plus namespace snapshots/rechecks prevent adoption or redirection to swapped roots/ancestors/folders/markers. Reading/lstat metadata of ancestors does not require opening/listing them. This is equivalent scoped access within the trusted private OS account, not a sandbox against a malicious privileged co-owner or a claim of atomic filesystem+DB/power-cut durability. Missing descriptor primitives fail closed, with no unsafe absolute-child fallback. Preserve marker/formats/IDs; share this fix in Demo branch only, leave Core WIP unchanged. Measured probe truth follows cleanup; random name collision is preserved, never deleted.
+
+## ADR063 — Session facade and local enrollment adapter
+Accepted for Phase4.0 Demo single-writer only. Use existing Registry one-use
+codes and Core durable retry enrollment; no second enrollment store/engine.
+Owner browser receives a short-lived code once, tracks a bounded session ticket;
+only hashes remain server RAM, underlying grant lifetime is independent of UI.
+Node identity belongs to the initialized local engine, not browser storage.
+An optional expected-cluster CLI guard uses the old pending field, preserving
+wire/schema compatibility. No automatic volumes/storage/domain permission.
+Reject unknown/quorum/recovery modes; Core3D writable recovery stays BLOCKED.
+Native application bridge, Keystore/SAF and single-writer-to-Raft migration need
+separate contracts/tests; this adapter does not implement them.

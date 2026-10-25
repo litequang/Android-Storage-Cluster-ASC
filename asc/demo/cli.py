@@ -37,6 +37,9 @@ def execute(args):
             if os.environ.get('ASC_DEMO_PREFIX'):
                 upgrade.binding(prefix, root, create=True)
         return {'initialized': True, 'mode': 'single-writer-demo', 'private_state_retained': True}
+    if args.command == 'quick-join':
+        from .quickjoin import start
+        start(root,args)  # Re-exec with private Core HOME BEFORE imports.
     inspect_state(root)
     if args.command == 'recover-upgrade':
         return upgrade.recover(root, prefix)
@@ -183,6 +186,9 @@ def main():
     join.add_argument('--controller', required=True)
     join.add_argument('--pin', required=True)
     join.add_argument('--name', required=True)
+    quick = commands.add_parser('quick-join', help='Guided pinned enrollment; never approves storage')
+    quick.add_argument('--controller');quick.add_argument('--pin');quick.add_argument('--name')
+    quick.add_argument('--expected-cluster-id');quick.add_argument('--new-code',action='store_true')
     storage = commands.add_parser('storage-init')
     storage.add_argument('--root', type=Path)
     storage.add_argument('--kind', choices=['internal', 'termux_sd'], default='internal')

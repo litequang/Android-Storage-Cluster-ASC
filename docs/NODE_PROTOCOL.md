@@ -468,3 +468,19 @@ max 8 KiB, no chunked/ambiguous frames. No node approve/policy/delete/GC browser
 
 ### DEMO.4d.2 owner local probe (no wire change)
 `ascdemo storage-status` requires the existing enrolled/initialized Demo state and stopped local Storage Node; reuses existing capability shape with readable/writable/fsync_tested/state/last_error. Demo prefix binding/compatibility/journal, root operation and agent/engine OS ownership guards apply; Controller may remain running. No data/volume initialization, network authorization change or new HTTP endpoint. Private local owner authority only; M51/unknown still refused before probe.
+
+## Phase4.0 owner Quick Join facade (Demo single-writer only)
+Authenticated Dashboard POST /api/v1/quick-join/pairings with empty JSON object,
+existing exact Host/Origin +CSRF, returns201: quick_join_version1,pairing_id,
+code,expires_at,expires_in,controller,pin,cluster_id,runtime,storage_auto_approvalFalse.
+GET /api/v1/quick-join/pairings/<UUID> requires the same owner session; returns
+state waiting/expired/registered/revoked/unknown, optional node_id and separate
+storage_approved/failure_domain evidence, checked_at. GET never returns the code.
+8 tickets/session,32 global, tracking expires with session; logout/restart erases
+tracking, not existing Core join-code validity. No CORS/new bearer/token route.
+Local quick-join first GETs pinned /api/v1/info (protocol1/schema4, explicit
+single-writer-development, raft_enabledFalse, retry-safe enrollment feature).
+Then calls the unchanged Core join/retry wire contract. No code in CLI arguments.
+Expected Cluster ID check uses the existing pending expected_cluster_id field;
+no new wire/config/schema. Registration is not owner storage/domain approval.
+Native/local-engine bridge and Core quorum mode remain future qualification.

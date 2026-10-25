@@ -8,8 +8,9 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 |Checkpoint|State|
 |---|---|
 |4.0a|PUSH/REMOTE VERIFIED5d15cb71dc07e0e31b7b9da68e4aea85178e3847;16 targeted PASS|
-|4.0b.1|READY: selective port95PASS0skip0fail290.653s; normal push gate follows|
-|4.0b.2|NOT STARTED: owner Dashboard +guided CLI, may split backend/UI|
+|4.0b.1|PUSH/REMOTE VERIFIED4646f68b7e7e60d924a6beb25de93dcd2e597448;95PASS|
+|4.0b.2a|READY: backend/guided CLI31PASS; push gate follows|
+|4.0b.2b|NOT STARTED: owner UI/browser|
 |4.0c|NOT STARTED: exact04.1 candidate upgrade/rollback +fresh full qualification|
 
 Read AGENTS in mandatory order, then3D acceptance/progress and Demo4D acceptance/
@@ -61,3 +62,31 @@ match pinned Demo bytes. Prototype package version remains historical0.4.1-alpha
 ONLY for this compatibility checkpoint (source ID differs because Core3D is kept);
 not republished or claimed as original released0.4.1. Next b.2 candidate0.4.2-dev.
 Next only after normal push/remote equality:Quick Join backend/CLI then UI/browser.
+
+## 4.0b.2a backend / guided CLI
+
+b.1 pushed and advertised remote matched4646f68 BEFORE this implementation.
+New Pairings session facade calls existing pinned admin/pair; sole durable state
+remains Registry join_codes/enrollment_ops. Hash-only RAM tickets,600s one-use
+node grants,8/session32global, owner CSRF/exact origin, no GET secret. Logout/
+restart discards tracking/session, DOES NOT revoke an unconsumed underlying code.
+CLI quick-join executes Core enrollment with ASC_HOME bound before import; pin,
+expected cluster, Demo mode/protocol/schema checked before code. Optional Core
+--expected-cluster-id guards use existing pending field; no wire/schema change.
+Lost ACK/replacement code retry preserves operation/token. Missing initialized
+Demo state/M51/unknown device/RECOVERY_READ_ONLY refuse without state adoption.
+Registered != storage approval; no volume creation/approval/start or domain claims.
+Source candidate0.4.2-dev only. Historical03/04->04.1 test setup now extracts exact
+published04.1 (SHA74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1),
+retaining ALL historical version/asset assertions; candidate upgrade gets a separate
+4c test. Public archives unchanged.
+
+Actual `python -B -m unittest tests.test_quick_join
+ tests.test_lifecycle.ClientIdentityTests tests.test_lifecycle.DeviceSafetyTests
+ tests.test_demo_dashboard tests.test_demo_release_upgrade -v`:
+**31PASS0SKIP0FAIL114.232s**.9 new Quick Join tests include real pinned TLS lost
+successful ACK/idempotent receipt, Controller restart, concurrent one-use race,
+expiry/new-code same operation, pin/cluster/quorum refusal, session isolation/
+CSRF/global32 bounds, no auto-storage, existing identity and setup/device guards.
+Full qualification/candidate upgrade and owner UI still pending. Next only after
+normal feature push/remote equality:4.0b.2b. Guide PHASE4-QUICK-JOIN.md.

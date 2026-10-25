@@ -417,3 +417,14 @@ Only approved-root directory absolute open is allowed by the new adapter, O_DIRE
 
 ### DEMO.4d.2 synthetic integration / local status
 Root-open denial lives only in tests/android_root_denial.py (not packaged); its Python wrapper preserves underlying actual dir_fd-support metadata rather than falsely pretending a different OS. No product mock/capability override. Real Controller/Storage/TLS/probe/bytes and authorization run unchanged. New Demo storage-status honors device/state/prefix and local ownership guards before reusing actual Engine probe, never creates volume/identity. Live node ownership/M51/unknown refusal is tested; old-certificate/browser TLS gates are rerun normally.
+
+## Phase4.0 Quick Join boundaries
+Owner pairing POST uses existing HTTPS CA/session/exact origin/CSRF; the one-use
+node code is returned once and must not enter URLs, persistent browser storage,
+logs or public artifacts. Session ownership and8/32 tracking limits apply; logout
+or restart is not code revocation. Registry expiry/one-use rules still govern.
+Node adapter checks private LAN origin, full TLS pin, expected Cluster ID and
+explicit supported Demo mode before secret submission. Hidden code input and
+redacted structured errors preserve pending retry identity. No shared password,
+auto storage permission, failure domain inference or recovery writer. M51/unknown
+model guards remain. Missing initialized state and recovery staging fail closed.
