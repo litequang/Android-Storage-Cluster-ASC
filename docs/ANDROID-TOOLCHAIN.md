@@ -73,3 +73,9 @@ No emulator PASS from a running host process, build or guessed boot delay. At th
 checkpoint ADB boot/runtime is NOT TESTED/NOT QUALIFIED; final status in4.2 acceptance.
 No broad adb devices/USB/phone access. Keep emulator/server OWN process handles and
 stop only those; retained synthetic files are private artifacts, not Git inputs.
+
+Update4.2b.1: corrected private adb listener +retained software emulator parent,
+actual API35 boot_completed1 and app/test APK installation Success.4 Android
+instrumentation tests PASS47.602s. Earlier NOT QUALIFIED text is historical tool
+checkpoint status; this qualifies those4 emulator operations only, not a native
+Node, Keystore/storage/Engine or production. Final matrix in4.2 acceptance.

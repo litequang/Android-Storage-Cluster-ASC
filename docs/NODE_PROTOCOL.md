@@ -515,3 +515,8 @@ Core routes403 (including downloads/mutations); Demo routes are unchanged in Dem
 mode. Unique owner cookie per gateway, same Origin/CSRF/CA policies. No browser
 node credentials or local-app authorization. See CORE-QUORUM-DASHBOARD/API contract;
 owner observation never supplies writer capability, even with confirmed Barrier.
+
+Phase4.2 native Binder uses ANDROID-NATIVE-API version1 typed AIDL, separate from
+Linux UDS/owner session/node token. Private own UID+signature+explicit consent;
+no path/PID/shell/arbitrary management request. Enrollment wire unchanged and
+native runtime unsupported until qualified, no fake Core pending/approval.

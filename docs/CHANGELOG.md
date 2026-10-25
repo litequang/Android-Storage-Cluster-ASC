@@ -483,3 +483,8 @@ Android/native/migration not tested, writable disaster recovery still BLOCKED.
 Separate feature from accepted4.1, isolated verified toolchain, pinned Gradle/Kotlin
 Android project, explicit FOUNDATION/UNKNOWN screen. No native Node/Termux adoption,
 consensus or recovery authority. Emulator/Engine qualification remains separate.
+
+## Phase4.2b.1 — private bound Service/typed IPC
+Own UID/signature+explicit local consent, version1 bounded validation and honest
+FOUNDATION/UNKNOWN. No native Node launch/enrollment or second storage backend.
+Actual Android instrumentation gate is separate from JVM policy/build evidence.

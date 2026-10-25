@@ -473,3 +473,9 @@ Official SHA pins+HTTPS and initial Maven checksum inventory, no system/proxy/CA
 mutation. Initial Kotlin APK is FOUNDATION; build is not native Node/emulator proof.
 App backups disabled, cleartext disabled; no management IPC in toolchain checkpoint.
 Private emulator/ADB only, never phones or USB/M51. Debug signer is not production.
+
+Native EngineService is nonexported with signature permission; per-call Binder
+UID/signature checked before validation/private state. Canonical UUID/bounded typed
+arguments/private HTTPS/pin/cluster/trust checks, no code reflection/log/secret return.
+Explicit local UI consent, no external Intent commands, no sticky/boot/idle mock FGS,
+foreign PID control or automatic node/volume/approval. Native Node remains unsupported.

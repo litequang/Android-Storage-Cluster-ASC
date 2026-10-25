@@ -566,3 +566,10 @@ bridge/Core read-only only; Android/native migration/writable DR remain unqualif
 - Contract.kt: version1 refusal/UNKNOWN contract; MainActivity: explicit FOUNDATION/unsupported Engine only.
 - ContractTest/LaunchTest: JVM version/UNKNOWN checks and actual Android launch gate (no emulator result implied).
 - PHASE4-2-PLAN/PROGRESS/ACCEPTANCE own serial checkpoints, toolchain evidence and native runtime blockers.
+
+## Phase4.2b.1 private native Binder
+- android/app/src/main/aidl ILocalEngine: typed bounded versioned fixed operations, no paths/PID/shell.
+- RequestPolicy.kt: canonical UUID/private HTTPS/full pin/Cluster ID/name/code/trust validation, own UID+signature policy.
+- EngineService.kt: exported=false/signature permission and per-call UID/signature, consent, honest FOUNDATION/UNKNOWN/unsupported runtime, no automatic identity/lifecycle.
+- MainActivity: explicit local consent and private binding/status; no browser/backend/Termux state.
+- RequestPolicyTest/BinderTest: JVM denial/validation and actual Android consent/version/runtime refusal gates; no mock online success.

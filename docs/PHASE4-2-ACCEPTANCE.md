@@ -20,3 +20,8 @@ No cross-UID Termux access or state copying. No quorum/Leader/fencing reconstruc
 SHA/dependency inventory present. Emulator35 software boot/ADB NOT QUALIFIED,
 missing KVM; see ANDROID-TOOLCHAIN and progress for actual attempts. Native runtime
 qualification remains mandatory before any runtime/Node claim. Full scope NOT ACCEPTED.
+
+4.2b.1 actual API35 emulator: boot1, APKs installed,4 Android instrumentation
+PASS47.602s;7 JVM PASS/build PASS. Actual private own-UID Binder/consent/denial
+and Activity launch only. Native Node/embedded Engine/Keystore/storage/enrollment/
+foreign caller/lifecycle/network/upgrade/full final gates remain PENDING.

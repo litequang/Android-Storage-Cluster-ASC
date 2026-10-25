@@ -7,8 +7,9 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 
 | Checkpoint | State |
 |---|---|
-|4.2a|BUILD TOOLCHAIN PASS:2 JVM tests/APK/test-APK; emulator runtime NOT QUALIFIED, final gate e|
-|4.2b|NOT STARTED|
+|4.2a|PUSH/REMOTE VERIFIED8667923 +audit follow-up a6e4d7e; build tools PASS; emulator35 now booted|
+|4.2b.1|READY:7 JVM +4 actual Android instrumentation PASS; native Binder foundation|
+|4.2b.2|NOT STARTED: embedded canonical Python Engine qualification|
 |4.2c|NOT STARTED|
 |4.2d|NOT STARTED|
 |4.2e|NOT STARTED|
@@ -50,3 +51,24 @@ independent native foundation work, never claims a Node. Next b after push/remot
 Windows gradlew.bat CRLF as trailing whitespace; the shell did not stop before
 commit. Corrected line endings in a NORMAL follow-up (no history rewrite) and
 reran complete tracked/index audit before moving on. No security/test gate weakened.
+
+## 4.2b.1 actual private Binder foundation
+
+a6e4d7ebb684d3689d309df82d0a191c30e4ed22 pushed/remote matched BEFORE b.1.
+EngineService nonexported/signature permission +per-call UID/signature; typed
+version1 AIDL,8192 aggregate bound/canonical IDs/private HTTPS/pin/cluster/code/
+trust input, explicit UI consent. No paths/PIDs/commands/second backend, foreign
+process kill or Node lifecycle. Unqualified native runtime refuses; status is
+FOUNDATION/UNKNOWN with no Node/Cluster identity. No idle mock FGS/boot/startup.
+
+Gradle assembleDebug/testDebugUnitTest/assembleDebugAndroidTest PASS70tasks28s;
+7 JVM tests0fail/error/skip. Actual AOSP API35 software emulator boot_completed1
+and installed BOTH APKs Success on task-owned127.0.0.1:5555/privateADB5038.
+`adb -P 5038 -s 127.0.0.1:5555 shell am instrument -w -r
+ org.asc.foundation.test/androidx.test.runner.AndroidJUnitRunner`:
+**4 Android tests PASS47.602s**, own UID Binder status/consent/version/dangerous
+operation/runtime refusal +Activity launch. This is actual emulator runtime,
+NOT native Node/engine/enrollment acceptance. Cross-UID attacker still futuregate.
+No KVM/phones/M51/Termux/system changes. a emulator earlier pending status now
+superseded by observed boot +actual4 tests, not a build-based inference.
+Next b.2 ONLY after normal commit/push/remote: embedded original Engine investigation.
