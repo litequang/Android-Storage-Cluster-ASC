@@ -445,3 +445,9 @@ volume status reuse existing services. Actual Quick Join via existing pinned
 worker, lost ACK/restart/identity and pending-owner-approval reporting; no auto init,
 new Catalog/Engine/approval/lifecycle or browser/Android access. Qualification in
 Phase4.1 progress; base formats and old candidate archives unchanged.
+
+## Phase4.1b.2 — controlled Node lifecycle and crash resume
+Only owned configured Demo Node lifecycle, retained supervisor/PDEATHSIG fence,
+exact known socket crash recovery and verified installed launcher bridge commands.
+Actual lost enrollment response +bridge SIGKILL retains same Core operation/Node.
+19 targeted PASS0skip/fail; no Android acceptance, Controller/Raft start or PID kill.

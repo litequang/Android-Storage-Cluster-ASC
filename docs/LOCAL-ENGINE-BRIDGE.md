@@ -1,7 +1,7 @@
 # Local Engine Bridge API v1
 
-Status:4.1b.1 implements provisioning/private IPC/status/Quick Join; lifecycle still
-operation_not_supported until4.1b.2. Qualification: PHASE4-1-PROGRESS.
+Status:4.1b.2 implements provisioning/private IPC/status/Quick Join and scoped
+owned Node lifecycle. Linux synthetic only; qualification: PHASE4-1-PROGRESS.
 Linux synthetic same-UID native client only, not a browser HTTP API or APK bridge.
 No cross-UID Termux access is claimed. No second Catalog/Storage/enrollment engine.
 
@@ -30,7 +30,8 @@ on installed-prefix use; device/M51/unknown and existing engine locks remain.
 
 Exactly `{api_version:1,request_id:UUID,app_id:UUID,authorization:secret,
 operation:string,params:object}`. Authorization is LOCAL APP only, never node/admin.
-Response `{api_version:1,request_id,ok,result|error,replayed}`; fixed error labels,
+Success `{api_version:1,request_id,ok:true,result,replayed,historical_receipt}`;
+rejected frame/operation `{api_version:1,ok:false,error}`; fixed error labels,
 no arbitrary exceptions/input echoed. Response success is not storage/write proof.
 
 | operation | scope | params / semantics |
@@ -106,3 +107,34 @@ unknown/malformed/foreign socket/app scope/secret response boundaries tested.
 Local status reads existing manifest/approved adapter and actual free space,
 never constructs a second Engine or probes writable/fsync. Those values remain
 null; ONLINE controller is pinned-info reachability only, writer_authority=false.
+
+## 4.1b.2 implemented lifecycle / installed commands
+
+Use verified installed `ascdemo --state <existing-state> bridge-provision --control
+<NEW-control> --allow-join --allow-lifecycle`, then bridge-run --control in a
+foreground. bridge-status, bridge-node-start/bridge-node-stop --request-id <UUID>
+and bridge-quick-join reuse the SAME --control and matching --state. Quick Join
+public --controller/--pin/--cluster-id/--name/--request-id flags; hidden code input,
+--resume can omit original code for same request binding, explicit --new-code
+requires NEW bridge request ID and keeps the old Core enrollment operation.
+The control root is not an installation/identity or public credential export.
+
+Lifecycle start runs ONLY an already configured Demo Storage Node; never starts
+Controller/Core/quorum. Owned-node ONLINE means process observed, not remote
+connectivity, writable/fsync or replica proof. An external foreground is reported
+separately by its lock and is never stopped. Receipt replay is historical and
+never auto-starts after bridge restart; a NEW explicit request ID may start again.
+All parent-owned spawns originate from one retained supervisor thread: Linux
+PDEATHSIG follows the creating THREAD, so short-lived request handlers cannot be
+parents. Fixed single-threaded child sets fence/checks parent before exec; no
+threaded preexec hook. SIGINT graceful stop then bounded SIGTERM of OWN child only.
+
+Optional socket.json format1 stores app UUID/device/inode. Restart holds exclusive
+bridge lock and removes only a matching private owned socket proven connection-
+refused; missing/bad receipt, unknown inode, link or live endpoint refuses. This
+supersedes b.1 stale-socket refusal for EXACT owned crash receipts only. No lock
+or foreign socket deletion. Actual SIGKILL tests verify parent death, retained
+bytes/identity, socket recovery and no receipt-driven automatic start.
+Join worker can finish a committed response after bridge death; completion is
+not canceled/assumed failed. Existing Core pending/identity remains authoritative,
+same-request resume does not mint another Node or grant storage approval.

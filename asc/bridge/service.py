@@ -22,6 +22,7 @@ from ..storage.errors import StorageError
 from .contract import VERSION, MAX_FRAME, SCOPES, Refused, decode, request
 from . import private
 from .engine import Engine
+from .lifecycle import OwnedNode
 
 
 def platform():
@@ -79,6 +80,7 @@ class Bridge:
         self.root = private.directory(control); self.cfg = load(self.root)
         self.engine = Engine(self.cfg['state'], self.cfg['installation_id'], self.cfg['prefix'], self.cfg['state_identity'])
         info = self.root.lstat(); self.identity = (info.st_dev,info.st_ino)
+        self.lifecycle = OwnedNode(self.engine)
         self.operation = threading.Lock()
         with private.journal(self.root): pass
 
@@ -92,8 +94,7 @@ class Bridge:
         op = value['operation']
         if SCOPES[op] not in self.cfg['scopes']: raise Refused('scope_denied')
         self.engine.check()
-        if op == 'status': return self.reply(value, self.engine.status())
-        if op not in ('quick_join',): raise Refused('operation_not_supported')
+        if op == 'status': return self.reply(value, {**self.engine.status(),'owned_node':self.lifecycle.state(),'lifecycle_supported':True})
         if not self.operation.acquire(blocking=False): raise Refused('operation_busy')
         try:
             params = dict(value['params']); raw_code = params.pop('code',None)
@@ -109,7 +110,8 @@ class Bridge:
                 else:
                     if db.execute('SELECT COUNT(*) FROM requests').fetchone()[0] >= 256: raise Refused('request_limit')
                     db.execute('INSERT INTO requests VALUES(?,?,?,?,\'RECEIVED\',NULL)', (value['request_id'],value['app_id'],intent,code_sha))
-            result = self.engine.quick_join(value['params'])
+            result = (self.engine.quick_join(value['params']) if op=='quick_join' else
+                      self.lifecycle.start() if op=='node_start' else self.lifecycle.stop())
             with private.journal(self.root) as db:
                 db.execute("UPDATE requests SET state='DONE',result=? WHERE request_id=?", (canonical(result).decode(),value['request_id']))
             return self.reply(value, result)
@@ -119,7 +121,7 @@ class Bridge:
         return {'api_version': VERSION, 'request_id': value['request_id'], 'ok': True, 'result': result,
                 'replayed': replayed, 'historical_receipt': replayed}
 
-    def close(self): pass
+    def close(self): self.lifecycle.close()
 
 
 class Handler(socketserver.StreamRequestHandler):
@@ -166,16 +168,37 @@ class Runtime:
         self.owner = private_lock(self.root,'bridge'); self.owner.__enter__()
         try:
             self.bridge = Bridge(self.root); self.path = self.root / 'engine.sock'
-            # Never remove/adopt an existing socket, including a stale one.
-            if self.path.exists() or self.path.is_symlink(): raise Refused('socket_already_exists')
+            self.recover_socket()
             self.server = Server(self.path,self.bridge); os.chmod(self.path,0o600)
             info = self.path.lstat(); self.socket_identity = (info.st_dev,info.st_ino)
+            private.replace(self.root/'socket.json',{'format':1,'app_id':self.bridge.cfg['app_id'],'device':info.st_dev,'inode':info.st_ino})
             self.thread = threading.Thread(target=self.server.serve_forever,daemon=True); self.thread.start()
             return self
         except BaseException:
             if hasattr(self,'server'): self.server.server_close()
             if hasattr(self,'bridge'): self.bridge.close()
             self.owner.__exit__(None,None,None); raise
+    def recover_socket(self):
+        receipt=self.root/'socket.json';expected=None
+        if receipt.exists() or receipt.is_symlink():
+            expected=private.read(receipt)
+            if (set(expected)!={'format','app_id','device','inode'} or type(expected['format']) is not int or expected['format']!=1 or
+                    expected['app_id']!=self.bridge.cfg['app_id'] or any(type(expected[k]) is not int for k in ('device','inode'))):
+                raise Refused('socket_receipt_rejected')
+        if self.path.exists() or self.path.is_symlink():
+            info=self.path.lstat()
+            if (expected is None or not stat.S_ISSOCK(info.st_mode) or info.st_uid!=os.getuid() or info.st_mode&0o077 or
+                    (info.st_dev,info.st_ino)!=(expected['device'],expected['inode'])):
+                raise Refused('socket_already_exists')
+            with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as connection:
+                connection.settimeout(1)
+                try:connection.connect(str(self.path))
+                except ConnectionRefusedError:pass
+                else:raise Refused('socket_already_exists')
+            current=self.path.lstat()
+            if (current.st_dev,current.st_ino)!=(info.st_dev,info.st_ino):raise Refused('socket_already_exists')
+            self.path.unlink()  # Known owned dead socket + exclusive bridge OS lock + exact durable receipt.
+
     def __exit__(self,*_):
         try:
             self.server.shutdown(); self.server.server_close(); self.thread.join(); self.bridge.close()

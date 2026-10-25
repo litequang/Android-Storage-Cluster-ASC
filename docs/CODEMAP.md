@@ -527,3 +527,10 @@ Android and writable DR remain NOT ACCEPTED.
 - asc/bridge/engine.py: existing state/installation inode binding, read-only approved volume adapter metrics and pinned Controller reachability, existing Quick Join subprocess via private stdin/ASC_HOME before imports; no identity init/approval/write probe.
 - asc/bridge/cli.py: explicit provision/run/status/hidden-code client; no shell/path/PID operations. Lifecycle unsupported until b.2.
 - tests/test_bridge.py: actual UDS/TLS/engine lost replies/restart/pending/no approval, scopes/peer credentials/frame limits, secret-safe receipts, root/guard/foreign socket/bounds.
+
+## Phase4.1b.2 controlled lifecycle
+- bridge/lifecycle.py OwnedNode: retained supervisor thread owns fixed guarded Node Popen, explicit start/stop/historical receipts; never external PID/Controller/Core launch.
+- bridge/child.py: Linux parent-death fence in single-threaded launcher before exec, original device/state/runtime guards retained.
+- bridge/service.py Runtime: exact private socket crash receipt recovery under exclusive OS lock, no foreign/live unlink. bridge/private.py atomic owned receipt publication.
+- bridge/cli.py register/execute_demo and demo/cli.py: verified installed launcher commands with root/prefix binding; local app scopes distinct from owner/node credentials.
+- tests/test_bridge_lifecycle.py:4 actual TLS/bytes/start/stop/parent SIGKILL/socket recovery/installed source/enrollment-commit crash tests. Linux parent-thread regression caught and fixed.

@@ -463,3 +463,8 @@ private app credential only. requests.sqlite3 schema1: request_id/app_id/public
 intent hash/code SHA/RECEIVED or DONE/sanitized historical result,<=256 permanent
 rows. This is not a Catalog/Storage/Node identity database. Engine pending schema,
 base Demo/Core/registry/manifest/cache formats unchanged; no auto init/migration.
+
+Phase4.1b.2 adds only optional private control/socket.json format1 (app UUID,
+device,inode), never engine identity. Same request journal stores sanitized owned
+Node lifecycle receipts; replay historical, not process authority. Old candidate/
+base schema/credentials/pending/volume markers unchanged. No PID file controls.

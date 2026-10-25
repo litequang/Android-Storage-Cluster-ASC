@@ -71,3 +71,19 @@ def initialize_journal(root):
             db.execute('CREATE TABLE requests(request_id TEXT PRIMARY KEY,app_id TEXT NOT NULL,intent TEXT NOT NULL,code_sha256 TEXT,state TEXT NOT NULL,result TEXT)')
             db.execute('PRAGMA user_version=1')
     finally: db.close()
+
+
+def replace(path, value):
+    """Replace an already validated owned receipt, never arbitrary state."""
+    import tempfile
+    if path.exists() or path.is_symlink():read(path)
+    fd, name = tempfile.mkstemp(prefix='.receipt-', dir=path.parent)
+    try:
+        with os.fdopen(fd,'wb') as out:
+            out.write(canonical(value));out.flush();os.fsync(out.fileno())
+        no_links(path);os.replace(name,path)
+        directory_fd=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+        try:os.fsync(directory_fd)
+        finally:os.close(directory_fd)
+    finally:
+        if os.path.exists(name):os.unlink(name)  # Only temporary receipt exclusively made here.

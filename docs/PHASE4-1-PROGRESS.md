@@ -8,8 +8,8 @@ Mandatory ordered reads and specified Phase4/3D/implementation documents complet
 | Checkpoint | Current state |
 |---|---|
 |4.1a|PUSH/REMOTE VERIFIED5c26ccf92337ddf2026702a1f8310d4f07b2d689;14PASS|
-|4.1b.1|READY:21 targeted PASS0skip/fail94.158s; normal push gate follows|
-|4.1b.2|NOT STARTED: controlled Node lifecycle and real process death|
+|4.1b.1|PUSH/REMOTE VERIFIEDfca0c37349ec65ce62220da52f9c1e8d4b6ae632;21PASS|
+|4.1b.2|READY:19 targeted PASS0skip/fail74.287s; normal push gate follows|
 |4.1c|NOT STARTED: Core read-only observer/gateway/shared UI and actual faults|
 |4.1d|NOT STARTED: app contract qualification/exact upgrade/full regression|
 
@@ -66,3 +66,29 @@ M51/unknown-before-private-access, root replacement, framing/auth/scopes/foreign
 socket/journal bound and all old Quick Join cases. No Android/other-UID runtime
 acceptance. b.1 has graceful restart; hard-crash socket recovery/Node lifecycle
 still b.2 pending. Next only after normal push/remote match:4.1b.2.
+
+## 4.1b.2 owned lifecycle / real bridge process loss
+
+b.1 pushed/remote matchedfca0c37 BEFORE this work. Owned Node only: fixed guarded
+Demo worker argv, retained supervisor thread/Popen handle, Linux PDEATHSIG before
+exec, no browser/PID/shell/process manager or Controller/Core/Raft launch. Scoped
+start/stop keeps process evidence separate from UNKNOWN writable/fsync/protection.
+Hard-crash socket recovery requires exclusive bridge OS lock +exact owned private
+socket receipt +matching inode +actual connection refusal; foreign/live/unknown
+socket is preserved. Optional receipt changes no engine/control base format.
+Verified installed Demo launcher exposes bridge-provision/run/status/node-start/
+node-stop/quick-join, existing root/prefix/source/journal checks apply.
+
+First lifecycle target caught real Linux parent-thread semantics: a short-lived
+IPC handler spawned the child, so PDEATHSIG killed it when that handler ended.
+Fixed spawn ownership to one retained supervisor thread, no test/timeout weakening.
+Corrected3 lifecycle PASS24.780s. Added actual bridge SIGKILL DURING paused successful
+TLS201 enrollment: original worker/pending identity finishes; same bridge request
+resumes with unknown current confirmation, exactly one enrolled Node/token and
+no storage approval. Final `python -B -m unittest tests.test_bridge_lifecycle
+ tests.test_bridge tests.test_bridge_contract tests.test_demo_installer -v`:
+**19PASS0SKIP0FAIL74.287s**. Actual Node start/stop/restart/SHA, external foreground
+untouched, parent SIGKILL/lock release/socket restart/historical no-autostart,
+installed verified source/root binding, enrollment loss/security/installer gates.
+No Android/cross-UID/real power-cut acceptance. Next only after push/remote match:
+4.1c.1 sanitized Core GET observer and pinned read-only gateway adapter.

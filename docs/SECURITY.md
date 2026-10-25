@@ -443,3 +443,11 @@ no raw secret logs/argv/env, bounded retry receipts and owned-child lifecycle.
 Core observation needs actual Barrier/identity/term evidence, supplies no writer.
 Threat/API/native limits: LOCAL-ENGINE-THREAT-MODEL, LOCAL-ENGINE-BRIDGE,
 CORE-QUORUM-DASHBOARD, ANDROID-APP-CONTRACT. No Android/DR authority unlock.
+
+Phase4.1 lifecycle uses a retained supervisor thread (Linux parent-death signal
+follows parent THREAD), a fixed child that sets PDEATHSIG/checks parent before exec,
+and only actual Popen handles for signals. No handler-thread spawn/PIDfile kill/
+Controller/Core start. Bridge SIGKILL releases Node locks and retains bytes; this
+is Linux process-death evidence, not Android/physical power loss. Socket recovery
+requires exclusive owner lock/private exact app+inode receipt/refused connection;
+unknown/live/link endpoints stay untouched. Installed source/root binding retained.

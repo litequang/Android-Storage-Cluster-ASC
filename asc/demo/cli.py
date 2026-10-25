@@ -45,6 +45,9 @@ def execute(args):
         return upgrade.recover(root, prefix)
     if os.environ.get('ASC_DEMO_PREFIX'):
         upgrade.startup_check(prefix, root)
+    if args.command.startswith('bridge-'):
+        from ..bridge.cli import execute_demo
+        return execute_demo(args,root)
     if args.command == 'diagnose':
         return upgrade.diagnose(root)
     if args.command == 'stage':
@@ -228,6 +231,8 @@ def main():
             item.add_argument('release_id')
         if command in ('upgrade', 'rollback'):
             item.add_argument('--backup', type=Path, required=True)
+    from ..bridge.cli import register as register_bridge
+    register_bridge(commands)
     args = parser.parse_args()
     try:
         if args.command == 'preflight':

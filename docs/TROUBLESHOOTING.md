@@ -446,3 +446,11 @@ retry same ID/--resume; no duplicate identity. request_limit: journal lifetime b
 no unsafe automatic eviction. socket_already_exists: b.1 preserves stale/foreign
 socket; do not unlink a socket/lock blindly. Writable/fsync null is honest read-only
 status, not permission denial and not readiness from process existence.
+
+Phase4.1b.2 known stale socket can recover automatically ONLY with its exact
+private app/device/inode receipt, exclusive bridge lock and connection refusal.
+Unknown/live socket or mismatched receipt stays refused. external_runtime_owned:
+stop original foreground in its terminal; bridge cannot kill it. node_not_configured:
+no existing node/storage setup, no implicit init. START_REQUESTED/owned process
+ONLINE is not writable/protection proof. After bridge death old start receipt is
+historical and does not auto-start; inspect fresh status, use NEW explicit ID.
