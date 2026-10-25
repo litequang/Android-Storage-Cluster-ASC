@@ -477,3 +477,6 @@ binds application/volume/quota/reserve/rootdev/inode; original Core manifest1 us
 only in isolated APP_PRIVATE_PROBE_ONLY namespace, not cluster Node identity.
 Missing/unknown/corrupt state held, no auto regeneration/schema migration.
 No Core/Demo formats/archive changes; ANDROID-NATIVE-STATE defines exact limits.
+
+## Native state compatibility evidence
+Application/probe/Core manifest remain format1; no schema migration. Android cloud and D2D CE/DE backups explicitly exclude private state. Same-signer native versionCode1 checkpoint ->2 qualification preserves existing appUUID, Keystore canary, exact encrypted unsent draft, private Volume ID/marker and committed Core bytes. Test-only upgrade receipt never ships in main APK. Lower version installation must refuse; no general native rollback/key export/Termux state adoption is supported.

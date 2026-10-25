@@ -19,6 +19,26 @@ class MainActivity : Activity() {
     private var engine:ILocalEngine?=null
     private var bound=false
     private var generation=0
+    internal var networkEpoch=0
+        private set
+    internal var networkLosses=0
+        private set
+    private var observingNetwork=false
+    private lateinit var connectivity:ConnectivityManager
+    private lateinit var busy:TextView
+    private var pending=0
+    private val networkObserver=object:ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network:android.net.Network) {changed(false)}
+        override fun onLost(network:android.net.Network) {changed(true)}
+        private fun changed(lost:Boolean) {runOnUiThread {
+            if(observingNetwork && !isFinishing) {
+                networkEpoch++;generation++;pending=0;if(::busy.isInitialized)busy.text=""
+                if(lost)networkLosses++;verifiedBinding=null
+                if(::code.isInitialized)code.setText("")
+                if(::joinResult.isInitialized)joinResult.text="Mạng thay đổi · Controller UNKNOWN. Kiểm tra lại TLS/Cluster ID, không tự tin địa chỉ mới."
+            }
+        }}
+    }
     private val worker=Executors.newSingleThreadExecutor()
     private val pages=mutableListOf<View>()
     private lateinit var status:TextView
@@ -61,6 +81,7 @@ class MainActivity : Activity() {
             isChecked=getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false)
             setOnCheckedChangeListener {_,checked ->getSharedPreferences("local-consent",MODE_PRIVATE).edit().putBoolean("granted",checked).commit();if(!checked){code.setText("");verifiedBinding=null}}
         };root.addView(consent)
+        busy=text("",13f).apply {tag="loading"};root.addView(busy)
         val tabs=LinearLayout(this);root.addView(tabs)
         val body=FrameLayout(this);root.addView(body,LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,0,1f))
         fun page(label:String):LinearLayout {
@@ -73,7 +94,7 @@ class MainActivity : Activity() {
         val overview=page("Tổng quan")
         status=text("Service/Controller/Node UNKNOWN").apply {tag="runtime-status"};overview.addView(status)
         val memory=ActivityManager.MemoryInfo();(getSystemService(ACTIVITY_SERVICE) as ActivityManager).getMemoryInfo(memory)
-        val cm=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager;connectivity=cm
         val caps=cm.getNetworkCapabilities(cm.activeNetwork)
         val network=when {caps==null->"OFFLINE / UNKNOWN";caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)->"Wi-Fi (không chứng minh Controller online)";caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)->"Ethernet";else->"Kết nối hệ thống, LAN UNKNOWN"}
         overview.addView(text("${Build.MANUFACTURER} ${Build.MODEL} · Android API ${Build.VERSION.SDK_INT}\nRAM đo được: ${memory.totalMem/1048576} MiB · CPU: ${Runtime.getRuntime().availableProcessors()}\nMạng: $network\nReplication: UNKNOWN · Nhiệt độ/uptime liên tục: UNKNOWN"))
@@ -140,6 +161,7 @@ class MainActivity : Activity() {
     private fun publicBinding()=listOf(controller.text.toString().trim(),cleanPin(),cluster.text.toString().trim()).joinToString("|")
     private fun message(value:JSONObject)=when(value.optString("error")) {
         "identity_locked"->"IDENTITY_LOCKED: giữ state/key hiện có; không tạo identity mới."
+        "device_not_qualified"->"Thiết bị PROTECTED/UNKNOWN: chỉ xem audit, không tạo state hoặc chạy Engine."
         "consent_required"->"Cần consent rõ ràng cho thao tác vùng riêng của APK."
         "invalid_request"->"Thông tin chưa hợp lệ hoặc bindings/code chưa đúng; chưa xác nhận thành công."
         "native_runtime_unqualified"->"BLOCKED: native Node/enrollment/lifecycle chưa được nghiệm thu."
@@ -154,16 +176,20 @@ class MainActivity : Activity() {
         task({JSONObject((engine ?: error("unavailable")).request(1,id,op,endpoint,fingerprint,expected,name,secret,trusted))},done)
     }
     private fun task(work:()->JSONObject,done:(JSONObject)->Unit) {
-        val current=generation
+        val current=generation;pending++;busy.text="Đang xử lý nguồn thật · chưa xác nhận kết quả."
         worker.execute {
             val result=try {work()}catch(_:Exception){JSONObject().put("state","UNKNOWN").put("error","service_unavailable")}
-            runOnUiThread {if(current==generation && !isFinishing)done(result)}
+            runOnUiThread {if(current==generation && !isFinishing) {pending--;busy.text=if(pending>0)"Đang xử lý nguồn thật…" else "";done(result)}}
         }
     }
     private fun refresh() {call("status") {
         val app=it.optJSONObject("application_identity")
-        status.text="Service: ${it.optString("state","UNKNOWN")}\nApplication identity: ${app?.optString("state") ?: "UNKNOWN"}\nNode/Controller: UNKNOWN · Node runtime NOT SUPPORTED\nStorage/failure-domain approval: UNKNOWN · Writer authority: false"
+        status.text="Service: ${it.optString("state","UNKNOWN")} · ${it.optString("device_policy","UNKNOWN")}\nApplication identity: ${app?.optString("state") ?: "UNKNOWN"}\nNode/Controller: UNKNOWN · Node runtime NOT SUPPORTED\nStorage/failure-domain approval: UNKNOWN · Writer authority: false"
     }}
-    override fun onStop() {generation++;if(::code.isInitialized)code.setText("");verifiedBinding=null;super.onStop()}
+    override fun onStart() {super.onStart();pending=0;if(::busy.isInitialized)busy.text=""
+        if(::connectivity.isInitialized && !observingNetwork) {observingNetwork=true;connectivity.registerDefaultNetworkCallback(networkObserver)}
+        if(engine!=null)refresh()
+    }
+    override fun onStop() {if(observingNetwork){observingNetwork=false;connectivity.unregisterNetworkCallback(networkObserver)};generation++;if(::code.isInitialized)code.setText("");verifiedBinding=null;super.onStop()}
     override fun onDestroy() {generation++;engine=null;if(bound)unbindService(connection);worker.shutdown();super.onDestroy()}
 }

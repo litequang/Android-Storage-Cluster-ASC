@@ -41,6 +41,13 @@ emulator/ADB, never phones/M51/production/SSH/system/Boot/root/format. Android R
 GC/failover/approval/writable DR stay locked. Migration separate/unimplemented.
 Full applicable Python/Go/Android/fault/security/package gates before acceptance.
 
+Current4.2 limited FOUNDATION now has real API35 Python Core I/O, private Binder,
+Keystore/probe/Vietnamese UI, exact prior native APK upgrade/process-death/downgrade
+refusal. Read current4.2 ACCEPTANCE: native Node/enrollment/FGS/observer NOT DONE.
+New AVD direct10.0.2.2 refused; explicit dev ADB loopback TLS proof is NOT LAN
+acceptance. No auto fallback/proxy changes. Final fresh full gates have their own
+receipt; don't infer full4.2 acceptance from build/instrumentation counts.
+
 ## Phase4.1 completed handoff — Linux synthetic only
 
 Qualified frozen source/tests/packaged guides/candidate 0a3ea839217156b69209a073f5d836ee1db4452b; fresh311

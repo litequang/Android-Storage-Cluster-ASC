@@ -471,3 +471,7 @@ historical and does not auto-start; inspect fresh status, use NEW explicit ID.
 - Gateway code expired: stop/restart serve --issue-login-code in PRIVATE terminal;
   this revokes all volatile owner sessions. Never log/publicly share its output.
 Detailed candidate-only use/backup/code rollback: PHASE4-1-OPERATIONS.md.
+
+## Android native emulator / compatibility
+Network-loss test must disable both emulator WiFi and cellular; disabling WiFi alone can keep a real default cellular network and correctly fails the fault gate. Restore both in finally and require actual callback/code clearing. No KVM means software boot takes minutes; wait for observed boot_completed, not a timed PASS. Use retained owned parent process and private ADB5038/numeric127.0.0.1 serial, never phone discovery or unknown locks.
+INSTALL_FAILED_VERSION_DOWNGRADE is expected safety proof; don't use -d/uninstall/data clear. Signature mismatch requires original private signer, not identity reset. Native runtime_unqualified is the real missing reviewed Node/enrollment/provider boundary; engine library I/O success does not remove it. See ANDROID-NATIVE-OPERATIONS for safe limits.

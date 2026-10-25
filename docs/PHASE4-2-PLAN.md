@@ -63,3 +63,11 @@ Missing /dev/kvm: test software emulation honestly; no fabricated emulator PASS.
 No Android Raft/GC/failover/automatic approval/replica reduction/writable DR or voter
 change. Core3D recovery staging NEVER a writer. Full native/physical-device and
 Termux->APK migration remain separate qualification; no production release.
+
+## Qualification continuation
+Split e.1 actual emulator/security/network/exact native prior-build upgrade and APK
+source freeze; e.2 fresh full applicable Python/Go/fault/package/remote evidence.
+No next full run before targeted runtime/upgrade gates. Full Phase4.2 stays NOT
+ACCEPTED while native joined Node/enrollment/FGS/observer implementation is missing;
+qualified independent native FOUNDATION can be published with explicit limitations.
+No term "completed native runtime" for a library self-test or encrypted join form.

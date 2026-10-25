@@ -20,6 +20,19 @@ class ControllerBindingTest {
             assertEquals("UNKNOWN",info.getString("state"));assertFalse(info.getBoolean("enrollment_performed"))
         } else {
             assertEquals("online",config.getString("phase"))
+            if(info.getString("state")!="TLS_AND_CLUSTER_MATCH") {
+                val py=com.chaquo.python.Python.getInstance();val scope=py.builtins.callAttr("dict")
+                for((key,value) in mapOf("origin" to origin,"pin" to pin,"expected_cluster" to cluster))scope.callAttr("__setitem__",key,value)
+                py.builtins.callAttr("exec", """
+from asc.client import request_json
+try:
+    r=request_json(origin,pin,'GET','/api/v1/info',timeout=10)
+    diagnostic='PUBLIC_REPLY mode='+str(r.get('mode'))+' schema='+str(r.get('schema_version'))+' protocol='+str(r.get('protocol_version'))+' cluster_match='+str(r.get('cluster_id')==expected_cluster)
+except Exception as exc:
+    diagnostic=type(exc).__name__
+""".trimIndent(),scope)
+                fail("Strict native binding UNKNOWN; direct primitive category: "+scope.callAttr("get","diagnostic"))
+            }
             assertEquals("TLS_AND_CLUSTER_MATCH",info.getString("state"));assertEquals(cluster,info.getString("cluster_id"))
             assertFalse(info.getBoolean("writer_authority"));assertFalse(info.getBoolean("enrollment_performed"))
             val wrongPin=(if(pin[0]=='a')"b" else "a")+pin.substring(1)

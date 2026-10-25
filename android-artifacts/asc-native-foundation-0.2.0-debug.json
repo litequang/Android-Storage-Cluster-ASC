@@ -1,0 +1,22 @@
+{
+  "sha256": "ab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705",
+  "bytes": 35790961,
+  "application_id": "org.asc.foundation",
+  "version_code": 2,
+  "version_name": "0.2.0-foundation",
+  "min_sdk": 26,
+  "target_sdk": 35,
+  "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "abis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "permissions": [
+    "org.asc.foundation.permission.LOCAL_ENGINE",
+    "android.permission.INTERNET",
+    "android.permission.ACCESS_NETWORK_STATE"
+  ],
+  "canonical_core_modules": 109,
+  "inventory_findings": [],
+  "scope": "internal debug FOUNDATION; no native Node, migration or phone acceptance"
+}

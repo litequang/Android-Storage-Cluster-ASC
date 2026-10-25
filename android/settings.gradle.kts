@@ -5,3 +5,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ASCNativeFoundation"
 include(":app")
+include(":untrusted")

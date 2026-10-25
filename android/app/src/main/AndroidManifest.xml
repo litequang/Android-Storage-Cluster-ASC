@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application android:label="ASC Foundation" android:theme="@android:style/Theme.Material.Light.NoActionBar"
-        android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
+        android:icon="@drawable/ic_asc" android:allowBackup="false" android:fullBackupContent="@xml/backup_rules" android:dataExtractionRules="@xml/data_extraction_rules" android:usesCleartextTraffic="false" android:supportsRtl="true">
         <service android:name=".EngineService" android:exported="false" android:permission="org.asc.foundation.permission.LOCAL_ENGINE" />
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>

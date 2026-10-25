@@ -506,3 +506,6 @@ Four foundation pages with actual metrics/explicit unknown providers, consent/
 owner trust and encrypted unsent draft. Existing Core pinned public GET matches
 cluster/mode, no credentials/enrollment/authority.13 Android+offline/reconnect/
 6 Python/7 JVM PASS. Node/observer/SAF/FGS not implemented by UI.
+
+## Phase4.2e native qualification foundation (internal debug)
+Added native M51/unknown fence, stable Binder transaction IDs, actual different-signature/UID bind-denial fixture, real default-network fault/code clearing, test-only exact prior-APK upgrade/process-death/downgrade refusal gates and CE/DE backup exclusion. Native Node/enrollment/FGS/Core observer/SAF/migration remain explicitly unsupported; no production or phone acceptance. Qualification receipts and APK inventory follow in PHASE4-2 documents.

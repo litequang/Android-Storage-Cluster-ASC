@@ -285,3 +285,6 @@ are separate from Core pending/token/Node. Fixed private capability probe reuses
 Core safety code and has its own application-bound namespace; never adopt synthetic
 actor/volume as live Node. Lost state/key/schema/medium is held. SAF unavailable
 until equivalent semantics proven; no custom encryption or writable recovery.
+
+## ADR068 — Native diagnostic fence, stable Binder and upgrade evidence
+Keep private Binder operation IDs explicit0/1 and reject foreign UID even with matching signature. Add native M51/unknown fence; debug AOSP emulator diagnostics do not bypass Core. Exclude CE/DE cloud+D2D backups because copying encrypted files cannot restore nonexportable keys. Qualify exact private prior-checkpoint APK upgrade on a FRESH AVD using same signer and real retained bytes/key/marker; Android version downgrade MUST refuse. No uninstall/adb-d/stale DB restoration, general native rollback or released Termux migration claim. Real default-network loss clears code/trust. Native Node/enrollment/FGS remains blocked on reviewed shared-Core native providers, not papered over by a mock or guard bypass.

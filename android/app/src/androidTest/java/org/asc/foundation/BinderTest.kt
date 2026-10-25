@@ -39,4 +39,14 @@ class BinderTest {
         assertEquals("invalid_request",request(b,"status",99).getString("error"))
         assertEquals("invalid_request",request(b,"shell").getString("error"))
     }
+    @Test fun fixedV1ParcelCodeRemainsCompatible()=withService {b,_ ->
+        val data=android.os.Parcel.obtain();val reply=android.os.Parcel.obtain()
+        try {
+            data.writeInterfaceToken("org.asc.foundation.ILocalEngine");data.writeInt(1)
+            data.writeString(UUID.randomUUID().toString());data.writeString("status")
+            repeat(5){data.writeString("")};data.writeInt(0)
+            assertTrue(b.asBinder().transact(android.os.IBinder.FIRST_CALL_TRANSACTION+1,data,reply,0))
+            reply.readException();assertEquals("FOUNDATION",JSONObject(reply.readString()!!).getString("state"))
+        }finally{data.recycle();reply.recycle()}
+    }
 }

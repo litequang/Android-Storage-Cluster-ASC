@@ -520,3 +520,6 @@ Phase4.2 native Binder uses ANDROID-NATIVE-API version1 typed AIDL, separate fro
 Linux UDS/owner session/node token. Private own UID+signature+explicit consent;
 no path/PID/shell/arbitrary management request. Enrollment wire unchanged and
 native runtime unsupported until qualified, no fake Core pending/approval.
+
+## Native Binder1 publication
+See ANDROID-NATIVE-IPC. Explicit approvePrivateProbe0/request1 transactions, actual per-call UID/signature, consent/device policy before state. Public pinned Controller GET is not enrollment, approval or authority; encrypted native draft remains NOT SENT. No new network write/Node/Core quorum API.

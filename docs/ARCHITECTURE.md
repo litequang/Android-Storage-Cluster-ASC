@@ -462,3 +462,6 @@ Embedded Core handles local capability probes and pinned public info; no enrollm
 POST/node runtime until explicit-context provider is qualified. Unconfigured native
 Core observer/list/replicas/quorum/recovery UNKNOWN; existing Dashboard remains
 the operational owner UI. Draft!=Core pending, app probe!=cluster storage approval.
+
+## Native qualification boundary
+Native device gate adds a diagnostic fence before private state (M51/unknown deny); it never overrides Core device guards or authorizes a Node. AOSP debug emulator is diagnostics only. Native Binder transaction IDs are explicit/stable. Default-network changes invalidate form trust and late callbacks. Native state excludes Android cloud/D2D backup: nonexportable Keystore is not folder-migratable. Test-only alternate instrumentation seeds/verifies exact old APK state, never included in management/runtime APK. No new observer, enrollment authority, FGS, Raft/GC or recovery writer.

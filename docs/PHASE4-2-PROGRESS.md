@@ -11,8 +11,9 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |4.2b.1|PUSH/REMOTE VERIFIED677e28ac5cff008e4b869847ac6c39bb51d71266;7 JVM/4 Android PASS|
 |4.2b.2|PUSH/REMOTE VERIFIED5ac246aa27f78e0c979cd0674f127939331cce26;local Engine PASS, Node BLOCKED|
 |4.2c|PUSH/REMOTE VERIFIED29c2985c839c6b20a0f6a6f3f4142c38b2f20847;11 Android/5 Linux/7 JVM PASS|
-|4.2d|READY:13 Android +offline1/reconnect1;6 Python/7 JVM PASS; native Foundation UI|
-|4.2e|NOT STARTED|
+|4.2d|PUSH/REMOTE VERIFIED8b901310da04f33e82165756d5bcd8ac36349d82;13 Android +offline1/reconnect1;6 Python/7 JVM PASS|
+|4.2e.1|TARGETED PASS for limited native FOUNDATION/dev TLS; native LAN/Node still NOT ACCEPTED; publication receipt follows|
+|4.2e.2|PENDING: fresh full Python/Go/fault/package publication|
 
 Tools/logs: /workspace/asc-android-dev (activate.sh), /workspace/work/phase4-2;
 no private state/signing/SDK/cache in Git. Existing Python/Go activate.sh unchanged.
@@ -142,3 +143,107 @@ Controller stopped =>**offline1PASS13.375s**, restarted same registry/cert =>
 Cluster ID denied over actual embedded Core transport, public data only.
 Next e only after push/remote: untrusted caller/process death/network/app upgrade,
 final applicable regressions/packaged APK/secrets audit. No production/phone claim.
+
+## 4.2e.1 security/network/upgrade gates
+
+d pushed/remote matched8b901310da04f33e82165756d5bcd8ac36349d82 BEFORE e.
+Added explicit AIDL transaction0/1 ABI, native M51/unknown pre-state fence, actual
+network callback/trust clearing, CE/DE cloud+D2D backup exclusion and distinct
+signer/UID fixture. Fixed-scope qualification tools only accept task-owned numeric
+loopback emulator with real qemu/hardware/boot proof; private new logs/state only.
+
+First15-case run had1FAIL: WiFi-only fault left default cellular network alive.
+Corrected fault to disable BOTH WiFi/cellular, require actual onLost+secret clearing,
+restore both finally and require restored network. No assertion weakened/skipped.
+Final Gradle assemble/unit/testAPK/untrusted/testAPK/lint PASS47s;10JVM0fail/skip.
+Lint0errors/21warnings (VN-only strings17, verified pinned dependency3, durable
+synchronous consent write1); Gradle9 deprecation remains, only8.11.1 qualified.
+
+Actual API35 emulator corrected qualification:15 Android PASS123.313s; separate
+different-signer app1PASS0.231s with actual UID/signature/permission/bind denial;
+Controller stop1PASS12.648s, same-registry/cert reconnect1PASS12.594s; zero enrollment
+rows, no Node credential issuance. Exact raw logs private e-runtime-qualified.
+Main APK inventory109 canonical Core modules from byte-identical generated inputs,
+ARM64+x86_64, apksigner verifies debug signature. No private state/key/test-only
+classes in main package under inventory/pattern audit; not comprehensive binary SAST.
+
+Fresh AVD ASC_UPGRADE_API35 software boot in progress, old AVD preserved and owned
+process stopped through retained parent only. Exact prior c versionCode1 APK private
+SHA7235444589ff0ae9fa3f56dfc4cc23bae910b46fdef27c290b021333959f6de9.
+This is a private checkpoint build, NOT a released native APK or Termux archive.
+Upgrade/actual process-death/version-downgrade refusal now PASS; see final receipt below.
+
+Remaining implementation blocker: actual native Core enrollment/identity TLS/agent
+provider with explicit app context (no CLI getpass/HOME/subprocess/OpenSSL bypass),
+owned Node lifecycle and justified FGS. Public pinned GET +encrypted UNSENT form is
+not Quick Join. Native observer unconfigured =>UNKNOWN. SAF/QR/hardware biometric
+key invalidation/physical ARM64/Doze/production/Termux migration unqualified.
+Full Phase4.2 NOT ACCEPTED; preserve independent qualified foundation checkpoints.
+
+Publication review additionally caught a real UI race: a response queued before
+network change could re-establish the old trust binding after the callback. Fixed
+network change to advance UI generation/reset pending status; old worker callbacks
+are discarded. Added controlled late Activity-worker response during ACTUAL WiFi/
+cellular loss and strict no-delivery assertion (UI concurrency proof, not a mocked
+Controller/Engine PASS). Rebuilt APK/unit/testAPK/lintPASS62s. All related emulator
+gates will be rerun against this corrected exact APK before publication.
+
+### Exact native upgrade final receipt
+
+First custom runner manifest was overwritten by generated Gradle runner, so Android
+could not find instrumentation; seed did NOT execute. Fixed TEST runner to extend
+AndroidJUnitRunner, delegate normal JUnit when no fixed phase, select it in Gradle.
+Resume requires exact installed base.apk SHA and ABSENT identity-v1/private-probe-v1/
+upgrade-proof before seed; no reset/uninstall. First resume path validation correctly
+refused Android randomized `~~` path; extended literal safe-character regex, no shell
+interpolation. Both failed setup logs retained privately, never reported as PASS.
+
+Final build/unit/testAPK/lintPASS65s (10JVM/0errors21lint warnings). Exact old native
+0.1.0-foundation/versionCode1 checkpoint c SHA7235444589ff0ae9fa3f56dfc4cc23bae910b46fdef27c290b021333959f6de9, installed base APK SHA checked again;
+new0.2.0-foundation/versionCode2 SHAab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705.
+Actual API35 fresh AVD PASS: old-APK seed, same-signer normal upgrade, exact retained
+application UUID/Keystore canary/encrypted pending FORM request+bytes/Volume ID/marker/
+committed object SHA and Core verify; actual force-stop/start then identical checks;
+normal lower-version install refused INSTALL_FAILED_VERSION_DOWNGRADE then identical
+checks. Test code never creates Node/Cluster authority, never copies Termux state.
+Private e-upgrade-qualified-final/results.json records5 PASS gates; no native rollback/
+Keystore restore/released APK or Termux migration claim. Main APK source/hash remained
+unchanged by runner-only build. Final all-Android rerun against corrected race pending.
+
+New upgrade AVD exposed real missing network precondition: WiFi enabled but not
+connected. Initial full15 run227.242s had2FAIL (TLS +loss); corrected actual virtual
+WLAN connection/observed default network/onAvailable BEFORE fault. Next full16 run
+152.177s had1FAIL (TLS); actual network loss/late UI callback refusal now PASS. Direct
+pinned primitive diagnostic (public error class only) confirmed ConnectionRefusedError
+to10.0.2.2, INTERNET granted. No weakening/skip/HTTP/changed pin/proxy workaround.
+Direct NAT remains NOT PASSED. An EXPLICIT development-only --host-transport
+adb-reverse-loopback uses guest127.0.0.1, real existing Core TLS/expected pin/cluster,
+owned no-rebind port mapping with scoped cleanup. Default stays NAT, no auto fallback.
+Final full16 Android PASS on that dev transport; outage/reconnect finishing. This
+proves native TLS/protocol in an isolated dev connection, NOT native LAN acceptance.
+Main APK remainsab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705.
+
+### Final corrected e.1 runtime receipt
+
+|actual-controller-offline|1 PASS /0skip|11.861s|
+|actual-controller-reconnect|1 PASS /0skip|11.298s|
+|actual-default-network-ready|1 PASS /0skip|0.315s|
+|foreign-uid-signer-permission-denied|1 PASS /0skip|0.254s|
+|full-android-online|16 PASS /0skip|121.122s|
+
+Final six-gate pipeline PASS including zero enrollment mutation. Explicit dev
+transport adb-reverse-loopback only, not LAN. Earlier reconnect harness attempted
+a second no-rebind mapping on the retained port and correctly failed BEFORE
+reconnect test; fixed to retain the existing owned mapping, then reran the ENTIRE
+pipeline above. No gate skipped or substituted from failed runs. Native APK exact
+SHAab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705; same artifact used for upgrade+final16.
+Next normal commit/push/advertised remote verification BEFORE fresh Python/Go.
+No source/test/packaged-guide/archive edits after that source freeze. Main source
+asc/, Go consensus, old source archives and old packaged Phase4.1 guides unchanged.
+Full Phase4.2 NOT ACCEPTED: native Node/enrollment/FGS/observer providers and native
+LAN remain outstanding; use the exact remaining-gate table in ACCEPTANCE.
+
+Fresh Gradle :app:testDebugUnitTest :app:lintDebug --rerun-tasks after owned emulator
+stop: BUILD SUCCESSFUL40s,40tasks actually executed,10JVM/0fail/error/skip. Lint
+0errors21warnings. Exact upgraded identity/marker/bytes/KeyStore/form verified AGAIN
+after the complete Android fault pipeline, PASS. Main APK still unchanged.

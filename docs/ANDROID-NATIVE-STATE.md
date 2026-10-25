@@ -56,7 +56,7 @@ SAF revoke/removal/real SD tests remain NOT TESTED pending a real provider.
 
 Native formats are separate from immutable Core/Demo formats/candidates. Same-key
 install-r must preserve app UID/private state/alias/context inode and pending form;
-actual upgrade qualification in4.2e. Never uninstall/clear app data or use adb -d to
+actual4.2e same-signer versionCode1->2 qualification PASS (exact private checkpoint APK, retained key/cipher/marker/committed bytes/process death). Never uninstall/clear app data or use adb -d to
 manufacture compatibility. Unknown schemas refuse; no native schema migrator yet.
 Keep NEW state/bytes before code changes. Android signature/version rollback rules
 are mandatory; do not restore stale DB or promise extracting Keystore keys into

@@ -19,6 +19,7 @@ class EngineService : Service() {
             caller()
             return synchronized(operations) {try {
                 RequestPolicy.validate(version,requestId,"status","","","","","",false)
+                if(!NativeDeviceGate.allowed())return@synchronized error("device_not_qualified")
                 if(!getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false))return@synchronized error("consent_required")
                 require(quotaBytes in 1..(1L shl 40) && reserveBytes in 0..(1L shl 40))
                 PrivateProbeStorage(this@EngineService,ApplicationVault(this@EngineService)).approve(quotaBytes,reserveBytes).toString()
@@ -32,6 +33,7 @@ class EngineService : Service() {
             try {
                 RequestPolicy.validate(version,requestId,operation,controller,pin,clusterId,name,code,trustConfirmed)
                 if (operation=="status") return status().toString()
+                if(!NativeDeviceGate.allowed())return error("device_not_qualified")
                 if (!getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false))
                     return error("consent_required")
                 val vault=ApplicationVault(this@EngineService)
@@ -57,7 +59,8 @@ class EngineService : Service() {
         .put("node_id",JSONObject.NULL).put("cluster_id",JSONObject.NULL).put("writer_authority",false)
         .put("storage_approved",JSONObject.NULL).put("failure_domain_approved",JSONObject.NULL)
         .put("owned_node",false).put("runtime_start_supported",false)
-        .put("application_identity",ApplicationVault(this).state())
+        .put("device_policy",NativeDeviceGate.state())
+        .put("application_identity",if(NativeDeviceGate.allowed())ApplicationVault(this).state() else JSONObject().put("state","NOT_ACCESSED"))
     override fun onBind(intent: Intent): IBinder=binder
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         stopSelf(startId) // No background/boot/node launch; unqualified FGS stays absent.

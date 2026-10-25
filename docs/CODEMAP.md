@@ -593,3 +593,14 @@ bridge/Core read-only only; Android/native migration/writable DR remain unqualif
 - native_engine.inspect_controller/EmbeddedEngine: existing Core pinned GET only, expected cluster/mode/schema, no code/token/POST.
 - ControllerBindingTest/NativeUiTest +test_native_controller_binding: actual Android+Linux TLS wrong-pin/cluster/outage/reconnect/no-enrollment and live UI/background secret clearing.
 - Manifest INTERNET/ACCESS_NETWORK_STATE only normal network permissions, no broad storage/camera/boot/FGS. Native0.2.0-foundation versionCode2, own state unchanged.
+
+## Phase4.2e emulator/security/upgrade qualification
+- NativeDeviceGate: M51 dominates fields, unknown denied before private state; debug AOSP emulator diagnostics only, known test model !=runtime acceptance.
+- MainActivity NetworkCallback: actual default-network loss invalidates public binding, clears code and drops late UI generation.
+- Explicit AIDL0/1 IDs +Binder golden Parcel test preserve native IPC1 ABI.
+- NativeLifecycleTest: actual owned-emulator WiFi+cellular fault/restoration. UpgradeQualificationRunner TEST APK ONLY: exact old APK state/Keystore/marker/bytes ->new APK/process death/platform downgrade refusal.
+- android/untrusted: different signer/UID/denied permission +actual bind refusal fixture, never shipped as main app. Backup XML excludes all CE/DE cloud+D2D state, no key/folder migration.
+- tools/qualify_android_emulator.py: explicit owned loopback AVD verification, actual Core TLS outage/reconnect, exact-APK upgrade fault gates, private output only.
+- ANDROID-NATIVE-IPC/OPERATIONS/PILOT: versioned Binder, developer/owner qualification and honest unsupported Native Node/migration boundaries.
+
+- NetworkReadinessTest: actual default-network precondition; NativeLifecycle waits observed onAvailable before a real loss fault. ControllerBindingTest failure diagnostic emits only public primitive error category. Direct NAT ConnectionRefused remains NOT PASSED; explicit dev-only adb-reverse-loopback qualifies TLS/protocol, never LAN. Tool removes only owned no-rebind mapping, no automatic transport fallback.
