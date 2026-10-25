@@ -13,8 +13,8 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |4.2c|PUSH/REMOTE VERIFIED29c2985c839c6b20a0f6a6f3f4142c38b2f20847;11 Android/5 Linux/7 JVM PASS|
 |4.2d|PUSH/REMOTE VERIFIED8b901310da04f33e82165756d5bcd8ac36349d82;13 Android +offline1/reconnect1;6 Python/7 JVM PASS|
 |4.2e.1|PUSH/REMOTE VERIFIED67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a; limited native FOUNDATION/dev TLS only|
-|4.2e.2a|Targeted fixture fix PASS; full attempt1 ERROR recorded; push/remote then fresh317 restart|
-|4.2e.2|PENDING new fresh full Python/Go/fault/package; NOT ACCEPTED|
+|4.2e.2a|PUSH/REMOTE VERIFIEDc7dabb041ee06ed27de7077f1ceb7c51f59288a1; targeted6+repeat3+browser1 PASS|
+|4.2e.2|RUNNING fresh317 fromc7dabb0; full final result/Go pending; NOT ACCEPTED|
 
 Tools/logs: /workspace/asc-android-dev (activate.sh), /workspace/work/phase4-2;
 no private state/signing/SDK/cache in Git. Existing Python/Go activate.sh unchanged.
@@ -286,3 +286,11 @@ Fixture targeted final:6 Dashboard PASS29.498s; strict old-session401/restart re
 integration1PASS9.671s.0skip/fail/error. No original assertions changed; TLS handshake
 precondition stronger than TCP-listening alone and sends no HTTP/cookie. No runtime/
 Core/native APK/archive change. Normal commit/push/remote before fresh full restart.
+
+Fresh full attempt2 actually STARTED2026-10-25T19:20:48.301095+00:00 from
+PUSH/REMOTE VERIFIEDc7dabb041ee06ed27de7077f1ceb7c51f59288a1.243 frozen
+source/test/tools/project/packaged-guide/archive/APK files; no source edits during
+run. Reporting docs only. Attempt1 preserved under first-failed-* outside Git;
+no failure replaced by a fabricated PASS. Current full is RUNNING, not acceptance.
+Go/vet/modverify/builds follow only after fresh fullPASS. Resume must read the
+actual FINISHED exit/source_unchanged/fault-group receipt, otherwise rerun full317.
