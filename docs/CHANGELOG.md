@@ -513,3 +513,11 @@ Added native M51/unknown fence, stable Binder transaction IDs, actual different-
 Phase4.2e.2a regression fixture hardening: wait CA-verified Dashboard TLS readiness
 independently of Controller API before first HTTP/session request. Preserve401/key/
 CSRF assertions and source/runtime/archives; no authentication retry or test skip.
+
+Phase4.2 independent native FOUNDATION qualification: actual API35 x86_64 Engine/
+Binder/Keystore/private I/O/Vietnamese UI/upgrade faults and explicit dev-loopback
+TLS qualified; fresh317Python/11Go/62retained faults PASS. Internal debug0.2.0 APK
+SHAab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705 published.
+Native Node/enrollment/FGS/observer/direct LAN remain unaccepted; no phone/production/
+Termux migration or writable DR qualification. Public frozen-input/evidence reports
+and remaining4.2 handoff supplied, no source change after final full run.

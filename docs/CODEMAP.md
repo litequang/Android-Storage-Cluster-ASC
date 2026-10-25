@@ -606,3 +606,8 @@ bridge/Core read-only only; Android/native migration/writable DR remain unqualif
 - NetworkReadinessTest: actual default-network precondition; NativeLifecycle waits observed onAvailable before a real loss fault. ControllerBindingTest failure diagnostic emits only public primitive error category. Direct NAT ConnectionRefused remains NOT PASSED; explicit dev-only adb-reverse-loopback qualifies TLS/protocol, never LAN. Tool removes only owned no-rebind mapping, no automatic transport fallback.
 
 Phase4.2 regression fixture: DashboardAPITests.start waits a CA-verified Dashboard TLS handshake separately from Core API readiness; sends no HTTP/cookie before original first-response401/session/key assertions. No runtime/Core change.
+
+Phase4.2 final qualification data: qualification/phase4-2-foundation.json owns bounded
+actual counts/scopes/artifact/protected-publication facts; phase4-2-source-sha256.json
+pins243 public source/test/tools/guides/archive/APK inputs to c7dabb0. Reports only,
+no runtime/config/authority or secrets. Full native Phase4.2 remains NOT ACCEPTED.

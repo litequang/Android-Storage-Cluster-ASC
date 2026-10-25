@@ -48,6 +48,18 @@ New AVD direct10.0.2.2 refused; explicit dev ADB loopback TLS proof is NOT LAN
 acceptance. No auto fallback/proxy changes. Final fresh full gates have their own
 receipt; don't infer full4.2 acceptance from build/instrumentation counts.
 
+Phase4.2 current independent foundation receipt: native source67fdd0c, final frozen
+source c7dabb041ee06ed27de7077f1ceb7c51f59288a1. Fresh317Python0skip/11uncachedGo/
+vet/modules/builds/62retained faults PASS;243 source/project/guide/APK hashes fixed.
+Native JVM10/main Android16+4additional/exact prior-native-APK upgrade PASS with
+EXPLICIT dev TLS loopback; direct10.0.2.2 NAT NOT PASSED. Read current ACCEPTANCE/
+PROGRESS plus public qualification reports. Full Phase4.2 NOT ACCEPTED: native Node/
+TLS/enrollment/agent/FGS/observer still need reviewed providers and actual gates.
+Library success is not Node acceptance. Continue remaining4.2, not Phase4.3 or a
+new ASC implementation. Original branches/archives/Core3D/read-only recovery kept.
+Debug signer PRIVATE, preserve operator custody; never publish key or uninstall/
+clear state to bypass an incompatible update. No real phones/M51/production access.
+
 ## Phase4.1 completed handoff — Linux synthetic only
 
 Qualified frozen source/tests/packaged guides/candidate 0a3ea839217156b69209a073f5d836ee1db4452b; fresh311

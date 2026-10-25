@@ -71,3 +71,14 @@ No next full run before targeted runtime/upgrade gates. Full Phase4.2 stays NOT
 ACCEPTED while native joined Node/enrollment/FGS/observer implementation is missing;
 qualified independent native FOUNDATION can be published with explicit limitations.
 No term "completed native runtime" for a library self-test or encrypted join form.
+
+## Actual handoff after independent foundation qualification
+
+Source c7dabb0, native app67fdd0c. Final fresh317Python/11Go/retained62fault gates,
+10JVM/16main Android+4additional instrumentation and exact native upgrade gates
+PASS under ACCEPTANCE's scope. Native app/SDK/toolchain and artifact are concrete;
+full Phase4.2 NOT ACCEPTED. Remaining native context/TLS/enrollment/agent/owned FGS/
+observer and direct LAN implementation/qualification are explicitly ordered in
+PROGRESS. Do not claim Cloud lacks an Engine: the actual canonical library ran
+inside Android. The missing reviewed native Node providers are implementation gaps.
+No Phase4.3, production/phone or Termux migration acceptance is implied.

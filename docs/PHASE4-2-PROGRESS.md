@@ -14,7 +14,7 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |4.2d|PUSH/REMOTE VERIFIED8b901310da04f33e82165756d5bcd8ac36349d82;13 Android +offline1/reconnect1;6 Python/7 JVM PASS|
 |4.2e.1|PUSH/REMOTE VERIFIED67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a; limited native FOUNDATION/dev TLS only|
 |4.2e.2a|PUSH/REMOTE VERIFIEDc7dabb041ee06ed27de7077f1ceb7c51f59288a1; targeted6+repeat3+browser1 PASS|
-|4.2e.2|RUNNING fresh317 fromc7dabb0; full final result/Go pending; NOT ACCEPTED|
+|4.2e.2|Fresh317Python/11Go/all retained faults PASS; limited FOUNDATION report/package ready; full Phase4.2 NOT ACCEPTED|
 
 Tools/logs: /workspace/asc-android-dev (activate.sh), /workspace/work/phase4-2;
 no private state/signing/SDK/cache in Git. Existing Python/Go activate.sh unchanged.
@@ -294,3 +294,71 @@ run. Reporting docs only. Attempt1 preserved under first-failed-* outside Git;
 no failure replaced by a fabricated PASS. Current full is RUNNING, not acceptance.
 Go/vet/modverify/builds follow only after fresh fullPASS. Resume must read the
 actual FINISHED exit/source_unchanged/fault-group receipt, otherwise rerun full317.
+
+## Final foundation regression / next-session handoff
+
+Actual final source freeze c7dabb041ee06ed27de7077f1ceb7c51f59288a1; native app
+source67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a. Fresh Python317PASS0fail/error/
+skip1817.803s; started19:20:48UTC, completed19:51:06UTC2026-10-25. Source unchanged
+through run and after Go/audit; all243 files equal both frozen bytes and Git source
+objects. User resumed after run finished; no duplicate full or old311 reuse.
+Go actual23:50UTC:11uncached PASS/vet/modverify/Linux-Windows-Android builds PASS.
+All62 mandatory fault banners checked by exact group IDs:12+20+7+3+8+3+9.
+Native final16 +foreign1/network-ready1/offline1/reconnect1, JVM10, five native
+upgrade gates and retained-state postfault check PASS as above; Android dev TLS
+transport is explicit and NOT native LAN acceptance. APK/published checksum
+ab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705.
+Independent bare remote fetch at3aa51ae4f44eab501b0b51c3156519285f1305ef matched
+all243 hashes, exact APK/old0.4.3 candidate checksums, unchanged5 protected branches.
+Final report docs/data only; final publication audit/fetch repeats after normal push.
+
+Public machine-readable facts and complete public frozen inputs are in qualification/;
+no raw private fixtures/keys/registries/signing/AVDs are there. Full Phase4.2 is
+NOT ACCEPTED. Partial independent Foundation qualification does not close the
+remaining native runtime product requirements.
+
+### Checkpoint source/publication ledger
+
+| Checkpoint | Pushed and advertised source commit |
+|---|---|
+|4.2a|86679237729947012bd26b5045f0caa7e654f9cb|
+|a audit follow-up|a6e4d7ebb684d3689d309df82d0a191c30e4ed22|
+|4.2b.1|677e28ac5cff008e4b869847ac6c39bb51d71266|
+|4.2b.2|5ac246aa27f78e0c979cd0674f127939331cce26|
+|4.2c|29c2985c839c6b20a0f6a6f3f4142c38b2f20847|
+|4.2d|8b901310da04f33e82165756d5bcd8ac36349d82|
+|4.2e.1 APK/fault foundation|67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a|
+|e freeze receipt|bc32a2c46d171db95660a3c013a7940a43046bb0|
+|e.2a fixture repair / full frozen source|c7dabb041ee06ed27de7077f1ceb7c51f59288a1|
+|full restart handoff|3aa51ae4f44eab501b0b51c3156519285f1305ef|
+
+Final reporting commit is identified by Git history/advertised feature HEAD after
+fetch; no report attempts to contain its own circular commit hash. No merge/force/
+reset, original branches unchanged. Core/Go/archives/packaged4.1 guides unchanged.
+
+### Continue remaining Phase4.2; do not rebuild ASC or start Phase4.3
+
+1. Implement a reviewed explicit native context/credential/enrollment/agent provider
+   around existing Core, no global HOME/getpass/device guard monkeypatch or Kotlin
+   duplicate Registry/Catalog/Storage. Current Engine LIBRARY is proven; Node is not.
+2. Qualify native TLS identity/key lifecycle and real existing Core Quick Join with
+   durable pending/resume, Node/Cluster ID preservation, separate owner storage and
+   physical-domain approval. UNSENT encrypted app form is not that workflow.
+3. Add owned Node lifecycle/justified SDK35 FGS type/notification/safe stop/process
+   death/background tests. No idle mock/Termux PID kill/auto failover/boot startup.
+4. Wire a separately authenticated read-only Core observer with explicit mode,
+   actual quorum proof and recovery-read-only handling; absent source stays UNKNOWN.
+5. Resolve direct emulator host/LAN transport gate (current10.0.2.2 ConnectionRefused)
+   without proxy/TLS bypass. Keep ADB dev transport evidence separate. Then close
+   real Native Node/enrollment/permission/provider/Doze/QR/hardware key gates as
+   applicable; physical ZTE/Bphone acceptance remains owner-only/future.
+6. SAF/media semantics, production signer custody/rotation, native rollback and
+   Termux→APK export/import/authority/volume migration require separate implemented
+   contracts and tests; do not adopt/copy old private state or activate DR staging.
+
+Use ANDROID-NATIVE-OPERATIONS for qualified tools/exact build/emulator commands and
+rollback limits, ANDROID-NATIVE-IPC for version1/explicit0-1 transactions, STATE for
+format1/AES/private probe. Signer remains PRIVATE /workspace/asc-android-dev/user/
+debug.keystore; a new account/key cannot update the published APK in place. Never
+put key/password in GitHub or uninstall/clear data to bypass signature/version.
+No real phone/M51/production/system/Termux access performed or authorized for Codex.

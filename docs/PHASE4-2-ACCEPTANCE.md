@@ -1,7 +1,7 @@
 # Phase4.2 native foundation qualification
 
 **Full Phase4.2 NOT ACCEPTED. Independent native FOUNDATION subset qualified on
-actual API35 x86_64 emulator; final fresh Core regressions pending below.**
+actual API35 x86_64 emulator; fresh applicable Core regressions PASS below.**
 No joined native Node, native Quick Join, FGS or Termux migration is accepted.
 No real phone/production/M51 access, no Android Raft/GC/failover/writableDR.
 
@@ -11,7 +11,7 @@ JDK17.0.21+9, Gradle8.11.1, AGP8.9.2, Kotlin2.2.20, SDK/target35/min26,
 buildtools35.0.0, Chaquopy16.1/Python3.13. AOSP35 x86_64 actual boot/install/runtime,
 software TCG (-accel off, no /dev/kvm), task-owned private ADB5038/loopback only.
 Official source/version/checksum/TOFU limitations: ANDROID-TOOLCHAIN/toolchain-lock.
-All native results below use the SAME published main APK, not a Kotlin mock Engine.
+The final current-version native table uses the SAME published main APK, not a Kotlin mock Engine; the prior upgrade baseline is specified separately.
 
 | Final Android gate | Result | Time |
 |---|---|---|
@@ -99,14 +99,49 @@ APK. Do not uninstall/clear state to bypass signature/version refusal.
 |API26–34,36+ runtime; Windows runtime|NOT TESTED; minSDK declaration/cross-build does not prove runtime|
 |Android Raft/GC/failover/recovery writer|FORBIDDEN; Core3D staging remains read-only|
 
-## Fresh final regression
+## Fresh final regression — actual final run
 
-PENDING at source-freeze checkpoint. Full applicable Python317 discovered unique
-cases, uncached Go11/vet/module verification/applicable builds, final security/
-package/remote proof must finish before claiming even final foundation regression
-qualification. Old Phase4.1 full311 is NOT reused as a fresh4.2 result.
+Frozen source/tests/packaged guides/project/APK:
+`c7dabb041ee06ed27de7077f1ceb7c51f59288a1` (native source67fdd0c).
+Fresh full actually ran2026-10-25 19:20:48UTC→19:51:06UTC:
+`python -B -m unittest discover -s tests -v -f` **317PASS/0FAIL/0ERROR/0SKIP**,
+1817.803s test time.243 frozen file hashes unchanged during run and rechecked after
+Go/audit. Reporting docs/receipts only afterward. No historical311 result reused.
 
-Full Phase4.2 remains NOT ACCEPTED even if independent regressions PASS. Continue
-remaining native Core provider/enrollment/lifecycle/observer work before native Node
-acceptance; no Phase4.3/production readiness claim. See ANDROID-NATIVE-IPC/STATE/
-OPERATIONS/PILOT and PHASE4-2-PROGRESS for reproducible boundaries and safe handoff.
+| Retained actual Linux synthetic fault group | PASS |
+|---|---:|
+|Phase3A backup/version/restore|12|
+|Phase2B takeover/fencing|20|
+|Phase3B|7|
+|Phase3C|3|
+|Linux actual physical GC|8|
+|GC network authorization|3|
+|Phase3D external backup/recovery staging|9|
+
+All required banner IDs checked for exact count/sequence, not just exit0. Existing
+Core faults/regressions were retained. First full attempt failed after76tests due
+a Dashboard fixture readiness race; c7dabb0 waits only CA-verified TLS handshake
+before original FIRST HTTP401/key-preservation assertions. No cookie/HTTP response
+retried into success. Targeted6PASS29.498s +strict restart3PASS20.901s +actual browser
+1PASS9.671s before fix push/remote and a completely fresh full317 run.
+
+Go final fresh2026-10-25 23:50UTC: `go test -count=1 -v -timeout 240s ./...`
+**11PASS**, `go vet ./...` PASS, `go mod verify` PASS. `CGO_ENABLED=0 go build
+-trimpath -buildvcs=false` Linuxamd64/Windowsamd64/Androidarm64 PASS. Windows/Android
+are CROSS-BUILDS, not runtime. Core asc/, consensus/, old release/candidate archives
+and packaged Phase4.1 guides remain byte-identical to accepted Phase4.1 baseline.
+
+Fresh post-full APK nested/module/test-class/signature/SHA audit PASS,0 findings
+under stated bounded review. Published artifact was independently fetched into a
+separate bare repository: exact APK SHA and all243 frozen source hashes matched;
+all5 protected Core/Demo/Phase4.0/4.1 branch heads unchanged. Final documentation
+publication verification follows this report commit; no source or APK drift allowed.
+Old candidate0.4.3 SHA96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04
+also independently matched, not rewritten. Full reports: `qualification/phase4-2-
+foundation.json` and `qualification/phase4-2-source-sha256.json`.
+
+Full Phase4.2 remains **NOT ACCEPTED**: shared-Core native enrollment/Node TLS/agent/
+owned FGS/observer providers and direct LAN are outstanding. This closes independent
+foundation regression/package qualification only. Continue remaining4.2 work before
+native Node acceptance; no Phase4.3/production readiness or Termux migration claim.
+See ANDROID-NATIVE-IPC/STATE/OPERATIONS/PILOT and PHASE4-2-PROGRESS.
