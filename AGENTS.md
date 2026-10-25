@@ -52,8 +52,11 @@ unchanged reports are historical; do not push Core WIP or change other Core logi
 4d.1 remote5050a79 (61PASS),4d.2 remote72bc61d (36+1PASS). Current4d.3
 status in DEMO4D-ACCEPTANCE/progress: frozen dae8e7a now fresh246 Python0skip/
 all8 physical gates/11 Go/vet/modules/builds,38 targeted and3 exact-archive installer
-checks PASS. Final public archive/remote/SHA receipt follows; Android NOT TESTED. Follow dedicated DEMO-ZTE-0.4.1 owner guide after
-qualified publication; code downgrade brings old Android defect back.
+checks PASS. Public archive normally pushed/remote verified at
+2bef69ac300a19e7b792a57979596a421c8e0d8c; immutable GitHub archive+checksum
+download matches qualified SHA74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1.
+No pending source/publication gate; Android NOT TESTED. Next OWNER alone follows
+DEMO-ZTE-0.4.1 guide; code downgrade brings old Android defect back.
 Preserve published archives/state/IDs/TLS/UI; no phone/M51/production/GC/Raft/
 failover/3D access or activation. Android diagnostics supplied by owner do not
 qualify the new runtime; only owner later tests ZTE/Bphone. Old-source rollback

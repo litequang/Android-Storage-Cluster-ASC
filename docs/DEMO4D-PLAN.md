@@ -62,3 +62,17 @@ compatible but includes the original Android root-open bug: rollback on that pho
 may return write_denied, so it is not a claim of restored working Android storage.
 Only publish direct upgrade paths exercised with the actual archives; owner alone
 performs real ZTE/Bphone runtime, public-CA trust and two-phone pilot acceptance.
+
+
+## Completed qualification / publication
+
+DEMO.4d.1/2/3 complete for Linux synthetic source-ready0.4.1. Frozen implementation
+/tests/packaged guides dae8e7a:246 Python0skip/0fail,38 targeted, all8 actual Linux
+physical faults,11 Go/vet/modules/builds and3 exact-archive installer checks PASS.
+Exact published0.3.0 and0.4.0 direct upgrade/code rollback exercised. Public archive
+normal-pushed and advertised remote verified at **2bef69ac300a19e7b792a57979596a421c8e0d8c**;
+immutable downloaded archive+checksum match qualified SHA
+**74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1**. See DEMO4D-ACCEPTANCE and final
+DEMO-TRACK-PROGRESS receipt. No pending mandatory source/release gate. Android0.4.1
+remains NOT TESTED; owner-only existing-ZTE/Bphone pilot is next. No phone access,
+state reinitialization, old-DB restore or safety unlock authorized.

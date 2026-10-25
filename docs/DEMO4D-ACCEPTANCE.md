@@ -54,7 +54,8 @@ release d022f29cb5d4f53835acf5a130a45fb921be73b875cdccaed8e9504e979ab08f,
 SHA74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1.
 Unpacked secret/path review0findings. All mandatory Linux source gates complete;
 normal publication/advertised remote and independently downloaded GitHub checksum
-receipt follow in progress. Old archives/accepted Dashboard0.4 report retained.
+verified at 2bef69ac300a19e7b792a57979596a421c8e0d8c (receipt below and in progress).
+Old archives/accepted Dashboard0.4 report retained.
 
 Owner existing-ZTE copyable commands, safe stop/backup/SHA/stage/upgrade/identity
 snapshot/status/HTTPS+CA/Bphone/replicas/download/rollback:
@@ -157,3 +158,18 @@ UNKNOWN/denial and state. Private-account/privileged-actor trust and non-atomic
 filesystem+metadata/final-syscall/power-loss limits in SECURITY/DEMO4D-PLAN persist.
 
 Windows runtime was not rerun in this Linux task; the separate Windows directory-handle route is retained, without a new Windows or power-cut qualification claim.
+
+
+## Verified public release receipt
+
+Publication commit **2bef69ac300a19e7b792a57979596a421c8e0d8c**, normal Demo-only push;
+advertised remote equals publication HEAD. Core WIP remains acea2ae unchanged.
+Ordinary verified HTTPS downloaded archive AND adjacent checksum from immutable
+commit at **2026-10-25T04:27:58.101266+00:00**. Archive175301bytes, byte-identical
+to qualified local artifact, SHA-256 **74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1**;
+checksum file byte-identical and correct. No network/trust bypass.
+[Archive](https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/2bef69ac300a19e7b792a57979596a421c8e0d8c/releases/asc-demo-alpha-0.4.1.tar.gz) /
+[Checksum](https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/2bef69ac300a19e7b792a57979596a421c8e0d8c/releases/asc-demo-alpha-0.4.1.tar.gz.sha256).
+No source/tests/packaged-guide changes after frozen dae8e7a full qualification;
+only final reporting follows. All mandatory Linux synthetic release gates complete;
+Android0.4.1/real phone/browser CA trust UX remain NOT TESTED, owner pilot required.

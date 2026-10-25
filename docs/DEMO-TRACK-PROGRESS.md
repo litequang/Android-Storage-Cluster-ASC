@@ -35,7 +35,7 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 | DEMO.4d.1 storage | PUSHED/REMOTE VERIFIED5050a7912baa58b51d1bf020c758aeb52f97918f;61 targeted PASS |
 | DEMO.4d.2 integration | PUSHED/REMOTE VERIFIED72bc61d6c8445e4bc161dc9037515b90b26c269f;36+1 targeted PASS |
 | DEMO.4d.3a source freeze | PUSHED/REMOTE VERIFIEDdae8e7ad8b9661b6ca4b7b6f2344652e8c2913e6;38 targeted PASS |
-| DEMO.4d.3b release | Full246/Go11/all8 Linux gates PASS; final publication/remote receipt follows |
+| DEMO.4d.3b release | PUSHED/REMOTE VERIFIED 2bef69ac300a19e7b792a57979596a421c8e0d8c; full246/Go11/all8 Linux gates PASS; immutable public download/SHA verified |
 | Demo0.4.1 source-ready | YES: Linux synthetic only; Android runtime NOT TESTED |
 
 ## Current DEMO.4d next action
@@ -45,8 +45,8 @@ Core base: `acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c`.
 physical gates PASS,38 targeted +3 exact-archive installer checks PASS;11 fresh
 Go/vet/modules/Linux build/Android cross-build PASS. Both exact published0.3 and0.4
 direct upgrade/code rollback paths tested; all identities/old+new bytes retained.
-Normal final archive push/remote/public download-SHA receipt is below; finish its
-verification before owner uses package. Then OWNER alone follows DEMO-ZTE-0.4.1
+Normal final archive push, advertised remote equality and immutable public
+download/SHA verification COMPLETE; receipt below. Next OWNER alone follows DEMO-ZTE-0.4.1
 (existing initialized ZTE0.3; no init/join/storage-init again), General QuickStart,
 and fills actual phone pilot. Android0.4.1/real browser trust/SD/Doze/production
 NOT TESTED. Old source rollback restores Android bug, not working storage service.
@@ -619,9 +619,9 @@ formats/IDs/credentials/media +Dashboard assets/04 CA preserved. Shared Core
 source edits ONLYstorage/volumes.py and engine.py ONDEMO branch explicitly
 requested; Core WIP/consensus/GC/other Core source/original Core tests/Go unchanged.
 
-All mandatory source gates now PASS. Normal release push, advertised remote match,
-immutable GitHub archive+checksum download/re-hash follow next; until receipt,
-locally qualified archive is not yet verified published. Owner guide is packaged
+All mandatory source gates PASS. Normal release push and advertised remote match
+COMPLETE at 2bef69ac300a19e7b792a57979596a421c8e0d8c; immutable GitHub
+archive+checksum download/re-hash verified (final receipt below). Owner guide is packaged
 DEMO-ZTE-0.4.1: old0.3 launcher backup/verify/stage/preflight/upgrade, private identity
 cmp, stopped-node storage-status actual writable/fsync, trusted HTTPS Dashboard,
 Bphone second domain/upload/two replicas/SHA/fallback/restart, new-backup code-only
@@ -629,3 +629,33 @@ rollback. Do NOT reinitialize ZTE or restore old DB. Old03/04 code rollback brin
 original Android write_denied back (tested), keep state/service stopped if needed.
 Android0.4.1/real-device trust/fsync/SD/Doze/power-cut/production NOT TESTED; owner
 alone executes ZTE/Bphone checklist, Codex has source/Linux-synthetic scope only.
+
+
+## Final 0.4.1 GitHub publication receipt — COMPLETE DEMO.4d
+
+Publication commit **2bef69ac300a19e7b792a57979596a421c8e0d8c** normally pushed to
+feature/android-demo-alpha; advertised remote equals local publication HEAD. Core
+WIP remains **acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c**, unchanged.
+Independently downloaded BOTH files over ordinary verified HTTPS from immutable
+publication commit; completed **2026-10-25T04:27:58.101266+00:00**. Downloaded archive
+**175301 bytes**, byte-identical to full-qualified local artifact, SHA-256
+**74932d474c71b57b4904bfa95ff240250fcf12afa400a85015c4c2d41a94edb1**. Downloaded checksum file byte-identical
+to committed checksum and names the same archive/hash. No proxy/trust bypass.
+
+- [Published QuickStart 0.4.1 archive](https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/2bef69ac300a19e7b792a57979596a421c8e0d8c/releases/asc-demo-alpha-0.4.1.tar.gz)
+- [Published SHA-256 file](https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/2bef69ac300a19e7b792a57979596a421c8e0d8c/releases/asc-demo-alpha-0.4.1.tar.gz.sha256)
+- [Existing-ZTE 0.3.0 upgrade/rollback guide](DEMO-ZTE-0.4.1.md)
+- [Full Linux acceptance / actual gates](DEMO4D-ACCEPTANCE.md)
+
+Frozen implementation/tests/packaged guides remain dae8e7a; this receipt changes
+reporting only. Fresh246 Python PASS/0skip/0fail, all8 Linux physical gates,38
+targeted,3 exact-archive installer,11 Go/vet/modules/builds PASS. Exact published
+0.3.0 and0.4.0 direct upgrades and code rollback exercised; old archives unchanged.
+Tracked/index and unpacked-package secrets/path audits0findings. No pending
+mandatory source/publication gate remains. Android0.4.1 runtime is **NOT TESTED**.
+Owner alone performs ZTE/Bphone pilot: stop/backup/verify, SHA/stage/preflight/upgrade
+(no re-init), verify unchanged identities plus writable/fsync=true, trusted HTTPS
+Dashboard, two real independent phones/replicas/SHA/fallback/restart. Rollback is
+stop-all +NEW full backup +compatible code-only selection, never old-DB restore;
+old0.3/0.4 code restores the original Android write_denied defect.
+Codex must not access phones/M51/production or enable Raft/failover/physical GC.
