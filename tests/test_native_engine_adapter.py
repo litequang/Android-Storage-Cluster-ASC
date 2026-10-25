@@ -28,3 +28,28 @@ class NativeEngineAdapterTests(unittest.TestCase):
         info=json.loads(adapter.info())
         self.assertEqual(info['implementation'],'asc.storage.engine')
         self.assertFalse(info['node_runtime_supported']);self.assertFalse(info['writer_authority'])
+
+    def test_private_probe_identity_restart_quota_and_missing_manifest_refuse(self):
+        import uuid
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)/'probe';app=str(uuid.uuid4())
+            initial=json.loads(adapter.approve_probe(str(root),app,1048576,0))
+            measured=json.loads(adapter.probe(str(root),app))['volume']
+            self.assertTrue(measured['writable']);self.assertTrue(measured['fsync_tested'])
+            self.assertEqual(initial,json.loads(adapter.approve_probe(str(root),app,1048576,0)))
+            self.assertIsNone(json.loads(adapter.volume_status(str(root),app))['volume']['writable'])
+            manifest=root/'manifest/manifest.sqlite3';manifest.rename(manifest.with_name('held.sqlite3'))
+            self.assertEqual(json.loads(adapter.probe(str(root),app))['state'],'DEGRADED')
+            self.assertFalse(manifest.exists())
+            held=Path(folder)/'quota';adapter.approve_probe(str(held),app,1,0)
+            self.assertEqual(json.loads(adapter.probe(str(held),app))['state'],'DEGRADED')
+            self.assertEqual(list((held/'data/staging').iterdir()),[])
+    def test_private_probe_future_format_holds_marker_and_schema(self):
+        import uuid
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)/'probe';app=str(uuid.uuid4());adapter.approve_probe(str(root),app,1048576,0)
+            marker=(root/'data/.asc-volume.json').read_bytes()
+            path=root/'probe-approved.json';cfg=json.loads(path.read_bytes());cfg['format']=2;path.write_text(json.dumps(cfg))
+            self.assertEqual(json.loads(adapter.probe(str(root),app))['state'],'DEGRADED')
+            self.assertEqual((root/'data/.asc-volume.json').read_bytes(),marker)
+            self.assertEqual(json.loads(path.read_bytes())['format'],2)

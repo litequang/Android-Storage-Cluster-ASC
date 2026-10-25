@@ -31,3 +31,8 @@ PASS0.166s. Real canonical StorageEngine stream/commit/SHA/fsync/restart proven
 without Core edits/guard bypass. First unsafe_path failure retained in progress;
 new-root canonical Context selection fixed. Native Node/Quick Join/TLS identity/
 agent/FGS provider still BLOCKED; library proof does not authorize runtime.
+
+4.2c:11 actual API35 Android instrumentation PASS50.003s;7 JVM/5 Linux adapter
+PASS (0.202s). Keystore/probe/root/corruption/capacity/realEACCES gates in progress.
+SAF/nativeNode/FGS/network/upgrade/finalfull still unsupported/pending, not PASS.
+Actual key deletion/loss PASS; biometric/hardware invalidation NOT TESTED.

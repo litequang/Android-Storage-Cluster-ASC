@@ -579,3 +579,11 @@ bridge/Core read-only only; Android/native migration/writable DR remain unqualif
 - EmbeddedEngine.kt/native_engine.py: actual library info +internal fresh synthetic I/O/commit/restart proof, no Node runtime API.
 - EmbeddedEngineTest/test_native_engine_adapter.py: real Android +Linux I/O/root/link refusal, preserved core guards and private Context canonical approval.
 - ANDROID-ENGINE-INTEGRATION owns current native runtime blocker and future explicit-context provider boundary.
+
+## Phase4.2c app Keystore/private capability volume
+- ApplicationVault.kt: explicit app UUID/AES-GCM AndroidKeyStore alias1/canary, atomic private encrypted DRAFT_NOT_SENT, loss/schema/cipher hold/no regeneration.
+- StorageFoundation.kt: PrivateProbeStorage delegates same Core JNI, UnqualifiedSafStorage refuses unproven provider semantics.
+- native_engine approve_probe/_approved/probe/volume_status: fixed app-private capability scope, root/app/schema/original volume binding, no constructor after missing manifest; Core quota/free/readback/fsync/own cleanup +read-only DB status.
+- EngineService: typed explicit app provision/draft/probe/approval operations, UID/signature/consent first, no cluster storage/failure-domain approval.
+- VaultStorageTest +extended native adapter tests: actual Android Keystore/permission/budget/identity/schema/corrupt bytes/root/SAF and Linux private I/O.
+- ANDROID-NATIVE-STATE owns format/backup/rollback/provider boundaries.

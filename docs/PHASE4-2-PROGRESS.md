@@ -9,8 +9,8 @@ Read AGENTS/mandatory ordered docs then7 required4.1/API/native/operations docum
 |---|---|
 |4.2a|PUSH/REMOTE VERIFIED8667923 +audit follow-up a6e4d7e; build tools PASS; emulator35 now booted|
 |4.2b.1|PUSH/REMOTE VERIFIED677e28ac5cff008e4b869847ac6c39bb51d71266;7 JVM/4 Android PASS|
-|4.2b.2|READY:7 JVM/3 Linux adapter/5 Android PASS; actual local Core library, Node runtime BLOCKED|
-|4.2c|NOT STARTED|
+|4.2b.2|PUSH/REMOTE VERIFIED5ac246aa27f78e0c979cd0674f127939331cce26;local Engine PASS, Node BLOCKED|
+|4.2c|READY:7 JVM/5 Linux adapter/11 Android PASS;Keystore/private probe;SAF unsupported|
 |4.2d|NOT STARTED|
 |4.2e|NOT STARTED|
 
@@ -95,3 +95,26 @@ or bypass those guards. Node start/Quick Join stay explicit unsupported. FGS/
 notification/background Node remains BLOCKED, not idle fake service.
 Next c only after normal commit/push/remote match: app Keystore/private probe/draft
 foundation. Draft !=Core enrollment, local probe !=approved cluster Storage Node.
+
+## 4.2c Keystore/private storage foundation
+
+b.2 pushed/remote matched5ac246a BEFORE c. App identity explicit/independent,
+AndroidKeyStoreAES256/GCM/randomIV/purpose+appAAD/canary, encrypted DRAFT_NOT_SENT,
+no Node/token/Cluster creation. Lost key/corrupt ciphertext/future schema holds
+identity, no automatic regen. Actual key deletion tested, hardware/biometric
+invalidation NOT TESTED. Fixed app-private Core capability volume/read-only status/
+quota-reserve/actual bounded probe, persistent bindings, no second Engine/Catalog.
+APP_PRIVATE_PROBE_ONLY is not enrolled/approved cluster storage. SAF explicit
+unsupported seam, no URI/permission/filesystem fallback. No idle FGS/Node startup.
+
+Final Gradle build/unit/testAPK PASS30s,7 JVM PASS;5 Linux adapter PASS0.202s.
+Both APKs installed on owned API35; **11 instrumentation PASS50.003s**, actual
+nonexportable key/restart/encrypted draft/key deletion/no regen, future schema/
+corrupt cipher, real probe/fsync/identity, quota/reserve/no-write denials, actual
+unprivileged private staging0500EACCES (only own fixture, restored0700), marker
+mismatch, missing manifest/replaced root cannot recreate state, corrupt committed
+Core object retained, SAF refusal. Earlier9case PASS53.572s before extra root/SAF
+cases; final11 is the checkpoint evidence. No tests weakened/skipped. Native c
+versionCode1 APK retained PRIVATELY for later exact app upgrade test; not a release.
+Node/enrollment/TLS runtime and FGS remain BLOCKED. Next d ONLY after push/remote:
+Vietnamese native UI +public pinned Controller validation, no fake cluster data.

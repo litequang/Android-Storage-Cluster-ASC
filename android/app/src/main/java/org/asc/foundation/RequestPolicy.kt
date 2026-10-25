@@ -3,7 +3,7 @@ import java.net.URI
 import java.util.UUID
 
 object RequestPolicy {
-    val operations = setOf("status", "volumes", "quick_join", "resume_join", "node_start", "stop_owned")
+    val operations = setOf("status", "volumes", "quick_join", "resume_join", "node_start", "stop_owned", "app_provision", "probe_private_volume", "save_join_draft", "draft_status")
     fun caller(uid: Int, ownUid: Int, signatureMatches: Boolean) {
         if (uid != ownUid || !signatureMatches) throw SecurityException("caller_denied")
     }
@@ -13,7 +13,7 @@ object RequestPolicy {
         require(UUID.fromString(id).toString() == id) { "invalid_request_id" }
         require(op in operations) { "unsupported_operation" }
         require(listOf(id,op,endpoint,pin,cluster,name,code).sumOf { it.toByteArray().size } <= 8192) { "request_limit" }
-        if (op != "quick_join") {
+        if (op !in setOf("quick_join","save_join_draft")) {
             require(listOf(endpoint,pin,cluster,name,code).all { it.isEmpty() } && !trusted) { "unexpected_fields" }
             return
         }

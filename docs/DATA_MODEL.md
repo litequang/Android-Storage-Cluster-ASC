@@ -468,3 +468,12 @@ Phase4.1b.2 adds only optional private control/socket.json format1 (app UUID,
 device,inode), never engine identity. Same request journal stores sanitized owned
 Node lifecycle receipts; replay historical, not process authority. Old candidate/
 base schema/credentials/pending/volume markers unchanged. No PID file controls.
+
+## Phase4.2 native foundation1 (separate app UID)
+Explicit application.json format1 app UUID/key version and AndroidKeyStore AES
+alias; canary/draft standard AES-GCM IV+ciphertext+Aad(app/version/purpose), no raw
+key export. Draft is DRAFT_NOT_SENT, NOT Core enrollment. Probe-approved format1
+binds application/volume/quota/reserve/rootdev/inode; original Core manifest1 used
+only in isolated APP_PRIVATE_PROBE_ONLY namespace, not cluster Node identity.
+Missing/unknown/corrupt state held, no auto regeneration/schema migration.
+No Core/Demo formats/archive changes; ANDROID-NATIVE-STATE defines exact limits.

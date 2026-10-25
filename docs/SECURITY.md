@@ -479,3 +479,11 @@ UID/signature checked before validation/private state. Canonical UUID/bounded ty
 arguments/private HTTPS/pin/cluster/trust checks, no code reflection/log/secret return.
 Explicit local UI consent, no external Intent commands, no sticky/boot/idle mock FGS,
 foreign PID control or automatic node/volume/approval. Native Node remains unsupported.
+
+Native4.2c uses AndroidKeyStore nonexportableAES256 and standardAES-GCM randomIV/
+app-purposeAAD, not custom crypto. Key/state loss/cipher or schema mismatch refuses
+without new Node/Cluster/application identity. Draft secret never returned/logged;
+no Termux key import. Explicit private capability volume only, original Core guard/
+root/marker/descriptors/quota/reserve/probe cleanup unchanged; missing manifest/root
+replacement holds before constructor. App actor is not network Node/approval.
+No broad external permission, SAF fallback or hardware-backed/power-loss claim.

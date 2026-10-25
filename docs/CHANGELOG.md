@@ -494,3 +494,9 @@ Pinned embedded Python/Core library passes real API35 stream/commit/SHA/fsync/
 manifest restart. Core no-links correctly held alias Context path; approve NEW
 canonical private root before test registration, no guard weakening. Local library
 proof only; native Node/enrollment/TLS/agent/FGS remain blocked by provider contract.
+
+## Phase4.2c — Keystore/private storage capability foundation
+App-owned nonexportable key/encrypted draft with loss/schema hold; original Core
+private-volume probes and honest read-only metrics, capacity/identity/no reinit
+checks.11 actual Android/5 Linux adapter/7 JVM PASS. Probe !=cluster approval,
+SAF/Node enrollment/FGS remain unsupported; no Core state/archive/guard changes.

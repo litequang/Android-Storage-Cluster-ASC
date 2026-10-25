@@ -272,3 +272,16 @@ never ensure_ready/commit/takeover. Explicit mode/pins/cluster/epoch/Controller 
 no Demo SQL fallback. Share existing Dashboard HTTPS/session/assets, server-side
 read-only enforcement and honest UNKNOWN/quorum/recovery states. Never activate
 recovery, change membership, mint GC authority or infer writer from Leader flags.
+
+## ADR066 — Native app UID and capability qualification before runtime authority
+Use pinned Android/Kotlin/embedded canonical Python; private Binder/UID+signature
+and explicit UI consent. Actual local Engine proof is separate from Native Node/
+TLS/enrollment/lifecycle. Unsupported provider stays FOUNDATION, not mock/idle FGS.
+No Termux shared UID/state copy or weakened guards.
+
+## ADR067 — App Keystore and probe namespace never become cluster identity
+Application UUID/nonexportable AndroidKeyStoreAES-GCM and encrypted unsent draft
+are separate from Core pending/token/Node. Fixed private capability probe reuses
+Core safety code and has its own application-bound namespace; never adopt synthetic
+actor/volume as live Node. Lost state/key/schema/medium is held. SAF unavailable
+until equivalent semantics proven; no custom encryption or writable recovery.
