@@ -25,6 +25,23 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
+## Current Phase4.0 authorization — Core-first selective integration
+
+Owner authorizes feature/phase4-core-demo-integration from Core3D ca2504f, selecting
+reviewed Demo c9c2660 modules ONLY. Never merge whole Demo or push original Core3D/
+Demo/WIP/main. Mandatory docs then PHASE3D acceptance/progress +Demo4D acceptance/
+QuickStart (read via pinned Demo ref before port), PHASE4-PLAN/PROGRESS/ACCEPTANCE.
+Complete4.0a audit,4.0b selective port +owner Dashboard/guided node CLI (split as
+needed),4.0c exact04.1 upgrade/rollback +fresh full and Go/fault/security gates.
+Each checkpoint targeted PASS/docs/secrets/normal feature push/remote before next.
+Reuse existing Registry/Catalog/Storage/enrollment; no parallel authority system.
+UI only Demo single-writer first; Core3D preserved including passive recovery.
+Writable DR remains BLOCKED: no writer/quorum/epoch/fencing reconstruction or staging
+runtime. No phones/M51/production/SSH/root/format/system packages/Boot changes,
+GC/failover/Raft unlock, APK or untested migration. Source +candidate0.4.2-dev only,
+not a public Android release. Historical earlier no-Dashboard language below is
+superseded ONLY for this explicit bounded task. Read current Phase4 handoff.
+
 ## Current Phase 3D authorization — separate external DR branch
 
 Owner authorizes feature/phase3d-external-dr from fetched Core acea2ae; preserve

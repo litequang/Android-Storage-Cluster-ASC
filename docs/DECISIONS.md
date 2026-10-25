@@ -203,3 +203,13 @@ ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telem
   Writer activation is blocked until upstream Raft recovery, old-cluster fencing
   and credential/identity recovery are independently qualified. Retention is
   preview-only; no external automatic deletion or custom encryption algorithm.
+
+## ADR-062 — Core-first Phase4 source integration without state convergence
+Keep Core3D ca2504f as feature baseline; port reviewed Demo c9c2660 modules/tests/
+public archives individually, never a whole merge/doc overwrite. Same base schema
+numbers do not grant mode compatibility. Keep marked Demo single-writer runtime
+separate from quorum/advanced state and passive recovery. Reuse durable Core
+registration and owner-session Dashboard; no new Catalog/Storage/auth DB. No native
+app/state migration or writable DR is implied. Candidate only, actual Android
+qualification deferred. Imported historical Demo ADR055/056 map to canonical
+ADR060/061; existing Core055/056 keep external/DR meaning, Demo057–059 are available.

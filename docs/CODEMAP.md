@@ -373,3 +373,10 @@ trusted manifest anchor and passive read-only recovery, no writer reconstruction
   all9 new +all original physical faults, Go11/vet/modules/builds PASS. Scoped
   external backup/verify/read-only staging accepted; Phase3D PARTIALLY COMPLETE,
   writable disaster recovery BLOCKED. Exact source/commands/limits in acceptance.
+
+## Phase4 integration audit
+PHASE4-PLAN/PROGRESS/ACCEPTANCE own Core-first allowlist/mode/QuickJoin foundation
+and independent checkpoint handoff.4.0a documentation only; no module port yet.
+Registry/server/CLI/client/identity/Catalog/StorageHTTP/manifest/Go identical across
+refs; approved-root storage patch requires separate port+qualification. Preserve
+external3D module/handler/tests and all old guards; ADR062 defines source vs state.
