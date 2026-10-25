@@ -42,6 +42,14 @@ GC/failover/Raft unlock, APK or untested migration. Source +candidate0.4.2-dev o
 not a public Android release. Historical earlier no-Dashboard language below is
 superseded ONLY for this explicit bounded task. Read current Phase4 handoff.
 
+Phase4 handoff:4a5d15cb7, b.14646f68, b.2ab96e4be, b.2bed07bbc and
+c.1 source/candidate freeze4d1758ddac926853ffc43ae9b1aee428ab63bccf normal-pushed/
+remote verified. Full287 Python RUNNING on frozen source; no acceptance yet.
+Read PHASE4-PROGRESS/ACCEPTANCE before any edits; do not redo completed checkpoints.
+Candidate0.4.2-dev under candidates/ is source-only, not an Android release.
+Only reporting docs may change during final full; if interrupted, inspect log/
+result or rerun fresh full before acceptance. Core3D writable recovery BLOCKED.
+
 ## Current Phase 3D authorization — separate external DR branch
 
 Owner authorizes feature/phase3d-external-dr from fetched Core acea2ae; preserve

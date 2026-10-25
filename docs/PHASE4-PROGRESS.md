@@ -11,8 +11,8 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 |4.0b.1|PUSH/REMOTE VERIFIED4646f68b7e7e60d924a6beb25de93dcd2e597448;95PASS|
 |4.0b.2a|PUSH/REMOTE VERIFIEDb96e4be43dd1228c025cb0305fd7372b559b9fb3;31PASS|
 |4.0b.2b|PUSH/REMOTE VERIFIEDed07bbc3640d3f0f89efbafb6545b22fe4514dd3;17PASS|
-|4.0c.1|READY: exact candidate/upgrade/security targeted PASS; freeze push follows|
-|4.0c.2|PENDING: fresh full287 Python; source/tests/packaged guide frozen after c.1|
+|4.0c.1|PUSH/REMOTE VERIFIED4d1758ddac926853ffc43ae9b1aee428ab63bccf; candidate SHA fetched/verified|
+|4.0c.2|RUNNING: fresh full287 Python on frozen4d1758d; no acceptance claim|
 
 Read AGENTS in mandatory order, then3D acceptance/progress and Demo4D acceptance/
 QuickStart where available, then PHASE4-PLAN/this/ACCEPTANCE. Prior plan audit read
@@ -158,3 +158,18 @@ MUST actually pass; do not accept using targeted/historical evidence. Logs under
 /workspace/work/phase4, no private artifacts in GitHub. If interrupted, inspect
 python-full-result.json/process and complete remaining qualification; never claim
 Android or writable DR. Original branches must remain unchanged.
+
+## Live qualification handoff (reporting only)
+
+c.1 normal-pushed/remote matched4d1758ddac926853ffc43ae9b1aee428ab63bccf;
+fresh git fetch of feature/FETCH_HEAD confirms same commit and archive SHA
+b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3.
+Full Python started2026-10-25T10:54:20.952148+00:00, frozen commit4d1758d.
+Private runner/workdir /workspace/work/phase4/run-full.py,
+python-full-result.json and python-full.log. Source fingerprint includes all
+asc/tests/consensus/scripts/tools/install.sh, packaged guides and candidate bytes.
+Only nonpackaged reporting docs can change. Current result RUNNING, NOT ACCEPTED.
+If process/Cloud environment is lost, fresh rerun is needed; do not infer PASS
+from this handoff or partial log. Expected287 unique cases,0 skips required.
+No source changes are pending. After actual full PASS, verify frozen hashes,
+fault groups, secrets and remote, update acceptance and normal-push final report.
