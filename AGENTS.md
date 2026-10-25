@@ -25,6 +25,21 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 - No shared node passwords/secrets, public SFTP or management ports. All network writes must authenticate; HTTPS must be pinned or trusted.
 - A missing telemetry value is UNKNOWN, not 0, not a guessed runtime measurement. Manufacturer specifications are merely baseline estimates.
 
+## Current Phase 3D authorization — separate external DR branch
+
+Owner authorizes feature/phase3d-external-dr from fetched Core acea2ae; preserve
+Core WIP and Demo c9c2660 branches. After mandatory ordered reads, read
+IMPLEMENTATION_PLAN, PHASE3A/3B acceptance and PHASE3C plan/progress/acceptance,
+then PHASE3D-PLAN/PROGRESS/ACCEPTANCE. Implement3D.0/1/2/3/4 sequentially; each
+checkpoint requires targeted PASS/docs/CODEMAP/secrets/normal feature-only push
+and remote verification before next. No reset/force/main merge or Demo changes.
+External independent bytes+metadata, anchored verify, immutable complete bundles,
+resume and isolated READ_ONLY recovery; no source deletions/GC credit. Missing
+writer/fencing/identity recovery proof => explicit partial scope, never new epoch,
+quorum or Leader. Historical3C no3D language below is superseded by this task.
+No phones/M51/production, system/root/format changes, GC/Raft unlock, membership,
+Dashboard/PWA/APK/remote access. Existing Phase3A–3C tests/guards remain intact.
+
 ## Current Phase 3C task — authorized isolated-test development
 
 Phase 3C is now authorized from `b1b46e527826617748a8bc68795259060e12d705`

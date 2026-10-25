@@ -62,8 +62,10 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
   [plan](PHASE3C-PLAN.md) and [progress](PHASE3C-PROGRESS.md). Fresh 208 Python / 11
   Go tests, all required faults, vet/module/build PASS on 8b679bc. Physical GC stays
   off by default and locked on real devices; no deployment/platform unlock.
-- **Phase 3D — External Backup & Disaster Recovery**: future, independent external
-  copies and reviewed disaster recovery; in-cluster snapshots do not supply this.
+- **Phase 3D — External Backup & Disaster Recovery**: active separate branch
+  feature/phase3d-external-dr; see PHASE3D-PLAN/PROGRESS/ACCEPTANCE. Independent
+  metadata+bytes, verification and isolated read-only staging; writable recovery
+  remains blocked pending authority/fencing qualification.
 - **Phase 4 — ASC Drive Web/PWA and Android Quick Join**: future application and
   enrollment UX; no Dashboard in Phase 3B.
 - **Phase 5 — Remote Access & Production Qualification**: future private access,

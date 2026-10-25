@@ -327,3 +327,11 @@ All published checkpoint and continuation status: PHASE3B-PROGRESS.md.
   all 39 legacy + 3 replication + 3 actual GC authorization + 8 Linux physical
   groups PASS. Fresh uncached Go 11 tests/vet/module/build PASS. Physical executor
   remains synthetic-only/default absent; Windows/Android outputs compile-only.
+
+## Phase 3D continuation
+
+PHASE3D-PLAN/PROGRESS/ACCEPTANCE own the external backup/DR contract and checkpoint
+handoff on feature/phase3d-external-dr from Core acea2ae.3D.0 is architecture only;
+no new runtime path yet. Existing backup is in-cluster and is not external DR.
+ADR-055/056 require exact projection+all-version bytes, private separate store,
+trusted manifest anchor and passive read-only recovery, no writer reconstruction.

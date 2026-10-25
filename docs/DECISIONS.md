@@ -187,3 +187,19 @@ ADR-053 proof-binding detail: canonicalize unrelated self-reported profile telem
   valid input. Failures are not cached, caller objects are not retained/returned,
   and runtime/extension/authority/term/quorum/physical-proof checks remain fresh.
   Do not increase destructive freshness budgets to compensate for repeated work.
+
+## Phase 3D external backup / recovery decisions
+
+- ADR-055: Export an exact strong quorum-confirmed runtime schema2 projection,
+  all Catalog versions and streamed size/SHA-verified bytes into a separate private
+  versioned store. Preserve historical jobs/identities but exclude secret keys/raw
+  tokens/local Raft databases. Conservative ALL-version coverage; missing pending
+  upload bytes prevents COMPLETE. Source/provider and destination interfaces remain
+  separate. External evidence never relaxes existing GC/pin protections.
+- ADR-056: Require trusted separately retained manifest SHA for verification/staging
+  authenticity, plus expected cluster and operator minimum-known index for staging.
+  Self-contained SHA is not a quorum certificate or freshness proof. Recovery only
+  writes a new isolated passive READ_ONLY bundle, never a live DB/config/voter.
+  Writer activation is blocked until upstream Raft recovery, old-cluster fencing
+  and credential/identity recovery are independently qualified. Retention is
+  preview-only; no external automatic deletion or custom encryption algorithm.
