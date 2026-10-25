@@ -10,8 +10,8 @@ Existing activation /workspace/asc-cloud/activate.sh supplies Python3.13.5/Go1.2
 | Checkpoint | State |
 |---|---|
 |3D.0|PUSH/REMOTE VERIFIED08d36d041f009a9417bc300157d9cb0526130818;20 backup units PASS|
-|3D.1a|Local format/streaming transaction READY:35 targeted PASS0skip0fail0.402s; push gate follows|
-|3D.1b|NEXT: actual pinned owner/quorum source and end-to-end TLS fixture|
+|3D.1a|PUSH/REMOTE VERIFIED86d11056a00fbbb4d52a809a4cbf236a8c21b4f5;35 targeted PASS|
+|3D.1b|READY:12 targeted PASS0skip0fail12.663s incl actual three-voter/TLS; push gate follows|
 |3D.2|NOT STARTED|
 |3D.3|NOT STARTED|
 |3D.4|NOT STARTED|
@@ -56,3 +56,27 @@ crash replay. Authority is an explicit UNIT FAKE here; actual Raft/TLS remains1b
 Initial test failed because restrictive umask made its intended0755 root0700;
 fixture now sets0755 explicitly, proving actual permission rejection. No product
 safety relaxation. Next only after normal push/remote equality:3D.1b source/API/TLS.
+
+## 3D.1b actual pinned owner/runtime source
+
+1a normal pushed/remote matched86d1105 before source integration. Added owner-only
+runtime POST external/capture/read/check. Capture nested exact strong schema2 view;
+read validates immutable version descriptor and same cluster/epoch, obtains only
+current approved exact-object audit/read grants, including retained lifecycle
+versions. Node/anonymous/wrong pin denied. Final check requires fresh actual Leader/
+quorum; old snapshot is never permission. No destination/restore/writer API.
+PinnedSource uses existing scoped Storage TLS/source_stream and bounded64KiB SHA;
+Engine retries unpublished partials across candidates after offline/corrupt reads,
+never overwrites published objects or changes Catalog data/replica evidence.
+Current transfer grant bookkeeping is existing quorum-fenced preparation; no new
+schema/authority algorithm/membership/GC path. Default single-writer/Demo unchanged.
+
+Actual `python -B -m unittest tests.test_external tests.test_external_cluster -v`:
+**12PASS0SKIP0FAIL12.663s**. Actual three Go voters/three Python-TLS cohosts, two
+versions/two independent approved simulated domains, retained snapshot+TRASH,
+exact manifest-to-runtime SHA, copied old+new bytes, no node/admin raw secret in
+metadata, node credential denied owner capture, wrong pin and forged content denied.
+Unit authority fakes remain labelled; this separate integration actually uses Go
+Barrier/CAS/storage online nonce authorization. Original Linux runtime guard stays
+unchanged; existing private synthetic launcher supplies its test-only profile.
+Next after normal push/remote match:3D.2 anchored verification/list/retention/CLI.

@@ -282,3 +282,8 @@
   schema/Engine/GC/membership change; actual quorum/TLS integration follows1b.
 - Actual filesystem target35PASS0skip incl11 new external cases; full qualification
   pending. No Windows/Android/production/writable DR claim; see PHASE3D documents.
+
+-3D.1b: owner/quorum-gated exact external capture, retained-version read plans and
+  final authority check; PinnedSource reuses scoped TLS/hash streams. Real3-voter
+  target12PASS0skip incl exact old/new bytes/lifecycle/owner/pinning. Full fault
+  acceptance still pending; no writer recovery/Android authorization.

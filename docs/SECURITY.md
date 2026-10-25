@@ -318,3 +318,9 @@ SHA must be anchored separately by trusted operator; self-hash is not authentici
 No encryption is invented; plaintext sensitive metadata/bytes cannot go to public
 storage. No raw key/token/config/Raft database is exported. External verification
 never supplies GC credit or permission to restore active state/old credentials.
+
+External source API is owner-only/current-quorum. Ordinary node bearer cannot
+export private authority hashes or read retained versions; only owner explicit
+backup scope can do so. Read grants are current generation/approval/exact object
+and expire under existing nonce-bound introspection. Captured hashes/IDs never
+become credentials. Existing single-writer/Demo APIs are not expanded.

@@ -341,3 +341,9 @@ trusted manifest anchor and passive read-only recovery, no writer reconstruction
   atomic no-replace per-object publication, durable resume/final complete check.
   tests/test_external.py owns actual filesystem safety/crash tests with explicit
   fake source authority; actual quorum/TLS acceptance remains separate.
+
+-3D.1b external/http.py supplies runtime-only owner capture/read/check; failover
+  RuntimeHandler delegates before generic routing. external/source.PinnedSource
+  consumes exact nested capture and fresh scoped TLS streams/final quorum check.
+  test_external_cluster uses original real3-voter/cohost fixture without inheriting
+  old test cases; no GC capabilities or extra live data source.

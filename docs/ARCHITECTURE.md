@@ -310,3 +310,10 @@ immutable capture and all Catalog version bytes live outside source state/volume
 rehashes rather than trusting progress. Only a current source authority final gate
 can publish new COMPLETE. Base runtime/registry/manifest/GC remain unchanged.
 Offline recovery is planned as passive READ_ONLY data staging, never a writer.
+
+3D.1b runtime source APIs reuse strong Runtime.operation and existing scoped
+audit/read grants, not cached metadata as authority. Exact capture is nested so
+transport labels cannot alter source checkpoint. Owner client streams candidates
+over pinned Storage HTTPS and retries only its unpublished private partial. Final
+current quorum check gates new COMPLETE; completed archives remain historical.
+No backup code runs in Raft apply or mutates source content/pins/history.

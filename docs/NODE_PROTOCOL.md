@@ -418,3 +418,17 @@ Ordinary Agent has an empty executor map; Windows/Android physical execution sta
 3C.5b: stale_gc_proof (409) rejects any reference/approval graph change during streamed proof, including a survivor pin/endpoint change. Retry the same GC job to obtain new current evidence; no old proof is relabeled. Wire and persistence shapes stay unchanged.
 
 Known GC error labels are now preserved by the pinned client whitelist; unrecognized server text remains request_failed. A stale/expired confirmation requires a newly prepared exact plan SHA; a stale proof requires fresh byte proof/nonce. No permission is inferred from a retry. Discovery may already recover a lost Node ACK; tests must prove actual unlink/reply loss rather than require an outer exception.
+
+## Phase 3D owner-only external archive source
+
+Only opt-in RuntimeHandler adds POST /catalog/v1/external/{capture,read,check}.
+Existing owner admin +current actual-term quorum gate required; no node bearer
+access. capture {} returns nested capture {document:exact runtime2,state:{index,
+term,document_sha256}} without transport relabeling inside. read {cluster_id,epoch,
+file:{file_id,logical_path,version,size,sha256}} compares exact current immutable
+version and issues fresh exact-local-file audit/read grants for all currently
+approved/readable replicas. Owner archival scope includes TRASH/EXPIRED; ordinary
+download lifecycle gates unchanged. Grants returned only to owner client, never
+backup manifest. check {cluster_id,epoch,source_index} requires current same-cluster
+quorum at >=capture index; returns current_authority/current_index, no writer proof
+for recovery. No destination path, secret config, restore, bootstrap, or GC route.

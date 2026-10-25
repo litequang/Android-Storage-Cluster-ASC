@@ -164,6 +164,9 @@ class RuntimeHandler(Handler):
         runtime = self.server.catalog.runtime
         parsed = urlsplit(self.path)
         try:
+            from ..external.http import handle as external_handle
+            if external_handle(self, parsed):
+                return
             if self.command == 'GET' and parsed.path == '/cluster/v1/leader':
                 if parsed.query or parsed.fragment:
                     raise ValueError()

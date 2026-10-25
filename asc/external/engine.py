@@ -1,10 +1,10 @@
 """Streaming external backup transaction, durable per-object resume and readback."""
-from contextlib import contextmanager
 import hashlib
 import os
 import time
 from .format import MAX_MANIFEST, MAX_METADATA, capture, decode, fail, validate
-from ..catalog.common import canonical, digest, identifier, now, uid
+from ..catalog.common import CatalogError, canonical, digest, identifier, now, uid
+from ..client import ClientError
 
 
 def check_body(tree, name, file, links=1):
@@ -86,20 +86,33 @@ class BackupEngine:
                                 check_body(objects,name,file,2);check_body(objects,part,file,2)
                                 objects.finish_link(part,name)
                             check_body(objects,name,file);continue
-                        with source.stream(file,manifest) as reader:
-                            if objects.exists(part):
-                                with objects.file(part) as old:
-                                    bound=os.fstat(old.fileno());expected=(bound.st_dev,bound.st_ino)
-                                objects.unlink_partial(part,expected)
-                            sha=hashlib.sha256();count=0
-                            with objects.file(part,os.O_RDWR|os.O_CREAT|os.O_EXCL) as output:
-                                while chunk:=reader.read(65536):
-                                    count+=len(chunk)
-                                    if count>file['size']:fail('external_source_mismatch')
-                                    sha.update(chunk);output.write(chunk)
-                                if (count,sha.hexdigest())!=(file['size'],file['sha256']):fail('external_source_mismatch')
-                                output.flush();os.fsync(output.fileno())
-                        check_body(objects,part,file);objects.publish(part,name)
+                        streams=(source.streams(file,manifest) if hasattr(source,'streams') else
+                                 [lambda:source.stream(file,manifest)])
+                        copied=False
+                        for attempt in streams:
+                            try:
+                                with attempt() as reader:
+                                    if objects.exists(part):
+                                        with objects.file(part) as old:
+                                            bound=os.fstat(old.fileno());expected=(bound.st_dev,bound.st_ino)
+                                        objects.unlink_partial(part,expected)
+                                    sha=hashlib.sha256();count=0
+                                    with objects.file(part,os.O_RDWR|os.O_CREAT|os.O_EXCL) as output:
+                                        while chunk:=reader.read(65536):
+                                            count+=len(chunk)
+                                            if count>file['size']:fail('external_source_mismatch')
+                                            sha.update(chunk);output.write(chunk)
+                                        if (count,sha.hexdigest())!=(file['size'],file['sha256']):fail('external_source_mismatch')
+                                        output.flush();os.fsync(output.fileno())
+                                check_body(objects,part,file)
+                            except (ClientError,CatalogError,OSError,ValueError):
+                                # Only unpublished transaction-owned .part may be
+                                # retried on another source. No Catalog mutation.
+                                if not hasattr(source,'streams'):raise
+                                continue
+                            objects.publish(part,name);copied=True;break
+                        if not copied:fail('external_source_unavailable',503)
+
                 # Re-read exact persisted metadata/manifest and every body; source
                 # failures cannot publish COMPLETE. Existing COMPLETE is immutable.
                 repeated,_,_=load(job)
