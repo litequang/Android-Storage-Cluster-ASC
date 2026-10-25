@@ -507,3 +507,10 @@ codes/secret URLs, offline clearing and delayed successful POST after logout.
 - tests/test_phase4_upgrade.py: standalone exact04.1 ->persisted candidate byte equality/upgrade; lost actual TLS ACK pending both directions, new-state code-only rollback, IDs/CA/volume/token and old/new SHA preservation. Existing historical03/04->04.1 tests stay exact.
 - asc/demo/package.py: adds only public Phase4 guide and candidate README warning, keeps format1; candidates/ contains deterministic source-only0.4.2-dev and SHA, no release/tag/phone claim.
 - PHASE4-PLAN/PROGRESS/ACCEPTANCE: audit, source freeze/qualification status, next app foundation and authority/migration blockers. Do not edit source/tests/packaged guides/candidate during final full.
+
+## Phase 4.0 final Linux qualification
+Frozen4d1758d source/candidate:287 Python PASS0skip/fail, all old/Core3D faults;
+11 Go/vet/modules/builds PASS. PHASE4-ACCEPTANCE owns exact evidence/limits;
+PHASE4-PROGRESS owns receipt/next steps; PHASE4-QUICK-JOIN owns qualified upgrade/
+rollback use. No post-full source/test/package-guide drift. Candidate only,
+Android and writable DR remain NOT ACCEPTED.

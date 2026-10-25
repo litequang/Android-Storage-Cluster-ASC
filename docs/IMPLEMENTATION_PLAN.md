@@ -132,3 +132,8 @@ PHASE4-PLAN/PROGRESS/ACCEPTANCE own status. Core3D external backup/verify/passiv
 recovery preserved; writable DR still BLOCKED. Next Phase4 requires explicit
 native/local-engine bridge, Core quorum UI adapter and tested migration/Keystore/
 SAF contracts; no APK or real-device readiness inferred from synthetic candidate.
+
+Phase4.0 bounded Linux synthetic foundation now ACCEPTED on frozen4d1758d,
+287 fresh Python/all old faults and11 Go/vet/modules/builds PASS. See current
+PHASE4-ACCEPTANCE/PROGRESS. Broader app/Core quorum UI/migration/device work remains
+future Phase4.1+, Core3D writable recovery BLOCKED; no whole Demo branch merge.

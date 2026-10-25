@@ -12,7 +12,7 @@ existed; new feature created from Core, no merge/reset/old-branch edits.
 |4.0b.2a|PUSH/REMOTE VERIFIEDb96e4be43dd1228c025cb0305fd7372b559b9fb3;31PASS|
 |4.0b.2b|PUSH/REMOTE VERIFIEDed07bbc3640d3f0f89efbafb6545b22fe4514dd3;17PASS|
 |4.0c.1|PUSH/REMOTE VERIFIED4d1758ddac926853ffc43ae9b1aee428ab63bccf; candidate SHA fetched/verified|
-|4.0c.2|NOT ACCEPTED: first full interrupted after3D error; standalone9/9 PASS; fresh full retry required|
+|4.0c.2|PASS: fresh287 Python /0skip/fail; all fault groups; final reporting push follows|
 
 Read AGENTS in mandatory order, then3D acceptance/progress and Demo4D acceptance/
 QuickStart where available, then PHASE4-PLAN/this/ACCEPTANCE. Prior plan audit read
@@ -188,3 +188,22 @@ Next fresh standard full uses unittest fail-fast `discover -s tests -v -f` so a
 repeated failure preserves traceback immediately. PASS still requires all287,
 all original faults and unchanged frozen source/candidate. If failure recurs,
 investigate it before acceptance. Current NOT ACCEPTED; original branches intact.
+
+## Final fresh qualification — report only
+
+Fresh full on reporting commit 8ea3c6aba08285f24418796b7eae834a9f118103, exact frozen source
+4d1758ddac926853ffc43ae9b1aee428ab63bccf, started 2026-10-25T11:05:24.414959+00:00, finished 2026-10-25T11:33:54.507185+00:00.
+**287 PASS /0 SKIP /0 FAIL /0 ERROR, 1709.879s**; all 164
+source/test/packaged-guide/candidate fingerprints equal freeze. No source drift.
+Original fault markers12+20+7+3+3+8 and external9 all actually PASS in this full.
+First interrupted full is retained as failed/incomplete history, never acceptance;
+unchanged standalone9/9 and fresh full pass recorded above. Intermittent first
+failure was not root-caused; do not claim otherwise. Future recurrence needs trace.
+Go11/vet/modules/builds and all targeted/compatibility/security evidence unchanged.
+Candidate SHA b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3, release ID f550f565836b44dc582001e3adabb34e1a594441bdd52dbfff51700b7c1e19c7; deterministic/source exact, no secrets.
+No public Android release or real-device acceptance. Current Phase4.0 Linux scope
+ACCEPTED; broader Phase4/application/migrations and Core3D writable DR still deferred/
+BLOCKED. See rewritten PHASE4-ACCEPTANCE for actual matrix, upgrade/rollback and risks.
+Next normal push/report verification only; no source edits or repeated full needed
+unless a real new change/failure/concern appears. Future development starts from
+this feature's qualified state; do not redo0–3D or re-merge the whole Demo branch.

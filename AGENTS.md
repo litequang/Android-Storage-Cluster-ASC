@@ -43,12 +43,15 @@ not a public Android release. Historical earlier no-Dashboard language below is
 superseded ONLY for this explicit bounded task. Read current Phase4 handoff.
 
 Phase4 handoff:4a5d15cb7, b.14646f68, b.2ab96e4be, b.2bed07bbc and
-c.1 source/candidate freeze4d1758ddac926853ffc43ae9b1aee428ab63bccf normal-pushed/
-remote verified. Full287 Python RUNNING on frozen source; no acceptance yet.
-Read PHASE4-PROGRESS/ACCEPTANCE before any edits; do not redo completed checkpoints.
-Candidate0.4.2-dev under candidates/ is source-only, not an Android release.
-Only reporting docs may change during final full; if interrupted, inspect log/
-result or rerun fresh full before acceptance. Core3D writable recovery BLOCKED.
+c.1 source/candidate freeze 4d1758ddac926853ffc43ae9b1aee428ab63bccf normal-pushed/remote verified.
+Fresh full287 Python PASS0skip/fail, all original/Core3D fault markers and11 fresh
+Go/vet/modules/builds PASS. Source/tests/packaged guides/candidate unchanged from
+freeze. Read PHASE4-PROGRESS/ACCEPTANCE for initial interrupted run, final actual
+evidence, exact04.1 candidate upgrade/NEW-state code rollback and remote receipts.
+Phase4.0 Linux synthetic foundation ACCEPTED; Android/Windows runtime/production,
+APK/Core quorum UI/migrations and writable DR NOT ACCEPTED/BLOCKED. No redo of
+completed checkpoints or whole Demo merge. Candidate0.4.2-dev is source-only, no
+public Android release. Only final reporting follows qualification.
 
 ## Current Phase 3D authorization — separate external DR branch
 

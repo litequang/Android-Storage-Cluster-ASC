@@ -424,3 +424,11 @@ rollback over NEW state, pending enrollment both directions PASS with real TLS/
 bytes.13 targeted +1 exact artifact PASS;11 fresh Go/vet/modules/builds PASS.
 No formats/schema change.106-file synthetic source candidate/SHA under candidates;
 no public Android release. Full287 Python and original faults still pending.
+
+## Phase 4.0 — Linux synthetic foundation accepted
+Selective Core-first Demo reuse and Quick Join owner UI/local durable adapter
+qualified on frozen4d1758d:287 fresh Python PASS0skip/fail/all Core3A–3D faults,
+11 fresh Go/vet/modules/builds PASS. Exact published04.1 candidate upgrade and
+NEW-state code-only rollback/pending resume qualified. Source candidate0.4.2-dev
+only; no public Android release, APK/Core quorum UI/state migration or writable DR.
+See PHASE4-ACCEPTANCE for full evidence and initial interrupted run disclosure.
