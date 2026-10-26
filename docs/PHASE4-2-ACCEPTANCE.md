@@ -262,3 +262,18 @@ Not an fd-pinned SQLite VFS for untrusted shared metadata. Native approved Node
 volume/Handler/Agent/FGS/direct LAN still incomplete; full4.2 NOT ACCEPTED.
 Next work follows owner MVP priority with targeted tests, preserving existing
 TLS/pinning/identity/data guards; fresh integrated final gates remain required.
+
+## h.2b Native Node MVP — limited actual API35 PASS
+Source9001f152 +NativeNodeMVPTest: actual private Binder/JSSE/canonical Engine/
+Controller-authorized256KiB transfer/hash/fsync/verify/restart PASS30.023s, then
+separate force-stopped fresh-process Keystore/Node/TLS/Volume/old SHA download
+PASS13.499s,0skip/fail. Original signer/UID/old state retained by normal install-r;
+no identity reset. Native43+original storage4 targeted Linux and JVM13/build PASS
+as recorded. No new full regression reused as current source acceptance.
+
+This is a real emulator Native Storage Node session, not merely an Engine library.
+It is one explicit owner-delegated object; no Global Catalog replicated_2/protection
+claim or automatic storage/domain approval. Guest loopback +dev ADB reverse !=LAN.
+FGS/background/notification, observer, direct network, phones/ARM64/OEM/Doze and
+full Phase4.2 remain NOT ACCEPTED/NOT TESTED. No new public APK; private unchanged
+version3 SHA2d843e1be727782105f092396a2620a5ba7c2ef76daa11477c3eb4fd46ee8d60.

@@ -1,13 +1,26 @@
 {
   "checkpoint": "4.2h.2b MVP source",
-  "scope": "Linux actual Node session integration; Android runtime pending",
+  "scope": "Linux +owned API35 x86_64 actual Native Node MVP; guest loopback/dev reverse, NOT direct LAN",
   "native_targeted_python_tests": 43,
   "native_targeted_seconds": 14.859,
   "original_storage_cluster_tests": 4,
   "storage_regression_seconds": 10.586,
   "jvm_tests": 13,
   "gradle_build": "PASS30s; main/testAPK; no new dependency/permission",
-  "android_native_node_runtime": "NOT YET TESTED",
+  "android_native_node_runtime": {
+    "actual_tests": 2,
+    "binder_tls_file_restart_seconds": 30.023,
+    "fresh_process_identity_tls_readback_seconds": 13.499,
+    "skipped": 0,
+    "failures": 0,
+    "actual_file_bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "owner_authorization": "real pinned Controller original synthetic Registry; explicit operator storage grant",
+    "node_app_tls_volume_identity_preserved": true,
+    "uid_preserved": true,
+    "route": "guest loopback Node TLS; explicit dev ADB reverse to Controller, NOT direct LAN",
+    "global_catalog_replicated_2": "NOT TESTED; single owner-delegated object, no protection claim"
+  },
   "foreground_service": "NOT IMPLEMENTED; activity-bound only",
   "direct_lan": "NOT PASSED",
   "full_current_runtime_regression": "DEFERRED to integrated qualification by owner MVP priority; do not reuse earlier full368 as current-source PASS",
@@ -26,7 +39,8 @@
     "asc/node/storage.py": "4958c342bed013861f46e37973dbdd982a5cef7abd3a3ec7c62a97910735d84a",
     "asc/server.py": "f710a7d52437aae39eacbb3c36da8154a1105d19649a78abed7da9074a4e3683",
     "asc/storage/http.py": "c859337bd607ba6ce8f87efce7134e2bcf34a36842b6e63e2c892d1098d7126c",
-    "tests/test_native_runtime.py": "9f9ec2e6b5f1637b313de3f303662769998dd02bad8a216bdeec520f7acf393f"
+    "tests/test_native_runtime.py": "9f9ec2e6b5f1637b313de3f303662769998dd02bad8a216bdeec520f7acf393f",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeNodeMVPTest.kt": "4d0949bf6cbdb499ae07f28b5fff0cde652aa5477e7ecd93063d2da362855de0"
   },
   "apk": {
     "sha256": "2d843e1be727782105f092396a2620a5ba7c2ef76daa11477c3eb4fd46ee8d60",
@@ -49,5 +63,7 @@
     "canonical_core_modules": 118,
     "inventory_findings": [],
     "scope": "internal debug FOUNDATION; no native Node, migration or phone acceptance"
-  }
+  },
+  "source_commit": "9001f152daaddeda70ea50dcea57669dadd1bccf",
+  "wrong_runner_invocation": "INSTRUMENTATION_FAILED before tests; retained separately, not added to PASS"
 }

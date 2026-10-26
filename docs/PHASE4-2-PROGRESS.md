@@ -1067,3 +1067,39 @@ Android qualification, then owned Foreground Service and direct-network E2E.
 No uninstall/clear/reseed/Termux adoption. Original old cipher proof must not be
 overwritten to hide the legitimate new storage/revision mutation; compare retained
 identity/token/TLS and old committed bytes separately. Full4.2 NOT ACCEPTED.
+
+### h.2b actual Android Native Node MVP qualification
+Source9001f152daaddeda70ea50dcea57669dadd1bccf normal push/fetch/advertised
+remote matched. Owner requested fewer broad/security gates; focused actual Node
+path only, no new full Core run or additional hardening layer.
+
+Owned ASC_JOIN_UI_API35 x86_64 TCG resumed original userdata (boot262.266s). First
+launch failed AVD discovery before boot; corrected ONLY task development AVD_HOME,
+no HOME/proxy/CA/system/identity change. Original installed APK61eb0323... pulled
+and preserved, updated normal install-r to same-signer2d843e1b.../version3. UID
+unchanged, no uninstall/clear/-d/identity reset. Synthetic Controller restored
+original g.2c Registry/cert at the same pinned endpoint;1 enrolled Node, no re-join.
+Private fixture owner credential generated only for isolated test operator, not
+node credentials/authority reconstruction; no Raft/quorum/DR involved.
+
+Actual NativeNodeMVPTest binder session PASS30.023s: same UID private Binder ->
+production NativeNodeSession ->canonical Python Runtime/StorageHandler/Engine over
+actual JSSE; real write/read/SHA/fsync probe; real pinned heartbeat, explicit owner
+storage grant;256KiB/all256-byte upload/commit/verify/download; stop/start same
+port, old exact bytes and same app/context/Node/token/TLS/Volume identity. No Kotlin
+mock backend, no fabricated Replica VERIFIED/replicated_2. Core Catalog approval
+is NOT auto granted: this is an explicit legacy owner-delegated local object.
+
+Then force-stop ONLY owned task app, confirm old process absent; independent fresh
+process case PASS13.499s: same Keystore/context/Node/token hash/TLS/Volume/file ID,
+actual new Node TLS listener and authenticated download of prior SHA bytes. Two
+actual tests0skip/fail. Original old cipher proof untouched: legitimate storage/
+revision publication changes encrypted record, retained identities verified.
+Initial wrong runner command did not execute a test; retained separately, never
+counted as PASS. Main APK unchanged, testAPK build PASS. Public bounded receipt
+qualification/phase4-2h2b-mvp.json; private raw logs/fixture under phase4-2h2b-mvp.
+
+Scope: API35 x86_64 emulator guest-loopback Node +explicit dev reverse to Controller,
+NOT direct LAN/ARM64/phone/Doze/OEM, two protected independent replicas or production.
+Activity-bound Node only; FGS/notification Stop/background lifecycle next. Observer
+and direct-network qualification remain. Full4.2 NOT ACCEPTED, writableDR BLOCKED.

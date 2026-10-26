@@ -734,3 +734,7 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 - MainActivity.kt: minimal Node quota/host/port/start/stop controls; foreground UI
   session only, no FGS yet. tests/test_native_runtime.py:4 actual Linux TLS/I/O/
   heartbeat/restart/missing-state/interrupted-setup/Controller-loss gates.
+
+- NativeNodeMVPTest.kt: focused actual API35 Binder/JSSE/owner grant/bytes/hash/
+  heartbeat/stop-start plus independent fresh-process retained identity/readback.
+  Uses private task fixture, never packaged owner credentials; no direct LAN claim.
