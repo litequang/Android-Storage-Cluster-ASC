@@ -1454,3 +1454,67 @@ acceptance is implied. Next: recover/verify original primary without reset, fini
 cold/fault evidence as applicable, freeze candidate/source, run final j.3 once and
 publish only honestly scoped artifact/acceptance. Review tracked/index/untracked
 secrets, normal feature-only push/fetch/remote match before next; receipt follows.
+
+
+### j.2 publication / j.3 resume state
+Source30660d8c28886d8a363bbcada48e06aaa2e6e776 normal-pushed, fetched HEAD and
+ls-remote exactly matched; clean tree before j.3. Work/index371files +0nonignored
+untracked secret-pattern/path audit0findings; final candidate inventory0findings.
+Original signer remains private, new internal APK stays outside Git/public release.
+
+j.3 starts with original-primary crash readback, then final frozen full gate.
+Private root/work receipts:/workspace/work/phase4-2j3-final. New Native Catalog AVD
+console shutdown was authorized only after verifying its live owned QEMU/name;
+command returned successfully BUT supervisor recorded SIGSEGV(-11), not cleanexit.
+Its already qualified app/state/files were NOT cleared; preserve userdata and do
+not call this a clean/power-loss PASS. Original ASC_JOIN_UI_API35 is restarting
+from original userdata, with original crash-offline copy still retained. Only ONE
+TCG VM at a time. New test-only NativeCrashRecoveryTest reads original h.2b proof/
+Keystore/TLS/Engine bytes; no seed/reset, network grant or production access.
+Current fresh Go11/vet/modules/Linux+Windows+Android cross-builds PASS; fullPython
+and original crash result still pending here. Do not infer acceptance from start.
+
+
+### j.3 qualified original crash-recovery prerequisite / final gate RUNNING
+
+NativeCrashRecoveryTest +ExistingStorage/NativeContext/NativeTLS/VaultStorage/UI/
+canonicalEngine/selected legacyBinder:26PASS0skip/fail822.806s on ORIGINAL retained
+ASC_JOIN_UI_API35, same UID10148/10149. Exact previous main APKd1847ce8... retained,
+normal same-signer v3->v4 install and final main SHA7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8.
+Actual old h.2b app/Node/Cluster/token hash/TLS identity/volume/bytes and still older
+h.2a committedEngine/manifest/marker bytes read back after the original VM crash.
+The earlier original-primary-crash-readback NOT TESTED item is superseded by THIS
+PASS, not by offline image copying. Current actual Android TLS handshakes/default
+untrusted trust/wrong-pin/sealed anonymousfd/missing-key no-regen and private
+storage fault assertions retained. Foreign original installed differentUID/signer
+app additionally1PASS0.464s, explicit OS bind denial, not a timeout.
+
+Initial update command exceeded its90s host deadline: NOT a successful install
+receipt/test. After normal Android completion, checked installed candidate exact
+SHA and retained historical UID; did NOT repeat main install/reseed. Normally
+updated only testAPK, then ran the full selected26 and foreign1 above. Original
+private debug signer remains0600. New test code reads existing proof only.
+
+Original VM booted318.872s in TCG. After all tests own app was stopped, normal guest
+shutdown requested; ADB command timed out30s and SDK again exited SIGSEGV(-11),
+like newVM's earlier console shutdown. No clean-shutdown/power-loss PASS claimed.
+Preserved8original images/config offline under j3 root, KEEPING original pre-crash
+copy too. No uninstall/clear/wipe/root/snapshot restore/Termux state copy. All task
+emulators now stopped; don't signal historical PIDs or assume state after restart.
+
+Fresh Go11/vet/module verification/Linux native+WindowsAMD64/AndroidARM64 builds
+PASS; Windows/Android are cross-builds only. All7old tracked sourcearchives/APK
+unchanged. Public bounded receipt:qualification/phase4-2j3-android-recovery.json.
+
+A SINGLE fresh full Python/currentCore fault run is underway (not PASS yet),
+296source/tests/Gradle/Go/package-guide/priorartifact hashes frozen. It began while
+one owned VM finished independent Android tests (GOMAXPROCS2), then all VMs stopped.
+Private durable log/full-python.log, owner/full-supervisor-owner.json, source-freeze
+and eventual full-python-receipt.json under/workspace/work/phase4-2j3-final. Don't
+restart the full run just because a turn ends; verify actual supervisor/child/receipt
+first. Do not edit frozen source while running. No prior368 result is reused as
+this current full result. Only document/test prerequisite is saved in this commit;
+final4.2j.3 and full4.2 acceptance remain pending. Cold initial full JUnit, phone/
+ARM64/ChromeAndroid/truly independent domains/Doze/LAN-internet-disconnected remain
+explicitly unqualified. No new public APK at this prerequisite. Source/targeted
+secrets/normal push/fetch receipt follows; continue same j.3 final gate afterward.

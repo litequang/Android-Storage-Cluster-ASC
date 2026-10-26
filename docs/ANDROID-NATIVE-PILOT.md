@@ -5,6 +5,11 @@ only a task-owned API35 x86_64 emulator and Linux synthetic services. Never inst
 on M51/production/unknown devices or replace existing Termux data. Read current
 PHASE4-2-ACCEPTANCE, ANDROID-NATIVE-OPERATIONS and ASC-USER-STATUS.
 
+The integrated j tests use the CURRENT branch's packaged Demo Controller, not
+an independently qualified APK-candidate -> published Demo0.4.1 Controller path.
+Do not infer that cross-version phone combination PASS. Keep existing Controller
+state; a supported tested Controller upgrade/candidate is required for a trial.
+
 ## Before installation
 
 Use only a candidate actually provided with its SHA-256 and signer report; a build

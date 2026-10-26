@@ -381,3 +381,17 @@ Original-primary-crash and cold-initialization incomplete gates remain explicit.
 Fresh final Python/Go/fault/package freeze still required at j.3. LAN needs local
 IP connectivity; no Internet dependency does not mean automatic hotspot/transport.
 Cloudflare remote stays Phase5/NOT IMPLEMENTED. Recovery writer remains BLOCKED.
+
+
+### j.3 original-primary recovery / selected final Android gates
+Actual ORIGINAL AVD restart+normal v3->final-v4 update:26AndroidPASS0skip/fail
+822.806s, plus foreign-UID/signature1PASS0.464s. Includes actual old app/Node/
+Cluster/Keystore TLS/token/Volume and h.2b+h.2a Engine bytes/marker/manifest after
+prior SIGSEGV. This supersedes earlier original-crash-readback NOT TESTED only.
+Initial90s installer host timeout not counted PASS; actual installed hash/UID
+verified before resume. Guest shutdown later timed out/SDK SIGSEGV;8images copied
+offline, no clean-shutdown/power-loss qualification. Signer/private state intact.
+Fresh Go11/vet/modules/builds PASS (Windows/Android cross-build only). Current full
+Python/fault run RUNNING,296hashes frozen: NOT ACCEPTED yet. No old full-result
+reuse. Exact scope/remaining cold/phone limits in PROGRESS and bounded receipt
+qualification/phase4-2j3-android-recovery.json. No new public APK at this prerequisite.

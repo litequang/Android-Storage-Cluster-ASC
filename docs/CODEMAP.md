@@ -771,3 +771,9 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 - NativeUpgradeDataTest.kt: retained app/context identity and actual canonical
   Engine read/hash of an original v3 object after normal v4 APK upgrade and
   Android's lower-version refusal. No fixture identities packaged in main APK.
+
+
+## j.3 retained original VM recovery qualification
+- NativeCrashRecoveryTest.kt: requires pre-crash h.2b proof; real Keystore decrypt,
+  same application/Node/Cluster/TLS/token/Volume and canonical local Engine byte
+  hash. No seeding, credential reset, network grant or copied Termux state.
