@@ -1306,3 +1306,88 @@ checkpoint; publication receipt follows without retesting unchanged source.
   existing emulator/Controller ownership receipts remain in phase4-2h2b-mvp.
   No real-phone/M51 operation, reset, signer recreation, data clear or forced
   downgrade. Current APK stays private version3; no new public candidate yet.
+
+## j.1 actual Native Node +Demo Catalog/File Manager — targeted PASS
+Baseline c4ece1e5201c8bcdee108605f64c183042727ae0 clean/fetch equal. No product
+Engine/Catalog/enrollment/runtime/authentication source changes: existing main APK
+d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a/version3/
+original signer reused. This checkpoint adds actual mixed-runtime qualification,
+not another Storage Engine, native File Manager or Core-to-Demo migration.
+
+Separate NEW ASC_NATIVE_CATALOG_API35 AVD/serial emulator-5560 on private ADB5038,
+official existing API35 x86_64 image/TCG. Original AVD/identities were not adopted.
+Actual marked Demo Controller +Linux peer use existing synthetic getprop/pkg/CLI
+fixture outside Git; Android app uses its REAL Build/context/Keystore/Engine. No
+Android/Core runtime guard override. Public tool validates task QEMU UID/AVD,
+original signer and exact installed APK, never discovers phones. Native joins
+through pinned HTTPS10.0.2.2. Host Node endpoint uses loopback-only standard SDK
+NAT; ADB is control/receipts only. No ADB reverse/file-byte transport or proxy/CA
+changes. Owner explicitly approves native volume/domain via existing API, with
+metadata permission false; app does NOT self-approve. Linux and AVD domains are
+asserted synthetic labels on ONE host, NOT independent physical devices.
+
+Final complete retained-state run e0c7166f8fc949cdaa633667a432be17 PASS: existing
+trusted-CA Chromium Dashboard owner login ->upload256KiB/all256-byte values ->two
+actual Core-scoped/independently hashed replicas including APK Engine. Existing
+390px/XSS/literal name/HTTPS/session/unknown/offline/download-SHA assertions retained.
+Stop actual APK Node via private Binder; browser download falls back to Linux peer
+and matches SHA2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9;
+new upload denied with only one eligible domain, no ghost file. Restart native,
+wait actual verified+available2, then directly read Native copy with scoped grant.
+
+Stop actual Controller; Native TLS listener remains reachable but old read grant
+gets EXACT503 authorization_unavailable, not just connection refusal/expired auth.
+Restart same Controller identity. Complete first Android holder, actual own-app
+force-stop then second instrumentation process; same app/Node/Cluster/TLS/Volume/
+decrypted context hash, fresh Core proof and DIRECT Native-copy SHA readback PASS.
+No fallback hides a missing Native copy in this retained-process assertion.
+Two Android receipts:141.100s +88.128s,0skip/fail. Host full report PASS, browser
+report PASS2replicas/verified SHA/CA trust and untrusted-CA refusal. Old unchanged-
+fixture browser regression separately PASS12.387s. Test-APK builds PASS3m15s under
+memory contention, then diagnostic build PASS; no new main APK or fresh JVM/Go/
+full-Python claim. Original main code/hash unchanged from i.2 scoped JVM15 receipt.
+
+Real failed/incomplete attempts are NOT counted as this PASS:
+- SDK avdmanager lacks installed-package metadata for the already qualified
+  emulator binary. A premature launch before AVD creation failed before any app
+  existed; retained logs, created only NEW AVD text config using existing image.
+- Two simultaneous TCG VMs exhausted usable memory/slow startup. Original
+  ASC_JOIN_UI_API35 exited SIGSEGV(-11) BEFORE console-stop verification completed;
+  console kill was not executed. Preserve original userdata/key images8files via
+  offline copy; original signer intact. Primary crash-restart/readback still NOT
+  TESTED here, not claimed clean shutdown/power-loss proof. New AVD remained live.
+- First instrumentation shortMsg=Process crashed before JUnit start,0tests. Actual
+  Launch/Binder diagnostic subsequently2PASS32.553s. No identity existed then.
+- Setup resume initially rejected the known reserved local-controller row;
+  corrected ONLY fixture precondition to require exactly its original Linux peer
+  besides that reserved non-storage identity. No Registry/identity was deleted.
+- Fresh native case DID enroll and persist local volume/proof but missed host
+  READY deadline. Its completed cold-initialization JUnit receipt is UNKNOWN/
+  INCOMPLETE, NOT PASS. Subsequent runs explicitly resumed SAME Node/context/
+  Keystore/volume; no reinitialization/new Node to evade failure. The passing full
+  run starts retained, not falsely relabelled fresh installation acceptance.
+- Prior full retained attempt had successful browser/authorization and2Android
+  receipts but host ended StopIteration: it mistook reconcile {busy:true} for
+  completed proof. Fix ONLY wait predicate: actual nonbusy reconciliation AND
+  verified2/available2 required before selecting Native download candidate. No
+  byte/identity/auth assertions removed, no product limits/security weakened.
+
+Private state/logs/supervisor/owner: /workspace/work/phase4-2j-native-catalog;
+qualification/home preserves original Demo Controller/peer/CA/Registry/data and
+qualification/runs keeps EVERY run separately. New AVD native context/proof/bytes
+remain intact. tools/qualify_native_catalog.py --resume requires that same source/
+APK/AVD; --resume-setup ONLY preidentity interruption (no app/context/proof and
+only original peer Registry row), with existing app/Keystore NOT_PROVISIONED
+assertion before provision. Lost/corrupt established identity is NEVER reset.
+
+Docs ASC-USER-STATUS answers owner: web owner login/File Manager exists; native
+file UI/multiuser login absent; LAN needs a local IP network but no Internet;
+automatic hotspot/Wi-Fi Direct and Cloudflare remote are NOT IMPLEMENTED. No
+Cloudflare/production/M51/real-phone/Termux operations performed.
+
+Full4.2 NOT ACCEPTED. Next j.2 candidate/version+upgrade, primary crash readback,
+remaining cold/fault gates, then j.3 final integrated full regression once. Phones/
+ARM64/real LAN/Chrome Android/Doze/OEM/two physical domains/writableDR unqualified.
+Rollback: main product source/APK/state formats unchanged; retain NEW test state/
+objects, no old DB restore/uninstall/forced downgrade. Check tracked/index/untracked
+secrets, normal feature push/fetch match before next checkpoint; receipt follows.

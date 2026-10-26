@@ -625,3 +625,13 @@ integration is g.2, no native Node/FGS or public APK claim.
   retain all assertions and failure evidence. Same signer/UID/Node/old bytes kept.
 - No new public APK/full integrated acceptance; j candidate/upgrade/final gates and
   physical phones/ARM64/independent hardware qualification remain outstanding.
+
+### 4.2j.1 mixed native Catalog/File Manager qualification
+- Actual APK Node participates in existing marked Demo Controller/Catalog and
+  browser File Manager: two synthetic-domain replicas, SHA/fallback/restart,
+  Controller-loss authorization refusal and retained-process Native bytes.
+- Android2 scoped receipts and browser regression PASS; preserve interrupted cold
+  setup/VM/fixture failures as incomplete, no identity resets or fake physical
+  independence. Main product/APK unchanged; candidate/final qualification pending.
+- Add clear owner feature status for web/native login/File Manager, LAN without
+  Internet versus no local network, and still-unimplemented Cloudflare/remote.

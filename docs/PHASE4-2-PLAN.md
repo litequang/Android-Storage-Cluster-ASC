@@ -117,3 +117,14 @@ TLS/recovery and three-voter fault regressions, normal push/remote verification.
 i.2: wire private versioned Binder and minimal Vietnamese Cụm page, qualify actual
 gateway on owned emulator. No full Core repetition at these small checkpoints;
 fresh integrated final gates remain j. Do not label i.1 as Android observer PASS.
+
+### j split / operational MVP continuation
+j.1: actual existing Demo Catalog+Dashboard with APK Node and synthetic Linux peer,
+owner approvals, scoped transfer/byte proof, outage/fallback/Controller-loss denial
+and retained-process identity. Separate fresh AVD/state; never relabel Core state.
+j.2: version-increased same-signer internal candidate, compatible upgrade/retained
+Node data and practical existing-Dashboard entrypoint; no second File Manager.
+j.3: freeze final inputs, one fresh full applicable Python/Go/fault/Android/package
+qualification. Keep explicit remaining gates/physical limits, no production claim.
+Owner asks LAN/offline/Cloudflare status: ASC-USER-STATUS owns the distinction.
+Cloudflare/remote remains Phase5, no public management route or production access.

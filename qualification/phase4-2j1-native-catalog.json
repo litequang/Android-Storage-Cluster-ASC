@@ -1,0 +1,71 @@
+{
+  "checkpoint": "4.2j.1",
+  "base_commit": "c4ece1e5201c8bcdee108605f64c183042727ae0",
+  "state": "TARGETED_RETAINED_NATIVE_E2E_PASS",
+  "main_apk_sha256": "d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a",
+  "main_product_unchanged": true,
+  "scope": "API35 x86_64 owned emulator +actual marked Demo Controller/Linux peer/Chromium; not phones",
+  "actual_result": {
+    "state": "PASS",
+    "scope": "Linux +API35 x86_64 synthetic; not phones/physical domains",
+    "adb_control_only": true,
+    "native_identity_reset": false,
+    "native_android_tests": 2,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "logical_domains": 2,
+    "physical_domain_independence": false,
+    "actual_browser_login_upload_download": true,
+    "native_offline_fallback": true,
+    "controller_loss_denied": true,
+    "retained_process_identity": true,
+    "entry_mode": "retained resume",
+    "fresh_initialization_junit_completed": false
+  },
+  "android_receipts": [
+    {
+      "tests": 1,
+      "seconds": 141.1,
+      "failures": 0,
+      "skips": 0
+    },
+    {
+      "tests": 1,
+      "seconds": 88.128,
+      "failures": 0,
+      "skips": 0
+    }
+  ],
+  "browser": {
+    "replicas": 2,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "trusted_tls": true,
+    "untrusted_tls_denied": true,
+    "mobile_width": 390,
+    "offline_refused": true,
+    "page_errors": 0
+  },
+  "legacy_browser_regression": {
+    "tests": 1,
+    "seconds": 12.387,
+    "failures": 0,
+    "skips": 0
+  },
+  "launch_binder_diagnostic": {
+    "tests": 2,
+    "seconds": 32.553,
+    "failures": 0,
+    "skips": 0
+  },
+  "fresh_initialization_junit": "INCOMPLETE; actual existing enrollment/storage retained, not reset/relabelled PASS",
+  "primary_avd_crash_recovery": "NOT TESTED; original images preserved offline after SIGSEGV",
+  "no_new_public_apk": true,
+  "new_full_python_go_not_run": true,
+  "physical_domains": "NOT QUALIFIED; one host",
+  "next": "j.2 candidate/upgrade and remaining cold/recovery/fault gates, then j.3 frozen fresh final regression",
+  "source_sha256": {
+    "android/app/src/androidTest/java/org/asc/foundation/NativeCatalogTest.kt": "85efdd3b0f9bb5783124009791cc4a46e2f9fa713e13b1918b2bf1fc60924b6c",
+    "tools/qualify_native_catalog.py": "92be6bd0da758bc8c591d151a911953d73616cb31ed21886f261a3bf6c49022a",
+    "tests/browser/demo_dashboard.cjs": "91cd4afeb780003385398d7ef7a860817affb1794bdec45338f7d570305712a5"
+  }
+}

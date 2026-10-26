@@ -340,3 +340,23 @@ credential migration or writer capability. Linux12 client gates from i.1 unchang
 no new full Python/Go claim or public APK/release. Full4.2 remains NOT ACCEPTED
 pending integrated j/candidate+upgrade/final gates; physical phones/ARM64/real LAN/
 Doze/OEM/two hardware domains unqualified; writable DR BLOCKED.
+
+## j.1 actual Native Catalog/Dashboard replication — scoped PASS
+Existing API35 x86_64 APK(version3/original signer) +actual marked Demo Controller
+and Linux peer: trusted-CA real Chromium owner login/upload256KiB/two actual
+scoped replicas including Native, SHA readback, Native stop/browser fallback,
+unsafe new-upload refusal, Node restart, live-Node503 rejection of old grant after
+actual Controller shutdown, Controller restart and own-app process death/retained
+Native-copy exact SHA/identity PASS. Native holder JUnit2PASS141.100s+88.128s;
+original browser regression1PASS12.387s, no skips. No new main Engine/source/APK.
+
+Synthetic domain assertions on one host are NOT independent physical hardware.
+Complete passing run is RETAINED resume; interrupted fresh-initialization JUnit
+receipt is UNKNOWN/INCOMPLETE, not counted PASS. Earlier instrumentation/startup/
+fixture precondition/reconcile-busy failures retained in progress/private runs;
+wait now requires actual fresh verified2/available2, all original assertions kept.
+Primary old AVD independently crashed SIGSEGV; offline images preserved, primary
+crash readback NOT TESTED here. No private state reset, Node recreation or signer
+replacement. No new full Python/Go/JVM claim or public APK. Candidate/upgrade/
+remaining faults/fresh final gates remain j.2/j.3; full4.2 NOT ACCEPTED. Physical
+phones/ARM64/LAN/Chrome Android/Doze/OEM/writableDR unqualified/BLOCKED.

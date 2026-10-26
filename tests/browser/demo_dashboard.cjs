@@ -70,7 +70,10 @@ async function launch(root) {
     await page.locator('#upload-button').click();
     await page.getByText('Đã xác nhận đủ hai bản sao trên hai miền lỗi độc lập.', { exact: true }).waitFor({ timeout: 90000 });
     stage = 'replica-details';
-    const row = page.locator('.file-row').first();
+    // Retained native-qualification state can contain earlier real files. Keep
+    // the original fresh-fixture behavior; target only this NEW upload on resume.
+    const row = config.existing_file_count === undefined ? page.locator('.file-row').first()
+      : page.locator('.file-row').filter({ has: page.locator('.file-name').filter({ hasText: config.logical }) });
     await row.getByText('Đủ hai bản sao', { exact: true }).waitFor();
     assert.equal(await row.locator('.file-name').innerText(), config.logical);
     assert.equal(await page.locator('img').count(), 0);
@@ -89,7 +92,9 @@ async function launch(root) {
     await page.screenshot({ path: path.join(config.output, 'dashboard-mobile.png'), fullPage: true });
     // Test-only parent fixture stops an ACTUAL synthetic node. No product control endpoint.
     stage = 'node-offline';
-    fs.writeFileSync(path.join(config.output, 'stop-node.json'), JSON.stringify({ node_id: copies[0] }));
+    const stopNode = config.required_native_node_id || copies[0];
+    assert.ok(copies.includes(stopNode));
+    fs.writeFileSync(path.join(config.output, 'stop-node.json'), JSON.stringify({ node_id: stopNode }));
     const deadline = Date.now() + 30000;
     while (!fs.existsSync(path.join(config.output, 'node-stopped')) && Date.now() < deadline) await delay(100);
     assert.ok(fs.existsSync(path.join(config.output, 'node-stopped')));
@@ -113,7 +118,7 @@ async function launch(root) {
     await page.locator('#logical-path').fill('browser/new-after-node-offline.bin');
     await page.locator('#upload-button').click();
     await page.getByText('Không đủ dung lượng hoặc chưa có hai điện thoại độc lập đủ điều kiện.', { exact: false }).waitFor({ timeout: 20000 });
-    assert.equal(await page.locator('.file-row').count(), 1);
+    assert.equal(await page.locator('.file-row').count(), (config.existing_file_count || 0) + 1);
     stage = 'controller-network-offline';
     await context.setOffline(true);
     await page.locator('#refresh').click();

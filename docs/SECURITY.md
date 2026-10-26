@@ -613,3 +613,12 @@ bound. No arbitrary URL/method/Node token/source bootstrap/credential export.
 Transient owner code/trust and displayed health clear on network/background;
 logout allowed after consent withdrawal. Existing app/Node/volume state untouched,
 no new alias/database/schema or Android quorum/GC/recovery writer capability.
+
+4.2j.1 qualification uses a separate fresh task AVD and genuine marked Demo
+Controller, never casts Core registry/state as Demo to reach the File Manager.
+Owner fixture explicitly approves native storage/domain; machine credentials stay
+in app Keystore/private Controller state, browser gets only existing owner session.
+NAT byte transport is actual TLS, not ADB reverse; two labels on one host are only
+synthetic domains. Controller-loss gate requires reachable Node TLS plus exact503
+authorization refusal. Incomplete cold/VM runs never count as acceptance or permit
+identity reset. Cloudflare/public management remains outside this track.

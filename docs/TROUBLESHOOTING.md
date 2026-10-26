@@ -519,3 +519,14 @@ had SIGABRT during initial install; preserve offline userdata/keys/logs, verify
 current task ownership/free stale lock before controlled restart. No wipe/root/
 signer recreation. Quickstep launcher ANR can cover the Activity even while
 programmatic View/Binder tests pass: that does NOT qualify interactive usability.
+
+### Native Catalog/Dashboard qualification j.1
+Reconcile `{busy:true}` is NOT physical verification. Wait for an actual completed
+reconciliation and target file verified/available counts before selecting a fresh
+Native download grant; never mark protection or invent a candidate manually.
+An interrupted initial Android holder may already have enrolled/configured bytes:
+preserve same context/proof/Controller, use explicit retained --resume, not reinit.
+--resume-setup is only for proven preidentity interruption; established/lost/
+corrupt keys must hold. Native stage marker is test-only/private, no Node secret.
+AVD crash is not a clean shutdown/power-loss PASS: preserve userdata/key images,
+verify fresh ownership and require actual subsequent key/identity/byte readback.
