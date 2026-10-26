@@ -910,3 +910,69 @@ storage/domain approval remains explicit owner action. Then real owned Agent/FGS
 notification/Stop/lifecycle/revocation/outage, i observer, j direct LAN/full fresh
 gates/new candidate. Preserve current enrolled Node/Keystore/private signer; no
 re-seed/reset. Publish normal h.2a commit and verify fetch before next checkpoint.
+
+### h.2a publication receipt
+66634a6cfb29468d8efeb0662f111c1e81231a65 normal push/fetch/advertised remote
+matched exactly before h.2b.1a source changes. Scoped native transport qualified;
+NOT Native Storage Agent. Original signer/old AVD/new enrolled AVD preserved.
+
+## h.2b.1a — existing-only Manifest/Engine gate (IN QUALIFICATION)
+Before native approved-volume/runtime work, add opt-in POSIX private existing-only
+constructor: no mkdir/chmod/missing DB creation/schema or identity repair. SQLite
+mode=rw +owner/single-link/no-symlink/dev+inode checks; same canonical format1 DDL
+reused in RAM for structural comparison, whitespace normalized to accept older
+indentation. Old default creation, IDs, tables and constraints unchanged. This
+is not an fd-pinned SQLite VFS for malicious same-UID/untrusted shared metadata.
+Native configuration must constrain approved app-private roots; SAF/shared media
+unsupported. No Node volume config/approval/Handler/Agent/FGS yet.
+
+Fresh8 targeted actual Linux tests PASS0skip. New symlink negative initially
+expected ValueError but original Core no_links correctly raised StorageError
+unsafe_path; fixed this NEW test to assert that exact existing guard, no original
+test or runtime assertion weakened. Exact h.2a installed APK89a2c9a2... retained
+privately; its committed Engine body/Volume ID/marker/manifest inode captured
+before upgrade, no DB copied/adopted and no Node/app identity reset. New actual
+Android tests must open/read this previous private test dataset, not fabricate
+compatibility with a newly generated object.
+
+Core/source/Native test files will be frozen for full Python safety regression +
+Android/Go checks. Current results pending below; NOT a completed checkpoint or
+new Phase acceptance. Private work/proofs: /workspace/work/phase4-2h2b1-existing.
+No public APK/release; normal checkpoint push only after required gates PASS.
+
+### h.2b.1a retained qualification / interrupted full runs
+Fresh Linux8 PASS0skip; actual API35 x86_64 existing-only tests3 PASS9.327s,
+additional original TLS/context/Engine/Keystore/socket18 PASS380.244s and foreign
+UID/signer denial1 PASS0.218s. Retained enrolled primary app proof PASS before and
+after normal same-signer install-r; original app/context/TLS/Node/token/committed
+cipher identity and UID preserved. No uninstall/clear/reseed. New Android negative
+fixture initially used filesDir's Android symlink alias: original Core unsafe_path
+guard correctly refused it. Only this NEW fixture changed to canonical filesDir;
+final3 tests all rerun. First failed run remains diagnostic, not added to PASS.
+
+Strict dependency build/main+testAPK/lint PASS (0errors25 retained warnings).
+Unchanged JVM13 results retained from h.2a; Gradle test task was UP-TO-DATE, not
+13 fresh executions. No new JVM source/dependency/permission. Private internal
+version3 APK SHA61eb0323b40021df192ebccb6f3089425bac1fd8eaac1e6cfbea551fae052821,
+original signer bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30;
+116 canonical modules/arm64+x86_64, bounded APK inventory PASS. No public artifact.
+
+Fresh Go11/vet/modules/Linux+Windows+Android builds PASS; latter two cross-builds,
+not runtime proof. First full Python run failed after73 at original consensus
+child shutdown20s; unchanged exact consensus retry PASS23.568s. No timeout/assertion
+weakened. Second full run reached288 completed ok lines and60 fault PASS markers,
+then SIGKILL before completion (no final receipt); NOT full PASS. Cgroup reports
+0 OOM kills; cause of external SIGKILL not established. All failures/logs retained.
+
+Both owned AVDs stopped with userdata/private signer intact. Latest emulator stop
+returned SIGSEGV(-11), not clean-stop/power-loss proof; offline userdata backup
+retained without restoring/replacing active state. Fresh full Python started
+2026-10-26 09:56:19 UTC through owned detached supervisor so completion can be read
+independently of interactive session lifetime. Original discovery/tests unchanged,
+source hashes frozen, no concurrent emulator/Go/Gradle. Receipt pending at
+/workspace/work/phase4-2h2b1-existing/full-python-durable/receipt.json, log tests.log.
+NOT qualified until full gate completes; no next checkpoint started. Preserve the
+current source/tests/docs in a normal source-only WIP commit while that gate runs;
+this does NOT close h.2b.1a or authorize transition to h.2b.1b. Public bounded status
+qualification/phase4-2h2b1-existing.json explicitly records pending full regression.
+On resume, inspect durable receipt/log and frozen hashes before any source edits.

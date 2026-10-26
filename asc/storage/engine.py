@@ -5,23 +5,43 @@ import os
 from pathlib import Path
 import re
 import sqlite3
+import stat
 import threading
 import time
 import uuid
 from .errors import StorageError
-from .manifest import Manifest
-from .volumes import CHUNK, VolumeManager, identifier, logical_path
+from .manifest import Manifest, existing_identity
+from .volumes import CHUNK, VolumeManager, identifier, logical_path, no_links
 from ..identity import ensure_private_home
 from ..runtime import foreground_lock
 
 
 class StorageEngine:
-    def __init__(self, home, node_id, max_upload=64 * 1024**2, bytes_per_second=8 * 1024**2):
+    def __init__(self, home, node_id, max_upload=64 * 1024**2, bytes_per_second=8 * 1024**2,
+                 *, existing_only=False, manifest_identity=None):
         if type(max_upload) is not int or not 1 <= max_upload <= 1024**3:
             raise ValueError('invalid upload limit')
         if type(bytes_per_second) is not int or not 1 <= bytes_per_second <= 64 * 1024**2:
             raise ValueError('invalid transfer rate')
-        self.home = ensure_private_home(home)
+        if type(existing_only) is not bool or not existing_only and manifest_identity is not None:
+            raise ValueError('invalid storage open mode')
+        if existing_only:
+            self.home = Path(home)
+            if os.name != 'posix' or not self.home.is_absolute() or '..' in self.home.parts:
+                raise ValueError('existing private storage provider not qualified')
+            source = Path(__file__).resolve().parents[2]
+            shared = (Path('/storage'), Path('/sdcard'), Path('/mnt/media_rw'))
+            if (self.home == source or source in self.home.parents or
+                    any(self.home == root or root in self.home.parents for root in shared)):
+                raise ValueError('private storage outside source/shared roots required')
+            no_links(self.home)
+            info = self.home.lstat()
+            if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o077:
+                raise ValueError('private existing storage required')
+            # BEFORE a lifecycle lock or Engine can create any path.
+            manifest_identity = existing_identity(self.home / 'manifest.sqlite3', manifest_identity)
+        else:
+            self.home = ensure_private_home(home)
         self.node_id, self.max_upload, self.rate = node_id, max_upload, bytes_per_second
         self._owner = foreground_lock(self.home, 'storage-engine')
         self._owner.__enter__()
@@ -29,7 +49,8 @@ class StorageEngine:
         self._mutex = threading.RLock()
         self._transfer = threading.BoundedSemaphore(1)
         try:
-            self.manifest = Manifest(self.home / 'manifest.sqlite3', node_id)
+            self.manifest = Manifest(self.home / 'manifest.sqlite3', node_id,
+                                     existing_only=existing_only, expected_file=manifest_identity)
             self.volumes = VolumeManager(self.manifest, node_id)
             self.recover()
         except BaseException:

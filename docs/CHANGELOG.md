@@ -578,3 +578,9 @@ integration is g.2, no native Node/FGS or public APK claim.
   absolute deadline that actually interrupts idle reads/blocked writes.
 - Actual API35 transport/regression/identity/foreign-caller proof; no new crypto
   dependency, permission or public APK. Core HTTP/Engine/Agent/FGS still next.
+
+### Phase4.2h.2b.1a — existing metadata open policy (qualification pending)
+- Add optional POSIX private existing-only Engine/Manifest open: no missing DB
+  recreation, identity/schema repair or chmod. Old defaults/formats unchanged.
+- Bind inode/Node/canonical structure with rw URI, reject symlinks/hardlinks/
+  missing/future/corrupt metadata. Native volume/runtime integration still next.

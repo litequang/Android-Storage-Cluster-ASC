@@ -513,3 +513,12 @@ All prior app/context/draft/probe/volume/Registry schema identifiers are unchang
 Old f.2 code refuses non-null pending/node; do NOT downgrade after enrollment by
 restoring stale records or dropping identity. Keep new state and use compatible
 code only. No Termux/Core-state adoption or schema migration is implemented.
+
+### Existing-only local manifest open
+Local Manifest remains schema1 with identical canonical tables/constraints and
+Node/Volume/File IDs. New existing_only is a constructor policy, not a data format
+or migration. It requires existing format1 +matching Node and structure; no
+creation/repair/downgrade of missing or unknown metadata. A supplied dev/inode
+receipt must match. Default explicit creation path is retained for old callers.
+SQLite DDL whitespace normalization preserves older Python indentation without
+rewriting stored schema. Native encrypted volume-config contract is still next.

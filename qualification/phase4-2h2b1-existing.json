@@ -1,0 +1,52 @@
+{
+  "checkpoint": "4.2h.2b.1a source preservation",
+  "qualification": "IN PROGRESS; not a completed checkpoint",
+  "scope": "POSIX app-private existing-only canonical Manifest/Engine prerequisite; NOT Native Storage Node",
+  "linux_targeted_tests": 8,
+  "android_existing_only_tests": 3,
+  "android_existing_only_seconds": 9.327,
+  "android_regression_tests": 18,
+  "android_regression_seconds": 380.244,
+  "foreign_caller_tests": 1,
+  "foreign_caller_seconds": 0.218,
+  "enrolled_identity_retention": "fixed production app proof PASS before/after normal same-signer install-r; no clear/uninstall/reseed",
+  "jvm_tests": {
+    "count": 13,
+    "provenance": "unchanged h.2a XML; current Gradle task UP-TO-DATE, not fresh executions"
+  },
+  "gradle_build": "PASS; strict dependency checks, main/testAPK, lint0errors25retained warnings",
+  "go_tests": 11,
+  "go_vet": "PASS",
+  "go_module_verification": "PASS",
+  "builds": {
+    "linux_amd64": "PASS",
+    "windows_amd64": "cross-build PASS, not runtime",
+    "android_arm64": "cross-build PASS, not runtime"
+  },
+  "fresh_full_python": "RUNNING; no final PASS receipt yet",
+  "prior_full_runs": [
+    {
+      "result": "FAIL after73; original consensus child shutdown20s; exact unchanged test retry PASS23.568s"
+    },
+    {
+      "result": "INTERRUPTED SIGKILL; 288 completed ok lines/60 fault markers; no final receipt, NOT PASS"
+    }
+  ],
+  "apk_sha256": "61eb0323b40021df192ebccb6f3089425bac1fd8eaac1e6cfbea551fae052821",
+  "signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "canonical_core_modules": 116,
+  "new_permissions": [],
+  "new_dependencies": [],
+  "public_release": false,
+  "full_phase_accepted": false,
+  "native_storage_agent_fgs": "NOT IMPLEMENTED",
+  "direct_lan": "NOT PASSED",
+  "phone_runtime": "NOT TESTED",
+  "writable_disaster_recovery": "BLOCKED",
+  "source_sha256": {
+    "asc/storage/engine.py": "c35dd015f47c3831d524a468a41f246016582fa0a4e1a591c144c2474c129e08",
+    "asc/storage/manifest.py": "e39aec5e1d2a4df6eb5652f904985a586afd537b18914e11af269b7a4f779130",
+    "tests/test_existing_storage.py": "4015deb3a13877fa2f1bbffa3266ddab038ddf3884201e5e3e66694e32182c20",
+    "android/app/src/androidTest/java/org/asc/foundation/ExistingStorageTest.kt": "a5f6bf976216ffde2708b4a92696cecc018ca3f29041c50d9104ac4b417e93de"
+  }
+}

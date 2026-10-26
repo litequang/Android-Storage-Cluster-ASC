@@ -70,3 +70,12 @@ Next h.2b must use SAME StorageHandler/Engine with explicit approved Node-volume
 state/ownership and original Controller authorization. Do not expose an internal
 plaintext HTTP hop, adopt probe volumes or infer writable from TLS/process flags.
 See ANDROID-NATIVE-TRANSPORT and current scoped acceptance.
+
+## Existing-only metadata prerequisite h.2b.1a
+Core Manifest/Engine now offer an explicit existing-only POSIX private-root mode
+for subsequent native startup. Missing metadata cannot become an empty database.
+No encrypted native storage config/approval or product runtime yet. Native code
+must validate root/volume/medium identity before opening this mode; no copying
+Termux databases/markers or adopting probe volumes. Exact old h.2a APK test bytes
+are retained for Android compatibility qualification; source/acceptance will
+record actual results, not inferred SDK support.

@@ -583,3 +583,16 @@ new permission/dependency or external executable. No new Binder/network auth
 capability: HTTP/Storage authorization must remain Core's per-operation scoped
 Controller check. Raw TLS echo belongs only to instrumentation and proves no
 file/replica/approval/writer rights. Source/limits in ANDROID-NATIVE-TRANSPORT.
+
+### Existing-only Manifest/Engine boundary (h.2b.1a)
+POSIX private approved metadata only, no shared/source root, symlink, hardlink,
+foreign UID or changed inode. SQLite mode=rw refuses recreation if file disappears
+between check and open; inode is checked again before yielding a connection and
+transaction return. Missing/empty/future/inconsistent Node/schema refuses with
+no DDL/identity insertion/chmod repair. Canonical DDL is shared, not a new schema.
+Approved app-private same-UID filesystem is the threat boundary, NOT arbitrary
+untrusted shared media or a compromised same-UID process. This API is not a
+portable descriptor-pinned SQLite VFS; no hidden Android FD/proc workaround is
+introduced. Native volume setup/status/runtime must still validate encrypted
+root/manifest/volume/medium bindings and preserve partial state. No HTTP/Agent/
+FGS/approval or authority is added by this library option.

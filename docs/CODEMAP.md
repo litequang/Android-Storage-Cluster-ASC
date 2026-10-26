@@ -706,3 +706,14 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
   contracts versus real API35 JSSE/pin/all-byte SHA/read and blocked-write deadline
   proof, kept distinct. ANDROID-NATIVE-TRANSPORT owns contract/limits/next Handler
   integration; no binary echo-as-Storage-Node acceptance.
+
+## Phase4.2h.2b.1a existing-only metadata gate (in qualification)
+- asc/storage/manifest.py: existing_identity +Manifest existing_only/expected_file:
+  POSIX private regular owner/single-link/inode checks, SQLite mode=rw, exact
+  version/Node/schema/integrity validation WITHOUT DDL/identity repair. Canonical
+  existing DDL reused in RAM for structural comparison (whitespace normalized).
+- asc/storage/engine.py: optional existing_only/manifest_identity prevents missing
+  home/DB creation and chmod before lifecycle ownership; old default unchanged.
+- test_existing_storage/ExistingStorageTest: actual missing/replacement/schema/
+  identity failures plus exact previous h.2a Android Engine bytes/marker/Volume ID.
+  Not yet approved native network-volume config or Handler/Agent/FGS.

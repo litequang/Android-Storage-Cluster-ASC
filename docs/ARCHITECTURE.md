@@ -527,3 +527,13 @@ ownership explicit. No second Engine/protocol or plaintext forwarding backend.
 Absolute socket-close watchdog is necessary because Java soTimeout does not bound
 writes. Listener is internal and unused by app startup/IPC; actual Handler/Engine
 serving and owned Agent/FGS are still required. See ANDROID-NATIVE-TRANSPORT.
+
+### Existing-only local metadata open
+Native runtime must not let a generic Engine constructor create a new manifest
+when existing approved state is missing. New optional existing_only mode opens
+SQLite with mode=rw, binds the actual inode and checks canonical format1/Node ID/
+structure/quick_check without creating directories, repairing schema or inserting
+identity. Default creation behavior stays available for explicit NEW setup only.
+Native caller must bind an approved private root/manifest receipt; shared/SAF
+metadata is unsupported. This is not a custom fd-pinned SQLite VFS defending a
+compromised same-UID host. No new Catalog/Schema or network volume approval.
