@@ -537,3 +537,12 @@ identity. Default creation behavior stays available for explicit NEW setup only.
 Native caller must bind an approved private root/manifest receipt; shared/SAF
 metadata is unsupported. This is not a custom fd-pinned SQLite VFS defending a
 compromised same-UID host. No new Catalog/Schema or network volume approval.
+
+### Native Node MVP owned session
+Private Binder ->NativeNodeSession ->same Python NativeRuntime/StorageEngine/
+StorageHandler, with JSSE sockets through the existing NativeSocket facade. Python
+StorageServer is unbound, so no parallel plaintext HTTP hop/listener. Existing Core
+heartbeat/introspection authorize operations. One owned accept thread +heartbeat
+thread, explicit stop and Engine close; no process PID control or auto bootstrap.
+This first session is activity-bound; native FGS/background ownership is still a
+separate next step. Linux targeted actual TLS/file/restart proof !=Android runtime.

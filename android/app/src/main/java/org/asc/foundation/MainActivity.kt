@@ -80,7 +80,7 @@ class MainActivity : Activity() {
         val consent=CheckBox(this).apply {
             tag="consent";text="Cho phép thao tác trong vùng riêng của APK. Không đọc hoặc sao chép Termux."
             isChecked=getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false)
-            setOnCheckedChangeListener {_,checked ->getSharedPreferences("local-consent",MODE_PRIVATE).edit().putBoolean("granted",checked).commit();if(!checked){code.setText("");verifiedBinding=null}}
+            setOnCheckedChangeListener {_,checked ->getSharedPreferences("local-consent",MODE_PRIVATE).edit().putBoolean("granted",checked).commit();if(!checked){code.setText("");verifiedBinding=null;call("stop_owned"){outcome.text=nodeText(it)}}}
         };root.addView(consent)
         busy=text("",13f).apply {tag="loading"};root.addView(busy)
         val tabs=LinearLayout(this);root.addView(tabs)
@@ -170,6 +170,23 @@ class MainActivity : Activity() {
         button(setup,"Đo write/readback/SHA/fsync","probe-volume") {call("probe_private_volume"){volume.text=volumeText(it)}}
         button(setup,"Đọc volume (không suy ra writable)","volume-status"){call("volumes"){volume.text=volumeText(it)}}
         setup.addView(text("SAF/SD/USB: NOT SUPPORTED · fsync/identity UNKNOWN. Vai trò storage chỉ là đề xuất sau probe; không cấp quyền Leader/voter."))
+        setup.addView(text("Node thử nghiệm · cần enrollment trước. Vùng Node tách khỏi volume probe. Giữ ứng dụng mở; Foreground Service chưa được tích hợp."))
+        val nodeQuota=field(setup,"Quota vùng Node (MiB)","node-quota").apply {inputType=InputType.TYPE_CLASS_NUMBER;setText("256")}
+        val nodeHost=field(setup,"IP LAN của điện thoại này (loopback để thử cục bộ)","node-host").apply {setText("127.0.0.1")}
+        val nodePort=field(setup,"Cổng TLS của Node","node-port").apply {inputType=InputType.TYPE_CLASS_NUMBER;setText("9443")}
+        button(setup,"Cho phép vùng Node riêng","approve-node-storage") {
+            val q=nodeQuota.text.toString().toLongOrNull()
+            if(q==null || q !in 1..1048576){volume.text="Quota Node không hợp lệ.";return@button}
+            task({JSONObject((engine ?: error("unavailable")).configureNodeStorage(1,UUID.randomUUID().toString(),q*1048576,0))}) {volume.text=nodeText(it)}
+        }
+        button(setup,"Chạy Storage Node","start-native-node") {
+            val port=nodePort.text.toString().toIntOrNull()
+            if(port==null || port !in 1024..65535){volume.text="Cổng Node không hợp lệ.";return@button}
+            val host=nodeHost.text.toString().trim()
+            task({JSONObject((engine ?: error("unavailable")).startNode(1,UUID.randomUUID().toString(),host,port))}) {volume.text=nodeText(it)}
+        }
+        button(setup,"Đọc trạng thái Node","native-node-status") {call("node_status"){volume.text=nodeText(it)}}
+        button(setup,"Dừng Node do APK sở hữu","stop-native-node") {call("stop_owned"){volume.text=nodeText(it)}}
         val clusterPage=page("Cụm")
         clusterPage.addView(text("Danh sách node: UNKNOWN\nController/Leader: UNKNOWN\nReplica protection: UNKNOWN\nQuorum: UNKNOWN\nBackup/recovery: UNKNOWN",18f).apply {tag="cluster-status"})
         clusterPage.addView(text("Chưa cấu hình nguồn quan sát được xác thực cho APK. Tiếp tục dùng Dashboard HTTPS hiện có đã xác minh CA; không sao chép admin/node token vào trình duyệt hoặc APK. Không tạo backend/Catalog mới. Recovery staging không được cấp writer."))
@@ -216,6 +233,15 @@ class MainActivity : Activity() {
         val v=value.optJSONObject("volume") ?: return message(value)
         fun observed(key:String)=if(v.isNull(key))"UNKNOWN" else v.opt(key).toString()
         return "App-private volume ${v.optString("volume_id").take(8)} · ${v.optString("state","UNKNOWN")}\nQuota: ${observed("quota")} · Reserve: ${observed("reserve")}\nFree: ${observed("free_bytes")} bytes\nReadable: ${observed("readable")} · Writable: ${observed("writable")}\nFsync thực đo: ${observed("fsync_tested")}\nCluster storage/failure-domain approval: UNKNOWN"
+    }
+    private fun nodeText(value:JSONObject):String {
+        if(value.has("error"))return message(value)
+        val v=value.optJSONObject("storage")?.optJSONArray("volumes")?.optJSONObject(0)
+        fun measured(key:String)=if(v==null || v.isNull(key))"UNKNOWN" else v.opt(key).toString()
+        return "Node: ${value.optString("state","UNKNOWN")} · Controller: ${value.optString("controller","UNKNOWN")}\n"+
+            "Node ID: ${value.optString("node_id","UNKNOWN").take(8)} · Port: ${value.opt("port") ?: "UNKNOWN"}\n"+
+            "Volume: ${v?.optString("volume_id")?.take(8) ?: "UNKNOWN"} · Writable: ${measured("writable")} · Fsync: ${measured("fsync_tested")}\n"+
+            "Storage/failure-domain của cụm: chờ owner duyệt. Số replica: UNKNOWN."
     }
     private fun call(op:String,endpoint:String="",fingerprint:String="",expected:String="",name:String="",secret:String="",trusted:Boolean=false,id:String=UUID.randomUUID().toString(),done:(JSONObject)->Unit) {
         task({JSONObject((engine ?: error("unavailable")).request(1,id,op,endpoint,fingerprint,expected,name,secret,trusted))},done)

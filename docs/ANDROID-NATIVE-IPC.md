@@ -77,3 +77,14 @@ transaction IDs0/1 remain. Public pending bindings +application request UUID are
 non-secret; accepted Node/Cluster IDs require a validated Core ACK. Public error
 labels are fixed; no raw exception/provider/server body. See ANDROID-NATIVE-
 ENROLLMENT for full state, scope and downgrade limits. No runtime/approval/writer.
+
+## MVP Node session additions (private Binder; qualification pending)
+Existing transactions0/1 retained. Transaction2 configureNodeStorage(version1,
+request UUID,quotaBytes,reserveBytes) explicitly approves a NEW fixed private Node
+volume; never remote storage/domain approval. Transaction3 startNode(version1,
+request UUID,host,port) starts only that configured existing context/Engine, numeric
+private TLS bind, port1024..65535. Original caller/consent/device gates reused.
+request node_status returns runtime/Controller/observed storage; stop_owned closes
+only this session and remains available after consent revocation. No token/key/path
+or PID arguments/returns. NodeContext runtime_start_supported is a local capability
+when storage READY, not Android acceptance or Controller write authority.

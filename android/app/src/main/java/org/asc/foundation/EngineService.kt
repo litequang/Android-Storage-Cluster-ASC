@@ -14,7 +14,22 @@ class EngineService : Service() {
         RequestPolicy.caller(uid,Process.myUid(),packageManager.checkSignatures(uid,Process.myUid())==PackageManager.SIGNATURE_MATCH)
     }
     private val operations=Any()
+    private var nodeSession:NativeNodeSession?=null
+    private fun nodeAction(version:Int,id:String,action:(NativeNodeSession)->JSONObject):String {
+        caller()
+        return synchronized(operations) {try {
+            RequestPolicy.validate(version,id,"node_status","","","","","",false)
+            if(!NativeDeviceGate.allowed())return@synchronized error("device_not_qualified")
+            if(!getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false))return@synchronized error("consent_required")
+            val session=nodeSession ?: NativeNodeSession(this,ApplicationVault(this)).also {nodeSession=it}
+            action(session).toString()
+        }catch(_:IdentityLocked){error("identity_locked")}catch(_:Exception){error("node_operation_unavailable")}}
+    }
     private val binder = object : ILocalEngine.Stub() {
+        override fun configureNodeStorage(version:Int,requestId:String,quotaBytes:Long,reserveBytes:Long):String =
+            nodeAction(version,requestId) {it.configure(quotaBytes,reserveBytes)}
+        override fun startNode(version:Int,requestId:String,host:String,port:Int):String =
+            nodeAction(version,requestId) {it.start(host,port)}
         override fun approvePrivateProbe(version:Int,requestId:String,quotaBytes:Long,reserveBytes:Long):String {
             caller()
             return synchronized(operations) {try {
@@ -34,7 +49,7 @@ class EngineService : Service() {
                 RequestPolicy.validate(version,requestId,operation,controller,pin,clusterId,name,code,trustConfirmed)
                 if (operation=="status") return status().toString()
                 if(!NativeDeviceGate.allowed())return error("device_not_qualified")
-                if (!getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false))
+                if (operation!="stop_owned" && !getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false))
                     return error("consent_required")
                 val vault=ApplicationVault(this@EngineService)
                 return synchronized(operations) {when(operation) {
@@ -51,7 +66,8 @@ class EngineService : Service() {
                     "draft_status" -> vault.draftSummary().toString()
                     "probe_private_volume" -> PrivateProbeStorage(this@EngineService,vault).probe().toString()
                     "volumes" -> PrivateProbeStorage(this@EngineService,vault).status().toString()
-                    "stop_owned" -> JSONObject().put("owned",false).put("node","UNKNOWN").put("state","NOT_RUNNING").toString()
+                    "node_status" -> (nodeSession?.status() ?: JSONObject().put("state","STOPPED")).toString()
+                    "stop_owned" -> {nodeSession?.close();nodeSession=null;JSONObject().put("owned",false).put("state","STOPPED").toString()}
                     else -> error("native_runtime_unqualified")
                 }}
             } catch (_: IdentityLocked) { return error("identity_locked") }
@@ -68,6 +84,11 @@ class EngineService : Service() {
         .put("device_policy",NativeDeviceGate.state())
         .put("application_identity",if(NativeDeviceGate.allowed())ApplicationVault(this).state() else JSONObject().put("state","NOT_ACCESSED"))
     override fun onBind(intent: Intent): IBinder=binder
+    override fun onDestroy() {
+        val owned=synchronized(operations) {nodeSession.also {nodeSession=null}}
+        Thread({try {owned?.close()}catch(_:Exception){}},"asc-owned-node-stop").start()
+        super.onDestroy()
+    }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         stopSelf(startId) // No background/boot/node launch; unqualified FGS stays absent.
         return START_NOT_STICKY

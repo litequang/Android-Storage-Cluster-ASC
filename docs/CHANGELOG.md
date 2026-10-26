@@ -587,3 +587,9 @@ integration is g.2, no native Node/FGS or public APK claim.
   recreation, identity/schema repair or chmod. Old defaults/formats unchanged.
 - Bind inode/Node/canonical structure with rw URI, reject symlinks/hardlinks/
   missing/future/corrupt metadata. Native volume/runtime integration still next.
+
+### Native Node MVP session — source/targeted Linux, Android pending
+- Add fixed approved Node volume, existing canonical TLS/HTTP Storage session and
+  heartbeat, explicit stop/restart without changing IDs. Minimal native UI controls.
+- Reuse current security guards; defer extra hardening/full Core repeat per owner
+  MVP priority. No FGS, production/phone/Android acceptance or new public release.

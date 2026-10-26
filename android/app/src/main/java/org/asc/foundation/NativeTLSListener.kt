@@ -91,6 +91,7 @@ internal class NativeTLSConnection(private val peer:SSLSocket,private val remove
         peer.outputStream.write(bytes)
     }
     fun setTimeoutMillis(millis:Int) {require(millis in 1..900000);peer.soTimeout=millis}
+    fun timeoutMillis():Int=peer.soTimeout
     fun peerAddress():String=peer.inetAddress.hostAddress ?: throw IOException("native_peer_unknown")
     fun peerPort():Int=peer.port
     fun closedByDeadline():Boolean=expired.get()

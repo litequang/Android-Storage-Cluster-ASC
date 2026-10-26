@@ -1,0 +1,53 @@
+{
+  "checkpoint": "4.2h.2b MVP source",
+  "scope": "Linux actual Node session integration; Android runtime pending",
+  "native_targeted_python_tests": 43,
+  "native_targeted_seconds": 14.859,
+  "original_storage_cluster_tests": 4,
+  "storage_regression_seconds": 10.586,
+  "jvm_tests": 13,
+  "gradle_build": "PASS30s; main/testAPK; no new dependency/permission",
+  "android_native_node_runtime": "NOT YET TESTED",
+  "foreground_service": "NOT IMPLEMENTED; activity-bound only",
+  "direct_lan": "NOT PASSED",
+  "full_current_runtime_regression": "DEFERRED to integrated qualification by owner MVP priority; do not reuse earlier full368 as current-source PASS",
+  "full_phase_accepted": false,
+  "source_sha256": {
+    "android/app/src/main/aidl/org/asc/foundation/ILocalEngine.aidl": "aaae6f9732556ba580771b209c3b75bc1a2fd386252b20f19d78dfdbef431707",
+    "android/app/src/main/java/org/asc/foundation/EngineService.kt": "cc00a05799a5b37ff860f7a761d138078b9f2833c410961143d7cffea9032c0a",
+    "android/app/src/main/java/org/asc/foundation/MainActivity.kt": "519a7f144ff920b829ee7f22961131e9914f1571dd5d7ba429e7f736423e8a94",
+    "android/app/src/main/java/org/asc/foundation/NativeNodeContext.kt": "47fe8847127dad0e9f41f37d7b512dc466e0d7255ea4218a3862987f34309b6a",
+    "android/app/src/main/java/org/asc/foundation/NativeNodeSession.kt": "6cd69d5641ec5aea4376d2d68ecc291451228ecf86e5a2cfc78610287030fe01",
+    "android/app/src/main/java/org/asc/foundation/NativeTLSListener.kt": "a79eeede0683906bece87f2b31f7d6806c78d525c4fe185fe8e4e5b02c5828fe",
+    "android/app/src/main/java/org/asc/foundation/RequestPolicy.kt": "88870364fe63cff16dd17257b8e37d70c0cd26c3ea17e67c54dd4652c74a847d",
+    "asc/node/context.py": "de9fd830ed6c5e3918e312330fa3acb1b0d4f269c5d99b2f3c2ffe518669826a",
+    "asc/node/runtime.py": "a8ff1f2bd7ed77b9d52a5a9e1404ea3deb85fa4602903566fa42b35a71cb672c",
+    "asc/node/socket.py": "f06460533ceb267716332f29aac8ad240db2621805d3534fe3da992721dd955e",
+    "asc/node/storage.py": "4958c342bed013861f46e37973dbdd982a5cef7abd3a3ec7c62a97910735d84a",
+    "asc/server.py": "f710a7d52437aae39eacbb3c36da8154a1105d19649a78abed7da9074a4e3683",
+    "asc/storage/http.py": "c859337bd607ba6ce8f87efce7134e2bcf34a36842b6e63e2c892d1098d7126c",
+    "tests/test_native_runtime.py": "9f9ec2e6b5f1637b313de3f303662769998dd02bad8a216bdeec520f7acf393f"
+  },
+  "apk": {
+    "sha256": "2d843e1be727782105f092396a2620a5ba7c2ef76daa11477c3eb4fd46ee8d60",
+    "bytes": 39819253,
+    "application_id": "org.asc.foundation",
+    "version_code": 3,
+    "version_name": "0.3.0-native-context",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE"
+    ],
+    "canonical_core_modules": 118,
+    "inventory_findings": [],
+    "scope": "internal debug FOUNDATION; no native Node, migration or phone acceptance"
+  }
+}

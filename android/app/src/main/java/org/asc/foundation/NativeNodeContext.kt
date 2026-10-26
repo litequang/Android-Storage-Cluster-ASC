@@ -47,12 +47,13 @@ class NativeNodeContext(private val context:Context, private val vault:Applicati
         return JSONObject(Python.getInstance().getModule("json").callAttr("dumps",value).toString())
     }
     internal fun serverTLSContext():com.chaquo.python.PyObject=core().callAttr("tls_context")
+    internal fun engineContext():com.chaquo.python.PyObject=core()
     private fun enrollment(operation:String,vararg arguments:Any):JSONObject {
         val python=Python.getInstance()
         val value=python.getModule("asc.node.enrollment").callAttr("public_request",core(),operation,*arguments)
         return JSONObject(python.getModule("json").callAttr("dumps",value).toString())
     }
-    fun join(request:String,endpoint:String,pin:String,cluster:String,name:String,code:String):JSONObject {
+    internal fun runtimeProfile():com.chaquo.python.PyObject {
         // Trusted Build/OS measurements, NEVER caller-supplied device/profile overrides.
         // Scores/free bytes do not grant storage, domain, voter or writer authority.
         if(!NativeDeviceGate.allowed())throw SecurityException("device_not_qualified")
@@ -65,9 +66,10 @@ class NativeNodeContext(private val context:Context, private val vault:Applicati
             .put("protected",false).put("memory_mb",memory.totalMem/1048576)
             .put("score_basis","runtime-ram").put("sd_status","unknown")
         val python=Python.getInstance()
-        return enrollment("join",request,endpoint,pin,cluster,name,code,
-            python.getModule("json").callAttr("loads",profile.toString()))
+        return python.getModule("json").callAttr("loads",profile.toString())
     }
+    fun join(request:String,endpoint:String,pin:String,cluster:String,name:String,code:String):JSONObject =
+        enrollment("join",request,endpoint,pin,cluster,name,code,runtimeProfile())
     fun resume():JSONObject {EmbeddedEngine(context);return enrollment("resume")}
     fun replaceCode(code:String):JSONObject {EmbeddedEngine(context);return enrollment("replace_code",code)}
 }

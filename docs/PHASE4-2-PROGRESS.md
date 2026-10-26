@@ -1038,3 +1038,32 @@ for unchanged code. Keep existing TLS/pinning/identity/data guards; no test weak
 or fake runtime PASS. Next h.2b minimal approved private Node volume +same canonical
 StorageHandler over existing JSSE adapter, then owned Agent/FGS and actual transfer.
 No more repeated full Core suites for each small adapter-only checkpoint.
+
+## h.2b MVP session source — IN ANDROID QUALIFICATION
+Prior prerequisite qualifier fa593325b308dd49a3a4e77f6fc3b805eb0e0dc8 normal
+push/fetch/advertised remote matched before these changes. Following owner request,
+implement working Node path first, targeted tests only; no new full Core run.
+
+New NativeStorage fixed private approved volume +NativeRuntime reuse SAME canonical
+Engine/StorageHandler/Core heartbeat, no parallel Registry/Catalog/backend. Native
+JSSE enters unbound Python handler. Existing Node/TLS/app identity reused; missing
+manifest/marker refuses, partial setup held. Local approval never remote/domain
+approval. AIDL2 configure,3 start; node_status/stop_owned; minimal Vietnamese UI.
+Stop works after consent revocation. Activity-bound session, FGS not implemented.
+
+Fresh targeted Native43 PASS14.859s0skip +original storage cluster4 PASS10.586s0skip.
+The4 NEW Node tests prove actual Linux TLS/Controller-introspected upload/verify/
+SHA download, real heartbeat, stop/restart same bytes/Node/Volume, missing-state
+refusal, held interruption and Controller-loss denial. Linux platform socket
+fixture is NOT Android JSSE evidence. No original assertions/tests weakened.
+Gradle main/testAPK/JVM build PASS30s; private APK audit original signer,118 Core
+modules, unchanged3permissions/no inventory findings. New source APK SHA
+2d843e1be727782105f092396a2620a5ba7c2ef76daa11477c3eb4fd46ee8d60. No public
+APK/release. Full368 earlier applies to source923c5558, NOT this new runtime.
+
+Next: preserve prior primary app/Node/enrollment/TLS/Keystore state and original
+signer, owned AVD restart only; actual Binder/configure/JSSE HTTP/Node I/O targeted
+Android qualification, then owned Foreground Service and direct-network E2E.
+No uninstall/clear/reseed/Termux adoption. Original old cipher proof must not be
+overwritten to hide the legitimate new storage/revision mutation; compare retained
+identity/token/TLS and old committed bytes separately. Full4.2 NOT ACCEPTED.

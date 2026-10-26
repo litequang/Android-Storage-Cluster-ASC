@@ -101,3 +101,16 @@ trust before first send, clears transient code and can resume the exact sealed
 pending without importing form data. Replacement changes only pending code.
 App/process restart does not initialize or repair Node identity. Error labels and
 actual tests are specified in ANDROID-NATIVE-ENROLLMENT/current acceptance.
+
+## MVP Node volume slot (h.2b source; Android runtime NOT YET TESTED)
+Context1.storage now accepts null or a typed format1 PREPARING/READY record. Fixed
+node-storage-v1/{engine,data} under the existing native context; never adopts probe
+volumes or Termux. Explicit local quota approval persists PREPARING before creating
+anything. Interrupted setup remains held, without resetting identity or cleanup.
+READY retains Node ID/quota/reserve, root dev/inode, manifest dev/inode, Volume ID
+and medium. Reopen uses canonical existing-only Engine and exact marker/identity.
+This is local storage consent, NOT Controller storage/failure-domain approval.
+Old readers rejecting nonnull storage must refuse the context; no downgrade or
+Termux migration is claimed. Preserve app state/Keystore, never restore an old DB
+over new bytes. Before configuring the primary test app, retain its old receipt;
+legitimate storage/revision mutation changes ciphertext, not app/Node/TLS identity.

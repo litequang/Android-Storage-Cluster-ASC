@@ -28,7 +28,7 @@ class UploadBody:
 
 
 class StorageServer(Server):
-    def __init__(self, address, engine, node_config):
+    def __init__(self, address, engine, node_config, *, bind_and_activate=True):
         self.engine, self.node_config = engine, dict(node_config)
         self.discovery = None
         self.gc_executors = {}  # Only an in-process synthetic fixture may attach issued executors.
@@ -37,7 +37,7 @@ class StorageServer(Server):
             if not node_config.get('cluster_epoch'):
                 raise ValueError('distributed storage requires pinned cluster epoch')
             self.discovery = Discovery(node_config['cluster_id'], node_config['controllers'], node_config['token'])
-        super().__init__(address, None, '', StorageHandler)
+        super().__init__(address, None, '', StorageHandler, bind_and_activate=bind_and_activate)
 
 
 class StorageHandler(Handler):

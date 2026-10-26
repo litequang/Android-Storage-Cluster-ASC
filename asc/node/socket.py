@@ -74,6 +74,12 @@ class NativeSocket:
         except Exception:
             raise OSError('native_socket_peer_failed') from None
 
+    def gettimeout(self):
+        try:
+            return int(self.connection.timeoutMillis()) / 1000
+        except Exception:
+            raise OSError('native_socket_timeout_failed') from None
+
     def shutdown(self, _how):
         # Core calls SHUT_WR only after the full handler finishes. Closing the
         # owned TLS connection also unblocks a peer/worker without an unbounded

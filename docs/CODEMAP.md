@@ -721,3 +721,16 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 - test_existing_storage/ExistingStorageTest: actual missing/replacement/schema/
   identity failures plus exact previous h.2a Android Engine bytes/marker/Volume ID.
   Not yet approved native network-volume config or Handler/Agent/FGS.
+
+## Native Node MVP session (h.2b, Android qualification pending)
+- asc/node/storage.py: explicit fixed app-private Node volume configuration, same
+  canonical Engine/probe, held partial setup and existing-only reopen.
+- asc/node/runtime.py: owned TLS/StorageHandler/heartbeat session and stop/status;
+  no second backend/Catalog or Raft/GC/approval.
+- asc/server.py, asc/storage/http.py: optional unbound constructor for native TLS
+  dispatch; old bound-server defaults unchanged. asc/node/socket.py timeout getter.
+- NativeNodeSession.kt/NativeNodeContext.kt/EngineService.kt: same private Binder,
+  Keystore context and JSSE factory; typed configure/start plus status/stop.
+- MainActivity.kt: minimal Node quota/host/port/start/stop controls; foreground UI
+  session only, no FGS yet. tests/test_native_runtime.py:4 actual Linux TLS/I/O/
+  heartbeat/restart/missing-state/interrupted-setup/Controller-loss gates.

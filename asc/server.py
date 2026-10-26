@@ -47,14 +47,14 @@ class Server(ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = True
 
-    def __init__(self, address, registry, admin_token, handler=None, catalog=None):
+    def __init__(self, address, registry, admin_token, handler=None, catalog=None, *, bind_and_activate=True):
         self.catalog = catalog
         self.registry = registry
         self.admin_hash = hashlib.sha256(admin_token.encode()).hexdigest()
         self.limiter = RateLimiter()
         self.slots = threading.BoundedSemaphore(32)
         self.tls_context = None
-        super().__init__(address, handler or Handler)
+        super().__init__(address, handler or Handler, bind_and_activate=bind_and_activate)
 
     def get_request(self):
         sock, address = super().get_request()

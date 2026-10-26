@@ -155,10 +155,10 @@ class NodeContext:
         _uuid(record['context_id'])
         # Strict components, never arbitrary opaque secrets. A certificate is
         # local TLS identity only, not enrollment/approval/Node or writer authority.
-        if record['storage'] is not None:
-            raise ContextLocked()
         from .enrollment import validate_components
         validate_components(record)
+        from .storage import validate as validate_storage
+        validate_storage(record)
         if record['tls'] is not None:
             from .tls import server_context
             server_context(record['tls'], self.tls_provider)
@@ -260,8 +260,9 @@ class NodeContext:
                 'storage_approved': None, 'failure_domain_approved': None,
                 'tls': 'IDENTITY_READY' if record['tls'] is not None else 'NOT_CONFIGURED',
                 'tls_pin': record['tls']['pin'] if record['tls'] is not None else None,
-                'storage': 'NOT_CONFIGURED', 'writer_authority': False,
-                'runtime_start_supported': False}
+                'storage': ('LOCAL_CONFIG_READY' if record['storage']['state'] == 'READY' else 'SETUP_HELD')
+                           if record['storage'] is not None else 'NOT_CONFIGURED', 'writer_authority': False,
+                'runtime_start_supported': record['storage'] is not None and record['storage']['state'] == 'READY'}
 
     def prepare_tls(self, certificate_provider):
         """Explicit provision once; repeat validates/reuses, never rotates on error.
