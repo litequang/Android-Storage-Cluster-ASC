@@ -29,6 +29,10 @@ class NativeLifecycleTest {
             val release=java.util.concurrent.CountDownLatch(1)
             val staleDelivered=java.util.concurrent.CountDownLatch(1)
             scenario.onActivity {a ->baseline=a.networkLosses;a.window.decorView.findViewWithTag<EditText>("join-code").setText("123456abcdef")}
+            scenario.onActivity {a ->
+                a.window.decorView.findViewWithTag<EditText>("observer-code").setText("test_only_unsent_owner_observer_code")
+                a.window.decorView.findViewWithTag<android.widget.CheckBox>("observer-trust").isChecked=true
+            }
             // Exercise the actual Activity worker with a controlled late response. No fake
             // Controller/Engine result or Node acceptance is inferred from this UI gate.
             scenario.onActivity {a ->
@@ -47,6 +51,11 @@ class NativeLifecycleTest {
                     if(!observed)Thread.sleep(200)
                 }
                 assertTrue("Actual network callback and secret clearing required",observed)
+                scenario.onActivity {a ->
+                    assertEquals("",a.window.decorView.findViewWithTag<EditText>("observer-code").text.toString())
+                    assertFalse(a.window.decorView.findViewWithTag<android.widget.CheckBox>("observer-trust").isChecked)
+                    assertTrue(a.window.decorView.findViewWithTag<android.widget.TextView>("cluster-status").text.toString().contains("Quorum: UNKNOWN"))
+                }
                 release.countDown()
                 assertFalse("Stale response must not re-establish UI trust",staleDelivered.await(1,java.util.concurrent.TimeUnit.SECONDS))
             } finally {release.countDown();shell("svc wifi enable");shell("svc data enable")}

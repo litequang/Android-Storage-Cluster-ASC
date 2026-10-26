@@ -104,3 +104,15 @@ then CAS only controller URI/revision. No re-join, token/certificate/Volume chan
 or write-authority inference. Pending enrollment cannot be moved this way. Binding/
 mode/network failure leaves original record. Cold native call starts the existing
 embedded library, never provisions a new identity.
+
+### i.2 separate Core owner observation
+New explicit transaction4 observeCore(version,id,operation,endpoint,pin,clusterId,
+epoch,mode,code,trustConfirmed) adds only login/state/logout against the existing
+read-only HTTPS gateway. Transactions0–3 unchanged. Existing ownUID/signature/
+consent/device checks; existing Keystore identity required, never provisioned.
+Login uses separate owner gateway code and explicit verified mode/pin/Cluster/epoch;
+state/logout require empty extra fields. Logout allowed after consent withdrawal.
+No Node token/owner source bootstrap/private key input or output. Session RAM-only,
+lost on process/service death; fresh owner login then, no durable login replay.
+No Node state/schema/runtime/Catalog changes. JSON>192KiB returns UNKNOWN, not
+silent truncation. Exact contract and qualification: ANDROID-CORE-OBSERVER.md.

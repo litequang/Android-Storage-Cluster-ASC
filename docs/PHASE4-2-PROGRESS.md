@@ -1,5 +1,13 @@
 # Phase4.2 progress / independent handoff
 
+Current continuation: Native Node/Quick Join/TLS/FGS/direct emulator NAT are
+qualified under h/g scoped receipts below; i.1 observer client published92f4ed2.
+i.2 adds the real native read-only Core view (targeted PASS; receipt below).
+Next remaining major checkpoint is j: integrated faults/full regressions and a
+version-increased same-signer candidate/upgrade. Full4.2 NOT ACCEPTED; physical
+phones/ARM64/Doze/OEM/two independent hardware domains and writable DR unqualified.
+The early a–e table/FOUNDATION statements below are historical, not current gaps.
+
 Branch feature/phase4-2-android-native; verified Phase4.1 baseline
 f42fffe7aa3fac8884d169bed61d884b0d777b33. GitHub200/fetch/advertised baseline match;
 initial tree clean, no existing4.2 branch. No original branch changed, no reset/merge.
@@ -1213,3 +1221,72 @@ owned emulator, same signer/Node/volume/bytes. Full4.2 NOT ACCEPTED; phones/ARM6
 Doze/OEM/independent two-domain replicas/final integrated gates still outstanding.
 Writable DR remains BLOCKED. Publish normal feature-only push and fetch verification
 before i.2; this receipt's exact commit is available in Git history.
+
+## i.2 Native Core observer / Cụm UI — targeted PASS
+i.1 commit92f4ed2c5e9d3b92a43608aa0330bedbbb51df81 normal push/fetch/advertised
+remote matched before i.2. Keep owner MVP scope: changed-path tests only, no new
+security subsystem/full Core repeat. Actual functionality over decorative UI.
+
+New private AIDL observeCore transaction4 retains0–3, existing caller UID/signature/
+consent/device/app-key gates. NativeCoreObserver reuses canonical Python client,
+separate owner gateway session in RAM, not Node credential/context. Fixed login/
+state/logout, explicit public binding/mode/owner trust,192KiB Binder result bound;
+no source bootstrap/private key/URL-method passthrough. Node lifecycle lock stays
+independent. Minimal Vietnamese Cụm page shows actual Core controllers/voters,
+confirmed Leader/quorum, nodes/volumes, file replica counts/protection/jobs and
+historical backup; UNKNOWN stays UNKNOWN. Network/background clears transient
+code/trust/displayed health. No new schema, Keystore alias, permissions or dependency.
+Optional observed Core cluster does not migrate the active single-writer Node.
+
+Fresh Gradle build/JVM15 PASS0skip/fail (original13+2 observer policy tests); main/
+testAPK builds PASS29s, final test-only rebuild PASS25s. Main APK unchanged during
+tests: SHA d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a,
+internal versionCode3, original signer bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30.
+Prior exact installed h.4 APK8df08b... preserved privately; normal install-r only,
+app/test UIDs10148/10149 unchanged, no uninstall/clear/-d. Final bounded inventory/
+signature audit119 canonical modules/7 unchanged permissions/no findings PASS.
+
+Actual API35 x86_64 NativeObserverTest **1 PASS90.332s**, public driver113.234s
+including startup (host harness1PASS126.813s including source fixture/cleanup).
+Real existing3-voter Core/Storage Engine uploads a replicated_3 file; APK's actual
+UI/private Binder/canonical Python connects to existing gateway over task-host
+private IP HTTPS DIRECTLY (not ADB reverse). Wrong pin refuses without consuming
+grant; real owner UI login displays3nodes/3verified+available replicas. Actual
+three-island Raft transport partition yields QUORUM UNAVAILABLE/false quorum,
+UNKNOWN Leader/current availability; actual heal restores strong read. Logout
+clears session; same app Keystore identity and exact decrypted Node-context payload
+retained (no plaintext credential returned/logged; not a ciphertext-byte assertion).
+Native app is an observer here, NOT a Core voter or the3 synthetic storage nodes.
+Same-host source domains simulate, never prove independent phone hardware.
+
+Initial new Android case FAIL79.910s (host harness152.836s): ACK control JSON was
+read during non-atomic host write after actual partition. Main APK/source and ALL
+Android/data/fault assertions unchanged; host-only fixture ACK now temp+rename.
+Fresh complete rerun above PASS; failure remains private actual-gateway logs and
+is not counted as successful fault qualification. No timeout/assertion weakened.
+
+Then **12 Android regression PASS136.452s0skip/fail**: existing Vietnamese UI2,
+private Binder4 tests (consent/version/dangerous-op/golden transaction1), canonical Engine
+actual write/SHA/fsync/restart1, exact previous-APK existing manifest/volume/body
+integrity and refusal3, actual original Native Node old-file SHA download/retained
+identity1, actual default-network loss/recovery1. The network case additionally
+asserts owner observer code/trust/healthy view clear; original assertions retained.
+Total current i.2 Android13 PASS across two runs, not an invented single suite.
+Fresh Linux12 PASS40.877s belongs unchanged i.1 client; no new full Python/Go result
+is claimed. No older/broken run counted or historical fault gate removed.
+
+Private artifacts/logs: /workspace/work/phase4-2i-native-observer. Public contract
+ANDROID-CORE-OBSERVER; reproducible tools/qualify_native_observer.py requires OWNED
+AVD, existing app/test APK and explicit task-host private IP, never a phone. No
+new public APK/release. Rollback contract keeps NEW app/Node/volume/bytes (no
+observer persisted schema), original signer and Android version rules; observer
+session requires fresh owner code. No new APK rollback execution is claimed here.
+Do not restore old databases, uninstall or force a downgrade/signer replacement.
+
+Next j: integrated Node/enrollment/lifecycle/network/fault qualification, increase
+APK versionCode, preserve signer/state and prove upgrade, fresh applicable Python/
+Go/fault/build/package checks once final candidate is ready. Physical phones/LAN/
+ARM64/Doze/OEM/two truly independent-domain replicas/fallback remain NOT TESTED;
+Core3D writableDR BLOCKED, full Phase4.2 NOT ACCEPTED. No original branch/archive
+changed. Normal feature-only commit/push/fetch verification before any next source
+checkpoint; publication receipt follows without retesting unchanged source.

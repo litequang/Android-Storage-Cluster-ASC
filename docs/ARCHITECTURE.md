@@ -553,3 +553,13 @@ through connectedDevice FGS, actual network work and notification Stop. It never
 starts an idle fake FGS or creates identity on restart. Existing actor/provider/
 Storage/Controller authorization unchanged; own stopped/failed-session health
 cleanup, START_NOT_STICKY, no boot/recovery writer/Termux process control.
+
+### i.2 optional native Core observer
+Private Binder transaction4 ->NativeCoreObserver ->canonical Python NativeObserver
+->existing Phase4.1 HTTPS gateway ->existing Core quorum projection. Explicit
+owner mode/cluster/epoch/leaf-pin and RAM-only owner session, separate from Node
+enrollment/token and app lifecycle authorization. No persistent observer database,
+Catalog/Storage rewrite, Node state change or automatic single-writer/Core migration.
+Minimal Cụm view consumes sanitized actual gateway data; unknown/unconfirmed/stale
+availability stays UNKNOWN. Separate observer/Node locks; passive observation does
+not create FGS or writer authority. Full-byte recovery remains passive READ-ONLY.

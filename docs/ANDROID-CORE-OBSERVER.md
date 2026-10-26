@@ -45,6 +45,71 @@ corrupt passive staging and real three-voter partition/stale Leader/quorum loss/
 Controller crash/reconnect. Unit-only leader-flag normalization is separately
 identified; it does not replace the actual Raft fault case.
 
-i.1 does NOT wire Android Binder/UI or claim Android observer runtime acceptance.
-i.2 next: fixed authenticated Binder operations, Vietnamese Cụm view, actual
-gateway/TLS/emulator qualification while preserving existing signer/Node/state.
+i.1 qualifies only the Linux client. i.2 adds the native integration described
+below; its actual receipt and limits are recorded in PHASE4-2-PROGRESS/ACCEPTANCE.
+
+## i.2 native IPC/UI
+
+Stable AIDL transactions0–3 remain unchanged; new `observeCore` transaction4:
+`(version=1, requestId, operation, endpoint, pin, clusterId, epoch, mode, code,
+trustConfirmed)`. Operations are exactly login/state/logout. Login requires an
+explicit private numeric IPv4 HTTPS endpoint, port1024–65535, full lowercase leaf
+SHA256, canonical cluster/epoch UUIDs, explicit mode and independently confirmed
+owner trust. State/logout accept NO extra bindings/secret/trust. Unknown versions,
+paths, hostnames/public addresses, arbitrary operations and Node enrollment codes
+refuse. Request UUID identifies a call; login is NOT a durable replay receipt.
+
+Existing own-UID/signature/device/consent gates apply. Existing app Keystore identity
+must validate; no automatic provisioning or Node/context mutation. Owner observer
+credentials remain in the canonical Python client's RAM, never Binder replies,
+preferences, browser or Node context. Logout remains available after consent is
+withdrawn. A separate observer lock prevents gateway requests holding the Node
+lifecycle lock. Service destruction clears/logs out only its own session. No FGS
+is created for passive observation. Payloads over192KiB return UNKNOWN rather than
+exceed Binder limits or silently claim complete coverage.
+
+The Vietnamese Cụm page takes gateway endpoint/leaf PIN/Cluster ID/epoch/mode and
+one-use OWNER login code, distinct from Quick Join. It displays sanitized source
+nodes/volumes, controllers/voters, confirmed Leader, quorum, file protection and
+desired/verified/available replica counts, jobs and historical backup states.
+UNKNOWN is never zero. Network changes/background clear transient code/trust and
+the displayed healthy view; fresh explicit read rechecks the same configured
+gateway, no address/discovery fallback. Session is lost after process death; use
+a NEW owner code. The observer may be explicitly configured for a separate Core
+cluster; this does not migrate or reinterpret the APK's single-writer Node.
+
+Owner setup uses the existing gateway procedure in PHASE4-1-OPERATIONS. Keep its
+source owner bootstrap private. Native pin is the gateway LEAF, not the browser CA:
+
+```sh
+openssl x509 -in '<private-gateway-root>/dashboard/server.crt' -noout -fingerprint -sha256
+python3 -B -m asc.observability.gateway --root '<private-gateway-root>' serve --issue-login-code
+```
+
+Read fingerprint, expected cluster/epoch/mode and fresh login code from a trusted
+owner channel. Never copy gateway source tokens/private keys into the APK. On Cụm,
+enter those bindings, explicitly confirm trust, choose Đăng nhập quan sát; use Đọc
+trạng thái Core for a fresh observation or Đăng xuất quan sát. A successful view
+grants no approval, writer, quorum configuration, GC or recovery activation rights.
+Do not use a browser TLS-error bypass; browser CA trust procedure is unchanged.
+
+Developer qualification uses already-installed task app/test APKs, original signer
+and retained Node state. `tools/qualify_native_observer.py` verifies the owned AVD,
+creates the existing actual three-voter/TLS/Core gateway fixture, streams a real
+replicated_3 file, passes only a private session fixture through ADB stdin, and
+executes the actual native UI/Binder test. Gateway HTTPS data goes directly to an
+explicit task host private IP, not ADB reverse. ADB carries only test controls;
+real Raft transport partitions/heal are required. Temporary control ACK publication
+is atomic, not a substitute for actual faults. Never run this on a physical phone.
+
+```sh
+python -B tools/qualify_native_observer.py --adb "$ANDROID_SDK_ROOT/platform-tools/adb" \
+  --adb-port 5038 --serial emulator-5556 \
+  --emulator-owner '<fresh-verified-task-AVD-receipt>' \
+  --host '<explicit-task-host-private-IPv4>' --out '<NEW-private-output-directory>'
+```
+
+Synthetic same-host storage domains do not prove independent phone hardware.
+Android API35 x86_64 emulator evidence does not qualify ARM64/physical LAN/Doze/
+OEM/production or Termux migration. Full Phase4.2/final integrated qualification
+and increased-version candidate are separate; writable DR remains BLOCKED.

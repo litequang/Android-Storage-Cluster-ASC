@@ -605,3 +605,11 @@ Cookie/CSRF RAM-only, no state/credential export or Node-context migration. Logi
 ACK/identity mismatch requires a fresh owner grant; no automatic code retry.
 Offline/stale/unconfirmed evidence cannot display healthy replicas/quorum. Passive
 staging remains read-only. Android Binder/UI/runtime qualification is separate.
+
+i.2 adds private observeCore transaction4 using the SAME UID/signature/device/
+consent/app-key checks and original Python gateway client. Existing transactions
+unchanged; only login/state/logout, strict public binding/trust and192KiB response
+bound. No arbitrary URL/method/Node token/source bootstrap/credential export.
+Transient owner code/trust and displayed health clear on network/background;
+logout allowed after consent withdrawal. Existing app/Node/volume state untouched,
+no new alias/database/schema or Android quorum/GC/recovery writer capability.

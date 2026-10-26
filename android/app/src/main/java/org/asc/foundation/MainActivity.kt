@@ -35,6 +35,7 @@ class MainActivity : Activity() {
                 networkEpoch++;generation++;pending=0;if(::busy.isInitialized)busy.text=""
                 if(lost)networkLosses++;verifiedBinding=null
                 if(::code.isInitialized)code.setText("")
+                clearObserverForm()
                 if(::joinResult.isInitialized)joinResult.text="Mạng thay đổi · Controller UNKNOWN. Kiểm tra lại TLS/Cluster ID, không tự tin địa chỉ mới."
             }
         }}
@@ -51,6 +52,9 @@ class MainActivity : Activity() {
     private lateinit var code:EditText
     private lateinit var trust:CheckBox
     private lateinit var joinResult:TextView
+    private lateinit var observerStatus:TextView
+    private lateinit var observerCode:EditText
+    private lateinit var observerTrust:CheckBox
     private var verifiedBinding:String?=null
     private var draftRequest=UUID.randomUUID().toString()
     private var joinRequest=UUID.randomUUID().toString()
@@ -80,7 +84,7 @@ class MainActivity : Activity() {
         val consent=CheckBox(this).apply {
             tag="consent";text="Cho phép thao tác trong vùng riêng của APK. Không đọc hoặc sao chép Termux."
             isChecked=getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false)
-            setOnCheckedChangeListener {_,checked ->getSharedPreferences("local-consent",MODE_PRIVATE).edit().putBoolean("granted",checked).commit();if(!checked){code.setText("");verifiedBinding=null;call("stop_owned"){outcome.text=nodeText(it)}}}
+            setOnCheckedChangeListener {_,checked ->getSharedPreferences("local-consent",MODE_PRIVATE).edit().putBoolean("granted",checked).commit();if(!checked){code.setText("");verifiedBinding=null;clearObserverForm();observerCall("logout");call("stop_owned"){outcome.text=nodeText(it)}}}
         };root.addView(consent)
         busy=text("",13f).apply {tag="loading"};root.addView(busy)
         val tabs=LinearLayout(this);root.addView(tabs)
@@ -199,8 +203,24 @@ class MainActivity : Activity() {
         button(setup,"Đọc trạng thái Node","native-node-status") {call("node_status"){volume.text=nodeText(it)}}
         button(setup,"Dừng Node do APK sở hữu","stop-native-node") {call("stop_owned"){volume.text=nodeText(it)}}
         val clusterPage=page("Cụm")
-        clusterPage.addView(text("Danh sách node: UNKNOWN\nController/Leader: UNKNOWN\nReplica protection: UNKNOWN\nQuorum: UNKNOWN\nBackup/recovery: UNKNOWN",18f).apply {tag="cluster-status"})
-        clusterPage.addView(text("Chưa cấu hình nguồn quan sát được xác thực cho APK. Tiếp tục dùng Dashboard HTTPS hiện có đã xác minh CA; không sao chép admin/node token vào trình duyệt hoặc APK. Không tạo backend/Catalog mới. Recovery staging không được cấp writer."))
+        observerStatus=text("Core observer: UNKNOWN · chưa đăng nhập\nQuorum: UNKNOWN\nReplica protection: UNKNOWN",18f).apply {tag="cluster-status"};clusterPage.addView(observerStatus)
+        clusterPage.addView(text("Quan sát Core chỉ đọc qua gateway HTTPS hiện có. Mã đăng nhập owner khác mã ghép Node. Không nhập admin/node token. Writer luôn false; không tạo quorum hoặc kích hoạt recovery."))
+        val observerEndpoint=field(clusterPage,"Gateway HTTPS riêng đã được owner xác minh","observer-endpoint")
+        val observerPin=field(clusterPage,"SHA-256 chứng chỉ leaf của gateway (khác CA/browser PIN)","observer-pin")
+        val observerCluster=field(clusterPage,"Cluster ID đã xác minh","observer-cluster")
+        val observerEpoch=field(clusterPage,"Epoch hiện tại đã xác minh","observer-epoch")
+        val observerMode=Spinner(this).apply {tag="observer-mode";adapter=ArrayAdapter(this@MainActivity,android.R.layout.simple_spinner_dropdown_item,listOf("core-quorum","recovery-read-only"))};clusterPage.addView(observerMode)
+        observerCode=field(clusterPage,"Mã đăng nhập gateway dùng một lần","observer-code",true)
+        observerTrust=CheckBox(this).apply {tag="observer-trust";text="Tôi đã xác minh endpoint, leaf PIN, Cluster ID, epoch và chế độ qua owner."};clusterPage.addView(observerTrust)
+        button(clusterPage,"Đăng nhập quan sát","observer-login") {
+            val ep=observerEndpoint.text.toString().trim();val fp=observerPin.text.toString().replace(":","").trim().lowercase()
+            val cid=observerCluster.text.toString().trim();val epoch=observerEpoch.text.toString().trim()
+            val mode=observerMode.selectedItem.toString();val secret=observerCode.text.toString();val trusted=observerTrust.isChecked
+            observerCode.setText("")
+            observerCall("login",ep,fp,cid,epoch,mode,secret,trusted)
+        }
+        button(clusterPage,"Đọc trạng thái Core","observer-refresh") {observerCall("state")}
+        button(clusterPage,"Đăng xuất quan sát","observer-logout") {clearObserverForm();observerCall("logout")}
         root.setOnApplyWindowInsetsListener {view,insets ->
             if(Build.VERSION.SDK_INT>=30) {
                 val bars=insets.getInsets(android.view.WindowInsets.Type.systemBars())
@@ -212,6 +232,60 @@ class MainActivity : Activity() {
         bound=bindService(Intent(this,EngineService::class.java),connection,Context.BIND_AUTO_CREATE)
     }
     private fun cleanPin()=pin.text.toString().replace(":","").trim().lowercase()
+    private fun clearObserverForm() {
+        if(::observerCode.isInitialized)observerCode.setText("")
+        if(::observerTrust.isInitialized)observerTrust.isChecked=false
+        if(::observerStatus.isInitialized)observerStatus.text="Core observer: UNKNOWN · cần đọc lại nguồn được xác thực\nQuorum: UNKNOWN\nReplica protection: UNKNOWN"
+    }
+    private fun observerCall(op:String,endpoint:String="",fingerprint:String="",clusterId:String="",epoch:String="",mode:String="",secret:String="",trusted:Boolean=false) {
+        observerStatus.text="Đang đọc nguồn Core · kết quả chưa xác nhận"
+        task({JSONObject((engine ?: error("unavailable")).observeCore(1,UUID.randomUUID().toString(),op,endpoint,fingerprint,clusterId,epoch,mode,secret,trusted))}) {
+            observerStatus.text=observerText(it)
+        }
+    }
+    private fun observerText(value:JSONObject):String {
+        fun shown(obj:JSONObject?,key:String)=if(obj==null || obj.isNull(key))"UNKNOWN" else obj.opt(key).toString()
+        val runtime=value.optJSONObject("runtime");val cluster=value.optJSONObject("cluster")
+        val counts=value.optJSONObject("counts");val capacity=value.optJSONObject("capacity")
+        val lines=mutableListOf("Core: ${shown(runtime,"state")} · chế độ ${shown(cluster,"mode")}",
+            "Cluster: ${shown(cluster,"cluster_id")} · Epoch: ${shown(runtime,"epoch")}",
+            "Quorum: ${shown(runtime,"quorum_available")} · Leader: ${if(runtime?.optBoolean("leader_confirmed")==true)shown(runtime,"leader_id") else "UNKNOWN"}",
+            "Read-only: true · Writer authority: false",
+            "Node: ${shown(counts,"paired_nodes")} · online ${shown(counts,"online")} · offline ${shown(counts,"offline")}",
+            "Quota: ${shown(capacity,"approved_quota_bytes")} · used ${shown(capacity,"used_bytes")} · available ${shown(capacity,"available_bytes")} bytes",
+            "File: ${shown(counts,"files")} · protected ${shown(counts,"protected_files")}")
+        val controllers=runtime?.optJSONArray("controllers")
+        if(controllers!=null)for(i in 0 until controllers.length()) {
+            val c=controllers.getJSONObject(i);lines.add("Controller ${shown(c,"node_id").take(8)}: ${shown(c,"state")} · voter ${shown(c,"voter_process")} · Leader confirmed ${shown(c,"leader_confirmed")}")
+        }
+        val nodes=value.optJSONArray("nodes")
+        if(nodes!=null)for(i in 0 until nodes.length()) {
+            val n=nodes.getJSONObject(i);lines.add("Node ${shown(n,"name")} (${shown(n,"node_id").take(8)}): ${shown(n,"online")}")
+            val volumes=n.optJSONArray("volumes")
+            if(volumes!=null)for(j in 0 until volumes.length()) {
+                val v=volumes.getJSONObject(j);lines.add("  Volume ${shown(v,"volume_id").take(8)}: ${shown(v,"state")} · writable ${shown(v,"writable")} · available ${shown(v,"available_bytes")}")
+            }
+        }
+        val files=value.optJSONArray("files")
+        if(files!=null)for(i in 0 until files.length()) {
+            val f=files.getJSONObject(i);lines.add("File ${shown(f,"logical_path")}: ${shown(f,"protection")} · replica desired/verified/available ${shown(f,"desired_replicas")}/${shown(f,"verified_replicas")}/${shown(f,"available_replicas")}")
+        }
+        val jobs=value.optJSONArray("jobs")
+        if(jobs!=null)for(i in 0 until jobs.length()) {
+            val j=jobs.getJSONObject(i);lines.add("Job ${shown(j,"job_id").take(8)} · ${shown(j,"kind")}: ${shown(j,"state")}")
+        }
+        val backup=value.optJSONObject("backup")
+        lines.add("External backup: ${shown(backup?.optJSONObject("external"),"state")} · Recovery: ${shown(backup?.optJSONObject("recovery"),"state")}")
+        val snapshots=backup?.optJSONArray("snapshots")
+        if(snapshots!=null)for(i in 0 until snapshots.length()) {
+            val s=snapshots.getJSONObject(i);lines.add("Snapshot ${shown(s,"snapshot_id").take(8)}: ${shown(s,"state")} · verified at ${shown(s,"verified_at")} (lịch sử)")
+        }
+        val evidence=value.optJSONObject("native_observer")
+        lines.add("Nguồn kiểm tra: ${shown(evidence,"checked_at")} · phiên RAM-only")
+        if(evidence?.has("error")==true)lines.add("${shown(evidence,"error")} · đăng nhập mới nếu phiên hết hạn/kết quả không rõ")
+        if(value.has("error"))lines.add(message(value))
+        return lines.joinToString("\n")
+    }
     private fun publicBinding()=listOf(controller.text.toString().trim(),cleanPin(),cluster.text.toString().trim()).joinToString("|")
     private fun showEnrollment(value:JSONObject) {
         if(!value.isNull("join_request_id"))joinRequest=value.getString("join_request_id")
@@ -274,6 +348,6 @@ class MainActivity : Activity() {
         if(::connectivity.isInitialized && !observingNetwork) {observingNetwork=true;connectivity.registerDefaultNetworkCallback(networkObserver)}
         if(engine!=null)refresh()
     }
-    override fun onStop() {if(observingNetwork){observingNetwork=false;connectivity.unregisterNetworkCallback(networkObserver)};generation++;if(::code.isInitialized)code.setText("");verifiedBinding=null;super.onStop()}
+    override fun onStop() {if(observingNetwork){observingNetwork=false;connectivity.unregisterNetworkCallback(networkObserver)};generation++;if(::code.isInitialized)code.setText("");verifiedBinding=null;clearObserverForm();super.onStop()}
     override fun onDestroy() {generation++;engine=null;if(bound)unbindService(connection);worker.shutdown();super.onDestroy()}
 }

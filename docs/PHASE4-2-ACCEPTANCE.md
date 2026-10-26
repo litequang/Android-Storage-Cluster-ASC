@@ -2,7 +2,10 @@
 
 **Full Phase4.2 NOT ACCEPTED. Independent native FOUNDATION subset qualified on
 actual API35 x86_64 emulator; fresh applicable Core regressions PASS below.**
-No joined native Node, native Quick Join, FGS or Termux migration is accepted.
+The original a–e FOUNDATION results below are historical. Later g/h receipts
+qualify actual native enrollment, owned Node, FGS and direct emulator NAT within
+their scopes; i adds native Core observation. Final integrated j and physical
+Android/Termux migration acceptance remain outstanding.
 No real phone/production/M51 access, no Android Raft/GC/failover/writableDR.
 
 ## Actual qualification / scope
@@ -313,3 +316,27 @@ change, no new backend or source authority. Owner sessions RAM-only, not Node to
 Android Binder/UI not yet wired or qualified by i.1; no new APK/full Python/Go
 acceptance claimed. Next i.2 adds that actual Android integration. Full4.2 remains
 NOT ACCEPTED; writable disaster recovery BLOCKED.
+
+## i.2 Native read-only Core observer — API35 targeted PASS
+Actual owner UI ->private Binder transaction4 ->canonical Python observer ->existing
+Core gateway over DIRECT private host HTTPS. Real3-voter Core file/3logical domains,
+wrong-pin refusal, actual owner login,3/3replica display, real partition/quorum loss/
+UNKNOWN Leader+availability, heal/strong read, logout and unchanged existing app/
+Node-context payload (decrypted comparison, not ciphertext bytes): **1 Android PASS90.332s**,
+driver113.234s. This app is only
+an observer of that Core cluster; no Android voter or state migration is implied.
+
+Additional12 actual Android regression PASS136.452s: existing UI/Binder/golden ID/
+Core Engine I/O+fsync+SHA/restart/old volume+manifest+bytes, original Native Node
+old-file download/identity and real default-network loss/recovery including observer
+secret/trust/healthy-view clearing. JVM15 PASS/build PASS, original signer/UIDs/
+state preserved via normal install-r. Bounded package audit119modules/7unchanged
+permissions/no findings PASS; current private APK d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a.
+
+Initial harness ACK-file race failed79.910s; fixed only atomic test-control
+publication, complete rerun above passed with original assertions/main APK. Logs
+and exact failure retained; not counted as PASS. Session RAM-only, no Node/schema/
+credential migration or writer capability. Linux12 client gates from i.1 unchanged;
+no new full Python/Go claim or public APK/release. Full4.2 remains NOT ACCEPTED
+pending integrated j/candidate+upgrade/final gates; physical phones/ARM64/real LAN/
+Doze/OEM/two hardware domains unqualified; writable DR BLOCKED.

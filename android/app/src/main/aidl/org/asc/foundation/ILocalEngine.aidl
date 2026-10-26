@@ -7,4 +7,7 @@ interface ILocalEngine {
         String code, boolean trustConfirmed) = 1;
     String configureNodeStorage(int version, String requestId, long quotaBytes, long reserveBytes) = 2;
     String startNode(int version, String requestId, String host, int port) = 3;
+    String observeCore(int version, String requestId, String operation,
+        String endpoint, String pin, String clusterId, String epoch,
+        String mode, String code, boolean trustConfirmed) = 4;
 }

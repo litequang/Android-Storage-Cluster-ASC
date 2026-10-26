@@ -615,3 +615,13 @@ integration is g.2, no native Node/FGS or public APK claim.
   plus recovery/TLS/session/gateway regression12PASS0skip40.877s. No Node credential/
   schema/backend/authority change. Android Binder/UI integration follows i.2;
   no Android observer/full Phase4.2 or new APK/release acceptance yet.
+
+### i.2 Native Core observer / Cụm page
+- Wire original read-only Core gateway/client into fixed private Binder transaction4
+  and minimal Vietnamese node/volume/replica/job/quorum/backup view. Explicit owner
+  session separate from Node state; no new schema, dependency or permission.
+- Actual API35 UI/pinning/three-voter partition+heal1PASS90.332s, retained Android
+  regressions12PASS136.452s/JVM15/build/audit PASS. Fix test-only atomic ACK race,
+  retain all assertions and failure evidence. Same signer/UID/Node/old bytes kept.
+- No new public APK/full integrated acceptance; j candidate/upgrade/final gates and
+  physical phones/ARM64/independent hardware qualification remain outstanding.

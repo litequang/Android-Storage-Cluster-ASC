@@ -120,3 +120,11 @@ An enrolled Node's controller URI may change only through the explicit stopped-
 session operation with verified SAME PIN/Cluster ID. CAS changes URI/revision,
 not Node/token/TLS/storage/Volume identity. No schema or pending migration, no
 re-enrollment or authority claim; credentials become live only after heartbeat.
+
+### i.2 observation session has no persistent state
+Optional Core gateway owner cookie/CSRF exists only in NativeCoreObserver RAM.
+No new files, schema, Keystore alias, Node-context field, token export or identity
+adoption. Existing app key is validated without provision. Process/service restart
+requires NEW explicit owner login; Node/pending/volume/committed bytes unchanged.
+Native observer mode/cluster is separate from the active single-writer Node; an
+observation never performs a state/authority migration. See ANDROID-CORE-OBSERVER.

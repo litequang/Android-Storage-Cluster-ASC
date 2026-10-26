@@ -1,5 +1,12 @@
 # Native Foundation operations — internal debug only
 
+Current continuation h/i has a real scoped emulator Native Node/FGS/direct NAT
+and separately authenticated Core observation; see later receipts in PHASE4-2-
+PROGRESS and ANDROID-CORE-OBSERVER for the Cụm page/gateway login. The original
+foundation artifact/version and unsupported-operation text below is historical;
+new source is not yet a newly published increased-version APK. Do not replace
+Termux state or infer physical-phone/full Phase4.2 acceptance from these receipts.
+
 Application `org.asc.foundation`, versionCode2 / `0.2.0-foundation`, minSDK26,
 targetSDK35. This is an independent native FOUNDATION, not a replacement for a
 Termux Controller/Storage Node or a production release. Existing Demo Dashboard

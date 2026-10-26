@@ -22,6 +22,8 @@ class EngineService : Service() {
         RequestPolicy.caller(uid,Process.myUid(),packageManager.checkSignatures(uid,Process.myUid())==PackageManager.SIGNATURE_MATCH)
     }
     private val operations=Any()
+    private val observerOperations=Any()
+    private var coreObserver:NativeCoreObserver?=null
     private var nodeSession:NativeNodeSession?=null
     private var watcher:Timer?=null
     @Volatile private var foreground=false
@@ -41,6 +43,20 @@ class EngineService : Service() {
         }catch(_:IdentityLocked){error("identity_locked")}catch(_:Exception){error("node_operation_unavailable")}}
     }
     private val binder = object : ILocalEngine.Stub() {
+        override fun observeCore(version:Int,requestId:String,operation:String,endpoint:String,pin:String,
+            clusterId:String,epoch:String,mode:String,code:String,trustConfirmed:Boolean):String {
+            caller()
+            return synchronized(observerOperations) {try {
+                ObserverPolicy.validate(version,requestId,operation,endpoint,pin,clusterId,epoch,mode,code,trustConfirmed)
+                if(operation=="logout")return@synchronized (coreObserver?.close() ?: NativeCoreObserver.unknown("observer_logged_out")).toString()
+                if(!NativeDeviceGate.allowed())return@synchronized error("device_not_qualified")
+                if(!getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false))return@synchronized error("consent_required")
+                val observer=coreObserver ?: NativeCoreObserver(this@EngineService).also {coreObserver=it}
+                (if(operation=="login")observer.login(endpoint,pin,clusterId,epoch,mode,code) else observer.state()).toString()
+            }catch(_:IdentityLocked){NativeCoreObserver.unknown("identity_locked").toString()}
+            catch(_:IllegalArgumentException){error("invalid_request")}
+            catch(_:Exception){NativeCoreObserver.unknown("observer_unavailable").toString()}}
+        }
         override fun configureNodeStorage(version:Int,requestId:String,quotaBytes:Long,reserveBytes:Long):String =
             nodeAction(version,requestId) {it.configure(quotaBytes,reserveBytes)}
         override fun startNode(version:Int,requestId:String,host:String,port:Int):String =
@@ -111,6 +127,7 @@ class EngineService : Service() {
     override fun onDestroy() {
         watcher?.cancel();watcher=null
         Thread({synchronized(operations) {try {nodeSession?.close()}catch(_:Exception){};nodeSession=null}},"asc-owned-node-stop").start()
+        Thread({synchronized(observerOperations) {coreObserver?.close();coreObserver=null}},"asc-observer-logout").start()
         super.onDestroy()
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
