@@ -1,0 +1,33 @@
+{
+  "checkpoint": "4.2h.2a",
+  "scope": "API35 x86_64 TCG guest-loopback JSSE/JNI socket transport, NOT Storage Agent",
+  "linux_tests": 23,
+  "jvm_tests": 13,
+  "android_socket_tests": 3,
+  "android_socket_seconds": 153.045,
+  "android_regression_tests": 15,
+  "android_regression_seconds": 294.004,
+  "foreign_caller_tests": 1,
+  "enrolled_identity_upgrade_fixed_phases": 2,
+  "skipped": 0,
+  "failures": 0,
+  "apk_sha256": "89a2c9a29a6b41e1d198519eb67e4b87aed91b2e32f3f0282914f367c1da54b4",
+  "signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "canonical_core_modules": 116,
+  "new_permissions": [],
+  "new_dependencies": [],
+  "public_release": false,
+  "full_phase_accepted": false,
+  "native_storage_agent_fgs": "NOT IMPLEMENTED",
+  "physical_file_transfer_via_adapter": "NOT YET TESTED; h.2b",
+  "direct_lan": "NOT PASSED",
+  "phone_runtime": "NOT TESTED",
+  "interactive_ux": "NOT QUALIFIED; earlier Quickstep ANR",
+  "source_sha256": {
+    "asc/node/socket.py": "0ea6665151e92be93837dbbd7d4d55a5dffcd174ffdca3798f2537d8ad97a989",
+    "tests/test_native_socket.py": "3e50d172316be78381785432c48f21ad3ee9e2efb37eb4d1c8604834d2f86309",
+    "android/app/src/main/java/org/asc/foundation/NativeTLSListener.kt": "fa386bfd01196ff59a0fcb347f8caeea5a463335ac8ef3f3b2d887ac8255fae3",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeSocketTest.kt": "925a434980b3fd1038606f1ad87336ba482ea22d1608cc7e1a1c195760d72269",
+    "android/app/src/test/java/org/asc/foundation/NativeTLSListenerPolicyTest.kt": "441fe368c01905a13c1e472ca9e1870ca2235140c0f18524bf198a3e96e0c3e0"
+  }
+}

@@ -148,3 +148,10 @@ start or storage approval yet. Keep original signer/state/keys; never adopt the
 Termux directory. Android qualification uses only owned emulator, explicit dev
 loopback and real Core; direct LAN and phone/Agent/FGS remain outstanding. Private
 retained fixture/proof must not be deleted to rerun seed. No public APK was changed.
+
+## Internal native transport h.2a
+No user start command/listener/Foreground Service was added. Native node_start
+still refuses. Socket tests are synthetic guest loopback, not file/replica/LAN
+acceptance. Source private APK remains version3, original signer; new116 modules
+audited. Keep enrolled state and original signer on normal install-r; no public
+release. ANDROID-NATIVE-TRANSPORT specifies API/ownership/deadline and next gates.

@@ -518,3 +518,12 @@ host can later reuse this same Core operation after validated context/device and
 owned runtime checks; it must not import/patch CLI HOME/getpass. A successful
 heartbeat establishes point-in-time authenticated Controller communication only,
 not write/storage/replica/Leader authority. No native Agent/FGS at h.1.
+
+### Native TLS socket boundary h.2a
+JSSE's SSLContext is not a CPython SSLSocket. A narrow owned native connection +
+Python file/socket facade now supplies the stream operations needed by the
+existing Core HTTP handler. Only public Java socket APIs; binary chunks/deadlines/
+ownership explicit. No second Engine/protocol or plaintext forwarding backend.
+Absolute socket-close watchdog is necessary because Java soTimeout does not bound
+writes. Listener is internal and unused by app startup/IPC; actual Handler/Engine
+serving and owned Agent/FGS are still required. See ANDROID-NATIVE-TRANSPORT.

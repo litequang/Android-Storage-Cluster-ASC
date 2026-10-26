@@ -695,3 +695,14 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 - tests/test_agent_contract.py: actual Core Registry/TLS/UNKNOWN profile, wrong
   pin, cluster mismatch, revoked token and offline/reconnect, no identity repair.
   Existing lifecycle/storage/distributed/discovery regressions remain unchanged.
+
+## Phase4.2h.2a native JSSE socket facade
+- asc/node/socket.py: NativeSocket/_Input bounded binary read1/readinto/sendall,
+  fixed errors/timeout/file modes, explicit socket ownership; no HTTP/Engine.
+- NativeTLSListener/NativeTLSConnection: SDK/device/private-bind/TLS1.2+ gates,
+  bounded32 owned sockets and absolute read/WRITE deadline/close cancellation.
+  No fd adoption, plaintext tunnel, external CLI or product startup/IPC.
+- test_native_socket +NativeTLSListenerPolicyTest/NativeSocketTest: Linux facade
+  contracts versus real API35 JSSE/pin/all-byte SHA/read and blocked-write deadline
+  proof, kept distinct. ANDROID-NATIVE-TRANSPORT owns contract/limits/next Handler
+  integration; no binary echo-as-Storage-Node acceptance.

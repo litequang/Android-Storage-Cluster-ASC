@@ -572,3 +572,9 @@ integration is g.2, no native Node/FGS or public APK claim.
   reuse, retaining all CLI guard/capability/cache/repair behavior and wire format.
 - Real Linux TLS/auth/outage regressions PASS; no native Agent/FGS/listener or APK
   release added. Remaining runtime transport/lifecycle work stays unaccepted.
+
+### Phase4.2h.2a — owned native TLS socket facade
+- Bounded public JSSE/JNI binary streams, private-bind/device/TLS gates and
+  absolute deadline that actually interrupts idle reads/blocked writes.
+- Actual API35 transport/regression/identity/foreign-caller proof; no new crypto
+  dependency, permission or public APK. Core HTTP/Engine/Agent/FGS still next.

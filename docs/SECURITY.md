@@ -571,3 +571,15 @@ IPC/network input. Existing CLI M51/capability/repair/cache behavior remains; Co
 Discovery still owns distributed pin/term routing. Returned topology never grants
 storage/GC/voter/writer rights. Wrong pin never updates server metadata; revoked
 credential/cluster mismatch/offline refuse without new identity or local state.
+
+### Native transport h.2a
+Internal constructor requires existing native TLS context, SDK30+ and original
+device guard; explicit numeric RFC1918/loopback bind only, TLS1.2+, no default
+listener/start hook. Trusted test port0 is not a product config. Bounded32 socket
+ownership/65536-byte callbacks, finite read and absolute read/write deadline.
+Real blocked-write test requires actual bytes sent +OSError/closed socket/worker
+exit, not timer-flag inference. No hidden FD/path/PID API, plaintext key/tunnel,
+new permission/dependency or external executable. No new Binder/network auth
+capability: HTTP/Storage authorization must remain Core's per-operation scoped
+Controller check. Raw TLS echo belongs only to instrumentation and proves no
+file/replica/approval/writer rights. Source/limits in ANDROID-NATIVE-TRANSPORT.

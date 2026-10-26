@@ -851,3 +851,62 @@ Normal h.1 commit/push/fetch verification must precede next source checkpoint.
 Rollback h.1 is code-only compatible (no schema/data change); keep newer native
 enrollment state and original signer, do not restore stale records or older f.2
 code that rejects populated slots.
+
+### h.1 publication receipt
+0d745a3beec4fb7394dc4817f4d990a6c5c9d93f normal push/fetch/advertised remote
+matched exactly before h.2a.57 targeted Linux PASS, no uncommitted work carried.
+
+## 4.2h.2a — native JSSE socket facade (transport only)
+New NativeTLSListener/Connection +asc.node.socket provide owned public Java TLS
+stream ->Python binary makefile/read1/readinto/sendall/timeout/close. Existing
+Node TLS context/provider, SDK30+/M51/unknown guard, explicit numeric private bind,
+TLS1.2/1.3 only. Bounded32 connections/65536-byte callbacks; scheduled absolute
+deadline closes only its exact owned socket, not reset by trickle/read timeout.
+Actual closed cause atomic, timers cancelled idempotently, listener closes owned
+connections. No hidden FD/proc/key file/plaintext tunnel/external executable,
+new crypto library, permission, management operation or app startup hook.
+
+Fresh Linux23 PASS0skip: facade4 +TLS9 +context10. Fake Linux stream fixture is
+contract-only, NOT Android TLS proof. Gradle/JVM13 PASS0fail/error/skip; main/test
+build +strict dependency checks PASS, lint0errors25 retained warnings. Final source
+frozen before runtime tests; preliminary builds/runs not added to counts.
+
+Actual owned ASC_JOIN_UI_API35/API35 x86_64 TCG:3 native socket tests PASS153.045s,
+real canonical pinned-client handshake/wrong-pin no application bytes, all256
+byte values/1MiB buffered JNI stream SHA, actual idle TLS-read deadline and actual
+blocked write while pinned peer does not consume bytes. Write gate requires some
+bytes sent, less than64MiB, actual OSError, actual deadline/peer closed, no live
+worker and0 active sockets. Public JSSE close genuinely unblocked I/O; not a fake
+timer flag. No Node/HTTP/physical file/protection claim from the raw echo frame.
+
+Additional fresh15 Android PASS294.004s0skip: original TLS5/context3/canonical
+Engine1/Keystore+storage6. Actual MFD seals/key mismatch/trust/pin failures, record/
+key loss/corruption, identity and real approved probe write/read/SHA/fsync/marker
+gates retained. Actual distinct-signer foreign UID/permission/bind denial1 PASS
+0.165s. Existing assertions unchanged. Retained enrolled primary UI proof
+ui-join-verify PASS before and after faults/normal install-r: original app/context/
+TLS/Node/token hash/committed ciphertext intact; target UID unchanged. No uninstall/
+clear/-d, stale DB restore, app identity/Volume ID regeneration or original AVD
+change. Exact prior g APK59541e41... backed up privately before h installation.
+
+Private version3/0.3.0-native-context APK SHA
+89a2c9a29a6b41e1d198519eb67e4b87aed91b2e32f3f0282914f367c1da54b4, original signer
+bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30;116 canonical
+Core modules/arm64+x86_64/unchanged3permissions, bounded APK/secrets inventory PASS.
+No public APK/archive/release. Private logs/source snapshot/prior artifact under
+/workspace/work/phase4-2h2a-socket. Public bounded receipt qualification/phase4-2h2a-
+socket.json; API/thread/deadline/limits in ANDROID-NATIVE-TRANSPORT.
+
+Scope: actual Android guest loopback only, not ADB reverse/direct NAT/LAN, ARM64/
+phone/OEM/Doze or interactive-touch usability. Earlier Quickstep ANR remains an
+explicit UX limit. No product Storage Handler/listener/Agent/FGS/approved network
+volume/real replica via this adapter yet. Full4.2 NOT ACCEPTED; writableDR blocked.
+No fresh full Python/Go/Core-fault run claimed at this scoped transport checkpoint.
+
+Next h.2b must reuse SAME StorageHandler/StorageEngine with actual authorized
+bytes/fsync/readback/SHA, explicit private Node-volume config/partial-setup/marker/
+identity/space guards; no probe adoption or absent-manifest recreation. Core
+storage/domain approval remains explicit owner action. Then real owned Agent/FGS
+notification/Stop/lifecycle/revocation/outage, i observer, j direct LAN/full fresh
+gates/new candidate. Preserve current enrolled Node/Keystore/private signer; no
+re-seed/reset. Publish normal h.2a commit and verify fetch before next checkpoint.

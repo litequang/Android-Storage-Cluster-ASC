@@ -61,3 +61,12 @@ Agent, storage approval, byte proof or FGS. h.2 must implement an owned native T
 socket adapter to existing StorageHandler/Engine; later owned Agent/FGS lifecycle
 must use validated NativeNodeContext, trusted Build/profile and actual volume
 probe, and stop on revoked credentials. No fake idle service or writer inference.
+
+## h.2a transport facade
+A narrow owned JSSE NativeTLSListener/Connection +asc.node.socket.NativeSocket is
+qualified on API35 guest loopback for real binary/pinning and read/WRITE deadline
+closure. It creates no product listener/HTTP/Agent or second storage backend.
+Next h.2b must use SAME StorageHandler/Engine with explicit approved Node-volume
+state/ownership and original Controller authorization. Do not expose an internal
+plaintext HTTP hop, adopt probe volumes or infer writable from TLS/process flags.
+See ANDROID-NATIVE-TRANSPORT and current scoped acceptance.

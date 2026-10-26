@@ -231,3 +231,17 @@ This is transport reuse, NOT native listener/Agent/Foreground Service acceptance
 No new APK/native tests/release; previously qualified Android artifact is frozen
 at g source. Full4.2 NOT ACCEPTED, writableDR BLOCKED; h.2/native owned lifecycle,
 i observer and j direct LAN/fresh full gates remain.
+
+## h.2a native transport scope — API35 guest loopback
+Fresh Linux23/JVM13/Android3 socket +15 retained TLS/context/Engine/Keystore tests
+PASS0skip; actual foreign caller denial1 and2 retained enrolled-identity fixed
+verifications PASS. Binary1MiB/all256 values through real JSSE/JNI/Core pinned
+client; actual idle read and blocked-write deadline/close/worker exit proved.
+Not physical-file/replica or Storage Node acceptance. No new dependency/permission/
+public release. Private version3 APK SHA89a2c9a29a6b41e1d198519eb67e4b87aed91b2e32f3f0282914f367c1da54b4
+original signer/UID/enrolled Node/cipher preserved. Public scoped receipt
+qualification/phase4-2h2a-socket.json, details in ANDROID-NATIVE-TRANSPORT/progress.
+Native Handler/Engine integration/approved network volume/Agent/FGS/observer/LAN
+still incomplete. Phones/ARM64/OEM/Doze not runtime-tested, interactive UX not
+qualified. Full4.2 NOT ACCEPTED; full Python/Go/fault/new-candidate gates not yet
+rerun for remaining runtime; writableDR BLOCKED.
