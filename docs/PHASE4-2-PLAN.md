@@ -109,3 +109,11 @@ process and refusal/trust gates. g.2c will qualify positive UI->Binder->Core on 
 separate owned sandbox, preserving retained original foundation fixtures and
 assertions. Do not start h before the g source/positive path checkpoint is durable.
 Progress/acceptance own exact evidence; full4.2 still NOT ACCEPTED.
+
+### Native i split (MVP priority)
+i.1: consume existing Phase4.1 read-only HTTPS owner gateway with canonical Python
+client; RAM-only session, no Node credential/schema/engine changes. Target actual
+TLS/recovery and three-voter fault regressions, normal push/remote verification.
+i.2: wire private versioned Binder and minimal Vietnamese Cụm page, qualify actual
+gateway on owned emulator. No full Core repetition at these small checkpoints;
+fresh integrated final gates remain j. Do not label i.1 as Android observer PASS.

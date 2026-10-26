@@ -596,3 +596,12 @@ portable descriptor-pinned SQLite VFS; no hidden Android FD/proc workaround is
 introduced. Native volume setup/status/runtime must still validate encrypted
 root/manifest/volume/medium bindings and preserve partial state. No HTTP/Agent/
 FGS/approval or authority is added by this library option.
+
+### Native observer i.1
+Existing Core gateway owner grant/session is separate from Node enrollment/token.
+Only fixed mode/login/state/logout routes over existing pinned HTTPS; exact expected
+mode/cluster/epoch/checkpoint, no discovery/Demo fallback or writer capability.
+Cookie/CSRF RAM-only, no state/credential export or Node-context migration. Login
+ACK/identity mismatch requires a fresh owner grant; no automatic code retry.
+Offline/stale/unconfirmed evidence cannot display healthy replicas/quorum. Passive
+staging remains read-only. Android Binder/UI/runtime qualification is separate.

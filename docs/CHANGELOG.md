@@ -607,3 +607,11 @@ integration is g.2, no native Node/FGS or public APK claim.
 - Actual API35 host↔Android file upload/verify/download SHA over standard SDK NAT,
   direct Controller10.0.2.2, ADB reverse removed. Reproducible focused driver.
 - No new dependency/permission/security layer; no phone/LAN/two-replica acceptance.
+
+### i.1 Native Core observer client
+- Reuse existing Core read-only HTTPS gateway/owner one-use sessions with explicit
+  pin/cluster/epoch/mode, RAM-only cookie/CSRF and UNKNOWN on unavailable evidence.
+- Actual Linux three-voter partition/stale Leader/quorum/Controller loss/reconnect
+  plus recovery/TLS/session/gateway regression12PASS0skip40.877s. No Node credential/
+  schema/backend/authority change. Android Binder/UI integration follows i.2;
+  no Android observer/full Phase4.2 or new APK/release acceptance yet.

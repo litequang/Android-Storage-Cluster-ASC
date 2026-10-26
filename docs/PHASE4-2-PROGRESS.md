@@ -1177,3 +1177,39 @@ Doze/OEM/real LAN and two independent-domain replica/fallback NOT TESTED. Standa
 emulator NAT success is not those acceptances. Full4.2 NOT ACCEPTED, writableDR
 BLOCKED. Preserve active AVD, signer, original stopped upgrade AVD and all private
 Node state; no resets or old cipher-proof overwrite.
+
+## i.1 Native observer client — Linux synthetic targeted PASS
+Started from clean de9767364d7daa195399da1b4670f286d1c63bbe; fresh WIP feature
+fetch matched HEAD. Existing mandatory contracts read, owner MVP priority retained:
+targeted changed paths, no repeated full Core or additional security subsystem.
+
+Added canonical asc.observability.native.NativeObserver consuming ONLY existing
+Phase4.1 HTTPS owner gateway. Uses existing pin transport and one-use owner login/
+session/CSRF, explicit mode/Cluster/epoch/index, RAM-only observer credentials.
+Node context/credentials, Core3D source, Engine/Catalog/schema untouched. Fixed
+read-only routes and existing gateway projection; no duplicate backend. Login ACK
+loss requires NEW owner code, not blind replay. Offline/expired sessions UNKNOWN;
+stale Leader flags alone cannot supply quorum/protection. Full-byte recovery view
+remains passive/read-only, never writer activation.
+
+Fresh final targeted command: python -B -m unittest tests.test_native_observer
+tests.test_observer_gateway.GatewayHTTPTests
+tests.test_observer_gateway.RecoveryGatewayTests
+tests.test_observability.ObservationUnitTests -v -f
+**12 PASS /0FAIL/0ERROR/0SKIP,40.877s**. Includes new8 tests, actual three-voter TLS
+partition/stale Leader/quorum loss/Controller death/reconnect, actual owner cookie/
+CSRF, wrong pin/mode before code consumption, Cluster/epoch/floor rejection,
+process/server session loss, corrupt byte staging and retained gateway mutation
+denial. Earlier development7PASS4.838s+Core1PASS23.844s are separate, not added to12.
+Existing redacted handler messages on intentionally rejected/missing login are
+expected; no credential/raw exception printed. No old test weakened/removed.
+
+i.1 is Linux client qualification, NOT Android observer acceptance. No APK build/
+install/source UI change, no new published artifact, no fresh full Python/Go claim.
+Rollback: compatible prior source retains existing Node/app state unchanged;
+observer credentials are ephemeral, new owner login needed after restart.
+Next i.2: private typed Binder +minimal Cụm page, actual gateway/TLS on preserved
+owned emulator, same signer/Node/volume/bytes. Full4.2 NOT ACCEPTED; phones/ARM64/
+Doze/OEM/independent two-domain replicas/final integrated gates still outstanding.
+Writable DR remains BLOCKED. Publish normal feature-only push and fetch verification
+before i.2; this receipt's exact commit is available in Git history.

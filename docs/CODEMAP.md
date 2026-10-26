@@ -539,6 +539,7 @@ Android and writable DR remain NOT ACCEPTED.
 - asc/observability/core.py: existing validated prepared registry/Catalog/Views read-only public projection, policy counts/jobs/backup history/UNKNOWN; observe uses only Runtime.view +status, never ensure_ready/commit.
 - observability/http.py +3-line failover/service.py delegation: owner GET /cluster/v1/observability, POST denial before readiness side effects, exact own response envelope.
 - observability/client.py Observer: fixed pinned identities/epoch/static3/floor, bounded GET collector/no legacy fallback, stale availability downgrade. RecoveryObserver: existing full-byte verified passive stage only.
+- observability/native.py (4.2i.1): fixed owner-session consumer of existing HTTPS gateway; RAM-only cookie/CSRF, exact mode/cluster/epoch/floor, no Node credentials or writer operations. Tests: test_native_observer.py; contract: ANDROID-CORE-OBSERVER.md. Android wiring follows i.2.
 - tests/test_observability.py: separate no-test helper +actual TLS API/partition/takeover classes, no duplicate fixture test inheritance; source/secret/read-only/policy3/verified backup/passive corruption gates.
 
 ## Phase4.1c.2 shared read-only browser gateway

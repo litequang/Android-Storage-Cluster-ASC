@@ -301,3 +301,15 @@ Scope is owned API35 x86_64 emulator NAT, one owner-delegated local object; NOT
 physical phone LAN/ARM64/Doze/OEM or two independent protected replicas/fallback.
 Core observer/native UI and final integrated gates still pending; full4.2 NOT
 ACCEPTED. No fresh full Python/Go claim or new public APK/release.
+
+## i.1 Native Core observer client — scoped Linux PASS
+12 targeted tests PASS0skip/fail40.877s: new canonical Python owner-session client
+through existing TLS gateway, actual three-voter stale Leader/partition/quorum loss/
+Controller death/reconnect, pinned mode/identity/checkpoint/session denial and
+full-byte passive recovery integrity. Existing gateway security/mutation-denial
+and no-writer projection regressions retained. No Node/Core schema/identity/storage
+change, no new backend or source authority. Owner sessions RAM-only, not Node tokens.
+
+Android Binder/UI not yet wired or qualified by i.1; no new APK/full Python/Go
+acceptance claimed. Next i.2 adds that actual Android integration. Full4.2 remains
+NOT ACCEPTED; writable disaster recovery BLOCKED.
