@@ -708,6 +708,10 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
   integration; no binary echo-as-Storage-Node acceptance.
 
 ## Phase4.2h.2b.1a existing-only metadata gate (in qualification)
+- tests/test_phase41_upgrade.py: exact published0.4.3 rebuilt from qualified
+  0a3ea839 source and byte/SHA checked; additional CurrentSourceUpgradeTests runs
+  the SAME full upgrade/pending/identity/bytes/rollback assertions against the
+  unpublished current-source package, with independent source/inventory checks.
 - asc/storage/manifest.py: existing_identity +Manifest existing_only/expected_file:
   POSIX private regular owner/single-link/inode checks, SQLite mode=rw, exact
   version/Node/schema/integrity validation WITHOUT DDL/identity repair. Canonical

@@ -1,5 +1,6 @@
 """Actual private POSIX I/O; missing metadata must never become a new manifest."""
 import hashlib
+from contextlib import closing
 import io
 import os
 from pathlib import Path
@@ -14,6 +15,7 @@ from asc.storage.errors import StorageError
 from asc.storage.manifest import Manifest, existing_identity
 
 
+@unittest.skipUnless(os.name == 'posix', 'existing-only private metadata provider is POSIX-only')
 class ExistingStorageTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
@@ -78,7 +80,7 @@ class ExistingStorageTests(unittest.TestCase):
                 if fault == 'empty': path.touch()
                 else:
                     shutil.copy2(self.path, path)
-                    with sqlite3.connect(path) as db:
+                    with closing(sqlite3.connect(path)) as db, db:
                         if fault == 'future': db.execute('PRAGMA user_version=99')
                         if fault == 'missing-node': db.execute("DELETE FROM settings WHERE key='node_id'")
                         if fault == 'missing-index': db.execute('DROP INDEX upload_path')
@@ -120,7 +122,7 @@ class ExistingStorageTests(unittest.TestCase):
         try: Manifest._initialize(db, self.actor)
         finally: db.close()
         path = self.root / 'legacy-whitespace.sqlite3'
-        with sqlite3.connect(path) as legacy:
+        with closing(sqlite3.connect(path)) as legacy, legacy:
             for statement in statements:
                 if statement.startswith(('BEGIN', 'SELECT')): continue
                 legacy.execute(statement.replace('\n', '\n    '))

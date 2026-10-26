@@ -1,9 +1,11 @@
-"""Exact published Phase4.0 archive ->current candidate; no stale DB rollback."""
+"""Exact historical Phase4.1 AND current-source upgrades; no stale DB rollback."""
 import contextlib
 import hashlib
+import io
 import json
 import sqlite3
 import subprocess
+import sys
 import tarfile
 from asc.client import request_json
 from asc.demo.package import verify
@@ -17,13 +19,40 @@ class Phase41UpgradeTests(historical.PublishedUpgradeFixture):
     proxy=quick.QuickJoinTests.proxy
     quick_join=quick.QuickJoinTests.join
 
+    def prepare_candidate(self):
+        # Historical qualification must still reproduce EXACT published bytes.
+        # New Android/Core changes cannot be relabelled as that frozen package.
+        qualified='0a3ea839217156b69209a073f5d836ee1db4452b'
+        source=self.root/'qualified-phase41-source'
+        raw=subprocess.check_output(['git','archive',qualified,'asc','scripts','docs'],cwd=self.repo,timeout=30)
+        with tarfile.open(fileobj=io.BytesIO(raw)) as saved:
+            self.assertTrue(all((m.isfile() or m.isdir()) and not m.name.startswith('/') and
+                                '..' not in m.name.split('/') for m in saved.getmembers()))
+            saved.extractall(source,filter='data')
+        self.archive=self.root/'qualified-phase41-rebuilt.tar.gz'
+        built=subprocess.run([sys.executable,'-I','-B','-c',
+            'import sys;sys.path.insert(0,sys.argv[1]);from asc.demo.package import build;build(sys.argv[1],sys.argv[2])',
+            str(source),str(self.archive)],cwd=self.root,capture_output=True,timeout=30)
+        self.assertEqual(built.returncode,0,'pinned historical source build failed')
+        with tarfile.open(self.archive) as saved:
+            self.assertTrue(all(m.isfile() and not m.name.startswith('/') and '..' not in m.name.split('/')
+                                for m in saved.getmembers()))
+            saved.extractall(self.root/'qualified-phase41-package',filter='data')
+        self.source=self.root/'qualified-phase41-package/asc-demo-alpha'
+
+    def assert_candidate_source(self):
+        published=self.repo/'candidates/asc-demo-alpha-0.4.3-dev.tar.gz'
+        self.assertEqual(self.archive.read_bytes(),published.read_bytes(), 'Exact candidate must match source build')
+        self.assertEqual(hashlib.sha256(published.read_bytes()).hexdigest(),
+                         '96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04')
+
     def command_result(self,root,*args,input=None):
         if not hasattr(self,'candidate_source'):
+            self.prepare_candidate()
             self.candidate_source=self.source
             self.candidate_release=verify(self.source)
             self.assertEqual(self.candidate_release['version'],'0.4.3-dev')
-            published=self.repo/'candidates/asc-demo-alpha-0.4.3-dev.tar.gz'
-            self.assertEqual(self.archive.read_bytes(),published.read_bytes(), 'Exact candidate must match source build')
+            self.assert_candidate_source()
             archive=self.repo/'candidates/asc-demo-alpha-0.4.2-dev.tar.gz'
             self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(),
                 'b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3')
@@ -139,3 +168,26 @@ class Phase41UpgradeTests(historical.PublishedUpgradeFixture):
         self.assertEqual({p.name:p.read_bytes() for p in control.iterdir() if p.is_file()},control_bytes)
         self.assertNotEqual(self.command_result(self.bphone,'bridge-status','--control',str(control)).returncode,0,
             'Old source must refuse unsupported bridge API; never silently fall back')
+
+
+class CurrentSourceUpgradeTests(Phase41UpgradeTests):
+    """Same complete gate again against this workspace's UNPUBLISHED source build.
+
+    Preserve the historical gate above, and do not qualify current code by running
+    only frozen packages. All inherited identity/bytes/pending/rollback assertions
+    execute independently on a fresh cluster for this current-source transition.
+    """
+    def prepare_candidate(self):
+        pass  # DemoLAN setUp has already built/extracted the current source.
+
+    def assert_candidate_source(self):
+        from asc.demo.package import build
+        rebuilt=self.root/'current-source-independent-rebuild.tar.gz'
+        build(self.repo,rebuilt)
+        self.assertEqual(self.archive.read_bytes(),rebuilt.read_bytes(),
+                         'Current candidate must match exact current source build')
+        manifest=verify(self.source)
+        expected={p.relative_to(self.repo).as_posix() for p in (self.repo/'asc').rglob('*.py')}
+        self.assertEqual({name for name in manifest['files'] if name.startswith('asc/') and name.endswith('.py')},expected)
+        for name in expected:
+            self.assertEqual((self.source/name).read_bytes(),(self.repo/name).read_bytes(),name)

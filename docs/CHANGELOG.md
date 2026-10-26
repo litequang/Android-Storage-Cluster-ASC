@@ -580,6 +580,9 @@ integration is g.2, no native Node/FGS or public APK claim.
   dependency, permission or public APK. Core HTTP/Engine/Agent/FGS still next.
 
 ### Phase4.2h.2b.1a — existing metadata open policy (qualification pending)
+- Preserve exact historical Phase4.1 source/archive compatibility regression and
+  add the same complete upgrade/rollback gate against current source. No old
+  candidate/archive replacement or assertion removal; fresh full gate pending.
 - Add optional POSIX private existing-only Engine/Manifest open: no missing DB
   recreation, identity/schema repair or chmod. Old defaults/formats unchanged.
 - Bind inode/Node/canonical structure with rw URI, reject symlinks/hardlinks/

@@ -976,3 +976,38 @@ current source/tests/docs in a normal source-only WIP commit while that gate run
 this does NOT close h.2b.1a or authorize transition to h.2b.1b. Public bounded status
 qualification/phase4-2h2b1-existing.json explicitly records pending full regression.
 On resume, inspect durable receipt/log and frozen hashes before any source edits.
+
+### Source preservation and compatibility gate repair
+WIP b6b1ee1e59de8804cd7f60b758301dd9e2d243cf normal push/fetch/advertised remote
+matched exactly. This preserved all Engine/Manifest/new tests/docs before the long
+full gate; NOT a completed h.2b.1a checkpoint.
+
+09:56 durable run finished 10:28:12 UTC:309 tests,1FAIL, no SKIP. Original Core
+GC/backup/quorum/observer fault gates reached61 PASS markers, but full FAILED at
+Phase41UpgradeTests: it compared a new current-source package to the immutable
+published0.4.3-dev bytes. No runtime corruption or proof of complete regression
+PASS inferred. Full log/receipt retained under full-python-durable.
+
+Fix the fixture's source contract without weakening its gates: independently
+rebuild historical0.4.3 from qualified0a3ea839217156b69209a073f5d836ee1db4452b;
+assert exact equality to published archive and hardcoded SHA
+96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04. Preserve the
+entire original upgrade/pending/bridge/identity/new bytes/code-only rollback test
+body. Additional CurrentSourceUpgradeTests executes that same entire body on a
+fresh cluster using this workspace's independently rebuilt/current-inventory- and
+byte-checked package. Old candidates/releases unchanged, no new archive published.
+This separates historical evidence from qualification of today's changed source.
+
+Fresh final targeted10 PASS44.775s0skip: both complete upgrade paths +existing-only8.
+New negative fixtures now close their SQLite connections explicitly; no suppressed
+warning/assertion. New existing-only tests scoped POSIX (provider rejects Windows);
+all8 still execute on Linux, no original fault test skipped or weakened. Windows
+runtime not tested/qualified here.
+
+Fresh full retry now under /workspace/work/phase4-2h2b1-existing/full-python-final:
+368 discovered tests,230 source/test/native/script/packaged-guide hashes frozen;
+owned detached supervisor persists receipt independent of interactive shell. All
+tests run without fail-fast so any further failure and remaining gates are recorded.
+No source modifications or concurrent emulator/Go/Gradle while this gate runs.
+Still IN QUALIFICATION; do not move to native volume config/Handler/Agent/FGS until
+full PASS, security review, qualification commit/push and exact remote verification.

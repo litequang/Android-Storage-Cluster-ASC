@@ -2,7 +2,7 @@
   "checkpoint": "4.2h.2b.1a source preservation",
   "qualification": "IN PROGRESS; not a completed checkpoint",
   "scope": "POSIX app-private existing-only canonical Manifest/Engine prerequisite; NOT Native Storage Node",
-  "linux_targeted_tests": 8,
+  "linux_targeted_tests": 10,
   "android_existing_only_tests": 3,
   "android_existing_only_seconds": 9.327,
   "android_regression_tests": 18,
@@ -23,13 +23,18 @@
     "windows_amd64": "cross-build PASS, not runtime",
     "android_arm64": "cross-build PASS, not runtime"
   },
-  "fresh_full_python": "RUNNING; no final PASS receipt yet",
+  "fresh_full_python": "RUNNING: full-python-final,368 discovery; no final PASS receipt",
   "prior_full_runs": [
     {
       "result": "FAIL after73; original consensus child shutdown20s; exact unchanged test retry PASS23.568s"
     },
     {
       "result": "INTERRUPTED SIGKILL; 288 completed ok lines/60 fault markers; no final receipt, NOT PASS"
+    },
+    {
+      "result": "FAIL:309 tests/1failure at historical Phase41 source/archive identity; no skips;61fault PASS markers do not make full PASS",
+      "seconds": 1912.461,
+      "repair": "original historical body retained; rebuild pinned0a3ea839 matches published96260f17 exactly; additional same complete body tests current source on fresh cluster"
     }
   ],
   "apk_sha256": "61eb0323b40021df192ebccb6f3089425bac1fd8eaac1e6cfbea551fae052821",
@@ -46,7 +51,11 @@
   "source_sha256": {
     "asc/storage/engine.py": "c35dd015f47c3831d524a468a41f246016582fa0a4e1a591c144c2474c129e08",
     "asc/storage/manifest.py": "e39aec5e1d2a4df6eb5652f904985a586afd537b18914e11af269b7a4f779130",
-    "tests/test_existing_storage.py": "4015deb3a13877fa2f1bbffa3266ddab038ddf3884201e5e3e66694e32182c20",
-    "android/app/src/androidTest/java/org/asc/foundation/ExistingStorageTest.kt": "a5f6bf976216ffde2708b4a92696cecc018ca3f29041c50d9104ac4b417e93de"
-  }
+    "tests/test_existing_storage.py": "06724cea682d20e8f2498022cd05b7846dc453b323e0dc44b66ca9d6bd244717",
+    "android/app/src/androidTest/java/org/asc/foundation/ExistingStorageTest.kt": "a5f6bf976216ffde2708b4a92696cecc018ca3f29041c50d9104ac4b417e93de",
+    "tests/test_phase41_upgrade.py": "fceae90c9976372c8252350d76b3f1e15840752d28e87b10ffc8ef4528d2c09f"
+  },
+  "linux_targeted_seconds": 44.775,
+  "linux_targeted_scope": "existing-only8 +2 complete historical/current-source upgrade/rollback paths,0skip",
+  "full_frozen_files": 230
 }
