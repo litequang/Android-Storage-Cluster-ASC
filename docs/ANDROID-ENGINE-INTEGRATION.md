@@ -51,3 +51,13 @@ global HOME/getpass/OpenSSL executable or plaintext config is added. This does
 not supply a StorageServer TLS socket, live Agent/heartbeat/volume authority or
 FGS. h must implement those separately against existing Core services. See
 ANDROID-NATIVE-ENROLLMENT; dev ADB loopback is not direct LAN acceptance.
+
+## h.1 shared Agent transport
+asc.agent.heartbeat now exposes the unchanged Core heartbeat network/cluster
+contract using explicit trusted node config/profile, no CLI HOME/getpass/probe or
+filesystem. CLI wrapper reuses it while retaining its guards/capabilities/cache/
+repair semantics. This is Linux-qualified source reuse only, NOT a running native
+Agent, storage approval, byte proof or FGS. h.2 must implement an owned native TLS
+socket adapter to existing StorageHandler/Engine; later owned Agent/FGS lifecycle
+must use validated NativeNodeContext, trusted Build/profile and actual volume
+probe, and stop on revoked credentials. No fake idle service or writer inference.

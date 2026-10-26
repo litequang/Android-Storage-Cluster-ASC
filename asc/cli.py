@@ -11,6 +11,7 @@ import time
 import uuid
 from .client import ClientError, request_json
 from .enrollment import new_pending, accepted_identity
+from .agent import heartbeat
 from .identity import (HOME, ensure_private_home, fingerprint_from_pem, make_cert,
                        new_admin_token, read_private, replace_private, save_private)
 from .probe import inspect
@@ -309,20 +310,12 @@ def agent_once(cfg, sd_test=False, storage_engine=None):
     if storage_engine is not None:
         profile['storage'] = storage_engine.capabilities()
     try:
-        if 'controllers' in cfg:
-            from .failover.discovery import Discovery
-            snap = Discovery(cfg['cluster_id'], cfg['controllers'], cfg['token']).request(
-                'POST', '/api/v1/heartbeat', {'node_id': cfg['node_id'], 'profile': profile})
-        else:
-            snap = request_json(cfg['controller'], cfg['pin'], 'POST', '/api/v1/heartbeat',
-                                {'node_id': cfg['node_id'], 'profile': profile}, token=cfg['token'])
+        snap = heartbeat(cfg, profile, send=request_json)
     except ClientError as exc:
         if exc.status in (401, 403):
             replace_private(HOME / 'agent_state.json',
                             {'credential_status': 'repair-required', 'checked_at': int(time.time())})
         raise
-    if snap['cluster_id'] != cfg['cluster_id']:
-        raise ClientError('Cluster ID mismatch; refusing snapshot')
     if snap.get('catalog_metadata_enabled'):
         try:
             from .catalog.metadata import synchronize

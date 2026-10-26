@@ -508,3 +508,13 @@ provider or duplicate enrollment/Registry. A saved receipt is historical, never
 current online/approval/writer evidence. Source remains without Agent/FGS/native
 StorageServer transport. Instrumentation harness is isolated from main APK and
 uses explicitly named development loopback tunnels, not direct LAN acceptance.
+
+### Explicit Agent transport h.1
+asc.agent.heartbeat extracts only the existing CLI network/cluster-verification
+contract. Caller supplies approved config/profile; it creates no identity, state
+root, process, thread, volume or listener. CLI retains hardware/ownership checks,
+capability measurement and private cache/metadata sync exactly as before. Native
+host can later reuse this same Core operation after validated context/device and
+owned runtime checks; it must not import/patch CLI HOME/getpass. A successful
+heartbeat establishes point-in-time authenticated Controller communication only,
+not write/storage/replica/Leader authority. No native Agent/FGS at h.1.

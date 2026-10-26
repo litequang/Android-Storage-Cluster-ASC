@@ -546,3 +546,11 @@ operation changes ONLY an encrypted pending code. Wire enrollment_id/token stay
 original across retries; accepted node publication+pending clearing is atomic.
 No storage/domain approval, listener/Agent or Core quorum fallback. See
 ANDROID-NATIVE-ENROLLMENT for local IPC/public failures and retained-state gates.
+
+### Shared Agent client h.1
+No wire change: same POST /api/v1/heartbeat node_id/profile and Node bearer, same
+pinned direct route or existing Core Discovery, same expected-cluster refusal.
+asc.agent.heartbeat has explicit trusted config/profile; host wrappers retain
+policy/ownership/persistence. UNKNOWN telemetry remains null. A snapshot is not
+byte/writer proof and does not approve storage/domain/voters. No new Android IPC
+operation or listener is introduced.

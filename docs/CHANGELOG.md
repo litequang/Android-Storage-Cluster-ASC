@@ -566,3 +566,9 @@ integration is g.2, no native Node/FGS or public APK claim.
   resume, actual filesDir readiness and bounded private diagnostics.
 - Record initial emulator crash/launcher ANR; no direct LAN/physical-touch/phone
   usability or Storage Agent/FGS acceptance claimed.
+
+### Phase4.2h.1 — shared Core Agent heartbeat primitive
+- Extract existing network/cluster-match operation for explicit native context
+  reuse, retaining all CLI guard/capability/cache/repair behavior and wire format.
+- Real Linux TLS/auth/outage regressions PASS; no native Agent/FGS/listener or APK
+  release added. Remaining runtime transport/lifecycle work stays unaccepted.

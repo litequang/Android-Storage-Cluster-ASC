@@ -806,3 +806,48 @@ Do not relabel source integration as full Native Node or Phase4.2 ACCEPTED.
 Final-source negative re-seed guard PASS: --resume-setup against the completed UI
 fixture refuses BEFORE reinstall/server mutation; exact encrypted Node context
 and UI proof hashes unchanged. Public source SHA receipt verified before staging.
+
+### g.2c publication receipt
+01958c34db2de8f34743b781f86da9d11d448c3e normal push/fetch/advertised remote
+matched exactly before h.1. All three actual UI/Binder/Core fixed phases +negative
+re-seed/unchanged ciphertext guard PASS, with launcher/TCG limits recorded.
+
+## 4.2h.1 — shared explicit Core Agent contract (Linux only)
+Extracted unchanged heartbeat network/direct-pin-or-existing-Discovery +cluster
+checks into asc.agent.heartbeat. Explicit config/profile, optional trusted
+in-process direct sender; no HOME/getpass/hardware discovery/FS/identity/thread/
+lifecycle. CLI agent_once retains original device/M51/capability checks,401/403
+repair-required status without Node identity changes, verified metadata sync and
+private snapshot/agent-state persistence. Same wire fields/routes/tokens and
+expected-cluster refusal; no new Android operation, runtime or approval.
+
+Final fresh57 targeted Linux PASS0skip/fail55.804s: new real TLS Agent contract5,
+original lifecycle29, all original storage-cluster/distributed suites and4 retained
+failover RuntimeState tests. Actual pinned heartbeat/UNKNOWN null profile, wrong
+pin before metadata mutation, cluster mismatch, revoked token, real disconnect/
+reconnect +same Node cfg; existing physical bytes/transfer scopes/storage leases/
+metadata/discovery assertions retained. No original test/assertion modified. New
+wrong-pin test compares durable Node rows rather than unrelated snapshot clock.
+Command: PYTHONPATH=tests python -m unittest test_agent_contract test_lifecycle
+test_storage_cluster test_distributed test_failover.RuntimeStateTests -v. Private
+log /workspace/work/phase4-2g2c-ui/h1-regression-final.log. Not a fresh whole-suite
+or Android runtime result. Previous smaller preliminary run not added to57.
+
+No APK rebuilt/released for h.1; frozen g.2b/g.2c private APK remains SHA59541e41...
+with114 modules. Current source now adds shared Agent module; next native build
+must resync canonical source/audit inventory, never count old APK as h runtime
+acceptance. Original public artifacts, signer, old AVD/probe/volume/Node identities
+and Core3D guards untouched. Full4.2 NOT ACCEPTED. Core/Go/full faults stay for
+remaining runtime safety/final gates, not historical PASS relabeling.
+
+Next h.2: actual native JSSE socket adaptation (not CPython SSLContext substitute)
+to SAME StorageHandler/Engine, bounds/deadlines/pinning/introspection, binary
+read/write/close/failure tests. Then explicit app-owned network volume configuration
+(no probe adoption/reinitialization), real Agent/heartbeat +Foreground Service/
+notification/Stop and authorized I/O/restart/network/revocation tests. Only then
+i observer/j direct LAN/full fresh gates/new debug candidate. Avoid duplicate
+Kotlin storage/Agent/Registry or global HOME/getpass monkeypatch. No Raft/GC/writerDR.
+Normal h.1 commit/push/fetch verification must precede next source checkpoint.
+Rollback h.1 is code-only compatible (no schema/data change); keep newer native
+enrollment state and original signer, do not restore stale records or older f.2
+code that rejects populated slots.

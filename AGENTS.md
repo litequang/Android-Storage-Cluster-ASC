@@ -230,3 +230,13 @@ Node or CPython socket drop-in. g actual Core enrollment/resume then h existing
 Agent/native socket adapter/FGS, i observer and j direct LAN/full regression remain.
 No public APK, phone/production/Termux migration/GC/Raft/writableDR acceptance.
 Preserve original signer/retained state and all uncommitted source on resume.
+
+Native continuation current receipt: f.2 TLS +g shared/pending/native provider/UI
+Core enrollment are durably scoped in current4.2 progress. Actual API35 explicit
+dev loopback/UI callback/process proofs are NOT LAN/physical-touch/phone acceptance
+(launcher ANR recorded). h.1 reuses explicit Core heartbeat contract, Linux only;
+no native StorageServer/Agent/FGS yet. Continue h.2 socket adapter/owned volume +
+Agent/FGS, i observer and j direct network/full gates, not redo f/g. Preserve
+original private signer, original stopped upgrade AVD and newly enrolled UI AVD
+state; never clear/re-seed identity or infer authority from heartbeat/Leader flag.
+Full4.2 NOT ACCEPTED, writerDR/Raft/GC/failover remain locked.

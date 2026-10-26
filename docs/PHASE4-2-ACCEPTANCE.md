@@ -222,3 +222,12 @@ ANR observed: programmatic real UI/Binder proof is NOT physical-touch usability
 acceptance. Interactive UX NOT QUALIFIED, direct LAN NOT PASSED, phones/ARM64
 runtime NOT TESTED, Agent/FGS/observer absent. Full4.2 NOT ACCEPTED, writableDR
 BLOCKED. This is no new public Android release/in-place upgrade claim.
+
+## h.1 shared Agent transport — Linux source checkpoint
+Fresh57 targeted Linux PASS0skip/fail: new actual TLS heartbeat/auth/outage5 plus
+original lifecycle/storage-cluster/distributed/discovery-related regression.
+Existing assertions unchanged; source/wire/CLI behavior preserved, no schema.
+This is transport reuse, NOT native listener/Agent/Foreground Service acceptance.
+No new APK/native tests/release; previously qualified Android artifact is frozen
+at g source. Full4.2 NOT ACCEPTED, writableDR BLOCKED; h.2/native owned lifecycle,
+i observer and j direct LAN/fresh full gates remain.

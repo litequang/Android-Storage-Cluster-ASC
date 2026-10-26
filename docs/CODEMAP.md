@@ -684,3 +684,14 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
   Controller/TLS fixture, pre-enrollment setup-only resume, explicit dev tunnel.
   Retains state; never uninstall/clear. Main APK/source unchanged. NOT direct LAN
   or physical-touch/phone usability proof; observed launcher ANR recorded.
+
+## Phase4.2h.1 shared explicit Agent heartbeat contract
+- asc/agent.py:heartbeat(config,profile,send=None): unchanged Core pinned request/
+  Discovery routing +cluster match, without HOME/hardware discovery/FS/lifecycle.
+  Trusted optional transport callback, never IPC. Not storage/Leader authority.
+- asc/cli.py:agent_once retains inspect/M51 storage fence/real capabilities,
+  credential rejection/private cache/metadata-sync behavior; delegates network
+  exchange to shared heartbeat, preserving existing transport injection seam.
+- tests/test_agent_contract.py: actual Core Registry/TLS/UNKNOWN profile, wrong
+  pin, cluster mismatch, revoked token and offline/reconnect, no identity repair.
+  Existing lifecycle/storage/distributed/discovery regressions remain unchanged.

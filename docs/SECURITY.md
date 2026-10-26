@@ -561,3 +561,13 @@ vault NOT_PROVISIONED before explicit UI provision. No identity reset/DB restore
 Debug signer/owned guest/process checked, private fixture via stdin. Programmatic
 View integration does not establish physical touch usability; TCG launcher ANR
 and initial emulator crash remain recorded limits, never hidden as Android PASS.
+
+### Explicit Agent primitive h.1
+Shared heartbeat is transport only, not an Android guard/runtime bypass. It has no
+HOME/getpass/probe/identity creation/filesystem/lifecycle effects. Native callers
+MUST validate original device/context/enrollment/ownership before invoking it.
+Optional direct send callback is trusted in-process only, not caller-controlled
+IPC/network input. Existing CLI M51/capability/repair/cache behavior remains; Core
+Discovery still owns distributed pin/term routing. Returned topology never grants
+storage/GC/voter/writer rights. Wrong pin never updates server metadata; revoked
+credential/cluster mismatch/offline refuse without new identity or local state.
