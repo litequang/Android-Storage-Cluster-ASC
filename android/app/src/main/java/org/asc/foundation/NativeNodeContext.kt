@@ -22,7 +22,7 @@ class NativeNodeContext(private val context:Context, private val vault:Applicati
             .put("fingerprint",Build.FINGERPRINT).put("sdk",Build.VERSION.SDK_INT).put("debug",BuildConfig.DEBUG)
         val python=Python.getInstance()
         return python.getModule("asc.node.context").callAttr("NodeContext",parent.absolutePath,
-            Credentials(vault),app,python.getModule("json").callAttr("loads",build.toString()))
+            Credentials(vault),app,python.getModule("json").callAttr("loads",build.toString()),NativeTLSLoader())
     }
     private fun result(operation:String):JSONObject {
         val value=core().callAttr(operation)
@@ -41,4 +41,10 @@ class NativeNodeContext(private val context:Context, private val vault:Applicati
         return result("initialize")
     }
     fun status():JSONObject=result("public_status")
+    fun prepareTls():JSONObject {
+        check(Build.VERSION.SDK_INT>=30) {"native_tls_api_not_qualified"}
+        val value=core().callAttr("prepare_tls",NativeTLSIdentity())
+        return JSONObject(Python.getInstance().getModule("json").callAttr("dumps",value).toString())
+    }
+    internal fun serverTLSContext():com.chaquo.python.PyObject=core().callAttr("tls_context")
 }

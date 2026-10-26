@@ -500,3 +500,23 @@ relative exclusive receipt and root/ancestor identity checks preserve scope.
 M51 dominates and unknown phones remain blocked; only actual DEBUG AOSP fixture
 identity gets SYNTHETIC scope. No TLS/enrollment/runtime/writer authority yet.
 Partial initialization/lost state is held, not repaired; no power-cut promise.
+
+## Native TLS provider boundary (4.2f.2)
+Explicit trusted Android JSSE loader uses only sealed anonymous-fd readback: no
+proc reopen after Android denial, filesystem plaintext key, raw syscall, SELinux/
+permission change, insecure TrustManager or fallback on failed memfd/sealing.
+CLOEXEC/all seals/readback/anonymous links and cleanup checked. Public Bionic
+API30+ only when Python wrapper absent; API26–29 NOT QUALIFIED. Standard JCA
+self-signature/validity/EC serverAuth/key-match proof before in-memory KeyManager.
+Software TLS key stays in app process RAM and existing Keystore-encrypted context,
+not hardware-backed TLS-key claim. Missing/corrupt key/record/witness cannot rotate
+identity. No key in Binder/browser/logs; provider/cert input never supplied via
+IPC. Protocol1/UID/signature/consent/M51/unknown/GC/Raft/DR guards preserved.
+Private guest-loopback test listener enforces TLS1.2/1.3; no product listener exists.
+Future Agent adapter must enforce secure protocol/bounds/fresh authorization itself.
+See ANDROID-NATIVE-TLS for scopes, dependencies, compatibility and remaining work.
+
+BC dependency lint retains an unused EST getTrustAllTrustManager helper warning.
+App uses no EST/trust-all helper and native default-system-trust negative TLS
+gate rejects untrusted self-signed peers. No suppression; see native TLS dependency
+review for exact scope. Do not confuse inventory/pattern checks with full SAST.

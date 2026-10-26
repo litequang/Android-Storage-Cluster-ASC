@@ -472,3 +472,13 @@ explicit canonical Core NodeContext. No process-global HOME/getpass/subprocess o
 second Registry/Catalog. Optional context is independent of old app/probe/Core
 formats; missing state/key/receipt/medium holds, no Node creation. Native runtime
 and enrollment remain unqualified. See ANDROID-NATIVE-CONTEXT.
+
+## Phase4.2f.2 platform TLS without plaintext disk keys
+NodeContext now accepts an explicit trusted in-process platform loader. Both use
+sealed anonymous fd readback; Linux uses CPython SSL, Android uses standard JSSE
+from RAM because its proc-fd reopen is denied. Selection is explicit before IO,
+never a failed-operation fallback or policy bypass. Key/cert match before sealed
+persistence, reuse rather than regenerate. No Kotlin Catalog/Storage/Registry.
+Returned JSSE context is NOT a CPython socket runtime: native transport/owned
+Agent/FGS integration remains4.2h; listener protocol minimum/bounds/authorization
+must be enforced there. No automatic listener/enrollment/writer. See native TLS doc.

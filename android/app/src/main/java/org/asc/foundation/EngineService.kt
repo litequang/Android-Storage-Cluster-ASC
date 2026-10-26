@@ -43,6 +43,7 @@ class EngineService : Service() {
                     "app_provision" -> vault.provision().toString()
                     "native_context_init" -> NativeNodeContext(this@EngineService,vault).initialize().toString()
                     "native_context_status" -> NativeNodeContext(this@EngineService,vault).status().toString()
+                    "native_tls_prepare" -> NativeNodeContext(this@EngineService,vault).prepareTls().toString()
                     "save_join_draft" -> vault.saveDraft(requestId,controller,pin,clusterId,name,code).toString()
                     "draft_status" -> vault.draftSummary().toString()
                     "probe_private_volume" -> PrivateProbeStorage(this@EngineService,vault).probe().toString()

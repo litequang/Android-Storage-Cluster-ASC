@@ -296,3 +296,14 @@ plaintext node tokens, legacy state adoption or new Kotlin enrollment logic.
 Partial publication is held rather than reconstructed. Debug AOSP is a distinct
 synthetic fixture scope, not unknown-phone/M51 permission or Core guard bypass.
 Context UUID is not Node/Cluster identity; f.1 cannot start runtime or join.
+
+## ADR070 — Explicit memory-only Android TLS provider
+Keep Core context and encryption authoritative. Use standard BC1.83 only for
+JCA/X.509 generation; Android platform JSSE/KeyManagerFactory consumes sealed-fd
+readback in RAM with standard certificate/signature key-match checks. Bionic
+public memfd API30+ supplies the missing Python wrapper, not an OS permission
+bypass. Android proc reopen denial is preserved; no disk PEM/raw syscall/SELinux
+change or automatic provider switch. Both platforms require actual seals/CLOEXEC/
+readback/cleanup. TLS key is software/exportable in RAM, protected at rest by
+existing Keystore AES, not falsely hardware-nonexportable. Agent socket/lifecycle
+integration is a separate checkpoint; no duplicate Engine or writer authority.

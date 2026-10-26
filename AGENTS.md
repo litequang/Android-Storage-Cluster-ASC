@@ -223,3 +223,10 @@ phone/M51/Termux/production access, writerDR/quorum/GC/failover. Preserve privat
 signer; normal APK upgrade only, no uninstall/clear/-d. Explicit dev ADB tunnel
 proof is not direct NAT/LAN; don't relabel previous317/full as new changed-source
 acceptance. Full4.2 NOT ACCEPTED until remaining gates actually qualify.
+
+4.2f.2 now has explicit native JSSE +sealed anonymous-fd TLS provider and fresh
+targeted qualification (current acceptance/progress/native TLS doc). Not a joined
+Node or CPython socket drop-in. g actual Core enrollment/resume then h existing
+Agent/native socket adapter/FGS, i observer and j direct LAN/full regression remain.
+No public APK, phone/production/Termux migration/GC/Raft/writableDR acceptance.
+Preserve original signer/retained state and all uncommitted source on resume.

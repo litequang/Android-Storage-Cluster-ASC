@@ -528,3 +528,11 @@ protected/unknown-phone refusal, no-follow identity-bound durable receipt and
 consent-gated private context IPC. No global HOME/getpass/subprocess, Node/Cluster
 creation, TLS/listener/enrollment/FGS/observer or writableDR. Existing formats/
 archives and original branches preserved. Actual tests/remaining work in progress.
+
+## Phase4.2f.2 — native TLS identity and memory-only platform provider
+Recover all12 dirty source files without overwrite; docs-only handoff fast-forward.
+Add stable Keystore-encrypted TLS cert/key via standard BC/JCA; sealed anonymous
+fd pipeline, explicit native JSSE loader avoids Android-denied proc reopening,
+actual key-match/handshake/pinning and fault/restart gates. No plaintext disk key,
+OpenSSL CLI/Termux/permission change or identity replacement. No native Node/FGS/
+enrollment/observer/LAN/public APK release; complete qualification in progress.

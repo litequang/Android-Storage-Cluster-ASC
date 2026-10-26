@@ -85,7 +85,8 @@ APK. Do not uninstall/clear state to bypass signature/version refusal.
 | Gate | Status / next evidence |
 |---|---|
 |Canonical Engine library actual Android I/O|PASS; not a joined Node|
-|Native Core enrollment/resume and node TLS/agent|BLOCKED: explicit native context/credential provider not implemented; CLI HOME/getpass/subprocess/OpenSSL path cannot be bypassed|
+|Native Core enrollment/resume and Storage Agent|NOT IMPLEMENTED; remaining4.2g/h; no CLI/HOME/subprocess bypass|
+|Native TLS identity/certificate provider|4.2f.2 targeted PASS API35 guest loopback; does not qualify a Native Node|
 |Encrypted unsent form|PASS; NOT Core pending enrollment/token/Node identity|
 |Owned Node/Controller lifecycle, FGS/notification/stop|BLOCKED; no idle fake service/background uptime claim|
 |Native authenticated Core observer/node list/replicas/quorum|UNCONFIGURED/UNKNOWN; existing Linux adapter retained|
@@ -156,3 +157,30 @@ exact source/commands/failures/limits in PROGRESS and ANDROID-NATIVE-CONTEXT.
 All old table entries about missing enrollment/TLS/Agent/FGS/observer/direct LAN
 remain outstanding. f.1 creates NO Node/Cluster identity. Full Phase4.2 NOT ACCEPTED,
 new-source full Python/Go/fault regression is deferred until final runtime gates.
+
+## 4.2f.2 fresh targeted acceptance — TLS provider only
+Workspace/source/signer/AVD recovered, all12 dirty source files preserved; normal
+docs-only161e833 fast-forward without reset/overwrite. Full Phase4.2 NOT ACCEPTED.
+
+Fresh34 Linux/11JVM/20Android(106.286s)+foreign1 PASS0skip/fail; actual BC/JCA/JSSE
+handshake with canonical Core pinning, wrong pin/default-system-trust denial,
+key mismatch, Bionic sealed memory/FD cleanup, Keystore/corrupt+missing state,
+context/Binder/Engine regression. Actual process-death TLS fingerprint/exact
+ciphertext/app/context identity and retained old native upgrade-state proof PASS.
+No new app identity/VolumeID, no uninstall/clear/forced downgrade or old DB restore.
+
+Explicit native JSSE avoids the recovered Android proc-fd EACCES while retaining
+actual memfd/sealing/readback checks. No plaintext disk/raw syscall/policy change
+or failed-operation fallback. TLS key is software in RAM, Keystore-encrypted at
+rest, not hardware nonexportable TLS signing. Native TLS26–29 NOT QUALIFIED.
+
+Strict build/6new dependency hashes/old pins retained/bounded APK audit PASS;
+original signer,112 canonical modules,unchanged3permissions. Private version3 APK
+SHA88435153fda9493bf13bd75a2d4e6a0cd3bc6c833e179e275b5f0faa511f2aa3, no public
+artifact/release. Lint0errors22warnings includes retained unused BC EST trust-all
+helper warning; app uses no such helper and actual default trust rejects untrusted
+peer. Review scope in ANDROID-NATIVE-TLS; not comprehensive binary SAST.
+
+Evidence/progress/API/state/security docs updated. Remaining g enrollment, h native
+socket adapter/Agent/FGS, i read-only observer, j direct LAN/end-to-end/fresh full
+regression remain separate. This does not close those mandatory Native Node gates.

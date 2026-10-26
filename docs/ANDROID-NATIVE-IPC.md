@@ -51,3 +51,9 @@ Additive4.2f.1 native_context_init/native_context_status require empty extra fie
 existing own UID/signature/consent/device/app-key gates. Fixed private context only;
 public null Node/Cluster/unconfigured TLS/enrollment/storage. No Node start or
 network authority; explicit AIDL IDs0/1 unchanged. See ANDROID-NATIVE-CONTEXT.
+
+4.2f.2 native_tls_prepare is additive to request transaction1 (no extra fields).
+Same caller UID/signature/consent/device/app identity/context gates. Explicit first
+preparation persists one validated cert/key; repeat reuses original public pin.
+Only IDENTITY_READY/public SHA returns; no key/cert/provider path, Node ID, listener
+or writer permission. Native SDK26–29 TLS refuses. See ANDROID-NATIVE-TLS.

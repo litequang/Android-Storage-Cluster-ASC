@@ -134,3 +134,9 @@ private signer; no new public APK until qualified artifact publication. Prior
 0.2.0 published APK remains unchanged. Context operations are private Binder/
 provider foundation only; native Node/enrollment/TLS/FGS are not delivered by them.
 Read ANDROID-NATIVE-CONTEXT and current progress before any continuation.
+
+4.2f.2 source adds native_tls_prepare/typed sealed TLS; read ANDROID-NATIVE-TLS.
+API35 x86_64 guest loopback proof is distinct from direct LAN/phones. TLS on26–29
+NOT QUALIFIED. Version3 build remains PRIVATE qualification input, not a release
+or Native Node. Keep original signer/UID/state; no uninstall/clear/-d. First native
+TLS preparation does not start a listener or approve storage; g–j remain separate.

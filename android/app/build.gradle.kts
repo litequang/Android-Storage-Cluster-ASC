@@ -14,8 +14,12 @@ android {
     buildFeatures { aidl = true; buildConfig = true }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     kotlinOptions { jvmTarget = "17" }
+    // Three BC jars carry the same Java9 OSGi metadata; Android does not run
+    // OSGi. Exclude only that descriptor, never crypto classes or policy checks.
+    packaging { resources.excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF" }
 }
 dependencies {
+    implementation("org.bouncycastle:bcpkix-jdk18on:1.83")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test:runner:1.6.2")
     androidTestImplementation("androidx.test:core:1.6.1")

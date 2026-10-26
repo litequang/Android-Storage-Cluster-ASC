@@ -483,3 +483,11 @@ replaced private root/receipt, incompatible schema/device or legacy/recovery
 state. Preserve all bytes/key/receipt; do not delete root, recreate identity or
 copy Termux state. CONTEXT_READY is local provider readiness only, not enrollment,
 TLS listener, storage approval or Node ONLINE. See ANDROID-NATIVE-CONTEXT.
+
+Native TLS: Chaquopy may omit os.memfd_create although API30+ Bionic provides it.
+The explicit typed public-Bionic adapter still requires actual sealing/CLOEXEC/
+readback. Android may deny proc-fd reopen; native JSSE consumes already-open fd
+bytes with ordinary OS policy. No disk-key/SELinux/raw-syscall workaround.
+Any key/cert/pin/seal/credential error refuses without rotation; preserve state.
+TLS identity readiness is not Node enrollment/approval/listener health. API26–29
+TLS NOT QUALIFIED. Read ANDROID-NATIVE-TLS and progress before continuing.

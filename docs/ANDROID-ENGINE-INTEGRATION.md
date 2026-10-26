@@ -36,3 +36,9 @@ that current app can join or store cluster replicas. Idle fake FGS stays absent.
 Native private capability probes/drafts are separate foundation state, never
 approved storage/failure domain, Raft membership or recovery writer. Migration from
 Termux and old synthetic probe volumes requires its own tested contract.
+
+4.2f.2 qualifies explicit stable TLS identity/provider separately (native TLS doc),
+not the Node. Android returns a standard JSSE context; it is not directly usable
+as CPython StorageServer.wrap_socket.4.2h must adapt owned native transport to
+EXISTING Python Storage handlers/Engine, including bounds/fresh introspection and
+secure protocols. No second Kotlin Storage Engine or product listener is created.

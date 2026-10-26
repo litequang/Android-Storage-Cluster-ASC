@@ -67,3 +67,9 @@ It uses a NEW dedicated native-runtime-v1(0700)/native-node-v1 parent/home; Andr
 filesDir0771 is not chmodded or treated as approved private Node state. Existing
 app1/draft1/probe1/alias/Core schema unchanged. Network identity slots remain null;
 context UUID never stands in for Node/Cluster. Partial/missing state is held.
+
+Current4.2f.2 extends ONLY typed optional TLS slot in context1, specified in
+ANDROID-NATIVE-TLS. Existing app/alias/draft/probe/Core IDs and formats remain.
+EC software key/cert are encrypted in existing Keystore-wrapped record, never
+plaintext disk; old f.1 rejects non-null TLS rather than adopts it. Missing/corrupt
+record/witness/key holds, no replacement. Node/pending/storage remain null.

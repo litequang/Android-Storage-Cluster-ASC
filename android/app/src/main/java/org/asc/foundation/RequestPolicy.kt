@@ -3,7 +3,7 @@ import java.net.URI
 import java.util.UUID
 
 object RequestPolicy {
-    val operations = setOf("status", "volumes", "quick_join", "resume_join", "node_start", "stop_owned", "app_provision", "probe_private_volume", "save_join_draft", "draft_status", "check_controller", "engine_info", "native_context_init", "native_context_status")
+    val operations = setOf("status", "volumes", "quick_join", "resume_join", "node_start", "stop_owned", "app_provision", "probe_private_volume", "save_join_draft", "draft_status", "check_controller", "engine_info", "native_context_init", "native_context_status", "native_tls_prepare")
     fun caller(uid: Int, ownUid: Int, signatureMatches: Boolean) {
         if (uid != ownUid || !signatureMatches) throw SecurityException("caller_denied")
     }

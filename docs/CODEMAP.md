@@ -621,3 +621,18 @@ no runtime/config/authority or secrets. Full native Phase4.2 remains NOT ACCEPTE
 - test_native_context/NativeContextTest and fixed runner context phases own Linux
   filesystem and actual Android credential/restart gates. ANDROID-NATIVE-CONTEXT
   defines format/threat/compatibility; f–j remain unfinished.
+
+## Phase4.2f.2 native TLS identity/providers
+- asc/node/tls.py: explicit sealed anonymous-memory loader, verified seals/CLOEXEC/
+  readback/FD cleanup; public Bionic ABI only when Python wrapper absent. Linux
+  CPython and explicit Android native loaders never fall back after denial.
+- NodeContext tls_provider/prepare_tls/tls_context: typed sealed TLS component,
+  one durable cert/key, key-match validation/restart/downgrade refusal; no Node.
+- NativeTLSIdentity.kt: pinned BC/JCA EC/X.509 generation. NativeTLSLoader.kt:
+  standard Android JSSE/KeyFactory/Signature/in-memory KeyStore/KeyManagerFactory;
+  no proc reopen/plaintext key store, explicit API30+ guard.
+- NativeNodeContext +EngineService/RequestPolicy: private native_tls_prepare/public
+  pin only; explicit Binder IDs/consent/device/UID unchanged.
+- test_native_tls/NativeTLSTest and fixed TLS runner phases qualify actual TLS/
+  sealing/credential/process faults alongside retained context/Binder/Engine gates.
+- ANDROID-NATIVE-TLS owns provider format/threat/API/platform/next-agent boundaries.

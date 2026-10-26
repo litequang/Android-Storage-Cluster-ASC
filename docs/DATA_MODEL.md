@@ -489,3 +489,13 @@ pending/node/tls/storage; four runtime slots must remain null at f.1. Persisted
 parent/root inode and original path prevent replacement adoption. Missing witness/
 record/key/root holds, never regeneration. Existing app/draft/probe/Core schemas
 unchanged; context_id is NOT network Node/Cluster identity. See native context doc.
+
+## Native TLS component1 (4.2f.2)
+Optional sealed context1 tls slot is now exactly format1/certificate/private_key/
+pin (PEM strings and lowercase SHA256). Revision advances once on explicit first
+prepare; complete record uses existing app-purpose AES-GCM/CAS/witness. Public
+receipt/app ID/Keystore alias/probe/Registry/manifest formats unchanged. Node/
+Cluster/pending/storage remain absent/null. Existing TLS validates/reuses, damaged
+state is held. Exact old f.1 code refuses this non-null slot rather than reinit.
+No plaintext key/PKCS12/database restore or Termux migration; native TLS doc owns
+compatibility and retained upgrade/process receipts.

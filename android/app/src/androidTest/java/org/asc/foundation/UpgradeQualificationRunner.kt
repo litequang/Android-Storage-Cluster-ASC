@@ -21,7 +21,33 @@ class UpgradeQualificationRunner:androidx.test.runner.AndroidJUnitRunner() {
             val version=c.packageManager.getPackageInfo(c.packageName,0).versionCode
             val vault=ApplicationVault(c);val engine=EmbeddedEngine(c)
             val receipt=File(c.filesDir.canonicalFile,"upgrade-proof.json")
-            if(phase=="context-seed" || phase=="context-verify") {
+            if(phase=="tls-seed" || phase=="tls-verify") {
+                check(version==3)
+                val folder=File(c.filesDir.canonicalFile,"native-context-process-proof")
+                check(folder.isDirectory)
+                val local=object:android.content.ContextWrapper(c) {override fun getFilesDir():File=folder}
+                val localVault=ApplicationVault(local,"native-context-process-proof")
+                val node=NativeNodeContext(local,localVault)
+                val original=JSONObject(File(folder,"process-proof.json").readText())
+                val proofFile=File(folder,"tls-proof.json")
+                if(phase=="tls-seed") {
+                    check(!proofFile.exists())
+                    val state=node.prepareTls()
+                    check(state.getString("application_id")==original.getString("application_id"))
+                    check(state.getString("context_id")==original.getString("context_id"))
+                    proofFile.writeText(JSONObject().put("application_id",state.getString("application_id"))
+                        .put("context_id",state.getString("context_id")).put("tls_pin",state.getString("tls_pin"))
+                        .put("cipher_sha",sha(File(localVault.root,"node-context.json"))).toString())
+                } else {
+                    val saved=JSONObject(proofFile.readText());val state=node.prepareTls()
+                    check(state.getString("application_id")==saved.getString("application_id"))
+                    check(state.getString("context_id")==saved.getString("context_id"))
+                    check(state.getString("tls_pin")==saved.getString("tls_pin"))
+                    check(sha(File(localVault.root,"node-context.json"))==saved.getString("cipher_sha"))
+                    node.serverTLSContext()
+                    check(state.isNull("node_id") && state.isNull("cluster_id"))
+                }
+            } else if(phase=="context-seed" || phase=="context-verify") {
                 check(version==3)
                 val folder=File(c.filesDir.canonicalFile,"native-context-process-proof")
                 if(phase=="context-seed") {check(!folder.exists());check(folder.mkdir());android.system.Os.chmod(folder.absolutePath,448)}

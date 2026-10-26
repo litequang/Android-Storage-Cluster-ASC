@@ -30,7 +30,7 @@ class RequestPolicyTest {
         assertThrows(IllegalArgumentException::class.java) {RequestPolicy.validate(1,"1-1-1-1-1","status","","","","","",false)}
     }
     @Test fun nativeContextCannotSmugglePathsCredentialsOrTrust() {
-        for(op in listOf("native_context_init","native_context_status")) {
+        for(op in listOf("native_context_init","native_context_status","native_tls_prepare")) {
             call(op)
             assertThrows(IllegalArgumentException::class.java) {call(op,ep="/private/elsewhere")}
             assertThrows(IllegalArgumentException::class.java) {call(op,code="123456abcdef")}

@@ -52,3 +52,8 @@ prototype-client ABI promise or cross-UID adoption. No raw secret response/log.
 Existing app identity/consent/UID/signature/device gates required; no new AIDL
 transaction/paths/secret record API. Context is optional and not a Node/TLS runtime.
 See ANDROID-NATIVE-CONTEXT for exact provider and persistence contract.
+
+4.2f.2 adds consent-gated native_tls_prepare with no extra fields; stable public
+fingerprint only, never private key/provider/paths. No enrollment/Node start or
+authority follows. Explicit Android JSSE and Linux CPython provider contracts and
+API30+/NOT QUALIFIED26–29 limits: ANDROID-NATIVE-TLS.

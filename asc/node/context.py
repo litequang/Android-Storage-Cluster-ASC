@@ -125,12 +125,13 @@ class NodeContext:
     Construction/status/restart are read-only. Initialization requires an explicit
     caller action and existing app identity/key; partial state is held for review.
     """
-    def __init__(self, private_parent, provider, app_id, build):
+    def __init__(self, private_parent, provider, app_id, build, tls_provider=None):
         self.parent = Path(private_parent)
         self.home = self.parent / 'native-node-v1'
         self.provider = provider
         self.app_id = _uuid(app_id)
         self.device = android_device(build)  # Before any provider/state access.
+        self.tls_provider = tls_provider  # Trusted in-process platform loader, never IPC input.
         if not self.parent.is_absolute() or '..' in self.parent.parts:
             raise ContextLocked()
         _directory(self.parent)
@@ -152,10 +153,13 @@ class NodeContext:
                 record['device_binding'] != self.device['binding']):
             raise ContextLocked()
         _uuid(record['context_id'])
-        # f.1 has NO network identity/provider yet. Future supported records require
-        # explicit schema/validation, rather than allowing arbitrary opaque secrets.
-        if any(record[key] is not None for key in ('pending', 'node', 'tls', 'storage')):
+        # Strict components, never arbitrary opaque secrets. A certificate is
+        # local TLS identity only, not enrollment/approval/Node or writer authority.
+        if any(record[key] is not None for key in ('pending', 'node', 'storage')):
             raise ContextLocked()
+        if record['tls'] is not None:
+            from .tls import server_context
+            server_context(record['tls'], self.tls_provider)
         self._check_recovery()
         expected = {'home': str(self.home), 'parent': _directory(self.parent),
                     'root': _directory(self.home)}
@@ -241,6 +245,39 @@ class NodeContext:
         return {'context_version': 1, 'state': 'CONTEXT_READY',
                 'context_id': record['context_id'], 'application_id': self.app_id,
                 'device_scope': self.device['scope'], 'node_id': None, 'cluster_id': None,
-                'enrollment': 'NOT_CONFIGURED', 'tls': 'NOT_CONFIGURED',
+                'enrollment': 'NOT_CONFIGURED',
+                'tls': 'IDENTITY_READY' if record['tls'] is not None else 'NOT_CONFIGURED',
+                'tls_pin': record['tls']['pin'] if record['tls'] is not None else None,
                 'storage': 'NOT_CONFIGURED', 'writer_authority': False,
                 'runtime_start_supported': False}
+
+    def prepare_tls(self, certificate_provider):
+        """Explicit provision once; repeat validates/reuses, never rotates on error.
+
+        certificate_provider is trusted in-process standard-library/third-party
+        X.509 generation, not a Binder-supplied implementation or shell command.
+        Its raw private material never crosses public IPC or a logging boundary.
+        """
+        from .tls import server_context
+        try:
+            with self.operation():
+                raw = self.provider.load()
+                record = self._validate(raw)
+                if record['tls'] is None:
+                    identity = decode(certificate_provider.generate())
+                    server_context(identity, self.tls_provider)  # Key match before persistence.
+                    record['tls'] = identity
+                    record['revision'] += 1
+                    replacement = canonical(record).decode()
+                    self._validate(replacement)
+                    self.provider.compare_exchange(raw, replacement)
+                return self.public_status()
+        except Exception:
+            raise ContextLocked() from None
+
+    def tls_context(self):
+        from .tls import server_context
+        record = self.load()
+        if record['tls'] is None:
+            raise ContextLocked()
+        return server_context(record['tls'], self.tls_provider)

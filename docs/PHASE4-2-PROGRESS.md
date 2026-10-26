@@ -545,3 +545,70 @@ The current public APK stays0.2.0-foundation/ab1b2da3...; f.1 source is durable 
 GitHub, f.2 source durability depends on recovering the original dirty workspace.
 This receipt records the exact limit instead of claiming all unfinished source
 was published or tested.
+
+## 4.2f.2 recovery / fresh native TLS qualification (2026-10-26)
+
+Workspace recovered at4df6ad6 with all12 dirty TLS files; none lost. Saved exact
+public source copies/tracked+staged patches/SHA manifest outside Git before fetch.
+Remote161e833 was docs-only; safe same-branch fast-forward preserved every dirty
+source byte. No reset/clean/force/whole merge. Original signer/AVD/userdata retained.
+Historical qemu500147 was a verified zombie with empty cmdline; both OS file locks
+were free. Moved ONLY its exact owned hardware PID lock to private recovery backup,
+kept multiinstance lock and all AVD data. Retained-state AVD cold boot verified
+qemu1/ranchu/boot1 before install. No old PID was killed or blindly reused.
+
+Recovered interrupted Bionic log contains3tests/2FAIL (proc reopen EACCES), supporting
+diagnosis only. Overall interrupted qualification stays UNKNOWN and contributes
+NO fresh PASS. Failed last seal/corrupt/no-fallback patch was absent; implemented
+those tests now. All original12 files retained and selectively completed; added
+NativeTLSLoader.kt and native TLS doc instead of reconstructing the project.
+
+Android explicitly uses standard JSSE/KeyFactory/Signature/in-memory PKCS12 +
+KeyManagerFactory on bytes read from already-open sealed fd. No proc reopen on
+Android, disk PEM/PKCS12, external OpenSSL, raw syscall, SELinux/permission or global
+provider change. Bionic public API30+ only if Python wrapper absent; verified
+actual seals/CLOEXEC/readback/zero links/cleanup, fail closed without fallback.
+Linux CPython route remains explicit. Typed TLS component and public-pin-only IPC
+reuse existing context/Keystore CAS; no Node/Cluster/storage/pending identity added.
+Native TLS on26–29 NOT QUALIFIED; actual platform proof is API35 x86_64 only.
+
+Fresh targeted Linux34 PASS0skip: TLS9/context10/Engine5/ControllerBinding1/identity4/
+bridge-contract5. Actual Gradle/JVM11 PASS0fail/error/skip; build/lint/testAPK PASS.
+Actual final Android20 PASS106.286s0skip, plus foreign-UID/signature/permission/bind
+denial1 PASS. Final20 includes real BC/JCA certificate/key match +mismatch, actual
+Bionic ABI/seals/denied mutation/fd-close, Keystore sealing/cipher and missing record/
+witness/wrapping-key hold, JSSE-to-Core-pinned-client handshake/wrong-pin/SHA,
+DEFAULT SYSTEM TRUST rejects untrusted self-signed peer, existing context/Binder/
+canonical Storage Engine read/write/readback/fsync/corruption/identity gates.
+Preliminary19 PASS97.185s preceded added default-trust negative test; final20 is
+the new complete targeted set, not19+20 or old interrupted results.
+
+Fixed TLS seed ->actual force-stop/cold Activity start ->TLS verify PASS: original
+application/context IDs, exact encrypted TLS bytes and certificate fingerprint
+preserved. Retained exact old-native upgrade receipt verify-v3 PASS: original
+app Keystore/draft/VolumeID+marker/committed Core bytes preserved. UID unchanged
+across normal install-r; no uninstall/clear/-d or database restore. An initial
+postboot install-r exited1 before tests (stderr not retained by first harness);
+normal same-APK retry succeeded without bypass flags. No root cause fabricated.
+
+Dependency review:3 new BC1.83 components/6 JAR+POM SHA256 match cache, every old
+verification pin unchanged (old AGP BC entries are retained). Strict build, no
+updated system tools/proxy/CA. Original signer SHA
+bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30. Private
+version3 APK SHA88435153fda9493bf13bd75a2d4e6a0cd3bc6c833e179e275b5f0faa511f2aa3,
+112 canonical modules/2ABIs/unchanged3permissions and bounded inventory PASS.
+NO public APK/release/archive changed. Lint0errors22warnings:17VN strings,3pinned
+dependency notices,1durable consent commit,1unused BC EST trust-all helper warning.
+Warning remains unsuppressed; app has no EST/helper reference, uses default platform
+trust and actual negative handshake. Read native TLS dependency review; not full SAST.
+
+Public bounded evidence: qualification/phase4-2f2-tls.json; ANDROID-NATIVE-TLS owns
+API/threat/format/compatibility and next Agent transport requirement. No product
+listener/Node/FGS/enrollment/LAN claim. Guest loopback is NOT direct LAN or Android
+phone acceptance. Source-only f.2 targeted scope qualified; full4.2 NOT ACCEPTED.
+Fresh whole Python/Go/Core-fault gates belong to later final qualification after
+g–j runtime work; historical full317/Go11 are NOT reused as fresh changed-source gates.
+
+Normal checkpoint commit/push/fetch receipt follows, before moving to4.2g.
+Private recovery logs retained under /workspace/work/phase4-2f2-recovery-*; original
+signer/state under /workspace/asc-android-dev. Preserve them if moving accounts.

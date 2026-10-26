@@ -528,3 +528,8 @@ Phase4.2f.1 adds private IPC1 native_context_init/native_context_status only, wi
 empty extra fields, existing UID/signature/device/consent/app-key checks. Sanitized
 CONTEXT_READY/null Node+Cluster/configuration and no writer/runtime authority.
 No network protocol change. Exact contract: ANDROID-NATIVE-CONTEXT.
+
+Phase4.2f.2 IPC1 adds native_tls_prepare (empty extra fields, same UID/signature/
+consent/device/existing app/context). Returns only TLS IDENTITY_READY/public pin
+with null Node/Cluster IDs and runtime_start_supported=false. Original transaction
+IDs0/1 unchanged. No network mutation/listener/enrollment/approval added.
