@@ -47,3 +47,8 @@ pinned /api/v1/info. Matching provided pin is not owner provenance; UI independe
 confirms owner trust before saving draft, no automatic QR trust. All fields remain
 versioned/bounded. Private UI/Service ship atomically in the same APK, no mixed
 prototype-client ABI promise or cross-UID adoption. No raw secret response/log.
+
+4.2f.1 adds native_context_init/native_context_status to IPC1 with no extra fields.
+Existing app identity/consent/UID/signature/device gates required; no new AIDL
+transaction/paths/secret record API. Context is optional and not a Node/TLS runtime.
+See ANDROID-NATIVE-CONTEXT for exact provider and persistence contract.

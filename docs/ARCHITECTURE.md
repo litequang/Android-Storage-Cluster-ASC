@@ -465,3 +465,10 @@ the operational owner UI. Draft!=Core pending, app probe!=cluster storage approv
 
 ## Native qualification boundary
 Native device gate adds a diagnostic fence before private state (M51/unknown deny); it never overrides Core device guards or authorizes a Node. AOSP debug emulator is diagnostics only. Native Binder transaction IDs are explicit/stable. Default-network changes invalidate form trust and late callbacks. Native state excludes Android cloud/D2D backup: nonexportable Keystore is not folder-migratable. Test-only alternate instrumentation seeds/verifies exact old APK state, never included in management/runtime APK. No new observer, enrollment authority, FGS, Raft/GC or recovery writer.
+
+## Phase4.2f.1 explicit native context foundation
+Trusted native Context/Build plus fixed sealed credential provider now feed an
+explicit canonical Core NodeContext. No process-global HOME/getpass/subprocess or
+second Registry/Catalog. Optional context is independent of old app/probe/Core
+formats; missing state/key/receipt/medium holds, no Node creation. Native runtime
+and enrollment remain unqualified. See ANDROID-NATIVE-CONTEXT.

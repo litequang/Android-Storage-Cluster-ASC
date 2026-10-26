@@ -1,0 +1,33 @@
+{
+  "checkpoint": "4.2f.1",
+  "scope": "explicit native context and Keystore provider ONLY; no Native Node/TLS/enrollment/FGS",
+  "python_targeted": 24,
+  "jvm": 11,
+  "android_instrumentation": 15,
+  "context_seed_process_death_verify": "PASS",
+  "retained_old_native_upgrade_state": "PASS",
+  "candidate_apk": {
+    "sha256": "1c75c43390490edaf9a4f5dba20a3a62cba99665b96979e58c3dc48822118f12",
+    "bytes": 35835714,
+    "application_id": "org.asc.foundation",
+    "version_code": 3,
+    "version_name": "0.3.0-native-context",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE"
+    ],
+    "canonical_core_modules": 111,
+    "inventory_findings": [],
+    "scope": "internal debug FOUNDATION; no native Node, migration or phone acceptance"
+  },
+  "old_core_go_packages_unchanged": true,
+  "full_phase4_2": "NOT ACCEPTED"
+}

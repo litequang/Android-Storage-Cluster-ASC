@@ -29,4 +29,12 @@ class RequestPolicyTest {
         assertThrows(IllegalArgumentException::class.java) {call("quick_join",code="x".repeat(9000))}
         assertThrows(IllegalArgumentException::class.java) {RequestPolicy.validate(1,"1-1-1-1-1","status","","","","","",false)}
     }
+    @Test fun nativeContextCannotSmugglePathsCredentialsOrTrust() {
+        for(op in listOf("native_context_init","native_context_status")) {
+            call(op)
+            assertThrows(IllegalArgumentException::class.java) {call(op,ep="/private/elsewhere")}
+            assertThrows(IllegalArgumentException::class.java) {call(op,code="123456abcdef")}
+            assertThrows(IllegalArgumentException::class.java) {call(op,trust=true)}
+        }
+    }
 }

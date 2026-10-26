@@ -477,3 +477,9 @@ Network-loss test must disable both emulator WiFi and cellular; disabling WiFi a
 INSTALL_FAILED_VERSION_DOWNGRADE is expected safety proof; don't use -d/uninstall/data clear. Signature mismatch requires original private signer, not identity reset. Native runtime_unqualified is the real missing reviewed Node/enrollment/provider boundary; engine library I/O success does not remove it. See ANDROID-NATIVE-OPERATIONS for safe limits.
 
 A restarted Controller public API may listen before its separate Dashboard listener. Synthetic Dashboard fixture now waits verified TLS on the actual Dashboard endpoint before FIRST session assertion; no HTTP200 acceptance/retry, auth/grant consumption or weakened401/key-preservation checks.
+
+Native native_context_locked means missing/corrupt encrypted context/key/witness,
+replaced private root/receipt, incompatible schema/device or legacy/recovery
+state. Preserve all bytes/key/receipt; do not delete root, recreate identity or
+copy Termux state. CONTEXT_READY is local provider readiness only, not enrollment,
+TLS listener, storage approval or Node ONLINE. See ANDROID-NATIVE-CONTEXT.

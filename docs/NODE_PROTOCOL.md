@@ -523,3 +523,8 @@ native runtime unsupported until qualified, no fake Core pending/approval.
 
 ## Native Binder1 publication
 See ANDROID-NATIVE-IPC. Explicit approvePrivateProbe0/request1 transactions, actual per-call UID/signature, consent/device policy before state. Public pinned Controller GET is not enrollment, approval or authority; encrypted native draft remains NOT SENT. No new network write/Node/Core quorum API.
+
+Phase4.2f.1 adds private IPC1 native_context_init/native_context_status only, with
+empty extra fields, existing UID/signature/device/consent/app-key checks. Sanitized
+CONTEXT_READY/null Node+Cluster/configuration and no writer/runtime authority.
+No network protocol change. Exact contract: ANDROID-NATIVE-CONTEXT.

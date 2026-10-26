@@ -25,7 +25,8 @@ class ApplicationVault(context:Context, namespace:String="identity-v1") {
     private val store=KeyStore.getInstance("AndroidKeyStore").apply {load(null)}
     private fun read(name:String):JSONObject {
         val f=File(root,name)
-        if(root.canonicalFile!=root.absoluteFile || f.canonicalFile!=f.absoluteFile || !f.isFile || f.length()>32768)throw IdentityLocked()
+        val limit=if(name=="node-context.json")98304 else 32768
+        if(root.canonicalFile!=root.absoluteFile || f.canonicalFile!=f.absoluteFile || !f.isFile || f.length()>limit)throw IdentityLocked()
         return try {JSONObject(f.readText())} catch(_:Exception){throw IdentityLocked()}
     }
     private fun write(name:String,data:JSONObject) {
@@ -98,5 +99,27 @@ class ApplicationVault(context:Context, namespace:String="identity-v1") {
         if(draft.keys().asSequence().toSet()!=setOf("request_id","controller","pin","cluster_id","name","code","state") || draft.getString("state")!="DRAFT_NOT_SENT")throw IdentityLocked()
         RequestPolicy.validate(1,draft.getString("request_id"),"quick_join",draft.getString("controller"),draft.getString("pin"),draft.getString("cluster_id"),draft.getString("name"),draft.getString("code"),true)
         draft.remove("code");return draft.put("network_enrolled",false).put("native_enrollment_supported",false)
+    }
+
+    // Trusted in-process provider ONLY, never exposed as a generic Binder
+    // read/write operation. One fixed authenticated record, independent of the
+    // unsent form. The witness detects record deletion; partial writes are held.
+    internal fun loadNodeContext():String? = synchronized(ApplicationVault::class.java) {
+        val app=requireIdentity()
+        val record=File(root,"node-context.json");val witness=File(root,"node-context-required.json")
+        if(!record.exists() && !witness.exists())return@synchronized null
+        val binding=read("node-context-required.json")
+        if(binding.keys().asSequence().toSet()!=setOf("format","app_id") ||
+            binding.get("format")!=1 || binding.getString("app_id")!=app)throw IdentityLocked()
+        decrypt(app,"node-context",read("node-context.json"))
+    }
+    internal fun compareNodeContext(expected:String?,replacement:String) = synchronized(ApplicationVault::class.java) {
+        val app=requireIdentity()
+        if(replacement.toByteArray().size>65536 || loadNodeContext()!=expected)throw IdentityLocked()
+        val value=try {JSONObject(replacement)} catch(_:Exception){throw IdentityLocked()}
+        if(value.get("format")!=1 || value.getString("app_id")!=app)throw IdentityLocked()
+        if(expected==null)write("node-context-required.json",JSONObject().put("format",1).put("app_id",app))
+        write("node-context.json",encrypt(app,"node-context",replacement))
+        if(loadNodeContext()!=replacement)throw IdentityLocked()
     }
 }

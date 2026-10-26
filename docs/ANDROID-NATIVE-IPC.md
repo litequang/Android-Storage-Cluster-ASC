@@ -46,3 +46,8 @@ identity are distinct. Native enrollment/resume needs the actual shared Core eng
 with explicit native context and reviewed credential/lifecycle providers. No CLI
 getpass/HOME monkeypatch, copied Termux private storage, or Kotlin identity/Catalog
 fallback is allowed. See ANDROID-ENGINE-INTEGRATION and PHASE4-2-ACCEPTANCE.
+
+Additive4.2f.1 native_context_init/native_context_status require empty extra fields,
+existing own UID/signature/consent/device/app-key gates. Fixed private context only;
+public null Node/Cluster/unconfigured TLS/enrollment/storage. No Node start or
+network authority; explicit AIDL IDs0/1 unchanged. See ANDROID-NATIVE-CONTEXT.

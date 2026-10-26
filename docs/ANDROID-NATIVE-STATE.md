@@ -61,3 +61,9 @@ manufacture compatibility. Unknown schemas refuse; no native schema migrator yet
 Keep NEW state/bytes before code changes. Android signature/version rollback rules
 are mandatory; do not restore stale DB or promise extracting Keystore keys into
 Termux/OpenSSL. Core4.0/4.1 code rollback remains independently qualified/unchanged.
+
+Optional4.2f.1 context format/witness/CAS is specified in ANDROID-NATIVE-CONTEXT.
+It uses a NEW dedicated native-runtime-v1(0700)/native-node-v1 parent/home; Android
+filesDir0771 is not chmodded or treated as approved private Node state. Existing
+app1/draft1/probe1/alias/Core schema unchanged. Network identity slots remain null;
+context UUID never stands in for Node/Cluster. Partial/missing state is held.

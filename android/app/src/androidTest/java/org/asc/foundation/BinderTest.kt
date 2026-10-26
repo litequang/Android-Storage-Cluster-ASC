@@ -39,6 +39,22 @@ class BinderTest {
         assertEquals("invalid_request",request(b,"status",99).getString("error"))
         assertEquals("invalid_request",request(b,"shell").getString("error"))
     }
+    @Test fun nativeContextUsesActualPrivateParentAndConsentWithoutNodeIdentity()=withService {b,c ->
+        c.getSharedPreferences("local-consent",Context.MODE_PRIVATE).edit().putBoolean("granted",false).commit()
+        for(op in listOf("native_context_init","native_context_status"))
+            assertEquals("consent_required",request(b,op).getString("error"))
+        c.getSharedPreferences("local-consent",Context.MODE_PRIVATE).edit().putBoolean("granted",true).commit()
+        val app=request(b,"app_provision").getString("app_id")
+        val first=request(b,"native_context_init")
+        assertEquals("CONTEXT_READY",first.getString("state"));assertEquals(app,first.getString("application_id"))
+        assertTrue(first.isNull("node_id"));assertTrue(first.isNull("cluster_id"))
+        assertFalse(first.getBoolean("runtime_start_supported"));assertFalse(first.getBoolean("writer_authority"))
+        assertEquals(first.toString(),request(b,"native_context_status").toString())
+        assertEquals(first.toString(),request(b,"native_context_init").toString())
+        val root=java.io.File(c.filesDir.canonicalFile,"native-runtime-v1/native-node-v1")
+        assertTrue(java.io.File(root,"context.json").isFile)
+        assertFalse(java.io.File(root,"node.json").exists());assertFalse(java.io.File(root,"storage.json").exists())
+    }
     @Test fun fixedV1ParcelCodeRemainsCompatible()=withService {b,_ ->
         val data=android.os.Parcel.obtain();val reply=android.os.Parcel.obtain()
         try {

@@ -21,7 +21,29 @@ class UpgradeQualificationRunner:androidx.test.runner.AndroidJUnitRunner() {
             val version=c.packageManager.getPackageInfo(c.packageName,0).versionCode
             val vault=ApplicationVault(c);val engine=EmbeddedEngine(c)
             val receipt=File(c.filesDir.canonicalFile,"upgrade-proof.json")
-            if(phase=="seed") {
+            if(phase=="context-seed" || phase=="context-verify") {
+                check(version==3)
+                val folder=File(c.filesDir.canonicalFile,"native-context-process-proof")
+                if(phase=="context-seed") {check(!folder.exists());check(folder.mkdir());android.system.Os.chmod(folder.absolutePath,448)}
+                check(folder.isDirectory)
+                val local=object:android.content.ContextWrapper(c) {override fun getFilesDir():File=folder}
+                val localVault=ApplicationVault(local,"native-context-process-proof")
+                val proofFile=File(folder,"process-proof.json")
+                if(phase=="context-seed") {
+                    localVault.provision();val state=NativeNodeContext(local,localVault).initialize()
+                    proofFile.writeText(JSONObject().put("application_id",state.getString("application_id"))
+                        .put("context_id",state.getString("context_id"))
+                        .put("cipher_sha",sha(File(localVault.root,"node-context.json")))
+                        .put("anchor_sha",sha(File(folder,"native-runtime-v1/native-node-v1/context.json"))).toString())
+                } else {
+                    val saved=JSONObject(proofFile.readText());val state=NativeNodeContext(local,localVault).status()
+                    check(state.getString("application_id")==saved.getString("application_id"))
+                    check(state.getString("context_id")==saved.getString("context_id"))
+                    check(sha(File(localVault.root,"node-context.json"))==saved.getString("cipher_sha"))
+                    check(sha(File(folder,"native-runtime-v1/native-node-v1/context.json"))==saved.getString("anchor_sha"))
+                    check(state.isNull("node_id") && state.isNull("cluster_id"))
+                }
+            } else if(phase=="seed") {
                 check(version==1);check(!receipt.exists())
                 c.getSharedPreferences("local-consent",Context.MODE_PRIVATE).edit().putBoolean("granted",true).commit()
                 val id=vault.provision().getString("app_id");val request=UUID.randomUUID().toString()
@@ -36,8 +58,8 @@ class UpgradeQualificationRunner:androidx.test.runner.AndroidJUnitRunner() {
                     .put("body_root",root.name).put("body_name",body.name).put("body_sha",sha(body))
                     .put("body_volume",proof.getJSONObject("capabilities").getJSONArray("volumes").getJSONObject(0).getString("volume_id"))
                 receipt.writeText(record.toString())
-            } else if(phase=="verify") {
-                check(version==2);val saved=JSONObject(receipt.readText());val id=vault.requireIdentity()
+            } else if(phase=="verify" || phase=="verify-v3") {
+                check(version==if(phase=="verify")2 else 3);val saved=JSONObject(receipt.readText());val id=vault.requireIdentity()
                 check(id==saved.getString("app_id"))
                 check(vault.draftSummary().getString("request_id")==saved.getString("draft_request"))
                 check(sha(File(vault.root,"join-draft.json"))==saved.getString("cipher_sha"))

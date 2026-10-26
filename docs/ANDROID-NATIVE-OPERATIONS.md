@@ -128,3 +128,9 @@ Collect only version, public package/signing digest, device policy, generic erro
 code and aggregate gate counts. Do not share logcat/full app-private folders,
 join code/draft, keys, certificates' private material, tokens or registry databases.
 See PHASE4-2-ACCEPTANCE for precise evidence and remaining implementation blockers.
+
+Continuation4.2f.1 development source uses versionCode3/0.3.0-native-context, same
+private signer; no new public APK until qualified artifact publication. Prior
+0.2.0 published APK remains unchanged. Context operations are private Binder/
+provider foundation only; native Node/enrollment/TLS/FGS are not delivered by them.
+Read ANDROID-NATIVE-CONTEXT and current progress before any continuation.

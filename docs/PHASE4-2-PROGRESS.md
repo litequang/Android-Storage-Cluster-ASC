@@ -373,3 +373,58 @@ follow-up, no source/tests/guides/APK changes. Public machine evidence includes 
 verified payload receipt. Final documentation-only feature HEAD follows in Git log;
 normal push/remote check repeats, never force/merge/reset. Full Phase4.2 NOT ACCEPTED
 and remaining4.2 work above still applies; no Node/phone/production readiness claim.
+
+## 4.2f.1 — explicit native context/provider (2026-10-26)
+
+Resumed verified445bd3193824fea7e4bb944b583b7a3b9199c34f, clean tree; GitHub200/
+fetch equal, managed spec101 current/enforced/unrestricted. Mandatory docs read
+in order then all ten requested native/current4.2 contracts. No original branch
+change/reset/merge; inherited proxy/CA retained, no proxy:8080 failure.
+
+Implemented asc.node.context explicit private parent/device/sealed-provider contract,
+original inode/public receipt, no-follow descriptor creation/fsync/CAS and guarded
+OS operation ownership. ApplicationVault supplies a fixed AES-GCM/Keystore record
+with deletion witness, not a generic Binder secret API. NativeNodeContext uses
+NEW native-runtime-v1(0700)/native-node-v1 below canonical app Context, never
+changes existing filesDir0771. Additive private IPC init/status still requires
+own UID/signature/consent/device/existing app key. No global HOME/getpass/
+subprocess/OpenSSL, Node/Cluster creation or source/state adoption. Context UUID
+is only a local receipt. Node/pending/TLS/storage remain explicitly null.
+
+First actual Android14 run had3 failures: official AOSP manufacturer=unknown.
+Separated strictly identified DEBUG SDK/ranchu/fingerprint SYNTHETIC fixture from
+unknown real phones; all M51 secondary fields still dominate/refuse, old Core
+guards unchanged. Also measured actual filesDir0771; create ONLY a new private0700
+parent rather than chmod/adopt existing paths. Both corrected intermediate14 runs
+PASS; final added actual Binder/private-parent gate rerun is the receipt below.
+No failed run relabeled/skip/assertion weakening.
+
+Final targeted:24 Python PASS0skip (context10/engine5/identity4/bridge-contract5);
+11 JVM PASS0fail/error/skip; Gradle assembleDebug/testDebugUnitTest/
+assembleDebugAndroidTest/lintDebug PASS36s. Actual retained-state API35 x86_64
+software emulator, qemu1/ranchu/boot1 verified, privateADB5038/numericloopback only.
+**15 Android instrumentation PASS45.226s**, actual Keystore encrypted CAS/restart/
+corruption/missing record+key/refused regeneration/private root/receipt/recovery
+plus unchanged Engine/private-volume/Binder gates. Actual fixed context seed ->
+force-stop ->cold Activity restart ->verify PASS: app UUID/context receipt/Keystore/
+exact ciphertext/anchor preserved. Retained exact prior-checkpoint upgrade proof
+from old version1 through version2 ->normal same-signer version3 verified AGAIN:
+appUUID/cipher/volume marker/original committed Core bytes unchanged. No uninstall/
+clear/-d/stale DB restore or native Node identity claim.
+
+New versionCode3/0.3.0-native-context debug build SHA
+1c75c43390490edaf9a4f5dba20a3a62cba99665b96979e58c3dc48822118f12; same signer
+bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30. Private
+checkpoint artifact only, not a new public release. APK inventory111 canonical
+Core modules/2ABIs/unchanged3permissions/no private/test-only findings PASS.
+Old public APK/source archives/Go and EVERY preexisting asc file byte-identical
+to445bd31; only new asc/node module. Public bounded report: qualification/phase4-2f1-
+context.json. Full317/Go11/62 faults above remain HISTORICAL baseline, not rerun
+for this new partial checkpoint and not a new full acceptance.
+
+4.2f remains IN PROGRESS, full4.2 NOT ACCEPTED. Next f.2: reviewed in-process TLS
+identity/certificate/config provider and its real Android gates, then g actual
+existing Core enrollment/pending/resume; h Agent/FGS; i observer; j direct network/
+end-to-end/fresh full. No Node listener, enrollment, FGS or LAN proof exists at f.1.
+No phone/M51/Termux/production/writableDR/Raft/GC/failover changes. Normal source
+checkpoint commit/push/fetch receipt follows; do not start f.2 before it matches.

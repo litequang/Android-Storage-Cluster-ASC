@@ -611,3 +611,13 @@ Phase4.2 final qualification data: qualification/phase4-2-foundation.json owns b
 actual counts/scopes/artifact/protected-publication facts; phase4-2-source-sha256.json
 pins243 public source/test/tools/guides/archive/APK inputs to c7dabb0. Reports only,
 no runtime/config/authority or secrets. Full native Phase4.2 remains NOT ACCEPTED.
+
+## Phase4.2f.1 explicit native context
+- asc/node/context.py: explicit private home/device binding/strict format1, pinned
+  descriptor receipt, credential-provider CAS and OS operation ownership. No Node
+  identity/TLS/enrollment/Agent yet.
+- NativeNodeContext/ApplicationVault: fixed Keystore-encrypted context+witness,
+  trusted JNI only; EngineService adds consent/device-gated context init/status.
+- test_native_context/NativeContextTest and fixed runner context phases own Linux
+  filesystem and actual Android credential/restart gates. ANDROID-NATIVE-CONTEXT
+  defines format/threat/compatibility; f–j remain unfinished.

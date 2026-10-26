@@ -492,3 +492,11 @@ No broad external permission, SAF fallback or hardware-backed/power-loss claim.
 M51/unknown deny before native private state; known model status is NOT ACCEPTED. Actual separate-signature app verifies UID/signature/permission mismatch and explicit bind refusal (not timeout proof). Same-UID Binder still validates every request/consent. Stable explicit AIDL IDs prevent accidental old-client dispatch. Real default-network loss clears secret/trust. Backup XML excludes CE/DE cloud and D2D, no nonexportable-key folder restore assumption. Internal debug signer must remain private and stable across operator/Codex accounts; public debug APK is never production trust. Test-only seed/upgrade instrumentation and foreign APK are not shipped. No credential/Node/Cluster authority created by diagnostic probe or public GET.
 
 Native direct NAT10.0.2.2 failure is preserved as NOT PASSED. Explicit ADB loopback development transport keeps real Core TLS/pin/cluster validation and never qualifies LAN/phone readiness. It changes neither proxy nor TLS policy, has no automatic fallback and removes only successfully owned no-rebind mappings on the verified emulator. Main runtime does not create any such mapping.
+
+## Native context credential boundary (4.2f.1)
+Fixed in-process provider, authenticated AES-GCM record/witness/CAS, explicit
+app identity and trusted Build, no generic Binder secret/path API. Descriptor-
+relative exclusive receipt and root/ancestor identity checks preserve scope.
+M51 dominates and unknown phones remain blocked; only actual DEBUG AOSP fixture
+identity gets SYNTHETIC scope. No TLS/enrollment/runtime/writer authority yet.
+Partial initialization/lost state is held, not repaired; no power-cut promise.

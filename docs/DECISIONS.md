@@ -288,3 +288,11 @@ until equivalent semantics proven; no custom encryption or writable recovery.
 
 ## ADR068 — Native diagnostic fence, stable Binder and upgrade evidence
 Keep private Binder operation IDs explicit0/1 and reject foreign UID even with matching signature. Add native M51/unknown fence; debug AOSP emulator diagnostics do not bypass Core. Exclude CE/DE cloud+D2D backups because copying encrypted files cannot restore nonexportable keys. Qualify exact private prior-checkpoint APK upgrade on a FRESH AVD using same signer and real retained bytes/key/marker; Android version downgrade MUST refuse. No uninstall/adb-d/stale DB restoration, general native rollback or released Termux migration claim. Real default-network loss clears code/trust. Native Node/enrollment/FGS remains blocked on reviewed shared-Core native providers, not papered over by a mock or guard bypass.
+
+## ADR069 — Explicit native context before Node authority
+Use one fixed application-bound, Keystore-encrypted CAS record with durable
+required-record witness and original private-directory receipt. No global HOME,
+plaintext node tokens, legacy state adoption or new Kotlin enrollment logic.
+Partial publication is held rather than reconstructed. Debug AOSP is a distinct
+synthetic fixture scope, not unknown-phone/M51 permission or Core guard bypass.
+Context UUID is not Node/Cluster identity; f.1 cannot start runtime or join.

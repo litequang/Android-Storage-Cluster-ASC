@@ -145,3 +145,14 @@ owned FGS/observer providers and direct LAN are outstanding. This closes indepen
 foundation regression/package qualification only. Continue remaining4.2 work before
 native Node acceptance; no Phase4.3/production readiness or Termux migration claim.
 See ANDROID-NATIVE-IPC/STATE/OPERATIONS/PILOT and PHASE4-2-PROGRESS.
+
+## Continuation4.2f.1 — scoped context gate, NOT full Phase acceptance
+Explicit native context and actual Keystore sealed provider now qualify separately:
+24 targeted Python/11JVM/15Android(PASS45.226s,0skip), actual context process-death
+restart and retained prior-native-APK state proof PASS. Gradle build/lint/package
+audit PASS. Original public artifact unchanged; new private version3 checkpoint
+is NOT a release. Public bounded evidence: qualification/phase4-2f1-context.json;
+exact source/commands/failures/limits in PROGRESS and ANDROID-NATIVE-CONTEXT.
+All old table entries about missing enrollment/TLS/Agent/FGS/observer/direct LAN
+remain outstanding. f.1 creates NO Node/Cluster identity. Full Phase4.2 NOT ACCEPTED,
+new-source full Python/Go/fault regression is deferred until final runtime gates.

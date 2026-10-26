@@ -41,6 +41,8 @@ class EngineService : Service() {
                     "check_controller" -> EmbeddedEngine(this@EngineService).inspectController(controller,pin,clusterId).toString()
                     "engine_info" -> EmbeddedEngine(this@EngineService).info().toString()
                     "app_provision" -> vault.provision().toString()
+                    "native_context_init" -> NativeNodeContext(this@EngineService,vault).initialize().toString()
+                    "native_context_status" -> NativeNodeContext(this@EngineService,vault).status().toString()
                     "save_join_draft" -> vault.saveDraft(requestId,controller,pin,clusterId,name,code).toString()
                     "draft_status" -> vault.draftSummary().toString()
                     "probe_private_volume" -> PrivateProbeStorage(this@EngineService,vault).probe().toString()

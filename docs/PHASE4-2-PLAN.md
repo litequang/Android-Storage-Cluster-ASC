@@ -82,3 +82,22 @@ observer and direct LAN implementation/qualification are explicitly ordered in
 PROGRESS. Do not claim Cloud lacks an Engine: the actual canonical library ran
 inside Android. The missing reviewed native Node providers are implementation gaps.
 No Phase4.3, production/phone or Termux migration acceptance is implied.
+
+## Authorized continuation f–j (2026-10-26)
+Baseline445bd31 fetched/HEAD equal, clean tree, managed network101 current/enforced
+unrestricted; GitHub200. Inherited proxy/CA retained, no VPN/phone access.
+- f.1: explicit app-private Core context +Keystore sealed CAS/witness, strict
+  persistence/guard/receipt/restart. No identities/runtime yet; small independent gate.
+- f.2+: reviewed in-process node TLS/certificate and configuration providers;
+  failure-safe ownership and actual existing Registry/Storage integration.
+- g: extract/reuse Core enrollment with explicit providers; real pinned Controller
+  join/durable pending/lostACK/resume/identity, separate owner approvals.
+- h: existing StorageRuntime/Agent in app-owned lifecycle, real TLS/heartbeats/
+  authorized bytes and justified Android FGS/notification/stop/faults.
+- i: separately authenticated existing read-only Core observer, honest UNKNOWN/
+  verified quorum/recovery, no membership/writer operations.
+- j: resolve actual direct transport, native Node upload/download/restart/faults,
+  distinguish simulated domains; fresh full applicable Python/Go/Android/security/
+  faults/new APK/same-signer upgrade. Do not count ADB reverse as LAN acceptance.
+Each source checkpoint normal-push/fetch verification before proceeding. All
+previous gates remain retained; final full is rerun only after new runtime targets.

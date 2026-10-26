@@ -521,3 +521,10 @@ SHAab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705 published.
 Native Node/enrollment/FGS/observer/direct LAN remain unaccepted; no phone/production/
 Termux migration or writable DR qualification. Public frozen-input/evidence reports
 and remaining4.2 handoff supplied, no source change after final full run.
+
+## Phase4.2f.1 — explicit native context/provider foundation
+Add fixed app-private Core NodeContext and Keystore-encrypted CAS provider/witness,
+protected/unknown-phone refusal, no-follow identity-bound durable receipt and
+consent-gated private context IPC. No global HOME/getpass/subprocess, Node/Cluster
+creation, TLS/listener/enrollment/FGS/observer or writableDR. Existing formats/
+archives and original branches preserved. Actual tests/remaining work in progress.

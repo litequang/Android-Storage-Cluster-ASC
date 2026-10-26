@@ -480,3 +480,12 @@ No Core/Demo formats/archive changes; ANDROID-NATIVE-STATE defines exact limits.
 
 ## Native state compatibility evidence
 Application/probe/Core manifest remain format1; no schema migration. Android cloud and D2D CE/DE backups explicitly exclude private state. Same-signer native versionCode1 checkpoint ->2 qualification preserves existing appUUID, Keystore canary, exact encrypted unsent draft, private Volume ID/marker and committed Core bytes. Test-only upgrade receipt never ships in main APK. Lower version installation must refuse; no general native rollback/key export/Termux state adoption is supported.
+
+## Native explicit context1 (optional, 4.2f.1)
+Fixed native-node-v1/context.json public receipt plus ApplicationVault fixed
+node-context.json AES-GCM/purpose/app binding and node-context-required.json
+witness. Sealed record: format1/app_id/context_id/revision/binding/device_binding/
+pending/node/tls/storage; four runtime slots must remain null at f.1. Persisted
+parent/root inode and original path prevent replacement adoption. Missing witness/
+record/key/root holds, never regeneration. Existing app/draft/probe/Core schemas
+unchanged; context_id is NOT network Node/Cluster identity. See native context doc.

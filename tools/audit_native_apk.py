@@ -14,6 +14,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('apk', type=Path)
     parser.add_argument('--sdk', type=Path, required=True)
+    parser.add_argument('--version-code', type=int, default=2)
+    parser.add_argument('--version-name', default='0.2.0-foundation')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     canonical = root / 'asc'
@@ -58,7 +60,7 @@ def main():
     signer = subprocess.check_output([str(build_tools/'apksigner'), 'verify', '--print-certs', str(args.apk)], text=True)
     digest = re.search(r'certificate SHA-256 digest: ([a-f0-9]{64})', signer).group(1)
     badging = subprocess.check_output([str(build_tools/'aapt2'), 'dump', 'badging', str(args.apk)], text=True)
-    for required in ("name='org.asc.foundation' versionCode='2' versionName='0.2.0-foundation'", "minSdkVersion:'26'", "targetSdkVersion:'35'", 'application-debuggable'):
+    for required in (f"name='org.asc.foundation' versionCode='{args.version_code}' versionName='{args.version_name}'", "minSdkVersion:'26'", "targetSdkVersion:'35'", 'application-debuggable'):
         if required not in badging:
             raise ValueError('unexpected APK metadata')
     permissions = re.findall(r"uses-permission: name='([^']+)'", badging)
@@ -66,7 +68,7 @@ def main():
         raise ValueError('unexpected permissions')
     print(json.dumps({'sha256': hashlib.sha256(args.apk.read_bytes()).hexdigest(),
         'bytes': args.apk.stat().st_size, 'application_id': 'org.asc.foundation',
-        'version_code': 2, 'version_name': '0.2.0-foundation', 'min_sdk': 26, 'target_sdk': 35,
+        'version_code': args.version_code, 'version_name': args.version_name, 'min_sdk': 26, 'target_sdk': 35,
         'debug_signer_certificate_sha256': digest, 'abis': abis, 'permissions': permissions,
         'canonical_core_modules': len(expected), 'inventory_findings': findings,
         'scope': 'internal debug FOUNDATION; no native Node, migration or phone acceptance'}, indent=2))

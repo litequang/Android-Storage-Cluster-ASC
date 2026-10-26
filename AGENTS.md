@@ -209,3 +209,17 @@ Do NOT touch unrelated docs or auto-generate giant maps; keep accurate module-to
 Explain: changed source/documentation files, behavior, risks, rollback, exact check commands, actual results and blockers. Distinguish Codex-run checks from owner-supplied results and state why any applicable checks were not rerun.
 Before publishing, inspect tracked AND staged paths/content for secrets (ignore rules alone are insufficient), preserve remote history, and push only within explicit authorization. Report commit hash and verified push status.
 Use versioned API/schema, backward compatibility and idempotent changes; avoid silently overwriting installed agent code. Preserve credentials under private HOME, outside repo.
+
+## Authorized Phase4.2 continuation f–j from445bd31
+Owner explicitly requests real Native Node, not a repeat of FOUNDATION a–e. Continue
+on feature/phase4-2-android-native; preserve Core/Demo/4.0/4.1 refs and all archives.
+After mandatory reads, current4.2 plan/progress/acceptance +Android app/engine/API/
+IPC/state/operations/pilot/context docs. Split f context/credentials/TLS, g existing
+Core enrollment/resume, h owned actual Node/FGS, i read-only observer, j direct
+network/end-to-end qualification. Targeted/docs/secrets/normal push/fetch match
+before next checkpoint. f.1 context is NOT finished f or native Node acceptance.
+No global HOME/getpass/subprocess guard patch, duplicate Kotlin storage/enrollment,
+phone/M51/Termux/production access, writerDR/quorum/GC/failover. Preserve private
+signer; normal APK upgrade only, no uninstall/clear/-d. Explicit dev ADB tunnel
+proof is not direct NAT/LAN; don't relabel previous317/full as new changed-source
+acceptance. Full4.2 NOT ACCEPTED until remaining gates actually qualify.
