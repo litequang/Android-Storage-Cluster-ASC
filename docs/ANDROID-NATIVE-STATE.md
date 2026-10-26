@@ -114,3 +114,9 @@ Old readers rejecting nonnull storage must refuse the context; no downgrade or
 Termux migration is claimed. Preserve app state/Keystore, never restore an old DB
 over new bytes. Before configuring the primary test app, retain its old receipt;
 legitimate storage/revision mutation changes ciphertext, not app/Node/TLS identity.
+
+### Explicit address change
+An enrolled Node's controller URI may change only through the explicit stopped-
+session operation with verified SAME PIN/Cluster ID. CAS changes URI/revision,
+not Node/token/TLS/storage/Volume identity. No schema or pending migration, no
+re-enrollment or authority claim; credentials become live only after heartbeat.

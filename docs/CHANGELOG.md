@@ -599,3 +599,11 @@ integration is g.2, no native Node/FGS or public APK claim.
   API35 background download SHA/OS foreground flag/notification/closed port PASS.
 - Android-standard connectedDevice/notification permissions, no new dependency/
   crypto/backend. No phone/Doze/OEM/direct LAN/public release acceptance.
+
+### h.4 direct Native Node transport
+- Explicitly change Controller address without re-enrolling or changing Node/TLS/
+  volume identities, same PIN/cluster only; stop active Node first. Show public
+  Node certificate PIN for owner approval.
+- Actual API35 host↔Android file upload/verify/download SHA over standard SDK NAT,
+  direct Controller10.0.2.2, ADB reverse removed. Reproducible focused driver.
+- No new dependency/permission/security layer; no phone/LAN/two-replica acceptance.

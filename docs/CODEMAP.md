@@ -747,3 +747,14 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
   bindings removed, real SHA download while background, PendingIntent Stop and
   real closed port. tools/audit_native_apk.py --foreground-node explicitly expects
   the4 documented service/notification permissions; old3-permission default kept.
+
+## h.4 actual direct NAT Node
+- NativeEnrollment.change_controller/public_request: explicit new address, SAME
+  certificate PIN/Cluster ID/Node credentials/storage; verified existing info+CAS,
+  rejects pending/unqualified runtime. Not leader/writer/recovery authority.
+- NativeNodeContext/RequestPolicy/EngineService/MainActivity: stopped-Node-only
+  address setting with existing trust UI; public Node TLS PIN is selectable for
+  owner approval. No new enrollment/state/schema or private-key export.
+- NativeNodeDirectTest.kt +tools/qualify_native_direct.py: owned AVD, reverse
+  removed, actual direct heartbeat +host upload/verify/download over loopback-only
+  standard SDK NAT; ADB control only. Cold Binder/identity and direct TLS probes.

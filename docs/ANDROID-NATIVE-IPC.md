@@ -95,3 +95,12 @@ promotes same private service as connectedDevice. Failure to request promotion
 closes owned runtime. node_status adds foreground_service (observed service state,
 not write authority). stop_owned also removes notification/stops started service;
 available after consent revocation. No bootstrap from binding/null/restart intent.
+
+### h.4 explicit Controller address setting
+request change_controller(version1/request UUID,controller,pin,cluster,empty name/
+code,trustConfirmed=true) requires stopped owned Node, SAME stored PIN/Cluster ID
+and existing enrollment. Verify pinned info with existing Core enrollment helper
+then CAS only controller URI/revision. No re-join, token/certificate/Volume change
+or write-authority inference. Pending enrollment cannot be moved this way. Binding/
+mode/network failure leaves original record. Cold native call starts the existing
+embedded library, never provisions a new identity.

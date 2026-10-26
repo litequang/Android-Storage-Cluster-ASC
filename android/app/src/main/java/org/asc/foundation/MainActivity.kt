@@ -111,7 +111,7 @@ class MainActivity : Activity() {
         nodeName=field(join,"Tên thiết bị","node-name").apply {setText(Build.MODEL)}
         code=field(join,"Mã ghép một lần (ẩn, không lưu View state)","join-code",true)
         trust=CheckBox(this).apply {text="Tôi đã đối chiếu endpoint, PIN và Cluster ID với owner."};join.addView(trust)
-        joinResult=text("Chưa xác minh Controller. Node/enrollment/approval UNKNOWN.").apply {tag="join-result"};join.addView(joinResult)
+        joinResult=text("Chưa xác minh Controller. Node/enrollment/approval UNKNOWN.").apply {tag="join-result";setTextIsSelectable(true)};join.addView(joinResult)
         button(join,"Kiểm tra TLS và Cluster ID","check-controller") {
             val binding=publicBinding();verifiedBinding=null
             call("check_controller",controller.text.toString().trim(),cleanPin(),cluster.text.toString().trim()) {
@@ -136,7 +136,7 @@ class MainActivity : Activity() {
             call("native_context_init") {ready ->
                 if(ready.optString("state")!="CONTEXT_READY")joinResult.text=message(ready)
                 else call("native_tls_prepare") {joinResult.text=if(it.optString("tls")=="IDENTITY_READY")
-                    "TLS identity đã sẵn sàng. Chưa gửi enrollment; Node chưa chạy." else message(it)}
+                    "TLS identity đã sẵn sàng. PIN công khai của Node:\n${it.optString("tls_pin","UNKNOWN")}\nCó thể sao chép để owner phê duyệt. Thao tác này không khởi chạy Node." else message(it)}
             }
         }
         button(join,"Gửi mã ghép tới Controller đã xác minh","native-join") {
@@ -152,6 +152,12 @@ class MainActivity : Activity() {
             showEnrollment(value)
         }}
         button(join,"Tiếp tục pending đã lưu — không đổi identity","resume-native-join") {call("resume_join") {showEnrollment(it)}}
+        button(join,"Đổi địa chỉ Controller — giữ Node ID","change-native-controller") {
+            if(!trust.isChecked || verifiedBinding!=publicBinding()){joinResult.text="Dừng Node, đối chiếu owner và kiểm tra TLS/Cluster ID mới trước.";return@button}
+            call("change_controller",controller.text.toString().trim(),cleanPin(),cluster.text.toString().trim(),trusted=true) {
+                joinResult.text=if(it.optBoolean("ok",false))"Đã lưu địa chỉ Controller cùng PIN/Cluster ID. Giữ identity và dữ liệu; bấm Chạy Node để kiểm tra heartbeat." else message(it)
+            }
+        }
         button(join,"Thay mã hết hạn của pending hiện có","replace-native-code") {
             if(!trust.isChecked || verifiedBinding!=publicBinding()) {joinResult.text="Đối chiếu owner và kiểm tra lại Controller trước khi thay mã pending.";return@button}
             val secret=code.text.toString();code.setText("")
@@ -223,6 +229,7 @@ class MainActivity : Activity() {
         "device_not_qualified"->"Thiết bị PROTECTED/UNKNOWN: chỉ xem audit, không tạo state hoặc chạy Engine."
         "consent_required"->"Cần consent rõ ràng cho thao tác vùng riêng của APK."
         "notification_required"->"Cần cho phép thông báo để chạy Node và dùng nút Dừng."
+        "stop_node_before_controller_change"->"Dừng Node trước khi đổi địa chỉ Controller."
         "invalid_request"->"Thông tin chưa hợp lệ hoặc bindings/code chưa đúng; chưa xác nhận thành công."
         "native_runtime_unqualified"->"BLOCKED: native Node/enrollment/lifecycle chưa được nghiệm thu."
         "native_context_locked"->"Context bị khóa: giữ state/key, không tạo identity mới."

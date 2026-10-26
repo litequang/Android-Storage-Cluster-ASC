@@ -72,4 +72,8 @@ class NativeNodeContext(private val context:Context, private val vault:Applicati
         enrollment("join",request,endpoint,pin,cluster,name,code,runtimeProfile())
     fun resume():JSONObject {EmbeddedEngine(context);return enrollment("resume")}
     fun replaceCode(code:String):JSONObject {EmbeddedEngine(context);return enrollment("replace_code",code)}
+    fun changeController(endpoint:String,pin:String,cluster:String):JSONObject {
+        EmbeddedEngine(context)
+        return enrollment("change_controller",endpoint,pin,cluster)
+    }
 }

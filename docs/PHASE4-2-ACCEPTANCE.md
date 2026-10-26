@@ -288,3 +288,16 @@ Private APK55bec3d9a9a9590ef6b35d70c37e164eed76ed4b2d56021175e96bc9fb44a4d5,
 not public release. FGS connectedDevice for real Node network session; no automatic
 restart/boot/identity/approval. No physical phone/ARM64/Doze/OEM/direct LAN/two
 replica acceptance; full Phase4.2 NOT ACCEPTED, writableDR blocked.
+
+## h.4 Native Node direct networking — emulator NAT PASS
+Targeted Native46 Linux PASS0skip14.632s/JVM13/build PASS; direct TLS/cluster probe
+9.935s and cold Binder address setting14.730s PASS. Final-APK actual host upload/
+Node commit+verify/download256KiB exact SHA over standard SDK NAT PASS84.213s;
+Node heartbeat/authorization direct10.0.2.2, ADB reverse removed, ADB control only.
+Same enrolled Node/token/TLS/volume/data retained; no rejoin/permission/dependency/
+parallel backend. Setup-timeout failed attempt retained; no fake/partial PASS.
+
+Scope is owned API35 x86_64 emulator NAT, one owner-delegated local object; NOT
+physical phone LAN/ARM64/Doze/OEM or two independent protected replicas/fallback.
+Core observer/native UI and final integrated gates still pending; full4.2 NOT
+ACCEPTED. No fresh full Python/Go claim or new public APK/release.

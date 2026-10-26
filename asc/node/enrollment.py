@@ -142,6 +142,26 @@ class NativeEnrollment:
         with self.context.operation():
             return self._send()
 
+    def change_controller(self, origin, pin, cluster):
+        """Explicit address change, SAME pinned cluster/Node credentials; no re-join.
+
+        Native session owner must stop its runtime first. Info verifies endpoint
+        binding, not current Node credential validity or Controller write authority.
+        """
+        _binding(origin, pin, cluster)
+        with self.context.operation():
+            raw, record = self._snapshot()
+            node = record['node']
+            if node is None:
+                raise EnrollmentRefused('enrollment_required')
+            if (pin, cluster) != (node['pin'], node['cluster_id']):
+                raise EnrollmentRefused('binding_mismatch')
+            self._info(origin, pin, cluster)
+            if node['controller'] != origin:
+                node['controller'] = origin
+                self._publish(raw, record)
+            return self.context.public_status()
+
     def replace_code(self, code):
         """Explicit new owner grant, SAME operation/token, never re-pair an enrolled ID."""
         code = valid.code(code)
@@ -171,6 +191,8 @@ def public_request(context, operation, *arguments):
             result = client.resume()
         elif operation == 'replace_code' and len(arguments) == 1:
             result = client.replace_code(arguments[0])
+        elif operation == 'change_controller' and len(arguments) == 3:
+            result = client.change_controller(*arguments)
         else:
             raise EnrollmentRefused('invalid_request')
         return dict(result, ok=True)

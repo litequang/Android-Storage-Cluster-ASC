@@ -84,6 +84,8 @@ class EngineService : Service() {
                     "quick_join" -> NativeNodeContext(this@EngineService,vault).join(requestId,controller,pin,clusterId,name,code).toString()
                     "resume_join" -> NativeNodeContext(this@EngineService,vault).resume().toString()
                     "replace_join_code" -> NativeNodeContext(this@EngineService,vault).replaceCode(code).toString()
+                    "change_controller" -> if(nodeSession?.status()?.optString("state") in setOf("RUNNING","STOPPING"))error("stop_node_before_controller_change")
+                        else NativeNodeContext(this@EngineService,vault).changeController(controller,pin,clusterId).toString()
                     "save_join_draft" -> vault.saveDraft(requestId,controller,pin,clusterId,name,code).toString()
                     "draft_status" -> vault.draftSummary().toString()
                     "probe_private_volume" -> PrivateProbeStorage(this@EngineService,vault).probe().toString()

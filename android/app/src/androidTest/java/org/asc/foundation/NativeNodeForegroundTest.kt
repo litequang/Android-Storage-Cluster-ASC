@@ -19,6 +19,13 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class NativeNodeForegroundTest {
+    @Test fun actualDirectNatControllerProbe() {
+        val c=InstrumentationRegistry.getInstrumentation().targetContext
+        val fixture=JSONObject(File(c.filesDir,"native-mvp-network-fixture.json").readText())
+        val port=java.net.URI(fixture.getString("origin")).port
+        val result=EmbeddedEngine(c).inspectController("https://10.0.2.2:$port",fixture.getString("pin"),fixture.getString("cluster_id"))
+        assertEquals(result.toString(),"TLS_AND_CLUSTER_MATCH",result.optString("state"))
+    }
     @Test fun actualBackgroundTransferAndNotificationStop() {
         val c=InstrumentationRegistry.getInstrumentation().targetContext
         val activity=ActivityScenario.launch(MainActivity::class.java)

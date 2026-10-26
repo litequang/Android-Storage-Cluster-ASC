@@ -172,3 +172,31 @@ system network setting changes, broad storage, root or new crypto provider. See
 https://developer.android.com/develop/background-work/services/fgs/service-types#connected-device
 Package inventory command adds --foreground-node; old archives/default audit
 remain unchanged. Main artifact remains private version3, not a public release.
+
+## Moving a known Controller address without resetting the app
+Stop the Node. On Ghép enter the new HTTPS address, SAME expected PIN/Cluster ID,
+verify TLS/cluster and confirm owner trust; press Đổi địa chỉ Controller — giữ Node
+ID, then start Node. A changed certificate/cluster needs a separate reviewed
+procedure; this operation does not adopt it or grant writer authority.
+Preparing TLS again on a valid context reuses identity and displays the selectable
+PUBLIC Node certificate SHA-256 PIN for owner approval. No private key is displayed.
+Owner still approves storage/volume/physical domain with existing Core tools.
+
+NativeNodeDirectTest/tools/qualify_native_direct.py is Linux/task-owned emulator
+qualification ONLY. Requires already installed/enrolled/configured app+test APK,
+notification permission, owner receipt and private synthetic fixture JSON with
+origin=https://127.0.0.1:PORT, pin, cluster_id, node_id, owner_token. Never commit
+the fixture. Example command (paths refer to private task development workspace):
+
+```sh
+python tools/qualify_native_direct.py --adb /path/to/sdk/platform-tools/adb \
+  --adb-port 5038 --serial emulator-5556 --emulator-owner /private/emulator-owner.json \
+  --fixture /private/native-mvp-network-fixture.json --out /private/new-direct-run
+```
+
+Driver removes/restores only its Controller reverse mapping, uses loopback-only
+standard SDK NAT for host-to-guest TLS and10.0.2.2 for Node-to-Controller. ADB carries
+control/receipts, no file bytes. Real SHA verify/download +JUnit completion required;
+adb exit0 alone is NOT PASS.180s emulator startup allowance, original transfer/TLS
+deadlines unchanged. No installs/resets/key generation or physical device support.
+This is emulator NAT, not physical phone LAN or two independent storage domains.

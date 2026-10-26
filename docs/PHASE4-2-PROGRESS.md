@@ -1138,3 +1138,42 @@ receipt qualification/phase4-2h3-foreground.json, private logs phase4-2h2b-mvp.
 No public APK/release, full4.2 NOT ACCEPTED. Remaining read-only observer, direct
 network/E2E/independent replica qualification and final integrated fresh gates;
 extra hardening deferred per owner preference, existing data guards retained.
+
+## h.4 Native direct networking / address setting — targeted PASS
+Prior FGS checkpoint f566915088a790929e680b795f7d33d482239df3 normal push/fetch/
+advertised remote exactly matched before this checkpoint. Continue owner MVP
+priority: actual file path first, no repeated full Core suite/extra hardening.
+
+Actual current owned AVD direct10.0.2.2 TLS PIN+Cluster probe PASS9.935s with reverse
+removed. Historical other-AVD ConnectionRefused is not relabelled/root cause proven;
+this is fresh evidence on ASC_JOIN_UI_API35, no proxy/CA/network-policy changes.
+Explicit production API now changes Controller address using existing Core info/
+CAS, SAME PIN/CID/Node/token/TLS/volume, stopped Node only; no re-enrollment or
+automatic failover. UI public Node PIN display supports explicit owner approval.
+
+Fresh targeted Native46 PASS14.632s0skip/fail (3new alias/pending/identity/storage
+tests+43existing); Gradle/JVM13/main/testAPK PASS. Actual cold-process Binder address
+setting PASS14.730s, existing Node retained. On final APK, public repository driver
+and NativeNodeDirectTest PASS84.213s: remove reverse; Node binds measured guest
+10.0.2.15, heartbeat/introspection to Controller10.0.2.2; actual host uploads256KiB
+through loopback-bound standard SDK NAT redirect, commits, asks real Node verify,
+downloads exact SHA2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9.
+ADB is test control/receipt only, NOT bytes transport. Original app/context/Node/
+token/TLS/Volume/storage retained. No second Catalog/Engine, no new permission/
+dependency. Metadata writer/GC/Raft/approval still not granted.
+
+First new two-sided attempt FAIL84.887s: host90s overall-startup deadline expired
+before Node READY,0direct uploads confirmed in synthetic manifest. Fixed ONLY
+harness startup allowance180s, Android result wait90/data/TLS deadlines/assertions
+unchanged. Final public driver confirmed actual data and JUnit success; no failure
+counted as PASS. Startup84.949s includes cold instrumented UI/TCG; not file throughput.
+Private logs/readiness/receipts retained under phase4-2h2b-mvp. Public bounded proof
+qualification/phase4-2h4-direct-network.json, reproducible tool documented in native
+operations. Main APK internal version3/original signer, no public release.
+
+Remaining: Native Core quorum observer/read-only UI, final integrated gates and
+version-increased debug candidate/upgrade qualification. Physical phones/ARM64/
+Doze/OEM/real LAN and two independent-domain replica/fallback NOT TESTED. Standard
+emulator NAT success is not those acceptances. Full4.2 NOT ACCEPTED, writableDR
+BLOCKED. Preserve active AVD, signer, original stopped upgrade AVD and all private
+Node state; no resets or old cipher-proof overwrite.
