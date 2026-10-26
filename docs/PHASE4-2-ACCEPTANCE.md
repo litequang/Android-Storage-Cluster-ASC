@@ -207,3 +207,18 @@ pin-failure/consent/allowlist and UI trust gates qualified. Positive full UI/Bin
 join still g.2c; Agent/FGS/observer/direct LAN/phone acceptance not claimed. Full
 Phase4.2 NOT ACCEPTED, writer DR BLOCKED. Full Python/Go/fault gates still deferred
 to final changed-runtime qualification; historical counts not reused as fresh.
+
+## g.2c real UI callback / Binder / Core proof (limited)
+Three fixed actual API35 x86_64 phases PASS across force-stop/cold restarts:
+MainActivity View callbacks ->production private Binder ->embedded Core ->real
+pinned Controller. One real successful ACK lost, twoPOSTs, one accepted Node,
+zero storage approvals; app/context/TLS/operation/token/Node/cipher identities
+preserved. No direct adapter substitute for UI send/resume. Main APK unchanged
+SHA59541e41.../original signer, new testAPK Gradle build PASS. JVM12 reused unchanged
+from g.2b, not fresh counts. See qualification/phase4-2g2c-native-ui.json.
+Initial new-AVD SIGABRT before UI gates and fixture readiness failures retained in
+progress; same userdata recovered without wipe/identity reset. Launcher Quickstep
+ANR observed: programmatic real UI/Binder proof is NOT physical-touch usability
+acceptance. Interactive UX NOT QUALIFIED, direct LAN NOT PASSED, phones/ARM64
+runtime NOT TESTED, Agent/FGS/observer absent. Full4.2 NOT ACCEPTED, writableDR
+BLOCKED. This is no new public Android release/in-place upgrade claim.

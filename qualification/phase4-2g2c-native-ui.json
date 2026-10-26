@@ -1,0 +1,29 @@
+{
+  "checkpoint": "4.2g.2c",
+  "fixed_ui_process_phases": 3,
+  "actual_successful_ack_losses": 1,
+  "server_join_posts": 2,
+  "accepted_nodes": 1,
+  "approved_storage_nodes": 0,
+  "apk_sha256": "59541e41afe010a9ca7c6041c96d16549b727666d4430fedafdf717d88bb62bd",
+  "signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "scope": "fresh separate owned API35 x86_64 AVD; actual native UI/Binder/Core; explicit ADB loopback ONLY",
+  "direct_lan": "NOT PASSED",
+  "phone_runtime": "NOT TESTED",
+  "storage_agent_fgs": "NOT IMPLEMENTED",
+  "in_place_upgrade": "NOT CLAIMED for fresh sandbox; original retained AVD proof is separate",
+  "full_phase_accepted": false,
+  "ui_method": "actual programmatic View callbacks -> production private Binder -> embedded Core -> pinned TLS Controller; not physical touch acceptance",
+  "emulator_limits": [
+    "initial SIGABRT before UI gates; same userdata restored by controlled restart, no wipe",
+    "Quickstep launcher ANR observed during scenario; interactive UX NOT QUALIFIED",
+    "API35 x86_64 TCG only; no real device/ARM64 runtime proof"
+  ],
+  "qualified_main_apk_unchanged_from": "b49f5fb6c05e1eb366ba4041ad9020a7eca7725a",
+  "source_sha256": {
+    "android/app/src/androidTest/java/org/asc/foundation/NativeJoinUiQualification.kt": "477159861fbd096698445cca4e27e3f22c7494f073e4e262800201b739748e30",
+    "android/app/src/androidTest/java/org/asc/foundation/UpgradeQualificationRunner.kt": "2f0a7067fd570fc6edcaf8b4855f94ae7b69cbac90d4139864b8c10d1c9e25d4",
+    "tools/qualify_native_join_ui.py": "4656663d42ebb656052ccd91f2a6afa5e6905b2620c70e35122ecd0bd7cc38f6"
+  },
+  "reseed_guard": "PASS: refusal before reinstall/mutation; encrypted context and proof SHA unchanged"
+}

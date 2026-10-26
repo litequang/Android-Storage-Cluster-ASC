@@ -558,3 +558,11 @@ integration is g.2, no native Node/FGS or public APK claim.
   runtime. Original app/Keystore/volume/Core formats and signer are retained.
 - Add actual Controller/TLS/emulator fault and process/identity qualification
   harness; direct LAN/Storage Agent/FGS/phone acceptance remain separate.
+
+### Phase4.2g.2c — positive native UI/Binder/Core integration
+- Add test-only fixed real UI callback/pinned enrollment/lost ACK/process resume
+  proof on separate owned API35 AVD. Main source/APK unchanged from g.2b.
+- Preserve original retained AVD/signer/data; exact pre-enrollment fixture setup
+  resume, actual filesDir readiness and bounded private diagnostics.
+- Record initial emulator crash/launcher ANR; no direct LAN/physical-touch/phone
+  usability or Storage Agent/FGS acceptance claimed.

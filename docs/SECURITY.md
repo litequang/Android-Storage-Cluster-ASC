@@ -551,3 +551,13 @@ node retry is explicitly historical and cannot refresh revoked credentials.
 No automatic storage/domain approval or runtime start. Test fixture secrets travel
 only stdin to a task-owned private file, remain outside Git/main APK and are not
 operator credentials. Original signer/UID/retained state must match before install.
+
+### Positive native UI/Binder qualification g.2c
+Only test-APK fixed phases invoke real native views/private Binder/Core. No new
+main APK permission/provider/backend, trust bypass or production operation. New
+fixture tool excludes original retained upgrade AVD; setup resume requires same
+private Controller bindings, zero Nodes/approval, no prior UI logs and actual
+vault NOT_PROVISIONED before explicit UI provision. No identity reset/DB restore.
+Debug signer/owned guest/process checked, private fixture via stdin. Programmatic
+View integration does not establish physical touch usability; TCG launcher ANR
+and initial emulator crash remain recorded limits, never hidden as Android PASS.

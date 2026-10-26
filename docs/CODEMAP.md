@@ -674,3 +674,13 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
   validation, synthetic Core/actual successful201 ACK-loss +retained state gates.
   Explicit ADB dev loopback ONLY; not direct LAN/phone qualification. Contract:
   ANDROID-NATIVE-ENROLLMENT. No listener/Agent/FGS or storage approval added.
+
+## Phase4.2g.2c positive native UI/Binder/Core proof
+- NativeJoinUiQualification +fixed ui-join-* runner phases: real MainActivity
+  View callbacks/private production Binder/Core/pinned HTTPS, successful201 ACK
+  loss, actual process force-stop/restart and preserved app/context/TLS/op/token/
+  Node identity. Separate fresh task-owned AVD, no old fixture/assertion changes.
+- tools/qualify_native_join_ui.py: live owned AVD/signer validation, private exact
+  Controller/TLS fixture, pre-enrollment setup-only resume, explicit dev tunnel.
+  Retains state; never uninstall/clear. Main APK/source unchanged. NOT direct LAN
+  or physical-touch/phone usability proof; observed launcher ANR recorded.

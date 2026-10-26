@@ -510,3 +510,12 @@ first. Invalid/expired/used code keeps pending; request an owner code and explic
 replace only that code. Binding mismatch or corrupt/lost context requires holding
 state for review. Never delete keys/state, restore stale databases, or copy Termux
 identity. Native node_start still refuses until h; no FGS/replica claim from join.
+
+### Native UI qualification setup
+am start -W waits for Activity startup, not asynchronous service binding. For
+a brand-new APK, wait for actual platform filesDir before writing a test-only
+private fixture. Never create a Node/identity to repair setup. Separate UI AVD
+had SIGABRT during initial install; preserve offline userdata/keys/logs, verify
+current task ownership/free stale lock before controlled restart. No wipe/root/
+signer recreation. Quickstep launcher ANR can cover the Activity even while
+programmatic View/Binder tests pass: that does NOT qualify interactive usability.

@@ -113,3 +113,31 @@ verified read-only observer data; j must resolve direct NAT/LAN and run fresh fu
 Python/Go/Core faults, APK upgrade and package/security qualification. Native
 phone/ARM64 runtime, Doze/OEM behavior, physical replicas and full Phase4.2 remain
 unaccepted until actually tested. Writable disaster recovery stays BLOCKED.
+
+## g.2c positive UI path
+NativeJoinUiQualification executes actual MainActivity View callbacks through
+production private Binder and embedded Core to a real pinned TLS Controller.
+Fixed ui-join-seed/resume/verify phases run across actual force-stop/cold restarts.
+No direct NativeEnrollment call substitutes for the UI send/resume path.
+Separate NEW task-owned ASC_JOIN_* AVD keeps the original upgrade AVD/fixtures
+intact; source main APK/signer unchanged. tools/qualify_native_join_ui.py checks
+live local owner process and guest identity, original signer, fresh app prerequisite
+and zero automatic storage approval. --resume-setup is ONLY for an interrupted
+pre-enrollment setup: exact private Registry/cluster/cert/pin/code, zero server
+Nodes/catalog approvals and NO prior UI phase logs. Actual UI seed additionally
+requires vault NOT_PROVISIONED; existing app/Node identity is never reset/adopted.
+It cannot re-seed an already-created UI proof or silently replace credentials.
+
+After am start -W, wait for actual platform filesDir created by the asynchronous
+private Binder status before writing the synthetic private fixture. No manual
+privileged directory, identity creation or guard bypass. Test fixture/code is
+passed on stdin only; keep private output, even after setup failure. A failed
+post-enrollment phase requires reviewed resume/verification of retained proof,
+not clearing the app or rerunning seed.
+
+Scope is programmatic real View event callbacks/Binder/network, NOT physical
+touch or phone usability. This TCG emulator had an initial SIGABRT before the
+UI gates and an observed Quickstep launcher ANR during the scenario. Actual
+three fixed phases later PASS with same userdata after controlled restart;
+no wipe/uninstall/clear. Interactive UX is NOT QUALIFIED by those results.
+Exact receipt/proof and all limits are in current progress/acceptance.

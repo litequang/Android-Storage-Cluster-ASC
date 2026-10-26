@@ -740,3 +740,69 @@ ACCEPTED; whole-suite historical results are not fresh g.2b qualification. Befor
 next source checkpoint: normal commit/push/fetch verification below/next receipt.
 Rollback: older f.2 refuses populated optional slots; keep NEW records/bytes/signer
 and compatible code, never restore stale state or regenerate Node/app/volume IDs.
+
+### g.2b publication receipt
+b49f5fb6c05e1eb366ba4041ad9020a7eca7725a normal push/fetch/advertised remote
+matched exactly before g.2c. All original refs/public archives retained.
+
+## 4.2g.2c — positive native UI -> Binder -> Core (scoped)
+Added test-only NativeJoinUiQualification/fixed runner phases +explicit owned-
+emulator qualification tool. Main source/APK unchanged from g.2b (SHA59541e41...);
+original signer bba77b68... preserved. New testAPK builds PASS with existing strict
+dependencies. JVM12 unchanged from g.2b reused (UP-TO-DATE), not12 new tests. No
+new Core/Android main source means earlier33/28 scope remains the frozen g.2b
+receipt, not relabeled as fresh g.2c regression. No public APK/release.
+
+Actual three UI phases PASS: ui-join-seed ->force-stop/cold Activity ->ui-join-resume
+->force-stop/cold Activity ->ui-join-verify. MainActivity input/trust/preparation/
+send and resume View callbacks invoke production private Binder +Core over real
+pinned TLS. Server dropped one REAL successful201 ACK; exactly2 joinPOSTs,1 Node,
+0 catalog approvals. Actual app/context/TLS pin/request UUID/op/token hash/accepted
+Node ID/ciphertext kept across process death, no direct adapter substitutes for
+UI send/resume. Approval UNKNOWN, runtime/writer false. Separate fresh app/AVD: no
+in-place upgrade claim for this scenario (retained original receipt is separate).
+
+Owned ASC_JOIN_UI_API35 created under existing workspace SDK with NEW userdata,
+not a clone of old app/Termux state. avdmanager create failed because this SDK's
+registered emulator package metadata is missing; executable/system image were
+already qualified. Wrote only a NEW standard AVD config pointing to that existing
+image. Actual boot465.4s TCG, no KVM. Initial install suffered qemu SIGABRT(-6)
+BEFORE UI tests; initial stderr was not retained by first helper, not fabricated.
+Old qualification AVD gracefully stopped through its verified Popen parent only
+after all g.2b gates, original userdata/signer kept. New failed AVD offline
+userdata/config/key backing saved (~570MB); exact NUL-terminated historical PID
+lock verified absent process +both free OS locks, then moved into backup, never
+killed blindly or deleted multiinstance lock. Same userdata restarted with1 TCG
+core (239.001s boot); no wipe/reset/root/proxy/CA changes. Crash cause unproven.
+
+New APK install then passed. Two pre-seed fixture setup attempts failed because
+filesDir was not yet created; am start -W is insufficient for async Binder status.
+Fixed actual-directory readiness wait, not identity initialization/guard bypass.
+Explicit --resume-setup reuses exact private Registry/cluster/cert/pin/code only
+with zero Nodes/approvals and no UI phase logs; seed asserts actual vault
+NOT_PROVISIONED before user consent/provision. No existing app/Node identity was
+reset. Actual successful run used canonical emulator-5556/privateADB5038; earlier
+TCP alias127.0.0.1:5557 also targets this same verified guest. These are dev
+transports, NOT direct NAT/LAN. Initial/setup failures are not added to PASS.
+
+LIMIT: private UI hierarchy captured an Android Quickstep launcher ANR overlay.
+The tests execute actual programmatic View event callbacks/Binder/Core, not
+physical taps; interactive UX NOT QUALIFIED. No claimed phone/ARM64 runtime,
+Doze/OEM or Native Storage Agent/FGS/direct LAN qualification. Full4.2 NOT ACCEPTED.
+Public source receipt qualification/phase4-2g2c-native-ui.json. Private logs/AVD
+owner receipt/proof under /workspace/work/phase4-2g2c-ui (qualification-retry).
+Retain all files; never rerun seed over existing proof. Original ASC_UPGRADE_API35
+userdata/signing key/f.2 and g.2b backups remain under documented private paths.
+
+Next after normal push/fetch: h should be split shared explicit Core Agent
+contract, native TLS socket adapter to SAME StorageHandler/Engine, owned storage
+configuration and real Agent/FGS lifecycle/authorized byte transfers. Retained UI
+Node is enrolled with no approved storage; do not reinitialize it. g Controller
+fixture is stopped but Registry/cert/Node token bindings are retained privately;
+restart exact isolated fixture only for further tests, no writer/raft bootstrap.
+Then i read-only observer and j direct LAN/fresh full regression/new candidate.
+Do not relabel source integration as full Native Node or Phase4.2 ACCEPTED.
+
+Final-source negative re-seed guard PASS: --resume-setup against the completed UI
+fixture refuses BEFORE reinstall/server mutation; exact encrypted Node context
+and UI proof hashes unchanged. Public source SHA receipt verified before staging.

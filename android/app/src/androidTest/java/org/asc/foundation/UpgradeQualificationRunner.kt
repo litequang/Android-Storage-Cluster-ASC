@@ -21,7 +21,9 @@ class UpgradeQualificationRunner:androidx.test.runner.AndroidJUnitRunner() {
             val version=c.packageManager.getPackageInfo(c.packageName,0).versionCode
             val vault=ApplicationVault(c);val engine=EmbeddedEngine(c)
             val receipt=File(c.filesDir.canonicalFile,"upgrade-proof.json")
-            if(phase in listOf("join-pending-seed","join-pending-resume","join-receipt-verify")) {
+            if(phase in listOf("ui-join-seed","ui-join-resume","ui-join-verify")) {
+                check(version==3);NativeJoinUiQualification.run(phase)
+            } else if(phase in listOf("join-pending-seed","join-pending-resume","join-receipt-verify")) {
                 check(version==3)
                 val folder=File(c.filesDir.canonicalFile,"native-join-process-proof")
                 if(phase=="join-pending-seed") {check(!folder.exists());check(folder.mkdir());android.system.Os.chmod(folder.absolutePath,448)}
