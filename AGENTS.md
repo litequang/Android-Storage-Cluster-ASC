@@ -240,3 +240,10 @@ Agent/FGS, i observer and j direct network/full gates, not redo f/g. Preserve
 original private signer, original stopped upgrade AVD and newly enrolled UI AVD
 state; never clear/re-seed identity or infer authority from heartbeat/Leader flag.
 Full4.2 NOT ACCEPTED, writerDR/Raft/GC/failover remain locked.
+
+Owner MVP priority2026-10-26: working Native Node/file I/O first, defer additional
+hardening. h.2b.1a full368 Linux PASS0skip on923c5558 plus scoped API35 existing-only
+I/O is recorded in current progress/acceptance. Do not repeat full Core regression
+for every small adapter change; run targeted tests, final integrated full gates.
+Reuse existing TLS/pinning/identity/data guards, no weakening tests or fake runtime.
+Next minimum approved Node volume +same Core StorageHandler/Agent, then owned FGS.

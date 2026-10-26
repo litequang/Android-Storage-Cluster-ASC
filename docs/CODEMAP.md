@@ -707,7 +707,7 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
   proof, kept distinct. ANDROID-NATIVE-TRANSPORT owns contract/limits/next Handler
   integration; no binary echo-as-Storage-Node acceptance.
 
-## Phase4.2h.2b.1a existing-only metadata gate (in qualification)
+## Phase4.2h.2b.1a existing-only metadata gate (scoped PASS)
 - tests/test_phase41_upgrade.py: exact published0.4.3 rebuilt from qualified
   0a3ea839 source and byte/SHA checked; additional CurrentSourceUpgradeTests runs
   the SAME full upgrade/pending/identity/bytes/rollback assertions against the

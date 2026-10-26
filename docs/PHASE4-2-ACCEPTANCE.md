@@ -245,3 +245,20 @@ Native Handler/Engine integration/approved network volume/Agent/FGS/observer/LAN
 still incomplete. Phones/ARM64/OEM/Doze not runtime-tested, interactive UX not
 qualified. Full4.2 NOT ACCEPTED; full Python/Go/fault/new-candidate gates not yet
 rerun for remaining runtime; writableDR BLOCKED.
+
+## h.2b.1a existing-metadata prerequisite — scoped PASS
+Fresh full368 Python PASS0skip/failure/error1991.896s on source923c5558, all230
+frozen source/test/native/package inputs unchanged. Actual original physical-GC,
+quorum/backup/observer/browser faults and both exact historical/current-source
+upgrade scenarios passed. Earlier interrupted/failed runs retained, not acceptance.
+Targeted10 PASS44.775s; actual API35 existing-only3 +original regression18 +foreign
+caller1 and enrolled identity retention PASS. Go11/vet/verify/Linux+Windows+Android
+builds PASS (Windows/Android cross-build only); JVM13 unchanged retained, not fresh.
+Strict build/APK inventory/original signer preserved; no new public artifact.
+
+Opt-in private POSIX Manifest/Engine mode refuses missing metadata and identity/
+structure mismatch without creating/repairing a DB. Format1/default callers kept.
+Not an fd-pinned SQLite VFS for untrusted shared metadata. Native approved Node
+volume/Handler/Agent/FGS/direct LAN still incomplete; full4.2 NOT ACCEPTED.
+Next work follows owner MVP priority with targeted tests, preserving existing
+TLS/pinning/identity/data guards; fresh integrated final gates remain required.

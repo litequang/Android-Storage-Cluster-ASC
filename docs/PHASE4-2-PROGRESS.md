@@ -1011,3 +1011,30 @@ tests run without fail-fast so any further failure and remaining gates are recor
 No source modifications or concurrent emulator/Go/Gradle while this gate runs.
 Still IN QUALIFICATION; do not move to native volume config/Handler/Agent/FGS until
 full PASS, security review, qualification commit/push and exact remote verification.
+
+### h.2b.1a final scoped qualification
+Source923c5558b92c0acd473109b19857cbf3b56c00e5 normal-pushed/fetched/advertised
+remote exactly before qualification ended. Fresh full368 Python PASS0fail/error/
+skip in1991.896s, ended2026-10-26 11:07:14 UTC; all230 frozen inputs unchanged.
+Original Core3A–3D/quorum/physical-GC/observer/browser/compatibility gates run,
+including historical AND current-source upgrade/rollback; no failed prior run
+counted as PASS. Raw logs/freeze/receipt remain private under full-python-final.
+Public bounded receipt qualification/phase4-2h2b1-existing.json. Existing-only8
+plus both complete upgrade scenarios targeted10 PASS44.775s. Android existing3/
+regression18/foreign1 and retained identity proof, Go11/vet/verify/builds, strict
+APK/signature inventory results above apply to unchanged Engine/native source.
+JVM13 retained unchanged, not fresh executions. No new public APK/release.
+
+This qualifies only canonical existing-metadata open policy on Linux/API35 private
+storage, not Native Storage Agent/FGS or full4.2. Android26–29/ARM64/phones/Doze/OEM/
+direct LAN remain unqualified; writableDR blocked. No second Catalog/Engine, schema
+migration, Node ID regeneration, physical GC unlock or old DB rollback.
+
+Owner steering2026-10-26: prioritize working Native Node over additional hardening.
+From here implement minimum existing Engine/enrollment/Node TLS/heartbeat path and
+actual file SHA/restart; use targeted changed-path tests. Defer extra hardening and
+another full regression until integrated qualification, reuse current full evidence
+for unchanged code. Keep existing TLS/pinning/identity/data guards; no test weakening
+or fake runtime PASS. Next h.2b minimal approved private Node volume +same canonical
+StorageHandler over existing JSSE adapter, then owned Agent/FGS and actual transfer.
+No more repeated full Core suites for each small adapter-only checkpoint.
