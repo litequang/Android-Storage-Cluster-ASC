@@ -761,3 +761,13 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 - NativeNodeDirectTest.kt +tools/qualify_native_direct.py: owned AVD, reverse
   removed, actual direct heartbeat +host upload/verify/download over loopback-only
   standard SDK NAT; ADB control only. Cold Binder/identity and direct TLS probes.
+
+## j.2 candidate and existing File Manager entry
+- DashboardLink.kt: bounded root HTTPS numeric private-IP URL validation; external
+  browser navigation only. No credentials, WebView, bridge or trust override.
+- MainActivity.kt: Cụm -> Mở File Manager web reuses existing Demo Dashboard;
+  runtime labels reflect measured Node status and preserve UNKNOWN approvals.
+- DashboardLinkTest.kt / NativeUiTest.kt: navigation policy and actual UI refusal.
+- NativeUpgradeDataTest.kt: retained app/context identity and actual canonical
+  Engine read/hash of an original v3 object after normal v4 APK upgrade and
+  Android's lower-version refusal. No fixture identities packaged in main APK.

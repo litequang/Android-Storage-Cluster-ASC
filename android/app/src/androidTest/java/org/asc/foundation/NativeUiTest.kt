@@ -8,6 +8,16 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class NativeUiTest {
+    @Test fun existingDashboardEntryRefusesPublicAndSecretUrlsWithoutDispatch() {
+        ActivityScenario.launch(MainActivity::class.java).use {s ->s.onActivity {a ->
+            val root=a.window.decorView;root.findViewWithTag<Button>("tab-3").performClick()
+            val field=root.findViewWithTag<EditText>("dashboard-url");assertFalse(field.isSaveEnabled)
+            for(url in listOf("http://192.168.1.2:8444","https://8.8.8.8:8444","https://192.168.1.2:8444?token=secret")) {
+                field.setText(url);root.findViewWithTag<Button>("open-dashboard").performClick()
+                assertTrue(root.findViewWithTag<TextView>("dashboard-link-result").text.toString().contains("Chỉ nhận URL gốc HTTPS"))
+            }
+        }}
+    }
     @Test fun nativeJoinAndReplacementRequireFreshOwnerTrustBeforeAnyDispatch() {
         ActivityScenario.launch(MainActivity::class.java).use {s ->s.onActivity {a ->
             val root=a.window.decorView

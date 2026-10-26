@@ -1,11 +1,21 @@
 # Native Foundation operations — internal debug only
 
-Current continuation h/i has a real scoped emulator Native Node/FGS/direct NAT
-and separately authenticated Core observation; see later receipts in PHASE4-2-
-PROGRESS and ANDROID-CORE-OBSERVER for the Cụm page/gateway login. The original
-foundation artifact/version and unsupported-operation text below is historical;
-new source is not yet a newly published increased-version APK. Do not replace
-Termux state or infer physical-phone/full Phase4.2 acceptance from these receipts.
+Current j.2 builds internal versionCode4 / 0.4.0-native-node-candidate with real
+scoped emulator Node/FGS/direct NAT, Catalog replicas and separate Core observation.
+See current PHASE4-2-ACCEPTANCE/PROGRESS for exact candidate/hash/test scope. The
+Cụm page adds Mở File Manager web: enter the owner's existing Demo Dashboard root
+HTTPS LAN URL (for example https://192.168.1.20:8444). This opens an external
+browser; trust the independently verified public CA and use a fresh Demo owner
+login code. No code/token in URL, no certificate-warning bypass. Gateway Core
+login remains separate/read-only. Native file picker, multiuser accounts,
+automatic hotspot/Wi-Fi Direct and Cloudflare remain unimplemented.
+
+The original foundation artifact/version and unsupported-operation text below
+is HISTORICAL, not the current Node capability. Do not replace Termux state or
+infer physical-phone/full Phase4.2 acceptance. Candidate upgrade uses the original
+private signer and normal install-r; never uninstall/clear/-d or restore an old
+database to evade refusal. An older versionCode is refused by Android: keep the
+current data and stage a forward-version compatible fix, not a forced downgrade.
 
 Application `org.asc.foundation`, versionCode2 / `0.2.0-foundation`, minSDK26,
 targetSDK35. This is an independent native FOUNDATION, not a replacement for a

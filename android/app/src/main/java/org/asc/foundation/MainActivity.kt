@@ -80,7 +80,7 @@ class MainActivity : Activity() {
     override fun onCreate(saved:Bundle?) {
         super.onCreate(saved)
         val root=panel();root.setBackgroundColor(Color.rgb(247,249,252))
-        root.addView(text("ASC · Nền tảng Android",24f));root.addView(text("FOUNDATION · Chưa có Node native được nghiệm thu",14f))
+        root.addView(text("ASC · Node thử nghiệm",24f));root.addView(text("Internal candidate · Đã kiểm thử emulator; điện thoại thật chưa nghiệm thu",14f))
         val consent=CheckBox(this).apply {
             tag="consent";text="Cho phép thao tác trong vùng riêng của APK. Không đọc hoặc sao chép Termux."
             isChecked=getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false)
@@ -106,7 +106,7 @@ class MainActivity : Activity() {
         outcome=text("Chưa có thao tác được xác nhận.").apply {tag="operation-result"};overview.addView(outcome)
         button(overview,"Đọc trạng thái","refresh"){refresh()}
         button(overview,"Tạo/kiểm tra identity ứng dụng","provision"){call("app_provision") {outcome.text="Application identity: ${it.optString("state","UNKNOWN")}. Không phải Node/Cluster ID.";refresh()}}
-        button(overview,"Kiểm tra thư viện Engine","engine-info"){call("engine_info") {outcome.text=if(it.optString("implementation")=="asc.storage.engine")"Thư viện Core thật có trong APK. Node runtime vẫn NOT SUPPORTED." else message(it)}}
+        button(overview,"Kiểm tra thư viện Engine","engine-info"){call("engine_info") {outcome.text=if(it.optString("implementation")=="asc.storage.engine")"Thư viện Core thật có trong APK. Đọc phiên Node ở Thiết lập để xác minh runtime, volume và kết nối." else message(it)}}
         val join=page("Ghép")
         join.addView(text("Xác minh endpoint, TLS PIN và Cluster ID với owner trước. Enrollment dùng Core hiện có; không tự phê duyệt storage/failure domain hoặc khởi chạy Node."))
         controller=field(join,"Controller HTTPS trong LAN (kèm cổng)","controller")
@@ -221,6 +221,18 @@ class MainActivity : Activity() {
         }
         button(clusterPage,"Đọc trạng thái Core","observer-refresh") {observerCall("state")}
         button(clusterPage,"Đăng xuất quan sát","observer-logout") {clearObserverForm();observerCall("logout")}
+        clusterPage.addView(text("Quản lý file · Dashboard Demo",20f))
+        clusterPage.addView(text("Mở File Manager web hiện có để đăng nhập owner, upload/download và xem replica. URL này khác gateway Core chỉ đọc. Trình duyệt phải tin đúng public CA đã được owner xác minh; không bỏ qua lỗi HTTPS. Chưa có tài khoản nhiều người dùng hoặc Cloudflare."))
+        val dashboard=field(clusterPage,"URL HTTPS LAN của Dashboard do owner cung cấp","dashboard-url")
+        val dashboardResult=text("").apply {tag="dashboard-link-result"};clusterPage.addView(dashboardResult)
+        button(clusterPage,"Mở File Manager web","open-dashboard") {
+            try {
+                val url=DashboardLink.origin(dashboard.text.toString().trim())
+                startActivity(Intent(Intent.ACTION_VIEW,android.net.Uri.parse(url)))
+                dashboardResult.text="Đã yêu cầu trình duyệt mở Dashboard. Chưa xác nhận TLS/đăng nhập; trình duyệt phải kiểm tra CA và owner cấp mã riêng."
+            }catch(_:IllegalArgumentException){dashboardResult.text="Chỉ nhận URL gốc HTTPS với IP LAN riêng/cổng rõ ràng; không nhận token, mã hoặc đường dẫn trong URL."}
+            catch(_:ActivityNotFoundException){dashboardResult.text="Chưa có trình duyệt phù hợp. Mở URL đã xác minh trên thiết bị có trình duyệt HTTPS."}
+        }
         root.setOnApplyWindowInsetsListener {view,insets ->
             if(Build.VERSION.SDK_INT>=30) {
                 val bars=insets.getInsets(android.view.WindowInsets.Type.systemBars())
@@ -328,7 +340,7 @@ class MainActivity : Activity() {
         return "Node: ${value.optString("state","UNKNOWN")} · Controller: ${value.optString("controller","UNKNOWN")}\n"+
             "Node ID: ${value.optString("node_id","UNKNOWN").take(8)} · Port: ${value.opt("port") ?: "UNKNOWN"}\n"+
             "Volume: ${v?.optString("volume_id")?.take(8) ?: "UNKNOWN"} · Writable: ${measured("writable")} · Fsync: ${measured("fsync_tested")}\n"+
-            "Storage/failure-domain của cụm: chờ owner duyệt. Số replica: UNKNOWN."
+            "Storage/failure-domain và replica của cụm: UNKNOWN tại Node. Xác minh trong Dashboard owner."
     }
     private fun call(op:String,endpoint:String="",fingerprint:String="",expected:String="",name:String="",secret:String="",trusted:Boolean=false,id:String=UUID.randomUUID().toString(),done:(JSONObject)->Unit) {
         task({JSONObject((engine ?: error("unavailable")).request(1,id,op,endpoint,fingerprint,expected,name,secret,trusted))},done)
@@ -342,7 +354,10 @@ class MainActivity : Activity() {
     }
     private fun refresh() {call("status") {
         val app=it.optJSONObject("application_identity")
-        status.text="Service: ${it.optString("state","UNKNOWN")} · ${it.optString("device_policy","UNKNOWN")}\nApplication identity: ${app?.optString("state") ?: "UNKNOWN"}\nNode/Controller: UNKNOWN · Node runtime NOT SUPPORTED\nStorage/failure-domain approval: UNKNOWN · Writer authority: false"
+        status.text="Service: ${it.optString("state","UNKNOWN")} · ${it.optString("device_policy","UNKNOWN")}\nApplication identity: ${app?.optString("state") ?: "UNKNOWN"}\nNode/Controller: UNKNOWN · cần đọc phiên Node thực tế\nStorage/failure-domain approval: UNKNOWN · Writer authority: false"
+        if(getSharedPreferences("local-consent",MODE_PRIVATE).getBoolean("granted",false))call("node_status") {node ->
+            if(!node.has("error"))status.append("\n"+nodeText(node))
+        }
     }}
     override fun onStart() {super.onStart();pending=0;if(::busy.isInitialized)busy.text=""
         if(::connectivity.isInitialized && !observingNetwork) {observingNetwork=true;connectivity.registerDefaultNetworkCallback(networkObserver)}

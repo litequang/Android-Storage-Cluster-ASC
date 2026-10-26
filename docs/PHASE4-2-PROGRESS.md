@@ -1391,3 +1391,66 @@ ARM64/real LAN/Chrome Android/Doze/OEM/two physical domains/writableDR unqualifi
 Rollback: main product source/APK/state formats unchanged; retain NEW test state/
 objects, no old DB restore/uninstall/forced downgrade. Check tracked/index/untracked
 secrets, normal feature push/fetch match before next checkpoint; receipt follows.
+
+
+## 2026-10-26 — j.2 targeted internal candidate / existing File Manager entry
+
+j.1 source14ce27c9749ad60e71d8e3f462289716cf099c25 normal-pushed, fetched and
+remote HEAD exactly verified before j.2. No branch merges/reset/uninstall/clear.
+
+Private main APK now versionCode4 /0.4.0-native-node-candidate, original signing
+certificate bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30,
+min26/target35, unchanged7permissions/119Coremodules/ABIs/state/schema/dependencies.
+Native TLS26–29 remains NOT QUALIFIED. Main/test normally installed-r on the same
+owned ASC_NATIVE_CATALOG_API35/emulator-5560/privateADB5038, same UID/Keystore/
+app/Node/Cluster/TLS/Volume/context and original bytes retained. No identity reset.
+
+Cụm now has Mở File Manager web to existing Demo Dashboard root HTTPS/private-IP/
+explicit-port URL. No path/query/fragment/credentials, WebView, browser-engine
+bridge, new backend/DB, CA bypass or second owner login. It only requests browser
+navigation, not proof of CA trust/login. Core observer session stays read-only and
+separate. Refresh reports actual Node session when permitted and keeps approval/
+replicas UNKNOWN without evidence; removed obsolete Node-runtime/library labels.
+Updated owner pilot reflects actual Node flow instead of historical draft-only UI.
+
+Fresh targeted actual results:
+- Gradle unit/main/test build PASS; final text-label build32s, JVM17PASS0skip/fail.
+- Candidate native Catalog/Dashboard E2E retained run39f08278388443cba7e023b7bb50ae3b
+  PASS, Android1/165.809s +1/100.390s, Chromium login/CA/XSS/mobile/2replicas/SHA/
+  actual Native-offline fallback PASS, reachable TLS +Controller-loss exact503,
+  retained-process/context/direct Native bytes PASS. No ADB reverse byte transport.
+- Normal v3->v4 upgrade, exact originalv3 retained262144-byte object SHA readback,
+  Keystore decrypted context/application identity, UI trust/refusal, old Binder
+  golden/auth/operation gates and actual canonical Engine/fsync:9PASS124.138s0skip.
+  Actual attempt to normally install preserved exactv3 APK refused by Android
+  INSTALL_FAILED_VERSION_DOWNGRADE; no-d/uninstall/clear or old DB restore.
+- Then corrected ONLY library-info UI text, rebuilt, normally updated samev4 with
+  same signer. FINAL APK actual UI3+original-v3-object/identity1 PASS:112.623s.
+  E2E used pre-text-only-correction SHA847307b0c3deb524bc2739138db29e39bb7273a1159a56f180e6e895dfacc576;
+  final APK SHA7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8.
+  No canonical Core/transport/enrollment/Node change between these builds.
+- Final APK inventory/signature audit PASS:39,000,362bytes,119exactCoremodules,
+  unchanged original signer/7permissions, no inventory findings/test classes/state.
+  This is an inventory scan, not a comprehensive independent security assessment.
+
+Frozen private candidate/checksum/audits and raw receipts remain under
+/workspace/work/phase4-2j-native-catalog; no new public APK is published here.
+Bounded public receipt:qualification/phase4-2j2-candidate.json. Private credentials,
+fixtures/CA/signing key/state are never committed. Prior archives/APK unchanged.
+
+Full4.2 STILL NOT ACCEPTED: j.3 fresh full applicable Python/Go/fault gates not run
+at this small checkpoint; do not reuse historical368PASS as current full proof.
+Original primary AVD crashed(-11) in j.1; offline8images retained, actual crash
+restart/old-key/byte readback STILL NOT TESTED. Cold initial JUnit receipt remains
+INCOMPLETE, not counted as PASS. Do not run two memory-heavy TCG VMs together.
+Physical phones/ARM64/real LAN without Internet/Chrome Android CA trust/two physical
+domains/OEM/Doze remain NOT TESTED. Native file picker/multiuser accounts/automatic
+hotspot/Wi-Fi Direct/Cloudflare unimplemented; read ASC-USER-STATUS. WriterDR blocked.
+
+Rollback: preserve current version4 data/key/identity/volumes and private signer;
+Android refuses lower-version APK. Stage a tested compatible forward-version fix,
+not forced downgrade/old DB restore. No Termux->APK migration or general rollback
+acceptance is implied. Next: recover/verify original primary without reset, finish
+cold/fault evidence as applicable, freeze candidate/source, run final j.3 once and
+publish only honestly scoped artifact/acceptance. Review tracked/index/untracked
+secrets, normal feature-only push/fetch/remote match before next; receipt follows.

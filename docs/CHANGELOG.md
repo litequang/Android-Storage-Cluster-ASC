@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-10-26 — Native j.2 internal candidate (not full Phase4.2 acceptance)
+
+- Increase private candidate to versionCode4 /0.4.0-native-node-candidate with
+  original signer; retain all Core modules, state formats, permissions and guards.
+- Add Cụm -> Mở File Manager web for the existing Demo owner Dashboard, keeping
+  private HTTPS/browser trust and separate owner login. No native file backend,
+  multiuser accounts, automatic hotspot or Cloudflare remote access.
+- Replace obsolete runtime labels with measured Node status/UNKNOWN approval.
+  Add actual retained-v3-object upgrade readback and Dashboard navigation tests.
+  Exact targeted evidence and outstanding full/phone gates: PHASE4-2-ACCEPTANCE.
+
 ## v0.9.0 — 2026-10-24 — Phase 3A Windows development accepted
 
 - Explicit bounded backup schema 1 on the existing runtime schema 2: immutable

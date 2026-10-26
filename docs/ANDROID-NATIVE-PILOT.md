@@ -1,37 +1,67 @@
-# Future ZTE/Bphone native pilot checklist
+# Owner checklist — Native Node internal candidate
 
-NOT physical-device acceptance. Codex has not accessed any phone. Never install on
-Samsung M51/production or unknown devices; do not change Termux/Boot/system state.
-This foundation does NOT replace ASC Demo 0.4.1 or enroll a working native Node.
-Leave existing Termux Controller, identities, volume and data untouched.
+Future owner-controlled ZTE/Bphone trial, NOT phone acceptance. Codex has used
+only a task-owned API35 x86_64 emulator and Linux synthetic services. Never install
+on M51/production/unknown devices or replace existing Termux data. Read current
+PHASE4-2-ACCEPTANCE, ANDROID-NATIVE-OPERATIONS and ASC-USER-STATUS.
 
-Owner-only future controlled trial on a separate ZTE9045/V40 or BphoneA40:
+## Before installation
 
-1. Read PHASE4-2-ACCEPTANCE and ANDROID-NATIVE-OPERATIONS. Verify the published APK
-   SHA256 and public signing digest before installation. Do not uninstall an older
-   native app to bypass signature/version failure. Preserve the private signer.
-2. Install only the internal debug artifact in a disposable test context. SDK26 is
-   the build minimum; only API35 x86_64 emulator runtime is qualified. Android11
-   ARM64 runtime, OEM Keystore, background policies and actual storage remain untested.
-3. Open ASC Foundation, review FOUNDATION/device policy/UNKNOWN values, explicitly
-   consent. Provision independent application identity only. This does not create
-   Node ID/Cluster ID or import Termux state. Missing/lost key must lock, not reset.
-4. Approve only its app-private capability probe with conservative quota/reserve.
-   Verify actual SHA readback/fsync report and unchanged Volume ID after reopening.
-   Do not point it at existing ASC volumes or user files; no SAF/SD/USB support.
-5. Obtain the Demo Controller's LAN HTTPS endpoint, full public certificate pin and
-   expected Cluster ID through a trusted owner channel. Confirm/check the public
-   binding. Wrong pin/cluster and offline Controller must fail. No credentials are
-   sent; encrypted join form remains NOT SENT and cannot complete native enrollment.
-6. Reopen/background/restart app, verify application identity and private probe
-   remain stable. Network changes must invalidate trust/clear displayed code.
-   Cluster/replica/quorum remain UNKNOWN without an authenticated observer provider.
-7. Stop trial without deleting data/keys or touching Termux. Report only sanitized
-   version/device-policy/error/gate facts, never code/token/private state/logcat.
+Use only a candidate actually provided with its SHA-256 and signer report; a build
+path is not a published download. The older Foundation APK has fewer functions.
+Native Node TLS requires API30+; minSDK26 is a packaging minimum. ARM64/OEM/Doze/
+physical LAN remain NOT TESTED. Stop if device guard refuses; never bypass it.
 
-Actual native enrollment, Node TLS/agent lifecycle, controlled foreground service/
-notification/stop and real file replication require further implementation and
-emulator acceptance BEFORE phone Node trials. Hardware-key invalidation, permission
-revocation on a real provider, Doze/network transitions/OEM process death, upgrade
-signer custody and ARM64 tests are separate gates. No Termux→APK migration, APK
-rollback restoration, writable disaster recovery or production readiness is promised.
+For an existing native app, verify the same original signer and higher versionCode,
+stop Node, then use normal Android update. Do not uninstall, clear data or force a
+downgrade. Keep private signer/state in operator custody; never upload them with
+diagnostics. Termux/APK identities are independent: no key/database/marker copy.
+
+## Controlled trial once the candidate is available
+
+1. Keep the existing Controller on its supported QuickStart/runtime. APK is a
+   Storage Node, not a Controller. Prepare the same private Wi-Fi or owner-enabled
+   hotspot with reachable IP addresses. Internet is not required by the protocol;
+   a local IP network is. No automatic hotspot/discovery exists.
+2. Open APK and explicitly consent. On a NEW install only, create application
+   identity. Reuse existing identity; missing/corrupt key means STOP, never reset.
+3. In Ghép enter the owner's Controller HTTPS endpoint, independently verified
+   full public SHA-256 leaf pin and expected Cluster ID. Check TLS/cluster, confirm
+   owner trust, then Chuẩn bị context và TLS native. Keep the displayed PUBLIC
+   Node pin for owner registration. Obtain a fresh one-use code through owner CLI
+   and Gửi mã ghép. If interrupted, Tiếp tục pending đã lưu with the same identity.
+   ENROLLED does not mean approved storage or failure domain.
+4. In Thiết lập explicitly allow only the APK-private Node volume, small quota/
+   reserve and this phone's private LAN IP/port9443. The separate probe volume is
+   a capability test, not a replica destination. Check actual writable/fsync:
+   UNKNOWN/denied is not success. Do not point it at user/Termux data.
+5. Owner registers/approves Node endpoint/public pin, measured volume and truthful
+   physical domain using existing tools (DEMO-QUICKSTART section4). No metadata/
+   voter role. Two volumes on one phone are one domain; app cannot approve itself.
+6. While Activity is visible, Chạy Storage Node. On API33+ grant notification
+   permission and press Start again. Verify heartbeat/storage in owner Dashboard
+   and foreground notification. Dừng Node stops only APK-owned runtime. OS/process
+   death needs explicit restart; no24/7/OEM/Doze guarantee.
+7. In Cụm choose Mở File Manager web with owner's Dashboard HTTPS LAN root URL.
+   External browser must trust the independently verified public CA. Use a fresh
+   separate Demo owner code, never code/token in URL. This is existing web File
+   Manager, not native file upload or Core observer write API.
+8. With TWO approved phones/physical domains online, upload a disposable file,
+   require two VERIFIED replicas, download/compare SHA-256. Stop one Node and
+   download via the other. Restart same Node: identical Node/Cluster/Volume/public
+   pin and original bytes must remain. Emulator+Linux on one host does not prove
+   physical independence. Do not use important data.
+9. Disconnect router Internet while preserving Wi-Fi/IP reachability; record real
+   results. Emulator NAT does not certify this phone test. No Cloudflare remote.
+10. Test notification Stop, foreground/background and Controller loss refusal.
+    Never promote another Controller or activate a recovery writer. Optional Core
+    observer has its own owner session and remains read-only.
+
+## If anything fails
+
+Stop Node, preserve keys/IDs/markers/state/bytes. Report version, Android/model,
+public artifact/signing hashes and sanitized error/gate facts; no code/token/key/
+database/full logcat. Android refuses version downgrade: use a forward-version
+compatible fix, not old database restore over new data. Termux→APK/SAF/DR migration
+is unsupported. Physical ARM64/Chrome Android CA trust/LAN/two phones/OEM/Doze and
+upgrade custody require separate owner acceptance before a phone release claim.

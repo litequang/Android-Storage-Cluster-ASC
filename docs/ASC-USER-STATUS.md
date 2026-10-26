@@ -8,9 +8,9 @@ Các gói Demo/Native đã công bố và mã nguồn mới nhất có phiên b�
 |---|---|
 | Đăng nhập Dashboard web | Có mã owner dùng một lần và phiên HTTPS; không phải hệ thống tài khoản nhiều người dùng/mật khẩu |
 | Quản lý file trên web | Dashboard Demo có danh sách file, upload/download, SHA-256 và trạng thái hai replica; không có xóa vật lý |
-| Quản lý file trực tiếp bằng màn hình native APK | Chưa có File Manager native/file picker; dùng Dashboard web hiện hữu |
+| Quản lý file từ APK | Candidate versionCode4 có nút mở File Manager web hiện hữu ở trang Cụm; chưa có File Manager native/file picker |
 | Đăng nhập quan sát Core trong APK | Có ở 4.2i; chỉ đọc node/volume/replica/job/backup/quorum, không có quyền upload hoặc tạo writer |
-| Storage Node native | Engine/TLS/enrollment/FGS/I/O và tích hợp Catalog/Dashboard/hai replica/fallback đã chạy thật trên emulator API35 +peer Linux; chưa có final candidate mới hoặc nghiệm thu điện thoại thật |
+| Storage Node native | Engine/TLS/enrollment/FGS/I/O và tích hợp Catalog/Dashboard/hai replica/fallback đã chạy thật trên emulator API35 +peer Linux; candidate4 đạt targeted upgrade/UI/E2E synthetic, còn gate final j.3, chưa nghiệm thu điện thoại thật |
 | Controller chạy bên trong APK | Chưa có; giữ Controller theo QuickStart/runtime đã hỗ trợ, tách khỏi APK Storage Node |
 | LAN không có Internet | Giao thức dùng HTTPS/IP nội bộ, không cần cloud/DNS công cộng/CDN; đã có bằng chứng synthetic/NAT, chưa nghiệm thu LAN trên điện thoại thật |
 | Không có Wi-Fi/router/hotspot hoặc đường IP giữa các thiết bị | Chưa có tự tạo hotspot, Wi-Fi Direct/Bluetooth hay transport thay thế; phải có mạng nội bộ do owner chuẩn bị |
@@ -42,7 +42,7 @@ Không nhập admin token, Node token hay private key vào các ô mã đăng nh
 ## Còn thiếu trước bản Native Node candidate hoàn chỉnh
 
 1. Hoàn thiện các gate còn lại sau bài Catalog/Dashboard/replication đã PASS; cold-setup receipt và giới hạn được ghi riêng trong tiến độ.
-2. APK tăng versionCode, giữ signer/Keystore/Node/volume/bytes; kiểm thử nâng cấp.
+2. APK candidate4 tăng versionCode, giữ signer/Keystore/Node/volume/bytes; kết quả nâng cấp ghi ở PHASE4-2-ACCEPTANCE.
 3. Fresh full regression Python/Go/fault và Android/package gates trên source cuối.
 4. Xuất APK debug/internal với SHA-256 và hướng dẫn owner nghiệm thu ZTE/Bphone.
 5. Owner tự nghiệm thu ARM64/điện thoại thật, LAN, Doze/OEM và hai miền lỗi vật lý.

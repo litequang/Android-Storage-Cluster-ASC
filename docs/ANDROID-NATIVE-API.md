@@ -64,3 +64,14 @@ client/Registry with encrypted pending CAS. Transaction1 and all authentication/
 consent/device restrictions remain. Read ANDROID-NATIVE-ENROLLMENT +IPC for fixed
 fields, error labels and historical receipt versus UNKNOWN live approval. No
 public network API, Node start/approval/GC/quorum/writer recovery was added.
+
+## j.2 existing Dashboard navigation (no IPC addition)
+The Cụm screen may dispatch ACTION_VIEW to an existing Demo File Manager root
+URL. DashboardLink accepts only HTTPS, numeric RFC1918/loopback and an explicit
+unprivileged port; no path, userinfo, query or fragment. It neither carries an
+owner code nor claims browser CA verification/login succeeded. Browser trust and
+the existing separate Demo owner session remain required. Core observer is still
+read-only; no WebView, filesystem/process bridge, new Catalog or account backend.
+Main versionCode4/versionName0.4.0-native-node-candidate changes no state/schema,
+Binder transaction, dependency or permission. min26 remains build-only outside
+qualified API35 x86_64; native TLS26–29 stays NOT QUALIFIED.

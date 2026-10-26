@@ -622,3 +622,11 @@ NAT byte transport is actual TLS, not ADB reverse; two labels on one host are on
 synthetic domains. Controller-loss gate requires reachable Node TLS plus exact503
 authorization refusal. Incomplete cold/VM runs never count as acceptance or permit
 identity reset. Cloudflare/public management remains outside this track.
+
+4.2j.2 adds only external browser navigation to an existing private HTTPS
+Dashboard root, with bounded numeric RFC1918/loopback URL validation. No secrets
+in URLs, WebView, Javascript bridge, cleartext fallback or certificate override.
+ACTION_VIEW dispatch is not proof of browser trust/login. Existing Demo owner
+session remains separate from Core observer and Node identity. No new permission,
+dependency, schema or public endpoint. Same original private signer is mandatory;
+Android lower-version refusal is preserved, never bypassed with uninstall/-d.

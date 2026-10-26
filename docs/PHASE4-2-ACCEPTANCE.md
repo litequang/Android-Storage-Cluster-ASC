@@ -360,3 +360,24 @@ crash readback NOT TESTED here. No private state reset, Node recreation or signe
 replacement. No new full Python/Go/JVM claim or public APK. Candidate/upgrade/
 remaining faults/fresh final gates remain j.2/j.3; full4.2 NOT ACCEPTED. Physical
 phones/ARM64/LAN/Chrome Android/Doze/OEM/writableDR unqualified/BLOCKED.
+
+
+## j.2 targeted candidate4 — not final full qualification
+
+Bounded receipt:qualification/phase4-2j2-candidate.json. Fresh JVM17PASS0skip,
+normal build32s, same-signer normal version3->4 update and Android lower-version
+refusal. Original-v3-file read/Keystore context/identity +UI/Binder/actualEngine
+9PASS124.138s. Final text-label-only APK update: UI3+original-data1PASS/112.623s.
+Retained candidate E2E2Android +Chromium/actualCatalog2replicas/native-offline
+fallback/Controller-loss503/process-death Native bytes PASS (165.809s/100.390s).
+No test skip/weakening or app identity reset. Exact build/hash provenance and
+pre-text-only E2E difference are in PROGRESS; final private candidate SHA:
+7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8.
+
+Only entry to EXISTING browser File Manager was added; native UI is not a second
+file backend. Browser CA/login on Android itself remains NOT TESTED. min26 does
+not qualify native Node26–29. No new public APK/full4.2/phone/production claim.
+Original-primary-crash and cold-initialization incomplete gates remain explicit.
+Fresh final Python/Go/fault/package freeze still required at j.3. LAN needs local
+IP connectivity; no Internet dependency does not mean automatic hotspot/transport.
+Cloudflare remote stays Phase5/NOT IMPLEMENTED. Recovery writer remains BLOCKED.
