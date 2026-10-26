@@ -546,3 +546,10 @@ heartbeat/introspection authorize operations. One owned accept thread +heartbeat
 thread, explicit stop and Engine close; no process PID control or auto bootstrap.
 This first session is activity-bound; native FGS/background ownership is still a
 separate next step. Linux targeted actual TLS/file/restart proof !=Android runtime.
+
+### h.3 foreground ownership
+Same EngineService now owns the explicitly started Node independently of UI binding
+through connectedDevice FGS, actual network work and notification Stop. It never
+starts an idle fake FGS or creates identity on restart. Existing actor/provider/
+Storage/Controller authorization unchanged; own stopped/failed-session health
+cleanup, START_NOT_STICKY, no boot/recovery writer/Termux process control.

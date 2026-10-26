@@ -4,6 +4,7 @@ import android.content.*
 import android.os.IBinder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.core.app.ActivityScenario
 import com.chaquo.python.Python
 import org.junit.Assert.*
 import org.junit.Test
@@ -52,6 +53,7 @@ assert hashlib.sha256(output.getvalue()).hexdigest()==proof['sha256']
         assertTrue(NativeDeviceGate.allowed())
         val fixture=File(c.filesDir,"native-mvp-network-fixture.json").readText()
         c.getSharedPreferences("local-consent",Context.MODE_PRIVATE).edit().putBoolean("granted",true).commit()
+        val activity=ActivityScenario.launch(MainActivity::class.java)
         var api:ILocalEngine?=null;val ready=CountDownLatch(1)
         val connection=object:ServiceConnection {
             override fun onServiceConnected(name:ComponentName,binder:IBinder) {api=ILocalEngine.Stub.asInterface(binder);ready.countDown()}
@@ -93,7 +95,8 @@ grant=request_json(fixture['origin'],fixture['pin'],'POST','/api/v1/admin/storag
 client=StorageClient('https://127.0.0.1:9443',before['tls']['pin'],grant,volume['volume_id'])
 data=bytes(range(256))*1024;sha=hashlib.sha256(data).hexdigest()
 session=client.initiate('android_native_mvp_1','native/mvp.bin',len(data),sha)
-client.upload(session['session_id'],io.BytesIO(data),len(data));saved=client.commit(session['session_id'])
+if session['state']!='COMMITTED':client.upload(session['session_id'],io.BytesIO(data),len(data))
+saved=client.commit(session['session_id'])
 assert client.json('POST','files/'+saved['file_id']+'/verify',{})['state']=='COMMITTED'
 assert call('stop_owned')['state']=='STOPPED'
 assert json.loads(str(api.startNode(1,str(uuid.uuid4()),'127.0.0.1',9443)))['state']=='RUNNING'
@@ -114,6 +117,7 @@ assert call('stop_owned')['state']=='STOPPED'
         } finally {
             try {api?.request(1,java.util.UUID.randomUUID().toString(),"stop_owned","","","","","",false)}catch(_:Exception){}
             c.unbindService(connection)
+            activity.close()
         }
     }
 }

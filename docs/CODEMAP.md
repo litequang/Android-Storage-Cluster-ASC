@@ -738,3 +738,12 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 - NativeNodeMVPTest.kt: focused actual API35 Binder/JSSE/owner grant/bytes/hash/
   heartbeat/stop-start plus independent fresh-process retained identity/readback.
   Uses private task fixture, never packaged owner credentials; no direct LAN claim.
+
+## h.3 owned foreground Node
+- EngineService.kt: promote ONLY actual explicitly started Node session as Android
+  connectedDevice FGS; notification Stop, own runtime health cleanup, no boot/auto
+  restart/initialization. MainActivity.kt requests notification permission on33+.
+- NativeNodeForegroundTest.kt: actual OS foreground/notification, all UI/test
+  bindings removed, real SHA download while background, PendingIntent Stop and
+  real closed port. tools/audit_native_apk.py --foreground-node explicitly expects
+  the4 documented service/notification permissions; old3-permission default kept.

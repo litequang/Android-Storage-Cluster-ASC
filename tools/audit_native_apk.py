@@ -16,6 +16,7 @@ def main():
     parser.add_argument('--sdk', type=Path, required=True)
     parser.add_argument('--version-code', type=int, default=2)
     parser.add_argument('--version-name', default='0.2.0-foundation')
+    parser.add_argument('--foreground-node', action='store_true', help='expect documented connectedDevice/notification permissions')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     canonical = root / 'asc'
@@ -64,14 +65,18 @@ def main():
         if required not in badging:
             raise ValueError('unexpected APK metadata')
     permissions = re.findall(r"uses-permission: name='([^']+)'", badging)
-    if set(permissions) != {'org.asc.foundation.permission.LOCAL_ENGINE', 'android.permission.INTERNET', 'android.permission.ACCESS_NETWORK_STATE'}:
+    expected_permissions = {'org.asc.foundation.permission.LOCAL_ENGINE', 'android.permission.INTERNET', 'android.permission.ACCESS_NETWORK_STATE'}
+    if args.foreground_node:
+        expected_permissions.update('android.permission.' + name for name in (
+            'FOREGROUND_SERVICE', 'FOREGROUND_SERVICE_CONNECTED_DEVICE', 'CHANGE_NETWORK_STATE', 'POST_NOTIFICATIONS'))
+    if set(permissions) != expected_permissions:
         raise ValueError('unexpected permissions')
     print(json.dumps({'sha256': hashlib.sha256(args.apk.read_bytes()).hexdigest(),
         'bytes': args.apk.stat().st_size, 'application_id': 'org.asc.foundation',
         'version_code': args.version_code, 'version_name': args.version_name, 'min_sdk': 26, 'target_sdk': 35,
         'debug_signer_certificate_sha256': digest, 'abis': abis, 'permissions': permissions,
         'canonical_core_modules': len(expected), 'inventory_findings': findings,
-        'scope': 'internal debug FOUNDATION; no native Node, migration or phone acceptance'}, indent=2))
+        'scope': 'internal debug inventory/signature only; no migration or phone acceptance'}, indent=2))
 
 
 if __name__ == '__main__':

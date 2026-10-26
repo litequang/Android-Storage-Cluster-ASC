@@ -155,3 +155,20 @@ still refuses. Socket tests are synthetic guest loopback, not file/replica/LAN
 acceptance. Source private APK remains version3, original signer; new116 modules
 audited. Keep enrolled state and original signer on normal install-r; no public
 release. ANDROID-NATIVE-TRANSPORT specifies API/ownership/deadline and next gates.
+
+## Native Node foreground MVP (API35 emulator qualified, not phone release)
+After enrollment and explicit private Node-volume approval, start Node while the
+Activity is visible. On33+ grant notifications, then press Start again; no Node is
+started on permission denial. The real Node session uses connectedDevice FGS,
+shows ASC Storage Node notification and Dừng Node action. Activity can close;
+notification Stop closes only the app-owned listener/Engine and removes service.
+Service is START_NOT_STICKY: process/OS death needs explicit user restart using
+existing state, not new identity or boot auto-start. No24/7/OEM/Doze guarantee.
+
+Android requires FOREGROUND_SERVICE, FOREGROUND_SERVICE_CONNECTED_DEVICE and a
+connectedDevice prerequisite (normal CHANGE_NETWORK_STATE declaration for actual
+network interaction); POST_NOTIFICATIONS enables visible Stop UX. No proxy/CA/
+system network setting changes, broad storage, root or new crypto provider. See
+https://developer.android.com/develop/background-work/services/fgs/service-types#connected-device
+Package inventory command adds --foreground-node; old archives/default audit
+remain unchanged. Main artifact remains private version3, not a public release.

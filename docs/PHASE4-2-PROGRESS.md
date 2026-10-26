@@ -1103,3 +1103,38 @@ Scope: API35 x86_64 emulator guest-loopback Node +explicit dev reverse to Contro
 NOT direct LAN/ARM64/phone/Doze/OEM, two protected independent replicas or production.
 Activity-bound Node only; FGS/notification Stop/background lifecycle next. Observer
 and direct-network qualification remain. Full4.2 NOT ACCEPTED, writableDR BLOCKED.
+
+## h.3 Foreground Node — actual API35 targeted PASS
+Prior Android MVP checkpoint2c2edd81c3b00e1047807509c076ede88eb15d9e normal
+push/fetch/advertised remote matched before these changes. Owner MVP priority kept:
+no additional hardening layer/full Core repeat; actual functionality focused.
+
+Same EngineService promotes ONLY the explicitly started real Node to connectedDevice
+FGS;4 standard manifest permissions (base/type/normal network prerequisite/visible
+notifications). Android docs verified; no proxy/CA/system-network edits, new crypto/
+Catalog/Engine. Existing UID/consent/device/TLS/data guards reused. UI permission
+request before start; no actor left on promotion failure. Notification Stop and
+health cleanup close only owned resources; START_NOT_STICKY/no boot auto-start.
+
+Fresh NativeNodeForegroundTest actual API35 x86_64 PASS58.326s0skip/fail: launch real
+Activity, own private Binder starts existing Node, actual OS service foreground
+flag and own notification asserted; remove BOTH UI and test service bindings,
+close Activity; actual pinned/granted old-file SHA download succeeds in background.
+Invoke actual notification PendingIntent Stop, require notification/foreground
+gone AND actual TLS port closed. No mocked service flag/idle keepalive success.
+Runtime notification permission was operator-granted on owned emulator; permission
+dialog/OEM/Doze/phones/ARM64 not qualified. Explicit dev Controller reverse/Node
+guest loopback remains NOT direct LAN. Current data was retained across normal
+same-signer install-r; prior2d843e... APK backed up, no uninstall/clear/-d.
+
+Main/testAPK Gradle build PASS36s/JVM13 PASS (main build executed tests; subsequent
+test-only syntax correction reused same results). Initial NEW Android test had a
+Kotlin destructuring syntax error; corrected, no assertion removed, final build
+and actual runtime rerun passed. No current Python/Go code changes or new full
+regression claimed. Inventory/signature118modules/7exact documented permissions/
+no findings/original signer PASS; private version3 APK SHA
+55bec3d9a9a9590ef6b35d70c37e164eed76ed4b2d56021175e96bc9fb44a4d5. Public bounded
+receipt qualification/phase4-2h3-foreground.json, private logs phase4-2h2b-mvp.
+No public APK/release, full4.2 NOT ACCEPTED. Remaining read-only observer, direct
+network/E2E/independent replica qualification and final integrated fresh gates;
+extra hardening deferred per owner preference, existing data guards retained.

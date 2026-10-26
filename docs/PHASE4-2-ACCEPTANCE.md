@@ -277,3 +277,14 @@ claim or automatic storage/domain approval. Guest loopback +dev ADB reverse !=LA
 FGS/background/notification, observer, direct network, phones/ARM64/OEM/Doze and
 full Phase4.2 remain NOT ACCEPTED/NOT TESTED. No new public APK; private unchanged
 version3 SHA2d843e1be727782105f092396a2620a5ba7c2ef76daa11477c3eb4fd46ee8d60.
+
+## h.3 Foreground Node — actual API35 limited PASS
+One actual test PASS58.326s0skip/fail: OS foreground flag +notification, all UI/test
+bindings removed, old file downloaded with pinned Controller grant and SHA while
+background; actual notification Stop then no notification/foreground AND closed
+TLS port. Same canonical actor/Engine/context. Original signer/state kept, normal
+install-r. JVM13/build/inventory PASS, no fresh full Python/Go claim for new runtime.
+Private APK55bec3d9a9a9590ef6b35d70c37e164eed76ed4b2d56021175e96bc9fb44a4d5,
+not public release. FGS connectedDevice for real Node network session; no automatic
+restart/boot/identity/approval. No physical phone/ARM64/Doze/OEM/direct LAN/two
+replica acceptance; full Phase4.2 NOT ACCEPTED, writableDR blocked.

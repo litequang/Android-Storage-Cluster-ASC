@@ -170,7 +170,7 @@ class MainActivity : Activity() {
         button(setup,"Đo write/readback/SHA/fsync","probe-volume") {call("probe_private_volume"){volume.text=volumeText(it)}}
         button(setup,"Đọc volume (không suy ra writable)","volume-status"){call("volumes"){volume.text=volumeText(it)}}
         setup.addView(text("SAF/SD/USB: NOT SUPPORTED · fsync/identity UNKNOWN. Vai trò storage chỉ là đề xuất sau probe; không cấp quyền Leader/voter."))
-        setup.addView(text("Node thử nghiệm · cần enrollment trước. Vùng Node tách khỏi volume probe. Giữ ứng dụng mở; Foreground Service chưa được tích hợp."))
+        setup.addView(text("Node thử nghiệm · cần enrollment trước. Vùng Node tách khỏi volume probe. Khi chạy có thông báo và nút Dừng; không cam kết hoạt động 24/7."))
         val nodeQuota=field(setup,"Quota vùng Node (MiB)","node-quota").apply {inputType=InputType.TYPE_CLASS_NUMBER;setText("256")}
         val nodeHost=field(setup,"IP LAN của điện thoại này (loopback để thử cục bộ)","node-host").apply {setText("127.0.0.1")}
         val nodePort=field(setup,"Cổng TLS của Node","node-port").apply {inputType=InputType.TYPE_CLASS_NUMBER;setText("9443")}
@@ -180,6 +180,11 @@ class MainActivity : Activity() {
             task({JSONObject((engine ?: error("unavailable")).configureNodeStorage(1,UUID.randomUUID().toString(),q*1048576,0))}) {volume.text=nodeText(it)}
         }
         button(setup,"Chạy Storage Node","start-native-node") {
+            if(Build.VERSION.SDK_INT>=33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),42)
+                volume.text="Cho phép thông báo rồi bấm Chạy Storage Node. Chưa khởi chạy Node."
+                return@button
+            }
             val port=nodePort.text.toString().toIntOrNull()
             if(port==null || port !in 1024..65535){volume.text="Cổng Node không hợp lệ.";return@button}
             val host=nodeHost.text.toString().trim()
@@ -217,6 +222,7 @@ class MainActivity : Activity() {
         "identity_locked"->"IDENTITY_LOCKED: giữ state/key hiện có; không tạo identity mới."
         "device_not_qualified"->"Thiết bị PROTECTED/UNKNOWN: chỉ xem audit, không tạo state hoặc chạy Engine."
         "consent_required"->"Cần consent rõ ràng cho thao tác vùng riêng của APK."
+        "notification_required"->"Cần cho phép thông báo để chạy Node và dùng nút Dừng."
         "invalid_request"->"Thông tin chưa hợp lệ hoặc bindings/code chưa đúng; chưa xác nhận thành công."
         "native_runtime_unqualified"->"BLOCKED: native Node/enrollment/lifecycle chưa được nghiệm thu."
         "native_context_locked"->"Context bị khóa: giữ state/key, không tạo identity mới."

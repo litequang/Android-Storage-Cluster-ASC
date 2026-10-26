@@ -88,3 +88,10 @@ request node_status returns runtime/Controller/observed storage; stop_owned clos
 only this session and remains available after consent revocation. No token/key/path
 or PID arguments/returns. NodeContext runtime_start_supported is a local capability
 when storage READY, not Android acceptance or Controller write authority.
+
+### h.3 lifecycle
+Typed startNode now requires notification permission on33+, starts actual Node then
+promotes same private service as connectedDevice. Failure to request promotion
+closes owned runtime. node_status adds foreground_service (observed service state,
+not write authority). stop_owned also removes notification/stops started service;
+available after consent revocation. No bootstrap from binding/null/restart intent.

@@ -593,3 +593,9 @@ integration is g.2, no native Node/FGS or public APK claim.
   heartbeat, explicit stop/restart without changing IDs. Minimal native UI controls.
 - Reuse current security guards; defer extra hardening/full Core repeat per owner
   MVP priority. No FGS, production/phone/Android acceptance or new public release.
+
+### h.3 actual foreground Node
+- Keep active Node after closing UI; show notification and controlled Stop. Actual
+  API35 background download SHA/OS foreground flag/notification/closed port PASS.
+- Android-standard connectedDevice/notification permissions, no new dependency/
+  crypto/backend. No phone/Doze/OEM/direct LAN/public release acceptance.

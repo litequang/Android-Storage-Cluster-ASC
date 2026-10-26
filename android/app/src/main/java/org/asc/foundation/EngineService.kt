@@ -1,11 +1,19 @@
 package org.asc.foundation
 import android.app.Service
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo
+import android.os.Build
 import android.os.Binder
 import android.os.IBinder
 import android.os.Process
 import org.json.JSONObject
+import java.util.Timer
+import java.util.TimerTask
 
 /** Private application bridge. No Node runtime is started by binding/restart. */
 class EngineService : Service() {
@@ -15,6 +23,13 @@ class EngineService : Service() {
     }
     private val operations=Any()
     private var nodeSession:NativeNodeSession?=null
+    private var watcher:Timer?=null
+    @Volatile private var foreground=false
+    private fun stopNode() {synchronized(operations) {
+        nodeSession?.close();nodeSession=null
+        watcher?.cancel();watcher=null
+        foreground=false;stopForeground(STOP_FOREGROUND_REMOVE);stopSelf()
+    }}
     private fun nodeAction(version:Int,id:String,action:(NativeNodeSession)->JSONObject):String {
         caller()
         return synchronized(operations) {try {
@@ -29,7 +44,14 @@ class EngineService : Service() {
         override fun configureNodeStorage(version:Int,requestId:String,quotaBytes:Long,reserveBytes:Long):String =
             nodeAction(version,requestId) {it.configure(quotaBytes,reserveBytes)}
         override fun startNode(version:Int,requestId:String,host:String,port:Int):String =
-            nodeAction(version,requestId) {it.start(host,port)}
+            nodeAction(version,requestId) {session ->
+                if(Build.VERSION.SDK_INT>=33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=PackageManager.PERMISSION_GRANTED)
+                    return@nodeAction JSONObject(error("notification_required"))
+                val result=session.start(host,port)
+                try {startForegroundService(Intent(this@EngineService,EngineService::class.java).setAction(RUN_NODE))}
+                catch(e:Exception){session.close();throw e}
+                result
+            }
         override fun approvePrivateProbe(version:Int,requestId:String,quotaBytes:Long,reserveBytes:Long):String {
             caller()
             return synchronized(operations) {try {
@@ -66,8 +88,8 @@ class EngineService : Service() {
                     "draft_status" -> vault.draftSummary().toString()
                     "probe_private_volume" -> PrivateProbeStorage(this@EngineService,vault).probe().toString()
                     "volumes" -> PrivateProbeStorage(this@EngineService,vault).status().toString()
-                    "node_status" -> (nodeSession?.status() ?: JSONObject().put("state","STOPPED")).toString()
-                    "stop_owned" -> {nodeSession?.close();nodeSession=null;JSONObject().put("owned",false).put("state","STOPPED").toString()}
+                    "node_status" -> (nodeSession?.status() ?: JSONObject().put("state","STOPPED")).put("foreground_service",foreground).toString()
+                    "stop_owned" -> {stopNode();JSONObject().put("owned",false).put("state","STOPPED").toString()}
                     else -> error("native_runtime_unqualified")
                 }}
             } catch (_: IdentityLocked) { return error("identity_locked") }
@@ -85,12 +107,35 @@ class EngineService : Service() {
         .put("application_identity",if(NativeDeviceGate.allowed())ApplicationVault(this).state() else JSONObject().put("state","NOT_ACCESSED"))
     override fun onBind(intent: Intent): IBinder=binder
     override fun onDestroy() {
-        val owned=synchronized(operations) {nodeSession.also {nodeSession=null}}
-        Thread({try {owned?.close()}catch(_:Exception){}},"asc-owned-node-stop").start()
+        watcher?.cancel();watcher=null
+        Thread({synchronized(operations) {try {nodeSession?.close()}catch(_:Exception){};nodeSession=null}},"asc-owned-node-stop").start()
         super.onDestroy()
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        stopSelf(startId) // No background/boot/node launch; unqualified FGS stays absent.
+        if(intent?.action==STOP_NODE) {
+            Thread({try {stopNode()}catch(_:Exception){}},"asc-notification-stop").start()
+        } else if(intent?.action==RUN_NODE && nodeSession!=null) {
+            val manager=getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(NotificationChannel(CHANNEL,"ASC Storage Node",NotificationManager.IMPORTANCE_LOW))
+            val stop=PendingIntent.getService(this,0,Intent(this,EngineService::class.java).setAction(STOP_NODE),PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            val open=PendingIntent.getActivity(this,0,Intent(this,MainActivity::class.java),PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            val notification=Notification.Builder(this,CHANNEL).setSmallIcon(android.R.drawable.stat_notify_sync)
+                .setContentTitle("ASC Storage Node").setContentText("Phiên Node đang hoạt động · quyền ghi do Controller cấp")
+                .setContentIntent(open).setOngoing(true).addAction(Notification.Action.Builder(null,"Dừng Node",stop).build()).build()
+            if(Build.VERSION.SDK_INT>=29)startForeground(NOTIFICATION_ID,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE)
+            else startForeground(NOTIFICATION_ID,notification)
+            foreground=true
+            if(watcher==null)watcher=Timer("asc-owned-node-health",true).apply {schedule(object:TimerTask(){override fun run(){
+                try {synchronized(operations) {if(nodeSession?.status()?.optString("state")!="RUNNING")stopNode()}}
+                catch(_:Exception){try {stopNode()}catch(_:Exception){}}
+            }},5000,5000)}
+        } else stopSelf(startId) // Restart/unknown intent never provisions or starts an Engine.
         return START_NOT_STICKY
+    }
+    companion object {
+        const val CHANNEL="asc-native-node"
+        const val NOTIFICATION_ID=42
+        private const val RUN_NODE="org.asc.foundation.RUN_OWNED_NODE"
+        private const val STOP_NODE="org.asc.foundation.STOP_OWNED_NODE"
     }
 }
