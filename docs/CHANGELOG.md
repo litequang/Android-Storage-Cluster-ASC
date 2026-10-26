@@ -536,3 +536,9 @@ fd pipeline, explicit native JSSE loader avoids Android-denied proc reopening,
 actual key-match/handshake/pinning and fault/restart gates. No plaintext disk key,
 OpenSSL CLI/Termux/permission change or identity replacement. No native Node/FGS/
 enrollment/observer/LAN/public APK release; complete qualification in progress.
+
+## Phase4.2g.1 — shared Core enrollment client preparation/acceptance
+Selectively extract existing CLI pending factory and ACK validator, preserving
+wire/config/token/retry/repair/device/lock contracts.42 targeted Linux PASS0skip
+(contract4/lifecycle29/actual TLS QuickJoin9). Native pending/IPC/enrollment Android
+integration is g.2, no native Node/FGS or public APK claim.

@@ -520,3 +520,8 @@ BC dependency lint retains an unused EST getTrustAllTrustManager helper warning.
 App uses no EST/trust-all helper and native default-system-trust negative TLS
 gate rejects untrusted self-signed peers. No suppression; see native TLS dependency
 review for exact scope. Do not confuse inventory/pattern checks with full SAST.
+
+4.2g.1 shared client extraction supplies no authority: callers still guard device,
+verify pinned expected cluster, persist private pending BEFORE sending and refuse
+cluster/target/token mismatch before saving identity. Registry remains sole grant/
+node transaction. Native wiring is not implemented by this shared helper alone.

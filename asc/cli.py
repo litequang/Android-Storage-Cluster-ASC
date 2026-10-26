@@ -4,13 +4,13 @@ from contextlib import ExitStack
 import os
 import getpass
 import json
-import secrets
 import sqlite3
 import sys
 import threading
 import time
 import uuid
 from .client import ClientError, request_json
+from .enrollment import new_pending, accepted_identity
 from .identity import (HOME, ensure_private_home, fingerprint_from_pem, make_cert,
                        new_admin_token, read_private, replace_private, save_private)
 from .probe import inspect
@@ -277,26 +277,11 @@ def _enroll(args, repair=False):
             code = valid.code(getpass.getpass('Enter one-time join code: '))
             if current:
                 save_private(HOME / ('node_before_repair-' + uuid.uuid4().hex + '.json'), current)
-            pending = {'config_version': 1, 'controller': origin, 'pin': pin,
-                       'target_node_id': target, 'cluster_id': cluster,
-                       'expected_cluster_id': info['cluster_id'],
-                       'payload': {'protocol_version': 1, 'code': code, 'name': node_name,
-                                   'profile': profile, 'enrollment_id': secrets.token_urlsafe(32),
-                                   'enrollment_token': secrets.token_urlsafe(32)}}
-            if target:
-                pending['payload']['node_id'] = target
-            if controllers:
-                pending['controllers'] = controllers
+            pending = new_pending(origin, pin, info['cluster_id'], node_name, profile, code,
+                                  target=target, cluster=cluster, controllers=controllers)
             save_private(pending_path, pending)
         reply = enrollment_request('POST', '/api/v1/join', pending['payload'])
-        if (reply['cluster_id'] != pending['expected_cluster_id'] or
-                (target and reply['node_id'] != target) or
-                reply['token'] != pending['payload']['enrollment_token']):
-            raise ClientError('Enrollment response mismatch; preserve pending operation for recovery')
-        valid.node_id(reply['node_id'])
-        state = {'config_version': 1, 'controller': origin, 'pin': pin,
-                 'node_id': reply['node_id'], 'token': reply['token'],
-                 'token_version': reply['token_version'], 'cluster_id': reply['cluster_id']}
+        state = accepted_identity(pending, reply)
         if controllers:
             state.update(controllers=controllers, cluster_epoch=current['cluster_epoch'])
         if repair and current:

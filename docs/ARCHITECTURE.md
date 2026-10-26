@@ -482,3 +482,8 @@ persistence, reuse rather than regenerate. No Kotlin Catalog/Storage/Registry.
 Returned JSSE context is NOT a CPython socket runtime: native transport/owned
 Agent/FGS integration remains4.2h; listener protocol minimum/bounds/authorization
 must be enforced there. No automatic listener/enrollment/writer. See native TLS doc.
+
+4.2g.1 extracts the shared host-independent Core enrollment payload/acceptance
+functions, reusing the same Registry server transaction and original CLI behavior.
+No second enrollment authority/DB, Native/Termux state bridge or network endpoint.
+Native encrypted pending/IPC/UI integration remains g.2, not implied by extraction.

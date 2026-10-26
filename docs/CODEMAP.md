@@ -636,3 +636,10 @@ no runtime/config/authority or secrets. Full native Phase4.2 remains NOT ACCEPTE
 - test_native_tls/NativeTLSTest and fixed TLS runner phases qualify actual TLS/
   sealing/credential/process faults alongside retained context/Binder/Engine gates.
 - ANDROID-NATIVE-TLS owns provider format/threat/API/platform/next-agent boundaries.
+
+## Phase4.2g.1 shared Core enrollment client contract
+asc/enrollment.py extracts new_pending/accepted_identity from existing CLI only:
+unchanged format1/payload/CSPRNG op+token/cluster+target+token ACK checks. CLI
+continues original device/HOME/locks/persistence/repair/discovery. No native join
+wiring yet. test_enrollment_contract plus all original lifecycle/QuickJoin gates
+preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.

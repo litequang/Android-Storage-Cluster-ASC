@@ -612,3 +612,31 @@ g–j runtime work; historical full317/Go11 are NOT reused as fresh changed-sour
 Normal checkpoint commit/push/fetch receipt follows, before moving to4.2g.
 Private recovery logs retained under /workspace/work/phase4-2f2-recovery-*; original
 signer/state under /workspace/asc-android-dev. Preserve them if moving accounts.
+
+### f.2 source publication receipt
+486a4d26fae487bab33aff2804ddb9db44e936b3 normal push/fetch/advertised remote
+matched exactly, clean tree BEFORE g.1. Final20/postfault process TLS identity/old
+upgrade receipt/foreign caller PASS; frozen source hashes unchanged.317 WORK+INDEX
+paths plus all31 dirty/untracked source paths reviewed; no leftover untracked, no
+secret findings. Postfinal APK audit PASS, original signer/public artifact unchanged.
+
+## 4.2g.1 — shared client contract extraction (Linux only)
+Native g is split into safe source reuse then actual native encrypted-pending/IPC/
+UI +Android network qualification. New asc/enrollment.py contains ONLY the exact
+existing CLI pending factory and ACK acceptance. CLI reuses them; no Registry/
+Catalog/Storage/enrollment-server duplication, global HOME/device/repair/locking
+behavior change or wire/schema change. Pending op/token remain original CSPRNG
+values, profile/controller lists copied defensively, target/cluster/token checks
+before identity publication. No native Node or network authority is introduced.
+
+Fresh42 targeted Linux PASS0skip:4 contract/29 original lifecycle/9 original actual
+TLS QuickJoin. Original lost successful ACK/code replacement/one-use/concurrency/
+identity/re-pair/revoke/guard/schema assertions retained. Contract/lifecycle rerun
+after removing now-unused CLI import. This is NOT Android enrollment acceptance.
+f.2 native APK remains private/unmodified; g.1 has not been built into a new APK.
+
+Next g.2 must reuse this same Core contract with typed encrypted pending/Node
+configuration, real pinned Controller join and lostACK/resume on actual Android;
+no token/code in public state, no auto storage/domain approval or identity reset.
+Only then h native transport/Agent/FGS, i observer, j direct LAN/fresh full gates.
+Full Phase4.2 NOT ACCEPTED. Normal g.1 push/fetch before further source work.

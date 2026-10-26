@@ -533,3 +533,7 @@ Phase4.2f.2 IPC1 adds native_tls_prepare (empty extra fields, same UID/signature
 consent/device/existing app/context). Returns only TLS IDENTITY_READY/public pin
 with null Node/Cluster IDs and runtime_start_supported=false. Original transaction
 IDs0/1 unchanged. No network mutation/listener/enrollment/approval added.
+
+4.2g.1 changes NO wire/config/pending schema. Shared Core enrollment client
+functions preserve original private format1/request/token/ACK checks. Existing
+CLI device gates, repair/grant/discovery and persistence contracts unchanged.
