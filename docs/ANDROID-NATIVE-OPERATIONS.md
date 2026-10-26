@@ -140,3 +140,11 @@ API35 x86_64 guest loopback proof is distinct from direct LAN/phones. TLS on26â€
 NOT QUALIFIED. Version3 build remains PRIVATE qualification input, not a release
 or Native Node. Keep original signer/UID/state; no uninstall/clear/-d. First native
 TLS preparation does not start a listener or approve storage; gâ€“j remain separate.
+
+## Native enrollment g.2b
+See ANDROID-NATIVE-ENROLLMENT for explicit context/TLS preparation, pin/cluster/
+owner trust, join/pending status/resume and replacement-code operations. No Node
+start or storage approval yet. Keep original signer/state/keys; never adopt the
+Termux directory. Android qualification uses only owned emulator, explicit dev
+loopback and real Core; direct LAN and phone/Agent/FGS remain outstanding. Private
+retained fixture/proof must not be deleted to rerun seed. No public APK was changed.

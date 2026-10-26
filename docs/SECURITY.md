@@ -537,3 +537,17 @@ storage/domain approval, observer or writer authority. Existing receipt is marke
 historical; revoked token is NOT automatically replaced. Request conflict and
 missing/corrupt provider fail closed. Android encrypted pending/Binder evidence is
 still required separately; test-only memory CAS must not be used by application.
+
+### Native enrollment IPC g.2b
+quick_join/resume_join/replace_join_code reuse the original private Binder checks,
+explicit consent, app/Keystore identity and M51/unknown device fences. No path,
+profile, Node-ID, credential/provider or repair argument is accepted. Native OS
+Build/RAM supplies diagnostic profile; memory never authorizes storage/voters.
+Owner trust +verified binding precedes UI first send; network/background clears
+transient code/trust verification. Public_request maps failures to bounded fixed
+labels and safe state; no exception/server text/token/code is reflected. The old
+encrypted form draft is not a Core operation and is never silently sent. Existing
+node retry is explicitly historical and cannot refresh revoked credentials.
+No automatic storage/domain approval or runtime start. Test fixture secrets travel
+only stdin to a task-owned private file, remain outside Git/main APK and are not
+operator credentials. Original signer/UID/retained state must match before install.

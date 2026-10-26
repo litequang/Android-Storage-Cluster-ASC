@@ -245,6 +245,7 @@ class NodeContext:
     def public_status(self):
         record = self.load()
         node, pending = record['node'], record['pending']
+        operation = pending['operation'] if pending else node
         return {'context_version': 1, 'state': 'CONTEXT_READY',
                 'context_id': record['context_id'], 'application_id': self.app_id,
                 'device_scope': self.device['scope'],
@@ -252,6 +253,9 @@ class NodeContext:
                 'cluster_id': node['cluster_id'] if node else None,
                 'enrollment': 'ENROLLED_PENDING_APPROVAL' if node else 'PENDING_RECEIPT' if pending else 'NOT_CONFIGURED',
                 'join_request_id': pending['request_id'] if pending else None,
+                'enrollment_controller': operation['controller'] if operation else None,
+                'enrollment_pin': operation['pin'] if operation else None,
+                'expected_cluster_id': (operation.get('expected_cluster_id') or operation.get('cluster_id')) if operation else None,
                 'controller_confirmation': 'HISTORICAL_JOIN_RECEIPT' if node else 'UNKNOWN',
                 'storage_approved': None, 'failure_domain_approved': None,
                 'tls': 'IDENTITY_READY' if record['tls'] is not None else 'NOT_CONFIGURED',

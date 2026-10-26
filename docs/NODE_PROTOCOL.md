@@ -537,3 +537,12 @@ IDs0/1 unchanged. No network mutation/listener/enrollment/approval added.
 4.2g.1 changes NO wire/config/pending schema. Shared Core enrollment client
 functions preserve original private format1/request/token/ACK checks. Existing
 CLI device gates, repair/grant/discovery and persistence contracts unchanged.
+
+### Native enrollment g.2b
+Native Binder is a local app capability, not a new network authority. It invokes
+unchanged /api/v1/info and retry-safe /api/v1/join through existing pinned Core
+transport, using trusted native Build profile. New local fixed replacement-code
+operation changes ONLY an encrypted pending code. Wire enrollment_id/token stay
+original across retries; accepted node publication+pending clearing is atomic.
+No storage/domain approval, listener/Agent or Core quorum fallback. See
+ANDROID-NATIVE-ENROLLMENT for local IPC/public failures and retained-state gates.

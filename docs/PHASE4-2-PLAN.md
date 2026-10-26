@@ -101,3 +101,11 @@ unrestricted; GitHub200. Inherited proxy/CA retained, no VPN/phone access.
   faults/new APK/same-signer upgrade. Do not count ADB reverse as LAN acceptance.
 Each source checkpoint normal-push/fetch verification before proceeding. All
 previous gates remain retained; final full is rerun only after new runtime targets.
+
+### Native g split continuation
+g.1 shared Core contract extraction and g.2a sealed typed adapter are published.
+g.2b connects native provider/private IPC/UI, with scoped real API35 provider/TLS/
+process and refusal/trust gates. g.2c will qualify positive UI->Binder->Core on a
+separate owned sandbox, preserving retained original foundation fixtures and
+assertions. Do not start h before the g source/positive path checkpoint is durable.
+Progress/acceptance own exact evidence; full4.2 still NOT ACCEPTED.

@@ -499,3 +499,12 @@ resumes the original operation/token. Existing node retry reports a historical
 receipt, never live credential validity or approval. No runtime is started.
 Android Binder/UI wiring and real Keystore/network qualification are subsequent
 g.2b work; Linux memory-provider tests do not establish native enrollment PASS.
+
+### Native enrollment bindings g.2b
+Private Binder routes actual Core enrollment through NativeNodeContext and the
+Keystore-encrypted context. UI adds explicit preparation, independently verified
+public trust bindings and pending resume; it does not expose raw credential
+provider or duplicate enrollment/Registry. A saved receipt is historical, never
+current online/approval/writer evidence. Source remains without Agent/FGS/native
+StorageServer transport. Instrumentation harness is isolated from main APK and
+uses explicitly named development loopback tunnels, not direct LAN acceptance.

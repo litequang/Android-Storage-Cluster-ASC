@@ -8,7 +8,7 @@ import uuid
 
 from .. import validation as valid
 from ..catalog.common import canonical
-from ..client import request_json
+from ..client import request_json, ClientError
 from ..demo.state import lan_origin
 from ..enrollment import new_pending, accepted_identity
 from .context import ContextLocked
@@ -154,3 +154,40 @@ class NativeEnrollment:
             op['payload']['code'] = code
             self._publish(raw, record)
             return self._send()
+
+
+def public_request(context, operation, *arguments):
+    """Private native JNI boundary: fixed dispatch, redacted bounded failures.
+
+    Inputs still pass Binder allowlists and trusted Build profile in the caller.
+    No raw exception/server text or credential is reflected. Failure can include
+    the latest safe pending status, never a fabricated successful receipt.
+    """
+    try:
+        client = NativeEnrollment(context)
+        if operation == 'join':
+            result = client.join(*arguments)
+        elif operation == 'resume' and not arguments:
+            result = client.resume()
+        elif operation == 'replace_code' and len(arguments) == 1:
+            result = client.replace_code(arguments[0])
+        else:
+            raise EnrollmentRefused('invalid_request')
+        return dict(result, ok=True)
+    except EnrollmentRefused as exc:
+        error = exc.code
+    except ClientError as exc:
+        allowed = {'invalid_or_expired_code', 'rate_limited', 'registry_unavailable',
+                   'credential_rejected_repair_required', 'unauthorized'}
+        error = exc.code if exc.code in allowed else 'controller_unverified'
+    except ContextLocked:
+        error = 'native_context_locked'
+    except Exception:
+        error = 'enrollment_unconfirmed'
+    try:
+        result = context.public_status()
+    except Exception:
+        result = {'writer_authority': False, 'runtime_start_supported': False,
+                  'enrollment': 'UNKNOWN'}
+        error = 'native_context_locked'
+    return dict(result, ok=False, error=error)

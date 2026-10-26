@@ -53,6 +53,7 @@ class MainActivity : Activity() {
     private lateinit var joinResult:TextView
     private var verifiedBinding:String?=null
     private var draftRequest=UUID.randomUUID().toString()
+    private var joinRequest=UUID.randomUUID().toString()
     private val connection=object:ServiceConnection {
         override fun onServiceConnected(name:ComponentName,binder:IBinder) {engine=ILocalEngine.Stub.asInterface(binder);refresh()}
         override fun onServiceDisconnected(name:ComponentName) {engine=null;status.text="Service UNKNOWN · Node NOT SUPPORTED"}
@@ -103,7 +104,7 @@ class MainActivity : Activity() {
         button(overview,"Tạo/kiểm tra identity ứng dụng","provision"){call("app_provision") {outcome.text="Application identity: ${it.optString("state","UNKNOWN")}. Không phải Node/Cluster ID.";refresh()}}
         button(overview,"Kiểm tra thư viện Engine","engine-info"){call("engine_info") {outcome.text=if(it.optString("implementation")=="asc.storage.engine")"Thư viện Core thật có trong APK. Node runtime vẫn NOT SUPPORTED." else message(it)}}
         val join=page("Ghép")
-        join.addView(text("Xác minh thông tin công khai trước. QR không tự cấp niềm tin. Native enrollment đang BLOCKED; chỉ lưu được bản nháp mã hóa."))
+        join.addView(text("Xác minh endpoint, TLS PIN và Cluster ID với owner trước. Enrollment dùng Core hiện có; không tự phê duyệt storage/failure domain hoặc khởi chạy Node."))
         controller=field(join,"Controller HTTPS trong LAN (kèm cổng)","controller")
         pin=field(join,"SHA-256 PIN đầy đủ do owner đối chiếu độc lập","pin")
         cluster=field(join,"Cluster ID dự kiến do owner xác minh","cluster")
@@ -131,6 +132,31 @@ class MainActivity : Activity() {
                 joinResult.text="DRAFT_NOT_SENT · khôi phục bindings; mã không hiển thị. Native enrollment vẫn BLOCKED."
             } else joinResult.text=message(it)
         }}
+        button(join,"Chuẩn bị context và TLS native (API 30+)","prepare-native-join") {
+            call("native_context_init") {ready ->
+                if(ready.optString("state")!="CONTEXT_READY")joinResult.text=message(ready)
+                else call("native_tls_prepare") {joinResult.text=if(it.optString("tls")=="IDENTITY_READY")
+                    "TLS identity đã sẵn sàng. Chưa gửi enrollment; Node chưa chạy." else message(it)}
+            }
+        }
+        button(join,"Gửi mã ghép tới Controller đã xác minh","native-join") {
+            if(!trust.isChecked || verifiedBinding!=publicBinding()) {joinResult.text="Cần đối chiếu owner và kiểm tra lại TLS/Cluster ID trước khi gửi mã.";return@button}
+            val secret=code.text.toString();code.setText("")
+            call("quick_join",controller.text.toString().trim(),cleanPin(),cluster.text.toString().trim(),nodeName.text.toString().trim(),secret,true,joinRequest) {showEnrollment(it)}
+        }
+        button(join,"Đọc pending/receipt native","native-join-status") {call("native_context_status") {value ->
+            if(!value.isNull("enrollment_controller")) {
+                controller.setText(value.getString("enrollment_controller"));pin.setText(value.getString("enrollment_pin"))
+                cluster.setText(value.getString("expected_cluster_id"));trust.isChecked=false;verifiedBinding=null
+            }
+            showEnrollment(value)
+        }}
+        button(join,"Tiếp tục pending đã lưu — không đổi identity","resume-native-join") {call("resume_join") {showEnrollment(it)}}
+        button(join,"Thay mã hết hạn của pending hiện có","replace-native-code") {
+            if(!trust.isChecked || verifiedBinding!=publicBinding()) {joinResult.text="Đối chiếu owner và kiểm tra lại Controller trước khi thay mã pending.";return@button}
+            val secret=code.text.toString();code.setText("")
+            call("replace_join_code",secret=secret,trusted=true) {showEnrollment(it)}
+        }
         val setup=page("Thiết lập")
         setup.addView(text("Volume này chỉ là APP_PRIVATE_PROBE_ONLY, chưa được cụm phê duyệt. Không tự tạo failure domain, Node hoặc voter."))
         val quota=field(setup,"Quota cho vùng probe (MiB)","quota").apply {inputType=InputType.TYPE_CLASS_NUMBER;setText("8")}
@@ -159,12 +185,31 @@ class MainActivity : Activity() {
     }
     private fun cleanPin()=pin.text.toString().replace(":","").trim().lowercase()
     private fun publicBinding()=listOf(controller.text.toString().trim(),cleanPin(),cluster.text.toString().trim()).joinToString("|")
+    private fun showEnrollment(value:JSONObject) {
+        if(!value.isNull("join_request_id"))joinRequest=value.getString("join_request_id")
+        val state=value.optString("enrollment","UNKNOWN")
+        val prefix=if(value.optBoolean("ok",true))"" else message(value)+"\n"
+        joinResult.text=prefix+when(state) {
+            "ENROLLED_PENDING_APPROVAL"->"Có receipt enrollment: Node ${value.optString("node_id").take(8)} · Cluster ${value.optString("cluster_id").take(8)}. Receipt lịch sử; kết nối/credential hiện tại UNKNOWN. Chờ owner phê duyệt storage và failure domain. Node chưa chạy."
+            "PENDING_RECEIPT"->"PENDING_RECEIPT · giữ nguyên operation/token đã mã hóa. Có thể server đã nhận mã; dùng Tiếp tục pending, không tạo identity mới."
+            "NOT_CONFIGURED"->"Chưa enrollment. Chuẩn bị context/TLS và xác minh Controller trước."
+            else->"Enrollment UNKNOWN · không xác nhận thành công. Giữ state/Keystore hiện có."
+        }
+    }
     private fun message(value:JSONObject)=when(value.optString("error")) {
         "identity_locked"->"IDENTITY_LOCKED: giữ state/key hiện có; không tạo identity mới."
         "device_not_qualified"->"Thiết bị PROTECTED/UNKNOWN: chỉ xem audit, không tạo state hoặc chạy Engine."
         "consent_required"->"Cần consent rõ ràng cho thao tác vùng riêng của APK."
         "invalid_request"->"Thông tin chưa hợp lệ hoặc bindings/code chưa đúng; chưa xác nhận thành công."
         "native_runtime_unqualified"->"BLOCKED: native Node/enrollment/lifecycle chưa được nghiệm thu."
+        "native_context_locked"->"Context bị khóa: giữ state/key, không tạo identity mới."
+        "cluster_mismatch","binding_mismatch"->"Cluster/bindings không khớp; không thay identity."
+        "invalid_or_expired_code"->"Mã hết hạn/không hợp lệ. Giữ pending; chỉ thay bằng mã mới của owner."
+        "resume_required"->"Đã có pending khác. Đọc trạng thái và tiếp tục operation cũ."
+        "tls_identity_required"->"Cần chuẩn bị TLS identity trước khi gửi enrollment."
+        "controller_unverified","enrollment_unconfirmed"->"Chưa xác minh được kết quả qua TLS/Controller. Không coi là thành công; kiểm tra pending và thử tiếp tục."
+        "no_pending_enrollment"->"Không có pending để tiếp tục hoặc thay mã."
+        "unsupported_runtime"->"Runtime Controller không được hỗ trợ; không fallback sang quorum/recovery."
         else->value.optString("state","UNKNOWN · thao tác chưa được xác nhận")
     }
     private fun volumeText(value:JSONObject):String {

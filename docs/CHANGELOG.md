@@ -549,3 +549,12 @@ integration is g.2, no native Node/FGS or public APK claim.
 - Redacted historical receipt and UNKNOWN approval, no auto re-pair/runtime.
 - Actual Linux Core/TLS fault gates; Android binding/Keystore qualification remains
   subsequent work. Existing formats/archives/Core3D guards remain unchanged.
+
+### Phase4.2g.2b — private native Core enrollment
+- Connect existing Core enrollment/pending/CAS to native Keystore context and
+  private authenticated Binder, with explicit trusted device profile.
+- Add actual join, safe receipt/errors, resume and explicit pending code replacement
+  to Vietnamese UI; keep old unsent draft independent, no auto approval or Node
+  runtime. Original app/Keystore/volume/Core formats and signer are retained.
+- Add actual Controller/TLS/emulator fault and process/identity qualification
+  harness; direct LAN/Storage Agent/FGS/phone acceptance remain separate.

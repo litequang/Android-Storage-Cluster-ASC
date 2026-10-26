@@ -42,3 +42,12 @@ not the Node. Android returns a standard JSSE context; it is not directly usable
 as CPython StorageServer.wrap_socket.4.2h must adapt owned native transport to
 EXISTING Python Storage handlers/Engine, including bounds/fresh introspection and
 secure protocols. No second Kotlin Storage Engine or product listener is created.
+
+## g.2b enrollment boundary
+NativeNodeContext now supplies the original app-private context/provider to
+Core NativeEnrollment using the same shared contract/Registry/pinned transport.
+Only real Core ACK supplies Node/Cluster identity. No Kotlin enrollment database,
+global HOME/getpass/OpenSSL executable or plaintext config is added. This does
+not supply a StorageServer TLS socket, live Agent/heartbeat/volume authority or
+FGS. h must implement those separately against existing Core services. See
+ANDROID-NATIVE-ENROLLMENT; dev ADB loopback is not direct LAN acceptance.

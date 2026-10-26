@@ -21,7 +21,55 @@ class UpgradeQualificationRunner:androidx.test.runner.AndroidJUnitRunner() {
             val version=c.packageManager.getPackageInfo(c.packageName,0).versionCode
             val vault=ApplicationVault(c);val engine=EmbeddedEngine(c)
             val receipt=File(c.filesDir.canonicalFile,"upgrade-proof.json")
-            if(phase=="tls-seed" || phase=="tls-verify") {
+            if(phase in listOf("join-pending-seed","join-pending-resume","join-receipt-verify")) {
+                check(version==3)
+                val folder=File(c.filesDir.canonicalFile,"native-join-process-proof")
+                if(phase=="join-pending-seed") {check(!folder.exists());check(folder.mkdir());android.system.Os.chmod(folder.absolutePath,448)}
+                check(folder.isDirectory)
+                val local=object:android.content.ContextWrapper(c) {override fun getFilesDir():File=folder}
+                val localVault=ApplicationVault(local,"native-join-process-proof")
+                val node=NativeNodeContext(local,localVault)
+                val proofFile=File(folder,"join-proof.json")
+                fun digest(value:String)=MessageDigest.getInstance("SHA-256").digest(value.toByteArray()).joinToString(""){"%02x".format(it)}
+                if(phase=="join-pending-seed") {
+                    check(!proofFile.exists());localVault.provision();node.initialize();val original=node.prepareTls()
+                    val fixture=JSONObject(File(c.filesDir,"native-join-fixture.json").readText())
+                    val state=node.join(UUID.randomUUID().toString(),fixture.getString("seed_origin"),fixture.getString("pin"),
+                        fixture.getString("cluster_id"),"Android pending process proof",fixture.getString("seed_code"))
+                    check(!state.getBoolean("ok") && state.getString("enrollment")=="PENDING_RECEIPT")
+                    val payload=JSONObject(localVault.loadNodeContext()!!).getJSONObject("pending").getJSONObject("operation").getJSONObject("payload")
+                    proofFile.writeText(JSONObject().put("application_id",original.getString("application_id"))
+                        .put("context_id",original.getString("context_id")).put("tls_pin",original.getString("tls_pin"))
+                        .put("operation_sha",digest(payload.getString("enrollment_id")))
+                        .put("token_sha",digest(payload.getString("enrollment_token")))
+                        .put("pending_cipher_sha",sha(File(localVault.root,"node-context.json"))).toString())
+                } else {
+                    val proof=JSONObject(proofFile.readText());val before=node.status()
+                    check(before.getString("application_id")==proof.getString("application_id"))
+                    check(before.getString("context_id")==proof.getString("context_id"))
+                    check(before.getString("tls_pin")==proof.getString("tls_pin"))
+                    if(phase=="join-pending-resume") {
+                        check(before.getString("enrollment")=="PENDING_RECEIPT")
+                        check(sha(File(localVault.root,"node-context.json"))==proof.getString("pending_cipher_sha"))
+                        val pending=JSONObject(localVault.loadNodeContext()!!).getJSONObject("pending").getJSONObject("operation").getJSONObject("payload")
+                        check(digest(pending.getString("enrollment_id"))==proof.getString("operation_sha"))
+                        check(digest(pending.getString("enrollment_token"))==proof.getString("token_sha"))
+                    }
+                    val state=node.resume();check(state.getBoolean("ok") && state.getString("enrollment")=="ENROLLED_PENDING_APPROVAL")
+                    val config=JSONObject(localVault.loadNodeContext()!!).getJSONObject("node")
+                    check(digest(config.getString("token"))==proof.getString("token_sha"))
+                    if(phase=="join-pending-resume") {
+                        proof.put("node_id",state.getString("node_id")).put("cluster_id",state.getString("cluster_id"))
+                            .put("node_cipher_sha",sha(File(localVault.root,"node-context.json")))
+                        proofFile.writeText(proof.toString())
+                    } else {
+                        check(state.getString("node_id")==proof.getString("node_id"))
+                        check(state.getString("cluster_id")==proof.getString("cluster_id"))
+                        check(sha(File(localVault.root,"node-context.json"))==proof.getString("node_cipher_sha"))
+                    }
+                    check(state.isNull("storage_approved") && state.isNull("failure_domain_approved") && !state.getBoolean("writer_authority"))
+                }
+            } else if(phase=="tls-seed" || phase=="tls-verify") {
                 check(version==3)
                 val folder=File(c.filesDir.canonicalFile,"native-context-process-proof")
                 check(folder.isDirectory)

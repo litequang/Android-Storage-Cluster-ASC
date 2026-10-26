@@ -192,3 +192,18 @@ This is not Android native enrollment acceptance: test-only memory CAS does not
 prove Keystore persistence or Binder/UI network use. No APK rebuilt/published.
 Full Phase4.2 remains NOT ACCEPTED; g.2b actual Android join/resume qualification,
 h Agent/FGS, i observer and j direct network/fresh full gates remain outstanding.
+
+## g.2b source qualification — API35 owned emulator, explicit dev loopback
+Fresh Linux33/JVM12/Android28 targeted PASS0skip; actual foreign caller denial1
+and5 fixed process/TLS/old-upgrade proof phases PASS. Real Core Registry/Keystore/
+pinned TLS enrollment:4 Nodes,0 automatic storage approvals,2 actual successful
+ACK losses +same-operation resume. Node/app/context/TLS/volume/draft/committed bytes
+retained; original signer and UID preserved by normal install-r. Public bounded
+receipt qualification/phase4-2g2b-enrollment.json; exact commands/scope in current
+progress and ANDROID-NATIVE-ENROLLMENT. No new public APK/release. Private source
+APK version3 SHA59541e41afe010a9ca7c6041c96d16549b727666d4430fedafdf717d88bb62bd.
+Positive enrollment uses the actual native provider/Core on Android; real Binder
+pin-failure/consent/allowlist and UI trust gates qualified. Positive full UI/Binder
+join still g.2c; Agent/FGS/observer/direct LAN/phone acceptance not claimed. Full
+Phase4.2 NOT ACCEPTED, writer DR BLOCKED. Full Python/Go/fault gates still deferred
+to final changed-runtime qualification; historical counts not reused as fresh.

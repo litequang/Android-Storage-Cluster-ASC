@@ -37,4 +37,13 @@ class RequestPolicyTest {
             assertThrows(IllegalArgumentException::class.java) {call(op,trust=true)}
         }
     }
+    @Test fun pendingResumeAndCodeReplacementCannotChangeBindingOrInjectProfile() {
+        call("resume_join")
+        call("replace_join_code",code="123456abcdef",trust=true)
+        for(op in listOf("resume_join","replace_join_code"))
+            assertThrows(IllegalArgumentException::class.java) {call(op,ep="https://192.168.1.2:8443",code="123456abcdef",trust=true)}
+        assertThrows(IllegalArgumentException::class.java) {call("replace_join_code",code="123456abcdef")}
+        assertThrows(IllegalArgumentException::class.java) {call("replace_join_code",code="invalid",trust=true)}
+        assertThrows(IllegalArgumentException::class.java) {call("replace_join_code",name="profile",code="123456abcdef",trust=true)}
+    }
 }

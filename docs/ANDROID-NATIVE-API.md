@@ -57,3 +57,10 @@ See ANDROID-NATIVE-CONTEXT for exact provider and persistence contract.
 fingerprint only, never private key/provider/paths. No enrollment/Node start or
 authority follows. Explicit Android JSSE and Linux CPython provider contracts and
 API30+/NOT QUALIFIED26–29 limits: ANDROID-NATIVE-TLS.
+
+## g.2b private enrollment
+Native quick_join/resume_join/replace_join_code now delegate to existing Core
+client/Registry with encrypted pending CAS. Transaction1 and all authentication/
+consent/device restrictions remain. Read ANDROID-NATIVE-ENROLLMENT +IPC for fixed
+fields, error labels and historical receipt versus UNKNOWN live approval. No
+public network API, Node start/approval/GC/quorum/writer recovery was added.

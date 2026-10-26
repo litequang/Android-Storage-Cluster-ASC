@@ -17,7 +17,7 @@ import uuid
 from asc.client import ClientError
 from asc.identity import make_cert
 from asc.node.context import NodeContext, ContextLocked
-from asc.node.enrollment import NativeEnrollment, EnrollmentRefused
+from asc.node.enrollment import NativeEnrollment, EnrollmentRefused, public_request
 from asc.server import Server
 from asc.store import Registry
 from test_native_context import MemoryCredentials, synthetic_build
@@ -193,3 +193,26 @@ class NativeEnrollmentTests(unittest.TestCase):
         self.assertEqual(self.store.raw, before); self.assertEqual(result['node_id'], node['node_id'])
         with self.assertRaises(EnrollmentRefused): self.join(cluster=str(uuid.uuid4()))
         self.assertFalse(self.reg.heartbeat(node['node_id'], node['token'], self.profile))
+
+    def test_public_native_boundary_redacts_failures_and_never_claims_success(self):
+        self.assertEqual(public_request(self.context, 'shell')['error'], 'invalid_request')
+        with self.reg.connect() as db:
+            db.execute('UPDATE join_codes SET expires_at=0')
+        result = public_request(self.context, 'join', self.id, self.origin, self.pin,
+                                self.cluster, 'native fixture', self.code, self.profile)
+        self.assertFalse(result['ok']); self.assertEqual(result['error'], 'invalid_or_expired_code')
+        self.assertEqual(result['enrollment'], 'PENDING_RECEIPT')
+        private = self.context.load()['pending']['operation']['payload']
+        for secret in (self.code, private['enrollment_token'], private['enrollment_id']):
+            self.assertNotIn(secret, json.dumps(result))
+        before = self.store.raw
+        with patch('asc.node.enrollment.request_json', side_effect=OSError('sensitive injected exception')):
+            failure = public_request(self.context, 'resume')
+        self.assertFalse(failure['ok']); self.assertEqual(failure['error'], 'enrollment_unconfirmed')
+        self.assertNotIn('sensitive', json.dumps(failure)); self.assertEqual(before, self.store.raw)
+        success = public_request(self.context, 'replace_code', self.reg.add_pair_code())
+        self.assertTrue(success['ok']); self.assertEqual(success['enrollment'], 'ENROLLED_PENDING_APPROVAL')
+        self.store.raw = '{}'
+        held = public_request(self.context, 'resume')
+        self.assertFalse(held['ok']); self.assertEqual(held['error'], 'native_context_locked')
+        self.assertEqual(held['enrollment'], 'UNKNOWN'); self.assertEqual(self.store.raw, '{}')

@@ -676,3 +676,67 @@ Commands: PYTHONPATH=tests python -m unittest test_native_context test_native_tl
 test_enrollment_contract test_lifecycle test_quick_join -v; python -m unittest
 discover -s tests -p test_native_enrollment.py -v. Logs retained privately alongside
 f.2 recovery logs. No historical whole-suite count reused as current PASS.
+
+### g.2a publication receipt
+857165ba5c2dc5c3b6653d7973915a3d67d4fadd normal push/fetch/advertised remote
+matched exactly before further g.2b source edits.70 distinct Linux targeted PASS.
+
+## 4.2g.2b — native sealed-provider/IPC enrollment qualification
+Private NativeNodeContext now calls the canonical Core adapter with trusted native
+Build/RAM profile. Existing Binder ownUID/signature/consent/device gates apply to
+quick_join/resume_join/replace_join_code; no path/profile/identity override. Native
+UI explicit context/TLS preparation +fresh owner trust/binding check, actual join/
+redacted pending/receipt/resume/code replacement; old encrypted draft independent.
+Safe fixed errors, no raw exception/code/token/key in public state or logging.
+No Node listener/Agent/FGS/volume approval or writer authority was introduced.
+
+Fresh33 Linux PASS0skip: enrollment10/context10/TLS9/shared contract4. Gradle main/
+testAPK build +JVM12 PASS0fail/error/skip; strict dependency checks unchanged.
+Lint0errors25warnings: prior unused BC EST helper/dependency/durable-consent notices
+and Vietnamese string notices (not suppressed). Package audit PASS114 canonical
+Core modules/2ABIs/unchanged3permissions; no test class, private-state/credential
+findings. Original debug signer SHA
+bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30 retained.
+Private version3/0.3.0-native-context APK SHA
+59541e41afe010a9ca7c6041c96d16549b727666d4430fedafdf717d88bb62bd. No public
+APK/archive/release/version change; final candidate version increment belongs to j.
+Exact installed f.2 APK backed up privately before install; hash88435153... matched.
+
+Actual retained ASC_UPGRADE_API35 owned emulator:28 targeted PASS244.749s0skip,
+including5 new real Keystore/Core/TLS enrollment cases, actual Binder pin-failure/
+consent/strict fields1, existing20 TLS/context/Engine/Keystore/Binder gates and
+UI2. Original assertions retained. Positive joins in these tests use trusted
+NativeNodeContext with an isolated private provider; Binder refusal and UI trust
+gates are actual service/UI tests. Positive UI->Binder->Core end-to-end on a new
+sandbox remains g.2c, avoiding mutation of retained foundation fixtures.
+
+Actual fixed proof phases join-pending-seed ->force-stop/cold Activity ->
+join-pending-resume ->force-stop/cold Activity ->join-receipt-verify PASS. Original
+app/context/TLS IDs, original pending operation/token hashes and accepted Node/
+Cluster identity retained; exact pending/committed ciphertext checked. Additional
+tls-verify +verify-v3 PASS preserve all earlier TLS/app/Keystore/draft/VolumeID/
+marker/committed Core bytes. Actual foreign UID/signer/permission/bind denial1
+PASS. UID10148/test10149 unchanged; original signer, no uninstall/clear/-d/db reset.
+
+Host actual Registry ends with exactly4 accepted Nodes,0 catalog storage approvals.
+Both TLS proxies dropped REAL successful201 ACK once and saw exactly one retry
+(twoPOSTs each), not a simulated successful join. Wrong pin/cluster/quorum mode,
+offline endpoint, expired/used code, pending corruption and identity-preservation
+gates PASS. Explicit development ADB reverse-loopback only; NOT direct NAT/LAN.
+Tool initially refused TCP-connected serial's unsupported adb emu console BEFORE
+any install/state change; replaced the console query with live owned PID/UID/
+cmdline receipt +guest qemu/hardware/AVD/boot checks, no ownership weakening.
+
+Private logs/Controller fixture/keys/retained prior APK/process proof under
+/workspace/work/phase4-2g2b-qualification and original task-owned AVD. Do not delete
+proof/fixture to rerun seed. tools/qualify_native_enrollment.py +ANDROID-NATIVE-
+ENROLLMENT specify scope/repeatability/retained-state limits. Public bounded source
+receipt qualification/phase4-2g2b-enrollment.json. No phones/Termux/production.
+
+Next g.2c positive UI/private Binder path on separate task-owned synthetic app/AVD,
+then h actual native socket adapter/Storage Agent/FGS, i observer, j direct LAN +
+fresh full Python/Go/Core faults/candidate upgrade/package gates. Full4.2 NOT
+ACCEPTED; whole-suite historical results are not fresh g.2b qualification. Before
+next source checkpoint: normal commit/push/fetch verification below/next receipt.
+Rollback: older f.2 refuses populated optional slots; keep NEW records/bytes/signer
+and compatible code, never restore stale state or regenerate Node/app/volume IDs.

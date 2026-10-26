@@ -8,6 +8,19 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class NativeUiTest {
+    @Test fun nativeJoinAndReplacementRequireFreshOwnerTrustBeforeAnyDispatch() {
+        ActivityScenario.launch(MainActivity::class.java).use {s ->s.onActivity {a ->
+            val root=a.window.decorView
+            root.findViewWithTag<Button>("tab-1").performClick()
+            for(tag in listOf("native-join","replace-native-code")) {
+                root.findViewWithTag<Button>(tag).performClick()
+                assertTrue(root.findViewWithTag<TextView>("join-result").text.toString().contains("đối chiếu",ignoreCase=true))
+            }
+            assertNotNull(root.findViewWithTag<Button>("resume-native-join"))
+            assertNotNull(root.findViewWithTag<Button>("native-join-status"))
+            assertFalse(root.findViewWithTag<EditText>("join-code").isSaveEnabled)
+        }}
+    }
     @Test fun actualUiUnknownsTrustGateAndNoSavedOneUseCode() {
         ActivityScenario.launch(MainActivity::class.java).use {s ->
             s.onActivity {a ->

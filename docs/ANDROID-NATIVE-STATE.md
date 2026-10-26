@@ -90,3 +90,14 @@ failure holds the original operation; there is no reset/delete-state remedy.
 No native Binder/Keystore enrollment acceptance yet; g.2b must exercise the actual
 Android provider. Old f.2 code rejects populated slots: code-only downgrade after
 join is unsupported, preserve NEW state rather than restoring old databases.
+
+## g.2b native provider wiring
+NativeNodeContext now invokes the same Core adapter with Android Keystore provider
+and trusted Build/RAM profile. Public status additionally returns saved public
+controller/pin/expected cluster, allowing operator review without revealing code/
+operation/token. Encrypted legacy draft is independent and never sent implicitly.
+Native UI requires explicit preparation +fresh pin/cluster verification and owner
+trust before first send, clears transient code and can resume the exact sealed
+pending without importing form data. Replacement changes only pending code.
+App/process restart does not initialize or repair Node identity. Error labels and
+actual tests are specified in ANDROID-NATIVE-ENROLLMENT/current acceptance.

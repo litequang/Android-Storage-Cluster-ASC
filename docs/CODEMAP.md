@@ -656,3 +656,21 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
   offline/reconnect, private publication failure, reply mismatch, retry identity,
   expiry/replacement, pin/cluster/mode/protected-device and corrupt-state gates.
   Memory CAS fixture is Linux only, NOT Android Keystore/IPC evidence.
+
+## Phase4.2g.2b native Core enrollment bindings
+- asc/node/enrollment.py:public_request: fixed private dispatch + safe public
+  failures/pending receipt; no raw exception, code/token or new authority.
+- NativeNodeContext.join/resume/replaceCode: trusted native Build/RAM profile,
+  existing embedded Core +Keystore context provider; no CLI/HOME/repair fallback.
+- EngineService/RequestPolicy: existing ownUID+signature/consent gates on
+  quick_join/resume_join/replace_join_code, fixed fields and transaction1 retained.
+- MainActivity: explicit context/TLS preparation, verified binding +owner trust,
+  actual join/pending status/resume/code replacement, secret clearing and truthful
+  historical receipt/UNKNOWN approval; old encrypted unsent draft stays separate.
+- NativeEnrollmentTest/BinderEnrollmentTest +fixed runner join phases: actual
+  Android Keystore/TLS/Core/pending/process proof; test-only private fixture outside
+  main APK. NativeUiTest/RequestPolicyTest retain old assertions +new trust/fields.
+- tools/qualify_native_enrollment.py: explicit task-owned Linux emulator/signer/UID
+  validation, synthetic Core/actual successful201 ACK-loss +retained state gates.
+  Explicit ADB dev loopback ONLY; not direct LAN/phone qualification. Contract:
+  ANDROID-NATIVE-ENROLLMENT. No listener/Agent/FGS or storage approval added.

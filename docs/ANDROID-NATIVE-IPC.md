@@ -64,3 +64,16 @@ with redacted historical receipt states. This source checkpoint adds NO Binder
 operation or native UI network enrollment: quick_join/resume_join still refuse
 until g.2b wiring and actual Android qualification. A private Python adapter is
 not evidence that browser/app can enroll, start a Node or approve a volume.
+
+## g.2b private native enrollment contract
+The preceding unqualified quick_join/resume_join restriction is superseded ONLY
+by the reviewed typed Core adapter. Native Node start remains unqualified.
+quick_join requires existing context/TLS, fixed original endpoint/pin/expected
+cluster/name/code +trust confirmation. No profile/Node-ID/path is accepted.
+resume_join accepts NO extra fields: exact encrypted pending operation only. New
+replace_join_code accepts ONLY code +trustConfirmed=true, keeping all saved
+bindings/operation/token. Existing ownUID/signature/consent/device checks and AIDL
+transaction IDs0/1 remain. Public pending bindings +application request UUID are
+non-secret; accepted Node/Cluster IDs require a validated Core ACK. Public error
+labels are fixed; no raw exception/provider/server body. See ANDROID-NATIVE-
+ENROLLMENT for full state, scope and downgrade limits. No runtime/approval/writer.

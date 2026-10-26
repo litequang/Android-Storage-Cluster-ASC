@@ -500,3 +500,13 @@ code may replace only the pending code. resume_required/binding_mismatch require
 review of the existing request/bindings. HISTORICAL_JOIN_RECEIPT does not establish
 current Controller connectivity, valid credentials or storage approval. Native
 Binder/UI enrollment is not available at this Linux-only source checkpoint.
+
+### Native join/resume from UI g.2b
+Explicitly prepare application identity/context/TLS, then independently verify
+Controller endpoint/PIN/Cluster ID and check the same binding before sending.
+PENDING_RECEIPT can follow successful server commit plus lost ACK: use Resume,
+not initialize/reset/re-pair. After process restart read pending/public bindings
+first. Invalid/expired/used code keeps pending; request an owner code and explicitly
+replace only that code. Binding mismatch or corrupt/lost context requires holding
+state for review. Never delete keys/state, restore stale databases, or copy Termux
+identity. Native node_start still refuses until h; no FGS/replica claim from join.
