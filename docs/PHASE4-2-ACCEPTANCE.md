@@ -395,3 +395,25 @@ Fresh Go11/vet/modules/builds PASS (Windows/Android cross-build only). Current f
 Python/fault run RUNNING,296hashes frozen: NOT ACCEPTED yet. No old full-result
 reuse. Exact scope/remaining cold/phone limits in PROGRESS and bounded receipt
 qualification/phase4-2j3-android-recovery.json. No new public APK at this prerequisite.
+
+
+## j.3 fresh final Core regression completed
+383 Python PASS /0failure /0skip,2239.675s. All296frozen source/test/project/
+packaged-guide/priorartifact inputs unchanged. Source/test contents0006bb8.
+Fresh Go11/vet/modules/Linux build +Windows/Android cross-builds PASS; Android
+original retained emulator26 +foreign Binder1 PASS (prior scoped receipt).
+Bounded final evidence:qualification/phase4-2j3-final.json. No old full result reused.
+
+Full Phase4.2 remains NOT ACCEPTED: cold complete integrated initialization JUnit
+receipt incomplete; physical phones/ARM64/real LAN/ChromeAndroid/OEM/Doze remain
+unqualified. SDK shutdown SIGSEGV documented; private images/signer preserved.
+No public APK published yet. Private final APK SHA7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8.
+Next timeline step: review/publish honestly scoped internal candidate and checksum,
+then close remaining cold-start/qualification evidence. Do not move to Phase5 or
+claim full acceptance. Current exact Controller source package matches byte-for-byte
+the native Catalog E2E package: private asc-demo-alpha-0.4.3-native-node-internal-
+source.tar.gz SHA9dbd9007058a6a43f075c1924f4014faa7060ef6667e014bbc28a91be070ad59,
+releaseIDe69ebeae3e5ab9a5372465caa8ed5e1882f352fd5f355157299091361f4c6706.
+All artifacts/logs under/workspace/work/phase4-2j3-final and original candidate
+under/workspace/work/phase4-2j-native-catalog; do not restart completed full gate
+without source changes. No phones/Termux/production access or writerDR activation.

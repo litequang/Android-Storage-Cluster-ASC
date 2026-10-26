@@ -21,6 +21,9 @@ For an existing native app, verify the same original signer and higher versionCo
 stop Node, then use normal Android update. Do not uninstall, clear data or force a
 downgrade. Keep private signer/state in operator custody; never upload them with
 diagnostics. Termux/APK identities are independent: no key/database/marker copy.
+The current exact direct APK upgrade qualified is retained Native versionCode3
+(SHA d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a) to4.
+Published Foundation2 ->4 directly is NOT TESTED; no general upgrade promise.
 
 ## Controlled trial once the candidate is available
 
@@ -40,9 +43,13 @@ diagnostics. Termux/APK identities are independent: no key/database/marker copy.
    reserve and this phone's private LAN IP/port9443. The separate probe volume is
    a capability test, not a replica destination. Check actual writable/fsync:
    UNKNOWN/denied is not success. Do not point it at user/Termux data.
+   If an existing Termux Node already uses9443, choose another unused port such as
+   9444 for APK; do not kill/reconfigure another process to free its port.
 5. Owner registers/approves Node endpoint/public pin, measured volume and truthful
    physical domain using existing tools (DEMO-QUICKSTART section4). No metadata/
    voter role. Two volumes on one phone are one domain; app cannot approve itself.
+   Termux and APK Nodes on the SAME phone must also share ONE physical domain;
+   distinct Node IDs/UIDs do not make them two independent replica destinations.
 6. While Activity is visible, Chạy Storage Node. On API33+ grant notification
    permission and press Start again. Verify heartbeat/storage in owner Dashboard
    and foreground notification. Dừng Node stops only APK-owned runtime. OS/process
