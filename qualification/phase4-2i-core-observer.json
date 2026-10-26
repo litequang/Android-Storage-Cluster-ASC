@@ -75,5 +75,11 @@
     "writable disaster recovery",
     "production acceptance"
   ],
-  "next_checkpoint": "4.2j integrated Node/fault/final regression and increased-version same-signer candidate upgrade"
+  "next_checkpoint": "4.2j integrated Node/fault/final regression and increased-version same-signer candidate upgrade",
+  "source_commit": "78d4b08b056ad4324ad512b94d8d5e6b02e5c826",
+  "publication": {
+    "branch": "feature/phase4-2-android-native",
+    "normal_push": true,
+    "fetched_and_advertised_head_verified": "78d4b08b056ad4324ad512b94d8d5e6b02e5c826"
+  }
 }

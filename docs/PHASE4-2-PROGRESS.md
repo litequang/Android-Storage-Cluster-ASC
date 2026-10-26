@@ -1290,3 +1290,19 @@ ARM64/Doze/OEM/two truly independent-domain replicas/fallback remain NOT TESTED;
 Core3D writableDR BLOCKED, full Phase4.2 NOT ACCEPTED. No original branch/archive
 changed. Normal feature-only commit/push/fetch verification before any next source
 checkpoint; publication receipt follows without retesting unchanged source.
+
+### i publication / resume receipt
+- i.1 code/docs92f4ed2c5e9d3b92a43608aa0330bedbbb51df81: normal push, fetch and
+  advertised feature remote HEAD matched before i.2 began.
+- i.2 source/qualification78d4b08b056ad4324ad512b94d8d5e6b02e5c826: normal push,
+  fresh fetch and ls-remote HEAD all EXACTLY matched; working tree clean.
+- This follow-up changes only reporting docs/evidence, not qualified source/APK;
+  targeted results reused unchanged, no redundant full regression. Original
+  Core/Demo/Phase4.0/4.1 branches and old artifacts are untouched.
+- Resume j from current feature HEAD. Read this progress/acceptance plus
+  ANDROID-CORE-OBSERVER/operations. Preserve original debug signer and current
+  ASC_JOIN_UI_API35 AVD/app/Keystore/Node/volume/old bytes; verify fresh ownership
+  before ADB. Private current work: /workspace/work/phase4-2i-native-observer;
+  existing emulator/Controller ownership receipts remain in phase4-2h2b-mvp.
+  No real-phone/M51 operation, reset, signer recreation, data clear or forced
+  downgrade. Current APK stays private version3; no new public candidate yet.
