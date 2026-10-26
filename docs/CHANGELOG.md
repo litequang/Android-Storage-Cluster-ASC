@@ -542,3 +542,10 @@ Selectively extract existing CLI pending factory and ACK validator, preserving
 wire/config/token/retry/repair/device/lock contracts.42 targeted Linux PASS0skip
 (contract4/lifecycle29/actual TLS QuickJoin9). Native pending/IPC/enrollment Android
 integration is g.2, no native Node/FGS or public APK claim.
+
+### Phase4.2g.2a — typed native enrollment adapter, Linux source scope
+- Reuse existing Core pinned enrollment with atomic private pending/node state,
+  original-operation resume and explicit code replacement; no CLI/global HOME.
+- Redacted historical receipt and UNKNOWN approval, no auto re-pair/runtime.
+- Actual Linux Core/TLS fault gates; Android binding/Keystore qualification remains
+  subsequent work. Existing formats/archives/Core3D guards remain unchanged.

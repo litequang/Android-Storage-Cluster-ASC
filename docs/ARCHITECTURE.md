@@ -487,3 +487,15 @@ must be enforced there. No automatic listener/enrollment/writer. See native TLS 
 functions, reusing the same Registry server transaction and original CLI behavior.
 No second enrollment authority/DB, Native/Termux state bridge or network endpoint.
 Native encrypted pending/IPC/UI integration remains g.2, not implied by extraction.
+
+### Native enrollment adapter g.2a
+The explicit app-owned NodeContext can now retain a typed Core enrollment operation
+and accepted node configuration in its single authenticated encrypted provider
+record. NativeEnrollment calls the SAME Core pinned HTTP client and shared CLI
+pending/receipt functions; Registry.join remains the only enrollment transaction.
+Pin/expected cluster/single-writer mode are verified before creating pending;
+pending is durably published before POST. Lost ACK or local publication failure
+resumes the original operation/token. Existing node retry reports a historical
+receipt, never live credential validity or approval. No runtime is started.
+Android Binder/UI wiring and real Keystore/network qualification are subsequent
+g.2b work; Linux memory-provider tests do not establish native enrollment PASS.

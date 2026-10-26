@@ -73,3 +73,20 @@ ANDROID-NATIVE-TLS. Existing app/alias/draft/probe/Core IDs and formats remain.
 EC software key/cert are encrypted in existing Keystore-wrapped record, never
 plaintext disk; old f.1 rejects non-null TLS rather than adopts it. Missing/corrupt
 record/witness/key holds, no replacement. Node/pending/storage remain null.
+
+## g.2a typed enrollment (Linux adapter only)
+The prior null-only node/pending restriction is superseded ONLY by the strict
+components in asc/node/enrollment.py. Both require existing TLS/context/app
+identity. Pending stores original Core retry-safe operation privately before POST;
+accepted node + pending removal is one CAS. Restart never recreates credentials.
+Public node_id/cluster_id appear only after a validated Core receipt; enrollment
+is PENDING_RECEIPT or ENROLLED_PENDING_APPROVAL. controller_confirmation explicitly
+says HISTORICAL_JOIN_RECEIPT; approval booleans remain null, runtime/writer false.
+Revocation is not repaired by repeating join; explicit future repair contract is
+required. Changed endpoint/pin/cluster or concurrent request refuses. A replacement
+code can change only pending code, keeping the operation/token. Old unsent draft
+is separate, never automatically adopted. Missing/corrupt state or publication
+failure holds the original operation; there is no reset/delete-state remedy.
+No native Binder/Keystore enrollment acceptance yet; g.2b must exercise the actual
+Android provider. Old f.2 code rejects populated slots: code-only downgrade after
+join is unsupported, preserve NEW state rather than restoring old databases.

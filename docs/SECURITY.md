@@ -525,3 +525,15 @@ review for exact scope. Do not confuse inventory/pattern checks with full SAST.
 verify pinned expected cluster, persist private pending BEFORE sending and refuse
 cluster/target/token mismatch before saving identity. Registry remains sole grant/
 node transaction. Native wiring is not implemented by this shared helper alone.
+
+### Native enrollment state boundary g.2a
+Only trusted in-process context adapter accepts node configuration, using Core
+pinned HTTPS/expected cluster + retry-safe shared contract. Initial runtime must
+explicitly advertise single-writer-development/schema4/protocol1/retry feature;
+Core quorum/recovery is not silently selected. Context device guard/ownership lock
+and authenticated atomic provider apply before mutations. No token/code in public
+status, logs or plaintext node files. TLS identity alone never grants enrollment,
+storage/domain approval, observer or writer authority. Existing receipt is marked
+historical; revoked token is NOT automatically replaced. Request conflict and
+missing/corrupt provider fail closed. Android encrypted pending/Binder evidence is
+still required separately; test-only memory CAS must not be used by application.

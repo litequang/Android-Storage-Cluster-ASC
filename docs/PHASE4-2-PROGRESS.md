@@ -640,3 +640,39 @@ configuration, real pinned Controller join and lostACK/resume on actual Android;
 no token/code in public state, no auto storage/domain approval or identity reset.
 Only then h native transport/Agent/FGS, i observer, j direct LAN/fresh full gates.
 Full Phase4.2 NOT ACCEPTED. Normal g.1 push/fetch before further source work.
+
+### g.1 publication receipt
+f423e9f5f75f0263805574e3228085b459d3afce normal push/fetch/advertised remote
+matched exactly before g.2a work. All original branches and public APK unchanged.
+
+## 4.2g.2a — typed sealed-state enrollment adapter (Linux only)
+NativeEnrollment reuses asc/enrollment.py +Core pinned transport and Registry.join.
+Context1 strictly validates optional pending/node components. Initial pin/cluster/
+mode check precedes credential creation; pending CAS precedes POST. Accepted node
+and pending removal are one CAS, retained original token/operation on lost ACK or
+local publication failure. Explicit code replacement never re-pairs an enrolled
+node. Historical receipt +UNKNOWN approval only, runtime/writer remain false.
+No plaintext node/pending config, global HOME/getpass/CLI or Kotlin server logic.
+
+Fresh9 actual Linux Core/TLS adapter tests PASS0skip, including successful201 ACK
+loss, Controller disconnect/reconnect, local CAS failure after committed join,
+authenticated reply mismatch, expired code replacement, wrong pin/cluster/mode/
+protected profile, pending conflict/missing/corrupt provider and revoked credential
+without identity recreation. MemoryCredentials is TEST ONLY, not Keystore proof.
+Native Android g.2b Binder/UI and actual encrypted pending/Controller/emulator
+qualification have NOT run. No APK changed/published at g.1 or g.2a. Full4.2 NOT
+ACCEPTED; h Agent/FGS, i observer, j direct LAN/fresh full gates remain.
+
+Rollback: f.2 rejects populated enrollment slots. Preserve new record/state; use
+compatible code, no stale database restore or identity deletion. Existing app/
+probe/TLS identity and old draft are independent and retained. Next g.2b must wire
+private native IPC to this adapter with trusted device profile and real Keystore
+CAS, real pinned Controller/wrong pin/cluster/expired/used/offline/ACK-loss/restart
+gates. Never count Linux provider tests as Android enrollment acceptance.
+
+Additional fresh61 Linux regression PASS0skip (context10/TLS9/shared contract4/
+original lifecycle29/actual TLS QuickJoin9), total70 distinct targeted tests.
+Commands: PYTHONPATH=tests python -m unittest test_native_context test_native_tls
+test_enrollment_contract test_lifecycle test_quick_join -v; python -m unittest
+discover -s tests -p test_native_enrollment.py -v. Logs retained privately alongside
+f.2 recovery logs. No historical whole-suite count reused as current PASS.

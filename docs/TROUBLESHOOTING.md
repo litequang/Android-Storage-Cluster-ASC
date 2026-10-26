@@ -491,3 +491,12 @@ bytes with ordinary OS policy. No disk-key/SELinux/raw-syscall workaround.
 Any key/cert/pin/seal/credential error refuses without rotation; preserve state.
 TLS identity readiness is not Node enrollment/approval/listener health. API26–29
 TLS NOT QUALIFIED. Read ANDROID-NATIVE-TLS and progress before continuing.
+
+### Native pending enrollment adapter g.2a
+PENDING_RECEIPT can mean the Controller committed a join but its ACK or local
+publication was lost. Preserve context/Keystore record, resume the same operation;
+do not clear state or reinitialize Node ID. If code expired, an explicit new owner
+code may replace only the pending code. resume_required/binding_mismatch require
+review of the existing request/bindings. HISTORICAL_JOIN_RECEIPT does not establish
+current Controller connectivity, valid credentials or storage approval. Native
+Binder/UI enrollment is not available at this Linux-only source checkpoint.

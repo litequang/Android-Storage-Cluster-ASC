@@ -57,3 +57,10 @@ Same caller UID/signature/consent/device/app identity/context gates. Explicit fi
 preparation persists one validated cert/key; repeat reuses original public pin.
 Only IDENTITY_READY/public SHA returns; no key/cert/provider path, Node ID, listener
 or writer permission. Native SDK26–29 TLS refuses. See ANDROID-NATIVE-TLS.
+
+## g.2a boundary
+Python NativeEnrollment now supports private typed join/resume/code replacement
+with redacted historical receipt states. This source checkpoint adds NO Binder
+operation or native UI network enrollment: quick_join/resume_join still refuse
+until g.2b wiring and actual Android qualification. A private Python adapter is
+not evidence that browser/app can enroll, start a Node or approve a volume.

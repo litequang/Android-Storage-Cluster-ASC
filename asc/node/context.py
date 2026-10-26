@@ -155,8 +155,10 @@ class NodeContext:
         _uuid(record['context_id'])
         # Strict components, never arbitrary opaque secrets. A certificate is
         # local TLS identity only, not enrollment/approval/Node or writer authority.
-        if any(record[key] is not None for key in ('pending', 'node', 'storage')):
+        if record['storage'] is not None:
             raise ContextLocked()
+        from .enrollment import validate_components
+        validate_components(record)
         if record['tls'] is not None:
             from .tls import server_context
             server_context(record['tls'], self.tls_provider)
@@ -242,10 +244,16 @@ class NodeContext:
 
     def public_status(self):
         record = self.load()
+        node, pending = record['node'], record['pending']
         return {'context_version': 1, 'state': 'CONTEXT_READY',
                 'context_id': record['context_id'], 'application_id': self.app_id,
-                'device_scope': self.device['scope'], 'node_id': None, 'cluster_id': None,
-                'enrollment': 'NOT_CONFIGURED',
+                'device_scope': self.device['scope'],
+                'node_id': node['node_id'] if node else None,
+                'cluster_id': node['cluster_id'] if node else None,
+                'enrollment': 'ENROLLED_PENDING_APPROVAL' if node else 'PENDING_RECEIPT' if pending else 'NOT_CONFIGURED',
+                'join_request_id': pending['request_id'] if pending else None,
+                'controller_confirmation': 'HISTORICAL_JOIN_RECEIPT' if node else 'UNKNOWN',
+                'storage_approved': None, 'failure_domain_approved': None,
                 'tls': 'IDENTITY_READY' if record['tls'] is not None else 'NOT_CONFIGURED',
                 'tls_pin': record['tls']['pin'] if record['tls'] is not None else None,
                 'storage': 'NOT_CONFIGURED', 'writer_authority': False,

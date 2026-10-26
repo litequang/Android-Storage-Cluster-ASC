@@ -499,3 +499,17 @@ Cluster/pending/storage remain absent/null. Existing TLS validates/reuses, damag
 state is held. Exact old f.1 code refuses this non-null slot rather than reinit.
 No plaintext key/PKCS12/database restore or Termux migration; native TLS doc owns
 compatibility and retained upgrade/process receipts.
+
+### Native context1 optional enrollment components (4.2g.2a)
+The predeclared pending/node slots are now strictly typed by asc/node/enrollment.py.
+Pending contains ONLY canonical application request_id and the existing Core
+private pending1 operation (controller/pin/expected cluster, original CSPRNG
+enrollment_id + enrollment_token, code/name/profile). Repair targets remain null.
+Accepted node contains ONLY Core config1 controller/pin/node_id/token/token_version/
+cluster_id. Both cannot coexist; either requires an existing valid TLS identity.
+They share the Keystore-provider atomic CAS record; neither plaintext node.json
+nor enrollment_pending.json is created. Revision increases at each publication.
+All prior app/context/draft/probe/volume/Registry schema identifiers are unchanged.
+Old f.2 code refuses non-null pending/node; do NOT downgrade after enrollment by
+restoring stale records or dropping identity. Keep new state and use compatible
+code only. No Termux/Core-state adoption or schema migration is implemented.

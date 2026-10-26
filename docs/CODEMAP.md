@@ -643,3 +643,16 @@ unchanged format1/payload/CSPRNG op+token/cluster+target+token ACK checks. CLI
 continues original device/HOME/locks/persistence/repair/discovery. No native join
 wiring yet. test_enrollment_contract plus all original lifecycle/QuickJoin gates
 preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
+
+## Phase4.2g.2a sealed native enrollment adapter (Linux qualification)
+- asc/node/enrollment.py: NativeEnrollment reuses shared Core pending/ACK contract
+  and pinned request_json under NodeContext ownership lock. Private CAS persists
+  original operation before POST, atomically publishes node + clears pending.
+  Strict typed fields, explicit code replacement, historical receipt only; no
+  CLI/HOME/repair/startup/storage or physical-domain approval.
+- asc/node/context.py: validates typed pending/node slots and returns redacted
+  enrollment/UNKNOWN approval status. Existing context1/null slots unchanged.
+- tests/test_native_enrollment.py: actual Core Registry/TLS/lost successful ACK,
+  offline/reconnect, private publication failure, reply mismatch, retry identity,
+  expiry/replacement, pin/cluster/mode/protected-device and corrupt-state gates.
+  Memory CAS fixture is Linux only, NOT Android Keystore/IPC evidence.

@@ -184,3 +184,11 @@ peer. Review scope in ANDROID-NATIVE-TLS; not comprehensive binary SAST.
 Evidence/progress/API/state/security docs updated. Remaining g enrollment, h native
 socket adapter/Agent/FGS, i read-only observer, j direct LAN/end-to-end/fresh full
 regression remain separate. This does not close those mandatory Native Node gates.
+
+## g.2a targeted source receipt — Linux only
+Native sealed-context enrollment adapter:9 new actual Core Registry/TLS fault
+tests +61 related context/TLS/CLI/lifecycle/QuickJoin regression PASS0skip.
+This is not Android native enrollment acceptance: test-only memory CAS does not
+prove Keystore persistence or Binder/UI network use. No APK rebuilt/published.
+Full Phase4.2 remains NOT ACCEPTED; g.2b actual Android join/resume qualification,
+h Agent/FGS, i observer and j direct network/fresh full gates remain outstanding.
