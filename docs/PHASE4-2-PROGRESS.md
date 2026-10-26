@@ -428,3 +428,120 @@ existing Core enrollment/pending/resume; h Agent/FGS; i observer; j direct netwo
 end-to-end/fresh full. No Node listener, enrollment, FGS or LAN proof exists at f.1.
 No phone/M51/Termux/production/writableDR/Raft/GC/failover changes. Normal source
 checkpoint commit/push/fetch receipt follows; do not start f.2 before it matches.
+
+## Executor interruption handoff — 4.2f.2 NOT QUALIFIED (2026-10-26)
+
+**Verified source checkpoint4.2f.1:
+4df6ad6676de2a441991455c71d2e8e2d3aa2685.**
+Normal Git push completed, fetch HEAD and advertised remote matched exactly before
+starting f.2. Targeted24Python/11JVM/15Android and real process-death/retained old
+native upgrade state proofs above are the f.1 evidence. Bounded WORK+INDEX secret
+audit completed before that source commit. Full4.2 NOT ACCEPTED.
+
+Cloud executor disconnected during f.2 work: exec-server transport closed, then
+No usable execution environment is available; attached environment unavailable.
+Cloud configuration service still reported running/current spec102, but that is
+NOT proof of a usable executor. Retained network diagnostics had no records.
+No proxy:8080 error or proxy/CA alteration occurred. Do not infer the cause of
+executor loss or test success. GitHub connector remained usable; this append is
+a DOC-ONLY interruption receipt, not publication of unqualified runtime source.
+No source rollback/reset/force/original-branch mutation was attempted.
+
+### f.2 draft implementation / state to preserve
+
+Uncommitted f.2 source may remain in the stopped workspace. It is NOT in the
+verified f.1 commit and has NOT passed final Android/TLS/security gates. Preserve
+and inspect all dirty files before updating the branch. Known draft paths:
+
+- asc/node/tls.py (new): SSLContext with key/cert in sealed anonymous memfd only,
+  no plaintext disk-key/OpenSSL executable/provider fallback on actual OS denial.
+- asc/node/context.py: strict optional TLS identity component, prepare_tls under
+  existing operation lock/CAS, tls_context and sanitized public pin; Node/pending/
+  storage still null, no Node identity or authority.
+- NativeTLSIdentity.kt (new): standard BouncyCastle/JCA EC secp256r1 +SHA256withECDSA
+  self-signed X.509 server cert. Software TLS key is exportable in RAM and sealed
+  by existing nonexportable Keystore wrapping key; NOT hardware-backed TLS signing.
+- NativeNodeContext.kt, EngineService.kt, RequestPolicy.kt: fixed trusted in-process
+  provider plus consent-gated native_tls_prepare; no arbitrary path/provider API.
+- android/app/build.gradle.kts: bcpkix-jdk18on1.83 ->bcutil/bcprov1.83, verification
+  metadata initial TLS/TOFU SHA pins. Exclude ONLY duplicate
+  META-INF/versions/9/OSGI-INF/MANIFEST.MF (Java9 OSGi metadata, not crypto classes).
+- android/gradle/verification-metadata.xml: new BC artifact hashes; review them.
+- tests/test_native_tls.py (new six-case Linux fixture) and NativeTLSTest.kt
+  (actual Android platform/X.509/TLS tests); RequestPolicyTest additional operation.
+- UpgradeQualificationRunner.kt: fixed tls-seed/tls-verify phases on the existing
+  isolated native-context-process-proof namespace, intended to verify stable
+  cert/pin/cipher after process death. Those phases were NOT confirmed executed.
+
+Private work/logs: /workspace/work/phase4-2-continuation. f.1 private APK preserved
+there as f1-version3.apk (SHA1c75c43390490edaf9a4f5dba20a3a62cba99665b96979e58c3dc48822118f12).
+SDK/AVDs/signer remain under /workspace/asc-android-dev if workspace survives.
+No private state/key/test APK/logs are in Git. Do NOT publish a replacement APK or
+claim same-signer upgrade if the original private signer is unavailable.
+
+### Actual f.2 failures / diagnosis (not final acceptance)
+
+1. First BC dependency build failed duplicate Java9 OSGi descriptor; exact
+   resource-only exclusion above fixed strict build (39s observed).
+2. Initial Linux TLS six-case run failed one handshake timeout after wrong-pin
+   client closed. TLS1.3 server ticket write can observe BrokenPipeError before
+   recv; the test server ended its accept loop before the valid second client.
+   Corrected fixture records expected first-peer reset as CLOSED_BEFORE_DATA
+   (never a successful read), requires actual wrong-pin ClientError, and still
+   requires valid second handshake/body/SHA. Corrected six Linux tests PASS0skip
+   in0.566s before the later Bionic-specific source change.
+3. Actual Android integrated TLS preparation FAILED (ContextLocked). Independent
+   standard BC/JCA X.509 generation test actually PASS. Platform diagnostic FAILED
+   Python-wrapper precondition and reported:
+   python_memfd=false, os_flags=false, fcntl_seals=true, bionic_memfd=true.
+   This is implementation/platform-wrapper evidence, NOT TLS handshake PASS.
+4. Official Android Bionic header inspected via authenticated public HTTPS:
+   https://android.googlesource.com/platform/bionic/+/refs/heads/main/libc/include/sys/mman.h
+   documents public memfd_create since API30; official UAPI
+   libc/kernel/uapi/linux/memfd.h defines CLOEXEC0x0001/ALLOW_SEALING0x0002.
+   Latest draft uses Python os.memfd_create where present; ONLY if that wrapper
+   is absent on Android, ctypes loads the documented libc.so memfd_create symbol
+   with explicit ABI types, same app UID/ordinary kernel/SELinux policy. No raw
+   syscall, elevation, filesystem key fallback or switch after a denied syscall.
+   Absent public API/failed sealing/proc access must refuse. Node TLS on API26–29
+   is NOT qualified; do not infer support from app minSDK26.
+5. Latest Android platform test was strengthened to actual memfd write/read,
+   all four F_SEAL bits, denied mutation and closed fd; it no longer mistakes
+   absent Python wrapper for absent public OS functionality. Full real handshake
+   plus wrong-pin refusal remains mandatory, no fake provider.
+6. New Linux6/context10 ->strict build/install/three Android TLS tests was launched
+   with latest Bionic draft (private session9191). Executor vanished before its
+   result was read. Treat latest run/build/Android tests as UNKNOWN/UNCONFIRMED.
+   Do not stitch prior Linux PASS/BC generation PASS into complete TLS acceptance.
+   A following attempted patch adding seal-failure/no-fallback/corrupt-record tests
+   failed at file-read with exec-server transport closed; its application is NOT
+   confirmed. Inspect actual files rather than assuming that patch exists.
+
+### Resume safely
+
+- Restore a usable workspace, read AGENTS/current docs, fetch this SAME feature
+  branch and inspect dirty f.2 files. This receipt advances remote docs only;
+  fast-forward the same branch only if compatible with retained local changes.
+  Never reset/overwrite those changes, original branches or private state.
+- Verify owned AVD/ADB identity before any command. Owned retained-state emulator
+  was ASC_UPGRADE_API35/privateADB5038/127.0.0.1:5555; start harness retained parent
+  session27513, qemuPID500147 was the recorded handle before loss. Those handles
+  are HISTORICAL, not authority to kill a later/reused PID. New owner verification
+  is required. No cleanup/termination could be confirmed after executor loss.
+- Inspect latest f2-bionic-* logs/results if preserved; otherwise run fresh gates.
+  Keep real memfd/sealing/proc/key-match/TLS/pin/corruption/no-regeneration and
+  process-restart tests. No plaintext disk or unsupported-OS workaround.
+- Rebuild with strict dependency verification, targeted Linux/JVM/Android tests,
+  f.1 regression/Binder/Keystore/probe/upgrade proof; update protocol/state/security
+  docs and source CODEMAP. Audit actual tracked+staged contents/new dependencies/
+  APK before a normal f.2 commit/push/fetch verification.
+- Only after qualified f.2 proceed g Core enrollment/resume, h actual Agent+FGS,
+  i read-only observer, j direct network/end-to-end/fresh full regression and new
+  debug candidate. None of g–j was started or accepted here. No Native Node,
+  enrollment, replica, FGS, observer/direct LAN or phone acceptance is claimed.
+  WritableDR/AndroidRaft/GC/failover remain forbidden.
+
+The current public APK stays0.2.0-foundation/ab1b2da3...; f.1 source is durable on
+GitHub, f.2 source durability depends on recovering the original dirty workspace.
+This receipt records the exact limit instead of claiming all unfinished source
+was published or tested.
