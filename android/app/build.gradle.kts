@@ -7,8 +7,8 @@ android {
         minSdk = 26
         targetSdk = 35
         ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
-        versionCode = 4
-        versionName = "0.4.0-native-node-candidate"
+        versionCode = 5
+        versionName = "0.4.1-native-node-candidate"
         testInstrumentationRunner = "org.asc.foundation.UpgradeQualificationRunner"
     }
     buildFeatures { aidl = true; buildConfig = true }

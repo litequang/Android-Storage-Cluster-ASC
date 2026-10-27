@@ -786,6 +786,12 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
 
 
 ## Phase4 network-only Dashboard PWA
+
+- docs/PHASE4-WEB-APP.md: Controller/CA/login/PWA/LAN/no-offline-write and safe
+  upgrade/rollback operator guide; Linux install proof is not ChromeAndroid proof.
+- NativeCandidateUpgradeTest.kt: separate exact APK4->5 retained app/context and
+  committed bytes test, repeated after actual downgrade refusal. Keeps historical
+  NativeUpgradeDataTest literal APK4 contract unchanged.
 - asc/demo/dashboard/assets.py: one fixed public HTTP/package asset allowlist.
 - dashboard/web/manifest.webmanifest,service-worker.js,icon-{192,512}.png: standalone
   browser metadata/network-only navigation, never caches API/file/owner data.

@@ -1663,3 +1663,41 @@ gateway tests PASS31.711s including all mutations denied/read-only recovery.
 Runtime/PWA source changed, so old383 is historical only for this NEW source.
 Next matching APK/package +retained-state upgrade targeted gates, then fresh final
 full regression once. No new candidate or phone/production acceptance yet.
+
+### Matching native5 targeted checkpoint — 2026-10-27
+
+Web/PWA source a6bbced normal-pushed/fetch verified. Native candidate versionCode5,
+0.4.1-native-node-candidate, original signer preserved. API30 exact installed APK4
+SHA7c4ba649... verified before normal install-r; UID unchanged. New separate
+NativeCandidateUpgradeTest reads original committed bytes/context after4->5;
+historical NativeUpgradeDataTest remains unchanged. Actual selected Android9PASS
+66.704s; normal APK4 downgrade refused INSTALL_FAILED_VERSION_DOWNGRADE; additional
+retained bytes/identity test1PASS8.674s. No uninstall/clear/-d/new identity.
+First private harness stopped before installation because package-service readiness
+was insufficient; retained log, retried same VM/state, no product assertion removed.
+
+Fresh JVM17PASS0skip after task-specific --rerun; Go11top-level tests (12 nested
+subcases),vet,module verification and Linuxamd64/Windowsamd64/Androidarm64 builds
+PASS. Androidarm64 is BUILD ONLY. APK inventory120canonical modules,0findings,
+same signer/permissions; SHA2d97cc2f987bc1d4805264b66b5f49df984d943581ab7c2309fe278ce443a2a1.
+
+Additional actual Linux Chromium CDP PWA install ->launch(targetID) ->uninstall
+PASS in isolated normal profile with verified HTTPS/public CA and private XDG.
+Two earlier diagnostic attempts failed on protocol-result assumptions (unknown
+manifest before install; getOsAppState has no displayMode); no fake browser events,
+TLS bypass or weakened product tests. Android PWA installation NOT TESTED.
+Current committed browser test proves installability/active worker/no cache and
+keeps actual install labelled NOT TESTED for that suite; independent install proof
+is separate. Guide: PHASE4-WEB-APP.md.
+
+Matching Controller source139files deterministic rebuild/exact-source verification
+PASS, SHA c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc,
+releaseID c8315bdb08973c4c8cca422a4aa8337362fedebb61bc1a61a721097fa37b9f55.
+Private stopped synthetic host state copied+hash-verified before source-only staging;
+old source e69 preserved, state bytes unchanged. This is not installed-launcher
+upgrade proof. Matching APK5+new host package retained E2E and fresh full Python
+are RUNNING, no final acceptance/publication claimed. Frozen305inputs include all
+current source/tests/project and old archives; no source mutation while full runs.
+Private evidence /workspace/work/phase4-pwa-native5 and phase4-pwa-final. Preserve
+all VM state and original signer. Full Phase4 remains NOT ACCEPTED pending genuine
+platform/owner gates; no Phase5, writerDR or Android Raft/GC/failover activated.
