@@ -96,7 +96,12 @@
   ],
   "authority_budgets_unchanged": true,
   "failed_trials_removed": true,
-  "publication": "PENDING normal feature Git push and separate fresh remote artifact download",
+  "publication": {
+    "state": "PASS",
+    "artifact_commit": "ed1749b5d05dfc886ebdd8027b44df338dcfadcb",
+    "receipt": "phase4-web-native5-publication.json",
+    "qualification": "Debug snapshot integrity/availability only; full regression BLOCKED"
+  },
   "limits": [
     "No full regression acceptance",
     "Final5 API30 x86_64 only; API35 NOT TESTED/cold BLOCKED",

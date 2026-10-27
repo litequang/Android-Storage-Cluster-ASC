@@ -1944,3 +1944,26 @@ unchanged; new distinct APK5/Controller names only. Snapshot manifest explicitly
 links all failed gates. Separate fresh GitHub download SHA verification follows.
 Full Phase4/4.2 NOT ACCEPTED, Android final5/35/ARM64/phones/physical2domains/LAN/
 OEM/Doze/ChromeAndroid PWA NOT TESTED or BLOCKED; writableDR/GC/Raft/failover locked.
+
+
+### Internal debug snapshot GitHub availability verified
+
+Artifact checkpoint ed1749b5d05dfc886ebdd8027b44df338dcfadcb normal-pushed,
+HEAD=FETCH_HEAD=advertised remote. Working tree clean after artifact commit.
+Separate fresh bare GitHub clone (not a local copy) downloaded both actual binary
+blobs and SHA sidecars at2026-10-27 15:00:01UTC. APK39,000,831bytes SHA
+`aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5`;
+Controller/PWA247,919bytes SHA
+`c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc`.
+Both match audited local bytes/sidecars. Normal Git artifacts only; no GitHub
+Release API success is claimed. Public phase4-web-native5-publication.json records
+actual artifact commit; this subsequent reporting commit changes no artifact.
+
+Security review: all401tracked/index files,0nonignoreduntracked at artifact stage,
+0credential/private-key/path findings; APK and unpacked package separately audited.
+Original debug signer0600, published old binaries/archives and retained Native
+state left intact. No new Android/phone/ADB operation or runtime test fabricated.
+These are INTERNAL DEBUG REVIEW snapshots; full regression/Phase4 still NOT
+ACCEPTED. Continue original GC network fault investigation before another full;
+44local guards/remote checksum/earlier native proofs do not waive it. Final API35/
+physical Android/ARM64/physical2domains/LAN/OEM/Doze/PWA phone gates remain missing.

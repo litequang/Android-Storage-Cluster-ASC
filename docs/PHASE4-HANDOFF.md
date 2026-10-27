@@ -9,8 +9,10 @@ Full cuối184/1ERROR1537.737s; GC lost-ACK/replay chưa đạt. Hai bản thử
 Gói dưới đây là snapshot debug nội bộ, **không khuyến nghị như bản đã nghiệm thu**.
 Giữ các bản đã công bố trước; chỉ chủ dự án tự thử sandbox/thiết bị được phép sau
 khi đọc giới hạn. Các bước dưới đây là hướng dẫn, không phải proof phone đã PASS.
-Trạng thái push/download: xem receipt publication đi kèm; checksum local một mình
-không được gọi là remote verification. Không dùng snapshot để bật GC/Raft/writerDR.
+Artifact commit `ed1749b5d05dfc886ebdd8027b44df338dcfadcb` đã normal-push và
+fresh fetch/ls-remote khớp. Clone GitHub riêng tải lại APK/archive +SHA lúc
+2026-10-27 15:00:01UTC: cả hai khớp; [publication receipt](../qualification/phase4-web-native5-publication.json).
+Đây chỉ là xác minh artifact debug, không làm full regression thành PASS. Không dùng snapshot để bật GC/Raft/writerDR.
 
 ## Gói đúng vai trò
 

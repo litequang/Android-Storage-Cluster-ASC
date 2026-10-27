@@ -54,7 +54,7 @@
     "retention/history/backup/last-readable-copy guards"
   ],
   "native_pwa_scoped_receipt": "phase4-web-native5-targeted.json",
-  "new_artifact_publication": "INTERNAL DEBUG REVIEW SNAPSHOT ONLY; full regression remains BLOCKED, no qualified release; separate remote-download proof pending",
+  "new_artifact_publication": "Internal debug review snapshot ed1749b5d05dfc886ebdd8027b44df338dcfadcb normal-pushed and separately downloaded SHA verified; full regression BLOCKED, no qualified release",
   "full_phase4": "NOT ACCEPTED",
   "next_steps": [
     "Investigate original GC authorization latency/proof drift on the 1024-event workload; compare controlled resource envelope and collect per-stage timing, no budget/assertion relaxation. Both failed experiments removed.",

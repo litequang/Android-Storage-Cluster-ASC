@@ -21,7 +21,7 @@ Snapshot APK5/source chỉ là debug review, không qualified release.
 |Downgrade|Exact APK4 refused, original identity/bytes1PASS10.738s; không uninstall/clear/-d|
 |Go|11top-level/12nested PASS; vet/modules/Linuxamd64 +Windowsamd64 +Androidarm64 builds PASS; source không đổi|
 |Package audit|APK120Core modules/original signer; source139files/rebuild deterministic/exact bytes,0secret findings|
-|Publication|Debug review snapshot only; separate remote-download receipt follows, no regression qualification|
+|Publication|Debug review snapshot ed1749b; separate GitHub download/SHA PASS, không nghiệm thu regression|
 
 APK SHA `aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5`,
 39,000,831bytes. Host SHA `c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc`.

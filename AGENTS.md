@@ -31,7 +31,9 @@ API30 native28+foreign1/JVM17/strict normal network2/downgrade-refusal readback1
 PWA8+Coregateway3 and actual Linux Chromium install/launch proof PASS. Fresh44local
 GC/storage guards PASS14.068s after trials removed; NOT network fault acceptance.
 APK5 aec65c2c/source c726bd36 are INTERNAL DEBUG REVIEW snapshots with exact source,
-original signer and secret audits, not a qualified release. Read current
+original signer and secret audits, not a qualified release. Artifact ed1749b
+normal-pushed/fetch/ls-remote matched; separate GitHub download SHA PASS15:00:01UTC,
+receipt qualification/phase4-web-native5-publication.json. Read current
 PHASE4-STATUS/HANDOFF/4.2PROGRESS/ACCEPTANCE, qualification/phase4-closure-gc-
 investigation.json and phase4-web-native5-internal-snapshot.json for current
 publication status. Preserve original published artifacts and private signer/AVD/
