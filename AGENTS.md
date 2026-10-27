@@ -14,6 +14,17 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-27
+LATEST RESUME NOTE: full4 on16c0717 finished184tests/1ERROR1537.737s,
+source313unchanged; NOT384PASS. After real unlink/lost successful TLS ACK,
+GC owner replay returned stale_gc_proof. Test-only bounded same-job retry also
+FAILED1test1094.769s with gc_execution_unconfirmed; it is NOT qualified.
+Storage routing-hint TTL2->10 trial is currently RUNNING/UNQUALIFIED, with that
+retry helper dirty. Do not package those experiments, increase GC budgets, mark
+rejections as success or reuse native/PWA targeted PASS as full qualification.
+Read qualification/phase4-closure-gc-investigation.json and latest PROGRESS first.
+Preserve dirty drafts/new APK5/source artifacts and private original signer/AVD.
+Earlier RUNNING/full-pending lines below are historical, not a completed PASS.
+
 Owner requests finishing Phase4. Same feature branch, no whole merges/phone access.
 Read latest PHASE4-2 PROGRESS/ACCEPTANCE and PHASE4-STATUS/HANDOFF after ordered
 reads. PWA source a6bbced and native5 upgrade checkpoint2b718d3 pushed/verified;

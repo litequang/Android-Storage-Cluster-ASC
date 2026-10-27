@@ -1,0 +1,57 @@
+{
+  "state": "BLOCKED_FULL_REGRESSION_NOT_ACCEPTED",
+  "last_committed_source": "16c0717c74c87c08a82b2bb44eef138ba100337f",
+  "fresh_full": {
+    "source_commit": "16c0717c74c87c08a82b2bb44eef138ba100337f",
+    "started_utc": "2026-10-27 13:50:50 UTC",
+    "finished_utc": "2026-10-27 14:16:28 UTC",
+    "exit_code": 1,
+    "source_unchanged": true,
+    "summary": [
+      "Ran 184 tests in 1537.737s",
+      "FAILED (errors=1)"
+    ]
+  },
+  "completed_fault_banners": 43,
+  "failed_gate": {
+    "test": "tests.test_gc_faults.GCClusterTests.test_real_quorum_scope_takeover_and_default_windows_lock",
+    "stage": "After proven actual Linux synthetic unlink and dropped successful TLS ACK, next same-job execution rejected stale_gc_proof",
+    "error": "HTTP409 stale_gc_proof",
+    "physical_gc_default": "LOCKED; only isolated synthetic fixture issued an executor"
+  },
+  "bounded_owner_retry_experiment": {
+    "state": "FAIL",
+    "test_count": 1,
+    "seconds": 1094.769,
+    "error": "HTTP503 gc_execution_unconfirmed after five bounded retries of same job",
+    "qualified_source_change": false
+  },
+  "routing_hint_experiment": {
+    "state": "RUNNING_NOT_QUALIFIED",
+    "change": "Storage Discovery routing-hint TTL2->10; no cached authority or changed GC budget",
+    "log_private": "/workspace/work/phase4-pwa-release-final/gc-routing-hint-targeted.log"
+  },
+  "observed_limits": {
+    "cpu_quota_cores": 2,
+    "owned_android_guest": "stopped before targeted/full; original signer and state preserved",
+    "controller_observation": "metadata preparation under Runtime lock; storage authorization waits on routing/quorum; exact root cause not yet proven",
+    "diagnostics_scope": "controlled synthetic fault fixture only, no production"
+  },
+  "unchanged_requirements": [
+    "10s final network authority budget",
+    "250ms local final-unlink window",
+    "fresh TLS pin, nonce and actual-term quorum receipt",
+    "physical survivor readback SHA and independent logical domains",
+    "retention/history/backup/last-readable-copy guards"
+  ],
+  "native_pwa_scoped_receipt": "phase4-web-native5-targeted.json",
+  "new_artifact_publication": "PENDING; no final regression qualification",
+  "full_phase4": "NOT ACCEPTED",
+  "next_steps": [
+    "Resolve or explicitly resource-qualify the GC fault gate without relaxing guards or dropping assertions",
+    "Run fresh full384 only after failed targeted gate passes",
+    "Audit exact APK/source package and preserve original signer/state",
+    "Normal feature push then independent GitHub download checksum; no force/whole merge",
+    "Owner physical Android/LAN/OEM gates remain NOT TESTED"
+  ]
+}

@@ -1871,3 +1871,39 @@ neither failed full attempt nor targeted retry is a full regression PASS. Next
 fresh full384required from this checkpoint, no active owned Android/Gradle. GIT
 candidate artifacts still staged/unpublished; full Phase4 NOT ACCEPTED, physical/
 ARM64/35/OEM gates not waived. Original VM/private signer stay private/intact.
+
+
+### Full4 GC lost-ACK blocker / bounded recovery experiment — ongoing
+
+Remote16c0717 verified again on resume; dirty drafts, APK5/source staging and
+original private signer/AVD retained. No reset/clean/identity recreation.
+Fresh full4 on16c0717 ended184tests/1ERROR1537.737s, source313unchanged,43fault
+banners before failfast. This is NOT384PASS. GCClusterTests had already proven
+actual isolated unlink and lost successful TLS ACK; the next same-job execute
+returned HTTP409 stale_gc_proof. No rejection was counted as completion.
+
+Uncommitted test-only helper tried five bounded retries of the SAME job on
+stale_gc_proof/gc_execution_unconfirmed/precondition_conflict, matching the
+existing Linux physical recovery fixture. It still FAILED1test1094.769s with
+HTTP503 gc_execution_unconfirmed; not qualified and not a new accepted contract.
+A small production routing experiment is RUNNING, NOT QUALIFIED: Storage's pinned
+Discovery address-hint TTL2->10, with every nonce/term/quorum authorization still
+fresh and all errors subject to existing invalidation. Do NOT publish/package
+these two experimental edits or assume they fix the gate. Preserve private patch
+if they must be removed; no arbitrary reset or lost user work.
+
+Observed controlled-fixture stacks show Runtime-lock metadata preparation and
+Storage introspection/discovery waits. Cloud cgroup grants2CPU; owned API30 guest
+is stopped and no Gradle runs concurrently. This is diagnostic evidence, not proof
+of a sole root cause or permission to relax the10s network/250ms local fence.
+Original assertions, physical readbacks, last-copy/pin/quorum protections remain.
+Private logs: /workspace/work/phase4-pwa-release-final/{full-python.log,
+gc-lost-ack-owner-retry-targeted.log,gc-routing-hint-targeted.log}.
+Sanitized receipt: qualification/phase4-closure-gc-investigation.json.
+
+Native source3914b99/APKaec65c2c and hostc726bd36 scoped targeted proofs remain
+valid for their exact source. New artifacts remain UNPUBLISHED/PENDING full/package
+qualification. No Phase4/4.2 acceptance or Phase5 advance. Continue the current
+GC trial, record exact outcome, retain only safely qualified changes, then rerun
+fresh full only after targeted failure resolves. Physical Android/ARM64/LAN/OEM/
+API35-final5 gates remain NOT TESTED/BLOCKED, writableDR remains BLOCKED.
