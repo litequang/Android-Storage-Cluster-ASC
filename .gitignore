@@ -168,3 +168,7 @@ local.properties
 
 # Explicit reviewed internal native foundation artifact only.
 !/android-artifacts/asc-native-foundation-0.2.0-debug.apk
+
+# Reviewed Phase4 Native Node internal artifacts, no private signer/state.
+!/android-artifacts/asc-native-node-0.4.0-internal-debug.apk
+!/candidates/asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz
