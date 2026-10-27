@@ -27,15 +27,24 @@
     "qualified_source_change": false
   },
   "routing_hint_experiment": {
-    "state": "RUNNING_NOT_QUALIFIED",
-    "change": "Storage Discovery routing-hint TTL2->10; no cached authority or changed GC budget",
-    "log_private": "/workspace/work/phase4-pwa-release-final/gc-routing-hint-targeted.log"
+    "state": "FAIL_NOT_RETAINED",
+    "test_count": 1,
+    "seconds": 783.307,
+    "failure": "Actual unlink/lost-successful-ACK marker remained armed after the original five attempts; rejection is not fault execution",
+    "live_denials": [
+      "gc_authority_budget_expired",
+      "authorization_unavailable"
+    ],
+    "change": "Trial TTL2->10 and unqualified bounded owner retry both removed exactly; canonical Core/test files match16c0717",
+    "private_patch": "/workspace/work/phase4-closure-blocked-handoff/unqualified-gc-experiments.patch"
   },
   "observed_limits": {
     "cpu_quota_cores": 2,
     "owned_android_guest": "stopped before targeted/full; original signer and state preserved",
     "controller_observation": "metadata preparation under Runtime lock; storage authorization waits on routing/quorum; exact root cause not yet proven",
-    "diagnostics_scope": "controlled synthetic fault fixture only, no production"
+    "diagnostics_scope": "controlled synthetic fault fixture only, no production",
+    "controller_projection_bytes_observed": 2409034,
+    "retained_catalog_events_observed": 1024
   },
   "unchanged_requirements": [
     "10s final network authority budget",
@@ -45,13 +54,21 @@
     "retention/history/backup/last-readable-copy guards"
   ],
   "native_pwa_scoped_receipt": "phase4-web-native5-targeted.json",
-  "new_artifact_publication": "PENDING; no final regression qualification",
+  "new_artifact_publication": "INTERNAL DEBUG REVIEW SNAPSHOT ONLY; full regression remains BLOCKED, no qualified release; separate remote-download proof pending",
   "full_phase4": "NOT ACCEPTED",
   "next_steps": [
-    "Resolve or explicitly resource-qualify the GC fault gate without relaxing guards or dropping assertions",
+    "Investigate original GC authorization latency/proof drift on the 1024-event workload; compare controlled resource envelope and collect per-stage timing, no budget/assertion relaxation. Both failed experiments removed.",
     "Run fresh full384 only after failed targeted gate passes",
     "Audit exact APK/source package and preserve original signer/state",
     "Normal feature push then independent GitHub download checksum; no force/whole merge",
     "Owner physical Android/LAN/OEM gates remain NOT TESTED"
-  ]
+  ],
+  "restored_safety_targeted": {
+    "state": "PASS",
+    "tests": 44,
+    "skips": 0,
+    "seconds": 14.068,
+    "command": "python -B -m unittest -v tests.test_gc_authorization tests.test_gc_sandbox tests.test_storage",
+    "scope": "Fast guards/storage tests only; does NOT replace the failed actual network GC fault gate"
+  }
 }

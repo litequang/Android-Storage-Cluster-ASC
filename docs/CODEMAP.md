@@ -814,3 +814,12 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
 - web/app.js: browser install event/prompt UX, no Node/native lifecycle control.
 - tests/test_demo_dashboard +browser: real trusted TLS/PWA criteria/active SW/empty
   CacheStorage before and after full file/logout/offline workflow; old assertions kept.
+
+
+### Phase4 closure diagnostics / artifact ownership
+- qualification/phase4-closure-gc-investigation.json records full4/failed trials,
+  unchanged GC budgets and next failed-target-first work; no Core fix claimed.
+- qualification/phase4-web-native5-internal-snapshot.json plus distinct APK5/source
+  artifacts preserve matching scoped Android/PWA proofs and exact-source audits.
+  Debug review only, full regression BLOCKED; never use artifact availability as
+  runtime/full-phase acceptance. PHASE4-STATUS/HANDOFF own current operator state.

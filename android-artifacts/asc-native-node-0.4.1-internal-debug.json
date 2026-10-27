@@ -1,0 +1,32 @@
+{
+  "sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+  "bytes": 39000831,
+  "application_id": "org.asc.foundation",
+  "version_code": 5,
+  "version_name": "0.4.1-native-node-candidate",
+  "min_sdk": 26,
+  "target_sdk": 35,
+  "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "abis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "permissions": [
+    "org.asc.foundation.permission.LOCAL_ENGINE",
+    "android.permission.INTERNET",
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+    "android.permission.CHANGE_NETWORK_STATE",
+    "android.permission.POST_NOTIFICATIONS"
+  ],
+  "canonical_core_modules": 120,
+  "inventory_findings": [],
+  "scope": "internal debug inventory/signature only; no migration or phone acceptance",
+  "qualification": "TARGETED_ONLY_FULL_REGRESSION_BLOCKED",
+  "release_status": "INTERNAL_DEBUG_REVIEW_SNAPSHOT_NOT_ACCEPTED",
+  "targeted_receipt": "../qualification/phase4-web-native5-targeted.json",
+  "blocker_receipt": "../qualification/phase4-closure-gc-investigation.json",
+  "physical_device": "NOT TESTED",
+  "upgrade_scope": "Published4 ->interim5 ->final5 tested; direct exact published4 ->final5 NOT TESTED; original signer/state preserved"
+}

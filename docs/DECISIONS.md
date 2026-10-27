@@ -316,3 +316,21 @@ no persistent offline catalog/cache, writes, credential store or app/Termux proc
 control. Install UX is consent-based, and CDP installability is separate from
 actual user/Android installation. Source package uses the same fixed asset allowlist
 as HTTP, preventing missing assets or accidental private frontend files.
+
+## ADR072 — Native accepted transport owns deadline cancellation (2026-10-27)
+
+The Android platform adapter retains only each TCP socket it accepted on an
+approved private endpoint, layered with the existing server-mode JSSE context.
+Core receives TLS streams only. Close the exact transport before TLS close to
+interrupt blocked Conscrypt I/O; concurrent closers wait for completed cleanup
+with a bounded failure path. A started-close flag is insufficient evidence that
+the active connection slot has been released. No arbitrary fd/PID/process access,
+plaintext dispatch, identity/schema change or certificate/pinning fallback.
+
+SO_REUSEADDR permits restarting after actual TCP TIME_WAIT; never SO_REUSEPORT.
+Actual Android rebind and concurrent-owner rejection tests distinguish these
+semantics. Existing nonreading-peer read/write deadline, wrong-pin and binary SHA
+tests remain unchanged. API30 x86_64 targeted28+foreign1 and normal Node/catalog
+network/process-death qualification pass; final APK5/API35 and phones are not
+inferred from historical APK4 evidence. See PHASE4-2-PROGRESS for failed attempts,
+source3914b99 and the fixture-only physical-readiness qualification2131e83.

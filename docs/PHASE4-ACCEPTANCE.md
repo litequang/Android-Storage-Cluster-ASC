@@ -1,5 +1,12 @@
 # Phase 4.0 acceptance — Linux synthetic foundation
 
+Current full Phase4 continuation: see PHASE4-STATUS/HANDOFF and
+PHASE4-2-ACCEPTANCE. Native5/API30 Node and shared Web/PWA now have targeted
+qualification; latest full FAILED184/1ERROR and regression is BLOCKED. Audited
+APK5/PWA artifacts are internal debug review snapshots, not qualified release. This original4.0 receipt below is
+historical, not a claim that native/PWA remain unimplemented or all Phase4 is
+accepted. Owner phone/ARM64/LAN/OEM and final5/API35 gates remain outstanding.
+
 **ACCEPTED for the bounded Phase 4.0 Linux synthetic scope below.**
 Android/Windows runtime and production are NOT ACCEPTED. Full writable disaster
 recovery remains NOT ACCEPTED / BLOCKED. Phase 4 application/migration work is

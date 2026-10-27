@@ -1,6 +1,6 @@
-# Native Foundation operations — internal debug only
+# Native Node operations — internal debug only
 
-Current j.2 builds internal versionCode4 / 0.4.0-native-node-candidate with real
+Current candidate builds internal versionCode5 / 0.4.1-native-node-candidate with real
 scoped emulator Node/FGS/direct NAT, Catalog replicas and separate Core observation.
 See current PHASE4-2-ACCEPTANCE/PROGRESS for exact candidate/hash/test scope. The
 Cụm page adds Mở File Manager web: enter the owner's existing Demo Dashboard root
@@ -9,6 +9,11 @@ browser; trust the independently verified public CA and use a fresh Demo owner
 login code. No code/token in URL, no certificate-warning bypass. Gateway Core
 login remains separate/read-only. Native file picker, multiuser accounts,
 automatic hotspot/Wi-Fi Direct and Cloudflare remain unimplemented.
+
+Shared network-only Dashboard PWA/install guidance: PHASE4-WEB-APP. Final5 has
+actual API30 transport/restart/nonreading-peer/retained catalog qualification;
+historical API35 APK4 proof does not qualify final5 on35. New artifact publication
+awaits final full gate: PHASE4-STATUS/HANDOFF own the current download/result.
 
 The original foundation artifact/version and unsupported-operation text below
 is HISTORICAL, not the current Node capability. Do not replace Termux state or

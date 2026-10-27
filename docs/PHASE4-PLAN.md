@@ -109,3 +109,31 @@ remains BLOCKED. Linux synthetic only; actual Android/real media/CA UX/power-cut
 not accepted. Stop all local services, NEW complete private state+approved-volume
 backup/readback, compatible code selection only; preserve current state/data/
 identities/keys and external backups/staging. Never restore old DB over new bytes.
+## Current Phase4 closure track — 2026-10-27
+
+This document's original4.0 audit below stays historical. The current continuation
+reuses that Core-first integration plus completed4.1 private bridge/read-only
+observer and4.2 native Node work; no whole Demo merge or second Catalog/Engine.
+
+- Native5 candidate: original signer, Core Python Engine/Agent, encrypted context,
+  actual TLS/enrollment, controlled Node/FGS and UI/observer. Final transport API30
+  targeted28+foreign1, downgrade refusal/readback and normal retained network2PASS.
+- Web/PWA: fixed manifest/icons/network-only worker and install UI on the shared
+  Dashboard. Real Chromium criteria and independent install/launch/uninstall PASS
+  on Linux; no cached catalog/files/offline writes or browser process bridge.
+- Final gates: preserve failed full attempts; strengthen backup fault readiness
+  with actual two-domain SHA proofs before cohost loss, not relaxed Core authority.
+  Full4 on16c0717 FAILED184/1ERROR; resolve original GC target before new full384.
+  Preserve archives/APK4. Keep APK5/exact Controller as audited INTERNAL DEBUG
+  REVIEW snapshot with known failed gates, never label qualified release. Verify
+  remote bytes independently. A qualified release still requires full PASS.
+- Scope remains internal candidate. Native APK is a Node, Controller remains
+  QuickStart/Termux or Linux. No native file backend, Termux-state adoption, Android
+  voters/GC/failover/writerDR or Phase5 remote access. API30 emulator is not ARM64/
+  physical-domain/LAN/OEM proof; API35 fresh cold remains blocked and new5 transport
+  on35 NOT TESTED. Full Phase4 acceptance still requires owner device gates.
+
+PHASE4-STATUS/HANDOFF and PHASE4-2-PROGRESS/ACCEPTANCE own the latest scoped result;
+PHASE4-WEB-APP documents browser use. Resolve current GC blocker/full qualification, then
+owner-controlled ZTE/Bphone pilot before broader acceptance or Phase5. No SDK/
+state/guard workaround to mark missing phone evidence PASS.

@@ -14,43 +14,31 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-27
-LATEST RESUME NOTE: full4 on16c0717 finished184tests/1ERROR1537.737s,
-source313unchanged; NOT384PASS. After real unlink/lost successful TLS ACK,
-GC owner replay returned stale_gc_proof. Test-only bounded same-job retry also
-FAILED1test1094.769s with gc_execution_unconfirmed; it is NOT qualified.
-Storage routing-hint TTL2->10 trial is currently RUNNING/UNQUALIFIED, with that
-retry helper dirty. Do not package those experiments, increase GC budgets, mark
-rejections as success or reuse native/PWA targeted PASS as full qualification.
-Read qualification/phase4-closure-gc-investigation.json and latest PROGRESS first.
-Preserve dirty drafts/new APK5/source artifacts and private original signer/AVD.
-Earlier RUNNING/full-pending lines below are historical, not a completed PASS.
+Owner asks finish Phase4. No whole merges/phone access or Phase5 advance.
+LATEST: full4 source16c0717 finished184tests/1ERROR1537.737s,313inputs unchanged;
+NOT384PASS. GC owner replay after proven unlink/lostACK returned stale_gc_proof.
+Bounded same-job retry FAILED1test1094.769s gc_execution_unconfirmed; routing-hint
+TTL2->10 trial FAILED1test783.307s before actual lostACK fault could occur. Both
+unqualified edits REMOVED EXACTLY; asc/tests/android match committed source. Private
+patch/drafts retained under /workspace/work/phase4-closure-blocked-handoff. Never
+reapply or raise10s/250ms budgets just to get PASS. Root cause not established:
+2CPU,1024events/~2.4MiB projection, observed Runtime-lock preparation and authority
+wait/expiry. Next: focused GC per-stage profiling/resource qualification, original
+failed target first, NEW full384 only after it passes. No blind full reruns.
 
-Owner requests finishing Phase4. Same feature branch, no whole merges/phone access.
-Read latest PHASE4-2 PROGRESS/ACCEPTANCE and PHASE4-STATUS/HANDOFF after ordered
-reads. PWA source a6bbced and native5 upgrade checkpoint2b718d3 pushed/verified;
-network-only PWA reuses Dashboard, actual Chromium install/launch proof is Linux.
-Original APK4/Controller remain published and intact. NEW APK5/139file PWA source
-candidate not yet published/accepted; fresh full Core/Python/Web run IN PROGRESS.
-Do not reuse old383 to qualify changed PWA. During final Native E2E found restart
-bug; actual Android TCP regression reproduces EADDRINUSE with reuseAddress=false.
-NativeTLSListener fix enables SO_REUSEADDR (never REUSEPORT), privately owned raw
-transport cancellation and bounded close completion. Fresh28+foreign1 Android and
-JVM17 PASS; final strict normal E2E2 +downgrade refusal/old bytes1 PASS. Fresh
-full pending: first384run2errors; isolated two failures PASS without Core changes.
-Second full stopped after backup fixture race FAIL, not counted384completed. Added
-actual2domain SHA precondition before scheduled-backup cohost loss; all12original
-faults targeted PASS146.550s, no Core/assertion/lease/deadline relaxation. Next fresh
-full required: last failfast186/1FAIL2003.503s (not384PASS), crash marker not
-consumed after actual denials. Added fresh actual3Storage-probe readiness after
-heal/restart; same45s/five attempts/authority budgets, original5faults targeted
-PASS535.314s. Next fresh384, owned VM paused/no Gradle contention. First two prepatch
-matching-package host attempts FAILED; preserve outcomes. Check current progress.
-Python/Web/Go inputs stay frozen; one Kotlin source changes after freeze plus
-new Android-only test, so never claim entire305freeze unchanged. Independently
-qualify native delta. API30 retained state/original signer must stay intact.
-API35 cold BLOCKED; physical/ARM64/LAN/OEM gates NOT TESTED, full Phase4 NOT ACCEPTED.
-No Phase5, writerDR, Android voter/GC/failover or Termux migration. Historical
-paragraphs/qualification receipts below do not override this latest pointer.
+Native/PWA source a6bbced/2b718d3/3914b99 and fixture2131e83/16c0717 pushed. Final
+API30 native28+foreign1/JVM17/strict normal network2/downgrade-refusal readback1 PASS;
+PWA8+Coregateway3 and actual Linux Chromium install/launch proof PASS. Fresh44local
+GC/storage guards PASS14.068s after trials removed; NOT network fault acceptance.
+APK5 aec65c2c/source c726bd36 are INTERNAL DEBUG REVIEW snapshots with exact source,
+original signer and secret audits, not a qualified release. Read current
+PHASE4-STATUS/HANDOFF/4.2PROGRESS/ACCEPTANCE, qualification/phase4-closure-gc-
+investigation.json and phase4-web-native5-internal-snapshot.json for current
+publication status. Preserve original published artifacts and private signer/AVD/
+identity/Keystore/bytes. Actual tested upgrade4->interim5->final5, NOT exact direct
+published4->final5. API35-final5/ARM64/phones/physical LAN/2domains/OEM/Doze NOT TESTED
+or BLOCKED. Full Phase4/4.2 NOT ACCEPTED. No recovery writer/Android voter/GC/failover/
+Termux migration/Cloudflare. Historical PASS receipts below keep old source scope.
 
 ## Non-negotiable user rules
 - M51 is production web hosting. Codex has SOURCE ACCESS ONLY: no production DB/logs, live file inspection, edits or SSH. No modification of AMH, MariaDB, ports, service management, existing Termux or Termux:Boot.

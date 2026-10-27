@@ -1907,3 +1907,40 @@ qualification. No Phase4/4.2 acceptance or Phase5 advance. Continue the current
 GC trial, record exact outcome, retain only safely qualified changes, then rerun
 fresh full only after targeted failure resolves. Physical Android/ARM64/LAN/OEM/
 API35-final5 gates remain NOT TESTED/BLOCKED, writableDR remains BLOCKED.
+
+
+### GC trial closed FAIL; preserve targeted-only debug snapshot
+
+36d65160f9e0187385b49e44a05e25895d75781f normal-pushed/fetch/ls-remote matched.
+Routing-hint trial ended1FAIL783.307s: original actual-unlink/lost-successful-ACK
+marker still armed after all five attempts; no physical fault execution was
+claimed. Live sanitized responses included gc_authority_budget_expired and
+authorization_unavailable. Both unqualified edits (TTL and bounded owner helper)
+removed EXACTLY, asc/tests/android match committed source; private patch and all
+dirty drafts preserved under /workspace/work/phase4-closure-blocked-handoff.
+No arbitrary reset/clean, user changes lost, GC deadline/assertion relaxation or
+proxy/CA change. No source fix is claimed; root cause remains open.
+
+Fresh guard/storage target:44PASS0skip14.068s (test_gc_authorization,
+test_gc_sandbox,test_storage). This DOES NOT replace failed actual network GC
+qualification. No blind full rerun while that original failed gate remains open.
+Current observations:2CPU,1024retained events/~2.4MiB projection, Runtime-lock
+metadata work and pending authority; collect bounded per-stage timing/resource
+profile next, preserving all required physical byte proofs and actual quorum.
+
+Exact private APK5 and Controller/PWA source already have scoped native28+
+foreign1/JVM17/normal network2/PWA+gateway11 proofs on matching bytes. Re-audited
+APK120canonical modules/permissions/original signer, no findings. Rebuilt archive
+byte-for-byte deterministic against restored current source, strict manifest139
+files/SHA and unpacked secrets audit PASS. Original private signer0600 retained,
+no ADB/device/state mutation this checkpoint. Go prior gates reused only because
+Go inputs unchanged. Historical4->interim5->final5 actual upgrade retained; exact
+direct4->final5 NOT TESTED. All earlier failed attempts preserved, not recounted.
+
+Preserve these as INTERNAL DEBUG REVIEW SNAPSHOTS on Git, not a qualified release,
+source-ready claim or Phase4 acceptance. This artifact-archival checkpoint does
+not advance timeline past the full regression blocker. Old public APK4/archives
+unchanged; new distinct APK5/Controller names only. Snapshot manifest explicitly
+links all failed gates. Separate fresh GitHub download SHA verification follows.
+Full Phase4/4.2 NOT ACCEPTED, Android final5/35/ARM64/phones/physical2domains/LAN/
+OEM/Doze/ChromeAndroid PWA NOT TESTED or BLOCKED; writableDR/GC/Raft/failover locked.

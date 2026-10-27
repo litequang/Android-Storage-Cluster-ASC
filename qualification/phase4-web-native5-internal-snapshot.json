@@ -1,0 +1,107 @@
+{
+  "state": "INTERNAL_DEBUG_SNAPSHOT_FULL_REGRESSION_BLOCKED",
+  "full_phase4": "NOT ACCEPTED",
+  "native_pwa_proof": "phase4-web-native5-targeted.json",
+  "gc_blocker": "phase4-closure-gc-investigation.json",
+  "canonical_source": "3914b99ff88cce898a59c980e168f839a8e81fd0",
+  "fixture_only_updates": [
+    "2131e83a709f05b53d6af5391f182087f75d8c31",
+    "16c0717c74c87c08a82b2bb44eef138ba100337f"
+  ],
+  "apk_audit": {
+    "sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "bytes": 39000831,
+    "application_id": "org.asc.foundation",
+    "version_code": 5,
+    "version_name": "0.4.1-native-node-candidate",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+      "android.permission.CHANGE_NETWORK_STATE",
+      "android.permission.POST_NOTIFICATIONS"
+    ],
+    "canonical_core_modules": 120,
+    "inventory_findings": [],
+    "scope": "internal debug inventory/signature only; no migration or phone acceptance",
+    "qualification": "TARGETED_ONLY_FULL_REGRESSION_BLOCKED",
+    "release_status": "INTERNAL_DEBUG_REVIEW_SNAPSHOT_NOT_ACCEPTED",
+    "targeted_receipt": "../qualification/phase4-web-native5-targeted.json",
+    "blocker_receipt": "../qualification/phase4-closure-gc-investigation.json",
+    "physical_device": "NOT TESTED",
+    "upgrade_scope": "Published4 ->interim5 ->final5 tested; direct exact published4 ->final5 NOT TESTED; original signer/state preserved"
+  },
+  "source_audit": {
+    "version": "0.4.3-dev",
+    "release_id": "c8315bdb08973c4c8cca422a4aa8337362fedebb61bc1a61a721097fa37b9f55",
+    "sha256": "c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc",
+    "files": 139,
+    "capabilities": [
+      "installer",
+      "lan-single-writer",
+      "upgrade-safe",
+      "dashboard-lite",
+      "android-volume-anchor",
+      "quick-join-foundation",
+      "local-engine-bridge",
+      "core-quorum-observer",
+      "dashboard-pwa-network-only"
+    ],
+    "state": "PASS",
+    "scope": "Exact immutable source and package inventory only; full regression BLOCKED, not source-ready or production release",
+    "secret_findings": []
+  },
+  "restored_safety_targeted": {
+    "state": "PASS",
+    "tests": 44,
+    "skips": 0,
+    "seconds": 14.068,
+    "command": "python -B -m unittest -v tests.test_gc_authorization tests.test_gc_sandbox tests.test_storage",
+    "scope": "Fast guards/storage tests only; does NOT replace the failed actual network GC fault gate"
+  },
+  "go_reused_unchanged_source": [
+    {
+      "gate": "go-tests",
+      "exit": 0
+    },
+    {
+      "gate": "go-vet",
+      "exit": 0
+    },
+    {
+      "gate": "go-mod",
+      "exit": 0
+    },
+    {
+      "gate": "build-linux",
+      "exit": 0
+    },
+    {
+      "gate": "build-windows",
+      "exit": 0
+    },
+    {
+      "gate": "build-android",
+      "exit": 0
+    }
+  ],
+  "authority_budgets_unchanged": true,
+  "failed_trials_removed": true,
+  "publication": "PENDING normal feature Git push and separate fresh remote artifact download",
+  "limits": [
+    "No full regression acceptance",
+    "Final5 API30 x86_64 only; API35 NOT TESTED/cold BLOCKED",
+    "No ARM64/physical Android/real2domains/LAN/OEM/Doze/ChromeAndroid PWA acceptance",
+    "No direct exact published4->final5 upgrade acceptance",
+    "No Termux migration/Android voters/GC/failover/writableDR/Phase5"
+  ]
+}

@@ -172,3 +172,5 @@ local.properties
 # Reviewed Phase4 Native Node internal artifacts, no private signer/state.
 !/android-artifacts/asc-native-node-0.4.0-internal-debug.apk
 !/candidates/asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz
+!/android-artifacts/asc-native-node-0.4.1-internal-debug.apk
+!/candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz

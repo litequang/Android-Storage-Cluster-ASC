@@ -1,40 +1,60 @@
-# Phase4 — gói dùng thử và các gate còn lại
+# Phase4 — internal debug snapshot và handoff
 
-Bản internal, không phải production hoặc nghiệm thu điện thoại thật. Source/runtime
-không đổi so với383Python PASS0skip/64fault banners, Go11/vet/modules/builds và
-Android26+foreign1; xem PHASE4-2-ACCEPTANCE. API30 có fresh enrollment JUnit1 và full retained workflow sau sửa fixture mạng;
-22regression+foreign1 PASS. Không gọi đó là clean cold E2E lần đầu. API35 cold
-vẫn BLOCKED. Xem qualification/phase4-api30-node.json.
+**FULL REGRESSION BLOCKED; Phase4/4.2 CHƯA ACCEPTED.**
+Lưu artifact đã có targeted proofs để review/tiếp tục, không công bố qualified
+release hay nghiệm thu điện thoại. Source Native3914b99/PWAa6bbced, fixture16c0717.
+Full cuối184/1ERROR1537.737s; GC lost-ACK/replay chưa đạt. Hai bản thử retry/TTL
+đều FAIL và đã loại, không đưa vào gói. [Blocker và next steps](../qualification/phase4-closure-gc-investigation.json).
 
-## Tải đúng gói
+Gói dưới đây là snapshot debug nội bộ, **không khuyến nghị như bản đã nghiệm thu**.
+Giữ các bản đã công bố trước; chỉ chủ dự án tự thử sandbox/thiết bị được phép sau
+khi đọc giới hạn. Các bước dưới đây là hướng dẫn, không phải proof phone đã PASS.
+Trạng thái push/download: xem receipt publication đi kèm; checksum local một mình
+không được gọi là remote verification. Không dùng snapshot để bật GC/Raft/writerDR.
 
-Checkpoint artifact3075f69e5fcc65687655afabf80733e1b55dac30 trên nhánh
-feature/phase4-2-android-native. GitHub Release upload401, nhưng file đã push bằng
-Git và tải lại bằng clone riêng từ GitHub: cả hai SHA256 khớp.
+## Gói đúng vai trò
 
-- [APK internal](../android-artifacts/asc-native-node-0.4.0-internal-debug.apk)
-- [Checksum APK](../android-artifacts/asc-native-node-0.4.0-internal-debug.apk.sha256)
-- [Controller source internal](../candidates/asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz)
-- [Checksum Controller](../candidates/asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz.sha256)
+- [Node APK5 internal](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk)
+- [SHA-256 APK](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk.sha256)
+- [Controller/PWA source](../candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz)
+- [SHA-256 Controller](../candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz.sha256)
 
-APK39,000,362bytes, org.asc.foundation/versionCode4/min26/target35. NodeTLS cần30+;
-API26–29 không được nghiệm thu. API30 thực chạy trên emulator, không phải ARM64. Signer công khai:
-bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30.
-Không có private signer/key/state trong gói. APK cần được kiểm checksum/signer trên
-PC tin cậy trước khi chuyển sang máy thử và dùng trình cài Android thông thường;
-không cần cài Termux chỉ để chạy Node APK. Controller hiện chưa nằm trong APK.
+APK SHA-256: `aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5`
 
-## Controller có sẵn: giữ dữ liệu, không init lại
+Controller archive SHA-256: `c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc`
 
-Đường đã kiểm Linux synthetic:0.4.1->exact0.4.2-dev->CURRENT0.4.3-dev source.
-Không gọi đó là bằng chứng direct0.4.1->internal0.4.3 hoặc phone runtime PASS.
-Nếu đang0.3, dùng DEMO-ZTE-0.4.1 trước. Gói0.4.2-dev trung gian nằm trong candidates,
-SHA b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3.
-Gói mới source-only có releaseIDe69ebeae3e5ab9a5372465caa8ed5e1882f352fd5f355157299091361f4c6706.
+Controller release ID: `c8315bdb08973c4c8cca422a4aa8337362fedebb61bc1a61a721097fa37b9f55`
 
-Dừng foreground Controller/Node/bridge/gateway bằng Ctrl+C, chờ thoát. Với MỖI
-bước đã kiểm tương thích, xác minh checksum và giải nén vào thư mục MỚI rồi dùng
-launcher hiện hữu (đường dẫn chuẩn dưới đây; kiểm lại prefix thực tế của bạn):
+APK org.asc.foundation/versionCode5/0.4.1-native-node-candidate,39,000,831bytes,
+minSDK26/target35. **Native Node TLS cần API30+**;26–29 NOT QUALIFIED. Chỉ x86_64
+emulator đã thử; ARM64 chỉ build. Signer public SHA-256:
+`bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30`.
+Không chứa private signer/key/state. Kiểm checksum/signer trên PC tin cậy trước
+khi chuyển sang máy thử. Các gói/Native APK4 cũ giữ nguyên, không bị ghi đè.
+
+Node APK không cần Termux. Controller vẫn là QuickStart/Termux hoặc Linux; chưa
+nằm trong APK. App và Termux khác UID/private state: không copy khóa/DB/marker,
+không tự adopt Node cũ. File Manager là Dashboard/PWA chung, không backend mới.
+
+Trên máy đã tải repository/gói đúng commit:
+
+```sh
+(cd android-artifacts && sha256sum -c asc-native-node-0.4.1-internal-debug.apk.sha256)
+(cd candidates && sha256sum -c asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz.sha256)
+# Nếu có Android SDK, kiểm certificate rồi so fingerprint bên trên:
+apksigner verify --verbose --print-certs android-artifacts/asc-native-node-0.4.1-internal-debug.apk
+```
+
+## Controller hiện hữu: không init lại
+
+Đường launcher đã kiểm Linux synthetic: exact0.4.1 ->exact0.4.2-dev ->CURRENT0.4.3-dev.
+Nếu còn0.3, đọc DEMO-ZTE-0.4.1 trước; không suy ra direct0.3->candidate đã hỗ trợ.
+0.4.2-dev trung gian ở candidates, SHA
+b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3.
+E69 old0.4.3 ->new package được thử bằng source-only staging/backup fixture giữ
+state, **không phải** exact installed-launcher upgrade proof của đường đó.
+
+Dừng Controller/Node/bridge bằng Ctrl+C và chờ thoát. Với mỗi bước đã kiểm:
 
 ```sh
 ASC_STATE="$HOME/.asc-demo"
@@ -43,45 +63,67 @@ ASC_RUN="$ASC_PREFIX/bin/asc-demo"
 ASC_BACKUP="$HOME/asc-before-upgrade-$(date +%Y%m%d-%H%M%S)"
 sh "$ASC_RUN" --state "$ASC_STATE" backup "$ASC_BACKUP"
 sh "$ASC_RUN" --state "$ASC_STATE" verify-backup "$ASC_BACKUP"
-# ASC_UNPACK là thư mục MỚI đã giải nén gói có checksum được xác minh.
+# ASC_UNPACK: thư mục MỚI đã giải nén archive có checksum đúng.
 sh "$ASC_RUN" --state "$ASC_STATE" stage "$ASC_UNPACK/asc-demo-alpha"
-# Đối chiếu ID trả về với gói đã xác minh, không tự đoán ID.
-ASC_RELEASE='<release_id trả về từ stage>'
+ASC_RELEASE='<release_id đúng của gói đã verify>'
 sh "$ASC_RUN" --state "$ASC_STATE" upgrade-preflight "$ASC_RELEASE"
 sh "$ASC_RUN" --state "$ASC_STATE" upgrade "$ASC_RELEASE" --backup "$ASC_BACKUP-activation"
 sh "$ASC_RUN" --state "$ASC_STATE" verify-backup "$ASC_BACKUP-activation"
 ```
 
-Không chạy nếu preflight/backup/verify lỗi. Không ghi đè private state hoặc restore
-DB cũ lên bytes mới. Giữ releaseID cũ/backup MỚI; chỉ code-only rollback qua preflight
-đã kiểm, xem PHASE4-1-OPERATIONS. Không claim mọi direct downgrade đều hỗ trợ.
+Không chạy tiếp nếu backup/preflight/verify lỗi. Không sửa private state hoặc phục
+hồi DB cũ đè bytes mới. Các lệnh trên chỉ backup state Controller/Termux, không
+backup private APK/Keystore. Chưa có native export/import hoặc Termux→APK migration.
 
-## Owner thử APK và file trong LAN
+## Thử Node và File Manager
 
-1. Chỉ ZTE/Bphone thử nghiệm, dữ liệu bỏ được; không M51/production/unknown-device.
-2. Làm theo ANDROID-NATIVE-PILOT: app identity độc lập, Controller HTTPS/pin/Cluster
-   do owner xác minh, mã pair dùng một lần, pending resume giữ nguyên operation.
-3. Owner duyệt Node/volume/domain bằng CLI hiện có, không app tự duyệt. Termux và
-   APK trên cùng điện thoại chỉ là MỘT miền lỗi. Đổi cổng APK nếu9443 đã bận.
-4. Start Node từ màn hình đang mở, cho phép notification theo Android, xem heartbeat/
-   writable/fsync thực tế. Notification Stop chỉ dừng Node APK. Restart không tạo
-   lại identity khi khóa mất/hỏng; dừng để kiểm tra lỗi.
-5. Chạy Controller với Dashboard, dùng dashboard-code tại terminal owner như
-   DEMO-QUICKSTART. Cụm -> Mở File Manager web mở URL HTTPS LAN đã được owner cấp;
-   trình duyệt cần tin đúng public CA, code owner riêng. Core observer chỉ đọc.
-6. Upload file nhỏ, yêu cầu2VERIFIED trên2điện thoại/domain, download và so SHA256.
-   Dừng một Node, download fallback và so SHA; restart, kiểm lại Node/Volume/PIN.
-7. Ngắt Internet của router nhưng GIỮ Wi-Fi/IP, thử lại. Không có LAN thì chưa có
-   tự tạo hotspot/Wi-Fi Direct. Không có offline-write hoặc Cloudflare hiện tại.
+1. Chỉ thiết bị thử được owner cho phép, dữ liệu bỏ được; không M51/production.
+   Kiểm model/SDK theo ANDROID-NATIVE-PILOT; không coi minSDK26 là NativeTLS26.
+2. Cài APK bằng trình cài Android, giữ app hiện hữu khi update và so signer. Không
+   uninstall/clear data hoặc ép downgrade để qua lỗi. Đường thực chạy: published4
+   ->các5 nội bộ ->final5, UID/context/old bytes giữ nguyên; **direct published4
+   ->FINAL5 chưa thực chạy**, Foundation2->final5 cũng chưa được chứng minh.
+3. Theo ANDROID-NATIVE-PILOT: xác minh Controller HTTPS endpoint, leaf fingerprint
+   và expected Cluster ID ngoài luồng, nhập mã ghép một lần, resume pending khi lỗi.
+   Không tạo identity mới nếu mất khóa; dừng để owner xử lý.
+4. Owner duyệt Node/volume/physical domain bằng CLI, không app tự duyệt. Node APK
+   và Termux trên cùng phone là một miền lỗi. Nếu9443 bận, dùng cổng được phép khác
+   như9445 trong app/cấu hình owner; không kill Termux để chiếm cổng.
+5. Start Node từ màn hình đang mở, cấp notification theo Android; xem probe thực
+   writable/fsync/heartbeat. Notification Stop chỉ dừng Node APK. Không cam kết24/7.
+6. Chạy Controller với `run-controller --dashboard` và lấy `dashboard-code` bằng
+   launcher như DEMO-QUICKSTART. App Cụm ->Mở File Manager web mở đúng URL HTTPS LAN.
+   Browser tin đúng **public Dashboard CA** đã đối chiếu fingerprint; không copy
+   CA private key/bỏ lỗi TLS. Node enrollment code và owner web login code khác nhau.
+7. Theo [PHASE4-WEB-APP](PHASE4-WEB-APP.md): mở web hoặc cài PWA khi browser cho phép.
+   Upload file nhỏ, chờ2VERIFIED trên2phone/domain, download so SHA-256; dừng một
+   Node thử fallback rồi restart kiểm IDs/bytes. Một volume thứ hai cùng phone
+   không được tính là domain thứ hai.
+8. Thử ngắt Internet router nhưng giữ Wi-Fi/IP. Giao thức dùng LAN, không cần cloud;
+   bước phone này chưa nghiệm thu. Không có tự tạo hotspot/Wi-Fi Direct. Mất
+   Controller thì không xác nhận ghi mới. PWA không offline-write/cache API/file,
+   không start Termux/Node. Cloudflare/SSH/VPN là Phase5, chưa triển khai.
 
-APK upgrade đã kiểm: EXACT Native3(d1847ce8...)->4, không uninstall/clear/-d.
-Published Foundation2->4 direct chưa kiểm. Termux->APK không migration: không copy
-khóa/DB/marker. Các bước phone/ARM64/ChromeAndroid/Doze/OEM/2hardware domains phải
-owner ghi kết quả, chưa PASS từ emulator. Thu thập version/model/error sanitised,
-không token/code/key/private DB/full logcat. Phase5 remote tách riêng, không mở SSH
-public hoặc writable disaster recovery để hoàn thành Phase4.
+| Endpoint thường gặp | Cách tin cậy |
+|---|---|
+|Controller API8443|Full leaf SHA-256 pin +expected Cluster ID|
+|Dashboard8444|Đúng public CA/hostname +owner code/session riêng|
+|Storage Node9443 hoặc cổng owner chọn|Node pin +grant được Controller xác thực|
 
+Đây là cổng ví dụ, dùng đúng cấu hình thực tế và LAN riêng; không bind/public hóa API.
 
-Ma trận đóng nghiệm thu hiện tại: [PHASE4-STATUS](PHASE4-STATUS.md). API30 fresh
-enrollment và subsequent retained dataflow/22+foreign1 đã có bằng chứng;35cold
-không được miễn. Owner điền các gate phone còn NOT TESTED, không suy ra từ emulator.
+## Dừng và rollback giữ dữ liệu
+
+Dừng Node bằng notification/app, Controller bằng Ctrl+C và chờ thoát; không kill
+process theo PID đoán. PWA logout/gỡ chỉ gỡ giao diện, không xóa state Node/Controller.
+Controller: backup MỚI +verify trước code-only rollback về release tương thích theo
+PHASE4-1-OPERATIONS; không khôi phục DB cũ để mất lịch sử mới. APK4 bị Android từ
+chối cài đè final5 đã kiểm và old bytes/identity vẫn đọc được. **Không có APK downgrade
+rollback đã nghiệm thu**: giữ app/state, dừng Node và dùng bản sửa cùng signer với
+versionCode hợp lệ; không uninstall/clear/-d/copy Keystore để chữa lỗi.
+
+Không đăng token/code/key/private DB/full logcat/browser profile/HAR. Chỉ thu version,
+model/SDK, public fingerprint, mã lỗi đã làm sạch, kết quả SHA và bước tái hiện.
+Owner điền gate phone/ARM64/LAN/ChromeAndroid/Doze/OEM theo PHASE4-STATUS. API35 cold
+vẫn BLOCKED, transport final5 trên35 chưa thử; không miễn gate hoặc cấp writerDR/
+Android Raft/GC/failover để gọi Phase4 hoàn tất.

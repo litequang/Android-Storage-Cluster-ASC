@@ -664,3 +664,12 @@ integration is g.2, no native Node/FGS or public APK claim.
   manifest/worker, all prior auth/CSRF/no-store/readonly-mode guards unchanged.
 - Actual Chromium normal-profile criteria/worker and browser file workflow PASS;
   real Android installation is not inferred. Candidate packaging/full gate follows.
+
+
+### Phase4 internal debug preservation — regression BLOCKED
+- Preserve exact targeted native5 TCP cancellation/restart and shared PWA snapshots
+  with SHA/original signer/exact source inventory; old published artifacts intact.
+- Full4 failed184/1ERROR; bounded GC retry and routing TTL experiments also failed
+  and were removed. Fresh44local guards PASS does not qualify network GC/full384.
+- No qualified release/Phase4 acceptance, phone access, GC/Raft/writerDR/Phase5
+  activation or source/schema change in this reporting/artifact checkpoint.

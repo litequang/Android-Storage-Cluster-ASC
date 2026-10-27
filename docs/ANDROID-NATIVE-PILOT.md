@@ -5,6 +5,10 @@ only task-owned API30/API35 x86_64 emulators and Linux synthetic services. Never
 on M51/production/unknown devices or replace existing Termux data. Read current
 PHASE4-2-ACCEPTANCE, ANDROID-NATIVE-OPERATIONS and ASC-USER-STATUS.
 
+Final candidate5 has targeted actual API30 x86_64 proof. Historical API35 retained
+APK4 proof is separate; final5/API35 NOT TESTED, fresh35cold BLOCKED. Read
+PHASE4-STATUS/HANDOFF for final-full/publication status before downloading.
+
 The integrated j tests use the CURRENT branch's packaged Demo Controller, not
 an independently qualified APK-candidate -> published Demo0.4.1 Controller path.
 Do not infer that cross-version phone combination PASS. Keep existing Controller
@@ -21,9 +25,13 @@ For an existing native app, verify the same original signer and higher versionCo
 stop Node, then use normal Android update. Do not uninstall, clear data or force a
 downgrade. Keep private signer/state in operator custody; never upload them with
 diagnostics. Termux/APK identities are independent: no key/database/marker copy.
-The current exact direct APK upgrade qualified is retained Native versionCode3
+The historical exact direct APK upgrade qualified is retained Native versionCode3
 (SHA d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a) to4.
 Published Foundation2 ->4 directly is NOT TESTED; no general upgrade promise.
+Final5 retained path tested: original4 ->unpublished5 builds ->final5, same UID/
+context/Keystore/old bytes. Direct published4 ->FINAL5 artifact NOT TESTED. Final5
+refuses exact APK4 downgrade and still reads original bytes. Never force -d or
+restore an old database; owner phone upgrade itself remains a required pilot gate.
 
 ## Controlled trial once the candidate is available
 

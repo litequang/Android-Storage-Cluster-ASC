@@ -1,10 +1,53 @@
-# Phase4.2 native qualification
+# Phase4.2 native qualification — NOT ACCEPTED
 
-Current internal candidate: APK4 and exact Controller source are downloadable
-(PHASE4-HANDOFF). API30 fresh enrollment startup +network-corrected retained
-workflow and22+foreign1 PASS. API35 retained26+1 PASS, fresh startup BLOCKED.
-Full Phase4 remains NOT ACCEPTED pending platform/owner-device gates.
-Historical a–e foundation receipts below retain their original scope.
+**Full regression BLOCKED. Native/PWA targeted proofs không phải nghiệm thu toàn Phase4.**
+Source Native3914b99/PWAa6bbced; fixture2131e83/16c0717. Không còn full đang chạy.
+Snapshot APK5/source chỉ là debug review, không qualified release.
+
+| Gate | Kết quả thực chạy |
+|---|---|
+|Fresh full4|184tests/1ERROR1537.737s,313inputs unchanged, failfast,43fault banners; **FAIL**|
+|Failed GC gate|Actual unlink/lostACK đã xảy ra, owner same-job replay409 stale_gc_proof|
+|Bounded retry experiment|1ERROR1094.769s gc_execution_unconfirmed, loại thay đổi|
+|Routing TTL experiment|1FAIL783.307s, actual unlink/lostACK marker vẫn tồn tại; loại thay đổi|
+|Fast guards/storage sau loại trial|44PASS0skip14.068s; không thay network fault gate|
+|Dashboard/PWA|8PASS46.917s; TLS/manifest/worker/empty caches/criteria/upload/SHA/fallback/mobile/XSS/offline|
+|Actual PWA install|Install/launch/uninstall PASS Chromium Linux CDP; Android NOT TESTED|
+|Core gateway|3PASS31.711s; owner/session/mode/all writes denied/passive recovery|
+|Final native JVM/build|17PASS fresh task rerun sau transport fix; main/test APK build PASS|
+|Final API30 native|28PASS249.012s,0skip +foreignUID1PASS0.128s|
+|Exact nonreader gate|1PASS35.657s, unchanged method; chạy lại trong28|
+|Strict normal network|2Android PASS80.675s/38.373s; browser/two logical domains/SHA/fallback/process death/Controller loss|
+|Downgrade|Exact APK4 refused, original identity/bytes1PASS10.738s; không uninstall/clear/-d|
+|Go|11top-level/12nested PASS; vet/modules/Linuxamd64 +Windowsamd64 +Androidarm64 builds PASS; source không đổi|
+|Package audit|APK120Core modules/original signer; source139files/rebuild deterministic/exact bytes,0secret findings|
+|Publication|Debug review snapshot only; separate remote-download receipt follows, no regression qualification|
+
+APK SHA `aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5`,
+39,000,831bytes. Host SHA `c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc`.
+Full failed attempts and current outcome:
+[GC investigation](../qualification/phase4-closure-gc-investigation.json),
+[scoped targeted](../qualification/phase4-web-native5-targeted.json),
+[internal snapshot audit](../qualification/phase4-web-native5-internal-snapshot.json).
+Full1 384/2ERRORS2141.271s; full2 interrupted after backup fixture FAIL; full3
+186/1FAIL2003.503s. No failed/interrupted full is counted as PASS. Existing targeted
+backup12groups and LinuxGC5groups PASS retain their scope, not a full384 result.
+
+Both trial edits removed exactly; canonical Core/tests match16c0717. No budget/
+lease/retention/physical proof/assertion weakened. Next original failed network
+GC gate must PASS before another full384 attempt. ROOT CAUSE NOT ESTABLISHED;
+2CPU/1024events/~2.4MiB projection and authority expiry are diagnostic observations.
+
+Exact tested upgrade: published4 ->interim5 ->final5 preserves original UID/context/
+Keystore/Volume/bytes. **Exact direct published4 ->final5 NOT TESTED**. API30 is
+x86_64 SDK NAT synthetic; two logical domains are not physical independence.
+Final5 API35 NOT TESTED/cold BLOCKED; ARM64/phones/real LAN/OEM/Doze/ChromeAndroid PWA
+NOT TESTED; API26–29 NativeTLS NOT QUALIFIED. No native Controller/Termux migration/
+Android voters/GC/failover/writable DR. No acceptance by inference from old receipts.
+
+## Historical foundation and continuation receipts
+
+The dated scopes below are preserved; the current closure table above takes precedence.
 
 **Full Phase4.2 NOT ACCEPTED. Independent native FOUNDATION subset qualified on
 actual API35 x86_64 emulator; fresh applicable Core regressions PASS below.**
