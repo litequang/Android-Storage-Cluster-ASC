@@ -14,20 +14,24 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-27
-Owner requests finishing Phase4. Current source remains this feature branch; no
-whole merges or phone access. Read latest PHASE4-2 PROGRESS/ACCEPTANCE and
-PHASE4-STATUS/HANDOFF after ordered reads. APK4 +exact Controller source/checksums
-are tracked and separately downloaded from GitHub (3075f69/0882333). Runtime frozen
-Core383Python0skip/64fault banners and Go11/vet/modules/builds remain unchanged;
-only SDK qualification driver gains explicit30/35 choice. API30 fresh enrollment
-startup JUnit1 then retained complete E2E after SDK .16->.15 fixture correction,
-22regression+foreign1 PASS. Preserve first host upload FAIL; don't call retained
-report a clean initial cold E2E. API35 retained26+1 PASS but fresh startup BLOCKED;
-all owner phone/ARM64/real LAN/OEM gates not run. Full Phase4 NOT ACCEPTED. Current
-qualification/phase4-api30-node.json owns precise scopes. Original signer/private
-VM states must remain private and intact. Do not redo completed full tests without
-runtime changes, reinterpret historical paragraphs below as current progress, or
-advance Phase5/activate writerDR/Raft/GC to claim completion.
+Owner requests finishing Phase4. Same feature branch, no whole merges/phone access.
+Read latest PHASE4-2 PROGRESS/ACCEPTANCE and PHASE4-STATUS/HANDOFF after ordered
+reads. PWA source a6bbced and native5 upgrade checkpoint2b718d3 pushed/verified;
+network-only PWA reuses Dashboard, actual Chromium install/launch proof is Linux.
+Original APK4/Controller remain published and intact. NEW APK5/139file PWA source
+candidate not yet published/accepted; fresh full Core/Python/Web run IN PROGRESS.
+Do not reuse old383 to qualify changed PWA. During final Native E2E found restart
+bug; actual Android TCP regression reproduces EADDRINUSE with reuseAddress=false.
+NativeTLSListener fix enables SO_REUSEADDR (never REUSEPORT), privately owned raw
+transport cancellation and bounded close completion. Fresh28+foreign1 Android and
+JVM17 PASS; strict E2E/full rerun still pending. First two prepatch
+matching-package host attempts FAILED; preserve outcomes. Check current progress.
+Python/Web/Go inputs stay frozen; one Kotlin source changes after freeze plus
+new Android-only test, so never claim entire305freeze unchanged. Independently
+qualify native delta. API30 retained state/original signer must stay intact.
+API35 cold BLOCKED; physical/ARM64/LAN/OEM gates NOT TESTED, full Phase4 NOT ACCEPTED.
+No Phase5, writerDR, Android voter/GC/failover or Termux migration. Historical
+paragraphs/qualification receipts below do not override this latest pointer.
 
 ## Non-negotiable user rules
 - M51 is production web hosting. Codex has SOURCE ACCESS ONLY: no production DB/logs, live file inspection, edits or SSH. No modification of AMH, MariaDB, ports, service management, existing Termux or Termux:Boot.

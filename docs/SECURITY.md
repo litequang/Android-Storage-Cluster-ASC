@@ -1,5 +1,20 @@
 # ASC SECURITY & RECOVERY
 
+## Native listener ownership and cancellation
+
+The Android listener binds only the existing approved private numeric address.
+SO_REUSEADDR permits restart after TCP TIME_WAIT; SO_REUSEPORT is never enabled.
+An additional actual Android test requires concurrent active bind to fail.
+Each accepted TCP socket stays privately owned by its connection and is wrapped
+with the existing server-mode JSSE context, TLS1.2/1.3 and existing certificate.
+Only TLS input/output enters the canonical Core handler; no plaintext dispatch.
+The absolute deadline closes that exact underlying transport before TLS close,
+so a Conscrypt blocked-write lock cannot prevent cancellation. No fd reflection,
+arbitrary descriptor/PID access, process kill, new credentials or IPC operation.
+TLS abort is an error boundary: content length/SHA and authorization remain
+mandatory, and partial objects never become verified. Existing wrong-pin,
+nonreading-peer read/write deadlines and restart tests must remain strict.
+
 ## Phase 2B development trust boundary — Windows qualified
 
 The opt-in runtime keeps distinct endpoint pins/admin credentials and node-local

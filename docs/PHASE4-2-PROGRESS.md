@@ -1701,3 +1701,88 @@ current source/tests/project and old archives; no source mutation while full run
 Private evidence /workspace/work/phase4-pwa-native5 and phase4-pwa-final. Preserve
 all VM state and original signer. Full Phase4 remains NOT ACCEPTED pending genuine
 platform/owner gates; no Phase5, writerDR or Android Raft/GC/failover activated.
+
+### Native TCP restart regression discovered during closure
+
+2b718d3b3f8029cd38ddba5f2dfc3ae250c6eda9 targeted checkpoint normal-pushed;
+FETCH_HEAD+ls-remote matched (this remote does not populate origin/<branch>).
+New matching-host E2E19baf4f... FAILED at browser download-event deadline.
+Unchanged assertion diagnostic retry7c134db... confirmed real HTTP200/SHA fallback,
+restart/direct bytes/Controller-loss denial and first Android1PASS124.718s, but
+second process-death startup FAILED (no state in startNode error response). Neither
+whole attempt is counted PASS. No deadline increase or skipped checks.
+
+Isolated actual JDK TCP close/rebind reproduced BindException with reuseAddress
+false; true allows restart while concurrent active bind still refuses. Added
+NativeListenerRestartTest on Android: prepatch actual2tests/1FAIL37.693s,
+EADDRINUSE at NativeTLSListener.bind; existing active-owner denial PASS. This
+proves a real listener restart defect, not yet every earlier browser timeout cause.
+Fix uses SO_REUSEADDR before same private bind; never SO_REUSEPORT or wildcard.
+Pinning, UID/device gates, keys/context/schema/permissions and Core untouched.
+Patched build/JVM17 PASS; two new actual Android TCP tests now PASS in ongoing
+28-case regression. Old prepatch5 APK2d97... saved privately, not published.
+
+Qualification scope adjustment: full Python was already running against frozen
+305inputs when this native-only defect was found. Python/Web/Go/all Python test
+inputs remain byte-identical; only frozen NativeTLSListener.kt changes, plus new
+Android-only NativeListenerRestartTest outside initial list. Therefore do NOT
+claim whole305source_unchanged=true for the final candidate or reinterpret the
+full receipt's drift flag. Record exact delta and independently qualify fresh
+Android/JVM/actual network tests after this fix. Python suite does not consume
+this Kotlin source; its fresh full gate qualifies unchanged Core/Web/provider
+inputs. No additional full Python repetition solely for a Kotlin socket option.
+Current original signer/UID/VM/volume/context preserved; final candidate remains
+pending fixed Android regression, strict normal E2E and publication/remote SHA.
+
+### Closure run failures retained; additional native cancellation fix
+
+Fresh full384Python2141.271s completed with2ERRORS,0SKIP (NOT PASS): ExternalFaults
+external_source_unavailable at final healthy backup and GCCluster stale_gc_plan
+at confirmation.58PASS banners, not64. Raw receipt correctly records
+source_unchanged=false for the Kotlin delta; no success report substituted.
+Host has2CPU quota; TCG Native tests were concurrent. Pause ONLY verified owned
+VM and repeat original two failing tests independently, without lease/timeout/
+assertion changes. ExternalFaults all9groups now PASS; GC targeted still running.
+Need new fresh full after failed gates resolved; do not reuse first failed run.
+
+Patched reuse-only Android28run276.649s has27PASS/1FAIL: existing unchanged
+NativeSocketTest.absoluteDeadlineUnblocksActualWriteWhenPinnedPeerDoesNotRead
+worker still alive at20s. The new two TCP-rebind tests PASS. No deadline extension.
+Further native transport fix retains only the owned accepted raw TCP socket and
+layers server-mode JSSE TLS over it; raw close interrupts blocked I/O BEFORE TLS
+close can wait on Conscrypt write lock. Core sees TLS streams only, same protocols/
+certificate/pinning, no plaintext dispatch, new backend, permissions or credentials.
+New build/JVM17 PASS; fresh original socket tests/full Android regression still
+required. Current APK files in repository are UNPUBLISHED staging and must be
+replaced from final audited build after targets PASS; preserve private prior builds.
+All original published archives/APK4/signer/VM identities remain intact.
+
+### Native cancellation checkpoint targeted PASS — 2026-10-27
+
+Isolated unchanged Core failure retest2PASS358.324s,0skip: all9ExternalFault groups
+and3GC fault groups including actual unlink/lostTLSACK/Leader+quorum loss. No Core
+changes, assertion edits or freshness/deadline increases. Need fresh full rerun
+after the failed384run; execute separately from TCG Android to avoid2CPU contention.
+
+Raw-first cancellation initially unblocked the writer but original unchanged
+NativeSocketTest still failed activeConnections expected0/actual1 at final cleanup
+(27/28PASS,298.362s). Do NOT count this run PASS. Fixed concurrent-close completion
+using bounded latch: a second close waits for the owning closer's cleanup, not just
+its started flag. No test modification or fake callback count. Exact original
+nonreader method now1PASS35.657s, all assertions including deadline/closed/active0.
+Fresh FULL SELECTED Android28PASS249.012s,0skip, plus actual foreignUID/signer Binder
+denial1PASS; report regression-completion.json. Fresh JVM17/build PASS24s. Only
+NativeTLSListener implementation +new actual TCP rebind test change; Core/Python/
+Go/protocol/schema/permissions/dependencies remain unchanged from PWA source.
+
+Final current build APK SHA aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5,
+39,000,831bytes,versionCode5, original signer bba77b68...120canonical modules,
+inventory0findings. Exact tested upgrade history is original published4 ->earlier
+unpublished5 builds ->final5 normal replacements, same UID/context/old bytes.
+Direct original4 ->FINAL5 artifact has NOT been executed and must not be claimed.
+All intermediate binaries stay private; only final audited candidate may be
+published after final gates. API30 x86_64 evidence only; new transport/API35 and
+phones/ARM64 NOT TESTED. Historical APK4 API35 retained success is not new5 proof.
+Next strict normal matching-package E2E, final downgrade-refusal readback, fresh
+full384without active VM, publication/independent remote-download SHA. Full Phase4
+still NOT ACCEPTED. No phones/M51/production/Termux/authority/GC/Raft/failover touched.

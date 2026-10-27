@@ -5,49 +5,61 @@ import java.io.Closeable
 import java.io.IOException
 import java.net.InetAddress
 import java.net.InetSocketAddress
+import java.net.ServerSocket
+import java.net.Socket
 import java.net.SocketTimeoutException
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLServerSocket
 import javax.net.ssl.SSLSocket
 
 /** Private platform transport ONLY. No HTTP/Storage Engine, IPC or startup hook. */
-internal class NativeTLSListener(tls:SSLContext,host:String,port:Int,private val deadlineMillis:Long=120000):Closeable {
+internal class NativeTLSListener(private val tls:SSLContext,host:String,port:Int,private val deadlineMillis:Long=120000):Closeable {
     private val lifecycle=Any()
     private val closed=AtomicBoolean(false)
     private val active=ConcurrentHashMap.newKeySet<NativeTLSConnection>()
     private val watchdog=ScheduledThreadPoolExecutor(1) {r ->Thread(r,"asc-owned-tls-deadline").apply {isDaemon=true}}.apply {removeOnCancelPolicy=true}
-    private val server:SSLServerSocket
+    private val server:ServerSocket
+    private val protocols:Array<String>
     init {
         check(Build.VERSION.SDK_INT>=30 && NativeDeviceGate.allowed()) {"native_tls_device_not_qualified"}
         require(port==0 || port in 1024..65535)
         require(deadlineMillis in 1000..900000)
         val address=approvedAddress(host)
-        server=tls.serverSocketFactory.createServerSocket() as SSLServerSocket
+        protocols=tls.supportedSSLParameters.protocols.filter {it in setOf("TLSv1.2","TLSv1.3")}.toTypedArray()
+        check(protocols.isNotEmpty())
+        server=ServerSocket()
         try {
-            server.enabledProtocols=server.supportedProtocols.filter {it in setOf("TLSv1.2","TLSv1.3")}.toTypedArray()
-            check(server.enabledProtocols.isNotEmpty())
-            server.reuseAddress=false;server.needClientAuth=false;server.soTimeout=250
+            // Permit this exclusive listener to restart after accepted sockets enter
+            // TCP TIME_WAIT. This is SO_REUSEADDR, never SO_REUSEPORT: a second
+            // active listener on the same approved address/port still fails bind.
+            server.reuseAddress=true;server.soTimeout=250
             server.bind(InetSocketAddress(address,port),32)
         } catch(e:Throwable) {server.close();watchdog.shutdownNow();throw e}
     }
     fun port():Int=server.localPort
     fun accept():NativeTLSConnection? {
-        val peer=try {server.accept() as SSLSocket}catch(_:SocketTimeoutException){return null}
+        val transport=try {server.accept()}catch(_:SocketTimeoutException){return null}
         return synchronized(lifecycle) {
-            if(closed.get() || active.size>=32) {peer.close();return@synchronized null}
+            if(closed.get() || active.size>=32) {transport.close();return@synchronized null}
+            var peer:SSLSocket?=null
             try {
-                peer.soTimeout=12000
-                peer.enabledProtocols=peer.supportedProtocols.filter {it in setOf("TLSv1.2","TLSv1.3")}.toTypedArray()
-                val connection=NativeTLSConnection(peer) {active.remove(it)}
+                transport.soTimeout=12000
+                // Retain ONLY this accepted transport so deadline cancellation can
+                // interrupt a blocked Conscrypt write before TLS close takes its
+                // write lock. Never dispatch plaintext to the Core handler.
+                peer=tls.socketFactory.createSocket(transport,transport.inetAddress.hostAddress,transport.port,true) as SSLSocket
+                peer.useClientMode=false;peer.needClientAuth=false
+                peer.soTimeout=12000;peer.enabledProtocols=protocols
+                val connection=NativeTLSConnection(peer,transport) {active.remove(it)}
                 active.add(connection)
                 try {connection.arm(watchdog,deadlineMillis);connection}
                 catch(e:Throwable){connection.close();throw e}
-            } catch(e:Throwable) {peer.close();throw e}
+            } catch(e:Throwable) {try {transport.close()} finally {peer?.close()};throw e}
         }
     }
     fun activeConnections():Int=active.size
@@ -72,9 +84,10 @@ internal class NativeTLSListener(tls:SSLContext,host:String,port:Int,private val
 }
 
 /** Public JNI methods operate ONLY this exact accepted socket. No fd/path/PID. */
-internal class NativeTLSConnection(private val peer:SSLSocket,private val removed:(NativeTLSConnection)->Unit):Closeable {
+internal class NativeTLSConnection(private val peer:SSLSocket,private val transport:Socket,private val removed:(NativeTLSConnection)->Unit):Closeable {
     private val closed=AtomicBoolean(false)
     private val expired=AtomicBoolean(false)
+    private val closeCompleted=CountDownLatch(1)
     @Volatile private var deadline:ScheduledFuture<*>?=null
     internal fun arm(watchdog:ScheduledThreadPoolExecutor,millis:Long) {
         val task=watchdog.schedule({closeOwned(true)},millis,TimeUnit.MILLISECONDS)
@@ -95,13 +108,28 @@ internal class NativeTLSConnection(private val peer:SSLSocket,private val remove
     fun peerAddress():String=peer.inetAddress.hostAddress ?: throw IOException("native_peer_unknown")
     fun peerPort():Int=peer.port
     fun closedByDeadline():Boolean=expired.get()
-    fun isClosed():Boolean=closed.get() && peer.isClosed
+    fun isClosed():Boolean=closeCompleted.count==0L && peer.isClosed && transport.isClosed
     override fun close()=closeOwned(false)
     private fun closeOwned(byDeadline:Boolean) {
-        if(closed.compareAndSet(false,true)) {
+        if(!closed.compareAndSet(false,true)) {
+            // A writer unblocked by the watchdog can reach finally/close before
+            // the watchdog removes the connection. Return only after cleanup,
+            // never just because another thread has started closing it.
+            try {
+                if(!closeCompleted.await(12,TimeUnit.SECONDS))throw IOException("native_tls_close_incomplete")
+            } catch(e:InterruptedException) {
+                Thread.currentThread().interrupt();throw IOException("native_tls_close_interrupted",e)
+            }
+        } else {
             if(byDeadline)expired.set(true)
             deadline?.cancel(false)
-            try {peer.close()}catch(_:IOException){} finally {removed(this)}
+            // Socket.close interrupts actual TCP I/O. Closing the layered TLS
+            // socket first can wait indefinitely for its blocked write lock.
+            try {transport.close()}catch(_:IOException){} finally {
+                try {peer.close()}catch(_:IOException){} finally {
+                    try {removed(this)} finally {closeCompleted.countDown()}
+                }
+            }
         }
     }
 }

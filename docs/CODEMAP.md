@@ -792,6 +792,11 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
 - NativeCandidateUpgradeTest.kt: separate exact APK4->5 retained app/context and
   committed bytes test, repeated after actual downgrade refusal. Keeps historical
   NativeUpgradeDataTest literal APK4 contract unchanged.
+- NativeListenerRestartTest.kt: actual Android accepted TCP close/rebind and
+  concurrent-listener rejection. NativeTLSListener privately owns accepted raw
+  transport below server-mode JSSE for bounded cancellation of blocked TLS writes;
+  Core receives TLS streams only. NativeSocketTest retains real binary/wrong-pin/
+  nonreading read/write deadline assertions.
 - asc/demo/dashboard/assets.py: one fixed public HTTP/package asset allowlist.
 - dashboard/web/manifest.webmanifest,service-worker.js,icon-{192,512}.png: standalone
   browser metadata/network-only navigation, never caches API/file/owner data.
