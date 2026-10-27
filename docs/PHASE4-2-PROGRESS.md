@@ -1786,3 +1786,25 @@ phones/ARM64 NOT TESTED. Historical APK4 API35 retained success is not new5 proo
 Next strict normal matching-package E2E, final downgrade-refusal readback, fresh
 full384without active VM, publication/independent remote-download SHA. Full Phase4
 still NOT ACCEPTED. No phones/M51/production/Termux/authority/GC/Raft/failover touched.
+
+### Strict matching-candidate network checkpoint PASS
+
+Native source3914b99ff88cce898a59c980e168f839a8e81fd0 normal-pushed/fetched and
+ls-remote matched. Actual normal driver (no diagnostic NODE_OPTIONS or changed
+assertions/deadlines) run18bda54690bc47e6910e0a8841c320bb PASS. Exact final APK
+aec65c2c... +exact host archive c726bd36.../releaseIDc8315bdb...:
+real Chromium owner login, upload256KiB,2verified logical domains, Native-offline
+fallback SHA, unsafe new upload denial, Native restart/direct bytes, reachable TLS
+with Controller-loss exact503, process death/same context/identity/bytes. Android
+retained1PASS80.675s +1PASS38.373s. One host, not two physical domains; SDK NAT,
+ADB control only, no reverse/route/proxy/certificate bypass. Fresh enrollment on
+FINAL5 not executed; this is retained Node proof, prior fresh4 evidence stays4.
+
+Exact published APK4 normal install on FINAL5 refused VERSION_DOWNGRADE, then
+original retained identity/file readback1PASS10.738s. No -d/uninstall/clear or DB
+rewind. Verified owned VM paused via SDK console after all tests, state preserved.
+Source/Core unchanged, original signer kept. Sanitized report:
+qualification/phase4-web-native5-targeted.json. Pending FINAL fresh full384Python
+after earlier failed full; use sequential scope/no active TCG VM/Gradle. Final
+package secret audit/publication/independent GitHub download SHA and current
+STATUS/HANDOFF/acceptance follow only after that full gate PASS. No Phase5 advance.

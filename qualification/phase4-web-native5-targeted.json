@@ -1,0 +1,135 @@
+{
+  "state": "SCOPED_TARGETED_PASS_FULL_REGRESSION_PENDING",
+  "source_matching_build": "3914b99ff88cce898a59c980e168f839a8e81fd0",
+  "apk": {
+    "sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "bytes": 39000831,
+    "application_id": "org.asc.foundation",
+    "version_code": 5,
+    "version_name": "0.4.1-native-node-candidate",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+      "android.permission.CHANGE_NETWORK_STATE",
+      "android.permission.POST_NOTIFICATIONS"
+    ],
+    "canonical_core_modules": 120,
+    "inventory_findings": [],
+    "scope": "internal debug inventory/signature only; no migration or phone acceptance"
+  },
+  "host_package": {
+    "version": "0.4.3-dev",
+    "release_id": "c8315bdb08973c4c8cca422a4aa8337362fedebb61bc1a61a721097fa37b9f55",
+    "sha256": "c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc",
+    "files": 139,
+    "capabilities": [
+      "installer",
+      "lan-single-writer",
+      "upgrade-safe",
+      "dashboard-lite",
+      "android-volume-anchor",
+      "quick-join-foundation",
+      "local-engine-bridge",
+      "core-quorum-observer",
+      "dashboard-pwa-network-only"
+    ],
+    "state": "PASS",
+    "deterministic_rebuild": true,
+    "verified_exact_source": true,
+    "private_state": false
+  },
+  "native_api30": {
+    "state": "PASS",
+    "android_tests": 28,
+    "seconds": 249.012,
+    "sdk": 30,
+    "uid_preserved": true,
+    "scope": "actual Android retained original v4->prepatch5->patched5; final direct4->5 NOT TESTED, no uninstall or clear; TLS restart/socket/full22regression plus original committed bytes",
+    "foreign_uid_binder_tests": 1,
+    "foreign_seconds": 0.128
+  },
+  "normal_catalog_e2e": {
+    "state": "PASS",
+    "scope": "Linux +API30 x86_64 synthetic; not phones/physical domains",
+    "adb_control_only": true,
+    "native_identity_reset": false,
+    "native_android_tests": 2,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "logical_domains": 2,
+    "physical_domain_independence": false,
+    "actual_browser_login_upload_download": true,
+    "native_offline_fallback": true,
+    "controller_loss_denied": true,
+    "retained_process_identity": true,
+    "entry_mode": "retained resume",
+    "fresh_initialization_junit_completed": false
+  },
+  "catalog_android_seconds": [
+    80.675,
+    38.373
+  ],
+  "downgrade_final_artifact": {
+    "state": "PASS",
+    "exact_previous_apk_refused": true,
+    "identity_and_original_bytes_after_refusal_tests": 1,
+    "seconds": 10.738,
+    "scope": "final APK5 unchanged after exact tracked APK4 refused; no -d/uninstall/clear"
+  },
+  "pwa": {
+    "targeted_dashboard_browser_tests": 8,
+    "seconds": 46.917,
+    "read_only_gateway_tests": 3,
+    "gateway_seconds": 31.711,
+    "manifest_and_network_only_worker": true,
+    "chromium_installability_errors": 0,
+    "independent_actual_install_launch_uninstall": "PASS Linux headless Chromium CDP, isolated trusted HTTPS profile",
+    "android_pwa_install": "NOT TESTED",
+    "offline_writes": false,
+    "cached_api_or_files": false
+  },
+  "jvm": {
+    "tests": 17,
+    "state": "PASS fresh task rerun after final native change"
+  },
+  "core": {
+    "first_fresh_full": "384 tests, 2 errors, 0 skips,2141.271s; NOT PASS",
+    "first_errors": [
+      "ExternalFaults external_source_unavailable",
+      "GCCluster stale_gc_plan"
+    ],
+    "unchanged_isolated_retest": {
+      "tests": 2,
+      "seconds": 358.324,
+      "state": "PASS",
+      "core_changes": false,
+      "vm_paused": true
+    },
+    "new_fresh_full": "PENDING; must run without active Android/Gradle contention"
+  },
+  "retained_prepatch_failures": [
+    "matching-package first normal browser download event TimeoutError",
+    "diagnostic retry browser HTTP200/SHA success but process-death Node start failed",
+    "Android TCP rebind2tests/1failure EADDRINUSE",
+    "reuse-only28tests/1failure blocked writer",
+    "raw-first28tests/1failure close-completion active count race"
+  ],
+  "limits": [
+    "Full Phase4 NOT ACCEPTED",
+    "No real phone/ARM64 runtime/physical domains/LAN/Doze/OEM acceptance",
+    "API35 fresh startup blocked; final native5 transport on35 NOT TESTED",
+    "API26-29 NativeTLS NOT QUALIFIED",
+    "Final exact direct published4->final5 upgrade NOT TESTED; actual original4->interim5->final5 normal replacements preserve state",
+    "No Termux->APK migration/Cloudflare/Android Raft/GC/failover/writable DR"
+  ]
+}

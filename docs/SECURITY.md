@@ -9,7 +9,9 @@ Each accepted TCP socket stays privately owned by its connection and is wrapped
 with the existing server-mode JSSE context, TLS1.2/1.3 and existing certificate.
 Only TLS input/output enters the canonical Core handler; no plaintext dispatch.
 The absolute deadline closes that exact underlying transport before TLS close,
-so a Conscrypt blocked-write lock cannot prevent cancellation. No fd reflection,
+so a Conscrypt blocked-write lock cannot prevent cancellation. Concurrent close
+waits for completed cleanup with a bounded12second failure path; a started-close
+flag alone is not proof the connection slot was released. No fd reflection,
 arbitrary descriptor/PID access, process kill, new credentials or IPC operation.
 TLS abort is an error boundary: content length/SHA and authorization remain
 mandatory, and partial objects never become verified. Existing wrong-pin,
