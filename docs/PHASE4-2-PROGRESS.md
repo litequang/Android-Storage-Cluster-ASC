@@ -1643,3 +1643,23 @@ Both newer35and30fixtures stopped; all PIDs in owner files are historical until
 revalidated. See PHASE4-STATUS/HANDOFF and qualification/phase4-api30-node.json.
 Next acceptance is genuinely missing phone/platform evidence, not another repeat
 of completed Core phases. Full Phase4 remains NOT ACCEPTED; Phase5 not started.
+
+
+## Phase4 Web/PWA completion checkpoint in progress
+Owner again requests finishing Phase4. API35 image verified still official latest
+r2 and /dev/kvm absent; cold block preserved, no speculative runtime fix or waived
+gate. Independent missing Web/PWA implementation now added: fixed assets/manifest/
+icons/network-only SW/install prompt, same backend. Source package allowlist shared.
+8targeted Dashboard+actualChromium PASS46.917s. First PWA browser attempt failed
+installability because Playwright newContext is incognito; corrected to isolated
+normal persistent profile only for current PWA fixture, no TLS/assertion bypass.
+No-cache/API/offline/full existing file assertions retained. Core observer targeted
+gate pending below; full final regression and matching candidate packaging still
+required after current software changes. Old APK4/source artifacts remain intact,
+but their frozen383proof does NOT qualify the newly changed web/package code.
+
+Web/PWA targeted checkpoint:8Dashboard/browser tests PASS46.917s,3Core observer
+gateway tests PASS31.711s including all mutations denied/read-only recovery.
+Runtime/PWA source changed, so old383 is historical only for this NEW source.
+Next matching APK/package +retained-state upgrade targeted gates, then fresh final
+full regression once. No new candidate or phone/production acceptance yet.

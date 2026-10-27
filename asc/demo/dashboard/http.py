@@ -18,11 +18,12 @@ from ...client import ClientError
 from ...server import Handler, PayloadTooLarge
 from ...storage.errors import StorageError
 from ...storage.volumes import no_links
+from .assets import ASSETS
 from .auth import COOKIE, SESSION_TTL, GRANT_TTL, Sessions
 from .views import Views
 from ..pairing import Pairings, PairingError
 
-CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
+CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self'; worker-src 'self'"
 ERRORS = {'no_eligible_storage': 'insufficient_capacity', 'logical_version_exists': 'file_exists',
           'idempotency_conflict': 'idempotency_conflict', 'file_not_found': 'not_found',
           'no_available_replica': 'replica_unavailable'}
@@ -259,8 +260,7 @@ class DashboardHandler(Handler):
             return self._json(200, {'authenticated': True, 'csrf': session['csrf'], 'expires_in': SESSION_TTL},
                               (('Set-Cookie', cookie_name + '=' + cookie + '; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=' + str(SESSION_TTL)),))
         # Fixed, public, local assets only. No filesystem path is derived from the request.
-        assets = {'/': ('index.html', 'text/html; charset=utf-8'), '/assets/app.js': ('app.js', 'text/javascript; charset=utf-8'),
-                  '/assets/style.css': ('style.css', 'text/css; charset=utf-8')}
+        assets = ASSETS
         if method == 'GET' and path == '/favicon.ico':
             self._headers(204, 'image/x-icon', 0)
             return

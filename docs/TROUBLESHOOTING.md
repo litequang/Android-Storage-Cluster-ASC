@@ -546,3 +546,10 @@ heartbeat outward yet host upload times out. Verify actual interfaces and select
 private Node bind; use the intended supported SDK adapter before E2E. A normal
 WiFi toggle in a TASK-OWNED fixture corrected this without changing identity,
 proxy/CA or using ADB as data transport. Phone WiFi LAN remains a separate gate.
+
+
+PWA install criteria: use verified HTTPS and a NORMAL browser profile; Chromium
+reports in-incognito and refuses installation in private browsing. Unsupported
+browsers can still use ordinary Dashboard. The install button appears only after
+browser beforeinstallprompt; no fake success. Offline navigation/API has no cached
+files or offline writes. This is a web client, not a Termux/native service launcher.

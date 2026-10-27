@@ -563,3 +563,14 @@ Catalog/Storage rewrite, Node state change or automatic single-writer/Core migra
 Minimal Cụm view consumes sanitized actual gateway data; unknown/unconfirmed/stale
 availability stays UNKNOWN. Separate observer/Node locks; passive observation does
 not create FGS or writer authority. Full-byte recovery remains passive READ-ONLY.
+
+
+## Phase4 Web App — network-only PWA client
+Existing Dashboard now provides fixed manifest/icons and root service worker for
+standalone browser installation. Same owner session and canonical services; no
+new Catalog, filesystem/process bridge, Node startup or cloud dependency. SW only
+passes root GET navigation to network/no-store; API/upload/download are untouched.
+No CacheStorage/IndexedDB, offline write or background sync. Browser install prompt
+needs explicit user action; acceptance of prompt is not claimed as installation.
+Current install criteria are verified in actual Chromium normal isolated persistent
+profile, not incognito; real Chrome Android installation remains an owner gate.

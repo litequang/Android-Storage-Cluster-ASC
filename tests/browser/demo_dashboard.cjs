@@ -30,9 +30,22 @@ async function launch(root) {
     await assert.rejects(page.goto(config.origin), /ERR_CERT_AUTHORITY_INVALID/);
   } finally { await untrusted.close(); }
   stage = 'trusted-launch';
-  const browser = await launch(home('trusted-browser', true));
+  const trustedRoot = home('trusted-browser', true);
+  let browser = null;
+  let context = null;
   try {
-    const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true, ignoreHTTPSErrors: false });
+    const options = { viewport: { width: 1280, height: 900 }, acceptDownloads: true, ignoreHTTPSErrors: false };
+    if (config.pwa) {
+      // Chromium refuses PWA installation in incognito: use an isolated REAL
+      // persistent profile, not a spoofed installability result or TLS bypass.
+      context = await chromium.launchPersistentContext(path.join(trustedRoot, 'profile'), {
+        ...options, executablePath: process.env.ASC_TEST_CHROMIUM || '/usr/bin/chromium', headless: true,
+        env: { ...process.env, HOME: trustedRoot },
+        args: ['--disable-background-networking', '--disable-component-update', '--disable-sync'] });
+    } else {
+      browser = await launch(trustedRoot);
+      context = await browser.newContext(options);
+    }
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.name));
@@ -43,6 +56,22 @@ async function launch(root) {
     assert.equal(response.status(), 200);
     assert.equal(await page.evaluate(() => window.isSecureContext), true);
     assert.ok(response.headers()['content-security-policy'].includes("frame-ancestors 'none'"));
+    let pwa = null;
+    if (config.pwa) {
+      stage = 'actual-pwa';
+      await page.evaluate(() => navigator.serviceWorker.ready);
+      await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
+      const manifest = await page.evaluate(async () => (await fetch('/manifest.webmanifest')).json());
+      assert.equal(manifest.display, 'standalone'); assert.equal(manifest.start_url, '/');
+      const cdp = await context.newCDPSession(page);
+      const appManifest = await cdp.send('Page.getAppManifest');
+      assert.equal(appManifest.url, config.origin + '/manifest.webmanifest');
+      assert.deepEqual(appManifest.errors, []);
+      const eligibility = await cdp.send('Page.getInstallabilityErrors');
+      assert.deepEqual(eligibility.installabilityErrors, []);
+      assert.deepEqual(await page.evaluate(() => caches.keys()), []);
+      pwa = { manifest: true, active_worker: true, chromium_installability_errors: 0, actual_install: 'NOT TESTED' };
+    }
     stage = 'invalid-login';
     await page.locator('#login-code').fill('deliberately-wrong-code');
     await page.locator('#login-button').click();
@@ -133,12 +162,12 @@ async function launch(root) {
     await page.locator('#logout').click();
     await page.locator('#login-panel').waitFor({ state: 'visible' });
     assert.equal((await context.cookies()).some(value => value.name === '__Host-ASC-Demo'), false);
+    if (config.pwa) assert.deepEqual(await page.evaluate(() => caches.keys()), []);
     assert.deepEqual(errors, []);
     assert.ok([...requested].every(url => url.startsWith(config.origin + '/') || url === config.origin));
     console.log(JSON.stringify({ passed: true, file_id: fileId, sha256: digest, replicas: copies.length,
-      trusted_tls: true, untrusted_tls_denied: true, mobile_width: 390, offline_refused: true, page_errors: errors.length }));
-    await context.close();
-  } finally { await browser.close(); }
+      pwa, trusted_tls: true, untrusted_tls_denied: true, mobile_width: 390, offline_refused: true, page_errors: errors.length }));
+  } finally { if (context) await context.close(); if (browser) await browser.close(); }
 })().catch(error => {
   const known = ['ERR_CERT_AUTHORITY_INVALID', 'ERR_CERT_COMMON_NAME_INVALID', 'canceled', 'ERR_BLOCKED_BY_CSP', 'Target closed'].find(value => String(error).includes(value));
   const review = '/workspace/work/demo4-browser';

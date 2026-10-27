@@ -655,3 +655,12 @@ integration is g.2, no native Node/FGS or public APK claim.
   correction,22Android +foreign1 PASS. Preserve initial failure and35cold blocker.
 - No runtime/schema/permission/dependency change or production/phone acceptance;
   see PHASE4-HANDOFF and scoped API30 receipt.
+
+### Phase4 Web/PWA client (development checkpoint)
+- Add standalone manifest/local192+512PNG icons, consent-based install prompt and
+  network-only service worker using the existing owner Dashboard/API. No cache of
+  API/files, offline write, background sync or local process control.
+- Fixed shared public asset inventory for HTTP/source package, CSP self-only
+  manifest/worker, all prior auth/CSRF/no-store/readonly-mode guards unchanged.
+- Actual Chromium normal-profile criteria/worker and browser file workflow PASS;
+  real Android installation is not inferred. Candidate packaging/full gate follows.

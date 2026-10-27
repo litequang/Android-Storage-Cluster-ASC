@@ -783,3 +783,14 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 tools/qualify_native_catalog.py --android-api {30,35} validates matching owned AVD
 name/serial/actual ro.build.version.sdk. Default35 unchanged;30 uses5562. No phone
 serial, identity reset, startup-budget or I/O assertion relaxation.
+
+
+## Phase4 network-only Dashboard PWA
+- asc/demo/dashboard/assets.py: one fixed public HTTP/package asset allowlist.
+- dashboard/web/manifest.webmanifest,service-worker.js,icon-{192,512}.png: standalone
+  browser metadata/network-only navigation, never caches API/file/owner data.
+- dashboard/http.py: fixed MIME routes +manifest-src/worker-src self; existing
+  no-store/auth/CSRF/mode guards retained. package.py reuses the exact allowlist.
+- web/app.js: browser install event/prompt UX, no Node/native lifecycle control.
+- tests/test_demo_dashboard +browser: real trusted TLS/PWA criteria/active SW/empty
+  CacheStorage before and after full file/logout/offline workflow; old assertions kept.

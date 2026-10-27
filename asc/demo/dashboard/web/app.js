@@ -1,6 +1,29 @@
 'use strict';
 (() => {
   const $ = id => document.getElementById(id);
+  let installation = null;
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault(); installation = event; $('install-app').hidden = false;
+  });
+  $('install-app').addEventListener('click', async () => {
+    const request = installation; installation = null; $('install-app').hidden = true;
+    if (!request) return;
+    try {
+      await request.prompt();
+      const choice = await request.userChoice;
+      $('install-status').textContent = choice.outcome === 'accepted'
+        ? 'Trình duyệt đã chấp nhận yêu cầu cài Web App; Node/Termux vẫn chạy riêng.'
+        : 'Chưa cài Web App. Bạn vẫn dùng được Dashboard trong trình duyệt.';
+    } catch (_) { $('install-status').textContent = 'Chưa xác nhận cài Web App. Tiếp tục dùng trình duyệt.'; }
+  });
+  window.addEventListener('appinstalled', () => {
+    installation = null; $('install-app').hidden = true;
+    $('install-status').textContent = 'Đã cài Web App trong trình duyệt này. Vẫn cần Controller online; không có offline-write.';
+  });
+  if (window.isSecureContext && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/', updateViaCache: 'none' })
+      .catch(() => { $('install-status').textContent = 'Web App chưa sẵn sàng; Dashboard vẫn dùng qua trình duyệt HTTPS.'; });
+  }
   const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null };
   const pairing = { generation: 0, ticket: null, timer: null, creating: false, polling: false };
   const messages = {

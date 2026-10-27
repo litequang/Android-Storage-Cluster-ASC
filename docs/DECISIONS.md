@@ -307,3 +307,12 @@ change or automatic provider switch. Both platforms require actual seals/CLOEXEC
 readback/cleanup. TLS key is software/exportable in RAM, protected at rest by
 existing Keystore AES, not falsely hardware-nonexportable. Agent socket/lifecycle
 integration is a separate checkpoint; no duplicate Engine or writer authority.
+
+
+## ADR071 — Network-only browser PWA shares owner Dashboard
+Provide manifest/local icons and network-only navigation worker under the existing
+HTTPS origin. Keep all API/file requests on the existing authenticated services;
+no persistent offline catalog/cache, writes, credential store or app/Termux process
+control. Install UX is consent-based, and CDP installability is separate from
+actual user/Android installation. Source package uses the same fixed asset allowlist
+as HTTP, preventing missing assets or accidental private frontend files.

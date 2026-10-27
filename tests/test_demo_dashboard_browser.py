@@ -36,7 +36,7 @@ class DashboardBrowserTests(unittest.TestCase):
         output = self.root / 'browser-artifacts'
         output.mkdir(mode=0o700)
         grant = self.command(self.controller, 'dashboard-code')
-        config = {'origin': self.browser_origin, 'code': grant['code'], 'ca': str(self.controller / 'dashboard/ca.crt'),
+        config = {'pwa': True, 'origin': self.browser_origin, 'code': grant['code'], 'ca': str(self.controller / 'dashboard/ca.crt'),
                   'payload': str(self.payload), 'sha': hashlib.sha256(self.data).hexdigest(), 'output': str(output),
                   'logical': 'browser/<img src=x onerror=globalThis.dashboardXss=1>.bin'}
         script = self.repo / 'tests/browser/demo_dashboard.cjs'

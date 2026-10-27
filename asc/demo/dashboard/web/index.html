@@ -5,15 +5,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>ASC · Dashboard Lite</title>
+  <meta name="theme-color" content="#185adb">
+  <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/assets/style.css">
   <script src="/assets/app.js" defer></script>
 </head>
 <body>
 <header class="topbar">
   <div class="brand"><span class="brand-mark">ASC</span><div><strong>Dashboard Lite</strong><small id="runtime-label">ASC · LAN riêng</small></div></div>
+  <button id="install-app" class="button subtle" hidden>Cài Web App</button>
   <button id="logout" class="button subtle" hidden>Đăng xuất</button>
 </header>
 <main>
+  <p id="install-status" class="muted" role="status">Web App cần Controller và kết nối LAN; không tự chạy Node/Termux.</p>
   <section id="login-panel" class="login-panel panel">
     <span class="eyebrow">Cụm lưu trữ cá nhân</span>
     <h1>Đăng nhập chủ cụm</h1>

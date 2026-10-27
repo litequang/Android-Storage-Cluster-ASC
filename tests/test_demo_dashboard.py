@@ -275,5 +275,30 @@ class DashboardAPITests(unittest.TestCase):
         self.assertEqual(entry['verified_replicas'], 2)  # Historical observation before domain reapproval.
 
 
+    def test_public_pwa_assets_are_fixed_network_only_and_never_auth_data(self):
+        from asc.demo.dashboard.assets import ASSETS
+        import struct
+        for route, (name, mime) in ASSETS.items():
+            status, headers, raw = self.http('GET', route, authenticated=False, json_response=False)
+            self.assertEqual(status, 200, route)
+            self.assertEqual(headers['Content-Type'], mime)
+            self.assertEqual(headers['Cache-Control'], 'no-store')
+            self.assertNotIn('Set-Cookie', headers)
+            self.assertIn("worker-src 'self'", headers['Content-Security-Policy'])
+            self.assertIn("manifest-src 'self'", headers['Content-Security-Policy'])
+            if name.endswith('.png'):
+                self.assertTrue(raw.startswith(b'\x89PNG\r\n\x1a\n'))
+                width,height=struct.unpack('>II',raw[16:24])
+                self.assertEqual((width,height),(192,192) if '192' in name else (512,512))
+        status, _, manifest = self.http('GET','/manifest.webmanifest',authenticated=False)
+        self.assertEqual(status,200)
+        self.assertEqual((manifest['id'],manifest['start_url'],manifest['scope']),('/','/','/'))
+        self.assertEqual(manifest['display'],'standalone')
+        self.assertEqual(len(manifest['icons']),2)
+        self.assertEqual(self.http('GET','/assets/private.key',authenticated=False)[0],401)
+        self.assertEqual(self.http('GET','/assets/%2e%2e/state',authenticated=False)[0],400)
+        self.assertEqual(self.http('GET','/api/state',authenticated=False)[0],401)
+
+
 if __name__ == '__main__':
     unittest.main()

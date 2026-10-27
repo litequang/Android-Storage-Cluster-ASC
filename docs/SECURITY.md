@@ -630,3 +630,14 @@ ACTION_VIEW dispatch is not proof of browser trust/login. Existing Demo owner
 session remains separate from Core observer and Node identity. No new permission,
 dependency, schema or public endpoint. Same original private signer is mandatory;
 Android lower-version refusal is preserved, never bypassed with uninstall/-d.
+
+
+## Phase4 Web App — network-only PWA client
+Existing Dashboard now provides fixed manifest/icons and root service worker for
+standalone browser installation. Same owner session and canonical services; no
+new Catalog, filesystem/process bridge, Node startup or cloud dependency. SW only
+passes root GET navigation to network/no-store; API/upload/download are untouched.
+No CacheStorage/IndexedDB, offline write or background sync. Browser install prompt
+needs explicit user action; acceptance of prompt is not claimed as installation.
+Current install criteria are verified in actual Chromium normal isolated persistent
+profile, not incognito; real Chrome Android installation remains an owner gate.
