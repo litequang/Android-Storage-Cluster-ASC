@@ -2012,3 +2012,27 @@ authority and NEW verified backup; no old DB restore or schema migration needed.
 Checkpoint normal commit/push/remote verification precedes fresh full392. Fresh
 Go/vet/module/builds running separately; full pending, no Phase4 acceptance yet.
 Physical/ARM64/LAN/OEM/Doze/API35-final5 gates and writerDR remain unqualified.
+
+
+### Core decode checkpoint synced; fresh full392 RUNNING
+
+Source checkpoint8c547288816342f9c6ebf94d3262ebf91049300a normal-pushed and
+HEAD=FETCH_HEAD=advertised remote before proceeding. Fresh Go uncached tests/vet/
+modules +Linuxamd64/Windowsamd64/Androidarm64 builds ALL PASS; exact commands/time
+in qualification/phase4-core-decode-go.json (cross-builds are not platform runtime).
+
+Fresh full source/tests/project/packaged-guide/old-artifact inputs314frozen from
+8c54728; expected392tests (all384original +8additive decoder tests), no assertions
+removed. Started durable supervisor under /workspace/work/phase4-core-decode-full.
+Read full-python-running.json/receipt/log and supervisor-owner.json on resume;
+PIDs are historical, verify identity before any signal. Executor has no active
+emulator/Gradle workload; original signer/AVD DATA retained, no Android action.
+Do not change frozen inputs or reuse old failed full384 as this new392result.
+Full is RUNNING, NOT PASS; all physical/phone/API35-final5 limits remain.
+
+Next after actual full392PASS: deterministic current-source Controller package
+with new distinct core-decode filename/SHA (allowlist already committed), package/
+secret/compatibility check, normal commit/push and separate remote download proof.
+Old APK5/source c831 packages remain immutable with their old source qualification;
+new Core optimization is host-only, no claim APK5 now embeds it. No new signer,
+identity/schema migration, APK downgrade or Android GC/Raft/writerDR activation.

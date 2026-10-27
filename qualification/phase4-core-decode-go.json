@@ -1,0 +1,101 @@
+{
+  "state": "PASS",
+  "source": "8c547288816342f9c6ebf94d3262ebf91049300a",
+  "go_source_changed": false,
+  "top_level_tests": 11,
+  "nested_cases": 12,
+  "gates": [
+    {
+      "gate": "tests",
+      "exit_code": 0,
+      "seconds": 19.464,
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-v",
+        "-timeout",
+        "240s",
+        "./..."
+      ],
+      "environment": {}
+    },
+    {
+      "gate": "vet",
+      "exit_code": 0,
+      "seconds": 0.164,
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "environment": {}
+    },
+    {
+      "gate": "modules",
+      "exit_code": 0,
+      "seconds": 0.14,
+      "command": [
+        "go",
+        "mod",
+        "verify"
+      ],
+      "environment": {}
+    },
+    {
+      "gate": "build-linux",
+      "exit_code": 0,
+      "seconds": 0.553,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/phase4-gc-decode-targeted/asc-raft-linux",
+        "./cmd/asc-raft"
+      ],
+      "environment": {
+        "CGO_ENABLED": "0",
+        "GOOS": "linux",
+        "GOARCH": "amd64"
+      }
+    },
+    {
+      "gate": "build-windows",
+      "exit_code": 0,
+      "seconds": 0.718,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/phase4-gc-decode-targeted/asc-raft-windows",
+        "./cmd/asc-raft"
+      ],
+      "environment": {
+        "CGO_ENABLED": "0",
+        "GOOS": "windows",
+        "GOARCH": "amd64"
+      }
+    },
+    {
+      "gate": "build-android",
+      "exit_code": 0,
+      "seconds": 0.485,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/phase4-gc-decode-targeted/asc-raft-android",
+        "./cmd/asc-raft"
+      ],
+      "environment": {
+        "CGO_ENABLED": "0",
+        "GOOS": "android",
+        "GOARCH": "arm64"
+      }
+    }
+  ],
+  "scope": "Linux runtime tests; Windowsamd64 and Androidarm64 builds are cross-build only, no phone runtime"
+}

@@ -1,3 +1,8 @@
+> **Latest Core checkpoint:** `8c54728` đã push/remote-verified. Original GC gate và
+> toàn bộ8nhóm physical fault đã PASS; fresh Go gates PASS. Full392mới đang chạy
+> trên314inputs cố định; chưa có full PASS. Các kết quả FAIL384/184 bên dưới là lịch sử.
+> Xem PHASE4-2-PROGRESS và qualification/phase4-core-decode-targeted.json.
+
 # Phase4.2 native qualification — NOT ACCEPTED
 
 **Full regression BLOCKED. Native/PWA targeted proofs không phải nghiệm thu toàn Phase4.**

@@ -14,6 +14,15 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-27
+CURRENT FULL RUN: source8c547288816342f9c6ebf94d3262ebf91049300a pushed/fetch/
+remote matched,45targeted+fresh Go/vet/modules/builds PASS. NEW full392 RUNNING on
+314frozen inputs, durable /workspace/work/phase4-core-decode-full/{full-python-
+running.json,full-python-receipt.json,full-python.log,supervisor-owner.json}.
+No active emulator/Gradle, do not change frozen inputs. Verify actual receipt,
+never infer PASS. Older full384failure/GC blocker paragraphs are history; original
+GC target/all8physical groups now PASS, full392 not yet qualified. Report/proceed
+only on actual outcome, preserve state/signer/artifacts and writerDR lock.
+
 LATEST CORE FIX: immutable structural decode source now has45targeted PASS:
 original networkGC1PASS97.119s +physicalLinux2PASS363.661s/all8groups +42guards
 PASS8.507s. Original fault cases/assertions/10s+250ms budgets unchanged. Read
