@@ -1,0 +1,65 @@
+{
+  "checkpoint": "Phase4 API30 internal candidate qualification",
+  "state": "SCOPED_API30_NODE_WORKFLOW_PASS_AFTER_FIXTURE_CORRECTION",
+  "full_phase4": "NOT ACCEPTED: physical device/ARM64/LAN/OEM gates not run; API35 cold remains blocked",
+  "apk_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+  "host_archive_sha256": "9dbd9007058a6a43f075c1924f4014faa7060ef6667e014bbc28a91be070ad59",
+  "fresh_install_before_context": true,
+  "fresh_enrollment_startup_junit": {
+    "tests": 1,
+    "seconds": 156.88,
+    "state": "PASS; initial full host flow FAILED upload timeout"
+  },
+  "initial_host_flow": "FAIL: actual browser upload TimeoutError; not counted PASS",
+  "network_correction": "observed wlan0 10.0.2.16 and radio0 10.0.2.15; normal synthetic WiFi disable selected standard SDK .15 NAT path; no proxy/CA/reverse or identity reset",
+  "subsequent_retained_workflow": {
+    "state": "PASS",
+    "scope": "Linux +API30 x86_64 synthetic; not phones/physical domains",
+    "adb_control_only": true,
+    "native_identity_reset": false,
+    "native_android_tests": 2,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "logical_domains": 2,
+    "physical_domain_independence": false,
+    "actual_browser_login_upload_download": true,
+    "native_offline_fallback": true,
+    "controller_loss_denied": true,
+    "retained_process_identity": true,
+    "entry_mode": "retained resume",
+    "fresh_initialization_junit_completed": false
+  },
+  "retained_android_seconds": [
+    63.58,
+    33.856
+  ],
+  "android30_regression": {
+    "android_tests": 22,
+    "seconds": 117.496,
+    "state": "PASS",
+    "sdk": 30,
+    "foreign_uid_binder_tests": 1,
+    "foreign_seconds": 0.124
+  },
+  "first_attempt_clean_cold_e2e": false,
+  "identity_reset": false,
+  "physical_domains_independent": false,
+  "core_regression": "existing fresh383Python/64fault banners/Go11/vet/modules/builds; unchanged runtime sources, not rerun for driver/platform-only extension",
+  "new_jvm": "not rerun; Kotlin/project/runtime/APK unchanged, previous17receipt retained",
+  "api35_status": "retained26+foreign1 PASS; fresh cold BLOCKED, no waiver",
+  "image": {
+    "url": "https://dl.google.com/android/repository/sys-img/android/x86_64-30_r11.zip",
+    "api": 30,
+    "revision": 11,
+    "abi": "x86_64",
+    "bytes": 676379777,
+    "official_sha1": "5e4de3946d46f88856c35efcc4d797b381456347",
+    "measured_sha256": "8d591034a4244a920d7a3ec274bb1734dd6474a3d8c11d0fce902010db3a13aa",
+    "seconds": 32.332,
+    "scope": "development SDK directory only; not runtime PASS",
+    "bundled_source_properties_revision": 10,
+    "revision_note": "official repository/ZIP filename revision11; ZIP source.properties says10; preserved, not rewritten",
+    "runtime_qualification": "API30 x86_64 scoped Node/fixture-corrected workflow +22regression+foreign1 PASS; not phones"
+  },
+  "driver_sha256": "d6348a999e2ab22b74894b60614ac789dd39911b6f46b2ec659fd3159dc8a148"
+}

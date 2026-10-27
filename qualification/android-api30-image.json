@@ -1,0 +1,14 @@
+{
+  "url": "https://dl.google.com/android/repository/sys-img/android/x86_64-30_r11.zip",
+  "api": 30,
+  "revision": 11,
+  "abi": "x86_64",
+  "bytes": 676379777,
+  "official_sha1": "5e4de3946d46f88856c35efcc4d797b381456347",
+  "measured_sha256": "8d591034a4244a920d7a3ec274bb1734dd6474a3d8c11d0fce902010db3a13aa",
+  "seconds": 32.332,
+  "scope": "development SDK directory only; not runtime PASS",
+  "bundled_source_properties_revision": 10,
+  "revision_note": "official repository/ZIP filename revision11; ZIP source.properties says10; preserved, not rewritten",
+  "runtime_qualification": "see phase4-api30-node.json: scoped Node+fixture-corrected workflow and22regression+foreign1 PASS; not phones"
+}

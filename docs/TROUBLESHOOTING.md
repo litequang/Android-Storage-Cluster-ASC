@@ -530,3 +530,19 @@ preserve same context/proof/Controller, use explicit retained --resume, not rein
 corrupt keys must hold. Native stage marker is test-only/private, no Node secret.
 AVD crash is not a clean shutdown/power-loss PASS: preserve userdata/key images,
 verify fresh ownership and require actual subsequent key/identity/byte readback.
+
+
+Fresh SDK35 TCG sandbox can fail process attach/startup; observed system telephony
+ANR in APN database/ICU regex and Bluetooth SIGABRT as well as ASC startup failure.
+This does NOT prove ASC innocent or qualify cold-start. Keep raw logs private,
+preserve userdata; no watchdog/identity/security bypass. API30 is an independent
+platform gate, not a relabelled35 PASS. Official pinned image metadata is in
+qualification/android-api30-image.json (repository rev11 versus bundled rev10
+source.properties discrepancy preserved). Actual image API30 checked at runtime.
+
+SDK API30 network fixture: observed active wlan0 .16 versus standard SDK ingress
+redir .15 (radio0 simulated data interface). A Node bound only to .16 can enroll/
+heartbeat outward yet host upload times out. Verify actual interfaces and selected
+private Node bind; use the intended supported SDK adapter before E2E. A normal
+WiFi toggle in a TASK-OWNED fixture corrected this without changing identity,
+proxy/CA or using ADB as data transport. Phone WiFi LAN remains a separate gate.

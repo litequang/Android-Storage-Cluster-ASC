@@ -1573,3 +1573,54 @@ phone API, still NOT ARM64/phone proof). Official repository image revision11,
 size676379777/SHA1 5e4de3946d46f88856c35efcc4d797b381456347. Download/extract only
 workspace development SDK; no proxy/CA/auth changes or phone access. Full Phase4
 NOT ACCEPTED. qualification/phase4-cold-api35-blocker.json preserves this result.
+
+API30 official AOSP x86_64 image downloaded676379777bytes, SHA1 verified5e4de3946d46f88856c35efcc4d797b381456347, measured SHA2568d591034a4244a920d7a3ec274bb1734dd6474a3d8c11d0fce902010db3a13aa. Repository/ZIP revision11 but inner source.properties10 preserved. New independent AVM/nameASC_NATIVE_CATALOG_API30/serial5562/private root/workspace/work/phase4-api30-final; original35 userdata retained/stopped. Runtime APK/host source unchanged. Driver gains strict explicit30/35 choice, syntax+unqualified29 refusal PASS; actual E2E pending. No new383 result claimed for driver-only extension; production Python/Go/Android code matches frozen baseline.
+
+
+## 2026-10-27 — API30 Native Node workflow and internal handoff
+Same exact published APK4/7c4ba649... and Controller archive9dbd9007... now run on
+actual official API30(Android11) x86_64 image. Fresh installation precondition
+verified package absent, real Keystore/application/context created only by test
+consent/enrollment flow. Initial enrollment/Node/TLS/volume probe/heartbeat holder
+JUnit1PASS156.880s. First HOST flow FAILED browser upload timeout, NOT a full PASS.
+
+Actual guest interfaces: wlan0=10.0.2.16, radio0=10.0.2.15. SDK standard redirection
+reaches .15 while automatic active-WiFi binding selected .16. Disabled WiFi ONLY
+in this synthetic fixture, selecting existing simulated data/radio0 .15; not a
+physical Ethernet/WiFi/cellular LAN acceptance. No proxy/CA/route-table/reverse
+changes. Retained SAME app/Node/Cluster/Keystore/volume/proof; no reset/new identity.
+Unmodified transfer/checksum/Controller-authority assertions then complete PASS:
+actual Chromium owner login/upload256KiB/allbytes/2logical-domain replicas/SHA,
+Native-offline Linux fallback, insufficient-domain upload denial, restart +direct
+Native bytes, reachable Node TLS +Controller-loss EXACT503, own-process death and
+same identity/context +actual Native bytes. Android retained1/63.580s +1/33.856s.
+Do NOT relabel that retained host report as a clean first-attempt cold E2E run.
+All failures retained, initial fresh-enrollment JUnit and subsequent full workflow
+are separate composite evidence. Hardware independence false (ONE host).
+
+Additional actual API30 selected regression22PASS0skip117.496s: context/TLS native
+Bionic memfd+seals/standardX509+key match/real handshake/wrong pin/Keystore lostkey
+no regen/private Engine I/O/readback/fsync/permission/corruption/SAF refusal/UI and
+legacy Binder. Actual separately signed foreignUID Binder1PASS0.124s. These are
+new30 executions, not inferred from35. SDK35 retained26+1 remains valid only in its
+recorded scope;35fresh cold BLOCKED unchanged. All original VMs/keys preserved.
+
+Runtime Core/Python/Go/Kotlin/project inputs and both published artifacts unchanged.
+Only qualification driver adds explicit30/35 strict owned name/serial/real SDK;
+default35 unchanged,29refused; parser/syntax +actual30 flow PASS. Existing fresh
+383Python0skip/64fault markers and Go11/vet/modules/builds apply to unchanged
+runtime. No NEW full/JVM counts invented; previous JVM17 remains unchanged-source
+receipt. Qualification JSON:phase4-api30-node.json; download receipt at
+phase4-package-publication.json; current main artifact3075f69 remotely downloaded
+with exact SHA verified. Private state and all raw logs under
+/workspace/work/phase4-api30-final, older35attempts underphase4-cold-final.
+
+Cloud MVP candidate is handed off with PHASE4-HANDOFF.md and real downloadable
+artifacts. Full Phase4/4.2 is NOT ACCEPTED: physical ZTE/Bphone/ARM64/real LAN without
+Internet/ChromeAndroid CA/Doze/OEM/two physical domains not run;35cold unsupported
+in current environment. API26–29 nativeTLS NOT QUALIFIED. Native file picker,
+multiuser-password account system, PWA installability and Cloudflare not added.
+Existing browser owner File Manager is the MVP interface, not a new backend.
+No Termux->APK migration, Android voter/GC/failover or writerDR activation.
+Owner device gates must be recorded honestly before broader acceptance; do not
+redo completed phases/full tests or advance to Phase5 just to claim completion.

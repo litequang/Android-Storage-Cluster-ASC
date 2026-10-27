@@ -646,3 +646,12 @@ integration is g.2, no native Node/FGS or public APK claim.
   independence. Main product/APK unchanged; candidate/final qualification pending.
 - Add clear owner feature status for web/native login/File Manager, LAN without
   Internet versus no local network, and still-unimplemented Cloudflare/remote.
+
+### 2026-10-27 — API30 Node and downloadable internal candidate
+- Publish exact existing signed APK4 and exact E2E Controller source as immutable
+  Git artifacts with SHA files; separate clone download verifies both hashes.
+- Extend only qualification driver to explicitly guarded API30/API35 fixtures.
+  Actual30 fresh enrollment startup, retained full file flow after SDK interface
+  correction,22Android +foreign1 PASS. Preserve initial failure and35cold blocker.
+- No runtime/schema/permission/dependency change or production/phone acceptance;
+  see PHASE4-HANDOFF and scoped API30 receipt.

@@ -13,6 +13,22 @@
 
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
+## Current Phase4 closure pointer — 2026-10-27
+Owner requests finishing Phase4. Current source remains this feature branch; no
+whole merges or phone access. Read latest PHASE4-2 PROGRESS/ACCEPTANCE and
+PHASE4-STATUS/HANDOFF after ordered reads. APK4 +exact Controller source/checksums
+are tracked and separately downloaded from GitHub (3075f69/0882333). Runtime frozen
+Core383Python0skip/64fault banners and Go11/vet/modules/builds remain unchanged;
+only SDK qualification driver gains explicit30/35 choice. API30 fresh enrollment
+startup JUnit1 then retained complete E2E after SDK .16->.15 fixture correction,
+22regression+foreign1 PASS. Preserve first host upload FAIL; don't call retained
+report a clean initial cold E2E. API35 retained26+1 PASS but fresh startup BLOCKED;
+all owner phone/ARM64/real LAN/OEM gates not run. Full Phase4 NOT ACCEPTED. Current
+qualification/phase4-api30-node.json owns precise scopes. Original signer/private
+VM states must remain private and intact. Do not redo completed full tests without
+runtime changes, reinterpret historical paragraphs below as current progress, or
+advance Phase5/activate writerDR/Raft/GC to claim completion.
+
 ## Non-negotiable user rules
 - M51 is production web hosting. Codex has SOURCE ACCESS ONLY: no production DB/logs, live file inspection, edits or SSH. No modification of AMH, MariaDB, ports, service management, existing Termux or Termux:Boot.
 - Codex may proactively run tests, typecheck, lint and build in the local development environment.

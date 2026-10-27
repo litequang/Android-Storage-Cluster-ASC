@@ -1,9 +1,9 @@
 # ASC Phase4 internal candidate — 2026-10-27
 
 NOT a production release or physical-phone acceptance. Native APK versionCode4,
-org.asc.foundation, min26/target35; Native Node TLS requires30+, only API35 x86_64
+org.asc.foundation, min26/target35; Native Node TLS requires30+, API30 and retained API35 x86_64
 runtime tested. ARM64 packaged, not runtime tested. Full4.2 remains NOT ACCEPTED
-until missing cold integrated receipt and owner device gates are closed.
+until remaining platform and owner device gates are closed.
 
 Artifacts are stored as immutable files on feature/phase4-2-android-native because
 GitHub Release upload returned401. No token/proxy/CA change or private signer upload.
@@ -33,6 +33,6 @@ fix, never stale database restore. Private debug signer must remain in owner cus
 
 383Python0skip/64fault banners, Go11/vet/modules/builds, actual Android26+foreign1
 are recorded in qualification/phase4-2j3-final.json. Runtime code unchanged since
-that gate; only artifact/ignore/document publication metadata changes here. Cold
-qualification currently running separately, not counted PASS yet. Phones/real LAN/
+that gate; only artifact/ignore/document publication metadata changes here. API30 fresh enrollment and subsequent retained full flow after SDK network correction
+are qualified separately in phase4-api30-node.json; API35 cold is still BLOCKED. Phones/real LAN/
 ChromeAndroid/OEM/Doze/two physical domains and writableDR remain unqualified.

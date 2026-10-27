@@ -2,8 +2,9 @@
 
 Bản internal, không phải production hoặc nghiệm thu điện thoại thật. Source/runtime
 không đổi so với383Python PASS0skip/64fault banners, Go11/vet/modules/builds và
-Android26+foreign1; xem PHASE4-2-ACCEPTANCE. Cold integrated run được ghi riêng,
-không cộng PASS khi chưa có đủ host report +JUnit.
+Android26+foreign1; xem PHASE4-2-ACCEPTANCE. API30 có fresh enrollment JUnit1 và full retained workflow sau sửa fixture mạng;
+22regression+foreign1 PASS. Không gọi đó là clean cold E2E lần đầu. API35 cold
+vẫn BLOCKED. Xem qualification/phase4-api30-node.json.
 
 ## Tải đúng gói
 
@@ -17,7 +18,7 @@ Git và tải lại bằng clone riêng từ GitHub: cả hai SHA256 khớp.
 - [Checksum Controller](../candidates/asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz.sha256)
 
 APK39,000,362bytes, org.asc.foundation/versionCode4/min26/target35. NodeTLS cần30+;
-API26–29 không được nghiệm thu. Signer công khai:
+API26–29 không được nghiệm thu. API30 thực chạy trên emulator, không phải ARM64. Signer công khai:
 bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30.
 Không có private signer/key/state trong gói. APK cần được kiểm checksum/signer trên
 PC tin cậy trước khi chuyển sang máy thử và dùng trình cài Android thông thường;
@@ -79,3 +80,8 @@ khóa/DB/marker. Các bước phone/ARM64/ChromeAndroid/Doze/OEM/2hardware domai
 owner ghi kết quả, chưa PASS từ emulator. Thu thập version/model/error sanitised,
 không token/code/key/private DB/full logcat. Phase5 remote tách riêng, không mở SSH
 public hoặc writable disaster recovery để hoàn thành Phase4.
+
+
+Ma trận đóng nghiệm thu hiện tại: [PHASE4-STATUS](PHASE4-STATUS.md). API30 fresh
+enrollment và subsequent retained dataflow/22+foreign1 đã có bằng chứng;35cold
+không được miễn. Owner điền các gate phone còn NOT TESTED, không suy ra từ emulator.

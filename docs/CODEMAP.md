@@ -777,3 +777,9 @@ preserve lostACK/code replacement/one-use/identity behavior. Native g.2 next.
 - NativeCrashRecoveryTest.kt: requires pre-crash h.2b proof; real Keystore decrypt,
   same application/Node/Cluster/TLS/token/Volume and canonical local Engine byte
   hash. No seeding, credential reset, network grant or copied Termux state.
+
+
+### Explicit API30/API35 synthetic qualification
+tools/qualify_native_catalog.py --android-api {30,35} validates matching owned AVD
+name/serial/actual ro.build.version.sdk. Default35 unchanged;30 uses5562. No phone
+serial, identity reset, startup-budget or I/O assertion relaxation.

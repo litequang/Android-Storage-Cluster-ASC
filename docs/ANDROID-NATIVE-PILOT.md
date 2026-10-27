@@ -1,7 +1,7 @@
 # Owner checklist — Native Node internal candidate
 
 Future owner-controlled ZTE/Bphone trial, NOT phone acceptance. Codex has used
-only a task-owned API35 x86_64 emulator and Linux synthetic services. Never install
+only task-owned API30/API35 x86_64 emulators and Linux synthetic services. Never install
 on M51/production/unknown devices or replace existing Termux data. Read current
 PHASE4-2-ACCEPTANCE, ANDROID-NATIVE-OPERATIONS and ASC-USER-STATUS.
 

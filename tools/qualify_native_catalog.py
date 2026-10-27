@@ -41,23 +41,27 @@ def port():
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--sdk',type=Path,required=True);p.add_argument('--adb-port',type=int,default=5038)
+    p.add_argument('--android-api',type=int,choices=(30,35),default=35,
+                   help='actual owned SDK image; default API35 contract unchanged')
     p.add_argument('--serial',required=True);p.add_argument('--owner',type=Path,required=True)
     p.add_argument('--out',type=Path,required=True);p.add_argument('--resume',action='store_true')
     p.add_argument('--resume-setup',action='store_true',help='ONLY interrupted pre-identity setup; requires --resume and no app/node state')
     a=p.parse_args();owner=json.loads(a.owner.read_text());proc=Path('/proc')/str(owner['pid'])
+    expected_avd=('ASC_NATIVE_CATALOG_API'+str(a.android_api)).encode()
+    expected_serial={30:'emulator-5562',35:'emulator-5560'}[a.android_api]
     if a.resume_setup and not a.resume:raise ValueError('setup resume must explicitly retain existing fixture')
     argv=(proc/'cmdline').read_bytes().split(b'\0')
-    if (os.name!='posix' or proc.stat().st_uid!=os.getuid() or b'ASC_NATIVE_CATALOG_API35' not in argv
-            or not Path(os.readlink(proc/'exe')).name.startswith('qemu-system') or a.serial!='emulator-5560'):
+    if (os.name!='posix' or proc.stat().st_uid!=os.getuid() or expected_avd not in argv
+            or not Path(os.readlink(proc/'exe')).name.startswith('qemu-system') or a.serial!=expected_serial):
         raise ValueError('requires separate owned Native Catalog AVD; never phones/original AVD')
     adb=[str(a.sdk/'platform-tools/adb'),'-P',str(a.adb_port),'-s',a.serial]
     def call(args,data=None,timeout=40):
         r=subprocess.run(adb+args,input=data,capture_output=True,timeout=timeout)
         if r.returncode:raise RuntimeError('owned ADB failed; private response suppressed')
         return r.stdout
-    if call(['emu','avd','name']).splitlines()[0]!=b'ASC_NATIVE_CATALOG_API35':raise ValueError('AVD mismatch')
-    for prop,wanted in [('ro.kernel.qemu',b'1'),('sys.boot_completed',b'1'),('ro.build.version.sdk',b'35')]:
-        if call(['shell','getprop',prop]).strip()!=wanted:raise ValueError('actual API35 boot required')
+    if call(['emu','avd','name']).splitlines()[0]!=expected_avd:raise ValueError('AVD mismatch')
+    for prop,wanted in [('ro.kernel.qemu',b'1'),('sys.boot_completed',b'1'),('ro.build.version.sdk',str(a.android_api).encode())]:
+        if call(['shell','getprop',prop]).strip()!=wanted:raise ValueError('actual selected SDK boot required')
     apk=ROOT/'android/app/build/outputs/apk/debug/app-debug.apk'
     signer=subprocess.check_output([str(a.sdk/'build-tools/35.0.0/apksigner'),'verify','--print-certs',str(apk)],text=True)
     if re.search(r'certificate SHA-256 digest: ([a-f0-9]{64})',signer).group(1)!='bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30':
@@ -102,7 +106,7 @@ esac
     config=json.loads((w/'ports.json').read_text());origin='https://127.0.0.1:'+str(config['controller_port'])
     cfg=json.loads((controller/'controller/controller.json').read_text());pin=fingerprint_from_pem(controller/'controller/server.crt')
     client=ClusterClient(origin,pin,cfg['admin_token'])
-    processes=[];logs=[];instrument=None;browser=None;nat=None;report={'state':'ERROR','scope':'Linux +API35 x86_64 synthetic; not phones/physical domains',
+    processes=[];logs=[];instrument=None;browser=None;nat=None;report={'state':'ERROR','scope':f'Linux +API{a.android_api} x86_64 synthetic; not phones/physical domains',
        'adb_control_only':True,'native_identity_reset':False}
     def start(root,role):
         log=(w/(role+'-'+uuid.uuid4().hex+'.log')).open('wb');logs.append(log)
