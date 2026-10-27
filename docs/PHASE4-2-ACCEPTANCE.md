@@ -424,3 +424,23 @@ Reverified existing APK inventory/signature: SHA7c4ba6496e89ac673026345f7abf1ea1
 Attempted gh prerelease native-node-v0.4.0-internal at c9ba037 with APK/checksum and exact E2E Controller source/checksum. Upload endpoint uploads.github.com returned HTTP401 Bad credentials. Subsequent release download returned release not found. Publication NOT VERIFIED; do not claim an available release or checksum downloaded from GitHub. No login/token/proxy/CA changes made.
 Private artifacts remain under /workspace/work/phase4-2j-native-catalog (APK and sha256) and /workspace/work/phase4-2j3-final (source archive, checksum, release-apk-audit.json, release-notes.md). Host archive SHA9dbd9007058a6a43f075c1924f4014faa7060ef6667e014bbc28a91be070ad59. Preserve original private signer, never publish it.
 Resume: inspect remote release/tag state before retry; never overwrite an existing tag/asset. Resolve supported upload authentication, publish honestly scoped candidate, download assets and verify SHA. Cold integrated initialization still INCOMPLETE; next qualification uses a fresh independently owned sandbox WITHOUT wiping existing AVD/state. Full4.2 NOT ACCEPTED; do not advance to Phase5. No phone/Termux/production access.
+
+
+## Fresh API35 cold gate — BLOCKED, not accepted
+Publication3075f69 and download proof0882333 completed independently. New isolated
+AVD from SDK image/textconfig only, no copied userdata/keys. Initial package
+readiness check stopped before install; verified PM ready/app absent, then same
+sandbox installed exact APK4 and testAPK. First cold instrumentation failed to
+attach before JUnit; diagnostic crashed0completed. Same userdata restarted at
+2048MiB/1vCPU (no wipe) after verifying no identity/context/proof existed. Diagnostic
+entered LaunchTest then process crashed0completed. No cold PASS or Node reprovision.
+System logs also show repeated com.android.phone startup ANRs; trace in APN DB
+creation/ICU regex; Bluetooth system SIGABRTs. ASC root cause NOT PROVEN: no code fix
+based on speculation. Raw private logs/owner under/workspace/work/phase4-cold-final.
+Bluetooth disable was a normal synthetic LAN-fixture setting, not a production or
+security-policy change. SDK35 cold remains BLOCKED; no acceptance waiver.
+Next independently qualify official AOSP API30 x86_64 image (Android11 like target
+phone API, still NOT ARM64/phone proof). Official repository image revision11,
+size676379777/SHA1 5e4de3946d46f88856c35efcc4d797b381456347. Download/extract only
+workspace development SDK; no proxy/CA/auth changes or phone access. Full Phase4
+NOT ACCEPTED. qualification/phase4-cold-api35-blocker.json preserves this result.

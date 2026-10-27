@@ -1553,3 +1553,23 @@ Resume: inspect remote release/tag state before retry; never overwrite an existi
 2026-10-27: exact tested artifacts added as new immutable Git files (PHASE4-INTERNAL-PACKAGE.md); original archives untouched. Release401 remains an endpoint blocker, not a code-push blocker. Runtime source unchanged, no repeat383suite for artifact/docs-only publication. New isolated AVD home/work root /workspace/work/phase4-cold-final, same task-controlled SDK name/port but NEW userdata from SDK only; no keys/state copied, no wipe of existing AVD. Cold run and owner record/logs kept there. Do not count as PASS until actual final report/JUnit receipts.
 
 Publication3075f69 normal-pushed/fetched verified. Separate fresh bare clone from GitHub downloaded APK and source archive plus checksums; SHA256 both PASS. qualification/phase4-package-publication.json records commit/hashes. Release upload401 does NOT prevent Git artifact distribution. PHASE4-HANDOFF.md gives actual links, tested upgrade CHAIN (not untested direct paths), ownership/rollback and phone acceptance steps. Cold run remains pending at this publication checkpoint.
+
+
+## Fresh API35 cold gate — BLOCKED, not accepted
+Publication3075f69 and download proof0882333 completed independently. New isolated
+AVD from SDK image/textconfig only, no copied userdata/keys. Initial package
+readiness check stopped before install; verified PM ready/app absent, then same
+sandbox installed exact APK4 and testAPK. First cold instrumentation failed to
+attach before JUnit; diagnostic crashed0completed. Same userdata restarted at
+2048MiB/1vCPU (no wipe) after verifying no identity/context/proof existed. Diagnostic
+entered LaunchTest then process crashed0completed. No cold PASS or Node reprovision.
+System logs also show repeated com.android.phone startup ANRs; trace in APN DB
+creation/ICU regex; Bluetooth system SIGABRTs. ASC root cause NOT PROVEN: no code fix
+based on speculation. Raw private logs/owner under/workspace/work/phase4-cold-final.
+Bluetooth disable was a normal synthetic LAN-fixture setting, not a production or
+security-policy change. SDK35 cold remains BLOCKED; no acceptance waiver.
+Next independently qualify official AOSP API30 x86_64 image (Android11 like target
+phone API, still NOT ARM64/phone proof). Official repository image revision11,
+size676379777/SHA1 5e4de3946d46f88856c35efcc4d797b381456347. Download/extract only
+workspace development SDK; no proxy/CA/auth changes or phone access. Full Phase4
+NOT ACCEPTED. qualification/phase4-cold-api35-blocker.json preserves this result.
