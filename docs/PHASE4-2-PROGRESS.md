@@ -1808,3 +1808,36 @@ qualification/phase4-web-native5-targeted.json. Pending FINAL fresh full384Pytho
 after earlier failed full; use sequential scope/no active TCG VM/Gradle. Final
 package secret audit/publication/independent GitHub download SHA and current
 STATUS/HANDOFF/acceptance follow only after that full gate PASS. No Phase5 advance.
+
+### Sequential full early failure / stronger cohost fixture precondition
+
+17aa000d6ecdc2259646ef643b87e460f0c43983 normal-pushed/fetch/ls-remote verified.
+Sequential full started06:53:29UTC on313frozen inputs, owned30VM guest paused.
+It exposed BackupClusterTests phase6 schedule/failover race after phase5. The
+restore initial upload is complete before ordinary policy COPY converges:
+Backups._restore verifies one initial readable copy, then background replication.
+Original upload fixture already waited2available copies, but restored version4
+did not. Killing its possible sole-source cohost while requiring scheduled backup
+completion without bringing that cohost back accidentally loses all readable
+sources. Diagnostics show COPY no_verified_source and unavailable source Node.
+Core correctly fails closed; no missing bytes may be declared backup-complete.
+
+Stopped this already-FAIL full attempt early rather than run unrelated remaining
+tests: root command/cwd/UID and7live descendant identities/start times verified;
+SIGTERM only owned test tree,0SIGKILL, no AVD/other process touched. Private logs/
+early-stop.json/full receipt retained. It is INTERRUPTED/NOT PASS, not384completed.
+No source fix/timeout/lease/quorum/policy relaxation in Core.
+
+Fixture strengthens readiness immediately BEFORE existing scheduled-backup fault:
+same180s budget as original upload, strong2available count then two actual pinned
+StorageClient readbacks with exact expected bytes/SHA and distinct owner-confirmed
+device domains. Existing real Controller/cohost crash, successful backup while
+former Controller remains offline, stale-Leader/quorum/retention/corruption checks
+stay untouched. No forced copy success, skipped fault or earlier restart.
+Fresh targeted matrix1PASS146.550s/all12original fault groups. Native final APK/
+PWA/Core source/Go remain unchanged; only tests/test_backup.py fixture changes.
+Need NEW fresh full from this qualified source, with failfast for diagnostics
+(all384run if PASS), no active TCG/Gradle. Do not reuse either failed full attempt.
+Private evidence /workspace/work/phase4-pwa-sequential-final; final artifacts still
+UNPUBLISHED until full/package/security/remote gates complete. Full Phase4 not
+accepted, owner phone/35platform gates remain. Original signing/VM state preserved.

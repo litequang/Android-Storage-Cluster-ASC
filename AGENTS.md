@@ -25,8 +25,11 @@ bug; actual Android TCP regression reproduces EADDRINUSE with reuseAddress=false
 NativeTLSListener fix enables SO_REUSEADDR (never REUSEPORT), privately owned raw
 transport cancellation and bounded close completion. Fresh28+foreign1 Android and
 JVM17 PASS; final strict normal E2E2 +downgrade refusal/old bytes1 PASS. Fresh
-full Python rerun pending after original384run2errors; isolated two failures PASS
-without Core changes. Owned VM now paused to avoid2CPU contention. First two prepatch
+full pending: first384run2errors; isolated two failures PASS without Core changes.
+Second full stopped after backup fixture race FAIL, not counted384completed. Added
+actual2domain SHA precondition before scheduled-backup cohost loss; all12original
+faults targeted PASS146.550s, no Core/assertion/lease/deadline relaxation. Next fresh
+full failfast on final source, owned VM paused/no Gradle contention. First two prepatch
 matching-package host attempts FAILED; preserve outcomes. Check current progress.
 Python/Web/Go inputs stay frozen; one Kotlin source changes after freeze plus
 new Android-only test, so never claim entire305freeze unchanged. Independently

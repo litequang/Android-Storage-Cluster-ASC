@@ -797,6 +797,10 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
   transport below server-mode JSSE for bounded cancellation of blocked TLS writes;
   Core receives TLS streams only. NativeSocketTest retains real binary/wrong-pin/
   nonreading read/write deadline assertions.
+- tests/test_backup.py: original12fault matrix now requires actual SHA readback
+  on two distinct domains of the restored head before scheduled-backup cohost
+  loss. Restore's initial upload and async policy COPY are separate; no Core
+  behavior, original failure assertions or acceptance deadlines changed.
 - asc/demo/dashboard/assets.py: one fixed public HTTP/package asset allowlist.
 - dashboard/web/manifest.webmanifest,service-worker.js,icon-{192,512}.png: standalone
   browser metadata/network-only navigation, never caches API/file/owner data.

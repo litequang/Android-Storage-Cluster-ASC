@@ -18,6 +18,7 @@ from asc.backup.service import Backups
 from asc.catalog.common import CatalogError, canonical, digest, uid
 from asc.catalog.state import Catalog, insert
 from asc.client import ClientError
+from asc.storage.client import StorageClient
 from asc.failover import state
 from tests import test_failover as fixture
 
@@ -363,6 +364,36 @@ class BackupClusterTests(unittest.TestCase):
             proxy.drop.set()
         return proxies
 
+    def prove_restored_copies_before_cohost_loss(self, file_id, data):
+        # Restore's initial upload completes before ordinary COPY jobs converge.
+        # Losing a Controller/cohost must leave a real readable source; otherwise
+        # this would accidentally test total source loss rather than failover.
+        deadline = time.monotonic()+180  # Same readiness budget as upload().
+        sha = hashlib.sha256(data).hexdigest()
+        while time.monotonic() < deadline:
+            report = self.owner.request('GET', 'files/'+file_id+'?consistency=strong')
+            if report['available_replicas'] >= 2:
+                nodes = self.cached(self.wait_ready())['document']['tables']['catalog_nodes']
+                domains = {n['node_id']: n['device_id'] for n in nodes}
+                plan = self.owner.request('POST', 'files/'+file_id+'/download', {})
+                verified = set()
+                for replica in plan['candidates']:
+                    domain = domains.get(replica['node_id'])
+                    if not domain or domain in verified:
+                        continue
+                    output = io.BytesIO()
+                    try:
+                        StorageClient(replica['origin'], replica['pin'], replica['grant'],
+                                      replica['volume_id']).download(replica['local_file_id'], output, len(data), sha)
+                    except (OSError, ClientError):
+                        continue
+                    self.assertEqual(output.getvalue(), data)
+                    verified.add(domain)
+                if len(verified) >= 2:
+                    return
+            time.sleep(0.4)
+        self.fail('restored head lacks two independent physical SHA proofs before cohost loss')
+
     def test_windows_backup_restore_fault_matrix(self):
         leader = self.make_cluster()
         self.post('enable')
@@ -420,6 +451,7 @@ class BackupClusterTests(unittest.TestCase):
         self.assertEqual(len(upload_jobs), 1)
         fixture.FailoverTests.physical_job_state(self, upload_jobs[0], old)
         self.mark(5, 'actual lost target commit ACK plus Controller crash resumes one restore job/session/object/version')
+        self.prove_restored_copies_before_cohost_loss(job['target_file_id'], old)
         # A due schedule is durably captured once and survives Controller changes.
         schedule = self.post('schedules', interval_seconds=86400, copies=2)
         deadline = time.monotonic()+60
