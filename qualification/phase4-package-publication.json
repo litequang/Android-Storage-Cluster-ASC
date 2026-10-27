@@ -1,0 +1,8 @@
+{
+  "commit": "3075f69e5fcc65687655afabf80733e1b55dac30",
+  "separate_remote_clone_download_verified": true,
+  "files": {
+    "android-artifacts/asc-native-node-0.4.0-internal-debug.apk": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+    "candidates/asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz": "9dbd9007058a6a43f075c1924f4014faa7060ef6667e014bbc28a91be070ad59"
+  }
+}

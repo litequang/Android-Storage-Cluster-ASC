@@ -1551,3 +1551,5 @@ Resume: inspect remote release/tag state before retry; never overwrite an existi
 
 ## Phase4 internal package / fresh cold sandbox
 2026-10-27: exact tested artifacts added as new immutable Git files (PHASE4-INTERNAL-PACKAGE.md); original archives untouched. Release401 remains an endpoint blocker, not a code-push blocker. Runtime source unchanged, no repeat383suite for artifact/docs-only publication. New isolated AVD home/work root /workspace/work/phase4-cold-final, same task-controlled SDK name/port but NEW userdata from SDK only; no keys/state copied, no wipe of existing AVD. Cold run and owner record/logs kept there. Do not count as PASS until actual final report/JUnit receipts.
+
+Publication3075f69 normal-pushed/fetched verified. Separate fresh bare clone from GitHub downloaded APK and source archive plus checksums; SHA256 both PASS. qualification/phase4-package-publication.json records commit/hashes. Release upload401 does NOT prevent Git artifact distribution. PHASE4-HANDOFF.md gives actual links, tested upgrade CHAIN (not untested direct paths), ownership/rollback and phone acceptance steps. Cold run remains pending at this publication checkpoint.
