@@ -801,6 +801,11 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
   on two distinct domains of the restored head before scheduled-backup cohost
   loss. Restore's initial upload and async policy COPY are separate; no Core
   behavior, original failure assertions or acceptance deadlines changed.
+- tests/test_gc_linux_faults.py: original five crash/replay gates require fresh
+  successful actual Storage probes after healing/restart before crash injection.
+  Same45s startup budget, five execution attempts,10s/250ms authority budgets,
+  actual exit91/unlink/journal/whole-cluster assertions. Sanitized denial labels
+  identify an unreached crash point; denied requests never count as a crash.
 - asc/demo/dashboard/assets.py: one fixed public HTTP/package asset allowlist.
 - dashboard/web/manifest.webmanifest,service-worker.js,icon-{192,512}.png: standalone
   browser metadata/network-only navigation, never caches API/file/owner data.

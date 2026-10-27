@@ -1841,3 +1841,33 @@ Need NEW fresh full from this qualified source, with failfast for diagnostics
 Private evidence /workspace/work/phase4-pwa-sequential-final; final artifacts still
 UNPUBLISHED until full/package/security/remote gates complete. Full Phase4 not
 accepted, owner phone/35platform gates remain. Original signing/VM state preserved.
+
+### GC cohost recovery readiness checkpoint — targeted PASS
+
+2131e83a709f05b53d6af5391f182087f75d8c31 normal-pushed/fetch/ls-remote matched.
+Next fresh failfast full source2131e83 ran186tests2003.503s,1FAIL,0skip; NOT384PASS.
+All313inputs unchanged at completion. LinuxGC crash/replay case stopped because
+an armed crash marker survived five actually rejected requests, not a real crash;
+previous quorum/term/expired-receipt cases passed. No false marker consumption,
+forced deletion, increased permit lifetime or ignored assertion.
+
+Added ONLY sanitized denial context to the failed assertion. Original complete
+case targeted1PASS466.647s/all5groups, including actual cohost exit91 before/after
+unlink and snapshot/replay. Live controlled-fixture observation saw
+gc_authority_budget_expired; first crash happened and next cohost was recovering.
+Controller wait_ready() alone did not establish fresh Storage readiness/routing.
+
+Fixture now waits after healing and restart for all3actual Storage probes with
+checked_at AFTER the barrier and last_error=None. Uses original45s startup budget,
+not process-is-running or synthetic writable flags. All five execute attempts,
+10s network/250ms local authority budgets, actual crash/absence/journal assertions
+remain unchanged. No production/Core/consensus/schema/permission changes.
+Fresh strengthened case1PASS535.314s/all5original fault groups. Private log:
+/workspace/work/phase4-pwa-qualified-final/gc-probed-readiness-targeted.log.
+
+Final APKaec65c2c.../hostc726bd36.../Native28+foreign1+normal network2 and preserved
+signer/UID/Node context/bytes stay unchanged. Those scoped proofs are valid;
+neither failed full attempt nor targeted retry is a full regression PASS. Next
+fresh full384required from this checkpoint, no active owned Android/Gradle. GIT
+candidate artifacts still staged/unpublished; full Phase4 NOT ACCEPTED, physical/
+ARM64/35/OEM gates not waived. Original VM/private signer stay private/intact.

@@ -29,7 +29,10 @@ full pending: first384run2errors; isolated two failures PASS without Core change
 Second full stopped after backup fixture race FAIL, not counted384completed. Added
 actual2domain SHA precondition before scheduled-backup cohost loss; all12original
 faults targeted PASS146.550s, no Core/assertion/lease/deadline relaxation. Next fresh
-full failfast on final source, owned VM paused/no Gradle contention. First two prepatch
+full required: last failfast186/1FAIL2003.503s (not384PASS), crash marker not
+consumed after actual denials. Added fresh actual3Storage-probe readiness after
+heal/restart; same45s/five attempts/authority budgets, original5faults targeted
+PASS535.314s. Next fresh384, owned VM paused/no Gradle contention. First two prepatch
 matching-package host attempts FAILED; preserve outcomes. Check current progress.
 Python/Web/Go inputs stay frozen; one Kotlin source changes after freeze plus
 new Android-only test, so never claim entire305freeze unchanged. Independently

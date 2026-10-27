@@ -101,8 +101,23 @@ class LinuxGCPhysicalTests(GCFixture,unittest.TestCase):
             pool.shutdown(wait=True)
 
     def restart_target(self,target):
+        since=time.time()
         i=target['index'];self.kill_python(i);self.stop(i,crash=True)
         self.start(i);self.launch_python(i);self.wait_ready()
+        self.wait_fresh_storage_probes(since)
+
+    def wait_fresh_storage_probes(self,since):
+        # Controller readiness alone does not prove its cohost/Storage peers
+        # have recovered authenticated routing and actual volume probes.
+        # Use the same45s startup budget as target(), never extend GC authority.
+        deadline=time.monotonic()+45
+        while time.monotonic()<deadline:
+            status=self.owner.request('GET','nodes')
+            if len(status['nodes'])==3 and all(
+                    n['last_error'] is None and type(n['checked_at']) is int and n['checked_at']>=since
+                    for n in status['nodes']):return
+            time.sleep(.2)
+        self.fail('fresh actual Storage probes required before arming a cohost crash')
 
     def execute_owner(self,job_id):
         for attempt in range(5):
@@ -152,9 +167,11 @@ class LinuxGCPhysicalTests(GCFixture,unittest.TestCase):
             self.denied(target,future)
             self.assertEqual(json.loads(self.response(target).read_bytes())['error'],'gc_authority_budget_expired')
         self.mark(3,'paused real successful final TLS receipt exceeds freshness budget; no unlink')
+        self.wait_fresh_storage_probes(time.time())
 
         for point,absent in (('after_delete_intent',False),('after_unlink',True)):
             crash=target['home']/('test-gc-crash-'+point);crash.write_text('crash synthetic cohost')
+            rejections=[]
             for attempt in range(5):
                 raw,exact,node=self.issue(job)
                 self.response(target).unlink(missing_ok=True)
@@ -163,9 +180,11 @@ class LinuxGCPhysicalTests(GCFixture,unittest.TestCase):
                 # A denied stale proof is not a crash. Keep the exact fault armed
                 # and same job, require a real rejection, then obtain new proof.
                 evidence=json.loads(self.response(target).read_bytes())
+                rejections.append(evidence)
                 self.assertGreaterEqual(evidence['status'],400)
                 self.assertEqual(target['body'].read_bytes(),target['data'])
-            self.assertFalse(crash.exists());self.assertTrue((target['home']/('test-gc-crashed-'+point)).exists())
+            self.assertFalse(crash.exists(),f'actual crash point {point} not reached; sanitized rejections={rejections}')
+            self.assertTrue((target['home']/('test-gc-crashed-'+point)).exists())
             self.python[target['index']].wait(timeout=10)
             self.assertEqual(self.python[target['index']].returncode,91)
             self.assertEqual(target['body'].exists(),not absent)
