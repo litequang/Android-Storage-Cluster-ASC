@@ -1624,3 +1624,22 @@ Existing browser owner File Manager is the MVP interface, not a new backend.
 No Termux->APK migration, Android voter/GC/failover or writerDR activation.
 Owner device gates must be recorded honestly before broader acceptance; do not
 redo completed phases/full tests or advance to Phase5 just to claim completion.
+
+
+### API30 checkpoint publication and preservation receipt
+65d29651a8650ef3cf63bfd23153e324f6207f21 normal-pushed/fetched/ls-remote matched.
+Work/index385files +0nonignored untracked secret/path audit0findings. APK and host
+archive hashes unchanged and previously downloaded from separate GitHub clone.
+Runtime frozen inputs match383gate; only .gitignore publication metadata and
+tools/qualify_native_catalog.py SDK selector differ, qualified separately by
+actual30 workflow+22regression+foreign1 and parser/syntax/29refusal. No runtime
+APK, Python, Go, Kotlin, schema, dependency or permission change.
+After all gates verified current task-owned30AVD, stopped only app-owned process
+then SDK console shutdown; host SDK exit-10, not claimed clean/power-loss proof.
+All9image/config files copied offline under/workspace/work/phase4-api30-final/
+qualified-offline-preservation with0700parent/0600files; original userdata and
+original private signer retained. Never import these into another Node identity.
+Both newer35and30fixtures stopped; all PIDs in owner files are historical until
+revalidated. See PHASE4-STATUS/HANDOFF and qualification/phase4-api30-node.json.
+Next acceptance is genuinely missing phone/platform evidence, not another repeat
+of completed Core phases. Full Phase4 remains NOT ACCEPTED; Phase5 not started.
