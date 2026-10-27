@@ -658,3 +658,16 @@ No CacheStorage/IndexedDB, offline write or background sync. Browser install pro
 needs explicit user action; acceptance of prompt is not claimed as installation.
 Current install criteria are verified in actual Chromium normal isolated persistent
 profile, not incognito; real Chrome Android installation remains an owner gate.
+
+
+## Immutable structural validation reuse is not permission
+The Core Controller may reuse successful schema/SQL round-trip validation for
+TWO exact immutable projection byte strings, each <=2MiB. It stores a None result
+and the bytes, no caller-owned mutable dictionaries or authorization result. Each
+decode returns fresh objects; invalid inputs/exceptions are not retained. Current
+Runtime checks still read the durable cache/hash, query Go and enforce envelope
+identity, canonical bytes, monotonic index/term/revision and quorum readiness.
+Commit validation, nonce/actual-term quorum receipts, GC independent byte proofs,
+10s network and250ms local final fences are unchanged. Cache hits cannot grant a
+writer, acknowledge missing bytes or turn recovery staging into authority. No
+new disk cache, secret export, pin/permission/retention/schema change.

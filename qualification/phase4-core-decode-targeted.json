@@ -1,0 +1,80 @@
+{
+  "state": "TARGETED_PASS_FRESH_FULL_PENDING",
+  "base": "f3549f1a4cc78777321c493eaf8d86f092e908ab",
+  "change": "Core Runtime immutable structural decode reuse only; no cached authority",
+  "network_gc": {
+    "tests": 1,
+    "seconds": 97.119,
+    "state": "PASS",
+    "skips": 0
+  },
+  "linux_physical_faults": {
+    "tests": 2,
+    "seconds": 363.661,
+    "state": "PASS",
+    "skips": 0
+  },
+  "physical_fault_groups": 8,
+  "structural_and_authority_guards": {
+    "tests": 42,
+    "seconds": 8.507,
+    "state": "PASS",
+    "skips": 0
+  },
+  "targeted_total": 45,
+  "input_sha256": {
+    "asc/failover/state.py": "eb20abc9056a5f27c7144b94d461ce9b5ce887ca0f2f197b1a28ca0bc6570e0d",
+    "asc/failover/runtime.py": "76cc9196ecdd6d58b8ffe9fa79d92346764d7907cddf28d5e8504fa5a46e55a3",
+    "tests/test_runtime_decode.py": "16960fbaabc771f7608208ed7b61e504b48cedfcd7ece65dfb0a5e2ecc4bd98d",
+    "tests/test_gc_faults.py": "e967ac930848073c025c1969a8f299c16ce0613bacfdb29b9f633ce1cc14ca7b",
+    "tests/test_gc_linux_faults.py": "85ba31fcfca98213ae40278ce4a87d1f86e9b2a571d0d045fd259a875368618d",
+    "tests/test_runtime_validation.py": "1a52c417fe4893ad34dea0d5d0fc4f317d81029a3aa2ae04b1c800d02d82053e"
+  },
+  "original_fault_cases_byte_identical": true,
+  "runtime_budgets_unchanged": {
+    "network_seconds": 10,
+    "local_seconds": 0.25
+  },
+  "diagnostic_before_change": {
+    "state": "INTERRUPTED_NOT_PASS",
+    "observed_successful_authorization_seconds": 10.64,
+    "private_exact_doc_bytes": 946136,
+    "events": 1024,
+    "observation": "Repeated full schema/SQL round-trips dominate Controller view CPU during nested survivor authorization; no original fault PASS inferred",
+    "process_stop": "7fresh-identity-checked diagnostic processes SIGTERM only,0SIGKILL; no emulator/phone/other process"
+  },
+  "offline_measurement": {
+    "state": "MEASUREMENT_ONLY_NOT_NETWORK_QUALIFICATION",
+    "document_bytes": 946136,
+    "retained_events": 1024,
+    "measurements": {
+      "full_structural_validation": {
+        "median_seconds": 0.0380851029999576,
+        "runs": [
+          0.040385872000001655,
+          0.03756412799998543,
+          0.03726327399999718,
+          0.038751106999995955,
+          0.0380851029999576
+        ]
+      },
+      "warm_immutable_byte_decode": {
+        "median_seconds": 0.0032473069999809923,
+        "runs": [
+          0.0032473069999809923,
+          0.0032403850000264356,
+          0.0032217769999647317,
+          0.0033061649999694964,
+          0.003717144000006556
+        ]
+      }
+    },
+    "scope": "Offline exact private synthetic projection, same canonical data, no quorum/authority simulation"
+  },
+  "development_attempt": "Initial additive unit fixture referenced an absent node; fixture seeded via existing Registry. Original3tests restored unchanged and all42fresh guards PASS; initial error not counted PASS. Private log retained.",
+  "full_regression": "PENDING fresh392, not old384/383",
+  "go": "fresh gates running separately; no Go source change",
+  "android": "No app/Node/Engine/enrollment/observer/UI/provider/signing/state changes; APK5 unchanged, earlier scoped source3914 proofs retained; new Core Runtime path is not instantiated on Android",
+  "rollback": "Code-only compatible Core change, same schema/wire/private state; stop owned Controller, NEW verified backup before compatible code selection, never restore old DB over newer history. Old code restores repeated-validation cost; no GC unlock.",
+  "scope": "Linux synthetic only; full Phase4/4.2 NOT ACCEPTED, physical/ARM64/LAN/OEM/API35-final5 and writerDR unchanged"
+}

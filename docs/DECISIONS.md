@@ -334,3 +334,16 @@ tests remain unchanged. API30 x86_64 targeted28+foreign1 and normal Node/catalog
 network/process-death qualification pass; final APK5/API35 and phones are not
 inferred from historical APK4 evidence. See PHASE4-2-PROGRESS for failed attempts,
 source3914b99 and the fixture-only physical-readiness qualification2131e83.
+
+
+## ADR073 — Reuse exact-byte structure, never live authority
+Profiling the unchanged1024-event synthetic GC workload observed repeated Runtime
+view/SQL validation while nested survivor authorization exceeded the10s fence.
+Reuse successful STRUCTURAL validation for at most two immutable <=2MiB inputs;
+return independently parsed JSON each time. No mutable result/approval/receipt is
+cached. validate(dict) and prepare_registry still validate their caller-owned
+inputs normally. Runtime checksum, canonical wire, identity, revision/index/term,
+fresh Go quorum and operation receipts remain mandatory. Keep GC10s/250ms fences
+and physical SHA/last-copy/reference checks. Prior retry/TTL experiments failed
+and remain excluded. This is a Core decode optimization, not Android GC/runtime
+activation or a new Catalog. Actual qualification follows in current progress.

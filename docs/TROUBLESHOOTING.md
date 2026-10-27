@@ -553,3 +553,14 @@ reports in-incognito and refuses installation in private browsing. Unsupported
 browsers can still use ordinary Dashboard. The install button appears only after
 browser beforeinstallprompt; no fake success. Offline navigation/API has no cached
 files or offline writes. This is a web client, not a Termux/native service launcher.
+
+
+### GC authorization expiry with large retained metadata
+A readable survivor is not enough if fresh quorum authorization exceeds its
+10s budget. Preserve the rejected operation/journal and do not increase the fence,
+claim a lost ACK without actual unlink, or remove history/pins to reduce load.
+For diagnosis, measure Runtime validation/lock/network phases with private
+synthetic metadata only; do not log tokens, payloads or production state. Exact
+structural decode reuse reduces repeated SQL work, but all fresh quorum/term and
+physical checks still apply. Current acceptance/progress owns the actual network
+fault result; an offline decode benchmark is not that result.

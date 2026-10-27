@@ -673,3 +673,12 @@ integration is g.2, no native Node/FGS or public APK claim.
   and were removed. Fresh44local guards PASS does not qualify network GC/full384.
 - No qualified release/Phase4 acceptance, phone access, GC/Raft/writerDR/Phase5
   activation or source/schema change in this reporting/artifact checkpoint.
+
+
+### Core projection decode optimization — qualification in progress
+Reuse bounded immutable exact-byte structural validation in Controller views,
+returning independent decoded state. Keep all live quorum/term/nonce, durable
+hash, canonical/monotone envelope, GC budget/physical/reference checks unchanged.
+Eight additive validation/authority tests retain all previous tests. No Android
+code, state/wire format, permission, signer, public artifact or recovery writer
+change. Actual network/full gates recorded in PHASE4-2-PROGRESS.

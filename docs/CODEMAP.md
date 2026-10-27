@@ -823,3 +823,16 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
   artifacts preserve matching scoped Android/PWA proofs and exact-source audits.
   Debug review only, full regression BLOCKED; never use artifact availability as
   runtime/full-phase acceptance. PHASE4-STATUS/HANDOFF own current operator state.
+
+
+### Core projection decode reuse (Phase4 closure)
+- asc/failover/state.py:decode_validated/_validated_runtime_bytes retain only the
+  structural validation result for two immutable <=2MiB byte inputs, returning a
+  newly decoded document. Mutable validate/prepare_registry contracts unchanged.
+- asc/failover/runtime.py:_cached/view use that decode path but still read/check
+  the durable hash and fresh Go envelope, cluster/epoch/index/term/canonical bytes.
+  ensure_ready, actual quorum receipts and all GC freshness/physical checks stay.
+- tests/test_runtime_decode.py adds mutation isolation, malformed/bounded cache,
+  fresh quorum loss, envelope rollback/hash/identity, canonical wire and durable
+  corruption gates. Existing test_runtime_validation and original fault cases
+  remain byte-identical. Current qualification is in PHASE4-2-PROGRESS.

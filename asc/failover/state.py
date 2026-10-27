@@ -198,6 +198,32 @@ def validate(doc):
         raise CatalogError('invalid_runtime_projection', 409) from None
 
 
+@lru_cache(maxsize=2)
+def _validated_runtime_bytes(raw):
+    # Pure schema/SQL round-trip validation only. Keep immutable exact bytes and
+    # a None result, never a mutable document, receipt or authority decision.
+    validate(json.loads(raw))
+
+
+def decode_validated(raw):
+    """Decode an independently owned document after bounded structural validation.
+
+    Repeated views of identical bytes need not rebuild the same disposable SQL.
+    This says nothing about current quorum, term, index, pins or GC freshness;
+    Runtime and operation authorizers must still check all of those every time.
+    At most two successful <=2MiB inputs are retained. Failed inputs are not.
+    """
+    if type(raw) is not bytes:
+        raise CatalogError('invalid_runtime_projection', 409)
+    if len(raw) > 2*1024**2:
+        raise CatalogError('runtime_projection_limit', 409)
+    try:
+        _validated_runtime_bytes(raw)
+        return json.loads(raw)  # Never return caller-shared mutable cached state.
+    except (ValueError, TypeError, RecursionError):
+        raise CatalogError('invalid_runtime_projection', 409) from None
+
+
 def prepare_registry(doc):
     """Create a disposable business-logic workspace, with no filesystem authority."""
     validate(doc)

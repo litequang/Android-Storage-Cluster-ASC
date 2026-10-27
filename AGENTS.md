@@ -14,6 +14,17 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-27
+LATEST CORE FIX: immutable structural decode source now has45targeted PASS:
+original networkGC1PASS97.119s +physicalLinux2PASS363.661s/all8groups +42guards
+PASS8.507s. Original fault cases/assertions/10s+250ms budgets unchanged. Read
+qualification/phase4-core-decode-targeted.json and latest PROGRESS before older
+blocker paragraphs. New fresh full392 (8added tests) still PENDING; Go fresh gates
+running. No Android/app source or published artifact change; APK5 old Core3914 is
+NOT rebuilt with host-only Runtime optimization. Keep signer/AVD data; old process
+PIDs are invalid after executor restart, no ADB action this checkpoint. FullPhase4
+NOT ACCEPTED; original failure receipts below remain historical, not current
+standalone target failure. Normal feature push/fetch before fresh full.
+
 Owner asks finish Phase4. No whole merges/phone access or Phase5 advance.
 LATEST: full4 source16c0717 finished184tests/1ERROR1537.737s,313inputs unchanged;
 NOT384PASS. GC owner replay after proven unlink/lostACK returned stale_gc_proof.

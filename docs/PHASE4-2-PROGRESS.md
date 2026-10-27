@@ -1967,3 +1967,48 @@ These are INTERNAL DEBUG REVIEW snapshots; full regression/Phase4 still NOT
 ACCEPTED. Continue original GC network fault investigation before another full;
 44local guards/remote checksum/earlier native proofs do not waive it. Final API35/
 physical Android/ARM64/physical2domains/LAN/OEM/Doze/PWA phone gates remain missing.
+
+
+### Core structural decode fix — original GC target and all physical faults PASS
+
+Resume fetched f3549f1; HEAD=FETCH_HEAD, clean working tree. Managed executor has
+restarted (old PIDs not reused); private original signer0600 and retained AVD data
+still exist. No ADB/AVD/phone action. Current host has2CPU, no TCG/Gradle workload.
+Observed ORIGINAL cohost methods using private timing-only wrappers; old loaded
+functions ran unchanged. Captured repeated Runtime views/SQL structure validation,
+authorize10.64s >existing10s fence. Diagnostic intentionally stopped after evidence:
+7fresh UID/cwd/start/command-checked processes SIGTERM only,0SIGKILL; INTERRUPTED,
+NOT PASS. Private metadata/timings retained, never published raw.
+
+Fix: state.decode_validated keeps only successful STRUCTURAL validation for two
+exact immutable <=2MiB byte inputs. None result, fresh JSON objects, failed inputs
+not cached. Runtime durable checksum/Go envelope, canonical bytes/monotonicity,
+identity, actual quorum/term/nonce, GC survivor SHA/last-copy/pins and10s/250ms fences
+stay unchanged. validate(dict)/prepare_registry still fully validate mutable inputs.
+No retry helper, routing TTL, code/clock/guard bypass, snapshot/history reduction,
+new backend/schema or writableDR. ADR073/security/map/troubleshooting updated.
+
+Offline946,136byte/1024event actual synthetic projection: median full validation
+38.085ms versus warm decode3.247ms (5runs), measurement NOT network qualification.
+Fresh ORIGINAL network GC case1PASS97.119s: actual unlink/lostTLSACK/same-job journal
+replay and old-permit refusal after Leader/quorum loss. Original Linux physical
+suite2PASS363.661s/all8groups: last-copy/corrupt/pins/paused final quorum+term+stale
+receipt/actual cohost exit+durable restart/whole-cluster snapshot/replay. No timing
+wrappers or original assertion edits in these actual qualifications.
+
+Fresh42guard tests PASS0skip8.507s incl additive8decoder cases and original catalog/
+Runtime/authorization/sandbox guards. Initial new fixture IndexError corrected via
+existing Registry.seed_self; original test_runtime_validation kept byte-identical,
+no old test deleted/overwritten. Total45targeted PASS; new full count392. Receipt
+qualification/phase4-core-decode-targeted.json binds actual inputs/results.
+
+Core Controller-only delta; Android app/Node/Engine/enrollment/TLS/observer/UI/signer/
+state and published APK5/archive bytes unchanged. APK5 contains qualified old Core
+sources3914b99, NOT this host optimization; Android never instantiates the quorum
+Controller Runtime. Reuse earlier Native proofs only for those unchanged components,
+not new Android/API35/phone acceptance. Code rollback keeps current private data/
+authority and NEW verified backup; no old DB restore or schema migration needed.
+
+Checkpoint normal commit/push/remote verification precedes fresh full392. Fresh
+Go/vet/module/builds running separately; full pending, no Phase4 acceptance yet.
+Physical/ARM64/LAN/OEM/Doze/API35-final5 gates and writerDR remain unqualified.

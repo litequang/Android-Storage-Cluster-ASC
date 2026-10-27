@@ -65,7 +65,8 @@ class Runtime:
             row = db.execute('SELECT data,sha256 FROM projection WHERE singleton=1').fetchone()
         if row is None or hashlib.sha256(row[0]).hexdigest() != row[1]:
             raise CatalogError('runtime_cache_quarantined', 409)
-        result = json.loads(row[0]); projection.validate(result['document'])
+        result = json.loads(row[0])
+        result['document'] = projection.decode_validated(canonical(result['document']))
         return result
 
     def view(self, strong=False):
@@ -87,7 +88,7 @@ class Runtime:
                     if not strong:
                         return {**cached, 'stale': True, 'read_only': True}
                     raise CatalogError('runtime_recovering', 503)
-                doc = projection.validate(json.loads(raw))
+                doc = projection.decode_validated(raw)
                 if (canonical(doc) != raw or hashlib.sha256(raw).hexdigest() != state['document_sha256'] or
                         (state['cluster_id'], state['epoch']) != (self.cluster, self.epoch) or
                         (doc['cluster_id'], doc['epoch']) != (self.cluster, self.epoch) or

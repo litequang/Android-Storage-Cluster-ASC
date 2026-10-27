@@ -574,3 +574,13 @@ No CacheStorage/IndexedDB, offline write or background sync. Browser install pro
 needs explicit user action; acceptance of prompt is not claimed as installation.
 Current install criteria are verified in actual Chromium normal isolated persistent
 profile, not incognito; real Chrome Android installation remains an owner gate.
+
+
+### Core structural decoding and live authority
+Runtime projection decoding can reuse exact-byte structural validation separately
+from live readiness. The two-entry <=2MiB/input in-memory cache stores no mutable
+projection, authorization or quorum result; decoded outputs are independent.
+Runtime durable checksum/envelope/monotonicity checks and fresh Go/GC authority
+remain per operation. This reduces repeated disposable-SQL preparation in nested
+survivor verification, without changing the Registry/Catalog/Engine boundaries.
+Android Node and single-writer Demo do not instantiate this quorum Runtime.
