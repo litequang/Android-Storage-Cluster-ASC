@@ -1540,3 +1540,10 @@ releaseIDe69ebeae3e5ab9a5372465caa8ed5e1882f352fd5f355157299091361f4c6706.
 All artifacts/logs under/workspace/work/phase4-2j3-final and original candidate
 under/workspace/work/phase4-2j-native-catalog; do not restart completed full gate
 without source changes. No phones/Termux/production access or writerDR activation.
+
+
+## 2026-10-27 — internal candidate publication blocker
+Reverified existing APK inventory/signature: SHA7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8; original signer, no findings. All296 full-regression inputs unchanged; no rebuild or full rerun.
+Attempted gh prerelease native-node-v0.4.0-internal at c9ba037 with APK/checksum and exact E2E Controller source/checksum. Upload endpoint uploads.github.com returned HTTP401 Bad credentials. Subsequent release download returned release not found. Publication NOT VERIFIED; do not claim an available release or checksum downloaded from GitHub. No login/token/proxy/CA changes made.
+Private artifacts remain under /workspace/work/phase4-2j-native-catalog (APK and sha256) and /workspace/work/phase4-2j3-final (source archive, checksum, release-apk-audit.json, release-notes.md). Host archive SHA9dbd9007058a6a43f075c1924f4014faa7060ef6667e014bbc28a91be070ad59. Preserve original private signer, never publish it.
+Resume: inspect remote release/tag state before retry; never overwrite an existing tag/asset. Resolve supported upload authentication, publish honestly scoped candidate, download assets and verify SHA. Cold integrated initialization still INCOMPLETE; next qualification uses a fresh independently owned sandbox WITHOUT wiping existing AVD/state. Full4.2 NOT ACCEPTED; do not advance to Phase5. No phone/Termux/production access.
