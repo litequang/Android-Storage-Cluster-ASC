@@ -1,0 +1,34 @@
+{
+  "state": "PUSH_AND_REMOTE_VERIFIED",
+  "date_utc": "2026-10-28T06:26:45.221362+00:00",
+  "branch": "feature/phase4-2-android-native",
+  "source_checkpoint": "de05e05ec1f8dd6c9c7ca19e949c7f02b711ef3f",
+  "local_head": "de05e05ec1f8dd6c9c7ca19e949c7f02b711ef3f",
+  "fetch_head": "de05e05ec1f8dd6c9c7ca19e949c7f02b711ef3f",
+  "advertised_remote": "de05e05ec1f8dd6c9c7ca19e949c7f02b711ef3f",
+  "working_tree_clean_at_verification": true,
+  "normal_push": true,
+  "force_or_merge": false,
+  "qualification_receipt": "qualification/phase4-api35-network-native.json",
+  "archived_android_executions_pass": 19,
+  "host_targeted_tests_pass": 9,
+  "additional_driver_network_success_excluded_from_archived_count": true,
+  "new_full_regression_or_apk_release": false,
+  "final_api35_extra15_pass": true,
+  "old_interrupted15_still_historical_unknown": true,
+  "all_task_sdk_guests_stopped": true,
+  "private_offline_backup_images": 7,
+  "private_host_state_files_verified": 32,
+  "sdk_sigsegv_exit_is_not_clean_powerloss_acceptance": true,
+  "full_phase4_physical_acceptance": false,
+  "secret_audit": {
+    "state": "PASS",
+    "counts": {
+      "work": 425,
+      "index": 425,
+      "untracked": 0
+    },
+    "findings": [],
+    "scope": "actual credential/key payloads and private paths; APK inventory audited separately"
+  }
+}

@@ -2556,3 +2556,21 @@ final gates. Remaining Phase4 acceptance is platform/owner scope: ARM64 phones,
 Android/PWA, FGS Stop/Doze/OEM/background/update, no Termux adoption. Phase4/4.2 not
 physical-device ACCEPTED, API26–29 TLS unqualified, writableDR/Android voter/GC/
 failover locked, no Phase5/phone/M51/production access.
+
+
+### API35 completed checkpoint publication verified
+
+Source/checkpoint `de05e05ec1f8dd6c9c7ca19e949c7f02b711ef3f` normal-pushed to `feature/phase4-2-android-native`.
+Actual local HEAD=FETCH_HEAD=advertised remote and clean working tree verified
+2026-10-28T06:26:45.221362+00:00.19archived Android targeted executions PASS (network/pinned Controller,
+cold/retained Node and15isolated faults),9host guards PASS; no new full suite or APK
+release. All425work/index files audited,0untracked/secret findings before commit.
+Original signer/immutable artifacts, all previous SDK30 datasets and new API35
+Main/volume/object/host fixture preserved; all SDKs stopped, private7image+32host
+file hashes verified. SDK exitSIGSEGV is explicitly not clean-powerloss acceptance.
+Receipt qualification/phase4-api35-network-publication.json records the observed
+GitHub event. Following documentation-only publication commit does not alter tested
+source/receipts/artifact bytes. Next owner physical pilot in ANDROID-NATIVE-PILOT;
+if resuming SDK35 use SAME existing state/--resume after fresh ownership/network/
+pin checks, never fresh initialize. No full physical Phase4 acceptance/Phase5/
+Android voter/GC/failover/writableDR claim.
