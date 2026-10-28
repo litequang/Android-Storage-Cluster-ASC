@@ -554,3 +554,10 @@ asc.agent.heartbeat has explicit trusted config/profile; host wrappers retain
 policy/ownership/persistence. UNKNOWN telemetry remains null. A snapshot is not
 byte/writer proof and does not approve storage/domain/voters. No new Android IPC
 operation or listener is introduced.
+
+## Phase5 access foundation
+No Node/enrollment/storage wire change. asc.access is a separate browser ingress
+contract, fixed existing Dashboard routes only; no Node/admin/shell/GC/membership
+proxy. Explicit upstream mode/pin, existing owner session+CSRF. Core/recovery mode
+stays read-only regardless of remote connectivity. Private network address does
+not prove VPN identity, controller health, quorum or writer permission.

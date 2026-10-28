@@ -347,3 +347,15 @@ fresh Go quorum and operation receipts remain mandatory. Keep GC10s/250ms fences
 and physical SHA/last-copy/reference checks. Prior retry/TTL experiments failed
 and remain excluded. This is a Core decode optimization, not Android GC/runtime
 activation or a new Catalog. Actual qualification follows in current progress.
+
+## ADR074 — Separate private access plane, preserve existing owner authority
+Owner defers hardware acceptance while source/synthetic Phase5 proceeds. Use a
+new explicit private HTTPS ingress forwarding only fixed existing browser routes
+to an operator-pinned Dashboard. Keep its owner sessions/CSRF/Catalog/transfer
+logic; no parallel database or machine-token browser login. Check external exact
+Host/Origin before translating to the fixed pinned upstream. Mode is mandatory:
+Demo file routes versus Core/recovery read-only, never fallback. Numeric private
+or CGNAT address does not prove VPN membership; status stays UNKNOWN until actual
+provider evidence. First version denies public/DNS/wildcard endpoints and all
+node/admin/enrollment/GC/shell routes. Cloudflare/public trust and operator-only
+private maintenance are separate later checkpoints. Deferred hardware is not PASS.

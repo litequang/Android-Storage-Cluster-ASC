@@ -741,3 +741,9 @@ and network/TLS preconditions;9host tests PASS. No app/Core/archive/release chan
 Fresh15 TLS/context/vault/Engine PASS209.708s/all6Main hashes unchanged; stopped
 SDK/private7image+32host-file backup verified, SIGSEGV exit not clean-powerloss.
 Full phone/ARM64/physical LAN/Phase4 not accepted.
+
+### Phase5.0 private access foundation — 2026-10-28
+Owner defers hardware acceptance; separate source/synthetic Remote Access track.
+Explicit versioned private profile/route contract reuses existing Dashboard owner
+sessions and Core read-only modes; public/admin/node/GC/shell routes refused. No
+listener/deployment/cloud account or existing Engine/state/artifact change yet.

@@ -522,3 +522,11 @@ creation/repair/downgrade of missing or unknown metadata. A supplied dev/inode
 receipt must match. Default explicit creation path is retained for old callers.
 SQLite DDL whitespace normalization preserves older Python indentation without
 rewriting stored schema. Native encrypted volume-config contract is still next.
+
+## Phase5 private access profile1
+New optional separate access-plane config, not a Registry/Catalog migration:
+format1, mode private-gateway, frontend_origin, upstream_origin, upstream_pin,
+upstream_mode, max_body_bytes. No admin/node credential or session persistence.
+Gateway TLS belongs to its separate private root; never adopt backend/Termux state.
+No backup/recovery/volume identity/schema changes. Unsupported profile versions
+refuse; removal of gateway leaves upstream state unchanged.

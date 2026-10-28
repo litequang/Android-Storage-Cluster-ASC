@@ -1,5 +1,13 @@
 # ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
+## Phase5 private access track
+- asc/access/policy.py: version1 explicit private ingress/upstream pin/mode/size
+  contract and fixed browser route exclusions; no runtime or authority source.
+- tests/test_access_policy.py: public/DNS/wildcard/config/management/path and
+  Core/recovery write refusals; private address never implies VPN/writer proof.
+- PHASE5-PLAN/PROGRESS/ACCEPTANCE: owner defers phone acceptance to later combined
+  campaign; no phone/production PASS, live VPN/Cloudflare/SSH or guard changes.
+
 ## Current API35 qualification handoff (2026-10-28)
 
 - `qualification/phase4-api35-network-native.json` / `PHASE4-API35-QUALIFICATION`:

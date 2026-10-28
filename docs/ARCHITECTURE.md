@@ -584,3 +584,12 @@ Runtime durable checksum/envelope/monotonicity checks and fresh Go/GC authority
 remain per operation. This reduces repeated disposable-SQL preparation in nested
 survivor verification, without changing the Registry/Catalog/Engine boundaries.
 Android Node and single-writer Demo do not instantiate this quorum Runtime.
+
+## Phase5 private access plane foundation
+Owner defers phone acceptance2026-10-28 and allows source/synthetic continuation.
+Separate asc.access profile/gateway reuses existing browser Dashboard/File Manager
+or explicit read-only Core observer; no Engine/Catalog/Controller replacement.
+Private ingress -> pinned HTTPS Dashboard -> existing authorized services. Existing
+Node/consensus ports are not ingress routes. Owner session/CSRF stays backend-owned;
+private routing grants no authority. See PHASE5-PLAN and ADR074. Hardware and
+production acceptance remain deferred, not inherited from emulator results.

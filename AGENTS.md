@@ -13,6 +13,20 @@
 
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
+## Current Phase5 authorization — 2026-10-28
+Owner explicitly requests next roadmap work and DEFERS phone acceptance to a later
+combined campaign. Do not block source progress waiting for phones or call deferred
+checks PASS. Source/synthetic Phase5 on separate feature/phase5-remote-access from
+verified0877a15; original Phase4/Core/Demo refs/private signers/AVDs preserved.
+Read PHASE5-PLAN/PROGRESS/ACCEPTANCE.5.0 contract ->5.1 private Dashboard gateway ->
+5.2 optional public-edge adapter ->5.3 private maintenance ->5.4 qualification,
+targeted/docs/secrets/normal push/remote each. No phones/M51/SSH/production/system
+or live cloud/tunnel changes, no public node/admin/SSH, custom arbitrary shell,
+identity adoption, Android voter/GC/failover/writableDR. Existing sessions/Catalog/
+Engine/observer reused. Mode/pin explicit, recovery/Core read-only; VPN alone is
+not authorization. Hardware/production deferred/not accepted. Older no-Phase5/
+wait-for-pilot instructions below are superseded only by this explicit task.
+
 ## Current Phase4 closure pointer — 2026-10-28
 
 LATEST API35 Native Node now QUALIFIED on SAME retained userdata/exact APK5:

@@ -564,3 +564,10 @@ synthetic metadata only; do not log tokens, payloads or production state. Exact
 structural decode reuse reduces repeated SQL work, but all fresh quorum/term and
 physical checks still apply. Current acceptance/progress owns the actual network
 fault result; an offline decode benchmark is not that result.
+
+## Phase5 access foundation
+Unsupported private profile/mode or public/wildcard origin: stop and correct the
+explicit access config, never widen backend LAN guards or regenerate its identity.
+A100.64/10 address alone means VPN membership/reachability UNKNOWN. No live VPN/
+Cloudflare service has been configured. Missing phone acceptance is deferred by
+owner, not a runtime failure or a permission to deploy to production/M51.

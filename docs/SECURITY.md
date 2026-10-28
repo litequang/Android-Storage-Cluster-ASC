@@ -684,3 +684,11 @@ command API/ADB data relay/CA/proxy/validation change. Forwarding is transport,
 NOT TLS trust, storage approval or writer authority. API35 Node qualification used
 the normal Ethernet/15 SDK path; actual network and pinned Controller must pass
 before fresh Node initialization. All old runtime/DR/GC guards remain unchanged.
+
+## Phase5 private access contract
+Only explicit numeric private/CGNAT frontend and pinned fixed LAN HTTPS upstream.
+No wildcard/public/DNS bind, management/node/consensus/shell proxy or browser machine
+credentials. VPN routing never replaces existing owner authentication. Core and
+recovery stay read-only. Hardware/production deferred by owner is not qualification.
+Public-edge/Cloudflare header/JWT/connector trust is separate and NOT implemented
+by this private profile. See ADR074/PHASE5-PLAN before extending exposure.
