@@ -1,0 +1,53 @@
+{
+  "state": "PASS_DIRECT_PUBLISHED4_TO_FINAL5_LOCAL_STATE_ONLY",
+  "baseline": "476e390a65188e28afa44cb1bd5be83e6ee16d71",
+  "actual": {
+    "state": "PASS_DIRECT_PUBLISHED4_TO_FINAL5_LOCAL_STATE",
+    "api": 30,
+    "abi": "x86_64",
+    "old_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+    "new_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "no_intermediate_main5": true,
+    "pre_update4_readback": {
+      "tests": 1,
+      "seconds": 9.142,
+      "failures": 0,
+      "skips": 0
+    },
+    "post_update5_regression": {
+      "tests": 9,
+      "seconds": 57.607,
+      "failures": 0,
+      "skips": 0
+    },
+    "after_downgrade_refusal": {
+      "tests": 1,
+      "seconds": 8.089,
+      "failures": 0,
+      "skips": 0
+    },
+    "uid_preserved": true,
+    "stable_metadata_records_equal": 6,
+    "original_sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "original_bytes": 262144,
+    "keystore_context_tls_pin_node_cluster_app_volume_preserved": true,
+    "normal_update_only": true,
+    "forced_downgrade_uninstall_clear_or_database_restore": false,
+    "native5_retained_network_e2e": "PENDING",
+    "physical_phone": false,
+    "full_phase4_accepted": false
+  },
+  "prior_baseline": "qualification/phase4-published4-cold-baseline.json",
+  "signed_public_apks_unchanged": true,
+  "signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "android_targeted_tests": 11,
+  "failures": 0,
+  "skips": 0,
+  "scope": "Actual API30 x86_64 SDK, ORIGINAL published4 first identity/bytes then direct FINAL published5; not phone/Termux migration/full Phase4 acceptance",
+  "records": "Six required metadata/ciphertext/proof records hash-equal before/after update/regression/refusal. No empty matching-record proof. Original4 readback9.142s, final5 suite57.607s, after downgrade refusal8.089s.",
+  "new_app_private_backup_or_export_feature": false,
+  "scope_limit": "This is synthetic Android PackageManager update/data-continuity evidence, not a phone backup/Keystore export or supported forced rollback",
+  "api35_blocker": "UNCHANGED",
+  "native5_retained_network_e2e": "PENDING; do not claim post-update Node online yet",
+  "next": "After commit/push/fetch verify, reuse SAME Controller/peer/AVD state with existing driver --resume --artifact published5, then original4-byte readback after new5 writes"
+}

@@ -2288,3 +2288,31 @@ positive integration now exercised. No new full claim. API35 remains BLOCKED.
 Next normal checkpoint commit/push/fetch verify, then exact direct published5 update,
 original IDs/Keystore/volume/bytes readback and downgrade refusal/retained Node E2E.
 AVD remains RUNNING; original private signer and all existing states preserved.
+
+
+### Direct exact published4->FINAL5 local state —11Android PASS
+
+Baseline476e390a65188e28afa44cb1bd5be83e6ee16d71 normal-pushed, fetched/advertised
+remote matched before upgrade. Same new API30 AVD, no clone/reset or other device.
+Original4 main was SHA7c4ba649 BEFORE first identity/data, no intermediate main5.
+Actual original4-byte readback NativeUpgradeDataTest1PASS9.142s. Matched original
+signer and exact published5/aec65c2c, normal install-r ONLY, no rebuild/new key.
+Real installed SHA verified, same package UID, all6required immutable metadata/
+canary/ciphertext/context/proof records present and byte-hash equal (not0records).
+
+Original NativeCandidateUpgradeTest +NativeUi +EmbeddedEngine +four Binder methods
+9PASS57.607s/0skip. Actual old4 blob256KiB/SHA preserved with original App/Node/
+Cluster/Volume/NodeTLS pin/context and Keystore decrypt. Then attempted normal-r
+old4 install, Android actually INSTALL_FAILED_VERSION_DOWNGRADE; no -d/uninstall/
+clear. Original bytes again1PASS8.089s on installed5, UID/all6records still match.
+Totals for THIS step11PASS0FAIL0SKIP, not a full suite. Main now exact final5; do
+NOT restart old4 setup or install another intermediate. No product/dependency/
+archive/APK change. No backup/Keystore export feature or forced rollback claim.
+
+Receipt qualification/phase4-direct-published45-local.json, raw private evidence
+/workspace/work/phase4-direct-apk45. This verifies direct signed code update/local
+state, NOT yet post-update online Node/Catalog. Next after normal push/remote verify:
+existing qualifier --resume --artifact published5 on SAME original Controller/peer/
+AVD identity/bytes, new actual replicas/browser/Controller-loss/process death, then
+read original4 bytes after new5 data. API35 remains BLOCKED, phones/physical LAN/
+ARM64/independent domains/OEM/Doze/writableDR/full Phase4 remain unqualified.

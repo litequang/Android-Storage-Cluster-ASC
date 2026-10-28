@@ -81,3 +81,12 @@ SHA/browser/Controller-loss/identity, no intermediate main5 yet. Receipt
 qualification/phase4-published4-cold-baseline.json. Actual direct4->final5 still
 NOT TESTED; two logical domains on one host are not physical phone acceptance.
 API35 blocked gate unchanged. Next preserve same state and normal final5 update.
+
+
+Direct published4->FINAL5 **local state** now11Android PASS on same API30 sandbox:
+original4 readback1, post-update9, refused downgrade+readback1; same UID/all6records/
+App/Node/Cluster/Volume/pin/Keystore/old bytes. Receipt
+qualification/phase4-direct-published45-local.json. Earlier direct4->5 NOT TESTED
+wording is superseded ONLY for this exact local-state path; post-update networked
+Node/Catalog still PENDING. Main now final5, no reset/re-init/intermediate APK.
+API35/phone/physical/ARM64/full Phase4 acceptance remains separate and incomplete.

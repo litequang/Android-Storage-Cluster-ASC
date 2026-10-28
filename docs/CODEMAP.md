@@ -876,3 +876,8 @@ Published4 baseline receipt: qualification/phase4-published4-cold-baseline.json,
 existing NetworkReadinessTest1 +NativeCatalogTest2 on exact original APK4/blank
 API30. Real existing Engine/Node/host Catalog, no new implementation. Cold+retained
 workflow PASS, direct final5 upgrade remains separate/NOT TESTED until actual run.
+
+Direct published APK4->final5 LOCAL-state receipt:
+qualification/phase4-direct-published45-local.json (11 actual Android tests, API30).
+Uses original NativeUpgradeDataTest/NativeCandidateUpgradeTest/UI/Binder/Engine;
+no product or APK delta. Networked retained5 qualification remains separate.

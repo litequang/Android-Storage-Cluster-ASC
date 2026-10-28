@@ -14,6 +14,15 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-28
+LATEST direct published4->FINAL5 LOCAL STATE PASS11 on same new API30 sandbox:
+old4 actual readback1, post5 original upgrade/Binder/UI/Engine9, refused normal
+old4 downgrade then old bytes1. No intermediate main5, UID and six required
+identity/ciphertext/context/proof records equal; Keystore/Node/Cluster/Volume/pin
+preserved. Receipt phase4-direct-published45-local.json. Main is NOW exact5,
+never rerun initial4 setup or force downgrade/reset! Native5 retained network E2E
+PENDING; next SAME preserved driver --resume --artifact published5, original4 bytes
+after new writes. API35/phone scopes independent; full Phase4 NOT ACCEPTED.
+
 LATEST independent API30 blank SDK sandbox now exact PUBLISHED4 baseline PASS:
 NetworkReadiness1 +NativeCatalog cold/retained2, real pinned enrollment/Storage/FGS/
 256KiB/two logical replicas/browser/SHA/fallback/Controller-loss/process death.
