@@ -15,6 +15,23 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 ## Current Phase5 authorization — 2026-10-28
 
+EXECUTOR INTERRUPTION (latest): tested5.2a source783dd7d normal-pushed/verified,
+16fresh JWT/private-policy PASS0.066s, optional hash-pinned env/pip check PASS.
+5.2b shared gateway hooks +cloudflare.py apply_patch acknowledged but UNTESTED/
+UNCOMMITTED; subsequent create/run integration command failed CreateProcess with
+exec-server transport disconnected. Environment provider's connected flag is NOT
+executor readiness. Do not count any5.2b TLS/file/connector/provider tests as PASS.
+Read docs/handoff/PHASE5-2B-EXECUTOR-INTERRUPTION.md BEFORE work: acknowledged source
+candidate reconstructed there (NOT byte-verified disk backup), test matrix/resume
+steps, private env paths. Check original workspace dirty/staged/untracked files,
+keep signer/old SDK/Node state, reconcile docs-only remote advances safely, no
+reset/clean/force or blind overwrite. If workspace gone, reconstruct ONLY missing
+5.2b from draft and test fresh. Active remote SOURCE remains tested5.2a; draft is
+not imported/shipped/qualified. PHASE5-PROGRESS interruption section owns scope.
+No live Cloudflare/DNS/tunnel/device operations, no actual cloudflared binary or
+new artifact qualified. Phone campaign DEFERRED BY OWNER, not PASS, not blocking
+source continuation once a real executor is available.
+
 Current5.0/5.1 private access software subset QUALIFIED, normal-pushed sourcefa0ada9
 and docs-only publication follows; see PHASE5-PROGRESS/qualification receipts.
 19+1+1+2separate targeted PASS: actual TLS/session/API/CLI/two logical replicas/
