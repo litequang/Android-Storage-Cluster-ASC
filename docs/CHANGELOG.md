@@ -773,3 +773,9 @@ Separate loopback edge profile2 and standard-library-backed Access RS256 verifie
 strict issuer/audience/claims, bounded key-cache rotation/fail-closed expiry. Four
 optional dependencies hash-pinned/workspace-only;16targeted PASS, synthetic real
 signatures, no live provider/listener/Cloudflare/production qualification yet.
+
+### Phase5.2b loopback edge source runtime
+Reuse existing browser proxy with separate JWT ingress/profile hooks, trusted
+loopback TLS and ASC-only owner-cookie forwarding. Add safe connector renderer,
+actual local JWKS/TLS/file and refusal tests; official cloudflared offline config
+validated. No live Cloudflare deployment, public management, release or phone PASS.

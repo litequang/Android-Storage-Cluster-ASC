@@ -584,3 +584,10 @@ a private supported env and verify the configured team's HTTPS certs endpoint.
 Never use token jku URLs/stale expired keys or change proxy/CA. edge_access_denied
 means no valid application JWT for exact issuer/audience/claims; it never authorizes
 an ASC owner role. Missing live Cloudflare setup is NOT a source-test PASS.
+
+Phase5.2b edge_origin_refused: preserve root/profile/certificate; check explicit
+format2/public origin versus loopback bind, pinned backend mode and optional
+dependencies. Existing incomplete root must NOT be regenerated automatically.
+Missing/wrong Access assertion403 differs from valid Access/no ASC owner401.
+Expired key cache/provider outage503 never falls back to stale keys or owner-only
+access. Connector offline validation does not prove tunnel/DNS/IdP reachability.

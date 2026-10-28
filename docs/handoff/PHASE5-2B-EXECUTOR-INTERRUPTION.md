@@ -1,3 +1,7 @@
+> Resume2026-10-28: executor recovered; dirty gateway/cloudflare source preserved,
+> docs-only commits fast-forwarded safely. See latest PHASE5-PROGRESS for actual
+> new test results. Historical untested draft below is not the current status.
+
 # Phase5.2b executor interruption — RECOVERY DRAFT, NOT QUALIFIED
 
 2026-10-28: the Cloud executor became unavailable. Last successful production-source

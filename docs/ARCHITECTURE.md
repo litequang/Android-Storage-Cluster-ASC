@@ -593,3 +593,12 @@ Private ingress -> pinned HTTPS Dashboard -> existing authorized services. Exist
 Node/consensus ports are not ingress routes. Owner session/CSRF stays backend-owned;
 private routing grants no authority. See PHASE5-PLAN and ADR074. Hardware and
 production acceptance remain deferred, not inherited from emulator results.
+
+## Phase5.2b optional edge origin
+Separate format2 runtime binds only127.0.0.1/TLS. A separately managed connector
+would terminate public HTTPS/Access and use verified origin CA/IP SAN, exact
+public Host, required Access audience. ASC independently verifies signed JWT
+BEFORE upstream connection; claims do not grant owner authority. Existing owner
+session/CSRF and pinned explicit Dashboard mode follow unchanged. Shared gateway
+hooks reuse routing/streaming/limits, no second Engine/Catalog or authority cache.
+No provider/account/DNS deployment or live edge acceptance in source work.

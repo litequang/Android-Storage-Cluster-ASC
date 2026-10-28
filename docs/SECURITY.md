@@ -708,3 +708,12 @@ bounded fresh public-key cache, required signed issuer/audience/time/subject and
 application type. Unavailable expired keys fail closed. No JWT logging/persistence/
 automatic owner session. Profile2 is explicit new loopback-only origin, public Host
 separate; private profile1 remains strict. See ADR075/PHASE5-CLOUDFLARE for scopes.
+
+## Phase5.2b loopback edge boundary
+Origin is owner-only separate identity/root,127.0.0.1 HTTPS with trusted CA/IP SAN.
+Connector template requires Access per hostname and final404; no TLS bypass. ASC
+independently verifies signature/issuer/audience/time before ANY upstream request,
+then preserves owner session/CSRF. CF assertion/cookies/email/forwarded identity
+never become backend credentials; a valid Access JWT alone is insufficient.
+Trusted test key transport is in-process only, not a CLI/profile bypass. No live
+provider proof, public listener, SSH/admin exposure, device or recovery authority.

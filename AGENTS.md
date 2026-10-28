@@ -15,22 +15,17 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 ## Current Phase5 authorization — 2026-10-28
 
-EXECUTOR INTERRUPTION (latest): tested5.2a source783dd7d normal-pushed/verified,
-16fresh JWT/private-policy PASS0.066s, optional hash-pinned env/pip check PASS.
-5.2b shared gateway hooks +cloudflare.py apply_patch acknowledged but UNTESTED/
-UNCOMMITTED; subsequent create/run integration command failed CreateProcess with
-exec-server transport disconnected. Environment provider's connected flag is NOT
-executor readiness. Do not count any5.2b TLS/file/connector/provider tests as PASS.
-Read docs/handoff/PHASE5-2B-EXECUTOR-INTERRUPTION.md BEFORE work: acknowledged source
-candidate reconstructed there (NOT byte-verified disk backup), test matrix/resume
-steps, private env paths. Check original workspace dirty/staged/untracked files,
-keep signer/old SDK/Node state, reconcile docs-only remote advances safely, no
-reset/clean/force or blind overwrite. If workspace gone, reconstruct ONLY missing
-5.2b from draft and test fresh. Active remote SOURCE remains tested5.2a; draft is
-not imported/shipped/qualified. PHASE5-PROGRESS interruption section owns scope.
-No live Cloudflare/DNS/tunnel/device operations, no actual cloudflared binary or
-new artifact qualified. Phone campaign DEFERRED BY OWNER, not PASS, not blocking
-source continuation once a real executor is available.
+LATEST5.2b: executor recovered, both dirty runtime files preserved, docs-only
+handoff fast-forwarded28fea21. New loopback edge CLI/Access-before-owner/cookie
+stripping/connector rendering source qualified:22PASS41.118s; existing private
+API/CLI/Dashboard/Chromium14PASS; actual Core/recovery2PASS67.221s after selecting
+existing command-only ASC_GO=/workspace/asc-cloud/go1.27.3/go/bin/go (default go
+is wrong executable, no test skip). See PHASE5-PROGRESS/ACCEPTANCE/CLOUDFLARE and
+qualification/phase5-edge-access.json. Historical interruption draft superseded.
+Official checksum-verified cloudflared2026.10.5 OFFLINE validation/rules only; NO
+live tunnel/account/DNS/provider/browser acceptance or new artifact. NEXT5.2c
+edge-mode Core/recovery +synthetic browser; then5.3maintenance/5.4final gates.
+Preserve SDK/signer/all identities; phones deferred, writerDR remains BLOCKED.
 
 Current5.0/5.1 private access software subset QUALIFIED, normal-pushed sourcefa0ada9
 and docs-only publication follows; see PHASE5-PROGRESS/qualification receipts.

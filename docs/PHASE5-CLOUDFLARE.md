@@ -1,7 +1,7 @@
 # Phase5.2 Cloudflare adapter — source/synthetic only, no live deployment
 
-5.2a provides a separate version2 edge profile and RS256 Access verifier, not an
-active tunnel. Private gateway profile1 stays unchanged. Browser HTTPS DNS origin
+5.2a provides a separate version2 edge profile and RS256 Access verifier;5.2b adds
+a loopback-only HTTPS origin and connector rendering, not an active tunnel. Private gateway profile1 stays unchanged. Browser HTTPS DNS origin
 is distinct from origin listener, which MUST remain127.0.0.1 with trusted TLS.
 No public Node/storage/admin/SSH listener, no widening of private profile, no
 Controller/identity/schema migration or writable recovery. Existing owner session/
@@ -57,3 +57,58 @@ and required Access audiences. We will render Access controls per hostname rule,
 never depend on an untested top-level setting or noTLSVerify. No Cloudflare SDK/
 API credential is available/configured in this managed task; source work does not
 create/modify an account, zone, DNS record or connector.
+
+## 5.2b loopback origin contract and source commands
+
+`python -m asc.access.cloudflare --root "$HOME/.asc-edge-dev" init --profile "$HOME/edge-profile.json"`
+creates a NEW, separate private gateway identity only; existing incomplete/different
+roots refuse rather than regenerate keys. `info` reports public CA fingerprint,
+UNKNOWN reachability, no writer authority. It never reads backend private state.
+
+Profile JSON has format2, mode `cloudflare-edge`, frontend_origin canonical public
+HTTPS DNS name WITHOUT port/path, listen_origin `https://127.0.0.1:8446`, exact
+private upstream_origin, verified upstream_pin, upstream_mode, max_body_bytes,
+access_team and access_audience (64lowercase hex). Keep profile owner-only0600,
+root0700 outside source/Engine ancestry. Do not convert a format1 private root.
+The upstream is the existing DASHBOARD listener, not Controller/node/admin ports.
+
+`python -m asc.access.cloudflare --root "$HOME/.asc-edge-dev" serve` runs foreground
+and requires actual configured team public keys before startup. No CLI option to
+skip JWT/CA/pin validation or inject a key source. SIGINT/SIGTERM stops only this
+owned gateway. Existing pinned backend must advertise the EXACT configured mode;
+no Demo/Core/recovery automatic fallback. Core/recovery routes stay read-only.
+
+`python -m asc.access.cloudflare --root "$HOME/.asc-edge-dev" render-connector --tunnel-id CANONICAL-UUID --credentials-file "$HOME/.cloudflared/OWNER-ISSUED-UUID.json" --output "$HOME/edge-connector.json"`
+creates a NEW0600 JSON configuration; never reads credentials, overwrites output,
+starts cloudflared or creates account/DNS/Access resources. JSON is accepted by the
+qualified cloudflared YAML/JSON parser. Use a verified pre-existing owner-managed
+named tunnel only in a future separately authorized deployment. No Quick Tunnel.
+
+Rendered configuration has one public hostname ->loopback HTTPS, verified public
+caPool/IP SAN, exact public HTTP Host, noTLSVerify=false, per-rule Access required/
+team/audience and final404. The public CA is not a private key; independently verify
+its fingerprint before connector installation. Each request ALSO validates the
+signed assertion in ASC before connecting to backend. Only the correct __Host ASC
+owner cookie passes upstream; CF cookies/assertion/email/forwarded identity never
+pass. Existing owner session/CSRF remain mandatory, limits/deadlines/routing remain
+in the shared private gateway. No session/Catalog/Registry/Engine duplication.
+
+Stop with Ctrl-C for rollback; return to existing LAN/private access. Keep edge
+identity/config for diagnosis, never restore old Controller DB or regenerate Node
+IDs. No release/archive/APK/installed service changed by this source checkpoint.
+
+## Qualified connector binary (offline only)
+Official cloudflare/cloudflared2026.10.5 linux-amd64,40263303bytes,
+SHA256 e1bc0cf084fd9e590554fe769a86b1db46701c3f847a43d902f7b974a4e16298.
+Digest matched BOTH official release body and asset digest, then actual download.
+Workspace-only executable, no system install. Actual `--version`, `tunnel --config
+FILE ingress validate` and `ingress rule` for matching hostname/final404 passed.
+No `tunnel run`, provider login, DNS/API change or live edge traffic was executed.
+https://github.com/cloudflare/cloudflared/releases/tag/2026.10.5
+
+Synthetic tests use actual loopback TLS/owner/Storage bytes and ephemeral real RSA
+signatures, with a trusted in-process key TRANSPORT mapping to a real pinned local
+HTTPS JWKS server. This is not a Cloudflare-issued token/IdP/account qualification.
+CLI init/info/render tested locally; production CLI serve with real issuer keys and
+live connector/edge/browser flow remain NOT TESTED. Existing private browser/Core
+regressions qualify shared gateway behavior, not edge-provider reachability.

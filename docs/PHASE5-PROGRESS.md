@@ -209,3 +209,68 @@ remote advances without overwriting dirty source. Recover only missing work, the
 fresh JWT/private/edge/realTLS/file/browser/Core targeted gates. Keep5.2b UNKNOWN/
 NOT QUALIFIED until those pass and are committed/remote verified. Physical-phone
 campaign remains DEFERRED BY OWNER; do not wait for phones to resume source work.
+
+## 5.2b executor recovered; loopback origin/source subset qualified
+Original workspace recovered, gateway.py/cloudflare.py dirty bytes preserved.
+Remote783->28fea21 docs-only handoff fast-forwarded after path review; no reset,
+clean, branch merge, state/signer/AVD/artifact modification. Missing integration
+file reconstructed from scenarios; no runtime source had to be reimplemented.
+Inherited network policy/proxy/CA untouched, no live tunnel/account/DNS deployment.
+
+Implemented separate `asc.access.cloudflare` init/info/serve/render-connector,
+exact loopback TLS/public Host split, actual RS256 before upstream, ASC-only cookie
+forwarding, no second owner DB/Engine or cloud credentials read. Shared gateway
+hooks retain profile1 behavior/limits/pinning/mode/CSRF. See PHASE5-CLOUDFLARE for
+source commands, contract, CA trust, offline connector evidence and stop rollback.
+No new source archive/APK release; old installed bundles do NOT include this CLI.
+
+Fresh /workspace/asc-access-dev/edge-env/bin/python -m unittest
+ tests.test_access_jwt tests.test_access_policy tests.test_access_cloudflare -v:
+22PASS0skip/fail41.118s. Six new actual loopback-TLS cases plus16foundation cases.
+Real pinned HTTPS JWKS test source/ephemeral RSA verification; valid JWT still
+requires ASC owner, invalid JWT never consumes owner code, actual two logical
+replicas/upload/SHA/fallback after node stop, wrong CA/pin/mode/origin/CSRF/duplicate
+assertion/cookie refusal, restart preserves gateway cert/session, real key-server
+stop +expired cache503, actual recording TLS upstream has no CF credentials,
+CLI init/info/render exclusive output/never reads tunnel credentials.
+Synthetic key TRANSPORT maps configured issuer URL to local pinned HTTPS fixture,
+not live Cloudflare tokens/provider. No production verifier bypass/CLI test mode.
+
+Shared source regression: tests.test_access_gateway tests.test_demo_dashboard
+ tests.test_access_browser tests.test_access_observer initial89.463s:15tests PASS,
+1Core class-setup ERROR (default /usr/bin/go was unrelated executable; no Core test
+ran). Existing gateway6+Dashboard7+actual Chromium1 =14PASS, passive recovery1PASS.
+Resolved WITHOUT source/test weakening: command-only ASC_GO selects existing
+/workspace/asc-cloud/go1.27.3/go/bin/go. Fresh tests.test_access_observer2PASS0skip/
+fail67.221s including cold Go build/actual3-Go/Python quorum partition/heal and
+passive recovery. Qualified coverage is22+14+2distinct cases, not a fresh full suite.
+Private browser still uses original unchanged demo_dashboard.cjs, actual trusted/
+untrusted CA/owner/PWA/mobile/XSS/bytes/offline fallback/logout. This private browser
+is not proof of live provider/browser-through-edge. Existing Core source unchanged.
+
+Initial new suite had1test-expectation failure (expected error lacked existing
+protocol_version field), not a runtime fault. Corrected exact envelope expectation;
+no assertion removed. Initial imported TestCase also discovered6duplicate existing
+private cases; switched to module import, final22 count excludes duplicates.
+Initial standalone connector validation used disallowed outside-HOME credentials
+PATH, correctly refused; reran in fresh private HOME directory, no guard change.
+
+Official cloudflared2026.10.5 linux-amd64 downloaded/workspace-only,40263303bytes,
+SHA256 e1bc0cf084fd9e590554fe769a86b1db46701c3f847a43d902f7b974a4e16298 matches
+release body AND asset digest. --version/offline ingress validate/matching rule0/
+other hostname404rule1 PASS. No tunnel run/service install/provider account used.
+
+Security review: tracked/index/untracked source inspected for private paths/PEM
+material/access keys/token patterns/URL credentials. Four initial pattern flags
+were existing PEM HEADER string validation constants and known u:p userinfo-refusal
+fixture, manually reviewed; no actual PEM or credential material. Scan recognizes
+real multiline key material and only that exact synthetic URL fixture. No original
+security tests modified. Final staged scan/remote receipt follows publication.
+
+Software subset5.2b qualified, Phase5 overall NOT ACCEPTED. Public-edge browser/
+real connector/IdP/DNS/network behavior NOT TESTED; edge-mode Core/recovery E2E is
+next5.2c qualification, then5.3 controlled private maintenance and5.4fresh final
+applicable gates. No fresh full Python/Go/Android/fault run claimed at5.2b. Physical
+phone campaign DEFERRED BY OWNER. WritableDR/Android voter/GC/failover stay locked.
+Private raw logs /workspace/work/phase5-edge-{targeted-final,private-regression,
+observer-final}.log; public sanitized receipt qualification/phase5-edge-access.json.

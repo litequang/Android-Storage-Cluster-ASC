@@ -49,3 +49,13 @@ Cloudflare/remote maintenance/production/phone campaign remain outstanding.
 private-mode regressions in hash-pinned optional private venv. No edge runtime/
 Cloudflare-issued JWT/live provider/remote reachability acceptance yet. Official
 references, dependency provenance and exact scope in PHASE5-CLOUDFLARE/PROGRESS.
+
+## 5.2b source/loopback scoped PASS
+22JWT/profile/actual edge TLS/JWKS/file cases PASS41.118s; shared gateway/Dashboard/
+Chromium14PASS from initial regression (Core setup failed due wrong default go),
+then explicit existing Go SDK Core/recovery2PASS67.221s. Setup error resolved,
+no skip/security weakening; exact logs/initial failures in PROGRESS.
+Official cloudflared2026.10.5 SHA verified, offline config/rule/catchall PASS only.
+No live Cloudflare/JWT issuer/IdP/DNS/tunnel/public browser/remote reachability,
+physical devices, new release or fresh full-suite acceptance. Next5.2c edge Core/
+recovery and synthetic browser integration; full Phase5 NOT ACCEPTED.

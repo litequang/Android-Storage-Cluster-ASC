@@ -927,3 +927,12 @@ new blank API30 (first main APK5 before identity), actual bytes/enrollment/TLS/F
 replicas/browser/fallback/Controller loss/process death. No new product code. Both
 exact fresh/upgrade paths now observed; API35/physical limits retained.7SDK images/
 32private host files verified offline; cache cleanup only public installer ZIPs.
+
+## Phase5.2b loopback edge runtime
+- asc/access/cloudflare.py: explicit EdgeProfile2 CLI/init/info/serve/render-connector,
+  strict JWT ingress and ASC-only cookie forwarding, loopback trusted TLS origin;
+  no live tunnel/account/DNS or backend state. Shared gateway exposes trusted
+  handler/profile/bind hooks, private format1 remains unchanged.
+- tests/test_access_cloudflare.py: actual local HTTPS JWKS, real RS256 signatures,
+  owner/CSRF/two logical Storage replicas/SHA/fallback, expired-key outage, pin/mode/
+  CA refusal, cookie stripping and safe CLI render. Not live Cloudflare/phones.

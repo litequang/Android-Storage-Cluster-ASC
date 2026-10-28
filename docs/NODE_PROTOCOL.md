@@ -574,3 +574,12 @@ team issuer/application audience/time checks; never trust merely header presence
 email/forwarded claims, unverified key URLs or a Cloudflare cookie as ASC owner.
 Existing owner cookie/CSRF and Core/recovery mode restrictions remain mandatory.
 No Node/storage/enrollment/consensus wire change or new writer grant.
+
+## Phase5.2b edge browser ingress
+Exactly one valid Cf-Access-Jwt-Assertion plus existing ASC owner session required.
+Missing/bad assertion403; expired key cache with unavailable provider503. Valid
+Access without ASC owner is401; wrong/missing CSRF keeps existing backend refusal.
+Exact public Host/Origin is checked before private upstream translation; no
+forwarded identity trust. Strip CF cookies/assertion/email; only expected __Host
+owner cookie/CSRF/content type forward. No Node/admin/enrollment/GC route exposed.
+Profile2 listener exact loopback HTTPS; profile1 not widened.

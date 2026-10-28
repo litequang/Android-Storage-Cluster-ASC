@@ -38,14 +38,18 @@ def initialize(root, value):
 def load(root):
     host_guard();root=private.directory(root);reject_engine_ancestry(root)
     profile=Profile.parse(private.read(root/'gateway.json'))
+    validate_tls(root,private_origin(profile.frontend_origin)[0])
+    return profile
+
+
+def validate_tls(root,host):
     private.directory(root/'dashboard')
     for name in FILES:
         path=root/'dashboard'/name;no_links(path);st=path.stat()
         if not path.is_file() or st.st_nlink!=1 or st.st_uid!=root.stat().st_uid or st.st_mode&0o077 or st.st_size>65536:
             raise ValueError('unsafe gateway TLS identity')
     openssl('verify','-CAfile',root/'dashboard/ca.crt','-purpose','sslserver',
-            '-verify_ip',private_origin(profile.frontend_origin)[0],root/'dashboard/server.crt')
-    return profile
+            '-verify_ip',host,root/'dashboard/server.crt')
 
 
 def info(root,profile):
@@ -57,6 +61,12 @@ def info(root,profile):
 
 class GatewayHandler(Handler):
     server_version='ASC-Private-Access'
+
+    def authorize_ingress(self):
+        pass # Private format1 keeps existing owner authorization in backend.
+
+    def session_cookie(self):
+        return self.headers.get('Cookie')
 
     def _dispatch(self):
         started=False;upstream=None;self.close_connection=True
@@ -85,13 +95,16 @@ class GatewayHandler(Handler):
                 if len(values)>1 or values and len(values[0])>limit:raise Rejected(400,'bad_headers')
             # Bounded aggregate ingress rate; existing backend owner limits still apply.
             if self._rate('gateway',consume=True):return
+            self.authorize_ingress()
             upstream=connect_pinned(profile.upstream_origin,profile.upstream_pin,timeout=12)
             upstream.putrequest(self.command,self.path,skip_host=True,skip_accept_encoding=True)
             upstream.putheader('Host',urlsplit(profile.upstream_origin).netloc)
             upstream.putheader('Origin',profile.upstream_origin) # Only after external-origin validation.
             upstream.putheader('Connection','close')
             if self.command!='GET':upstream.putheader('Content-Length',str(length))
-            for name in ('Cookie','X-ASC-CSRF','Content-Type'):
+            cookie=self.session_cookie()
+            if cookie is not None:upstream.putheader('Cookie',cookie)
+            for name in ('X-ASC-CSRF','Content-Type'):
                 if self.headers.get(name) is not None:upstream.putheader(name,self.headers[name])
             # No Authorization/Forwarded/CF identity header is ever forwarded.
             upstream.endheaders();deadline=time.monotonic()+120;remaining=length
@@ -132,17 +145,22 @@ class GatewayHandler(Handler):
 
 
 class Runtime:
+    handler=GatewayHandler
     def __init__(self,root):self.root=Path(root)
+    def load_profile(self):return load(self.root)
+    def bind_address(self):return private_origin(self.profile.frontend_origin)
+    def prepare_server(self,server):pass
     def __enter__(self):
-        self.profile=load(self.root)
+        self.profile=self.load_profile()
         mode=request_json(self.profile.upstream_origin,self.profile.upstream_pin,'GET','/api/mode')
         if mode!={'mode':self.profile.upstream_mode,'read_only':self.profile.upstream_mode!='single-writer-demo'}:
             raise ValueError('pinned upstream mode mismatch; no automatic fallback')
         self.owner=private_lock(self.root,'access-gateway');self.owner.__enter__()
         try:
-            self.server=Server(private_origin(self.profile.frontend_origin),None,'',handler=GatewayHandler)
+            self.server=Server(self.bind_address(),None,'',handler=self.handler)
             self.server.limiter.limits['gateway']=(120,240)
             self.server.profile=self.profile;self.server.slots=threading.BoundedSemaphore(8);self.server.daemon_threads=False
+            self.prepare_server(self.server)
             context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER);context.minimum_version=ssl.TLSVersion.TLSv1_2
             context.load_cert_chain(self.root/'dashboard/server.crt',self.root/'dashboard/server.key')
             self.server.tls_context=context

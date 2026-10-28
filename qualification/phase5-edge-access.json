@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "checkpoint": "5.2b",
+  "scope": "Linux synthetic loopback edge source only",
+  "recovered_workspace": true,
+  "preserved_dirty_files": [
+    "asc/access/gateway.py",
+    "asc/access/cloudflare.py"
+  ],
+  "tests": [
+    {
+      "modules": [
+        "tests.test_access_jwt",
+        "tests.test_access_policy",
+        "tests.test_access_cloudflare"
+      ],
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 41.118
+    },
+    {
+      "modules": [
+        "tests.test_access_gateway",
+        "tests.test_demo_dashboard",
+        "tests.test_access_browser"
+      ],
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "provenance": "initial regression89.463s; Core setup failure excluded and resolved separately"
+    },
+    {
+      "modules": [
+        "tests.test_access_observer"
+      ],
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 67.221,
+      "go": "existing workspace Go1.27.3 explicit ASC_GO"
+    }
+  ],
+  "connector": {
+    "version": "2026.10.5",
+    "platform": "linux-amd64",
+    "sha256": "e1bc0cf084fd9e590554fe769a86b1db46701c3f847a43d902f7b974a4e16298",
+    "size": 40263303,
+    "release_url": "https://github.com/cloudflare/cloudflared/releases/tag/2026.10.5",
+    "offline": [
+      "version",
+      "ingress validate",
+      "rule0 hostname",
+      "rule1 final404"
+    ],
+    "tunnel_run": false
+  },
+  "evidence_limits": [
+    "Synthetic issuer using real RSA and real pinned local HTTPS JWKS; not Cloudflare tokens",
+    "Private Chromium regression, not live edge browser",
+    "No fresh full Python/Go/Android/fault claim",
+    "No account/DNS/tunnel changes or new release",
+    "Physical devices deferred by owner; writable DR blocked"
+  ],
+  "inputs_sha256": {
+    "asc/access/__init__.py": "811245446393f6fad5a67d0b901f76e769decef2d45b583ac7be342dd6028e21",
+    "asc/access/access_jwt.py": "5e4c128cb6fbf1007163fa64182aea9d1755b4847a95fd81f227052b79c95a0d",
+    "asc/access/cloudflare.py": "9b4b8bb0455c7f99a61d67c0e2201797d0758a32a107ffdeec931a34bc2ae242",
+    "asc/access/edge_policy.py": "07ecd23acd5bc1df7b6b00ab7234f3f998ac01759e06cdb7610223c78ea5c81d",
+    "asc/access/gateway.py": "b552caa8544c825680d506b4de9a7a42fb3bd691711e4b35ea3b168c84a03fcc",
+    "asc/access/policy.py": "39173ace713c9be8eeef5a2c566ebc57417c7b8b257947134302c6df2b6f16c0",
+    "requirements-cloudflare.txt": "08b02a5550b9efff6c57af876af373709e182e685df95076b3ab06bdc4f46ff2",
+    "tests/browser/demo_dashboard.cjs": "8b21ac5c0266501f851433d877d2096e8fa7b7297fc58c387691d79f39911ce1",
+    "tests/test_access_browser.py": "3938a72353dd82d2063728d275940dc6fdb09a8f4f1f2c8acf3191426f9c6fb8",
+    "tests/test_access_cloudflare.py": "4e6ef9b8b94ba99f83c5ccdf1a790c1ede9b7f65b5d3720d2ab6c671f24e4cc4",
+    "tests/test_access_gateway.py": "1e751963bad946be512ed6dd9355b004b1590f3e9f396e30a26beef44368aab2",
+    "tests/test_access_jwt.py": "4bf20b1a4a00b1eb991357f95627b5c0e9b26b2dae706933d1f88862d8793529",
+    "tests/test_access_observer.py": "90e632bb2ba9b1874121d430360472e92278cd4c5be36496419204409376a4a1",
+    "tests/test_access_policy.py": "f4ef2df1f67cfae2a9580e2772d02fcc0c03184ef77ab2452a0ec0b74f6db1b1",
+    "tests/test_demo_dashboard.py": "7fd8a598cd2e4483bbf40ed200d213aa72b7a34a968563307d66f30663e59cb9"
+  }
+}
