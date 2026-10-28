@@ -10,7 +10,9 @@
   streaming; no session DB/Engine/state access. tests/test_access_gateway.py uses
   actual two-node TLS/bytes and CLI init/info/serve/stop. tests/test_access_browser.py
   reuses original unchanged demo_dashboard.cjs through gateway/trusted CA, actual
-  UI/PWA/replicas/SHA/fallback/offline/mobile/XSS. PHASE5-PRIVATE-ACCESS guide.
+  UI/PWA/replicas/SHA/fallback/offline/mobile/XSS. tests/test_access_observer.py
+  adds actual Core3cohost/quorum partition/heal readonly +passive recovery I/O
+  ingress, no writer/metadata authority. PHASE5-PRIVATE-ACCESS guide.
 - PHASE5-PLAN/PROGRESS/ACCEPTANCE: owner defers phone acceptance to later combined
   campaign; no phone/production PASS, live VPN/Cloudflare/SSH or guard changes.
 

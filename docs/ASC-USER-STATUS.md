@@ -79,3 +79,9 @@ fallback/restart/offline theo đúng phạm vi synthetic. Xem PHASE5-PRIVATE-ACC
 PHASE5-PROGRESS. Source entrypoint, chưa có gói mới. Tailscale/VPN thực tế chưa
 cấu hình/kiểm thử, Cloudflare/remote maintenance chưa triển khai; chưa được mở
 private alpha này ra Internet. Không thay APK/Termux state hay quyền Controller.
+
+Private gateway bổ sung2test Core/recovery PASS: quorum partition/heal thực trên
+3cohost Go/Python vẫn chỉ đọc; recovery staging không đổi bytes/không có writer.
+Tổng bằng chứng mới19+1+1+2lượt scoped, không phải fresh full suite. Tiếp theo5.2
+Cloudflare source adapter/identity/connector trust; chưa có tunnel hay truy cập từ
+xa công khai thực tế. Không expose private alpha này ra Internet để thử tắt bảo vệ.

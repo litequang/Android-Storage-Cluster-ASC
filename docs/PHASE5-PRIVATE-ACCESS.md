@@ -90,8 +90,12 @@ Errors are fixed labels without request credentials. Wrong upstream pin/mode or
 offline backend refuses startup; after backend loss requests return503, no cached
 writer/session success. Keep profile/private keys/cookies/codes out of reports.
 Report only fixed error labels, source commit, public cert fingerprints and OS.
-Live cloud accounts, Cloudflare connector/Access validation, remote maintenance,
-real Core observer end-to-end and hardware acceptance
-are separate following checkpoints. No Android Raft/GC/failover/writableDR unlock.
+Live cloud accounts, Cloudflare connector/Access validation, remote maintenance
+and hardware acceptance are separate following checkpoints. No Android Raft/GC/failover/writableDR unlock.
 
 Browser-through-gateway now PASS on real Chromium Linux (1targeted12.565s), including actual file bytes and original mobile/PWA/security assertions. This is not Chrome Android, VPN reachability or physical-phone acceptance.
+
+Core/recovery ingress also qualified separately2targeted14.866s: actual three-Go/
+Python cohost quorum loss/heal remains read-only, plus passive staging bytes
+unchanged over verified TLS. Recovery uses synthetic MemorySource archive metadata,
+not a live quorum-recovery authority proof. See exact receipt/progress.

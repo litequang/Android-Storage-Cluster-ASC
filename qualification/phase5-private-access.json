@@ -28,9 +28,17 @@
       "state": "PASS",
       "skips": 0,
       "failures": 0
+    },
+    {
+      "command": "python -m unittest tests.test_access_observer -v",
+      "tests": 2,
+      "seconds": 14.866,
+      "state": "PASS",
+      "skips": 0,
+      "failures": 0
     }
   ],
-  "scope": "19+1+1 separate scoped executions, NOT fresh full suite; actual trusted TLS/API/CLI and Chromium owner/PWA workflow on loopback",
+  "scope": "19+1+1+2 separate scoped executions, NOT fresh full suite; actual trusted TLS/API/CLI/Chromium and Core observer transport",
   "browser": {
     "passed": true,
     "sha256": "1d7f183a51bed004c4a1d56cff97f56cc2d9d302dc99587ac7c02bcc3115b48f",
@@ -52,17 +60,36 @@
     "asc/access/gateway.py": "bb7b8d878744098558fddf50b45d7c842b77201b31c7d719ddcdbb6aefb0742b",
     "tests/test_access_policy.py": "f4ef2df1f67cfae2a9580e2772d02fcc0c03184ef77ab2452a0ec0b74f6db1b1",
     "tests/test_access_gateway.py": "1e751963bad946be512ed6dd9355b004b1590f3e9f396e30a26beef44368aab2",
-    "tests/test_access_browser.py": "3938a72353dd82d2063728d275940dc6fdb09a8f4f1f2c8acf3191426f9c6fb8"
+    "tests/test_access_browser.py": "3938a72353dd82d2063728d275940dc6fdb09a8f4f1f2c8acf3191426f9c6fb8",
+    "tests/test_access_observer.py": "90e632bb2ba9b1874121d430360472e92278cd4c5be36496419204409376a4a1"
   },
   "two_independent_physical_domains": false,
   "actual_vpn_tailscale": "NOT TESTED/UNKNOWN; no provider configured",
   "cloudflare_public_remote": "NOT IMPLEMENTED/NOT TESTED",
-  "core_observer_through_private_gateway": "NOT TESTED; next5.1b.2",
+  "core_observer_through_private_gateway": {
+    "state": "PASS",
+    "actual_three_go_python_cohosts_pinned_tls": true,
+    "partition": "three islands, actual Raft transport",
+    "quorum_unavailable_observed": true,
+    "heal_observed": true,
+    "writer_authority_never_granted": true,
+    "mutating_routes_refused": true
+  },
   "physical_android_acceptance": "DEFERRED BY OWNER; not PASS",
   "production_accepted": false,
   "new_artifact_release": false,
   "old_source_archives_apks_signer_avds_preserved": true,
   "core_go_android_changes": false,
   "full_python_go_regression": "Not rerun: added Linux access-plane module/tests only, no modified existing Core/Go/Android; final5.4 fresh gates still required",
-  "private_evidence": "/workspace/work/phase5-private-*.log and phase5-private-browser/"
+  "private_evidence": "/workspace/work/phase5-private-*.log and phase5-private-browser/",
+  "browser_checkpoint": "467b92c81a128d9eb2a300b79d183bd348b2b894",
+  "recovery_ingress": {
+    "state": "PASS",
+    "source": "Existing MemorySource fixture synthetic metadata +actual local backup/staging I/O; NOT live quorum recovery authority",
+    "actual_pinned_tls_to_readonly_observer": true,
+    "stage_bytes_unchanged": true,
+    "credentials_restored": false,
+    "writer_activation": false
+  },
+  "closure_utc": "2026-10-28T13:37:31.844491+00:00"
 }

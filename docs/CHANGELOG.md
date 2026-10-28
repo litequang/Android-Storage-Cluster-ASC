@@ -760,3 +760,10 @@ Existing owner Dashboard/PWA works through private ingress in actual trusted-CA
 Chromium, file upload/two logical replicas/SHA/offline fallback/mobile/XSS/logout.
 Browser1PASS12.565s, no product/bundle/APK change, actual VPN/phones/public edge and
 Core read-only ingress still separate. Physical acceptance deferred, not skipped.
+
+### Phase5.1b.2 explicit Core/recovery ingress qualification
+Private gateway preserves actual Core observer read-only status across real
+three-cohost Raft partition/heal. Passive recovery staging/bytes unchanged and
+credentials/writer remain absent (existing synthetic source fixture).2targeted
+PASS14.866s; no product/Core/Go/APK or authority change. No actual VPN/public-edge/
+production acceptance; phone campaign remains deferred by owner.

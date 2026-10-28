@@ -28,3 +28,12 @@ actual Node stop/fallback/offline refusal/reconnect/logout. Receipt
 qualification/phase5-private-access.json records separate19+1+1executions and all
 source hashes; not a full suite/actual VPN/phone/public-edge/Core-runtime claim.
 Next Core read-only and passive recovery ingress qualification remain separate.
+
+## 5.1b.2 Core/passive read-only ingress PASS
+Two targeted tests14.866s: actual three-Go/Python Core observer through gateway,
+three-island transport quorum loss and heal, owner remains read-only/no mutations;
+plus actual filesystem passive backup/stage via existing MemorySource metadata
+fixture, read-only mode/credentials missing/staged bytes unchanged/no writer.
+Synthetic memory-source recovery is NOT live-Raft backup/DR authority proof.
+Private software subset5.1 qualified in these named scopes. Actual VPN/public
+Cloudflare/remote maintenance/production/phone campaign remain outstanding.

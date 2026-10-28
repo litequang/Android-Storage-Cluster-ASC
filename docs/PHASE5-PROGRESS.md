@@ -99,3 +99,34 @@ entrypoint. Guide still source checkout only, no new release. All owned syntheti
 services cleaned up after tests. Core quorum/recovery THROUGH private gateway
 is next5.1b.2, not inferred from mode-policy units. Then5.2Cloudflare edge identity/
 header trust/source adapter; no live cloud account/tunnel/device operations.
+
+## 5.1b.1 remote verified / 5.1b.2 Core and passive recovery
+467b92c81a128d9eb2a300b79d183bd348b2b894 normal-pushed and HEAD/FETCH_HEAD/advertised
+feature remote matched BEFORE next work;437work/index files/0secret findings.
+
+New tests/test_access_observer.py2PASS0skip/fail14.866s. Actual existing three-Go/
+three-Python cohost Core fixture, pinned TLS observer ->private gateway ->CA-trusted
+owner request. Healthy quorum observed, actual three-island Raft transport partition
+reported QUORUM UNAVAILABLE/UNKNOWN without writer authority, all mutations denied
+before backend, heal/wait_ready and fresh positive quorum still read-only. No voter/
+consensus/runtime source or authority change; test-only existing fault controls only.
+
+Second test uses existing MemorySource UNIT fixture for synthetic archive metadata,
+ACTUAL local backup/staging bytes and two HTTPS layers/owner session. Recovery
+READ-ONLY/credentials_restoredfalse, activation/upload/GC denied, staged bytes
+unchanged and no registry/controller identity created. This is read-only ingress
+qualification, NOT live quorum capture or writable disaster recovery proof.
+No HOME/global provider/guard patch in these new tests; new gateway/observer roots
+are isolated fresh private directories under real development HOME, existing engine
+fixtures separate. All services/test roots cleaned; old private SDK/signer datasets
+untouched. No provider/production/phone calls or live VPN/cloud tunnel configured.
+
+Private-access software subset5.1 now covers Demo API/CLI/browser plus actual Core
+read-only and passive staging. Receipt lists19+1+1+2scoped targeted executions,
+not a fresh full Python/Go/Android regression. Source gateway/policy unchanged since
+runtime22bdcd9; test additions only. User guide and status updated. Phase5 overall
+NOT ACCEPTED; physical campaign DEFERRED BY OWNER, actual VPN/Cloudflare/public-edge
+and maintenance5.2/5.3 remain NOT TESTED/NOT IMPLEMENTED. Next5.2 source adapter needs
+independent public-origin/connector/Access JWT-header trust, secure verified TLS to
+loopback origin, no public Node/admin ports. No live account/tunnel deployment is
+authorized by source work. Do not widen private profile or label VPN UNKNOWN as PASS.
