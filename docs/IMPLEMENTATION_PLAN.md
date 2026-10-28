@@ -146,3 +146,13 @@ Catalog/Storage. Phase4.0/Core3A–3D preserved, no whole-branch merge. Next4.2:
 ANDROID-APP-CONTRACT verified SDK/Binder/native lifecycle/Keystore/SAF/network/Doze/
 OS-death gates then owner-operated devices. No APK/Termux migration/Android runtime
 or writable disaster recovery acceptance; no copying state to convert authority.
+
+## Phase5 continuation authorization — 2026-10-28
+Owner defers physical-phone acceptance to later overall qualification and authorizes
+next source/synthetic track from verified Phase4 checkpoint0877a15. Phase4 Linux/
+emulator software evidence is retained; hardware/production stays NOT ACCEPTED.
+Phase5 private access foundation/runtime in feature/phase5-remote-access reuses
+existing Dashboard and explicit read-only observer. See PHASE5-PLAN/PROGRESS.
+No requirement to wait on phones before source work; no permission to access real
+phones/M51/production or activate writableDR/Android Raft/GC/failover. Private
+VPN provider and optional Cloudflare/maintenance remain distinct checkpoints.

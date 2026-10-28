@@ -571,3 +571,10 @@ explicit access config, never widen backend LAN guards or regenerate its identit
 A100.64/10 address alone means VPN membership/reachability UNKNOWN. No live VPN/
 Cloudflare service has been configured. Missing phone acceptance is deferred by
 owner, not a runtime failure or a permission to deploy to production/M51.
+
+Phase5 private_gateway_refused: verify a NEW separate private root/profile, exact
+numeric bind, correct independently verified upstream DASHBOARD leaf pin/mode and
+working existing backend. Never delete/regenerate Node/Controller state to fix it.
+503 after upstream loss is fail-closed; no alternate Controller/writer is created.
+Old cookie after backend restart requires new owner login code. Wrong CSRF token
+401 versus missing CSRF403 are existing backend contracts. See PHASE5-PRIVATE-ACCESS.

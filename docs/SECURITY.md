@@ -692,3 +692,12 @@ credentials. VPN routing never replaces existing owner authentication. Core and
 recovery stay read-only. Hardware/production deferred by owner is not qualification.
 Public-edge/Cloudflare header/JWT/connector trust is separate and NOT implemented
 by this private profile. See ADR074/PHASE5-PLAN before extending exposure.
+
+Phase5.1a Linux private gateway alpha: before opening listener verify pinned
+backend /api/mode matches explicit profile. Validate original Host/Origin/fetch
+site BEFORE rewriting to fixed upstream; copy only owner Cookie/CSRF/content
+headers, never Authorization/Forwarded claims. Keep duplicate/framing/size/worker/
+rate/IO bounds, no arbitrary target/redirect/Node/admin proxy. Existing backend
+session remains sole auth, including invalidation on restart. No auth cache, DB,
+TLS/pinning bypass or live VPN/tunnel changes. Browser and actual Core gateway
+integration are following gates; only current Linux API scope qualified.

@@ -147,3 +147,8 @@ exact source/deterministic/042upgrade/new-state rollback passed. Existing APK5
 unchanged; do not rerun broad suites without a source/platform concern. Next owner
 physical/API35/ARM64/LAN/OEM gates per current STATUS/HANDOFF; full Phase4 remains
 NOT ACCEPTED, no automatic Phase5/migration or recovery writer activation.
+
+2026-10-28 owner explicitly defers hardware campaign and authorizes next source/
+synthetic Phase5 without waiting for pilot. This supersedes old wait-before-Phase5
+ordering only; physical Phase4/production NOT ACCEPTED, no test relabeled PASS.
+Phase4 freeze0877a15 preserved; continuation in separate feature/phase5-remote-access.

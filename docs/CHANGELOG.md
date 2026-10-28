@@ -747,3 +747,10 @@ Owner defers hardware acceptance; separate source/synthetic Remote Access track.
 Explicit versioned private profile/route contract reuses existing Dashboard owner
 sessions and Core read-only modes; public/admin/node/GC/shell routes refused. No
 listener/deployment/cloud account or existing Engine/state/artifact change yet.
+
+### Phase5.1a private browser ingress runtime
+Source-only Linux HTTPS gateway reuses existing Dashboard sessions/CSRF and real
+file transfers, explicit upstream mode/pin and frontend origin/bind, bounded
+streaming and no management proxy. Compatible separate identity and foreground
+CLI, startup refusal and backend-loss semantics; source usage/rollback guide.
+19API/regression+1CLI targeted PASS, no VPN/public/phone/production acceptance.

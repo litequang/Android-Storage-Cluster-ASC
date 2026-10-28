@@ -561,3 +561,10 @@ contract, fixed existing Dashboard routes only; no Node/admin/shell/GC/membershi
 proxy. Explicit upstream mode/pin, existing owner session+CSRF. Core/recovery mode
 stays read-only regardless of remote connectivity. Private network address does
 not prove VPN identity, controller health, quorum or writer permission.
+
+Phase5.1a ingress: existing browser assets and /api/login/logout/session/mode/state,
+Demo refresh/uploads/{ticket}, files/{id}/content and node detail only. Backend
+receives fixed configured Host/Origin only AFTER external exact same-origin checks;
+Cookie/CSRF remain backend verified. Bearer/Forwarded identities never forwarded,
+no Node API change. Unsupported routes/framing fail before forwarding body. TLS
+frontend uses separate trusted public CA; upstream uses existing exact leaf pin.
