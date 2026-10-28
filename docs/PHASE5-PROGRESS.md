@@ -74,3 +74,28 @@ and do not provide this entrypoint. NEXT after normal checkpoint push/verificati
 5.1b actual Chromium via gateway +Core read-only/fault qualification, then separate
 5.2Cloudflare adapter. No live VPN/Cloudflare credentials configured: remote actual
 reachability UNKNOWN; do not call loopback PASS remote/production PASS.
+
+## 5.1a published / 5.1b.1 real browser qualification
+22bdcd935449f3c5bf7833835558bc8db7a2caf5 normal-pushed, HEAD/FETCH_HEAD/advertised
+feature remote matched BEFORE next work.435work/index files audited/0findings.
+
+New tests/test_access_browser.py uses UNCHANGED original demo_dashboard.cjs through
+new gateway URL and its own trusted CA, no ignoreHTTPSErrors/root/proxy/CA bypass.
+Actual Chromium/PWA1PASS12.565s: untrusted cert denied, trusted HTTPS/secure context,
+owner invalid/valid login/Secure HttpOnly Strict cookie, existing UI/file listing,
+actual upload/two logical replicas, mobile390 layout/XSS/node detail, actual Node
+stop/offline protection/download fallback+SHA, unsafe new upload refusal, browser
+network loss UNKNOWN/disabled actions/reconnect/logout, network-only PWA empty
+cache/manifest/service worker/installability checks. Existing original150s deadline
+and all browser assertions unchanged. No actual PWA installation claim from CDP
+criteria alone, no Chrome Android/VPN/remote-public/hardware claim. Screenshot/
+raw outputs PRIVATE /workspace/work/phase5-private-browser; sanitized combined
+receipt qualification/phase5-private-access.json. This adds1browser execution to
+prior19API/regression +1CLI, not a fresh full suite or production acceptance.
+
+No product changes after22bdcd9; browser fixture/test/docs only. Existing source
+bundles/APKs/signers/SDKs retained; current old archives do not contain this new
+entrypoint. Guide still source checkout only, no new release. All owned synthetic
+services cleaned up after tests. Core quorum/recovery THROUGH private gateway
+is next5.1b.2, not inferred from mode-policy units. Then5.2Cloudflare edge identity/
+header trust/source adapter; no live cloud account/tunnel/device operations.

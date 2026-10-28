@@ -69,3 +69,13 @@ qualification/phase4-direct043-upgrade.json. Product/old314inputs unchanged,
 full392 retained and new2tests separately targeted, not fresh full394. Any older
 NOT TESTED direct043 wording above is superseded only for these exact archives.
 APK direct upgrade/Android API35/physical-device scope remains separate.
+
+## Phase5 source continuation — owner authorization2026-10-28
+Owner hoãn nghiệm thu điện thoại thật để tổng nghiệm thu sau; không tính PASS,
+không chặn phát triển source tiếp. Nhánh feature/phase5-remote-access đã có gateway
+HTTPS riêng trên Linux, tái sử dụng Dashboard/File Manager/owner code/session.
+19API/regression+1CLI+1Chromium targeted PASS, upload/two logical replicas/SHA/
+fallback/restart/offline theo đúng phạm vi synthetic. Xem PHASE5-PRIVATE-ACCESS và
+PHASE5-PROGRESS. Source entrypoint, chưa có gói mới. Tailscale/VPN thực tế chưa
+cấu hình/kiểm thử, Cloudflare/remote maintenance chưa triển khai; chưa được mở
+private alpha này ra Internet. Không thay APK/Termux state hay quyền Controller.

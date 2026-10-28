@@ -754,3 +754,9 @@ file transfers, explicit upstream mode/pin and frontend origin/bind, bounded
 streaming and no management proxy. Compatible separate identity and foreground
 CLI, startup refusal and backend-loss semantics; source usage/rollback guide.
 19API/regression+1CLI targeted PASS, no VPN/public/phone/production acceptance.
+
+### Phase5.1b.1 actual gateway browser qualification
+Existing owner Dashboard/PWA works through private ingress in actual trusted-CA
+Chromium, file upload/two logical replicas/SHA/offline fallback/mobile/XSS/logout.
+Browser1PASS12.565s, no product/bundle/APK change, actual VPN/phones/public edge and
+Core read-only ingress still separate. Physical acceptance deferred, not skipped.

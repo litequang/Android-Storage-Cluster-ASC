@@ -91,5 +91,7 @@ offline backend refuses startup; after backend loss requests return503, no cache
 writer/session success. Keep profile/private keys/cookies/codes out of reports.
 Report only fixed error labels, source commit, public cert fingerprints and OS.
 Live cloud accounts, Cloudflare connector/Access validation, remote maintenance,
-real Core observer end-to-end, browser-through-gateway and hardware acceptance
+real Core observer end-to-end and hardware acceptance
 are separate following checkpoints. No Android Raft/GC/failover/writableDR unlock.
+
+Browser-through-gateway now PASS on real Chromium Linux (1targeted12.565s), including actual file bytes and original mobile/PWA/security assertions. This is not Chrome Android, VPN reachability or physical-phone acceptance.

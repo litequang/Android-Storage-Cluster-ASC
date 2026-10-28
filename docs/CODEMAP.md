@@ -8,7 +8,9 @@
 - asc/access/gateway.py: Linux-only private TLS foreground proxy/CLI, fixed
   Dashboard routes, pinned explicit mode, external origin/CSRF boundary, bounded
   streaming; no session DB/Engine/state access. tests/test_access_gateway.py uses
-  actual two-node TLS/bytes and CLI init/info/serve/stop. PHASE5-PRIVATE-ACCESS guide.
+  actual two-node TLS/bytes and CLI init/info/serve/stop. tests/test_access_browser.py
+  reuses original unchanged demo_dashboard.cjs through gateway/trusted CA, actual
+  UI/PWA/replicas/SHA/fallback/offline/mobile/XSS. PHASE5-PRIVATE-ACCESS guide.
 - PHASE5-PLAN/PROGRESS/ACCEPTANCE: owner defers phone acceptance to later combined
   campaign; no phone/production PASS, live VPN/Cloudflare/SSH or guard changes.
 

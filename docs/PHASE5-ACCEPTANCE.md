@@ -20,3 +20,11 @@ foreground stop passed. No browser-through-gateway/Core E2E/VPN/Cloudflare/phone
 claim. Prior failed fixture runs retained in PROGRESS; no checks weakened.
 Source-only Linux alpha guide PHASE5-PRIVATE-ACCESS; no new archive/APK release.
 Full Phase5 NOT ACCEPTED, hardware DEFERRED BY OWNER and production not qualified.
+
+## 5.1b.1 browser scoped PASS
+Actual Chromium through new gateway and verified new public CA:1PASS12.565s,
+unchanged existing browser gate/PWA/mobile/XSS/session/upload/two replicas/SHA/
+actual Node stop/fallback/offline refusal/reconnect/logout. Receipt
+qualification/phase5-private-access.json records separate19+1+1executions and all
+source hashes; not a full suite/actual VPN/phone/public-edge/Core-runtime claim.
+Next Core read-only and passive recovery ingress qualification remain separate.
