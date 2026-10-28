@@ -28,7 +28,9 @@ New DISTINCT host-source archive core-decode0.4.3-dev SHA6a60bd4180bc338d8c62eff
 releaseb423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca,
 139files/exact source/deterministic/secret audit; extra exact archive042->current
 upgrade/identity/pending/bytes/NEW-state rollback1PASS21.649s. Direct old043->new
-NOT TESTED. Check latest publication receipt before claiming remote availability.
+NOT TESTED. Artifact commitd3b1a9f303a03151d520154d850c407449bb69f9 normal-pushed/fetch/remote
+matched; separate fresh GitHub clone/download SHA PASS2026-10-28 00:09:15UTC,
+receipt qualification/phase4-core-decode-publication.json.
 Old public archives/APK5 unchanged; new Core Runtime optimization NOT embedded in
 APK5. Native Node does not instantiate quorum Controller Runtime. Prior APK5
 source3914/API30 native28+foreign1/JVM17/network2/downgrade old bytes1 retain ONLY

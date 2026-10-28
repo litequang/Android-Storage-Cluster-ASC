@@ -13,7 +13,7 @@
 |Android proof giữ lại|API30x86_64:28selected+foreign1/JVM17/network2/downgrade readback1 PASS trước đó; không chạy lại Android trong checkpoint này|
 |Web/PWA|Dashboard login/File Manager/node/volume/replicas/upload/download/SHA/fallback; fresh full có browser/API integration PASS|
 |PWA install|Actual Chromium Linux install/launch proof trước đó, web bytes không đổi; Chrome Android chưa thử|
-|GitHub/checksum|Xem [handoff](PHASE4-HANDOFF.md) và publication receipt; checksum không thay cho runtime acceptance|
+|GitHub/checksum|Artifactd3b1a9f normal-pushed; separate GitHub clone/archive+APK SHA PASS; [receipt](../qualification/phase4-core-decode-publication.json), không phải runtime acceptance|
 
 Core fix chỉ tái sử dụng kiểm tra cấu trúc cho2immutable inputs <=2MiB, không cache
 quyền. Quorum/term/nonce, checksum/physical proof, retention/last-copy và budget10s/

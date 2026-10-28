@@ -2074,3 +2074,25 @@ preserved; no ADB/phone action. Full Phase4/4.2 still NOT ACCEPTED pending final
 35/ARM64/phone/physical LAN/domains/OEM/Doze/ChromeAndroid evidence. WriterDR,
 Android voters/GC/failover and Phase5 remain locked/deferred. Next audit/stage/
 normal push and independent GitHub actual archive download SHA verification.
+
+
+### Exact source snapshot GitHub download proof — 2026-10-28
+
+Artifact checkpointd3b1a9f303a03151d520154d850c407449bb69f9 normal-pushed;
+HEAD=FETCH_HEAD=advertised branch. Tracked/index409files,0untracked/0secret findings,
+strict source package inventory separately audited. No original APK/archive changed.
+Separate fresh bare GitHub clone downloaded actual archive248,278bytes +SHA and
+unchanged APK5/sidecar at2026-10-28 00:09:15UTC. Both match audited bytes: hostSHA
+6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57, APKaec65c2c...
+Full receipt references actual source8c54728; publication receipt references actual
+artifactd3b1a9f. Subsequent reporting commit does not change any314frozen input or
+artifact. No Release API upload success claimed; normal Git source/bytes available.
+
+Linux software blocker resolved and scoped gates complete. No need to repeat full
+without source/platform changes. Next required evidence is owner phone/ARM64/real
+LAN/2hardware domains/Doze/OEM/ChromeAndroid PWA and final5/API35 cold blocker; exact
+prior043->new source and published4->final5 direct upgrades remain NOT TESTED.
+Read current STATUS/HANDOFF; older RUNNING/FAIL receipts are retained history.
+Original signer/AVD data/UID state untouched (no Android execution this host patch).
+No phone/M51/production/Termux access, source branch merge or Android GC/Raft/
+failover/writableDR/Phase5 activation. Full Phase4/4.2 NOT ACCEPTED on phones.

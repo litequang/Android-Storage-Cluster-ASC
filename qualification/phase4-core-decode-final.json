@@ -446,12 +446,25 @@
     "network_seconds": 10,
     "local_seconds": 0.25
   },
-  "publication": "PENDING new source snapshot normal Git push and independent download proof; old artifacts unchanged",
+  "publication": {
+    "state": "PASS",
+    "artifact_commit": "d3b1a9f303a03151d520154d850c407449bb69f9",
+    "verified_utc": "2026-10-28 00:09:15 UTC",
+    "receipt": "phase4-core-decode-publication.json",
+    "scope": "Separate actual GitHub clone/downloaded APK5+new archive+SHA sidecars; no Release API claim"
+  },
   "limits": [
     "Linux synthetic validation is not Windows runtime or ARM64/physical-phone acceptance",
     "No Termux->APK or single-writer->Raft migration",
     "No Android voters/GC/failover/recovery writer/Phase5 remote access",
     "New archive is source0.4.3-dev, not public Android/production release",
     "Only exact042->current/new-state rollback proved for new archive; direct prior043->current not tested"
-  ]
+  ],
+  "security_audit": {
+    "work_files": 409,
+    "index_files": 409,
+    "untracked": 0,
+    "findings": 0,
+    "scope": "Actual credential/private-key/path payloads at artifact stage; source archive separately exact-source/secret audited, unchanged APK5 retains original audit/signature proof"
+  }
 }

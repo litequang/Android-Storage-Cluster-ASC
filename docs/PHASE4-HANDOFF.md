@@ -9,7 +9,7 @@ không đổi, không chứa host-only fix; Node không instantiate quorum Runti
 New archive được rebuild byte-identical,139files/secret audit PASS, exact042->new
 upgrade/pending/IDs/bytes/NEW-state rollback PASS21.649s. Direct prior043->new
 chưa thực chạy; không hứa hỗ trợ đường đó. [Full receipt](../qualification/phase4-core-decode-final.json).
-Push/download checksum của gói mới sẽ có receipt riêng; xem mục publication cuối.
+Gói mới đã push và tải lại từ GitHub, checksum xác minh PASS; xem mục publication cuối.
 Các archive/APK cũ giữ nguyên. Không dùng software PASS để bật Android GC/Raft/
 failover/writerDR hoặc tuyên bố phone/LAN/ARM64/Doze đã nghiệm thu.
 
@@ -129,3 +129,13 @@ model/SDK, public fingerprint, mã lỗi đã làm sạch, kết quả SHA và b
 Owner điền gate phone/ARM64/LAN/ChromeAndroid/Doze/OEM theo PHASE4-STATUS. API35 cold
 vẫn BLOCKED, transport final5 trên35 chưa thử; không miễn gate hoặc cấp writerDR/
 Android Raft/GC/failover để gọi Phase4 hoàn tất.
+
+
+## Publication đã xác minh
+
+Artifact commit `d3b1a9f303a03151d520154d850c407449bb69f9` normal-pushed; fresh
+fetch/advertised remote khớp. Clone GitHub riêng tải actual archive248,278bytes +SHA
+và APK5/sidecar lúc2026-10-28 00:09:15UTC; cả hai khớp đúng bytes đã audit. Không
+phải copy local hoặc claim GitHub Release upload. [Publication receipt](../qualification/phase4-core-decode-publication.json).
+Commit báo cáo sau đó không đổi artifact/source. Checksum chỉ chứng minh integrity,
+không thay thế các gate phone/ARM64/physical domains/LAN/OEM/API35-final5 còn thiếu.
