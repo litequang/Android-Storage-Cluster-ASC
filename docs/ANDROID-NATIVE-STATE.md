@@ -128,3 +128,19 @@ adoption. Existing app key is validated without provision. Process/service resta
 requires NEW explicit owner login; Node/pending/volume/committed bytes unchanged.
 Native observer mode/cluster is separate from the active single-writer Node; an
 observation never performs a state/authority migration. See ANDROID-CORE-OBSERVER.
+
+
+## Exact direct published4->FINAL5 continuity evidence (API30 SDK)
+
+qualification/phase4-direct-published45-final.json: independently blank SDK data
+FIRST initialized by exact published4/7c4ba649, normal direct published5/aec65c2c
+update with original signer, no interim main5/reset/clone/DB restore. Six required
+identity/canary/ciphertext/native-context/proof records present and hash-equal;
+same UID/Keystore/App/Node/Cluster/Volume/NodeTLS pin. Existing canonical Engine
+reads original4 bytes before/after update, refused downgrade and new5 writes;
+retained Node/Controller/browser/replicas/process-death tests PASS. No schema or
+state contract change. Exact SDK-only path, not Termux adoption, arbitrary old
+build compatibility, phone backup/Keystore export or physical-device acceptance.
+Keep signer/private state in owner custody; lost key still fail-closed, never
+regenerate identity. Android normal downgrade refused; use compatible signed
+forward update, never uninstall/clear/-d or restore old databases over new data.

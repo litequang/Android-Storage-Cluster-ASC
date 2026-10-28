@@ -30,9 +30,15 @@ The historical exact direct APK upgrade qualified is retained Native versionCode
 (SHA d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a) to4.
 Published Foundation2 ->4 directly is NOT TESTED; no general upgrade promise.
 Final5 retained path tested: original4 ->unpublished5 builds ->final5, same UID/
-context/Keystore/old bytes. Direct published4 ->FINAL5 artifact NOT TESTED. Final5
-refuses exact APK4 downgrade and still reads original bytes. Never force -d or
-restore an old database; owner phone upgrade itself remains a required pilot gate.
+context/Keystore/old bytes. Also NOW qualified: **exact published4/7c4ba649 ->exact
+FINAL5/aec65c2c directly**, no intermediate main5, on independently blank API30
+x86_64 SDK data.17targeted Android executions include original4 cold Node/bytes,
+normal update, six required identity records/UID/Keystore/Volume/pin preservation,
+real5 replica/browser/fallback/Controller-loss/process death, and original4 bytes
+after new5 writes. See qualification/phase4-direct-published45-final.json.
+Final5 refuses exact APK4 downgrade and still reads original bytes. Never force -d
+or restore an old database; owner phone upgrade itself remains a required pilot
+gate. SDK-only raw-image preservation is NOT a phone backup/Keystore export tool.
 
 ## Controlled trial once the candidate is available
 

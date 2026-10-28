@@ -2316,3 +2316,67 @@ existing qualifier --resume --artifact published5 on SAME original Controller/pe
 AVD identity/bytes, new actual replicas/browser/Controller-loss/process death, then
 read original4 bytes after new5 data. API35 remains BLOCKED, phones/physical LAN/
 ARM64/independent domains/OEM/Doze/writableDR/full Phase4 remain unqualified.
+
+
+### Exact direct published4->FINAL5 — Native Node E2E QUALIFIED (API30 only)
+
+Local-state checkpointa79a8c3959ae45dff94062b93919d0a21f3f12c8 normal-pushed/
+HEAD=FETCH_HEAD=advertised remote matched before next stage. Same original4-born
+App/Node/Cluster/Volume/pin/token/Keystore, same Controller/peer/state, exact final5.
+Run existing qualifier --resume --artifact published5; NEVER fresh-init/resume-setup
+or enrollment again. Real retained5 first Android1PASS70.627s and process-death
+retained1PASS33.26s, no fail/skip. Existing owner web/browser/TLS/Catalog all used;
+no second storage backend, Core state migration or fake Android Node.
+
+Actual new5 upload256KiB/two VERIFIED logical replicas, SHA download/Node offline
+fallback/unsafe new upload refusal, real Node stop/start/heartbeat/FGS, Controller
+loss returns503authorization_unavailable while NodeTLS listener remains live;
+Controller reconnect and process death preserve original identities/context/bytes.
+Then ORIGINAL4 file again read locally through existing NativeCandidateUpgradeTest
+1PASS8.112s AFTER new5 writes; all6required stable metadata/ciphertext/proof hashes
+still equal original4. Controller Catalog now holds2distinct file records. Same
+payload vector is intentionally used by original browser test; no claim distinct
+content/physical hardware beyond actual tested file IDs/bytes.
+
+This path totals17Android test EXECUTIONS0fail0skip: network1 +cold/retained4 Node2
++pre-update4/local5/refused-downgrade11 +retained5 Node2 +original4 after new5 writes1.
+Some methods repeat at meaningful pre/post/fault stages; NOT17distinct methods or
+fresh full Android/Python suite.3host selection guards passed separately0.193s.
+Exact final receipt qualification/phase4-direct-published45-final.json. Actual
+host source archive SHA6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57
+matches qualified b423source, not arbitrary current/old Demo. Published APK4/5 and
+same original signer unchanged. No new APK/build/release or product/dependency edit.
+
+After final readback: freshly verified current owned QEMU/AVD/datadir/start/UID and
+same app UID; force-stopped ONLY owned instrumentation app. Original6records still
+match after stop. First WiFi-restoration check caught async transition (disabled
+immediately after svc enable), stopped before SDK shutdown/backup. That cleanup
+attempt/log preserved; later bounded status observation verified enabled, no
+validation/proxy/CA/route override. No test assertion weakened or state reset.
+No active SDK NAT redirection, owned Controller/peer already stopped by original
+finally. Normal SDK shutdown requested; actual supervisor exit-10/SIGUSR1, not a
+clean-shutdown/powerloss guarantee. Emulator now STOPPED, all historical PIDs invalid.
+
+Private preservation /workspace/work/phase4-direct-apk45: all7offline SDK image/
+config copies hash-equal,33quiescent host-state files tar/hash-verified, no restore.
+This preserves synthetic task state only; NOT phone backup/Keystore export or
+writableDR recovery. Original private signer2618bytes0600, old AVDs/Core/Demo/WIP/
+other branch data/public artifacts preserved. Do not publish raw archives/images/
+keys/tokens/full logcat. Agent can continue from source +receipt without rerunning
+old checkpoints; private signer/state custody still required for in-place testing.
+
+Only old frozen tools/qualify_native_catalog.py input differs (fixed published
+artifact selection); other313inputs and all product/archives/APKs unchanged.
+Prior full392Python/all64faults +Go/vet/modules/build proof reused ONLY exact
+unchanged product;3new host tests and this Android path separate, NOT fresh full397.
+Docs AGENTS/STATUS/HANDOFF/Native PILOT/OPERATIONS/STATE/CODEMAP/ACCEPTANCE now state
+exact direct path is qualified on API30, not arbitrary version4/5 builds/phones.
+Security/index/JSON/receipt/source consistency checks precede normal feature push.
+
+Remaining: API35 independent cold Node E2E blocked before enrollment, extra15
+UNKNOWN timeout600s, transport5PASS only; responsive owned environment/default
+network +real pin before retry, no proxy/CA/root/validation bypass or re-init.
+Owner-only ARM64/ZTE/Bphone/physical LAN/two hardware domains/ChromeAndroid/OEM/
+Doze/same-signer upgrade acceptance still required. Native26-29TLS/Termux->APK/
+Foundation2->final5 unsupported or unqualified. No Android voter/GC/failover,
+recovery writer, physical-phone action or Phase5. Full Phase4/4.2 NOT ACCEPTED.

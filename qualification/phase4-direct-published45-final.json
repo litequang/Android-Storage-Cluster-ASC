@@ -1,0 +1,205 @@
+{
+  "state": "PASS_EXACT_DIRECT_PUBLISHED4_TO_FINAL5_API30",
+  "baseline": "a79a8c3959ae45dff94062b93919d0a21f3f12c8",
+  "scope": "Actual Linux +Android API30 x86_64 SDK; exact published4 first Node/bytes then direct exact published5 without intermediate main5; not phone/full Phase4 acceptance",
+  "old_apk_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+  "final_apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+  "public_signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "test_apk_sha256": "b5375f59236263b66b5d8e9fc9125dedc2da879287fd4e6d88a9b54965597be7",
+  "controller_source_archive_sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+  "host_guard_tests": {
+    "tests": 3,
+    "seconds": 0.193,
+    "failures": 0,
+    "skips": 0,
+    "receipt": "qualification/phase4-published-apk-selection.json"
+  },
+  "actual_android_test_executions": 17,
+  "android_failures": 0,
+  "android_skips": 0,
+  "count_scope": "Sum of JUnit executions across this exact path; some methods repeated at meaningful pre/post/fault stages. NOT17 distinct new tests or a fresh full suite. Excludes old API35 UNKNOWN15.",
+  "network_precondition": {
+    "executions": 1,
+    "seconds": 0.161
+  },
+  "runs": [
+    {
+      "actual": {
+        "state": "PASS",
+        "scope": "Linux +API30 x86_64 synthetic; not phones/physical domains",
+        "adb_control_only": true,
+        "native_identity_reset": false,
+        "artifact": "published5",
+        "apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+        "native_android_tests": 2,
+        "bytes": 262144,
+        "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+        "logical_domains": 2,
+        "physical_domain_independence": false,
+        "actual_browser_login_upload_download": true,
+        "native_offline_fallback": true,
+        "controller_loss_denied": true,
+        "retained_process_identity": true,
+        "entry_mode": "retained resume",
+        "fresh_initialization_junit_completed": false
+      },
+      "android": [
+        {
+          "name": "android-resumed.log",
+          "test_executions": 1,
+          "seconds": 70.627,
+          "failures": 0,
+          "skips": 0
+        },
+        {
+          "name": "android-retained.log",
+          "test_executions": 1,
+          "seconds": 33.26,
+          "failures": 0,
+          "skips": 0
+        }
+      ]
+    },
+    {
+      "actual": {
+        "state": "PASS",
+        "scope": "Linux +API30 x86_64 synthetic; not phones/physical domains",
+        "adb_control_only": true,
+        "native_identity_reset": false,
+        "artifact": "published4",
+        "apk_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+        "native_android_tests": 2,
+        "bytes": 262144,
+        "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+        "logical_domains": 2,
+        "physical_domain_independence": false,
+        "actual_browser_login_upload_download": true,
+        "native_offline_fallback": true,
+        "controller_loss_denied": true,
+        "retained_process_identity": true,
+        "entry_mode": "fresh initialization",
+        "fresh_initialization_junit_completed": true
+      },
+      "android": [
+        {
+          "name": "android-initial.log",
+          "test_executions": 1,
+          "seconds": 85.277,
+          "failures": 0,
+          "skips": 0
+        },
+        {
+          "name": "android-retained.log",
+          "test_executions": 1,
+          "seconds": 36.08,
+          "failures": 0,
+          "skips": 0
+        }
+      ]
+    }
+  ],
+  "old4_bytes_after_new5_writes": {
+    "state": "PASS_ORIGINAL4_BYTES_AFTER_NEW5_WRITES",
+    "tests": 1,
+    "seconds": 8.112,
+    "failures": 0,
+    "skips": 0,
+    "all6_original_identity_records_unchanged": true,
+    "native5_network_e2e": {
+      "state": "PASS",
+      "scope": "Linux +API30 x86_64 synthetic; not phones/physical domains",
+      "adb_control_only": true,
+      "native_identity_reset": false,
+      "artifact": "published5",
+      "apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+      "native_android_tests": 2,
+      "bytes": 262144,
+      "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+      "logical_domains": 2,
+      "physical_domain_independence": false,
+      "actual_browser_login_upload_download": true,
+      "native_offline_fallback": true,
+      "controller_loss_denied": true,
+      "retained_process_identity": true,
+      "entry_mode": "retained resume",
+      "fresh_initialization_junit_completed": false
+    },
+    "no_state_reset_or_restore": true
+  },
+  "final_catalog_files": 2,
+  "all6_original_metadata_ciphertext_records_equal": true,
+  "main_app_uid_keystore_and_node_cluster_volume_tls_pin_preserved": true,
+  "normal_update_and_real_downgrade_refusal": true,
+  "no_uninstall_clear_force_downgrade_identity_reset_db_restore_or_node_clone": true,
+  "physical_domains_independent": false,
+  "physical_lan_or_phone_proof": false,
+  "final_preservation": {
+    "state": "STOPPED_AND_PRIVATE_OFFLINE_STATE_VERIFIED",
+    "sdk_exit": -10,
+    "exit_signal": "SIGUSR1",
+    "clean_shutdown_or_powerloss_qualified": false,
+    "private_offline_images_hash_verified": 7,
+    "private_quiescent_host_files_archive_verified": 33,
+    "original_wifi_setting_restored": true,
+    "only_owned_app_stopped": true,
+    "backup_restore_or_node_clone": false,
+    "private_evidence_root": "/workspace/work/phase4-direct-apk45",
+    "original_signer_and_other_AVDs_preserved": true,
+    "scope": "PRIVATE task-SDK preservation only; no phone backup/export/migration or writable recovery feature"
+  },
+  "source_changes": {
+    "qualification_driver": "Allowlisted published artifact selection only, source checkpointc0655a8",
+    "new_host_test_module": "tests/test_native_qualification_artifacts.py",
+    "product_core_app_deps_archives_apks_changed": false,
+    "old_frozen_input_differences": [
+      "tools/qualify_native_catalog.py"
+    ],
+    "prior_full": "392Python/Go/fault proof retained ONLY identical product;3new host cases and this Android path separately targeted, NOT a fresh full397"
+  },
+  "api35": "BLOCKED independent cold Node E2E; transport5PASS retained, additional15 timed out UNKNOWN. See phase4-api35-cold-node-blocker.json",
+  "limits": [
+    "API30 x86_64 SDK only, not ARM64/phones/physical LAN/two hardware domains/Doze/OEM/ChromeAndroid",
+    "Final5 started as retained old4 state after exact normal upgrade; not a fresh final5 first-install/identity proof",
+    "No Android API26-29 NativeTLS qualification, Termux->APK migration, native Controller or new File Manager backend",
+    "No new APK release or signing key; original artifacts preserved",
+    "No Android voter/GC/failover, writableDR or Phase5 activation"
+  ],
+  "next": "Owner-only compatible phone pilot; responsive ownedAPI35 environment for remaining gate. Do not repeat Core phases or wipe/re-init existing Nodes.",
+  "prior_local_step": {
+    "state": "PASS_DIRECT_PUBLISHED4_TO_FINAL5_LOCAL_STATE",
+    "api": 30,
+    "abi": "x86_64",
+    "old_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+    "new_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "no_intermediate_main5": true,
+    "pre_update4_readback": {
+      "tests": 1,
+      "seconds": 9.142,
+      "failures": 0,
+      "skips": 0
+    },
+    "post_update5_regression": {
+      "tests": 9,
+      "seconds": 57.607,
+      "failures": 0,
+      "skips": 0
+    },
+    "after_downgrade_refusal": {
+      "tests": 1,
+      "seconds": 8.089,
+      "failures": 0,
+      "skips": 0
+    },
+    "uid_preserved": true,
+    "stable_metadata_records_equal": 6,
+    "original_sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "original_bytes": 262144,
+    "keystore_context_tls_pin_node_cluster_app_volume_preserved": true,
+    "normal_update_only": true,
+    "forced_downgrade_uninstall_clear_or_database_restore": false,
+    "native5_retained_network_e2e": "PENDING",
+    "physical_phone": false,
+    "full_phase4_accepted": false
+  },
+  "native5_retained_network_e2e": "PASS; earlier prior_local_step PENDING resolved by published5 run"
+}

@@ -17,6 +17,17 @@ transport5PASS and boot/PM READY, but integrated cold35Node is BLOCKED at networ
 preflight/System UI ANR. PHASE4-API35-QUALIFICATION owns the exact scope. Published
 artifacts/full software results: PHASE4-STATUS/HANDOFF, not the historical text below.
 
+Direct exact published4/7c4ba649 ->FINAL5/aec65c2c now qualified on API30 x86_64:
+17targeted Android executions, normal-r update, original UID/Keystore/IDs/volume/
+pin/old bytes, actual retained5 replicas/browser/fallback/Controller loss/process
+death and old4 readback after new5 writes. Fixed artifact selection/host guards3
+also PASS. Receipt qualification/phase4-direct-published45-final.json. No interim
+main5, uninstall/clear/-d, DB restore or cloned Node. This is a tested SDK upgrade
+path, not a new APK release or phone acceptance. Keep original private signer in
+owner custody. If update fails, stop/preserve state and use a compatible forward
+update with higher versionCode/same signer; no forced downgrade or old DB restore.
+Private SDK images/host archive preserve this task only, not a phone backup/export.
+
 The original foundation artifact/version and unsupported-operation text below
 is HISTORICAL, not the current Node capability. Do not replace Termux state or
 infer physical-phone/full Phase4.2 acceptance. Candidate upgrade uses the original

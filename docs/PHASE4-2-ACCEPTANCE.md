@@ -575,3 +575,45 @@ pinned Controller readiness then unfinished suite/Native Catalog E2E. Old retain
 API30/oldAPI35/APK upgrade scopes remain distinct. Physical phone/ARM64/LAN/two
 hardware domains/OEM/Doze/ChromeAndroid and exact direct published4->final5 retained
 Node/data upgrade NOT QUALIFIED. No new release or writerDR/Android Raft/GC/failover.
+
+
+## Exact published APK4->FINAL5 direct upgrade — API30 SDK qualified
+
+Source/selection checkpointc0655a8, original4 cold baseline476e390, local upgrade
+checkpointa79a8c3; each normal-pushed/fetch/remote verified before next stage.
+Final receipt qualification/phase4-direct-published45-final.json binds exact old
+APK7c4ba649... and finalAPKaec65c2c..., original public signerbba77b68..., existing
+Core/Demo Controller source b423/SHA6a60... and same independently initialized
+API30x86_64 test data. No intermediate main5, cloned state or recreated identity.
+
+|Stage|Actual Android executions|Result|
+|---|---|---|
+|Network precondition|1|PASS0.161s|
+|Cold original4 +process-death retained4 Node/Catalog|2|PASS85.277s /36.080s|
+|Original4 bytes before upgrade|1|PASS9.142s|
+|Normal-r final5 +original Binder/UI/Engine/upgrade regression|9|PASS57.607s|
+|Actual downgrade refusal +original bytes on5|1|PASS8.089s|
+|Retained final5 Node/Catalog +process death|2|PASS70.627s /33.26s|
+|Original4 bytes AFTER new5 writes|1|PASS8.112s|
+
+17executions0fail0skip across stages, NOT17distinct new methods/full suite.3host
+artifact/path/no-fallback guards separately PASS. All6required metadata/ciphertext/
+proof records match original4; same UID/App/Node/Cluster/Volume/TLS pin and Keystore
+canary/context decrypt, original256KiB SHA retained. Actual final5 new replicas/
+trusted HTTPS owner browser/download/fallback, Controller-loss503/refusal, Node
+stop/restart and process-death all PASS. Two logical domains on ONE host; no
+physical-domain/phone/real LAN proof. Main5 retained old4 state, not fresh final5
+first-identity initialization. All original assertions/budgets unchanged.
+
+Final emulator STOPPED; owned app only stopped, WiFi restored/no NAT. Private7SDK
+images offline/hash-verified +33quiescent host files archive verified, no restore.
+Normal SDK shutdown requested, exit-10/SIGUSR1 observed; not clean-powerloss proof.
+Original private signer/other AVDs/archives/APKs preserved. Only test-driver artifact
+selection changed; prior392Python/Go/fault proof applies to same product, NOT a
+fresh full397. No new release/phone backup/Keystore export/Termux migration.
+
+Full Phase4/4.2 NOT ACCEPTED: API35 independent Node E2E still BLOCKED and extra15
+UNKNOWN; physical ARM64/LAN/two phones/Doze/OEM/ChromeAndroid and owner upgrade
+remain required. No Android voter/GC/failover/writableDR/Phase5. Older NOT TESTED
+published4->final5 lines are superseded ONLY by this exact API30 path; historical
+intermediate5 proofs remain separate and unchanged.

@@ -21,6 +21,14 @@ at preflight. Read [API35 qualification](PHASE4-API35-QUALIFICATION.md) before a
 new ADB action. Never wipe/re-init a partially initialized Node, use ADB data
 forwarding as LAN proof, disable validation or change proxy/CA to bypass this.
 
+Exact direct APK4/7c4ba649 ->FINAL5/aec65c2c now PASS on API30 x86_64:17targeted
+Android executions/0fail/skip +3host selection guards, no interim main5. Original
+identity/Keystore/volume/bytes preserved, retained5 actual replicas/browser/SHA/
+fallback/Controller loss/process death PASS; original4 bytes still readable after
+new5 writes. [Final receipt](../qualification/phase4-direct-published45-final.json).
+This supersedes old direct4->5 NOT TESTED wording ONLY for the two exact APKs and
+this SDK path; not phones/physical LAN/API35 or a full Android acceptance.
+
 ## Gói đúng vai trò
 
 - [Node APK5 internal](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk)
@@ -91,9 +99,10 @@ backup private APK/Keystore. Chưa có native export/import hoặc Termux→APK 
 1. Chỉ thiết bị thử được owner cho phép, dữ liệu bỏ được; không M51/production.
    Kiểm model/SDK theo ANDROID-NATIVE-PILOT; không coi minSDK26 là NativeTLS26.
 2. Cài APK bằng trình cài Android, giữ app hiện hữu khi update và so signer. Không
-   uninstall/clear data hoặc ép downgrade để qua lỗi. Đường thực chạy: published4
-   ->các5 nội bộ ->final5, UID/context/old bytes giữ nguyên; **direct published4
-   ->FINAL5 chưa thực chạy**, Foundation2->final5 cũng chưa được chứng minh.
+   uninstall/clear data hoặc ép downgrade để qua lỗi. Đường **direct exact
+   published4/7c4ba649 ->FINAL5/aec65c2c** đã PASS API30 x86_64 với old bytes/
+   Keystore/IDs và Node thật sau update. Không cần qua bản5 trung gian để đi đường
+   đã kiểm thử này. Foundation2->final5 và update trên phone chưa được chứng minh.
 3. Theo ANDROID-NATIVE-PILOT: xác minh Controller HTTPS endpoint, leaf fingerprint
    và expected Cluster ID ngoài luồng, nhập mã ghép một lần, resume pending khi lỗi.
    Không tạo identity mới nếu mất khóa; dừng để owner xử lý.

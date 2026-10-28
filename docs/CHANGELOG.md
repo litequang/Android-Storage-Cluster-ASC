@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-10-28 — Exact direct published APK4→FINAL5 qualified on API30 SDK
+
+- Add allowlisted original-APK selection to existing Catalog qualification driver;
+ 3host guards PASS, no current-build fallback for a missing/corrupt baseline.
+- Original4 FIRST identity/bytes then normal direct final5 update, same signer/UID/
+ Keystore/IDs/volume/pin; actual Node/browser/replicas/fallback/Controller loss/
+ process death and original bytes after new writes:17Android executions PASS.
+- Preserve old artifacts/private signer/all AVDs; no app/Engine/dependency change
+ or new release. Update exact upgrade/forward-fix guidance and scoped receipts.
+ API35/phone/full Phase4 acceptance remains incomplete.
+
 ## 2026-10-28 — API35 cold Node handoff, NOT new release
 
 - Preserve exact final APK5/old signer and transport5PASS; no Engine/app change.

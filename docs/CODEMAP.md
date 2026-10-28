@@ -881,3 +881,11 @@ Direct published APK4->final5 LOCAL-state receipt:
 qualification/phase4-direct-published45-local.json (11 actual Android tests, API30).
 Uses original NativeUpgradeDataTest/NativeCandidateUpgradeTest/UI/Binder/Engine;
 no product or APK delta. Networked retained5 qualification remains separate.
+
+
+Current exact direct published4->FINAL5 qualification:
+`qualification/phase4-direct-published45-final.json` binds17Android executions,
+3host selection guards, actual original4-first state/update/retained5 Node/old4
+bytes after new5 writes. Existing canonical Engine/Catalog/tests reused. Raw state
+private/offline, SDK STOPPED. Core/app/APKs unchanged; Native STATE/OPERATIONS/PILOT
+and STATUS/HANDOFF own limited API30 SDK upgrade contract; API35 still blocked.

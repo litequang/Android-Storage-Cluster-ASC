@@ -14,92 +14,57 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-28
-LATEST direct published4->FINAL5 LOCAL STATE PASS11 on same new API30 sandbox:
-old4 actual readback1, post5 original upgrade/Binder/UI/Engine9, refused normal
-old4 downgrade then old bytes1. No intermediate main5, UID and six required
-identity/ciphertext/context/proof records equal; Keystore/Node/Cluster/Volume/pin
-preserved. Receipt phase4-direct-published45-local.json. Main is NOW exact5,
-never rerun initial4 setup or force downgrade/reset! Native5 retained network E2E
-PENDING; next SAME preserved driver --resume --artifact published5, original4 bytes
-after new writes. API35/phone scopes independent; full Phase4 NOT ACCEPTED.
 
-LATEST independent API30 blank SDK sandbox now exact PUBLISHED4 baseline PASS:
-NetworkReadiness1 +NativeCatalog cold/retained2, real pinned enrollment/Storage/FGS/
-256KiB/two logical replicas/browser/SHA/fallback/Controller-loss/process death.
-No intermediate main5 installed. Direct4->FINAL5 still NOT TESTED, next exact normal
-update/old identity+bytes readback. Receipt phase4-published4-cold-baseline.json.
-Only fresh task AVD RUNNING /workspace/work/phase4-direct-apk45/emulator-owner.json;
-reverify fresh /proc UID/exe/start/AVD/datadir before ADB, never historical PID.
-Original API30/API35/other data/signing untouched, no Node/Keystore clone or reset.
-API35 blocker remains independent, not superseded by this API30 result.
+LATEST exact published APK4->FINAL5 direct upgrade QUALIFIED on API30 x86_64 SDK.
+Read qualification/phase4-direct-published45-final.json +PHASE4-STATUS/HANDOFF and
+latest PHASE4-2-PROGRESS/ACCEPTANCE. Original4 FIRST identity/bytes on independently
+blank SDK data, normal direct5 update, NO interim main5, clone/reset/uninstall/-d/
+DB restore. Original signer/UID/Keystore/App/Node/Cluster/Volume/TLS pin and all6
+required records preserved. Actual17Android test EXECUTIONS0fail/skip across named
+pre/post/fault stages (not17distinct methods/full suite), plus3host artifact guards.
+Cold4 Node2, local upgrade11, network1, retained5 Node2, old4 bytes after new5 writes1.
+Real Engine/FGS/enrollment,256KiB/two logical copies/browser/SHA/fallback, Controller-
+loss503, restart/process death. One host, NOT independent phone hardware/physical LAN.
 
-CURRENT independent direct-APK qualification setup: existing Catalog driver now
-accepts --artifact published4/published5 (fixed original SHA allowlist), default
-current unchanged. Three HOST selection/no-fallback/path guards PASS0.193s; this
-is NOT Android upgrade acceptance. Only old frozen driver input changed; Core/app/
-packages/APKs/signing unchanged, prior full392 applies only to unchanged product.
-Next independently fresh API30 SDK sandbox, exact published4 BEFORE first identity,
-then normal direct published5 update; no intermediate5, clone/wipe/adoption or reset
-of existing AVD/Node data. Direct4->final5 remains NOT TESTED until actual receipts.
-API35 remains STOPPED/BLOCKED as below; no replacement of that gate withAPI30.
+Core/app/deps/archives/APKs unchanged. Only old frozen test-driver input changed:
+qualify_native_catalog --artifact current|published4|published5, fixed original
+SHA/signer/installed equality, no current-build fallback.3host guards PASS0.193s;
+actual workflows exercise BOTH published inputs. Prior fresh full392Python/64faults
++Go11top-level/12nested/vet/modules/builds apply ONLY identical product, NOT fresh
+full397. Other313old frozen inputs match. Source Core8c547288816342f9c6ebf94d3262ebf91049300a;
+Native APK5 embeds3914, not host-only decode cache. Node never instantiates quorum
+Controller Runtime. Quorum/term/nonce/physical proof,10s+250ms fences unchanged.
 
-LATEST API35: transport5PASS210.286s/boot+PM READY retained, but cold Node E2E
-BLOCKED BEFORE enrollment. Additional15Android request timed out600.104s without
-final JUnit; UNKNOWN, NOT15PASS. First method finished290.455s; next started, no
-aggregate receipt. No speculative TLS patch, timeout weakening, root/proxy/CA or
-network-validation bypass. Read qualification/phase4-api35-cold-node-blocker.json,
-PHASE4-API35-QUALIFICATION and latest PROGRESS BEFORE resuming.
+Controller snapshot core-decode0.4.3-dev139files SHA6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57,
+releaseb423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca.
+Exact042->current1PASS21.649s; exact e69/native-node and c831/PWA043->b4232PASS51.823s
+incl NEW-state rollback/pending/identities/bytes. Separate publicationd3b1a9f/fresh
+GitHub-download SHA verified; receipts phase4-core-decode-publication and direct043.
+APK5 unchanged SHAaec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5;
+original public signer bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30.
+Original private signer2618bytes0600/other AVDs preserved; never publish/copy keys.
 
-Same retained AVD reboot with documented SDK legacy-network fixture booted267.105s;
-AP DHCP10.0.2.16 then Android rejected no-Internet network; System UI ANR. No host/
-guest TCP/TLS/Node E2E proved. Main identity/context/Catalog proof still ABSENT at
-closure. Only owned test app stopped; original WiFi enabled/no saved networks
-restored. Emulator now STOPPED; graceful SDK shutdown requested but waitstatus11/
-SIGSEGV, NOT clean-powerloss acceptance. Final7image private offline backup hash-
-verified, no restore. Signer/other AVDs/Core source/archives/APK5 preserved. Raw
-evidence/private backup /workspace/work/phase4-api35-resume. No historical PID use.
+ALL task emulators now STOPPED; historical PIDs invalid. New direct-upgrade data
+PRIVATE /workspace/work/phase4-direct-apk45, final7image hashes/33quiescent host
+files archive verified, no restore; original6records/UID/two files retained.
+WiFi fixture restored. SDK normal shutdown requested, exit-10/SIGUSR1 observed,
+NOT clean-shutdown/powerloss acceptance. Raw SDK backup is not phone export/DR.
 
-Next responsive ownedAPI35/default network +pinned Controller readiness, unfinished
-Android suite and same-state Native Catalog E2E; require NetworkReadinessTest OK
-before fresh Main init. Never reset a later partial identity. Full392/314inputs
-unchanged; direct043 source2tests already pushed3abba07. Full Phase4 NOT ACCEPTED.
+API35 independent: exact5 transport5PASS210.286s/boot+PM READY, but cold Node E2E
+BLOCKED before enrollment (AP no-Internet rejection/System UI ANR). Extra15request
+timeout600.104s without final JUnit, UNKNOWN, never15PASS. Same old35state offline
+preserved7files/no restore, SDK exit11/SIGSEGV, Main identity ABSENT at closure.
+Read phase4-api35-cold-node-blocker +PHASE4-API35-QUALIFICATION. Do not replace this
+scope withAPI30, speculate TLS fixes, change proxy/CA/validation, root or reset.
 
-LATEST ADDITION: exact published e69/native-node and c831/PWA043 ->b423/core-decode
-source upgrade +NEW-state code rollback now2PASS0skip51.823s (TLS/bytes/pending/
-identities/bridge/CA/volume/no auto approvals). Product/artifacts and all314frozen
-inputs unchanged; full392 retained, NOT a fresh full394. Read qualification/
-phase4-direct043-upgrade.json. Older direct043 NOT TESTED lines below are historical
-and superseded ONLY for these exact two archives. APK4->5/API35/phones still separate.
-
-LATEST: Core source8c547288816342f9c6ebf94d3262ebf91049300a normal-pushed/remote
-verified;45targeted PASS incl original networkGC/all8physical faults. NEW fresh
-full392PASS0skip1484.150s,64fault markers,314frozen inputs unchanged. Fresh Go11
-(top-level)/12nested, vet/modules/Linuxamd64 +Windowsamd64/Androidarm64 builds PASS.
-Read qualification/phase4-core-decode-final.json and latest PHASE4-2-PROGRESS/
-ACCEPTANCE/STATUS/HANDOFF. Old full384failures remain historical, NOT current
-blockers; retry and routing TTL experiments remain excluded. Only two successful
-immutable <=2MiB structural validation inputs cached; no cached authority. Fresh
-quorum/term/nonce/physical proof and10s+250ms fences unchanged. No tests weakened.
-
-New DISTINCT host-source archive core-decode0.4.3-dev SHA6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57,
-releaseb423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca,
-139files/exact source/deterministic/secret audit; extra exact archive042->current
-upgrade/identity/pending/bytes/NEW-state rollback1PASS21.649s. Direct old043->new
-NOT TESTED. Artifact commitd3b1a9f303a03151d520154d850c407449bb69f9 normal-pushed/fetch/remote
-matched; separate fresh GitHub clone/download SHA PASS2026-10-28 00:09:15UTC,
-receipt qualification/phase4-core-decode-publication.json.
-Old public archives/APK5 unchanged; new Core Runtime optimization NOT embedded in
-APK5. Native Node does not instantiate quorum Controller Runtime. Prior APK5
-source3914/API30 native28+foreign1/JVM17/network2/downgrade old bytes1 retain ONLY
-unchanged component scope, no Android rerun this host-only patch. Original private
-signer/AVD data preserved; executor restarted, old PIDs invalid, no ADB action.
-
-Full Phase4/4.2 still NOT ACCEPTED: final5/API35/cold startup, ARM64/phones/physical
-LAN/2domains/OEM/Doze/PWA phone evidence missing or BLOCKED. Native API26–29 TLS NOT
-QUALIFIED. No Termux migration, Android voter/GC/failover, Phase5 or writerDR.
-Core/Demo/WIP/4.0/4.1 refs and published artifacts preserved. Next owner pilot,
-not blind full reruns or redo accepted source checkpoints. Historical receipts
-below do not override current source/platform scopes.
+Full Phase4/4.2 remains NOT ACCEPTED: responsive ownedAPI35 +real network/pinned
+Controller before any fresh init; owner-only ARM64/phones/physical LAN/2domains/
+ChromeAndroid/OEM/Doze/update acceptance. Reverify actual process/AVD ownership
+BEFORE any ADB/signal; preserve/resume partial state, no clone/new identity to hide
+loss. NativeTLS26–29 NOT QUALIFIED. No Termux migration/native Controller/native
+file backend, Android voter/GC/failover, writableDR or Phase5. Do not redo accepted
+Core/Native source or blindly rerun full for unchanged product. Original branches
+and historical receipts preserved. Check latest remote before continuation.
 
 ## Non-negotiable user rules
 - M51 is production web hosting. Codex has SOURCE ACCESS ONLY: no production DB/logs, live file inspection, edits or SSH. No modification of AMH, MariaDB, ports, service management, existing Termux or Termux:Boot.
