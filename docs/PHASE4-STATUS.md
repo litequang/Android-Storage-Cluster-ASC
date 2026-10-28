@@ -65,3 +65,11 @@ vẫn chưa tạo, Wi-Fi thử nghiệm khôi phục và7image backup riêng đ�
 SDK shutdown SIGSEGV nên chưa có clean-powerloss proof. Xem
 [receipt](../qualification/phase4-api35-cold-node-blocker.json). Source/APK/signer
 không đổi; không chạy lại full hoặc chuyển Phase5 để né các gate còn thiếu.
+
+
+Independent upgrade setup: driver --artifact now selects fixed published4/5
+bytes before initial identity;3host guards PASS0.193s, receipt
+qualification/phase4-published-apk-selection.json. Only this old frozen test-driver
+input changed; product/app/packages unchanged. Full392 is retained for unchanged
+product, not a fresh full397. Direct published4->final5 Android upgrade remains
+NOT TESTED pending actual fresh API30 sandbox; API35 blocker is preserved.

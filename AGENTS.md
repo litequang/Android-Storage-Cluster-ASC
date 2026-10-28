@@ -14,6 +14,16 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-28
+CURRENT independent direct-APK qualification setup: existing Catalog driver now
+accepts --artifact published4/published5 (fixed original SHA allowlist), default
+current unchanged. Three HOST selection/no-fallback/path guards PASS0.193s; this
+is NOT Android upgrade acceptance. Only old frozen driver input changed; Core/app/
+packages/APKs/signing unchanged, prior full392 applies only to unchanged product.
+Next independently fresh API30 SDK sandbox, exact published4 BEFORE first identity,
+then normal direct published5 update; no intermediate5, clone/wipe/adoption or reset
+of existing AVD/Node data. Direct4->final5 remains NOT TESTED until actual receipts.
+API35 remains STOPPED/BLOCKED as below; no replacement of that gate withAPI30.
+
 LATEST API35: transport5PASS210.286s/boot+PM READY retained, but cold Node E2E
 BLOCKED BEFORE enrollment. Additional15Android request timed out600.104s without
 final JUnit; UNKNOWN, NOT15PASS. First method finished290.455s; next started, no

@@ -1,0 +1,21 @@
+{
+  "state": "PASS_HOST_ARTIFACT_SELECTION_ONLY",
+  "baseline": "872572590d0330587943673633d3190acf866fe6",
+  "tests": 3,
+  "failures": 0,
+  "skips": 0,
+  "seconds": 0.193,
+  "command": "python -B -m unittest -v tests.test_native_qualification_artifacts",
+  "purpose": "Exercise exact original published4 before any identity is created; then direct final5, without first installing an intermediate5",
+  "published4_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+  "published5_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+  "guards": "Fixed artifact names/hash allowlist; original signer/installed equality/owned emulator checks intact; missing/corrupt inputs fail closed without current-build fallback",
+  "changed_old_frozen_inputs": [
+    "tools/qualify_native_catalog.py"
+  ],
+  "product_app_dependencies_archive_delta": false,
+  "prior_full": "392 retained ONLY unchanged product; three new host cases separately targeted, not fresh full397",
+  "android_upgrade_result": "NOT TESTED YET",
+  "api35": "Prior blocker remains; stopped data/signing preserved",
+  "next": "Normal push/verify, then independent fresh API30 test sandbox; no cloning or reset of existing Node/AVD state"
+}

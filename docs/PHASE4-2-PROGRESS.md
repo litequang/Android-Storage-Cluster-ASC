@@ -2226,3 +2226,29 @@ private7file backup, unchanged314inputs and APK SHA consistency checks PASS.
 This is verification of the BLOCKED handoff, not a new passing Android checkpoint.
 Following documentation-only commit records this observed publication; no new test,
 source, artifact or full acceptance claim. Resume from latest branch, not old PIDs.
+
+
+### Independent direct published APK4->FINAL5 setup — host guards PASS
+
+After verified blocker-handoff872572590d0330587943673633d3190acf866fe6, continue
+an independent outstanding qualification path; API35 blocker remains unchanged.
+Existing Catalog driver was hardwired to current local APK5, so it could not prove
+state FIRST created by exact published4. Add --artifact current|published4|published5;
+fixed original names/SHA, original public signer and installed-byte match still
+required. Missing/corrupt/unknown inputs refuse, no fallback to newer current APK.
+No ownership/network/TLS/test assertions weakened, no second Engine/backend.
+
+Host targeted3PASS0skip0.193s: actual two published APKs selected distinctly, missing/
+corrupt originals refuse even if current build exists, unknown/path inputs refuse.
+Receipt qualification/phase4-published-apk-selection.json. Only old frozen driver
+input changed; product/Core/app/dependencies/packages/APKs unchanged. Prior392
+applies to unchanged product, these3 separately targeted; NOT a fresh full397 or
+Android upgrade PASS. Original tests and APK hashes preserved. No new release.
+
+Next after normal feature commit/push/verify: fresh independent API30 SDK-data
+sandbox, original signer, exact published4 installed BEFORE first identity/data.
+Run existing real Catalog tests, normal -r update directly to exact published5,
+verify original IDs/Keystore/volume/bytes plus refused downgrade/retained service.
+Keep all old AVD/Node data untouched; no cloned state, uninstall/clear/-d or force.
+API35 gate remains BLOCKED, Android/physical acceptance still distinct. Do not
+label this setup as a completed Android upgrade checkpoint.

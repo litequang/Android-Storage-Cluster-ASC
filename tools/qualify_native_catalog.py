@@ -34,6 +34,27 @@ from asc.identity import fingerprint_from_pem
 from asc.storage.client import StorageClient
 
 
+PUBLISHED_APKS={
+    'published4':('asc-native-node-0.4.0-internal-debug.apk',
+                  '7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8'),
+    'published5':('asc-native-node-0.4.1-internal-debug.apk',
+                  'aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5'),
+}
+
+
+def selected_apk(root,artifact):
+    """Explicit test input, never silently substitute a newer APK for old state."""
+    if artifact=='current':
+        target=root/'android/app/build/outputs/apk/debug/app-debug.apk'
+        if not target.is_file():raise ValueError('current built APK required')
+        return target
+    if artifact not in PUBLISHED_APKS:raise ValueError('unknown qualification artifact')
+    name,sha=PUBLISHED_APKS[artifact];target=root/'android-artifacts'/name
+    if not target.is_file() or hashlib.sha256(target.read_bytes()).hexdigest()!=sha:
+        raise ValueError('exact published APK required; no current-build fallback')
+    return target
+
+
 def port():
     with socket.socket() as s:s.bind(('127.0.0.1',0));return s.getsockname()[1]
 
@@ -44,6 +65,8 @@ def main():
     p.add_argument('--android-api',type=int,choices=(30,35),default=35,
                    help='actual owned SDK image; default API35 contract unchanged')
     p.add_argument('--serial',required=True);p.add_argument('--owner',type=Path,required=True)
+    p.add_argument('--artifact',choices=('current',*PUBLISHED_APKS),default='current',
+                   help='exact installed baseline; published4 permits direct old4->final5 qualification without first installing an interim5')
     p.add_argument('--out',type=Path,required=True);p.add_argument('--resume',action='store_true')
     p.add_argument('--resume-setup',action='store_true',help='ONLY interrupted pre-identity setup; requires --resume and no app/node state')
     a=p.parse_args();owner=json.loads(a.owner.read_text());proc=Path('/proc')/str(owner['pid'])
@@ -62,7 +85,7 @@ def main():
     if call(['emu','avd','name']).splitlines()[0]!=expected_avd:raise ValueError('AVD mismatch')
     for prop,wanted in [('ro.kernel.qemu',b'1'),('sys.boot_completed',b'1'),('ro.build.version.sdk',str(a.android_api).encode())]:
         if call(['shell','getprop',prop]).strip()!=wanted:raise ValueError('actual selected SDK boot required')
-    apk=ROOT/'android/app/build/outputs/apk/debug/app-debug.apk'
+    apk=selected_apk(ROOT,a.artifact)
     signer=subprocess.check_output([str(a.sdk/'build-tools/35.0.0/apksigner'),'verify','--print-certs',str(apk)],text=True)
     if re.search(r'certificate SHA-256 digest: ([a-f0-9]{64})',signer).group(1)!='bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30':
         raise ValueError('original private signer required')
@@ -107,7 +130,8 @@ esac
     cfg=json.loads((controller/'controller/controller.json').read_text());pin=fingerprint_from_pem(controller/'controller/server.crt')
     client=ClusterClient(origin,pin,cfg['admin_token'])
     processes=[];logs=[];instrument=None;browser=None;nat=None;report={'state':'ERROR','scope':f'Linux +API{a.android_api} x86_64 synthetic; not phones/physical domains',
-       'adb_control_only':True,'native_identity_reset':False}
+       'adb_control_only':True,'native_identity_reset':False,
+       'artifact':a.artifact,'apk_sha256':hashlib.sha256(apk.read_bytes()).hexdigest()}
     def start(root,role):
         log=(w/(role+'-'+uuid.uuid4().hex+'.log')).open('wb');logs.append(log)
         child=subprocess.Popen(['sh',str(script),'--state',str(root),role,*(['--dashboard'] if role=='run-controller' else [])],

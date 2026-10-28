@@ -2,6 +2,13 @@
 
 ## Current API35 qualification handoff (2026-10-28)
 
+- `tools/qualify_native_catalog.py --artifact current|published4|published5`:
+  existing real Node/Catalog qualification can select exact immutable original
+  APKs before initial identity. Fixed names/hashes, no newer-build fallback; all
+  existing ownership/signature/installed-byte checks and fault assertions retained.
+  `tests/test_native_qualification_artifacts.py`:3 host guards PASS; actual direct
+  APK upgrade still separate/NOT TESTED. Product/archives not changed.
+
 - `qualification/phase4-api35-cold-node-blocker.json` and
   `docs/PHASE4-API35-QUALIFICATION.md`: exact APK5 transport5PASS retained;
   extra15 requested tests timed out without final JUnit, NOT PASS. Cold Node E2E
