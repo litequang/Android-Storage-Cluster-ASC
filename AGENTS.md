@@ -13,54 +13,34 @@
 
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
-## Current Phase4 closure pointer — 2026-10-27
-CURRENT FULL RUN: source8c547288816342f9c6ebf94d3262ebf91049300a pushed/fetch/
-remote matched,45targeted+fresh Go/vet/modules/builds PASS. NEW full392 RUNNING on
-314frozen inputs, durable /workspace/work/phase4-core-decode-full/{full-python-
-running.json,full-python-receipt.json,full-python.log,supervisor-owner.json}.
-No active emulator/Gradle, do not change frozen inputs. Verify actual receipt,
-never infer PASS. Older full384failure/GC blocker paragraphs are history; original
-GC target/all8physical groups now PASS, full392 not yet qualified. Report/proceed
-only on actual outcome, preserve state/signer/artifacts and writerDR lock.
+## Current Phase4 closure pointer — 2026-10-28
+LATEST: Core source8c547288816342f9c6ebf94d3262ebf91049300a normal-pushed/remote
+verified;45targeted PASS incl original networkGC/all8physical faults. NEW fresh
+full392PASS0skip1484.150s,64fault markers,314frozen inputs unchanged. Fresh Go11
+(top-level)/12nested, vet/modules/Linuxamd64 +Windowsamd64/Androidarm64 builds PASS.
+Read qualification/phase4-core-decode-final.json and latest PHASE4-2-PROGRESS/
+ACCEPTANCE/STATUS/HANDOFF. Old full384failures remain historical, NOT current
+blockers; retry and routing TTL experiments remain excluded. Only two successful
+immutable <=2MiB structural validation inputs cached; no cached authority. Fresh
+quorum/term/nonce/physical proof and10s+250ms fences unchanged. No tests weakened.
 
-LATEST CORE FIX: immutable structural decode source now has45targeted PASS:
-original networkGC1PASS97.119s +physicalLinux2PASS363.661s/all8groups +42guards
-PASS8.507s. Original fault cases/assertions/10s+250ms budgets unchanged. Read
-qualification/phase4-core-decode-targeted.json and latest PROGRESS before older
-blocker paragraphs. New fresh full392 (8added tests) still PENDING; Go fresh gates
-running. No Android/app source or published artifact change; APK5 old Core3914 is
-NOT rebuilt with host-only Runtime optimization. Keep signer/AVD data; old process
-PIDs are invalid after executor restart, no ADB action this checkpoint. FullPhase4
-NOT ACCEPTED; original failure receipts below remain historical, not current
-standalone target failure. Normal feature push/fetch before fresh full.
+New DISTINCT host-source archive core-decode0.4.3-dev SHA6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57,
+releaseb423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca,
+139files/exact source/deterministic/secret audit; extra exact archive042->current
+upgrade/identity/pending/bytes/NEW-state rollback1PASS21.649s. Direct old043->new
+NOT TESTED. Check latest publication receipt before claiming remote availability.
+Old public archives/APK5 unchanged; new Core Runtime optimization NOT embedded in
+APK5. Native Node does not instantiate quorum Controller Runtime. Prior APK5
+source3914/API30 native28+foreign1/JVM17/network2/downgrade old bytes1 retain ONLY
+unchanged component scope, no Android rerun this host-only patch. Original private
+signer/AVD data preserved; executor restarted, old PIDs invalid, no ADB action.
 
-Owner asks finish Phase4. No whole merges/phone access or Phase5 advance.
-LATEST: full4 source16c0717 finished184tests/1ERROR1537.737s,313inputs unchanged;
-NOT384PASS. GC owner replay after proven unlink/lostACK returned stale_gc_proof.
-Bounded same-job retry FAILED1test1094.769s gc_execution_unconfirmed; routing-hint
-TTL2->10 trial FAILED1test783.307s before actual lostACK fault could occur. Both
-unqualified edits REMOVED EXACTLY; asc/tests/android match committed source. Private
-patch/drafts retained under /workspace/work/phase4-closure-blocked-handoff. Never
-reapply or raise10s/250ms budgets just to get PASS. Root cause not established:
-2CPU,1024events/~2.4MiB projection, observed Runtime-lock preparation and authority
-wait/expiry. Next: focused GC per-stage profiling/resource qualification, original
-failed target first, NEW full384 only after it passes. No blind full reruns.
-
-Native/PWA source a6bbced/2b718d3/3914b99 and fixture2131e83/16c0717 pushed. Final
-API30 native28+foreign1/JVM17/strict normal network2/downgrade-refusal readback1 PASS;
-PWA8+Coregateway3 and actual Linux Chromium install/launch proof PASS. Fresh44local
-GC/storage guards PASS14.068s after trials removed; NOT network fault acceptance.
-APK5 aec65c2c/source c726bd36 are INTERNAL DEBUG REVIEW snapshots with exact source,
-original signer and secret audits, not a qualified release. Artifact ed1749b
-normal-pushed/fetch/ls-remote matched; separate GitHub download SHA PASS15:00:01UTC,
-receipt qualification/phase4-web-native5-publication.json. Read current
-PHASE4-STATUS/HANDOFF/4.2PROGRESS/ACCEPTANCE, qualification/phase4-closure-gc-
-investigation.json and phase4-web-native5-internal-snapshot.json for current
-publication status. Preserve original published artifacts and private signer/AVD/
-identity/Keystore/bytes. Actual tested upgrade4->interim5->final5, NOT exact direct
-published4->final5. API35-final5/ARM64/phones/physical LAN/2domains/OEM/Doze NOT TESTED
-or BLOCKED. Full Phase4/4.2 NOT ACCEPTED. No recovery writer/Android voter/GC/failover/
-Termux migration/Cloudflare. Historical PASS receipts below keep old source scope.
+Full Phase4/4.2 still NOT ACCEPTED: final5/API35/cold startup, ARM64/phones/physical
+LAN/2domains/OEM/Doze/PWA phone evidence missing or BLOCKED. Native API26–29 TLS NOT
+QUALIFIED. No Termux migration, Android voter/GC/failover, Phase5 or writerDR.
+Core/Demo/WIP/4.0/4.1 refs and published artifacts preserved. Next owner pilot,
+not blind full reruns or redo accepted source checkpoints. Historical receipts
+below do not override current source/platform scopes.
 
 ## Non-negotiable user rules
 - M51 is production web hosting. Codex has SOURCE ACCESS ONLY: no production DB/logs, live file inspection, edits or SSH. No modification of AMH, MariaDB, ports, service management, existing Termux or Termux:Boot.

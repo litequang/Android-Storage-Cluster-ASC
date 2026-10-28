@@ -76,5 +76,10 @@
   "go": "fresh gates running separately; no Go source change",
   "android": "No app/Node/Engine/enrollment/observer/UI/provider/signing/state changes; APK5 unchanged, earlier scoped source3914 proofs retained; new Core Runtime path is not instantiated on Android",
   "rollback": "Code-only compatible Core change, same schema/wire/private state; stop owned Controller, NEW verified backup before compatible code selection, never restore old DB over newer history. Old code restores repeated-validation cost; no GC unlock.",
-  "scope": "Linux synthetic only; full Phase4/4.2 NOT ACCEPTED, physical/ARM64/LAN/OEM/API35-final5 and writerDR unchanged"
+  "scope": "Linux synthetic only; full Phase4/4.2 NOT ACCEPTED, physical/ARM64/LAN/OEM/API35-final5 and writerDR unchanged",
+  "follow_up": {
+    "full_receipt": "phase4-core-decode-final.json",
+    "fresh_full": "392PASS0skip1484.150s",
+    "go_receipt": "phase4-core-decode-go.json"
+  }
 }

@@ -137,3 +137,13 @@ PHASE4-STATUS/HANDOFF and PHASE4-2-PROGRESS/ACCEPTANCE own the latest scoped res
 PHASE4-WEB-APP documents browser use. Resolve current GC blocker/full qualification, then
 owner-controlled ZTE/Bphone pilot before broader acceptance or Phase5. No SDK/
 state/guard workaround to mark missing phone evidence PASS.
+
+
+## Core/Linux closure qualification — 2026-10-28
+Source8c54728 now has45targeted +fresh392full0skip/all64faults/314inputs unchanged,
+Go/vet/modules/builds PASS. Prior GC blocker resolved by pure immutable structural
+decode reuse, no authority/cache/fence relaxation. Distinct core-decode archive
+exact source/deterministic/042upgrade/new-state rollback passed. Existing APK5
+unchanged; do not rerun broad suites without a source/platform concern. Next owner
+physical/API35/ARM64/LAN/OEM gates per current STATUS/HANDOFF; full Phase4 remains
+NOT ACCEPTED, no automatic Phase5/migration or recovery writer activation.

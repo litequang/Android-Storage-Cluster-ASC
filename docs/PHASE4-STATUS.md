@@ -1,59 +1,41 @@
-> **Latest Core checkpoint:** `8c54728` đã push/remote-verified. Original GC gate và
-> toàn bộ8nhóm physical fault đã PASS; fresh Go gates PASS. Full392mới đang chạy
-> trên314inputs cố định; chưa có full PASS. Các kết quả FAIL384/184 bên dưới là lịch sử.
-> Xem PHASE4-2-PROGRESS và qualification/phase4-core-decode-targeted.json.
+# Phase4 — trạng thái 2026-10-28
 
-# Phase4 — trạng thái 2026-10-27
+**Đã hoàn tất gate phần mềm Linux còn thiếu. Toàn Phase4/4.2 CHƯA ACCEPTED trên Android thật.**
 
-**Native Node/PWA đã có targeted PASS. Full regression bị chặn; toàn Phase4 CHƯA ACCEPTED.**
-Snapshot debug nội bộ phục vụ review/tiếp tục công việc, không phải release đã nghiệm thu.
-
-| Phần | Kết quả thực chạy |
+| Phần | Kết quả thực tế |
 |---|---|
-|4.0 Core/Demo +Quick Join|Linux synthetic accepted; Core3D được bảo toàn, không merge toàn Demo|
-|4.1 bridge +Core quorum observer|Linux synthetic accepted, read-only|
-|Native APK5|Core Engine/Agent, Keystore/TLS, Quick Join, volume, FGS/Stop, UI/observer; API30 x86_64 targeted PASS|
-|Web File Manager/PWA|Owner HTTPS login, upload/download/SHA/replica/fallback; manifest/install/network-only worker; tái sử dụng backend|
-|Android/JVM|28selected PASS249.012s +foreignUID1PASS0.128s; JVM17PASS; downgrade refusal/readback1PASS10.738s|
-|Network|Actual browser +Native2PASS80.675s/38.373s; SDK NAT trực tiếp, không ADB reverse truyền dữ liệu|
-|Web|8Dashboard/browser +3Core gateway PASS; cài/mở/gỡ PWA thực tế Chromium Linux PASS, Chrome Android chưa thử|
-|Full cuối|**FAIL:184tests/1ERROR1537.737s**,313inputs unchanged; không phải384PASS|
-|Blocker|GC same-job replay sau unlink/lostACK: stale_gc_proof; bounded retry FAIL1094.769s, routing trial FAIL783.307s; cả hai bản thử đã loại|
-|Guard test mới|44PASS0skip14.068s sau loại trial; không thay cho network fault gate|
-|Go|11top-level/12nested PASS, vet/modules/builds PASS; source Go không đổi, không chạy lại vô ích|
-|Artifact mới|APK5/source được audit và lưu dạng debug review với SHA; trạng thái remote xem PHASE4-HANDOFF/receipt|
+|Core decode fix|Source8c54728, original networkGC +all8Linux fault groups +guards:45targeted PASS|
+|Fresh full Python|**392PASS /0SKIP /0FAIL**,1484.150s;64fault markers,314inputs không đổi|
+|Fresh Go|11top-level/12nested PASS; vet/module verification và builds PASS; Windows/Android chỉ cross-build|
+|Controller source mới|0.4.3-dev core-decode:139files, exact source/deterministic/secret audit PASS|
+|Đúng archive upgrade|Exact0.4.2->new source +pending/IDs/bytes/NEW-state rollback:1PASS21.649s; direct old0.4.3->new chưa thử|
+|APK5|Giữ nguyên bản source3914/signer cũ, không rebuild vì Core Controller-only delta; Native Node không instantiate quorum Runtime|
+|Android proof giữ lại|API30x86_64:28selected+foreign1/JVM17/network2/downgrade readback1 PASS trước đó; không chạy lại Android trong checkpoint này|
+|Web/PWA|Dashboard login/File Manager/node/volume/replicas/upload/download/SHA/fallback; fresh full có browser/API integration PASS|
+|PWA install|Actual Chromium Linux install/launch proof trước đó, web bytes không đổi; Chrome Android chưa thử|
+|GitHub/checksum|Xem [handoff](PHASE4-HANDOFF.md) và publication receipt; checksum không thay cho runtime acceptance|
 
-Không tăng budget GC10s/250ms, không bỏ assertions hay coi phản hồi từ chối là
-thực hiện fault thành công. Mọi lần FAIL giữ trong PROGRESS/receipt; không dùng383
-cũ để nghiệm thu PWA/native mới. Core GC chỉ có executor trong synthetic fixture,
-vẫn khóa trong Android/runtime thường. Root cause chưa chứng minh; quan sát thấy
-metadata1024events/~2.4MiB và chờ Runtime lock/authority trên môi trường2CPU.
+Core fix chỉ tái sử dụng kiểm tra cấu trúc cho2immutable inputs <=2MiB, không cache
+quyền. Quorum/term/nonce, checksum/physical proof, retention/last-copy và budget10s/
+250ms giữ nguyên. Các full/trial FAIL cũ được giữ trong history; đã được supersede
+bởi lượt392PASS, không cộng lại thành PASS hay dùng retry/TTL thử nghiệm.
 
-## Sử dụng và phần còn thiếu
+## Phần còn thiếu
 
-Node APK không cần Termux; Controller vẫn QuickStart/Termux hoặc Linux. App không
-đọc/adopt state Termux. File Manager là web dùng owner code/session; chưa có native
-file picker, native Controller hoặc tài khoản mật khẩu đa người dùng.
+APK Node không cần Termux; Controller vẫn QuickStart/Termux hoặc Linux, chưa có
+Controller native. File Manager dùng web/PWA chung; chưa native file picker hay
+user-password/multiuser sharing. LAN cần đường IP nội bộ; không tự tạo hotspot/
+Wi-Fi Direct, PWA không offline-write/cache API/file hay điều khiển Termux.
+Cloudflare/SSH/VPN/remote maintenance thuộc Phase5, chưa triển khai.
 
-LAN cần đường IP giữa thiết bị; giao thức không phụ thuộc Internet/cloud nhưng
-phone LAN/ngắt Internet chưa nghiệm thu. PWA không chạy Termux/Node, không cache
-API/file/catalog hay offline-write. Cloudflare/SSH/VPN remote maintenance thuộc
-Phase5, chưa triển khai.
+Final APK5/API35 chưa thử (cold35 BLOCKED); API30 proof là x86_64 SDK NAT, không
+phải ARM64/phone LAN/hai miền lỗi vật lý. API26–29 NativeTLS NOT QUALIFIED dù
+minSDK26. Exact direct published4->final5 chưa thử; chỉ4->interim5->final5 đã giữ
+state. Không Termux→APK migration, Android voters/GC/failover hoặc writableDR.
 
-API30 x86_64 SDK NAT chỉ là synthetic; hai logical domains trên một host không
-chứng minh hai miền lỗi vật lý. Final5 trên API35 NOT TESTED (cold35 BLOCKED); APK4/
-35 là proof lịch sử. ARM64 chỉ build. API26–29 NativeTLS NOT QUALIFIED dù minSDK26.
-Không hỗ trợ Termux→APK migration, Android voters/GC/failover hoặc writableDR.
-
-## Việc tiếp theo theo thứ tự
-
-1. Điều tra GC authority/proof latency với nguyên workload; giữ mọi guard và fault.
-   Chạy original targeted gate trước; không chạy full lặp lại khi gate này còn FAIL.
-2. Khi targeted đạt, fresh full384 +faults; audit/package/remote checksum theo source mới.
-3. Owner nghiệm thu ZTE/Bphone SDK30+/ARM64: Quick Join/pin, private probe,2phone/
-   2domain/replicas/SHA/fallback, restart/mất Controller/network, app upgrade,
-   notification/Stop/background/Doze/OEM, Chrome HTTPS/PWA và LAN giữ Wi-Fi mất Internet.
-
-Codex không truy cập điện thoại/M51/production để đánh PASS các gate còn thiếu.
-Hướng dẫn [PHASE4-HANDOFF](PHASE4-HANDOFF.md), [Web/PWA](PHASE4-WEB-APP.md),
-[receipt blocker](../qualification/phase4-closure-gc-investigation.json).
+Owner nghiệm thu theo [pilot](ANDROID-NATIVE-PILOT.md): model/SDK30+/ARM64, pin/
+Cluster/pending, private probe,2phones/2domains/2replicas/SHA/fallback, restart/
+Controller loss/network changes, same-signer update, FGS/Stop/Doze/OEM, Chrome
+HTTPS/PWA và LAN giữ Wi-Fi khi mất Internet. Codex không truy cập phone/M51/
+production để đánh PASS. Không cần chạy lại full nếu source không đổi; tiếp tục
+nghiệm thu đúng platform/đường upgrade còn thiếu, không chuyển Phase5 tự động.

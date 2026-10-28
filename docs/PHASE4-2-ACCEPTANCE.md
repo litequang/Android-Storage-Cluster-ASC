@@ -1,54 +1,44 @@
-> **Latest Core checkpoint:** `8c54728` đã push/remote-verified. Original GC gate và
-> toàn bộ8nhóm physical fault đã PASS; fresh Go gates PASS. Full392mới đang chạy
-> trên314inputs cố định; chưa có full PASS. Các kết quả FAIL384/184 bên dưới là lịch sử.
-> Xem PHASE4-2-PROGRESS và qualification/phase4-core-decode-targeted.json.
+# Phase4.2 qualification — Linux software scope qualified
 
-# Phase4.2 native qualification — NOT ACCEPTED
+**Fresh Core/Linux software gates PASS. Full Phase4/4.2 NOT ACCEPTED trên Android thật.**
+Source Core8c54728; Native APK5 vẫn source3914b99, không chứa host-only decode fix.
+Không đổi app/Engine/Node/TLS/enrollment/UI/identity/signer/state; Node không chạy
+quorum Controller Runtime. Android proof cũ chỉ giữ cho những component không đổi.
 
-**Full regression BLOCKED. Native/PWA targeted proofs không phải nghiệm thu toàn Phase4.**
-Source Native3914b99/PWAa6bbced; fixture2131e83/16c0717. Không còn full đang chạy.
-Snapshot APK5/source chỉ là debug review, không qualified release.
-
-| Gate | Kết quả thực chạy |
+| Gate | Actual result |
 |---|---|
-|Fresh full4|184tests/1ERROR1537.737s,313inputs unchanged, failfast,43fault banners; **FAIL**|
-|Failed GC gate|Actual unlink/lostACK đã xảy ra, owner same-job replay409 stale_gc_proof|
-|Bounded retry experiment|1ERROR1094.769s gc_execution_unconfirmed, loại thay đổi|
-|Routing TTL experiment|1FAIL783.307s, actual unlink/lostACK marker vẫn tồn tại; loại thay đổi|
-|Fast guards/storage sau loại trial|44PASS0skip14.068s; không thay network fault gate|
-|Dashboard/PWA|8PASS46.917s; TLS/manifest/worker/empty caches/criteria/upload/SHA/fallback/mobile/XSS/offline|
-|Actual PWA install|Install/launch/uninstall PASS Chromium Linux CDP; Android NOT TESTED|
-|Core gateway|3PASS31.711s; owner/session/mode/all writes denied/passive recovery|
-|Final native JVM/build|17PASS fresh task rerun sau transport fix; main/test APK build PASS|
-|Final API30 native|28PASS249.012s,0skip +foreignUID1PASS0.128s|
-|Exact nonreader gate|1PASS35.657s, unchanged method; chạy lại trong28|
-|Strict normal network|2Android PASS80.675s/38.373s; browser/two logical domains/SHA/fallback/process death/Controller loss|
-|Downgrade|Exact APK4 refused, original identity/bytes1PASS10.738s; không uninstall/clear/-d|
-|Go|11top-level/12nested PASS; vet/modules/Linuxamd64 +Windowsamd64 +Androidarm64 builds PASS; source không đổi|
-|Package audit|APK120Core modules/original signer; source139files/rebuild deterministic/exact bytes,0secret findings|
-|Publication|Debug review snapshot ed1749b; separate GitHub download/SHA PASS, không nghiệm thu regression|
+|Fresh full Python|392PASS0skip/0failure1484.150s,2026-10-27 23:38:30 ->28 00:03:14UTC|
+|Input/fault freeze|314inputs unchanged;64actual fault markers; all384old +8new tests|
+|Original targeted GC|Network1PASS97.119s +Linux2PASS363.661s/all8physical groups|
+|Fresh guards|42PASS8.507s incl8new decode cases and all original catalog/Runtime/GC tests|
+|Fresh Go|11top-level/12nested PASS19.464s; vet/modules and Linuxamd64/Windowsamd64/Androidarm64 builds PASS|
+|Current package|139files, same formats/capabilities, deterministic rebuild/exact source/secret inventory PASS|
+|Exact new archive upgrade|042->current with pending/IDs/bytes +NEW-state code rollback1PASS21.649s; byte-equality asserted against actual archive|
+|Android/API30 retained|28+foreign1/JVM17/normal network2/downgrade-readback1 scoped prior PASS; NOT rerun for Core-only fix|
+|Final5/API35, physical/ARM64/LAN/OEM|NOT TESTED/BLOCKED; no new Android/platform acceptance|
 
-APK SHA `aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5`,
-39,000,831bytes. Host SHA `c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc`.
-Full failed attempts and current outcome:
-[GC investigation](../qualification/phase4-closure-gc-investigation.json),
-[scoped targeted](../qualification/phase4-web-native5-targeted.json),
-[internal snapshot audit](../qualification/phase4-web-native5-internal-snapshot.json).
-Full1 384/2ERRORS2141.271s; full2 interrupted after backup fixture FAIL; full3
-186/1FAIL2003.503s. No failed/interrupted full is counted as PASS. Existing targeted
-backup12groups and LinuxGC5groups PASS retain their scope, not a full384 result.
+[Full evidence](../qualification/phase4-core-decode-final.json),
+[targeted](../qualification/phase4-core-decode-targeted.json),
+[fresh Go](../qualification/phase4-core-decode-go.json).
+Pure immutable structure reuse never caches authority: all existing durable hash,
+canonical/envelope/index/term checks and actual quorum/nonce commits remain. GC
+budget10s/250ms, physical survivor SHA/independent domains/last-copy/version/pins
+and ordinary runtime lock unchanged. No old assertion, history or fault removed.
 
-Both trial edits removed exactly; canonical Core/tests match16c0717. No budget/
-lease/retention/physical proof/assertion weakened. Next original failed network
-GC gate must PASS before another full384 attempt. ROOT CAUSE NOT ESTABLISHED;
-2CPU/1024events/~2.4MiB projection and authority expiry are diagnostic observations.
+Historical fulls/trials remain FAIL/INTERRUPTED in PROGRESS and
+[old investigation](../qualification/phase4-closure-gc-investigation.json); the new
+392PASS resolves the Linux blocker, not those old outcomes. New archive SHA
+`6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57`,
+release`b423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca`.
+APK5 SHA`aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5`
+and old archives preserved. Publication availability is recorded separately.
 
-Exact tested upgrade: published4 ->interim5 ->final5 preserves original UID/context/
-Keystore/Volume/bytes. **Exact direct published4 ->final5 NOT TESTED**. API30 is
-x86_64 SDK NAT synthetic; two logical domains are not physical independence.
-Final5 API35 NOT TESTED/cold BLOCKED; ARM64/phones/real LAN/OEM/Doze/ChromeAndroid PWA
-NOT TESTED; API26–29 NativeTLS NOT QUALIFIED. No native Controller/Termux migration/
-Android voters/GC/failover/writable DR. No acceptance by inference from old receipts.
+New exact archive has042->current/new-state rollback proof; direct prior043->new
+NOT TESTED. APK actual retained path4->interim5->final5, direct exact published4->
+final5 NOT TESTED. API30 is x86_64 SDK NAT; logical domains on one host are not
+physical independent hardware. Final5/API35/cold/ARM64/phones/real LAN/OEM/Doze/
+ChromeAndroid PWA missing or BLOCKED; API26–29 NativeTLS NOT QUALIFIED. No APK
+Controller, Termux migration, Android voters/GC/failover, Phase5 or writableDR.
 
 ## Historical foundation and continuation receipts
 

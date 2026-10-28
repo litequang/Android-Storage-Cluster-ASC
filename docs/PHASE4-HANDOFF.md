@@ -1,31 +1,30 @@
-# Phase4 — internal debug snapshot và handoff
+# Phase4 — source mới và hướng dẫn bàn giao
 
-**FULL REGRESSION BLOCKED; Phase4/4.2 CHƯA ACCEPTED.**
-Lưu artifact đã có targeted proofs để review/tiếp tục, không công bố qualified
-release hay nghiệm thu điện thoại. Source Native3914b99/PWAa6bbced, fixture16c0717.
-Full cuối184/1ERROR1537.737s; GC lost-ACK/replay chưa đạt. Hai bản thử retry/TTL
-đều FAIL và đã loại, không đưa vào gói. [Blocker và next steps](../qualification/phase4-closure-gc-investigation.json).
+**Linux software scope đã qualified:392PASS0skip/all64faults,314inputs không đổi.**
+Toàn Phase4/4.2 trên Android thật vẫn NOT ACCEPTED; đây là internal source/debug,
+không production release. Source Core8c54728 khắc phục GC authority quá hạn bằng
+reuse kiểm tra cấu trúc, giữ mọi quyền/fence/physical proof. Native APK5 source3914
+không đổi, không chứa host-only fix; Node không instantiate quorum Runtime.
 
-Gói dưới đây là snapshot debug nội bộ, **không khuyến nghị như bản đã nghiệm thu**.
-Giữ các bản đã công bố trước; chỉ chủ dự án tự thử sandbox/thiết bị được phép sau
-khi đọc giới hạn. Các bước dưới đây là hướng dẫn, không phải proof phone đã PASS.
-Artifact commit `ed1749b5d05dfc886ebdd8027b44df338dcfadcb` đã normal-push và
-fresh fetch/ls-remote khớp. Clone GitHub riêng tải lại APK/archive +SHA lúc
-2026-10-27 15:00:01UTC: cả hai khớp; [publication receipt](../qualification/phase4-web-native5-publication.json).
-Đây chỉ là xác minh artifact debug, không làm full regression thành PASS. Không dùng snapshot để bật GC/Raft/writerDR.
+New archive được rebuild byte-identical,139files/secret audit PASS, exact042->new
+upgrade/pending/IDs/bytes/NEW-state rollback PASS21.649s. Direct prior043->new
+chưa thực chạy; không hứa hỗ trợ đường đó. [Full receipt](../qualification/phase4-core-decode-final.json).
+Push/download checksum của gói mới sẽ có receipt riêng; xem mục publication cuối.
+Các archive/APK cũ giữ nguyên. Không dùng software PASS để bật Android GC/Raft/
+failover/writerDR hoặc tuyên bố phone/LAN/ARM64/Doze đã nghiệm thu.
 
 ## Gói đúng vai trò
 
 - [Node APK5 internal](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk)
 - [SHA-256 APK](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk.sha256)
-- [Controller/PWA source](../candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz)
-- [SHA-256 Controller](../candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz.sha256)
+- [Controller/PWA source](../candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz)
+- [SHA-256 Controller](../candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz.sha256)
 
 APK SHA-256: `aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5`
 
-Controller archive SHA-256: `c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc`
+Controller archive SHA-256: `6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57`
 
-Controller release ID: `c8315bdb08973c4c8cca422a4aa8337362fedebb61bc1a61a721097fa37b9f55`
+Controller release ID: `b423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca`
 
 APK org.asc.foundation/versionCode5/0.4.1-native-node-candidate,39,000,831bytes,
 minSDK26/target35. **Native Node TLS cần API30+**;26–29 NOT QUALIFIED. Chỉ x86_64
@@ -42,7 +41,7 @@ Trên máy đã tải repository/gói đúng commit:
 
 ```sh
 (cd android-artifacts && sha256sum -c asc-native-node-0.4.1-internal-debug.apk.sha256)
-(cd candidates && sha256sum -c asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz.sha256)
+(cd candidates && sha256sum -c asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz.sha256)
 # Nếu có Android SDK, kiểm certificate rồi so fingerprint bên trên:
 apksigner verify --verbose --print-certs android-artifacts/asc-native-node-0.4.1-internal-debug.apk
 ```
@@ -53,8 +52,9 @@ apksigner verify --verbose --print-certs android-artifacts/asc-native-node-0.4.1
 Nếu còn0.3, đọc DEMO-ZTE-0.4.1 trước; không suy ra direct0.3->candidate đã hỗ trợ.
 0.4.2-dev trung gian ở candidates, SHA
 b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3.
-E69 old0.4.3 ->new package được thử bằng source-only staging/backup fixture giữ
-state, **không phải** exact installed-launcher upgrade proof của đường đó.
+Đường direct c831/prior0.4.3 ->new b423 NOT TESTED; không suy ra từ schema giống
+nhau. Nếu đã ở prior043, giữ release/state hiện hữu cho đến khi đường đó được
+qualify; gói PWA cũ không cần host-only Core fix cho runtime Demo single-writer.
 
 Dừng Controller/Node/bridge bằng Ctrl+C và chờ thoát. Với mỗi bước đã kiểm:
 
@@ -67,7 +67,7 @@ sh "$ASC_RUN" --state "$ASC_STATE" backup "$ASC_BACKUP"
 sh "$ASC_RUN" --state "$ASC_STATE" verify-backup "$ASC_BACKUP"
 # ASC_UNPACK: thư mục MỚI đã giải nén archive có checksum đúng.
 sh "$ASC_RUN" --state "$ASC_STATE" stage "$ASC_UNPACK/asc-demo-alpha"
-ASC_RELEASE='<release_id đúng của gói đã verify>'
+ASC_RELEASE='b423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca'
 sh "$ASC_RUN" --state "$ASC_STATE" upgrade-preflight "$ASC_RELEASE"
 sh "$ASC_RUN" --state "$ASC_STATE" upgrade "$ASC_RELEASE" --backup "$ASC_BACKUP-activation"
 sh "$ASC_RUN" --state "$ASC_STATE" verify-backup "$ASC_BACKUP-activation"

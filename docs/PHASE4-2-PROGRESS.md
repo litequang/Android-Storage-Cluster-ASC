@@ -2036,3 +2036,41 @@ secret/compatibility check, normal commit/push and separate remote download proo
 Old APK5/source c831 packages remain immutable with their old source qualification;
 new Core optimization is host-only, no claim APK5 now embeds it. No new signer,
 identity/schema migration, APK downgrade or Android GC/Raft/writerDR activation.
+
+
+### Fresh full392 Linux software qualification PASS — 2026-10-28
+
+081533841d172ceaffa561238fc09ebcc9320628 reporting checkpoint normal-pushed/fetched.
+Actual full source8c54728 started2026-10-27 23:38:30UTC, ended28 00:03:14UTC:
+392PASS0skip/0fail/error1484.150s,64original fault markers,314inputs unchanged.
+All384original tests retained plus8additive decode tests. No source change during
+run. Passive monitor tool session expired; fresh process checks showed durable
+supervisor/full still running; reattached monitor, did NOT restart suite.
+Full receipt/private logs in /workspace/work/phase4-core-decode-full; public
+qualification/phase4-core-decode-final.json binds hashes and actual fault lines.
+
+All Core3A/3B/3C/3D fault groups, real quorum/term/Controller loss, physical GC
+unlink/ACK loss/journal/crash/replay/last-copy/pins, TLS, identity, Dashboard/browser/
+PWA, existing-source compatibility and upgrade regressions passed. No old failure
+recounted PASS; prior investigation/history retained with new-resolution pointer.
+Fresh Go11top-level/12nested/vet/modules/Linux+Windows+Android builds PASS, cross-
+builds not foreign-platform runtime. Source/historical artifacts unchanged.
+
+After full PASS only: build DISTINCT source archive core-decode0.4.3-dev139files,
+SHA6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57,
+releaseb423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca.
+Independent rebuild byte-identical, strict manifest/exact current source and
+unpacked secret scan0findings. All314frozen inputs still match; new artifact is
+output of that tested source, not a source edit. Additional actual archive gate
+1PASS21.649s: original CurrentSourceUpgradeTests ALL assertions plus extra
+byte-equality to new archive before042->new upgrade/pending/IDs/data and NEW-state
+code rollback. No existing assertion weakened. Direct prior043->new NOT TESTED.
+
+APK5/old archives remain byte-identical; no new APK or Android test claimed for
+this Controller-only delta. APK5 embeds prior source3914, not host optimization;
+Native Node never instantiates quorum Controller Runtime. Prior Android API30/
+JVM/retained update proofs keep exact unchanged component scope. Signer/AVD data
+preserved; no ADB/phone action. Full Phase4/4.2 still NOT ACCEPTED pending final5/
+35/ARM64/phone/physical LAN/domains/OEM/Doze/ChromeAndroid evidence. WriterDR,
+Android voters/GC/failover and Phase5 remain locked/deferred. Next audit/stage/
+normal push and independent GitHub actual archive download SHA verification.

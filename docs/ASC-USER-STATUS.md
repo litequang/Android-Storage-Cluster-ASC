@@ -3,8 +3,8 @@
 Nguồn hiện tại: nhánh `feature/phase4-2-android-native`. Kết quả nghiệm thu chi tiết
 ở PHASE4-2-PROGRESS/ACCEPTANCE; không suy ra điện thoại thật PASS từ emulator.
 Các gói Demo/Native đã công bố và mã nguồn mới nhất có phiên bản khác nhau.
-Candidate5 đã targeted PASS; full cuối FAIL184/1ERROR. Snapshot5 chỉ dành review/
-sandbox, không phải release nghiệm thu. Trạng thái
+Core fix8c54728 đã fresh392PASS0skip/all64faults +Go PASS. APK5 giữ nguyên scoped
+API30 proof trước đó; phone/ARM64/LAN/OEM chưa nghiệm thu. Trạng thái
 tải/checksum/nghiệm thu hiện tại: PHASE4-STATUS và PHASE4-HANDOFF.
 
 | Nhu cầu | Hiện trạng |
@@ -45,13 +45,12 @@ Không nhập admin token, Node token hay private key vào các ô mã đăng nh
 
 ## Phần còn thiếu trước khi nghiệm thu
 
-1. Sửa/qualify original Core GC lost-ACK/replay fault gate; hai trial retry/TTL đã
-   FAIL và loại, không tăng budget hoặc bỏ test. Xem receipt blocker.
-2. Fresh full384 khi targeted đã đạt. Full383 cũ không nghiệm thu PWA/native5 mới.
-3. Snapshot debug5 có scoped Android28+foreign1/JVM17/network2 PASS, bảo toàn signer/
-   state; remote SHA chỉ xác nhận artifact, không làm full regression thành PASS.
-4. Exact direct published4->final5 chưa thử; đường thực chạy4->interim5->final5.
-5. Owner nghiệm thu phones/ARM64/LAN/2physical domains/Doze/OEM/ChromeAndroid PWA.
+Core GC blocker đã sửa và fresh full392PASS; không cần lặp lại full khi source
+không đổi. Controller source mới b423 có exact042->current/NEW-state rollback
+proof, direct prior043->new chưa thử. APK5 không rebuild; đường actual4->interim5->
+final5 được giữ, direct published4->final5 chưa thử. Còn owner nghiệm thu phones/
+ARM64/LAN/2physical domains/Doze/OEM/ChromeAndroid PWA và final5API35 bị cold blocker.
+Cloudflare/SSH/VPN/remote maintenance vẫn Phase5, chưa triển khai.
 
 APK Node mới không cần Termux để chạy chính Node, nhưng không thay Controller
 Termux hiện hữu và không tự nhận state của nó. Không cài lên M51/production.

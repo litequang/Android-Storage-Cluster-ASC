@@ -682,3 +682,11 @@ hash, canonical/monotone envelope, GC budget/physical/reference checks unchanged
 Eight additive validation/authority tests retain all previous tests. No Android
 code, state/wire format, permission, signer, public artifact or recovery writer
 change. Actual network/full gates recorded in PHASE4-2-PROGRESS.
+
+
+### Core/Linux closure qualified — 2026-10-28
+Source8c54728 fresh392PASS0skip/all64faults/314inputs unchanged +45targeted and
+Go/vet/modules/builds PASS. Distinct core-decode source snapshot exact/deterministic/
+secret audit and actual archive042upgrade/NEW-state rollback PASS. Existing APK5/
+all old archives preserved; no new Android/phone/ARM64/API35 or production claim,
+no GC/Raft/failover/writableDR unlock. Full Phase4 remains platform-gated.
