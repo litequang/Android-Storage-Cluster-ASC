@@ -1,6 +1,12 @@
 # Phase5 acceptance — NOT ACCEPTED
 
-5.0 only: source contract/route exclusions, targeted host tests. No remote runtime,
+Latest5.1 private gateway software subset qualified:19API/regression +1CLI +1actual
+Chromium +2Core/passive read-only scoped executions PASS. Actual VPN/Tailscale,
+public Cloudflare, maintenance, physical/production and final full5.4 gates are
+outstanding. Hardware DEFERRED BY OWNER, not a reason to stop source development
+and not evidence of PASS. See dated scopes below and PHASE5-PROGRESS.
+
+Historical5.0 checkpoint only: source contract/route exclusions, targeted host tests. No remote runtime,
 VPN, Cloudflare, SSH, phone or production acceptance. Physical-phone gates are
 DEFERRED BY OWNER2026-10-28, not PASS and not unittest skips. Prior Core392/Go/fault
 and Phase4 API30/API35 scoped receipts remain valid only for identical inputs.

@@ -14,6 +14,18 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase5 authorization — 2026-10-28
+
+Current5.0/5.1 private access software subset QUALIFIED, normal-pushed sourcefa0ada9
+and docs-only publication follows; see PHASE5-PROGRESS/qualification receipts.
+19+1+1+2separate targeted PASS: actual TLS/session/API/CLI/two logical replicas/
+SHA/fallback/restart +real Chromium/PWA +Core3Go/Python quorum partition/heal readonly
++passive staging unchanged (existing synthetic MemorySource metadata, not live DR).
+Source-only Linux gateway, no package/APK release, actual VPN/Cloudflare UNKNOWN/
+NOT TESTED. Original Phase4 remote0877a15/signers/AVDs/artifacts unchanged. No Core/
+Go/Android product modifications, no fresh full-regression claim. NEXT5.2 optional
+public-edge source adapter, NOT opening private profile to public/DNS or trusting
+forwarded headers. Read PHASE5-PRIVATE-ACCESS for current CLI/limits/rollback.
+
 Owner explicitly requests next roadmap work and DEFERS phone acceptance to a later
 combined campaign. Do not block source progress waiting for phones or call deferred
 checks PASS. Source/synthetic Phase5 on separate feature/phase5-remote-access from

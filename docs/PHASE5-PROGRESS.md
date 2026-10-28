@@ -130,3 +130,24 @@ and maintenance5.2/5.3 remain NOT TESTED/NOT IMPLEMENTED. Next5.2 source adapter
 independent public-origin/connector/Access JWT-header trust, secure verified TLS to
 loopback origin, no public Node/admin ports. No live account/tunnel deployment is
 authorized by source work. Do not widen private profile or label VPN UNKNOWN as PASS.
+
+## Private software5.1 publication verified / next exact resume
+Source checkpoint `fa0ada971585ee5151fc7b48ceeef47d03bdef75` normal-pushed and local HEAD=FETCH_HEAD=advertised
+remote verified 2026-10-28T13:41:43.555080+00:00, clean tree. Original Phase4 remote still0877a15 unchanged;
+Core/Demo/Go/Android/candidates/APKs unchanged; only new asc/access modules added.
+All tested source hashes still match sanitized receipt,438work/index files audited
+with0untracked/secret findings. Following docs-only publication note changes no
+tested code or artifact. Separate named tests19+1+1+2PASS, no fresh full claim.
+
+Completed5.0/5.1a/5.1b.1/5.1b.2 within Linux synthetic scopes, source CLI ready for
+controlled development; no new packaged release. Read PHASE5-PRIVATE-ACCESS for
+init/info/serve/private CA/existing owner code/rollback. No additional local Core/
+Android/full rerun needed merely to repeat unchanged5.1 proof. NEXT5.2 source-only
+Cloudflare edge adapter: review explicit public origin versus loopback binding,
+connector TLS/public-CA trust, verified Access JWT/header identity, request/body/
+edge limits and existing owner session/CSRF preservation. Current private profile
+MUST NOT simply accept public/DNS origin or trusted forwarded headers. Real account/
+DNS/tunnel deployment not authorized/configured; never open Node/admin/SSH ports.
+Then5.3private operator maintenance,5.4fresh final applicable qualification. Physical
+phones/ARM64/LAN/Doze/OEM/power deferred to overall owner campaign, not PASS; no
+production/M51 access or Android voter/GC/failover/writableDR activation.
