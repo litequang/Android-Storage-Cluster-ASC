@@ -1,6 +1,6 @@
 # Phase5 acceptance — NOT ACCEPTED
 
-Latest5.3 owner-local maintenance source subset qualified:7fresh targeted tests
+Latest5.3b owner-local maintenance source subset qualified:8fresh targeted tests
 and6fresh upgrade/compatibility regressions PASS in Linux synthetic. Prior private/
 edge subsets remain scoped below. Fresh final5.4, live SSH/VPN/provider/public
 browser and physical/production gates remain outstanding.

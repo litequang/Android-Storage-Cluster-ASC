@@ -28,7 +28,7 @@ LATEST5.2c also qualified6PASS55.833s: edge browser/Core/recovery plus original
 private equivalents; product unchanged sincebf04868. Test-only connector front is
 LOOPBACK, not real Cloudflare/IdP/public DNS; reserved-public-host experiment failed
 ERR_TUNNEL_CONNECTION_FAILED, no proxy/CA change. Exact scope/receipts in current
-progress. LATEST5.3 source CLI qualified:LATEST5.3b8fresh maintenance PASS49.868s +6fresh
+progress. LATEST5.3b source CLI qualified:8fresh maintenance PASS49.868s +6fresh
 upgrade/fault/exact042->CURRENT source/NEW-state rollback PASS59.793s,14distinct
 final cases. Pre-lock marker/recovery/prefix validation prevents denied-path lock
 creation (prior extra-lock regression reproduced; all final cases PASS).

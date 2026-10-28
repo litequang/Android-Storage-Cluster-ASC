@@ -446,3 +446,31 @@ NEXT5.4 after this normal publication: freeze inputs; fresh applicable full Pyth
 under optional hash-locked env and explicit private Go SDK, Go tests/vet/module
 verify/applicable builds, integrated security/fault/package checks. Preserve old
 archives/APKs/signers/SDKs/identities and real-phone acceptance deferred by owner.
+
+## 5.3 final publication verified / next resume5.4
+Source checkpoint2521be8a6e2b6ce4f3caab39f21ec61471e82bab and final fix
+c5c1cb0526b1eb09f888dbd649b494d1ea6c3488 each normally pushed, fetched and
+HEAD=FETCH_HEAD=advertised feature remote verified, clean tree before next work.
+Final source tracked/index455files/0untracked/0secret findings. All exact final
+receipt source/test SHA256 verified unchanged. This publication only updates docs/
+receipt; no executable/artifact/test changes or extra qualification claimed.
+
+NEXT5.4 from fetched feature/phase5-remote-access latest HEAD, preserve dirty work:
+- Mandatory ordered docs, then PHASE5 PLAN/PROGRESS/ACCEPTANCE and access/maintenance
+  guides. No redo accepted feature implementation, whole branch merge or reset.
+- Freeze exact current source/test/package inputs and record hashes. Use existing
+  /workspace/asc-access-dev/edge-env/bin/python (optional dependencies hash locked)
+  and command-only ASC_GO=/workspace/asc-cloud/go1.27.3/go/bin/go; default go is NOT
+  the qualified SDK. No proxy/CA/HOME/global PATH changes needed.
+- Fresh applicable Python discovery including Phase5+legacy/fault/security gates,
+  Go tests/vet/module verification/applicable builds, deterministic source-package/
+  exact compatibility/secret audits. No old full392/Go/Android receipt relabelled
+  fresh. No required fault weakened/skipped to pass; preserve failures/blockers.
+- Current old APK/source archives are immutable and no new public release exists.
+  Unchanged Android artifact evidence is historical scoped proof only; no need to
+  start AVD/ADB merely for this local CLI. Original private signer/SDK/Node data
+  preserved, no Termux migration/adoption or phone operation authorized.
+- Real Cloudflare/public-host browser/SSH/VPN/provider, ARM64/phones/physical LAN/
+  independent domains/OEM/Doze/power/production remain NOT TESTED or deferred by
+  owner. Software final qualification cannot mark those PASS. WritableDR and
+  Android voter/GC/failover remain locked; full Phase5 NOT ACCEPTED.
