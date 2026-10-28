@@ -24,7 +24,7 @@ class AccessPolicyTests(unittest.TestCase):
         for origin in ('http://127.0.0.1:8445','https://0.0.0.0:8445','https://8.8.8.8:8445',
                        'https://169.254.1.2:8445','https://100.128.0.1:8445','https://example.com:8445',
                        'https://[::]:8445','https://127.0.0.1:443','https://127.0.0.1:8445/',
-                       'https://user:secret@127.0.0.1:8445','https://127.0.0.1:8445?x=1'):
+                       'https://u:p@127.0.0.1:8445','https://127.0.0.1:8445?x=1'):
             with self.subTest(origin=origin),self.assertRaises(ValueError):private_origin(origin)
 
     def test_no_implicit_mode_upgrade_or_config_secret_fields(self):

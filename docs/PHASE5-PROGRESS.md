@@ -19,3 +19,12 @@ against existing Dashboard with actual two-node file bytes; keep original owner
 session/CSRF and explicit backend-mode/pin checks. 5.2 Cloudflare and5.3 private
 maintenance not yet implemented. See PHASE5-PLAN. No real VPN configured in Cloud;
 network membership/remote reachability and phones remain NOT TESTED/UNKNOWN.
+
+5.0 audit correction: initial scanner flagged ONLY the explicit dummy userinfo URL
+in test_access_policy (no real credential). The shell command chain continued to
+commit/pushd56e84b despite the audit exit; this was a publishing workflow error.
+Changed that fixture to shorter clearly synthetic u:p, preserving the same actual
+userinfo refusal test, then reran all8 tests and full work/index secret scan. No
+real secret/key was exposed; no scanner/test assertion relaxed. Subsequent publish
+commands use set-e so audit failure stops commit/push. Verify this correction on
+GitHub before starting5.1.
