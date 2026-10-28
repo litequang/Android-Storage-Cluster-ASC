@@ -1,0 +1,88 @@
+{
+  "state": "PASS_API35_TRANSPORT_ONLY",
+  "scope": "Task-owned AOSP35x86_64 emulator/TCG, prior cold sandbox retained; NOT Native Node/phone acceptance",
+  "official_image": {
+    "package": "system-images;android-35;default;x86_64",
+    "revision": [
+      "2"
+    ],
+    "url": [
+      "x86_64-35_r02.zip"
+    ],
+    "size": [
+      "782404023"
+    ],
+    "checksum": [
+      "2d857d170c0d1b827149565da34b3383e5306f7f"
+    ],
+    "metadata_sha256": "7b119fdc282a65432aab52e8bbc64546f7fb6ec74e79e235633c60d06564b111"
+  },
+  "boot": {
+    "state": "BOOT_AND_PACKAGE_MANAGER_READY",
+    "scope": "Same prior task-owned cold API35 AVD, no wipe/root/restore/proxy/CA or app operation",
+    "seconds": 138.886,
+    "owner_verified": true
+  },
+  "transport": {
+    "state": "PASS",
+    "api": 35,
+    "abi": "x86_64",
+    "uid_preserved": true,
+    "previous_version": 5,
+    "new_version": 5,
+    "existing_state_hashes_equal": true,
+    "existing_identity_records": 0,
+    "scope": "Same prior cold35 task-owned userdata; normal install-r, no uninstall/clear/force-downgrade/identity reset",
+    "apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "seconds": 225.075,
+    "completed_tests": 5,
+    "original_main_state_hashes_unchanged": true
+  },
+  "junit_seconds": 210.286,
+  "apk_signature_check": [
+    {
+      "path": "android-artifacts/asc-native-node-0.4.0-internal-debug.apk",
+      "sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+      "signer": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+      "bytes": 39000362
+    },
+    {
+      "path": "android-artifacts/asc-native-node-0.4.1-internal-debug.apk",
+      "sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+      "signer": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+      "bytes": 39000831
+    },
+    {
+      "path": "android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+      "sha256": "b5375f59236263b66b5d8e9fc9125dedc2da879287fd4e6d88a9b54965597be7",
+      "signer": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+      "bytes": 973436
+    }
+  ],
+  "offline_preservation": {
+    "files": 7,
+    "verified_hashes": true,
+    "restore_or_wipe": false,
+    "raw": "private /workspace/work/phase4-api35-resume/offline-preservation.json"
+  },
+  "host": {
+    "kvm": false,
+    "guest_memory_mib": 2048,
+    "guest_cores": 1,
+    "competing_core_tests_or_emulators": false
+  },
+  "preliminary_harness_failure": {
+    "state": "FAILED_BEFORE_JUNIT",
+    "reason": "Private script expected dumpsys userId field; API35 returns appId. Main install4->5 succeeded, harness then stopped; not test PASS",
+    "correction": "Use existing standard cmd package list packages -U for actual UID and strict fixed-file hash probe quoting/exit checks",
+    "first4_to5_scope": "Package Manager appId continuity only; main identity not present, NOT retained Node upgrade proof"
+  },
+  "main_identity_scope": "Corrected5->5 normal update preserved UID;0main identity records. TLS tests create disposable namespaces, not an enrolled Main Node or retained4->5 data proof.",
+  "unchanged_source": "No product/app/archive/signer changes; original full392 still applies to its exact source; direct snapshot tests2 separately passed",
+  "next": "Publish scoped transport receipt, then actual Native Catalog fresh-context/real bytes E2E if main identity still NOT_PROVISIONED; no reset if partial state exists",
+  "limits": [
+    "No physical/ARM64/LAN/OEM/Doze/PWA Android qualification",
+    "No Android Raft/GC/failover/writable DR",
+    "Original coldAPK4 failures kept; root cause not proven, no speculative app/system fix"
+  ]
+}

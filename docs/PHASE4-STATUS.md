@@ -47,3 +47,10 @@ qualification/phase4-direct043-upgrade.json. Product/old314inputs unchanged,
 full392 retained and new2tests separately targeted, not fresh full394. Any older
 NOT TESTED direct043 wording above is superseded only for these exact archives.
 APK direct upgrade/Android API35/physical-device scope remains separate.
+
+
+API35 supplement: same cold sandbox boot/PM READY and exact APK5 transport5PASS
+210.286s, no wipe/restore/root/source change. Node E2E still pending;0main identity
+records so no retained4->5 proof. See PHASE4-API35-QUALIFICATION and transport5
+receipt; previous API35 NOT TESTED wording is superseded only for this transport
+scope. Physical/ARM64/Doze/OEM/PWA and full Phase4 acceptance unchanged.

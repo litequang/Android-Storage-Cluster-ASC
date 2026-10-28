@@ -845,3 +845,9 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
   test or product source; both old/new043 bridge APIs must still work.
 - qualification/phase4-direct043-upgrade.json records2additional Linux synthetic
   tests, not a replacement/full394 claim; current source full392 remains frozen.
+
+
+### API35 supplemental runtime evidence
+- docs/PHASE4-API35-QUALIFICATION.md / qualification/phase4-api35-transport5.json:
+  fresh ownership, offline preservation, boot and actual APK5 JSSE5test scope;
+  Node/identity/process lifecycle acceptance remains separate. No new runtime.

@@ -14,6 +14,16 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-28
+LATEST API35: original cold sandbox boot+PM now READY138.886s; exact APK5 transport
+5PASS0skip210.286s, same signer/UID, main identity0records. Read qualification/
+phase4-api35-transport5.json +PHASE4-API35-QUALIFICATION and latest PROGRESS. NOT
+Node E2E/retained4->5/phone proof. Old coldAPK4 failures kept. No source/APK changes,
+full392 retained; only one task-owned35TCG guest currently RUNNING, private owner
+/workspace/work/phase4-api35-resume/emulator-owner.json. Reverify fresh process
+identity BEFORE ADB or signal; no old PIDs. Offline7image backup preserved. Next
+native Catalog E2E on this same cold sandbox IF main identity remains unprovisioned;
+never wipe/re-init partial identity. Direct043 source2tests already pushed3abba07.
+
 LATEST ADDITION: exact published e69/native-node and c831/PWA043 ->b423/core-decode
 source upgrade +NEW-state code rollback now2PASS0skip51.823s (TLS/bytes/pending/
 identities/bridge/CA/volume/no auto approvals). Product/artifacts and all314frozen

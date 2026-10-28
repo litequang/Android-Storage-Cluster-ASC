@@ -2126,3 +2126,31 @@ exact named043archives, not arbitrary043 builds or architecture/state migration.
 Direct APK4->5 and API35 cold/runtime gates remain next independent scope. Docs
 now permit exact e69/c831->b423 code upgrade and new-state rollback; normal feature
 commit/push/verify precedes Android investigation.
+
+
+### API35 boot and final5 transport PASS — Node E2E still pending
+
+Direct-upgrade checkpoint3abba078faed6fe9968670f9243f7d7c1d02af2d normal-pushed/
+fetched/remote matched. Original source/archives/signing unchanged. Rechecked
+Google official image35r2/latest and emulator37.2.12; no KVM. Original cold35
+userdata preserved offline7files/hash-equal, never restored/wiped/copied into Node.
+Started ONLY this owned old cold AVD2048MiB/1vCPU, no other guest/Core workload.
+Fresh process UID/exe/start/AVD/datadir/port verified before private ADB5038.
+Boot+PM two consecutive real probes READY138.886s, no root/proxy/CA/SELinux change.
+
+Initial private install script expected dumpsys userId, actual35appId; normal
+APK4->5 install succeeded then harness stopped before JUnit. That attempt is NOT
+PASS or retained-Node upgrade evidence. Corrected to standard cmd package list
+packages -U and strictly quoted/exit-checked fixed hash probes. Original main
+identity0records, so5->5 same-signer UID continuity is not Node/Keystore retained
+upgrade proof. All old data backed offline; no uninstall/clear/reset or new signer.
+
+EXACT published APK5/aec65c2c +testAPK b5375f59 (same original bba77b68 signer):
+actual NativeListenerRestart2 +NativeSocket3,5PASS0skip210.286s (host225.075s).
+Actual TCP/rebind/cross-owner refusal/binarySHA/pin/idle+WRITE deadlines. Fresh
+private namespaces only, main identity still absent; this is TRANSPORT, NOT a
+joined Native Node. Receipt phase4-api35-transport5.json and guide PHASE4-API35-
+QUALIFICATION.md. Original APK4 cold failures kept, no asserted root cause or
+speculative app fix. Full software392 unchanged/reused; not another full count.
+Next exact existing Catalog/Node workflow, with data/identity resume if interrupted.
+Physical phones/ARM64/LAN/domains/Doze/OEM/PWA and writerDR remain unqualified.
