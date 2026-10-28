@@ -729,3 +729,8 @@ outcome/PREPARED cannot become success; retry needs matching COMPLETED journal
 and actual backup/release. No old-DB restore, runtime auto-start, voter/GC/failover
 or recovery writer. Future private SSH must retain normal host-key/auth/ACL checks;
 no live SSH/VPN configured/tested and no public management exposed here.
+
+5.3b refuses unmarked/recovery roots and unbound prefixes BEFORE coordination file
+creation, then rechecks under existing locks. A denied operator path must not gain
+a lifecycle marker. Actual synthetic filesystem regression reproduces prior write
+and proves refusal leaves inventories/bytes unchanged; no storage/authority bypass.

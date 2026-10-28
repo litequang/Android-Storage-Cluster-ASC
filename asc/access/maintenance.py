@@ -50,6 +50,9 @@ def validate(plan,confirmation=None):
 @contextmanager
 def locked(root,prefix):
     platform_guard();root=private_path(root);prefix=private_path(prefix,code_prefix=True)
+    # Reject unmarked/recovery roots and unrelated prefixes BEFORE opening any
+    # coordination file. Repeat binding/startup checks under locks below.
+    inspect_state(root);upgrade.binding(prefix,root)
     with upgrade.stopped(root),private_lock(prefix,'install'):
         upgrade.startup_check(prefix,root)
         yield root,prefix

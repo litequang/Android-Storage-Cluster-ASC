@@ -139,3 +139,7 @@ recovery, giữ identity và file sau NEW-state code rollback. Các test upgrade
 Chưa nghiệm thu remote SSH/VPN, Termux runtime, cập nhật APK qua CLI, nhiều host
 thật, power loss, OEM/Doze hoặc production. Không mở khóa GC/Raft/failover/writable
 disaster recovery. Kết quả/commit chính xác nằm trong PHASE5-PROGRESS/ACCEPTANCE.
+
+Pre-lock guard đã bổ sung ở5.3b: từ chối thư mục chưa đăng ký, recovery marker và
+prefix chưa gắn state trước khi tạo file lock; sau đó vẫn kiểm tra lại dưới locks.
+Bằng chứng cuối:8maintenance +6upgrade/tương thích PASS trong Linux synthetic.

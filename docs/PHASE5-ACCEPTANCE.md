@@ -89,3 +89,9 @@ NOT ACCEPTED pending5.4fresh gates and external/physical scope; see owner guide.
 5.3 final clean regression command (corrected selector)6PASS0skip/fail59.551s.
 Together with7targeted PASS39.055s this supersedes the initial selector-error run
 for final qualification;13distinct cases, no double counting. No full-suite claim.
+
+5.3b final-current-source:8maintenance PASS49.868s +6original upgrade/fault/exact
+current-source compatibility PASS59.793s,0skip/fail. Reproduced prior extra lock on
+unmarked state1FAIL4.892s and fixed pre-lock marker/binding validation; synthetic
+unmarked/recovery-marker/unbound paths remain untouched.14distinct final cases,
+not cumulative with earlier passes. Full5.4/real connectivity/phone gates pending.

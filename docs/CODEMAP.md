@@ -957,3 +957,7 @@ exact fresh/upgrade paths now observed; API35/physical limits retained.7SDK imag
 - tests/test_access_maintenance.py: installed two-node TLS upgrade/NEW-state code
   rollback, identity/bytes, local lost-ACK retry, final CAS, interruption/recovery,
   protected/unknown/Core/recovery refusals. PHASE5-MAINTENANCE owner guide.
+
+5.3b maintenance.locked prechecks marker/recovery/prefix binding BEFORE creating
+coordination files; repeats fresh guards under original locks. New filesystem
+regression asserts unmarked/recovery-marker/unbound directories stay untouched.

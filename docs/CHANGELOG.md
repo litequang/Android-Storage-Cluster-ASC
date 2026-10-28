@@ -794,3 +794,9 @@ backup under original locks; old defaults/formats unchanged. Proven local ACK
 retry, interruption recovery, actual new writes +code-only rollback and identity/
 bytes qualified in Linux synthetic. No SSH/tunnel/device deployment, new release,
 Android/Core maintenance or automatic updater. PHASE5-MAINTENANCE guide.
+
+### Phase5.3b refusal before coordination writes
+Fix new maintenance preflight opening lifecycle lock before rejecting unmarked
+state. Validate marker/recovery/prefix binding first and repeat checks under locks.
+Actual refusal regression reproduced prior extra lock; final8maintenance +6upgrade/
+compatibility PASS. No identity/data overwrite, schema/runtime/remote service change.

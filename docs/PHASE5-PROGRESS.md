@@ -415,3 +415,34 @@ selector-error/individual reruns remain historical, not extra passes. Exact sour
 test hashes match receipt, no executable changes after successful qualification.
 Only docs/reporting updates follow. Source/target archives used by tests remain
 private synthetic fixtures; no newly published release or Android upgrade claim.
+
+## 5.3b pre-lock refusal fix / final exact-source qualification
+5.3 source2521be8a6e2b6ce4f3caab39f21ec61471e82bab normally pushed/fetched;
+HEAD/FETCH_HEAD/advertised feature remote matched and tree was clean BEFORE this
+follow-up. Final review found original stopped() opens a coordination file before
+checking marker/binding. New owner CLI could therefore refuse an unmarked state
+but leave demo-operation.lock. No identity/data overwrite or writer was created.
+
+Fresh actual filesystem regression reproduced failure on unmarked private fixture:
+1FAIL4.892s, extra demo-operation.lock. Fixed maintenance.locked() to inspect state/
+recovery and existing prefix binding BEFORE any coordination open, then retain all
+fresh checks under original locks. No old guard removed or fallback added.
+Test also asserts isolated recovery-marker directory and unbound private prefix
+stay byte/file-inventory unchanged. Recovery case is a marker-only refusal fixture,
+not a new live-DR qualification. Every directory/sentinel is synthetic/task-owned.
+
+Fresh final tests.test_access_maintenance8PASS0skip/fail49.868s. Fresh final five
+original upgrade/fault cases +CurrentSourceUpgradeTests6PASS0skip/fail59.793s,
+phase5-maintenance-prelock-{final,regression}.log.14distinct scoped cases, superseding
+prior7+6 as final current-source proof; no counts added for repetitions. Exact
+published0.4.2 ->CURRENT package, original bytes/pending/identity/bridge/new-state
+rollback assertions preserved. asc/demo/upgrade.py unchanged since2521be8, no
+Engine/Node/Go/Android/DB/journal/schema/source archive/APK change from this fix.
+
+Update qualification/phase5-maintenance.json with final hashes/results. Stop/plan/
+apply/retry/rollback guide is PHASE5-MAINTENANCE. Full Phase5 remains NOT ACCEPTED;
+no remote SSH/VPN/provider/device proof and no fresh full regression claimed.
+NEXT5.4 after this normal publication: freeze inputs; fresh applicable full Python
+under optional hash-locked env and explicit private Go SDK, Go tests/vet/module
+verify/applicable builds, integrated security/fault/package checks. Preserve old
+archives/APKs/signers/SDKs/identities and real-phone acceptance deferred by owner.
