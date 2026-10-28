@@ -1,0 +1,98 @@
+{
+  "state": "BLOCKED_API35_COLD_NODE_E2E",
+  "date_utc": "2026-10-28",
+  "qualified_baseline": "8ffd5ef531d6846c608a963b624cee46e57a36bd",
+  "branch": "feature/phase4-2-android-native",
+  "scope": "Same task-owned cold AOSP35/default/x86_64 sandbox; no phone/production/Termux action; docs-only handoff, not a completed Node checkpoint",
+  "apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+  "public_signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "prior_actual_pass": {
+    "API35_transport_tests": 5,
+    "junit_seconds": 210.286,
+    "receipt": "qualification/phase4-api35-transport5.json",
+    "scope": "Transport only on exact same APK; separate run before SDK network-fixture restart"
+  },
+  "preserved_sdk_restart": {
+    "emulator": "37.2.12",
+    "api": 35,
+    "abi": "x86_64",
+    "kvm": false,
+    "requested_cores": 1,
+    "requested_memory_mib": 2048,
+    "same_userdata": true,
+    "offline_files_hash_verified": 7,
+    "restored_or_wiped": false,
+    "documented_fixture_flag": "-feature -WiFiPacketStream",
+    "official_reference": "https://developer.android.com/studio/run/emulator-networking-interconnect",
+    "boot_package_manager_ready_seconds": 267.105,
+    "not_application_fix": true
+  },
+  "network_preflight": {
+    "state": "NOT_READY_NO_NODE_ENROLLMENT_ATTEMPT",
+    "wifi_initial": "enabled, not connected",
+    "initial_alternate_radio_route": "unavailable; original WiFi enabled setting restored",
+    "observed_dhcp": "10.0.2.16/24, gateway10.0.2.2",
+    "observed_local_disconnect_reason": 3,
+    "android_selection_reason": "NETWORK_SELECTION_DISABLED_NO_INTERNET_PERMANENT",
+    "usable_host_guest_TCP_proved": false,
+    "tls_lan_or_node_pass_claimed": false,
+    "system_ui": "ANR observed; normal Wait selected, subsequent XML unavailable",
+    "bluetooth_crash": "SIGABRT observed in private guest crash logs; not an ASC fault result",
+    "network_validation_disabled": false,
+    "proxy_ca_policy_route_overrides": false,
+    "adb_data_forwarding_used": false,
+    "limits": "Initial private route preflight stopped before transition completed; later shell-route and nonce attempts do not prove an ASC TLS defect or an application-level route. No COMPLETE E2E test started."
+  },
+  "additional_instrumentation": {
+    "state": "UNKNOWN_NOT_QUALIFIED_TIMEOUT",
+    "requested_classes": [
+      "NativeTLSTest",
+      "NativeContextTest",
+      "VaultStorageTest",
+      "EmbeddedEngineTest"
+    ],
+    "requested_tests": 15,
+    "host_seconds": 600.104,
+    "host_budget_seconds": 600,
+    "completed_junit_suite": false,
+    "additional_pass_count": 0,
+    "skip_count": null,
+    "assertion_failure_count": null,
+    "observed_first_method_finished_in_log": "platformDefaultTrustRejectsUntrustedSelfSignedPeer,290.455s between start and finish",
+    "observed_next_started": "missingTlsCredentialOrWrappingKeyNeverRegeneratesIdentity",
+    "note": "A TestRunner finished event alone is not an aggregate JUnit PASS. No final JUnit receipt; do not count the requested15 as pass, fail or skip. No retry, test weakening or root escalation."
+  },
+  "preservation": {
+    "emulator_state": "STOPPED",
+    "own_instrumentation_app_stopped_only": true,
+    "main_identity_context_catalog_proof_absent_after_attempt": true,
+    "original_wifi_enabled_no_saved_networks_restored": true,
+    "private_final_offline_files_hash_verified": 7,
+    "backup_restore": false,
+    "sdk_shutdown_requested": true,
+    "observed_linux_wait_status": 11,
+    "observed_signal": "SIGSEGV",
+    "clean_shutdown_powerloss_qualified": false,
+    "original_private_signer_preserved": true,
+    "private_evidence_root": "/workspace/work/phase4-api35-resume"
+  },
+  "unchanged_product": {
+    "product_app_dependencies_archive_bytes_changed": false,
+    "old_frozen_inputs_match": 314,
+    "full_python": "Prior392PASS0skip/full64fault markers retained for identical source, NOT a new full run",
+    "additional_exact043_upgrades": "2PASS51.823s, separate qualification/phase4-direct043-upgrade.json",
+    "go": "Prior fresh11top-level/12nested +vet/modules/builds retained for unchanged source"
+  },
+  "next": [
+    "Use a responsive task-owned API35 emulator with an actual default network and confirmed pinned Controller path; no proxy/CA/validation/root bypass",
+    "Rerun only unfinished additional Android suite; no previous incomplete result becomes PASS",
+    "Run existing NetworkReadinessTest and require actual OK (1 test) before any fresh Catalog initialization",
+    "Run existing qualify_native_catalog.py with original retained state; Main unprovisioned at closure, never reset a later partial enrollment",
+    "Exact published4->final5 retained Node/state direct update remains NOT TESTED",
+    "Owner-only ARM64/physical LAN/two hardware domains/Doze/OEM/ChromeAndroid/phone upgrade acceptance remains required"
+  ],
+  "phase4_accepted": false,
+  "writable_DR": "BLOCKED",
+  "android_raft_gc_failover": "LOCKED",
+  "phase5": "NOT STARTED"
+}

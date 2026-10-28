@@ -545,3 +545,33 @@ qualification/phase4-direct043-upgrade.json. Product/old314inputs unchanged,
 full392 retained and new2tests separately targeted, not fresh full394. Any older
 NOT TESTED direct043 wording above is superseded only for these exact archives.
 APK direct upgrade/Android API35/physical-device scope remains separate.
+
+
+## API35 continuation on final APK5 — incomplete (2026-10-28)
+
+Prior transport5PASS210.286s is retained, not replaced by a new full Android run.
+Same AVD/data booted267.105s after preserved-data SDK legacy-network fixture
+restart. Native Catalog E2E NOT STARTED: network preflight failed (AP DHCP then
+Android no-Internet permanent rejection/local disconnect, System UI ANR). No Main
+identity/context/enrollment/Node volume was created. No proxy/CA/validation/root/
+SELinux bypass or application repair claimed.
+
+Additional15 requested isolated Android tests timed out at600.104s without final
+JUnit: **UNKNOWN/NOT QUALIFIED**, no additional passing/failed/skipped total.
+Private TestRunner log has first method finished290.455s then next started; this
+alone does not certify an aggregate suite or establish a TLS deadlock/root cause.
+No timeout/assertion changes or repeat attempt. Actual receipt:
+qualification/phase4-api35-cold-node-blocker.json.
+
+Own instrumentation app stopped only after watchdog; Main absence echo-verified,
+original WiFi enabled/no saved networks restored. SDK shutdown requested but actual
+waitstatus11/SIGSEGV, NOT clean-powerloss acceptance. Guest STOPPED; final7image
+PRIVATE offline backup hash-verified/no restore, old signer/other AVDs/source/
+archive/APK5 preserved. All314 frozen inputs unchanged: reuse full392/Go/old faults
+only for exact code; direct source043upgrade2 separately PASS, not a fresh full394.
+
+Full Phase4/4.2 remains NOT ACCEPTED; next responsive ownedAPI35/default network/
+pinned Controller readiness then unfinished suite/Native Catalog E2E. Old retained
+API30/oldAPI35/APK upgrade scopes remain distinct. Physical phone/ARM64/LAN/two
+hardware domains/OEM/Doze/ChromeAndroid and exact direct published4->final5 retained
+Node/data upgrade NOT QUALIFIED. No new release or writerDR/Android Raft/GC/failover.

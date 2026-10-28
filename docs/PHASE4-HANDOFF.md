@@ -13,6 +13,14 @@ Gói mới đã push và tải lại từ GitHub, checksum xác minh PASS; xem m
 Các archive/APK cũ giữ nguyên. Không dùng software PASS để bật Android GC/Raft/
 failover/writerDR hoặc tuyên bố phone/LAN/ARM64/Doze đã nghiệm thu.
 
+API35 update: exact APK5 transport5PASS210.286s; boot/PM READY138.886s, then
+267.105s after a preserved-data SDK network-fixture restart. Integrated cold Node
+E2E has NOT started: no usable network/default route, Android rejected the SDK AP
+without Internet, System UI ANR. Main identity/context/Catalog proof remain absent
+at preflight. Read [API35 qualification](PHASE4-API35-QUALIFICATION.md) before any
+new ADB action. Never wipe/re-init a partially initialized Node, use ADB data
+forwarding as LAN proof, disable validation or change proxy/CA to bypass this.
+
 ## Gói đúng vai trò
 
 - [Node APK5 internal](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk)
@@ -128,7 +136,7 @@ versionCode hợp lệ; không uninstall/clear/-d/copy Keystore để chữa l�
 Không đăng token/code/key/private DB/full logcat/browser profile/HAR. Chỉ thu version,
 model/SDK, public fingerprint, mã lỗi đã làm sạch, kết quả SHA và bước tái hiện.
 Owner điền gate phone/ARM64/LAN/ChromeAndroid/Doze/OEM theo PHASE4-STATUS. API35 cold
-vẫn BLOCKED, transport final5 trên35 chưa thử; không miễn gate hoặc cấp writerDR/
+integrated Node vẫn BLOCKED; transport final5 trên35 đã PASS5, không miễn gate hoặc cấp writerDR/
 Android Raft/GC/failover để gọi Phase4 hoàn tất.
 
 

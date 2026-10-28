@@ -1,5 +1,17 @@
 # ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
+## Current API35 qualification handoff (2026-10-28)
+
+- `qualification/phase4-api35-cold-node-blocker.json` and
+  `docs/PHASE4-API35-QUALIFICATION.md`: exact APK5 transport5PASS retained;
+  extra15 requested tests timed out without final JUnit, NOT PASS. Cold Node E2E
+  blocked BEFORE enrollment by SDK default-network/System UI conditions. Includes
+  preservation/STOPPED guest, SDK exit SIGSEGV and original private signer scope.
+- Existing `NativeCatalogTest`, `NetworkReadinessTest` and
+  `tools/qualify_native_catalog.py` remain unchanged; do not create another Engine
+  or reset a partial enrollment. Establish actual network/TLS readiness first.
+  Product/archives/APK/all314 frozen inputs unchanged; no new full-run claim.
+
 ## Phase 2B — Windows development qualified
 
 - `asc/failover/state.py`: runtime schema-2 envelope, authority-table allowlist,

@@ -2154,3 +2154,65 @@ QUALIFICATION.md. Original APK4 cold failures kept, no asserted root cause or
 speculative app fix. Full software392 unchanged/reused; not another full count.
 Next exact existing Catalog/Node workflow, with data/identity resume if interrupted.
 Physical phones/ARM64/LAN/domains/Doze/OEM/PWA and writerDR remain unqualified.
+
+
+### API35 cold Node continuation — BLOCKED; safe offline handoff (2026-10-28)
+
+Fetch/HEAD/advertised feature branch8ffd5ef matched, clean working tree; no reset/
+merge/force or original branch action. Scoped positive proof remains exact APK5
+transport5PASS210.286s and prior full392/314inputs unchanged. Exact source043
+snapshot upgrades2PASS are a separate earlier checkpoint3abba07. No new app,
+Engine, dependency, source archive, APK, signer or test assertion changes here.
+
+Investigated actual preflight BEFORE running NativeCatalogTest: old cold AVD Wi-Fi
+was enabled/unconnected; private script expected alternate radio0/.15, disabled
+Wi-Fi then stopped on unavailable route before its transition loop completed.
+Restored original enabled setting, requested normal SDK shutdown, preserved seven
+post-transport image/config files offline/hash-equal. Restarted SAME userdata with
+Google-documented per-emulator legacy network fixture -feature -WiFiPacketStream;
+boot/PM responded twice267.105s. No proxy/CA/policy/route override, root/SELinux,
+restore/wipe or identity recreation. This is not a proven application repair.
+
+Actual SDK AP scan/ordinary connect obtained10.0.2.16 DHCP/gateway10.0.2.2, then
+Android locally disconnected reason3, NETWORK_SELECTION_DISABLED_NO_INTERNET_PERMANENT.
+Final actual IPv4/default-network not usable; public-nonce TCP probes did not
+establish app/host transport. No successful pinned handshake/enrollment claimed.
+Opened ordinary Wi-Fi Settings to inspect use-without-Internet user choice, saw
+System UI ANR, selected ONLY Wait; next XML unavailable. Bluetooth SIGABRT also
+observed in guest boot logs. KVM absent; root cause of all slowdown not established.
+Read-only own-app stack request denied root-required; no privilege escalation.
+
+Independent requested Android instrumentation: NativeTLS5 +Context3 +VaultStorage6
++EmbeddedEngine1, original budgets/assertions. Host600s watchdog expired600.104s;
+no final JUnit receipt. TestRunner first method finished290.455s, next began.
+Requested15 are UNKNOWN/NOT QUALIFIED, no added PASS/FAIL/SKIP totals. Do not infer
+15 test failures, a TLS deadlock or a safe app fix from incomplete output. Existing
+API30/Foundation proofs remain their exact previous scopes. No blind retry/full.
+
+After timeout freshly verified current QEMU UID/exe/start/AVD/datadir/port, exact
+package UID10148, then force-stopped ONLY owned instrumentation app. Echo-checked
+Main identity/native context/Catalog proof ABSENT after attempt; no Controller
+fixture/enrollment/Node volume initialized, no pending Main identity discarded.
+Forgot only newly added SDK AP0; original WiFi enabled/No networks restored. Normal
+SDK shutdown requested, observed waitstatus11/SIGSEGV; NOT clean-powerloss proof.
+All7 final image/config files hash-verified into PRIVATE offline backup, no restore.
+Other AVDs/original private signer2618bytes0600 unchanged. Guest now STOPPED; all
+historical PIDs invalid for future action. Backup/raw logs /workspace/work/
+phase4-api35-resume (closing-preservation.json +offline-after-blocked-qualification).
+Do not commit raw disks, keystore, credentials, full logcat or private fixtures.
+
+Sanitized receipt qualification/phase4-api35-cold-node-blocker.json; guide
+PHASE4-API35-QUALIFICATION. STATUS/HANDOFF/PILOT/OPERATIONS and CODEMAP updated.
+All314 frozen inputs still equal full392; Go/old faults/archives/APK byte proofs
+reused only for unchanged code, not another fresh full. This is docs-only BLOCKER
+handoff, NOT completed Node checkpoint/Phase4 acceptance. No new APK release.
+Security/index checks and normal feature push/remote verification follow.
+
+Next: responsive ownedAPI35 environment (KVM if available elsewhere), ordinary
+approved default network, actual NetworkReadinessTest OK(1), pinned Controller
+access, unfinished Android suite and existing Native Catalog E2E. Main remains
+unprovisioned at closure; recheck before fresh init and preserve/resume ANY later
+partial enrollment. Exact published4->FINAL5 retained Node/state direct update,
+ARM64/physical LAN/two phone domains/ChromeAndroid/OEM/Doze/owner upgrade remain
+unqualified. No phone/M51/Termux/production access, Phase5, Android voter/GC/
+failover, recovery writer or untested state migration to bypass these gates.

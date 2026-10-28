@@ -12,8 +12,10 @@ automatic hotspot/Wi-Fi Direct and Cloudflare remain unimplemented.
 
 Shared network-only Dashboard PWA/install guidance: PHASE4-WEB-APP. Final5 has
 actual API30 transport/restart/nonreading-peer/retained catalog qualification;
-historical API35 APK4 proof does not qualify final5 on35. New artifact publication
-awaits final full gate: PHASE4-STATUS/HANDOFF own the current download/result.
+historical API35 APK4 proof does not qualify final5 on35. Final5 now has API35
+transport5PASS and boot/PM READY, but integrated cold35Node is BLOCKED at network
+preflight/System UI ANR. PHASE4-API35-QUALIFICATION owns the exact scope. Published
+artifacts/full software results: PHASE4-STATUS/HANDOFF, not the historical text below.
 
 The original foundation artifact/version and unsupported-operation text below
 is HISTORICAL, not the current Node capability. Do not replace Termux state or

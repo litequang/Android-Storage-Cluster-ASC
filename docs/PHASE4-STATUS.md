@@ -8,7 +8,7 @@
 |Fresh full Python|**392PASS /0SKIP /0FAIL**,1484.150s;64fault markers,314inputs không đổi|
 |Fresh Go|11top-level/12nested PASS; vet/module verification và builds PASS; Windows/Android chỉ cross-build|
 |Controller source mới|0.4.3-dev core-decode:139files, exact source/deterministic/secret audit PASS|
-|Đúng archive upgrade|Exact0.4.2->new source +pending/IDs/bytes/NEW-state rollback:1PASS21.649s; direct old0.4.3->new chưa thử|
+|Đúng archive upgrade|Exact0.4.2->new source:1PASS21.649s; exact e69/native-node và c831/PWA043 ->b423:2PASS51.823s, gồm pending/IDs/bytes/NEW-state code rollback|
 |APK5|Giữ nguyên bản source3914/signer cũ, không rebuild vì Core Controller-only delta; Native Node không instantiate quorum Runtime|
 |Android proof giữ lại|API30x86_64:28selected+foreign1/JVM17/network2/downgrade readback1 PASS trước đó; không chạy lại Android trong checkpoint này|
 |Web/PWA|Dashboard login/File Manager/node/volume/replicas/upload/download/SHA/fallback; fresh full có browser/API integration PASS|
@@ -28,8 +28,11 @@ user-password/multiuser sharing. LAN cần đường IP nội bộ; không tự 
 Wi-Fi Direct, PWA không offline-write/cache API/file hay điều khiển Termux.
 Cloudflare/SSH/VPN/remote maintenance thuộc Phase5, chưa triển khai.
 
-Final APK5/API35 chưa thử (cold35 BLOCKED); API30 proof là x86_64 SDK NAT, không
-phải ARM64/phone LAN/hai miền lỗi vật lý. API26–29 NativeTLS NOT QUALIFIED dù
+Final APK5/API35 đã PASS5transport; cold boot/Package Manager đã sẵn sàng.
+Cold integrated Node E2E trên35 vẫn BLOCKED ở network preflight: AP thử nghiệm
+không có Internet bị Android ngắt, System UI ANR; chưa tạo Main Node identity.
+Không suy ra enrollment/replica/process-death PASS từ transport. API30 proof là
+x86_64 SDK NAT, không phải ARM64/phone LAN/hai miền lỗi vật lý. API26–29 NativeTLS NOT QUALIFIED dù
 minSDK26. Exact direct published4->final5 chưa thử; chỉ4->interim5->final5 đã giữ
 state. Không Termux→APK migration, Android voters/GC/failover hoặc writableDR.
 
@@ -46,7 +49,7 @@ archives ->b423/core-decode upgrade +NEW-state code rollback2PASS0skip51.823s;
 qualification/phase4-direct043-upgrade.json. Product/old314inputs unchanged,
 full392 retained and new2tests separately targeted, not fresh full394. Any older
 NOT TESTED direct043 wording above is superseded only for these exact archives.
-APK direct upgrade/Android API35/physical-device scope remains separate.
+APK direct upgrade/Android API35 Node E2E/physical-device scope remains separate.
 
 
 API35 supplement: same cold sandbox boot/PM READY and exact APK5 transport5PASS
@@ -54,3 +57,11 @@ API35 supplement: same cold sandbox boot/PM READY and exact APK5 transport5PASS
 records so no retained4->5 proof. See PHASE4-API35-QUALIFICATION and transport5
 receipt; previous API35 NOT TESTED wording is superseded only for this transport
 scope. Physical/ARM64/Doze/OEM/PWA and full Phase4 acceptance unchanged.
+
+Latest continuation: thêm15bài Android được yêu cầu nhưng timeout600.104s, không
+có JUnit hoàn tất; **UNKNOWN/BLOCKED, không cộng PASS/FAIL/SKIP**. Chưa chạy cold
+Node E2E vì network preflight chưa đạt. Emulator đã dừng, Main identity/context
+vẫn chưa tạo, Wi-Fi thử nghiệm khôi phục và7image backup riêng đã xác minh hash.
+SDK shutdown SIGSEGV nên chưa có clean-powerloss proof. Xem
+[receipt](../qualification/phase4-api35-cold-node-blocker.json). Source/APK/signer
+không đổi; không chạy lại full hoặc chuyển Phase5 để né các gate còn thiếu.

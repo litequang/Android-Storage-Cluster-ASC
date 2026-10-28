@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-10-28 — API35 cold Node handoff, NOT new release
+
+- Preserve exact final APK5/old signer and transport5PASS; no Engine/app change.
+- Document real SDK AP DHCP then no-Internet rejection, System UI ANR and blocked
+  pre-enrollment E2E. Additional15Android request timed out600s without final
+  JUnit; no new PASS/skip claim or speculative TLS/security workaround.
+- Stop only the owned instrumentation app/guest, restore original WiFi setting,
+  hash-verify private offline backup. SDK shutdown SIGSEGV remains unqualified.
+  Main identity/context absent; full392/314inputs unchanged. Current scope/resume:
+  PHASE4-API35-QUALIFICATION and phase4-api35-cold-node-blocker receipt.
+
 ## 2026-10-26 — Native j.2 internal candidate (not full Phase4.2 acceptance)
 
 - Increase private candidate to versionCode4 /0.4.0-native-node-candidate with

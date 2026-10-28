@@ -14,15 +14,26 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-28
-LATEST API35: original cold sandbox boot+PM now READY138.886s; exact APK5 transport
-5PASS0skip210.286s, same signer/UID, main identity0records. Read qualification/
-phase4-api35-transport5.json +PHASE4-API35-QUALIFICATION and latest PROGRESS. NOT
-Node E2E/retained4->5/phone proof. Old coldAPK4 failures kept. No source/APK changes,
-full392 retained; only one task-owned35TCG guest currently RUNNING, private owner
-/workspace/work/phase4-api35-resume/emulator-owner.json. Reverify fresh process
-identity BEFORE ADB or signal; no old PIDs. Offline7image backup preserved. Next
-native Catalog E2E on this same cold sandbox IF main identity remains unprovisioned;
-never wipe/re-init partial identity. Direct043 source2tests already pushed3abba07.
+LATEST API35: transport5PASS210.286s/boot+PM READY retained, but cold Node E2E
+BLOCKED BEFORE enrollment. Additional15Android request timed out600.104s without
+final JUnit; UNKNOWN, NOT15PASS. First method finished290.455s; next started, no
+aggregate receipt. No speculative TLS patch, timeout weakening, root/proxy/CA or
+network-validation bypass. Read qualification/phase4-api35-cold-node-blocker.json,
+PHASE4-API35-QUALIFICATION and latest PROGRESS BEFORE resuming.
+
+Same retained AVD reboot with documented SDK legacy-network fixture booted267.105s;
+AP DHCP10.0.2.16 then Android rejected no-Internet network; System UI ANR. No host/
+guest TCP/TLS/Node E2E proved. Main identity/context/Catalog proof still ABSENT at
+closure. Only owned test app stopped; original WiFi enabled/no saved networks
+restored. Emulator now STOPPED; graceful SDK shutdown requested but waitstatus11/
+SIGSEGV, NOT clean-powerloss acceptance. Final7image private offline backup hash-
+verified, no restore. Signer/other AVDs/Core source/archives/APK5 preserved. Raw
+evidence/private backup /workspace/work/phase4-api35-resume. No historical PID use.
+
+Next responsive ownedAPI35/default network +pinned Controller readiness, unfinished
+Android suite and same-state Native Catalog E2E; require NetworkReadinessTest OK
+before fresh Main init. Never reset a later partial identity. Full392/314inputs
+unchanged; direct043 source2tests already pushed3abba07. Full Phase4 NOT ACCEPTED.
 
 LATEST ADDITION: exact published e69/native-node and c831/PWA043 ->b423/core-decode
 source upgrade +NEW-state code rollback now2PASS0skip51.823s (TLS/bytes/pending/

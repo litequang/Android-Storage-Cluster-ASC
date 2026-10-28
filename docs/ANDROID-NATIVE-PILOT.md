@@ -6,7 +6,8 @@ on M51/production/unknown devices or replace existing Termux data. Read current
 PHASE4-2-ACCEPTANCE, ANDROID-NATIVE-OPERATIONS and ASC-USER-STATUS.
 
 Final candidate5 has targeted actual API30 x86_64 proof. Historical API35 retained
-APK4 proof is separate; final5/API35 NOT TESTED, fresh35cold BLOCKED. Read
+APK4 proof is separate; final5/API35 transport5PASS, boot/PM READY; integrated
+fresh35Node remains BLOCKED at network preflight/System UI ANR. Read
 PHASE4-STATUS/HANDOFF for final-full/publication status before downloading.
 
 The integrated j tests use the CURRENT branch's packaged Demo Controller, not
@@ -73,6 +74,10 @@ restore an old database; owner phone upgrade itself remains a required pilot gat
    physical independence. Do not use important data.
 9. Disconnect router Internet while preserving Wi-Fi/IP reachability; record real
    results. Emulator NAT does not certify this phone test. No Cloudflare remote.
+   Android may ask whether to keep using a network without Internet. Verify the
+   correct private AP and use the ordinary user choice; do not disable network
+   validation, change proxy/CA or bypass TLS. Wi-Fi enabled/DHCP alone is not proof
+   the app has a usable default network; verify actual pinned Controller access.
 10. Test notification Stop, foreground/background and Controller loss refusal.
     Never promote another Controller or activate a recovery writer. Optional Core
     observer has its own owner session and remains read-only.
