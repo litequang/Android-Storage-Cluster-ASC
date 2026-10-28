@@ -252,7 +252,7 @@ def stage(source, prefix):
     return {'staged': True, 'release_id': release['release_id'], 'activated': False}
 
 
-def activate(root, prefix, release_id, backup_destination, action='upgrade'):
+def activate(root, prefix, release_id, backup_destination, action='upgrade', *, expected_current=None, verified_backup=None):
     guard()
     root, backup_destination = private_path(root), private_path(backup_destination)
     prefix = private_path(prefix, code_prefix=True)
@@ -260,6 +260,16 @@ def activate(root, prefix, release_id, backup_destination, action='upgrade'):
     with stopped(root), foreground_lock(prefix, 'install'):
         startup_check(prefix, root)
         old = read_json(prefix / 'install.json')
+        # Optional private maintenance CAS. Recheck under the SAME existing locks
+        # as backup/pointer activation; a separate preflight is never authority.
+        if (expected_current is None) != (verified_backup is None):
+            raise ValueError('maintenance preconditions must be complete')
+        if expected_current is not None:
+            if (inspect_state(root)['installation_id'], old['release_id']) != expected_current:
+                raise ValueError('maintenance installation or active release changed')
+            previous = verify_backup(verified_backup[0], root)
+            if previous['backup_sha256'] != verified_backup[1]:
+                raise ValueError('maintenance backup anchor changed')
         verify(release_path(prefix, old['release_id']))
         release = verify(release_path(prefix, release_id))
         compatibility(release, root)

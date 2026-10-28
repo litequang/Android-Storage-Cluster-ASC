@@ -583,3 +583,13 @@ Exact public Host/Origin is checked before private upstream translation; no
 forwarded identity trust. Strip CF cookies/assertion/email; only expected __Host
 owner cookie/CSRF/content type forward. No Node/admin/enrollment/GC route exposed.
 Profile2 listener exact loopback HTTPS; profile1 not widened.
+
+## Phase5.3 private CLI (no network API)
+asc.access.maintenance preflight/apply uses format1 fixed action upgrade|rollback,
+installation/role, current/target release, state formats, backup SHA and plan SHA.
+Apply requires exact confirmation and a new activation-backup destination; all
+identity/current-release/backup comparisons repeat inside original activation
+locks. Completion retry requires real matching journal/release/backup evidence.
+Error response is maintenance_refused/UNKNOWN, never raw private exception text.
+No management route is added to private/Cloudflare browser gateways. Plan digest
+is not a credential, source signature, writer grant or SSH authorization.

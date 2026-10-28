@@ -39,3 +39,11 @@ Stop gateway for rollback; upstream state/sessions/IDs/bytes remain untouched.
 Each checkpoint: targeted PASS, docs/CODEMAP/secrets, normal feature-only commit/
 push/fetch/advertised remote verification before next. No live phones/M51/SSH/
 production/system/network policy changes; all work source and synthetic Linux.
+
+5.3 implementation: owner-local bounded plan1 +existing activation CAS, no remote
+executor/listener. Qualify actual installed Controller/Node upgrade and NEW-state
+code rollback, local lost-ACK/interruption/refusals and exact historical-source
+compatibility. Live SSH/VPN and Android maintenance remain separate NOT TESTED.
+5.4 follows only after5.3 normal publication/remote verification; freeze tested
+inputs, run fresh applicable full Python/Go/security/fault/package gates and keep
+provider/hardware/production acceptance explicitly outstanding.

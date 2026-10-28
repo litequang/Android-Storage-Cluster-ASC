@@ -602,3 +602,12 @@ BEFORE upstream connection; claims do not grant owner authority. Existing owner
 session/CSRF and pinned explicit Dashboard mode follow unchanged. Shared gateway
 hooks reuse routing/streaming/limits, no second Engine/Catalog or authority cache.
 No provider/account/DNS deployment or live edge acceptance in source work.
+
+## Phase5.3 maintenance boundary
+No additional access server or remote execution engine. Local same-owner CLI
+creates a bounded content-confirmed plan from existing stopped Demo state/staged
+release/verified complete backup. Apply reuses existing upgrade activation, with
+final installation/current-release/backup revalidation under its original locks.
+Existing journal/pointer/backup/recover-upgrade remain the only activation flow.
+No runtime auto-start, DB restore, Core quorum change or APK/Termux UID sharing.
+SSH/private connectivity remains separately operator-managed and NOT TESTED.

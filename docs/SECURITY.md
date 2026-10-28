@@ -717,3 +717,15 @@ then preserves owner session/CSRF. CF assertion/cookies/email/forwarded identity
 never become backend credentials; a valid Access JWT alone is insufficient.
 Trusted test key transport is in-process only, not a CLI/profile bypass. No live
 provider proof, public listener, SSH/admin exposure, device or recovery authority.
+
+## Phase5.3 operator maintenance
+Local OS-owner CLI only, no remote shell/network listener or browser management.
+Keep plan/backup private; retain all Demo protected/unknown-device/dependency and
+state/mode guards. New module refuses unqualified Android/Termux. Content digest
+is explicit confirmation, not authenticity: operator independently verifies source
+archive provenance before stage. Under original activation locks compare actual
+installation/current release and complete backup/current state again. Unknown
+outcome/PREPARED cannot become success; retry needs matching COMPLETED journal
+and actual backup/release. No old-DB restore, runtime auto-start, voter/GC/failover
+or recovery writer. Future private SSH must retain normal host-key/auth/ACL checks;
+no live SSH/VPN configured/tested and no public management exposed here.

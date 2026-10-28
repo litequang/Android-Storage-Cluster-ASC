@@ -1,9 +1,9 @@
 # Phase5 acceptance — NOT ACCEPTED
 
-Latest5.2b/c edge source/synthetic subset qualified:22edge/foundation tests,
-14private API/CLI/Dashboard/browser regressions,2Core/recovery and6edge/private
-integration executions PASS in separate runs. Public provider/tunnel/browser,
-maintenance5.3 and fresh final5.4 gates remain outstanding.
+Latest5.3 owner-local maintenance source subset qualified:7fresh targeted tests
+and6fresh upgrade/compatibility regressions PASS in Linux synthetic. Prior private/
+edge subsets remain scoped below. Fresh final5.4, live SSH/VPN/provider/public
+browser and physical/production gates remain outstanding.
 
 Historical5.1 private gateway software subset qualified:19API/regression +1CLI +1actual
 Chromium +2Core/passive read-only scoped executions PASS. Actual VPN/Tailscale,
@@ -75,3 +75,17 @@ proxy/CA/policy untouched, test changed to explicitly local synthetic connector.
 Therefore no live provider/IdP/public-DNS/Cloudflare/tunnel acceptance is inferred.
 Next5.3 maintenance and5.4fresh final gates. Full Phase5 NOT ACCEPTED, phone gates
 deferred and writableDR/Android voter/GC/failover locked; no new release/APK.
+
+## 5.3 private maintenance source/synthetic scoped PASS
+7fresh maintenance cases PASS39.055s,5original upgrade regressions PASS (initial
+selector run additionally had one loader-name error), corrected exact0.4.2->CURRENT
+source/NEW-state rollback1PASS24.651s.13scoped cases, no full-regression claim.
+Actual installed TLS/file I/O/identity/Controller+Node upgrade and local ACK retry,
+new writes/code-only rollback, interruption/recovery, stale/CAS/backup/guard refusal.
+No journal/DB formats changed or original tests weakened. No real SSH/VPN/phone/
+Termux/APK/Core maintenance, release or production acceptance. Full Phase5 remains
+NOT ACCEPTED pending5.4fresh gates and external/physical scope; see owner guide.
+
+5.3 final clean regression command (corrected selector)6PASS0skip/fail59.551s.
+Together with7targeted PASS39.055s this supersedes the initial selector-error run
+for final qualification;13distinct cases, no double counting. No full-suite claim.

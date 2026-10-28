@@ -535,3 +535,14 @@ Phase5.2 NEW access profile2 (cloudflare-edge): existing frontend/upstream/pin/m
 size fields plus listen_origin (loopback only), access_team and access_audience.
 It is a separate root/format, not a migration of private profile1 or any Catalog/
 Node state. Access JWT/claims are never persisted; public key cache is bounded RAM.
+
+## Phase5.3 maintenance plan1
+Operator-owned private JSON outside state/backup, <=8KiB when read by CLI. Exact
+fields: format, kind=asc-private-maintenance, mode=single-writer-demo, action,
+installation_id, role, current_release_id, target_release_id, backup_sha256,
+state_formats, plan_sha256. SHA is canonical encoded body excluding plan_sha256.
+Reject unknown fields/actions, bool version/formats, mismatched content/confirmation
+and same-release target. No commands/credential paths or secrets in plan. Existing
+Demo formats/Registry/Manifest/upgrade-journal1 unchanged; no migration/new catalog.
+Activation optional preconditions are in-process arguments, not persisted authority.
+Plan file never substitutes for current stopped-state/backup/release verification.

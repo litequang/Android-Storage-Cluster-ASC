@@ -348,3 +348,70 @@ no custom remote shell/public SSH/automatic update or compatibility promises.
 Targeted PASS/docs/secrets/normal push/remote each, then5.4fresh final gates.
 Do not repeat full historical Core/Android acceptance merely to recover context.
 Live provider/public-browser and phone/production gates remain separate/unaccepted.
+
+## 5.3 stopped private maintenance — source/synthetic qualified
+Fetched feature/phase5-remote-access96d5293, HEAD/FETCH_HEAD/advertised remote equal,
+clean workspace preserved. Mandatory maps/Phase5 handoff/upgrade/installer/state/
+package/locks/test contracts reviewed. Skill/network policy checked; no inherited
+proxy/CA/credentials change, account/SSH/VPN/provider/device operation or ADB.
+
+New asc.access.maintenance preflight/apply CLI reuses existing stopped/install
+locks, prefix binding, exact release/format/complete backup verification and
+activation/recovery journal. Plan1 carries fixed operation/installation/release/
+backup bindings, no commands/credentials. Explicit content digest confirmation,
+private plan read bound8KiB, fixed safe errors. Under original activate locks,
+optional expected_current+verified_backup preconditions close preflight/activation
+race. Defaults and journal1 remain unchanged. Proven COMPLETE retry verifies actual
+matching old/new/action/installation/backup/release and does not activate twice.
+PREPARED still refuses and uses original explicit code-only recover-upgrade.
+No runtime auto-start, schema migration, DB restore or new updater state engine.
+
+Fresh /workspace/asc-access-dev/edge-env/bin/python -m unittest
+ tests.test_access_maintenance -v:7PASS0skip/fail39.055s. Actual installed Controller
+and two TLS Storage nodes/logical domains, original file upload, stopped upgrade
+of Controller+peer, same plan lost-successful-local-ACK retry, exact identities,
+new file writes after upgrade, NEW-state backup/code rollback and both files
+still downloaded byte-equal. Wrong confirmation/state change/corrupt backup,
+installation/release/backup CAS, source gap race, real PREPARED pointer/journal
+interruption +existing recover-upgrade, protected/unknown/Core/recovery/symlink and
+unqualified Android refusal. Linux fake-device/dependency context is the EXISTING
+Demo fixture, not physical-phone runtime proof. Interruption uses actual journal/
+pointer I/O with fault at completion, not fake success/network-ACK proof.
+Initial6case run34.830s also PASS; final7cases supersede it, no double counting.
+
+Five original upgrade regressions passed in initial38.179s selector run (actual
+installed upgrade/rollback/backup, incompatible/missing-volume/corrupt refusal,
+interrupted activation/recovery, approved external-volume/mutation and linked-lock
+safety). That run also had one TEST-SELECTION loader error: nonexistent class
+CurrentPhase41UpgradeTests. Correct selector tests.test_phase41_upgrade.
+CurrentSourceUpgradeTests then1PASS0skip/fail24.651s: exact published0.4.2 ->CURRENT
+source, pending TLS enrollment both directions, bridge/identity/volume preservation,
+new file bytes and NEW-state old-code rollback. No original tests/assertions
+changed; no new provider/Android/full-suite PASS inferred from13scoped cases.
+
+PHASE5-MAINTENANCE gives contract/operator commands, downtime/backup/stage/confirm/
+apply/retry/recovery/code-only rollback and separate APK/Termux/Core boundaries.
+Only source checkout contains new CLI; no new source archive/APK/release published,
+old archives/signer/private SDK/phone data untouched. Module explicitly refuses
+unqualified Android/Termux; existing device/dependency checks remain, no bypass.
+Remote maintenance connectivity remains NOT TESTED: no SSH daemon/client session,
+VPN/tunnel/DNS configuration, public SSH or custom command endpoint created.
+
+Private logs /workspace/work/phase5-maintenance-{targeted-final,regression,
+current-upgrade}.log; sanitized receipt qualification/phase5-maintenance.json.
+After normal commit/push/remote verification NEXT5.4: fresh applicable integrated
+Python/Go/fault/security/package gates. Historical Core/Android/full qualification
+must not be relabelled fresh. Provider/public-browser, real SSH/VPN, physical ARM64/
+LAN/Doze/OEM/power/phone campaign remain outstanding/deferred, full Phase5 NOT
+ACCEPTED. WritableDR/Android voter/GC/failover stay locked; original branches kept.
+
+### 5.3 final clean regression run
+After correcting the selector, reran the complete intended regression command:
+five named tests.test_demo_upgrade.DemoUpgradeTests upgrade/fault cases plus
+tests.test_phase41_upgrade.CurrentSourceUpgradeTests.6PASS0skip/fail59.551s,
+private phase5-maintenance-regression-final.log. Final checkpoint evidence is
+7maintenance PASS39.055s +6regression PASS59.551s,13distinct scoped cases. Earlier
+selector-error/individual reruns remain historical, not extra passes. Exact source/
+test hashes match receipt, no executable changes after successful qualification.
+Only docs/reporting updates follow. Source/target archives used by tests remain
+private synthetic fixtures; no newly published release or Android upgrade claim.

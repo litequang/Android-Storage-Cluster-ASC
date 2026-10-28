@@ -591,3 +591,11 @@ dependencies. Existing incomplete root must NOT be regenerated automatically.
 Missing/wrong Access assertion403 differs from valid Access/no ASC owner401.
 Expired key cache/provider outage503 never falls back to stale keys or owner-only
 access. Connector offline validation does not prove tunnel/DNS/IdP reachability.
+
+Phase5.3 maintenance_refused/UNKNOWN: preserve plan/state/prefix/backups/journal.
+Check stopped local runtime, exact installation/release and verified complete
+backup of CURRENT state. A changed state or corrupted/missing backup must refuse
+before activation; make a new stopped backup/preflight after operator review.
+A PREPARED journal uses existing recover-upgrade only; never edit it or reinit
+identity. Code rollback needs NEW-state backup, not old SQLite restore. This Linux
+source CLI refuses Android/Termux; it is not an APK updater or remote SSH service.

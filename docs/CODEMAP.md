@@ -947,3 +947,13 @@ exact fresh/upgrade paths now observed; API35/physical limits retained.7SDK imag
   hook; default remains original private gateway. test_access_browser saves edge
   screenshots separately. Original JS gains actual-error-code-only diagnostics;
   no assertion or TLS change. qualification/phase5-edge-integration.json receipt.
+
+## Phase5.3 private operator maintenance
+- asc/access/maintenance.py: version1 owner-local preflight/apply CLI, stopped
+  installation/release/complete-backup binding and explicit plan confirmation,
+  proven-complete local retry; no network/SSH/shell/identity creation.
+- asc/demo/upgrade.py: activate gains optional expected_current/verified_backup
+  CAS under existing stopped/install locks; defaults and journal format unchanged.
+- tests/test_access_maintenance.py: installed two-node TLS upgrade/NEW-state code
+  rollback, identity/bytes, local lost-ACK retry, final CAS, interruption/recovery,
+  protected/unknown/Core/recovery refusals. PHASE5-MAINTENANCE owner guide.

@@ -786,3 +786,11 @@ connector and edge adapter; real Core quorum partition/heal and passive recovery
 stay read-only.6fresh targeted PASS55.833s. Improve test error-code diagnostics,
 no product/dependency/state change. Public-host route failed tunnel connection;
 no proxy/CA override/live provider/phone/production qualification.
+
+### Phase5.3 stopped private maintenance
+Add owner-local content-confirmed preflight/apply CLI over original Demo upgrade
+engine. Final activation CAS binds actual installation/current release/complete
+backup under original locks; old defaults/formats unchanged. Proven local ACK
+retry, interruption recovery, actual new writes +code-only rollback and identity/
+bytes qualified in Linux synthetic. No SSH/tunnel/device deployment, new release,
+Android/Core maintenance or automatic updater. PHASE5-MAINTENANCE guide.

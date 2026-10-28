@@ -374,3 +374,17 @@ Strip Access assertions/cookies/forwarded identity before existing backend. New
 edge dependencies are OPTIONAL/private-venv/hash pinned, no Android/Core rewrite.
 Connector origin TLS must verify the new public CA; Access required per ingress
 rule with final404 catchall. No account/DNS/tunnel activation in source task.
+
+## ADR076 — Local maintenance plan, original activation and no remote shell API
+Use existing Demo stopped backups, release verifier, prefix binding and activation
+journal rather than a new updater/service. A bounded plan1 binds installation/role,
+current/target release, exact state formats and complete-backup SHA; its content
+digest requires explicit operator confirmation but grants no network authority.
+Apply revalidates the exact backup/state plus active release/identity inside the
+existing activation locks, preserving old-call defaults and journal1. A matching
+COMPLETED journal/actual backup/release can prove a lost local ACK without applying
+again. PREPARED remains blocked and uses original explicit recover-upgrade. Never
+restore old DB after newer writes; code rollback requires NEW complete backup.
+No arbitrary commands, remote listener, SSH setup, auto-update or runtime start.
+Linux synthetic qualification only; Android/APK/Termux/Core/recovery maintenance
+requires its own contract. Private SSH/VPN deployment is not implied by this CLI.
