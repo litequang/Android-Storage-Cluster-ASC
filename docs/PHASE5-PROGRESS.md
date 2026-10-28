@@ -325,3 +325,26 @@ automatic update. Then5.4 fresh applicable final regression/fault/security/packa
 qualification. Live Cloudflare/IdP/DNS/tunnel/real public-browser STILL NOT TESTED/
 BLOCKED, physical campaign DEFERRED BY OWNER, full Phase5 NOT ACCEPTED. WritableDR,
 Android voter/GC/failover remain locked. Preserve all SDK/signers/states/artifacts.
+
+## 5.2 source publication / exact next resume
+5.2b bf04868f875fb800db1e9f4b6af7dfc2511d1f39 and5.2c
+04a6ee0aa76f1c901c0b27e949039119a2eb7a12 each normally pushed/fetched and
+local HEAD=FETCH_HEAD=advertised feature remote verified with clean working tree
+BEFORE continuation. Final5.2c tracked/index451files/0untracked/0secret findings.
+Exact current integration inputs and every unchanged product/access module match
+sanitized receipt SHA256. Older5.2b fixture hashes are historical, new fixture/
+browser diagnostic edits qualified separately in5.2c; no product drift.
+This following publication note changes docs ONLY. No new tests or release claimed.
+
+Resume5.3 from feature/phase5-remote-access latest HEAD after fetch/status, no reset
+or whole branch merge. Read AGENTS/mandatory docs then current PHASE5 PLAN/PROGRESS/
+ACCEPTANCE, PHASE5-CLOUDFLARE and PHASE5-PRIVATE-ACCESS. Use existing private Python
+/workspace/asc-access-dev/edge-env/bin/python and explicit command-only
+ASC_GO=/workspace/asc-cloud/go1.27.3/go/bin/go. No SDK/ADB/signing operation needed.
+Review existing asc/demo/upgrade.py, scripts/demo-alpha.sh and upgrade tests for
+controlled private operator backup/verify/stage/preflight/code upgrade/NEW-backup
+rollback. Distinguish source-Demo, Android APK, Termux and Core quorum contracts;
+no custom remote shell/public SSH/automatic update or compatibility promises.
+Targeted PASS/docs/secrets/normal push/remote each, then5.4fresh final gates.
+Do not repeat full historical Core/Android acceptance merely to recover context.
+Live provider/public-browser and phone/production gates remain separate/unaccepted.
