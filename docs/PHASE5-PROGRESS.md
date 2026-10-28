@@ -180,3 +180,32 @@ Next AFTER normal commit/push/remote verification:5.2b edge origin runtime reusi
 same browser gateway, JWT BEFORE forwarding, cookie/assertion stripping, pinned
 backend and exact public Host/Origin, real local TLS/owner/file tests; connector
 config with trusted CA/loopback/per-rule Access +404 catchall. No live tunnel run.
+
+
+## Executor interruption handoff — 5.2b NOT QUALIFIED
+Last tested source checkpoint783dd7d9a737fcdd58011c054a98fcc85e525618 was normal-
+pushed/fetch+advertised verified before runtime work.16fresh targeted PASS0.066s
+and optional private-env pip check are the ONLY new5.2 qualification results.
+
+Cloud executor then became unavailable. Last create/run integration command
+failed CreateProcess with exec-server transport disconnected: no successful test
+process or results. Provider environment_status still said connected; that does
+not establish executor readiness. No5.2b runtime/TLS/file/connector acceptance,
+cloudflared binary qualification, new APK/archive or live Cloudflare deployment.
+
+The apply_patch acknowledgment covered shared asc/access/gateway.py hooks and new
+asc/access/cloudflare.py, UNCOMMITTED/UNTESTED. Cannot reread disk/verify its exact
+bytes now. Do NOT discard dirty files, reset/clean/force-checkout or assume source
+already exists remotely. The test file creation command was not acknowledged;
+check existence before reconstructing it. Original signer/SDK/Node/private state
+and original branches must remain intact. No new5.2b services known to have started.
+
+GitHub connector saved a TOOL-CALL RECONSTRUCTION/draft and full resume/test matrix
+at docs/handoff/PHASE5-2B-EXECUTOR-INTERRUPTION.md, commit
+b672f38247b204b21e9420ba47bae10b721e5b6b. This is recovery documentation, not active
+source or a byte-verified workspace backup. Source16test checkpoint unchanged.
+Read handoff first, inspect/reconcile original workspace/branch and docs-only
+remote advances without overwriting dirty source. Recover only missing work, then
+fresh JWT/private/edge/realTLS/file/browser/Core targeted gates. Keep5.2b UNKNOWN/
+NOT QUALIFIED until those pass and are committed/remote verified. Physical-phone
+campaign remains DEFERRED BY OWNER; do not wait for phones to resume source work.
