@@ -7,8 +7,8 @@ reuse kiểm tra cấu trúc, giữ mọi quyền/fence/physical proof. Native A
 không đổi, không chứa host-only fix; Node không instantiate quorum Runtime.
 
 New archive được rebuild byte-identical,139files/secret audit PASS, exact042->new
-upgrade/pending/IDs/bytes/NEW-state rollback PASS21.649s. Direct prior043->new
-chưa thực chạy; không hứa hỗ trợ đường đó. [Full receipt](../qualification/phase4-core-decode-final.json).
+upgrade/pending/IDs/bytes/NEW-state rollback PASS21.649s. Direct exact e69/native-node và c831/PWA043 ->b423 mới cũng đã PASS2tests51.823s,
+gồm rollback giữ NEW state; [receipt](../qualification/phase4-direct043-upgrade.json). [Full receipt](../qualification/phase4-core-decode-final.json).
 Gói mới đã push và tải lại từ GitHub, checksum xác minh PASS; xem mục publication cuối.
 Các archive/APK cũ giữ nguyên. Không dùng software PASS để bật Android GC/Raft/
 failover/writerDR hoặc tuyên bố phone/LAN/ARM64/Doze đã nghiệm thu.
@@ -52,9 +52,10 @@ apksigner verify --verbose --print-certs android-artifacts/asc-native-node-0.4.1
 Nếu còn0.3, đọc DEMO-ZTE-0.4.1 trước; không suy ra direct0.3->candidate đã hỗ trợ.
 0.4.2-dev trung gian ở candidates, SHA
 b7904a82c55e41866b374ecb42b873a6796a4f8e5e53a213f648e026467a64a3.
-Đường direct c831/prior0.4.3 ->new b423 NOT TESTED; không suy ra từ schema giống
-nhau. Nếu đã ở prior043, giữ release/state hiện hữu cho đến khi đường đó được
-qualify; gói PWA cũ không cần host-only Core fix cho runtime Demo single-writer.
+Đường direct **exact e69/native-node hoặc c831/PWA0.4.3 ->b423** đã kiểm thử
+upgrade và rollback bằng đúng archive. Kiểm checksum/release ID; không suy ra cho
+build043khác. Dừng runtime, backup+verify rồi stage/preflight/upgrade như bên dưới.
+Không init lại, không khôi phục database cũ đè dữ liệu mới.
 
 Dừng Controller/Node/bridge bằng Ctrl+C và chờ thoát. Với mỗi bước đã kiểm:
 

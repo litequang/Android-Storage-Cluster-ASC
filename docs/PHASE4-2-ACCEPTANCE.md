@@ -537,3 +537,11 @@ Existing browser owner File Manager is the MVP interface, not a new backend.
 No Termux->APK migration, Android voter/GC/failover or writerDR activation.
 Owner device gates must be recorded honestly before broader acceptance; do not
 redo completed phases/full tests or advance to Phase5 just to claim completion.
+
+
+Latest exact043 compatibility supplement: published e69/native-node and c831/PWA
+archives ->b423/core-decode upgrade +NEW-state code rollback2PASS0skip51.823s;
+qualification/phase4-direct043-upgrade.json. Product/old314inputs unchanged,
+full392 retained and new2tests separately targeted, not fresh full394. Any older
+NOT TESTED direct043 wording above is superseded only for these exact archives.
+APK direct upgrade/Android API35/physical-device scope remains separate.

@@ -836,3 +836,12 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
   fresh quorum loss, envelope rollback/hash/identity, canonical wire and durable
   corruption gates. Existing test_runtime_validation and original fault cases
   remain byte-identical. Current qualification is in PHASE4-2-PROGRESS.
+
+
+### Published043 snapshot compatibility qualification
+- tests/test_phase4_snapshot_upgrade.py pins exact e69(native-node) and c831(PWA)
+  archives to b423(core-decode), real installed CLI/TLS bytes/pending/backup/new-
+  state code rollback. Reuses original fixture helpers without changing any old
+  test or product source; both old/new043 bridge APIs must still work.
+- qualification/phase4-direct043-upgrade.json records2additional Linux synthetic
+  tests, not a replacement/full394 claim; current source full392 remains frozen.

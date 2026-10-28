@@ -1,0 +1,49 @@
+{
+  "state": "PASS_LINUX_SYNTHETIC_ONLY",
+  "source_baseline": "201d11c619d06f6e2a18f52d3a48875558877774",
+  "tests": 2,
+  "seconds": 51.823,
+  "skips": 0,
+  "command": "GOMAXPROCS=2 python -B -m unittest -v tests.test_phase4_snapshot_upgrade",
+  "test_sha256": "b8e96ab36a9ccb8d81d3389ac7d5eb60b4826af7afd2a19141838c8019f85f5d",
+  "published_archives": [
+    {
+      "from": "asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz",
+      "sha256": "9dbd9007058a6a43f075c1924f4014faa7060ef6667e014bbc28a91be070ad59",
+      "release_id": "e69ebeae3e5ab9a5372465caa8ed5e1882f352fd5f355157299091361f4c6706"
+    },
+    {
+      "from": "asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz",
+      "sha256": "c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc",
+      "release_id": "c8315bdb08973c4c8cca422a4aa8337362fedebb61bc1a61a721097fa37b9f55"
+    }
+  ],
+  "destination": {
+    "name": "asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz",
+    "sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+    "release_id": "b423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca"
+  },
+  "actual_gates": [
+    "Exact SHA-pinned archives install OLD source before identities/data exist",
+    "Actual pinned TLS successful enrollment ACK loss; original pending survives source upgrade",
+    "Verified backup/stage/preflight/activation, no schema migration",
+    "Node/Cluster/Volume/medium inode/certificate/PIN/token bytes preserved",
+    "Bridge authenticated app control retained and actual status works on BOTH old043/new043 after code rollback",
+    "Trusted Dashboard HTTPS owner login/download SHA; unauthorized download401",
+    "Two verified logical-domain replicas; new bytes committed after upgrade",
+    "New-state backup/verification before compatible code-only rollback, no stale database restore",
+    "Old and newly committed file download after rollback with SHA/exact bytes",
+    "New-source pending enrollment resumes under exact old source with same operation/token",
+    "No storage or failure-domain auto approval for either pending Node"
+  ],
+  "production_source_changed": false,
+  "published_artifacts_changed": false,
+  "previous314inputs_unchanged": true,
+  "regression_provenance": "Existing full392/64faults on8c54728 reused for unchanged product source; these2ADDITIONAL tests executed separately, NOT a fresh full394",
+  "android": "NOT RUN; names ZTE/Bphone in reused fixture are synthetic only; no signer/AVD/phone mutation",
+  "limits": [
+    "Not arbitrary043 builds; only exact two named archives",
+    "Not Termux->APK, single-writer->Raft or writable DR migration",
+    "Direct APK4->5 and API35/physical-device gates remain separately unqualified"
+  ]
+}

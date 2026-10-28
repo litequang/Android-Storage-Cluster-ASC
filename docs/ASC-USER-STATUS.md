@@ -59,3 +59,11 @@ Không dùng APK Foundation cũ để suy ra đã có toàn bộ Node/observer �
 Cloudflare không được bật ngầm trong Phase4.2. Phase5 cần thiết kế/kiểm thử riêng
 cho gateway, xác thực, giới hạn quyền và vận hành; không đưa management API/Node
 listener trực tiếp lên Internet hay can thiệp tunnel/hosting production hiện hữu.
+
+
+Latest exact043 compatibility supplement: published e69/native-node and c831/PWA
+archives ->b423/core-decode upgrade +NEW-state code rollback2PASS0skip51.823s;
+qualification/phase4-direct043-upgrade.json. Product/old314inputs unchanged,
+full392 retained and new2tests separately targeted, not fresh full394. Any older
+NOT TESTED direct043 wording above is superseded only for these exact archives.
+APK direct upgrade/Android API35/physical-device scope remains separate.

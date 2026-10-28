@@ -2096,3 +2096,33 @@ Read current STATUS/HANDOFF; older RUNNING/FAIL receipts are retained history.
 Original signer/AVD data/UID state untouched (no Android execution this host patch).
 No phone/M51/production/Termux access, source branch merge or Android GC/Raft/
 failover/writableDR/Phase5 activation. Full Phase4/4.2 NOT ACCEPTED on phones.
+
+
+### Direct published043 snapshot upgrade/rollback PASS — 2026-10-28
+
+Resumed201d11c, HEAD=FETCH_HEAD/clean. Read current maps/ordered docs and handoff.
+New tests ONLY, no product code/dependency/package/signing change. Run exact
+published e69/native-node9dbd... and c831/PWAc726... ->b423/core-decode6a60... on
+fresh private Linux synthetic installed Controller/two Nodes. Actual archives
+SHA checked and extracted, OLD source used before first init/identity/file.
+Both direct paths2PASS0skip51.823s. Receipt phase4-direct043-upgrade.json.
+
+Actual gates: verified pre-upgrade and activation backups, stage/preflight/no
+schema migration, exact original identity/credentials/certs/PIN/Volume/medium inode,
+real dropped successful TLS join ACK/pending survives upgrade; original operation/
+token resume with no Node/domain storage approval. Owner Dashboard HTTPS/CA login/
+SHA download and401unauthorized download; two logical-domain copies. Commit NEW
+DIFFERENT bytes after upgrade; rollback uses NEW verified state backups; both old
+and new files readable from OLD source after rollback, catalog still has2files.
+Reverse pending created NEW then resumed OLD retains its original token/operation.
+Bridge private app control retained, actual authenticated status works on BOTH
+old043 and new043; prior042 unsupported-bridge regression is untouched.
+
+All314old frozen source/tests/artifact inputs still equal8c54728 full392 PASS;
+full is reused only for unchanged product. New two cases separately targeted,
+NOT a fresh full394 claim. No Android/phone/M51/Termux/Keystore/AVD action; source
+snapshots/package bytes and original tests unchanged. This proves only the two
+exact named043archives, not arbitrary043 builds or architecture/state migration.
+Direct APK4->5 and API35 cold/runtime gates remain next independent scope. Docs
+now permit exact e69/c831->b423 code upgrade and new-state rollback; normal feature
+commit/push/verify precedes Android investigation.

@@ -14,6 +14,13 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-28
+LATEST ADDITION: exact published e69/native-node and c831/PWA043 ->b423/core-decode
+source upgrade +NEW-state code rollback now2PASS0skip51.823s (TLS/bytes/pending/
+identities/bridge/CA/volume/no auto approvals). Product/artifacts and all314frozen
+inputs unchanged; full392 retained, NOT a fresh full394. Read qualification/
+phase4-direct043-upgrade.json. Older direct043 NOT TESTED lines below are historical
+and superseded ONLY for these exact two archives. APK4->5/API35/phones still separate.
+
 LATEST: Core source8c547288816342f9c6ebf94d3262ebf91049300a normal-pushed/remote
 verified;45targeted PASS incl original networkGC/all8physical faults. NEW fresh
 full392PASS0skip1484.150s,64fault markers,314frozen inputs unchanged. Fresh Go11

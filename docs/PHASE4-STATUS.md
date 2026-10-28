@@ -39,3 +39,11 @@ Controller loss/network changes, same-signer update, FGS/Stop/Doze/OEM, Chrome
 HTTPS/PWA và LAN giữ Wi-Fi khi mất Internet. Codex không truy cập phone/M51/
 production để đánh PASS. Không cần chạy lại full nếu source không đổi; tiếp tục
 nghiệm thu đúng platform/đường upgrade còn thiếu, không chuyển Phase5 tự động.
+
+
+Latest exact043 compatibility supplement: published e69/native-node and c831/PWA
+archives ->b423/core-decode upgrade +NEW-state code rollback2PASS0skip51.823s;
+qualification/phase4-direct043-upgrade.json. Product/old314inputs unchanged,
+full392 retained and new2tests separately targeted, not fresh full394. Any older
+NOT TESTED direct043 wording above is superseded only for these exact archives.
+APK direct upgrade/Android API35/physical-device scope remains separate.

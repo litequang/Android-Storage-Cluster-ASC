@@ -690,3 +690,10 @@ Go/vet/modules/builds PASS. Distinct core-decode source snapshot exact/determini
 secret audit and actual archive042upgrade/NEW-state rollback PASS. Existing APK5/
 all old archives preserved; no new Android/phone/ARM64/API35 or production claim,
 no GC/Raft/failover/writableDR unlock. Full Phase4 remains platform-gated.
+
+
+### Exact043 source snapshot upgrade supplement
+Published e69/native-node and c831/PWA ->b423 core-decode direct code upgrade and
+NEW-state rollback qualified2Linux synthetic tests/51.823s with actual TLS/bytes/
+pending/identity/bridge preservation. No product/source artifact or old test change;
+full392 retained, no fresh full394 or Android/architecture migration claim.
