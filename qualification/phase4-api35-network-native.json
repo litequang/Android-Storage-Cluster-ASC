@@ -1,0 +1,157 @@
+{
+  "state": "API35_NATIVE_NODE_SYNTHETIC_QUALIFIED",
+  "date_utc": "2026-10-28T06:14:53.122314+00:00",
+  "baseline": "242ca3fa5f27c07c5d986a86b74eafc3384fc2d8",
+  "api": 35,
+  "abi": "x86_64",
+  "toolchain": {
+    "emulator": "37.2.12/16428233",
+    "image": "default/x86_64 API35 revision2",
+    "acceleration": "TCG; /dev/kvm absent",
+    "vcpus": 2,
+    "guest_mib": 3072,
+    "host_cpu_quota": 2
+  },
+  "same_old_userdata": true,
+  "preexisting_main_identity": false,
+  "reset_clone_uninstall_restore": false,
+  "apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+  "public_signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "archived_android_junit": {
+    "standalone_network": {
+      "tests": 1,
+      "state": "PASS",
+      "wall_seconds": 15.216
+    },
+    "android-initial.log": {
+      "tests": 1,
+      "state": "PASS",
+      "junit_seconds": 282.291
+    },
+    "android-retained.log": {
+      "tests": 1,
+      "state": "PASS",
+      "junit_seconds": 86.727
+    },
+    "android-pinned-controller-preflight.log": {
+      "tests": 1,
+      "state": "PASS",
+      "junit_seconds": 27.674
+    }
+  },
+  "additional_driver_network_precondition": "OK (1 test) required and observed before fixture creation; stdout not separately archived; excluded from archived-test total",
+  "archived_android_executions": 19,
+  "earlier_network_attempts": [
+    {
+      "state": "FAIL",
+      "actual_network_readiness": false,
+      "elapsed_seconds": 78.776
+    },
+    {
+      "state": "FAIL",
+      "actual_network_readiness": false,
+      "elapsed_seconds": 58.631
+    }
+  ],
+  "initial_boot_pm_seconds": 271.062,
+  "network_recovery": "Initially WiFi10.0.2.16/no Internet and system/startup ANRs; later real eth0/10.0.2.15/default network became available without override. Boot-ready was not network-ready. Exact internal cause of the system delays not established.",
+  "wifi_diagnostics": {
+    "prototype1": "host timeout before listener confirmation; NOT PASS",
+    "prototype2": "actual public bytes received by guest TCP10.0.2.16 via virtio-wifi/host127.0.0.1; no TLS/Node claim",
+    "guarded_class_attempt": "actual own mapping add/table/loopback/remove confirmed, but no guest16 listener after NIC transitioned to eth0; overall diagnostic FAIL, not WiFi E2E qualification"
+  },
+  "native_workflow": {
+    "state": "PASS",
+    "scope": "Linux +API35 x86_64 synthetic; not phones/physical domains",
+    "adb_control_only": true,
+    "native_identity_reset": false,
+    "artifact": "published5",
+    "apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "ingress": "SDK console redir/10.0.2.15",
+    "android_preflight_tests": 2,
+    "native_android_tests": 2,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "logical_domains": 2,
+    "physical_domain_independence": false,
+    "actual_browser_login_upload_download": true,
+    "native_offline_fallback": true,
+    "controller_loss_denied": true,
+    "retained_process_identity": true,
+    "entry_mode": "fresh initialization",
+    "fresh_initialization_junit_completed": true
+  },
+  "host_tests": {
+    "tests": 9,
+    "state": "PASS",
+    "seconds": 0.172,
+    "scope": "6 new WiFi ingress guards +3 exact published-artifact guards; not full Python regression"
+  },
+  "source_inputs": {
+    "tools/qualify_native_catalog.py": "d3fb91db457179b83e69ba737921846fb915d94273244f28f76d46945bd16655",
+    "tools/native_wifi_ingress.py": "684b438565f3ebcffa8432dee2b4aa7354d64c6f04a8eb7d5e04d7d1a87bd84d",
+    "tests/test_native_wifi_ingress.py": "e9626e23248f237be82dfd932a57a1e5671522a705b41e8f4a1814c8c56651b3",
+    "tests/test_native_qualification_artifacts.py": "eae0ebbe75eaddb50feb05d6d010f12277eb62121f32a7396d828362cb45d654"
+  },
+  "extra15": {
+    "state": "PASS",
+    "tests": 15,
+    "skips": 0,
+    "failures": 0,
+    "junit_seconds": 209.708,
+    "host_seconds": 230.783,
+    "classes": [
+      "NativeTLSTest",
+      "NativeContextTest",
+      "VaultStorageTest",
+      "EmbeddedEngineTest"
+    ],
+    "all6_main_record_hashes_unchanged": true,
+    "old_interrupted_request": "Still historical UNKNOWN, not retroactively completed"
+  },
+  "preservation": {
+    "state": "STOPPED_AND_PRIVATE_OFFLINE_API35_VERIFIED",
+    "host_files_verified": 32,
+    "all6_main_records_equal_before_after_isolated_faults_and_stop": true,
+    "same_uid_10148": true,
+    "original_actual_object_sha_after_faults": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "object_count": 1,
+    "catalog_file_count": 1,
+    "original_saved_networks_and_wifi_enabled_retained": true,
+    "all_owned_ingress_removed": true,
+    "only_own_app_stopped": true,
+    "sdk_exit": -11,
+    "clean_shutdown_powerloss_qualified": false,
+    "clone_restore_clear_or_identity_recreation": false,
+    "scope": "SDK state preservation only, not phone export/Keystore migration/writable DR",
+    "offline_image_count": 7
+  },
+  "core_regression_scope": "No Core/app/dependency/archive/APK changes. Prior392Python/Go/fault proof retained for identical product, no new full suite claimed.",
+  "full_phase4_accepted": false,
+  "not_qualified": [
+    "physical Android/ARM64 runtime",
+    "two independent hardware failure domains",
+    "phone LAN without Internet",
+    "Chrome Android/PWA",
+    "Doze/OEM/24x7",
+    "Termux-to-APK migration",
+    "writable disaster recovery"
+  ],
+  "private_evidence_root": "/workspace/work/phase4-api35-recovery2",
+  "host_input_freeze": {
+    "previous_full_inputs": 314,
+    "unchanged": 313,
+    "changed": [
+      "tools/qualify_native_catalog.py"
+    ],
+    "new_full_regression_claimed": false
+  },
+  "private_original_signer_metadata_preserved": {
+    "bytes": 2618,
+    "permissions": "0600",
+    "mtime_ns": 1792946385115259498
+  },
+  "closure_utc": "2026-10-28T06:20:51.910000+00:00",
+  "controller_archive_rebuild_sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+  "qualification_helpers_packaged": false
+}

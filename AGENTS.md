@@ -15,6 +15,30 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 ## Current Phase4 closure pointer — 2026-10-28
 
+LATEST API35 Native Node now QUALIFIED on SAME retained userdata/exact APK5:
+archived network1PASS15.216s, pinned Controller/wrong-pin/cluster1PASS27.674s,
+cold Node1PASS282.291s, retained/process death1PASS86.727s. Receipt
+qualification/phase4-api35-network-native.json supersedes old network/Node blocker
+and Main-ABSENT statements BELOW. Two earlier process-start ANR failures retained;
+later eth0/15/default network became ready naturally, no proxy/CA/validation/root
+or ADB data forwarding. Actual Engine/FSYNC/enroll/owner approval/browser/replicas/
+SHA/fallback/Controller-loss503 and identity retention. One host/logical domains,
+NOT physical phone/ARM64/LAN acceptance. Main NOW EXISTS: NEVER fresh initializer,
+clear/clone/recreate; reuse private Controller/peer fixture with --resume after
+fresh ownership/network/pin verification. Private /workspace/work/phase4-api35-recovery2.
+Fresh15 isolated TLS/context/vault/Engine PASS0fail/skip209.708s JUnit/230.783s host,
+all6Main hashes unchanged. Old600s request stays historical UNKNOWN. All task SDKs
+now STOPPED. API35 private7offline image copies/hash-equal +32host files archived/
+verified; same UID10148, original256KiB object still exactSHA after faults/stop,
+saved AP/WiFi preserved, all forwards removed. SDK exit-11/SIGSEGV after normal
+shutdown request, NOT clean-powerloss acceptance. No clone/restore/Keystore export.
+New qualification-only API35 network/TLS preconditions and optional private QEMU
+WiFi ingress;6new+3existing host guards PASS0.172s, no product/APK/Core change.
+Native workflow actually uses default SDK eth0/15 ingress; separate raw WiFi TCP
+probe not TLS/Node acceptance. Full Phase4 NOT ACCEPTED; owner phone gates and
+writableDR/Android voter/GC/failover locks unchanged. Do not rerun old full392 for
+unchanged product or count this as a fresh full suite.
+
 LATEST ALSO fresh FINAL5 FIRST-identity path QUALIFIED on separate blank API30:
 network1PASS0.202s, cold Node1PASS92.364s, retained/process-death1PASS36.607s.
 Receipt qualification/phase4-fresh-final5-api30.json. Original published5/aec65c2c

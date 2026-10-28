@@ -13,13 +13,17 @@ Gói mới đã push và tải lại từ GitHub, checksum xác minh PASS; xem m
 Các archive/APK cũ giữ nguyên. Không dùng software PASS để bật Android GC/Raft/
 failover/writerDR hoặc tuyên bố phone/LAN/ARM64/Doze đã nghiệm thu.
 
-API35 update: exact APK5 transport5PASS210.286s; boot/PM READY138.886s, then
-267.105s after a preserved-data SDK network-fixture restart. Integrated cold Node
-E2E has NOT started: no usable network/default route, Android rejected the SDK AP
-without Internet, System UI ANR. Main identity/context/Catalog proof remain absent
-at preflight. Read [API35 qualification](PHASE4-API35-QUALIFICATION.md) before any
-new ADB action. Never wipe/re-init a partially initialized Node, use ADB data
-forwarding as LAN proof, disable validation or change proxy/CA to bypass this.
+API35 latest: [network/Native receipt](../qualification/phase4-api35-network-native.json)
+now qualifies SAME retained SDK/exact APK5: archived network1/TLS1/cold Node1/
+retained1 PASS. Actual Engine/FSYNC/replicas/browser/SHA/fallback/Controller-loss503,
+IDs/pin/context preserved, direct standard SDK eth0/15 (no ADB data relay). Two
+startup-ANR failures retained; later real Ethernet became ready with no override.
+Fresh15 isolated TLS/context/vault/Engine PASS209.708s/all6Main hashes equal; old
+timeout still historical UNKNOWN. All task SDKs STOPPED;7API35 offline images/
+32host files private backup/hash-verified. SDK exitSIGSEGV(-11), not clean-powerloss.
+Main NOW provisioned; preserve all data, only --resume same private fixture after
+fresh owner/network/pin checks. Never fresh init/reset/clone or adopt another Node.
+Other SDK30 datasets/signer preserved. Full physical Android/Phase4 NOT ACCEPTED.
 
 Exact direct APK4/7c4ba649 ->FINAL5/aec65c2c now PASS on API30 x86_64:17targeted
 Android executions/0fail/skip +3host selection guards, no interim main5. Original

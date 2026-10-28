@@ -4,7 +4,7 @@ Nguồn hiện tại: nhánh `feature/phase4-2-android-native`. Kết quả nghi
 ở PHASE4-2-PROGRESS/ACCEPTANCE; không suy ra điện thoại thật PASS từ emulator.
 Các gói Demo/Native đã công bố và mã nguồn mới nhất có phiên bản khác nhau.
 Core fix8c54728 đã fresh392PASS0skip/all64faults +Go PASS. APK5 giữ nguyên scoped
-API30 proof trước đó; phone/ARM64/LAN/OEM chưa nghiệm thu. Trạng thái
+API30 và API35 Native Node/replica/SHA/fallback/restart proof; phone/ARM64/LAN/OEM chưa nghiệm thu. Trạng thái
 tải/checksum/nghiệm thu hiện tại: PHASE4-STATUS và PHASE4-HANDOFF.
 
 | Nhu cầu | Hiện trạng |
@@ -14,7 +14,7 @@ tải/checksum/nghiệm thu hiện tại: PHASE4-STATUS và PHASE4-HANDOFF.
 | Quản lý file từ APK | Candidate versionCode5 có nút mở File Manager web hiện hữu ở trang Cụm; chưa có File Manager native/file picker |
 | Web/PWA | Đã có manifest/icons/install prompt/network-only worker trên Dashboard chung; Chromium Linux criteria và cài/mở/gỡ PASS; Chrome Android chưa thử, không offline-write/cache API/file |
 | Đăng nhập quan sát Core trong APK | Có ở 4.2i; chỉ đọc node/volume/replica/job/backup/quorum, không có quyền upload hoặc tạo writer |
-| Storage Node native | Final5 API30 x86_64:28regression+foreign1, normal Catalog/network2case, hai logical replicas/fallback/SHA/process death PASS; một host chưa phải2domain vật lý. APK4/35retained là bằng chứng lịch sử; final5/35 NOT TESTED, cold35 BLOCKED. Điện thoại/ARM64 chưa nghiệm thu |
+| Storage Node native | Exact final5: API30 fresh install/direct4→5/retained Node PASS; API35 cold+retained Node/replicas/browser/SHA/fallback/Controller loss và15TLS/Keystore/Storage faults PASS. Hai miền logic cùng host chưa phải hai điện thoại độc lập; ARM64/phone chưa nghiệm thu |
 | Controller chạy bên trong APK | Chưa có; giữ Controller theo QuickStart/runtime đã hỗ trợ, tách khỏi APK Storage Node |
 | LAN không có Internet | Giao thức dùng HTTPS/IP nội bộ, không cần cloud/DNS công cộng/CDN; đã có bằng chứng synthetic/NAT, chưa nghiệm thu LAN trên điện thoại thật |
 | Không có Wi-Fi/router/hotspot hoặc đường IP giữa các thiết bị | Chưa có tự tạo hotspot, Wi-Fi Direct/Bluetooth hay transport thay thế; phải có mạng nội bộ do owner chuẩn bị |
@@ -47,9 +47,11 @@ Không nhập admin token, Node token hay private key vào các ô mã đăng nh
 
 Core GC blocker đã sửa và fresh full392PASS; không cần lặp lại full khi source
 không đổi. Controller source mới b423 có exact042->current/NEW-state rollback
-proof, direct prior043->new chưa thử. APK5 không rebuild; đường actual4->interim5->
-final5 được giữ, direct published4->final5 chưa thử. Còn owner nghiệm thu phones/
-ARM64/LAN/2physical domains/Doze/OEM/ChromeAndroid PWA và final5API35 bị cold blocker.
+proof; exact e69/native-node và c831/PWA043→b423 cũng đã PASS. APK5 không rebuild:
+exact published4→FINAL5 trực tiếp và fresh-first5 đã PASS trên API30. API35 cold+
+retained Node và15TLS/context/vault/storage faults nay đã PASS; xem receipt
+phase4-api35-network-native. Còn owner nghiệm thu phones/ARM64/LAN/2physical
+domains/Doze/OEM/ChromeAndroid PWA và upgrade thực trên điện thoại.
 Cloudflare/SSH/VPN/remote maintenance vẫn Phase5, chưa triển khai.
 
 APK Node mới không cần Termux để chạy chính Node, nhưng không thay Controller

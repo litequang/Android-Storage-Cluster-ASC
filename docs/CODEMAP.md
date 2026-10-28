@@ -2,22 +2,28 @@
 
 ## Current API35 qualification handoff (2026-10-28)
 
-- `tools/qualify_native_catalog.py --artifact current|published4|published5`:
-  existing real Node/Catalog qualification can select exact immutable original
-  APKs before initial identity. Fixed names/hashes, no newer-build fallback; all
-  existing ownership/signature/installed-byte checks and fault assertions retained.
-  `tests/test_native_qualification_artifacts.py`:3 host guards PASS; actual direct
-  APK upgrade still separate/NOT TESTED. Product/archives not changed.
-
-- `qualification/phase4-api35-cold-node-blocker.json` and
-  `docs/PHASE4-API35-QUALIFICATION.md`: exact APK5 transport5PASS retained;
-  extra15 requested tests timed out without final JUnit, NOT PASS. Cold Node E2E
-  blocked BEFORE enrollment by SDK default-network/System UI conditions. Includes
-  preservation/STOPPED guest, SDK exit SIGSEGV and original private signer scope.
-- Existing `NativeCatalogTest`, `NetworkReadinessTest` and
-  `tools/qualify_native_catalog.py` remain unchanged; do not create another Engine
-  or reset a partial enrollment. Establish actual network/TLS readiness first.
-  Product/archives/APK/all314 frozen inputs unchanged; no new full-run claim.
+- `qualification/phase4-api35-network-native.json` / `PHASE4-API35-QUALIFICATION`:
+  actual default network +pinned Controller +cold/retained Native Node PASS on
+  unchanged exact APK5/same retained SDK35. Two startup-ANR failures preserved;
+  eth0/15 eventually became usable, no proxy/CA/validation override/ADB data relay.
+  Main now provisioned: preserve/resume, never repeat fresh init. Fresh15 PASS
+  209.708s/all6Main hashes equal; old interrupted15 UNKNOWN retained. SDK stopped,
+  7images/32host files private backup/hash-equal, exitSIGSEGV not clean-powerloss.
+  No physical phone/ARM64/LAN/Doze/Phase4 acceptance.
+- `tools/qualify_native_catalog.py`: exact published4/5 or explicit current artifact,
+  original SHA/signer/installed equality; API35 actual network +TLS/cluster/wrong-pin
+  preconditions BEFORE Node init. Fresh process ownership before ADB. Existing
+  Engine/Node/browser/fault assertions and time limits retained. API30 direct4->5
+  and fresh-first5 proved separately in existing receipts, no whole branch merge.
+- `tools/native_wifi_ingress.py`: optional PRIVATE task-owned QEMU Unix monitor
+  ingress to fixed virtio-wifi/10.0.2.16:9443, host127 only, never runtime/browser
+  management API. Exact process/start/AVD/port/monitor/socket guards, bounded reply/
+  table verification/owned cleanup. Successful Node run uses normal eth0/15 redir;
+  WiFi raw TCP probe is not TLS/Node qualification. `tests/test_native_wifi_ingress.py`
+  six guards +three prior artifact guards PASS. No app/Core/package/identity change.
+- Older `phase4-api35-cold-node-blocker.json` retains interrupted/failed evidence;
+  fifteen old requested tests UNKNOWN, never added as passes. Read current receipt
+  and progress before ADB. Original API30/other private SDK data/signer preserved.
 
 ## Phase 2B — Windows development qualified
 

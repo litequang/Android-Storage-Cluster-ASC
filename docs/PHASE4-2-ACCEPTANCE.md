@@ -1,5 +1,29 @@
 # Phase4.2 qualification — Linux software scope qualified
 
+## Latest API35 Native Node supplement — 2026-10-28
+
+**API35 x86_64 synthetic Native Node now PASS; full Phase4/physical Android NOT ACCEPTED.**
+[Receipt](../qualification/phase4-api35-network-native.json): same old userdata,
+exact final APK5/aec65c2c/original signer, no reset/rebuild. Archived network1PASS,
+pinned Controller/wrong pin/cluster1PASS27.674s, cold Node1PASS282.291s, retained
+Node/process death1PASS86.727s. Real TLS/Engine/FSYNC, enrollment then owner approval,
+Dashboard/browser upload256KiB/two logical replicas/SHA/fallback, Controller-loss503
+and all original identity checks passed. Standard direct SDK NAT10.0.2.15, ADB
+control only. Two early startup-ANR attempts FAILED and remain recorded; later
+real Ethernet/default network became ready without a security/network override.
+
+9host guards PASS0.172s (6new+3existing); only qualification tools/tests/docs changed.
+Product/Core/app/dependencies/APK/archives unchanged, no fresh full-regression claim.
+Fresh15 TLS/context/vault/Engine PASS0fail/skip209.708s JUnit/230.783s host, all6Main
+hashes equal. Old600s partial request stays historical UNKNOWN. Four other archived
+Android executions +these15 =19PASS in named scopes; duplicate successful driver
+network invocation excluded. All task SDKs stopped;7private offline image copies/
+32host files hash-verified, UID/original file SHA retained. Normal SDK shutdown
+returned SIGSEGV(-11), NOT clean-powerloss qualification. API30 exact fresh/update proofs remain their own
+scopes. Physical phone/ARM64/2hardware domains/real LAN/Chrome Android/Doze/OEM and
+API26–29 NativeTLS remain unqualified. No GC/voter/failover/writableDR unlock.
+This supplement takes precedence over older API35 NOT TESTED/blocked rows below.
+
 **Fresh Core/Linux software gates PASS. Full Phase4/4.2 NOT ACCEPTED trên Android thật.**
 Source Core8c54728; Native APK5 vẫn source3914b99, không chứa host-only decode fix.
 Không đổi app/Engine/Node/TLS/enrollment/UI/identity/signer/state; Node không chạy

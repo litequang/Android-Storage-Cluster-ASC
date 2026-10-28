@@ -12,10 +12,15 @@ automatic hotspot/Wi-Fi Direct and Cloudflare remain unimplemented.
 
 Shared network-only Dashboard PWA/install guidance: PHASE4-WEB-APP. Final5 has
 actual API30 transport/restart/nonreading-peer/retained catalog qualification;
-historical API35 APK4 proof does not qualify final5 on35. Final5 now has API35
-transport5PASS and boot/PM READY, but integrated cold35Node is BLOCKED at network
-preflight/System UI ANR. PHASE4-API35-QUALIFICATION owns the exact scope. Published
-artifacts/full software results: PHASE4-STATUS/HANDOFF, not the historical text below.
+historical API35 APK4 proof stays separate. Final5 now also qualifies actual API35
+cold+retained Node/Engine/FSYNC/replicas/browser/SHA/fallback/Controller-loss plus
+15TLS/context/vault/storage faults, using same old userdata/original APK+signer.
+Network/Controller pin preconditions passed after real eth0/15 became available;
+no ADB data relay/proxy/CA/validation override. Prior ANR failures retained. All
+SDKs stopped, private API35 data backed up/hash-verified; Main NOW exists, only
+resume original fixture after fresh owner/network/pin checks, never init/reset.
+PHASE4-API35-QUALIFICATION owns this synthetic scope; phones/ARM64/physical LAN/
+Doze remain unqualified. Published artifacts/full software: PHASE4-STATUS/HANDOFF.
 
 Direct exact published4/7c4ba649 ->FINAL5/aec65c2c now qualified on API30 x86_64:
 17targeted Android executions, normal-r update, original UID/Keystore/IDs/volume/

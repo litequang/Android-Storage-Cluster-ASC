@@ -1,5 +1,52 @@
 # API35 qualification supplement — 2026-10-28
 
+## Latest: actual API35 Native Node PASS (2026-10-28)
+
+[Current receipt](../qualification/phase4-api35-network-native.json) supersedes the
+older network/Node blocker below ONLY for this retained API35 x86_64 SDK. Same
+userdata/exact APK5/original signer; no wipe/clone/new APK. Main had not previously
+been provisioned; now it HAS a real App/Node/Cluster/Volume identity and Catalog
+proof. NEVER rerun the fresh initializer on this dataset: preserve and resume.
+
+Archived JUnit: default-network1PASS (15.216s host), actual pinned Controller with
+wrong-pin/cluster refusal1PASS27.674s, cold Native Catalog1PASS282.291s, retained/
+process-death1PASS86.727s. Driver additionally required another successful
+NetworkReadinessTest before creating its fixture (stdout not separately archived,
+not added to the four archived executions). Existing Engine/enrollment/FSYNC,
+owner storage approval, 256KiB/two logical replicas, HTTPS owner Dashboard/Chromium,
+SHA readback, native-offline fallback, Controller-loss503 and preserved identities
+all actually ran. Same host, NOT two independent phones or physical LAN.
+
+Boot/PM ready271.062s was insufficient. Two network attempts ended with Process
+crashed (78.776s/58.631s); event log records startup ANRs and system termination,
+plus System UI/Quickstep/phone/provider ANRs and Bluetooth SIGABRT. Normal Wait
+choices only. Later eth0/10.0.2.15 appeared and the strict real-network and TLS
+preconditions succeeded. No proxy/CA/route/validation/security override or ADB data
+forwarding. Do not infer an ASC TLS defect from the earlier stage/timeouts.
+
+WiFi10.0.2.16 is a separate QEMU virtio-wifi backend. A public-byte TCP probe
+actually succeeded through that backend, host127.0.0.1 only; it is NOT TLS/Node
+proof. Another guarded probe found no WiFi listener after the guest switched to
+Ethernet and failed; that result is retained. New test-only optional
+`--wifi-monitor /PRIVATE_TASK_DIR/monitor.sock` targets fixed guest16:9443 and
+requires the exact owned QEMU/AVD/port/monitor/start identity, socket0600/private
+parent0700, bounded replies, exact table confirmation and owned cleanup. It never
+exposes a management service or generic command API. Normal default SDK redir
+remains in use for the successful Node workflow on eth0/15. Do not select this
+option for an Ethernet Node or assume successful mapping means successful TLS.
+
+`tools/native_wifi_ingress.py` +6host tests; combined9host tests PASS0.172s. Existing
+NativeCatalog assertions and all original time limits unchanged. Extra15 isolated
+TLS/context/vault/Engine rerun completed15PASS0fail/skip209.708s JUnit/230.783s host,
+all6Main hashes identical. Old600s request remains historical UNKNOWN. All task
+SDKs now STOPPED,7private offline images +32host files hash-verified; sameUID10148,
+original256KiB object exactSHA after isolated faults and stop, saved AP/WiFi state
+retained, all SDK/QEMU forwards removed. Normal shutdown requested, SDK exit-11/
+SIGSEGV, NOT clean-powerloss acceptance. No phone export/Keystore migration/DR
+claim. Private /workspace/work/phase4-api35-recovery2.
+Full Phase4 NOT ACCEPTED; phone/ARM64/physical LAN/OEM/Doze and writableDR remain
+unqualified/locked. Historical failures and partial receipts below are preserved.
+
 This is a TASK-OWNED emulator, never phones/M51/production. The original cold35
 sandbox resumed without wipe/restore/identity reset. Seven raw images/config files
 were hash-verified in an offline PRIVATE backup first; no key/state was copied

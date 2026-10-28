@@ -1,5 +1,7 @@
 # Phase4 — trạng thái 2026-10-28
 
+**API35 Native Node synthetic vừa PASS; xem [receipt](../qualification/phase4-api35-network-native.json).**
+
 **Cài mới trực tiếp APK5 và nâng cấp APK4→FINAL5 đã nghiệm thu trên API30 x86_64 synthetic.
 Toàn Phase4/4.2 và Android thật vẫn CHƯA ACCEPTED.**
 
@@ -15,7 +17,7 @@ Toàn Phase4/4.2 và Android thật vẫn CHƯA ACCEPTED.**
 |Dữ liệu sau update|UID/Keystore/App/Node/Cluster/Volume/TLS pin và6records giữ nguyên; file4 còn đọc đúng SHA sau các lần ghi5|
 |Node sau update|Existing Engine/enrollment/FGS, upload256KiB/two logical replicas, HTTPS/browser/download SHA/fallback, Controller-loss503, process death PASS|
 |Web/PWA|Dùng chung owner Dashboard/File Manager; Linux Chromium HTTPS/PWA proof có sẵn, Chrome Android chưa nghiệm thu|
-|API35|Exact5 transport5PASS210.286s; cold Node E2E BLOCKED ở mạng/System UI; extra15timeout600s UNKNOWN, không cộng PASS/FAIL/SKIP|
+|API35|Same exact5: network1/TLS1/cold Node1/retained1 archived PASS; actual replicas/browser/SHA/fallback/Controller loss; fresh15 TLS/context/vault/Engine PASS209.708s/all6Main hashes equal; old600s UNKNOWN giữ nguyên|
 |Artifact|Giữ nguyên APK5/aec65c2c và signer bba77b68; không build/phát hành APK mới vì công cụ test thay đổi|
 
 Chi tiết mới: [direct-upgrade receipt](../qualification/phase4-direct-published45-final.json).
@@ -23,7 +25,7 @@ Bộ17lượt gồm network1, cold/retained4 Node2, local update11, retained5 No
 đọc original4 sau ghi5 thêm1; có phương thức lặp lại tại các giai đoạn khác nhau.
 Thêm [fresh5 receipt](../qualification/phase4-fresh-final5-api30.json):3lượt trên
 userdata trống riêng. Tổng20lượt Android của hai đường, không phải20phương thức
-khác nhau/full suite; không cộng15API35 UNKNOWN. Mỗi checkpoint có source/receipt
+khác nhau/full suite; không cộng15API35 UNKNOWN cũ;15fresh API35 PASS được ghi riêng trong receipt mới. Mỗi checkpoint có source/receipt
 và push riêng; đọc PHASE4-2-PROGRESS.
 
 Chỉ một trong314inputs cũ đổi: test driver chọn artifact; Core/app/dependencies/
@@ -49,13 +51,13 @@ Cloudflare/SSH/VPN/remote maintenance thuộc Phase5, chưa triển khai.
 ## Chưa nghiệm thu
 
 API30 x86_64 SDK NAT +Linux peer cùng host chỉ là2miền logic, không phải LAN điện
-thoại/hai miền lỗi vật lý. API35 giữ blocker độc lập; xem
-[API35 qualification](PHASE4-API35-QUALIFICATION.md). ARM64/phones/Chrome Android/
+thoại/hai miền lỗi vật lý. API35 cold/retained Node và15fresh faults nay PASS;
+blocker cũ giữ làm lịch sử, xem [API35 qualification](PHASE4-API35-QUALIFICATION.md). ARM64/phones/Chrome Android/
 Doze/OEM/24x7, SDK26–29 NativeTLS, Termux→APK, Foundation2→FINAL5 chưa qualified.
 Direct exact published4→FINAL5 đã PASS đúng hai archive APK được chỉ rõ, không suy
 ra cho mọi build gắn version4/5. Android thật phải được owner kiểm chứng riêng.
 
-Các emulator đã dừng; private signer và mọi dữ liệu cũ giữ nguyên. Data mới
+Tất cả emulator đã dừng; API35 có7offline image/32host files backup/hash-verified, all6Main hashes/UID/file SHA giữ nguyên. SDK exit-11/SIGSEGV không phải clean-powerloss PASS. Không dùng PID cũ; xác minh owner mới trước ADB. Các dataset API30 cũ giữ nguyên; private signer và mọi dữ liệu cũ giữ nguyên. Data mới
 /workspace/work/phase4-direct-apk45:7image backup offline và33host files kiểm hash,
 không restore. SDK shutdown yêu cầu bình thường, exit-10/SIGUSR1, chưa có bằng
 chứng clean-powerloss. API35 cũ giữ riêng backup/SIGSEGV. Không dùng disk backup
@@ -67,6 +69,10 @@ disk SDK; mọi công cụ cài sẵn, source/APK/signer/AVD/state cũ giữ ngu
 Bước tiếp: owner theo [pilot](ANDROID-NATIVE-PILOT.md) trên model được phép,
 SDK30+/ARM64,2phones/2domains/2replicas/SHA/fallback/restart/Controller loss,
 Wi-Fi còn khi ngắt Internet, FGS/Stop/Doze/OEM và HTTPS/PWA. Codex không truy cập
-phone/M51/production. Với API35, cần emulator đáp ứng/default network thật +pin
-Controller rồi mới chạy lại phần chưa hoàn tất; không wipe/re-init identity hay
-đổi proxy/CA/validation để vượt gate. WriterDR/Android voter/GC/failover giữ khóa.
+phone/M51/production. API35 các gate Node/15fresh faults đã PASS; nếu mở lại dataset
+chỉ --resume fixture/identity cũ sau khi xác minh live owner/default network/pin.
+Không fresh init/wipe/clone hay đổi proxy/CA/validation. Không còn blocker mạng/
+Node trong lượt nghiệm thu cuối này; phone/ARM64/platform gates vẫn chưa đạt.
+WriterDR/Android voter/GC/failover giữ khóa.
+
+API35 latest supersedes old network/Node blocker wording above: Node cold/retained đã PASS qua actual eth0/15 SDK NAT, không ADB relay. Main hiện đã có identity, chỉ resume cùng fixture; không init lại. Full Phase4/phone/ARM64/physical LAN vẫn NOT ACCEPTED.

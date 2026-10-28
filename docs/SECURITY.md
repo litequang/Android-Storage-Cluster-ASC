@@ -671,3 +671,16 @@ Commit validation, nonce/actual-term quorum receipts, GC independent byte proofs
 10s network and250ms local final fences are unchanged. Cache hits cannot grant a
 writer, acknowledge missing bytes or turn recovery staging into authority. No
 new disk cache, secret export, pin/permission/retention/schema change.
+
+
+### Private SDK qualification monitor boundary (2026-10-28)
+`tools/native_wifi_ingress.py` is host TEST tooling, never shipped in the APK or
+Controller package and never exposed to browser/Binder/LAN. QEMU HMP has broad
+owner privileges: allow ONLY task-owned Unix socket under0700 parent/owner-only
+socket, verified live UID/executable/start/AVD/port/exact monitor argument. Tool
+emits fixed WiFi-backend forwarding commands to guest10.0.2.16:9443/host127 only,
+validates port/input/table/cleanup and bounds replies; no public listener/generic
+command API/ADB data relay/CA/proxy/validation change. Forwarding is transport,
+NOT TLS trust, storage approval or writer authority. API35 Node qualification used
+the normal Ethernet/15 SDK path; actual network and pinned Controller must pass
+before fresh Node initialization. All old runtime/DR/GC guards remain unchanged.

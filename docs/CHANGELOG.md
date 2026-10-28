@@ -730,3 +730,14 @@ Published e69/native-node and c831/PWA ->b423 core-decode direct code upgrade an
 NEW-state rollback qualified2Linux synthetic tests/51.823s with actual TLS/bytes/
 pending/identity/bridge preservation. No product/source artifact or old test change;
 full392 retained, no fresh full394 or Android/architecture migration claim.
+
+
+### API35 network prerequisites and Native Node synthetic supplement — 2026-10-28
+Actual unchanged APK5 cold+retained Node, pinned Controller, Engine/FSYNC/replicas/
+Dashboard/SHA/fallback/Controller-loss and identity retention now PASS on retained
+SDK35. Startup ANR failures retained; actual default Ethernet readiness required,
+no network-security override. Qualification-only owned WiFi ingress option/guards
+and network/TLS preconditions;9host tests PASS. No app/Core/archive/release change.
+Fresh15 TLS/context/vault/Engine PASS209.708s/all6Main hashes unchanged; stopped
+SDK/private7image+32host-file backup verified, SIGSEGV exit not clean-powerloss.
+Full phone/ARM64/physical LAN/Phase4 not accepted.

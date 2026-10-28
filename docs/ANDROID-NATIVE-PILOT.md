@@ -5,10 +5,12 @@ only task-owned API30/API35 x86_64 emulators and Linux synthetic services. Never
 on M51/production/unknown devices or replace existing Termux data. Read current
 PHASE4-2-ACCEPTANCE, ANDROID-NATIVE-OPERATIONS and ASC-USER-STATUS.
 
-Final candidate5 has targeted actual API30 x86_64 proof. Historical API35 retained
-APK4 proof is separate; final5/API35 transport5PASS, boot/PM READY; integrated
-fresh35Node remains BLOCKED at network preflight/System UI ANR. Read
-PHASE4-STATUS/HANDOFF for final-full/publication status before downloading.
+Final candidate5 now has actual API30 AND API35 x86_64 scoped Node proof. API35
+same retained data: real network/pinned Controller, cold+retained Node/Engine/FSYNC/
+replicas/browser/SHA/fallback/Controller-loss and15TLS/context/vault/storage faults
+PASS. Prior startup/network failures retained, not counted as passes. No Android
+ARM64/physical-phone/LAN/Doze acceptance. Read PHASE4-STATUS/HANDOFF and receipt
+phase4-api35-network-native before downloading; immutable APK/signer unchanged.
 
 The integrated j tests use the CURRENT branch's packaged Demo Controller, not
 an independently qualified APK-candidate -> published Demo0.4.1 Controller path.

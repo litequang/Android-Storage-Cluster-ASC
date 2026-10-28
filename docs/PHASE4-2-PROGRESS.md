@@ -2463,3 +2463,96 @@ reset/overwrite or lost pending source. Both task datasets/all other private sta
 and original signer remain preserved STOPPED. Following docs-only report records
 this observed remote event; source/artifacts/runtime proof unchanged. API35/owner
 phone gates remain incomplete, no Phase4 ACCEPTED/writerDR/Phase5 claim.
+
+
+### API35 network recovery and actual Native Node qualification — 2026-10-28
+
+Baseline242ca3f fetched/HEAD matched/clean. Same retained API35 userdata matched all7
+previous offline image hashes before startup; original signer unchanged. Existing
+source/APK/app/dependencies/archives kept. SDK37.2.12/image35rev2, TCG/no KVM,
+2vCPU/3072MiB under2CPU/8GiB quota. Boot+PM271.062s, then system/Quickstep/phone/
+provider ANRs and Bluetooth SIGABRT. Ordinary Wait choices only. Two NetworkReadiness
+attempts returned Process crashed at78.776s and58.631s; event log confirms app
+startup not completed/system ANR kill, not a completed JUnit fault assertion.
+No root/provider rewrite/proxy/CA/validation/route/ADB-data bypass. These failures
+remain in the new receipt, not silently converted to PASS.
+
+Actual WiFi10.0.2.16 lives on QEMU virtio-wifi, separate from mynet/15. Public-byte
+TCP ingress succeeded on that backend/host127only. First prototype timed out and
+later guarded-class diagnostic failed when WiFi disappeared; map/cleanup actually
+confirmed, no WiFi TLS/Node pass claimed. Later eth0/10.0.2.15 appeared naturally;
+standalone NetworkReadiness1PASS15.216s. Existing driver additionally enforced its
+own fresh actual network test (success checked, stdout not archived) before fixture
+creation, then actual pinned Controller/wrong-pin/wrong-cluster1PASS27.674s before
+any Android Main identity/enrollment initialization.
+
+Exact APK5 cold NativeCatalog1PASS282.291s, retained after real process death
+1PASS86.727s. Real existing Engine/node TLS/heartbeat/FSYNC/readback, enrollment
+pending approval, host-owner approves separate logical domains, actual HTTPS
+Dashboard/Chromium login/upload256KiB/two replicas/SHA/native-offline fallback,
+Node restart and Controller-loss503 all PASS. Original time limits and assertions
+unchanged. SHA2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9.
+Same App/Node/Cluster/Volume IDs, pin/context checks after restart. Four archived
+JUnit executions in table; extra enforced network invocation not added to that
+archived total. No independent phone failure domains/physical LAN claim.
+
+Added test-only explicit --wifi-monitor helper with live owned-process/start/AVD/
+port/monitor/socket0600+parent0700 checks, fixed backend/guest16:9443/host127,
+bounded responses/actual table/owned cleanup; never arbitrary browser IPC/shell or
+public management. Default SDK ingress remains unchanged for actual successful
+eth0/15 Node workflow. API35 now gates actual network/TLS before Node init; all
+ADB actions recheck owned process.6new+3prior artifact host guards9PASS0.172s.
+No app/Core/dependency/format/schema/identity/APK/build change or new release. Prior
+392/Go/fault receipts retain identical-product scope; not a new fresh full.
+
+Current Main identity is now REAL/PRESENT. Preserve/resume original fixture at
+/workspace/work/phase4-api35-recovery2/native-catalog, NEVER run fresh initializer
+again, no clone/reset. Cold/retained report actual PASS. Extra15 isolated namespaces
+fresh rerun is currently RUNNING/UNKNOWN; all6Main hashes captured before, final
+JUnit/equality required. Previous15timeout remains historical UNKNOWN. Other SDK30
+states/original signer retained. Follow-up records final result and offline
+preservation; no physical phones/M51/Termux/prod/Phase5/writableDR actions.
+
+
+### API35 isolated faults completed and preservation closed
+
+Fresh SAME exact APK5 NativeTLSTest5 +NativeContextTest3 +VaultStorageTest6 +
+EmbeddedEngineTest1 =15PASS0fail/skip,209.708s JUnit/230.783s host, within original
+600s watchdog, no assertion/time-limit change. Real Bionic memfd/seals/no plaintext
+fallback, actual TLS/wrong-pin/mismatch/key-loss/seal refusal, actual Keystore,
+identity holds, private EACCES/quota/marker/replacement/corrupt-object retention,
+SAF refusal and canonical Engine streaming/readback/fsync/restart all passed.
+All6Main App/Node/context/proof records SHA equal before/after these isolated
+namespace faults. Historical600s incomplete request remains UNKNOWN, not repaired
+by changing its result. The four separately archived Android preflight/Node tests
+and these15 provide19archived successful executions; additionally enforced driver
+network success not added to archived total. No full Android-suite claim.
+
+Verified current QEMU UID/exe/start/AVD/datadir/port again, original app UID10148,
+then force-stopped ONLY own app. All6required record hashes still equal, original
+256KiB native object SHA2312394b... exact after all faults/stop, volume marker
+retained, controller Catalog1file. Existing saved AP list/WiFi-enabled state retained;
+all own SDK/QEMU ingress removed, host Controller/peer already stopped. Requested
+normal SDK shutdown: actual exit-11/SIGSEGV, NO clean-powerloss/shutdown PASS.
+Seven offline image files copied privately/hash-equal,32quiescent host-state files
+archived and verified. No restore/clone/wipe/uninstall/old DB restoration/identity
+regeneration/Keystore export. /workspace/work/phase4-api35-recovery2 contains all
+private logs/fixtures/backups; never publish raw disks or credentials.
+
+All task SDKs now STOPPED, all previous SDK30 datasets/private original signer
+unchanged. Signer2618bytes0600/original mtime, same immutable APK5 SHA and archives.
+Rechecked old314input freeze:313identical, ONLYtools/qualify_native_catalog.py differs;
+new helper/new host tests are additive.9host guards PASS0.172s, JSON/source/staged/
+secret checks before normal push. No fresh full Python/Go or new APK/release; old
+392/Go/fault receipts retain identical-product scopes. Source-only check changes
+never alter quorum/term/fencing/physical/retention/GC budgets or runtime locks.
+
+Resume this Node ONLY with --resume and same private native-catalog fixture after
+fresh owned-process/SDK/network/pin verification; Main identity is now PRESENT,
+never repeat fresh initializer. API35 network/Node and fifteen fresh fault gates
+now qualified in their specific synthetic scopes; no outstanding failure in those
+final gates. Remaining Phase4 acceptance is platform/owner scope: ARM64 phones,
+2independent devices/domains/replicas/fallback, real LAN without Internet, Chrome
+Android/PWA, FGS Stop/Doze/OEM/background/update, no Termux adoption. Phase4/4.2 not
+physical-device ACCEPTED, API26–29 TLS unqualified, writableDR/Android voter/GC/
+failover locked, no Phase5/phone/M51/production access.

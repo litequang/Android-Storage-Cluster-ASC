@@ -32,6 +32,7 @@ from asc.catalog.client import ClusterClient
 from asc.demo.package import build
 from asc.identity import fingerprint_from_pem
 from asc.storage.client import StorageClient
+from tools.native_wifi_ingress import OwnedWifiIngress
 
 
 PUBLISHED_APKS={
@@ -65,6 +66,8 @@ def main():
     p.add_argument('--android-api',type=int,choices=(30,35),default=35,
                    help='actual owned SDK image; default API35 contract unchanged')
     p.add_argument('--serial',required=True);p.add_argument('--owner',type=Path,required=True)
+    p.add_argument('--wifi-monitor',type=Path,
+                   help='API35 only: private task-owned QEMU Unix monitor for explicit virtio-wifi ingress; never ADB forwarding')
     p.add_argument('--artifact',choices=('current',*PUBLISHED_APKS),default='current',
                    help='exact installed baseline; published4 permits direct old4->final5 qualification without first installing an interim5')
     p.add_argument('--out',type=Path,required=True);p.add_argument('--resume',action='store_true')
@@ -77,8 +80,16 @@ def main():
     if (os.name!='posix' or proc.stat().st_uid!=os.getuid() or expected_avd not in argv
             or not Path(os.readlink(proc/'exe')).name.startswith('qemu-system') or a.serial!=expected_serial):
         raise ValueError('requires separate owned Native Catalog AVD; never phones/original AVD')
+    proc_start=(proc/'stat').read_text().split()[21]
+    if a.wifi_monitor and a.android_api!=35:raise ValueError('explicit Wi-Fi ingress requires API35')
+    wifi_ingress=OwnedWifiIngress(proc,a.wifi_monitor) if a.wifi_monitor else None
     adb=[str(a.sdk/'platform-tools/adb'),'-P',str(a.adb_port),'-s',a.serial]
+    def verify_owned():
+        if (proc.stat().st_uid!=os.getuid() or (proc/'stat').read_text().split()[21]!=proc_start
+                or (proc/'cmdline').read_bytes().split(b'\0')!=argv):
+            raise ValueError('task emulator ownership changed')
     def call(args,data=None,timeout=40):
+        verify_owned()
         r=subprocess.run(adb+args,input=data,capture_output=True,timeout=timeout)
         if r.returncode:raise RuntimeError('owned ADB failed; private response suppressed')
         return r.stdout
@@ -94,6 +105,12 @@ def main():
         raise ValueError('existing installed task APK required')
     if hashlib.sha256(call(['exec-out','cat',installed])).digest()!=hashlib.sha256(apk.read_bytes()).digest():
         raise ValueError('installed APK differs from qualified local artifact')
+    if a.android_api==35:
+        network=call(['shell','am','instrument','-w','-r','-e','class',
+            'org.asc.foundation.NetworkReadinessTest',
+            'org.asc.foundation.test/org.asc.foundation.UpgradeQualificationRunner'],timeout=180)
+        if b'OK (1 test)' not in network or b'Process crashed' in network:
+            raise RuntimeError('actual Android default-network precondition failed; no Node/fixture initialization')
     w=a.out.absolute()
     if ROOT==w or ROOT in w.parents or w.exists()!=a.resume:raise ValueError('new private output, or explicit retained resume required')
     if not a.resume:w.mkdir(mode=0o700)
@@ -132,6 +149,7 @@ esac
     processes=[];logs=[];instrument=None;browser=None;nat=None;report={'state':'ERROR','scope':f'Linux +API{a.android_api} x86_64 synthetic; not phones/physical domains',
        'adb_control_only':True,'native_identity_reset':False,
        'artifact':a.artifact,'apk_sha256':hashlib.sha256(apk.read_bytes()).hexdigest()}
+    report['ingress']='virtio-wifi/10.0.2.16' if wifi_ingress else 'SDK console redir/10.0.2.15'
     def start(root,role):
         log=(w/(role+'-'+uuid.uuid4().hex+'.log')).open('wb');logs.append(log)
         child=subprocess.Popen(['sh',str(script),'--state',str(root),role,*(['--dashboard'] if role=='run-controller' else [])],
@@ -149,10 +167,11 @@ esac
             time.sleep(.2)
         raise RuntimeError('actual qualification condition not established')
     def put(name,value):
-        if name not in ('native-catalog-fixture.json','native-catalog-control.json'):raise ValueError('fixed private fixture only')
+        if name not in ('native-catalog-fixture.json','native-catalog-control.json','controller-fixture.json'):raise ValueError('fixed private fixture only')
         call(['shell',"run-as org.asc.foundation sh -c 'umask 077; cat > files/"+name+".pending && mv files/"+name+".pending files/"+name+"'"],json.dumps(value).encode())
     def read(name):
         if name not in ('native-catalog-ready.json','native-catalog-ack.json'):raise ValueError('fixed public test receipt only')
+        verify_owned()
         raw=subprocess.run(adb+['exec-out','run-as','org.asc.foundation','cat','files/'+name],capture_output=True,timeout=15)
         try:return json.loads(raw.stdout)
         except ValueError:return {}
@@ -160,6 +179,7 @@ esac
         operation=str(uuid.uuid4());put('native-catalog-control.json',{'request_id':request,'operation_id':operation,'action':action})
         return wait(lambda:read('native-catalog-ack.json').get('operation_id')==operation,40)
     def launch(retained):
+        verify_owned()
         method='retainedNodeServesSameCatalogAfterProcessDeath' if retained else 'enrollAndServeActualDashboardReplicas'
         log=(run/('android-retained.log' if retained else 'android-initial.log')).open('wb');logs.append(log)
         child=subprocess.Popen(adb+['shell','am','instrument','-w','-r','-e','class','org.asc.foundation.NativeCatalogTest#'+method,
@@ -177,6 +197,16 @@ esac
         return value if value['verified_replicas']==2 and value['available_replicas']==2 else False
     try:
         controller_process=start(controller,'run-controller');wait(lambda:request_json(origin,pin,'GET','/api/v1/info'))
+        if a.android_api==35:
+            put('controller-fixture.json',{'origin':'https://10.0.2.2:'+str(config['controller_port']),
+                'pin':pin.lower(),'cluster_id':cfg['cluster_id'],'phase':'online'})
+            binding=call(['shell','am','instrument','-w','-r','-e','class',
+                'org.asc.foundation.ControllerBindingTest',
+                'org.asc.foundation.test/org.asc.foundation.UpgradeQualificationRunner'],timeout=180)
+            (run/'android-pinned-controller-preflight.log').write_bytes(binding)
+            if b'OK (1 test)' not in binding or b'Process crashed' in binding:
+                raise RuntimeError('actual pinned Controller precondition failed before Node initialization')
+            report['android_preflight_tests']=2 # default network +real TLS/wrong pin/cluster, not Node acceptance.
         if not a.resume:
             command(peer,'init','--role','node','--host','127.0.0.1')
             pair=command(controller,'pair')
@@ -208,7 +238,8 @@ esac
         instrument=launch(retained_start)
         ready=wait(native_ready,240)
         nat=port()
-        if b'OK' not in call(['emu','redir','add',f'tcp:{nat}:9443']):raise RuntimeError('owned standard SDK NAT not confirmed')
+        if wifi_ingress:wifi_ingress.add(nat,ready['guest_host'])
+        elif b'OK' not in call(['emu','redir','add',f'tcp:{nat}:9443']):raise RuntimeError('owned standard SDK NAT not confirmed')
         if not any(f'127.0.0.1:{nat}' in line for line in subprocess.check_output(['ss','-ltn'],text=True).splitlines()):raise ValueError('NAT must be loopback-only')
         client.request('POST','nodes/register',{'node_id':ready['node_id'],'volume_ids':[ready['volume_id']],
            'origin':f'https://127.0.0.1:{nat}','pin':ready['pin'],'device_id':'synthetic-android-avd',
@@ -275,7 +306,11 @@ esac
             try:control('finish');instrument.wait(timeout=50)
             except Exception:instrument.terminate()
         if browser is not None and browser.poll() is None:browser.terminate();browser.wait(timeout=15)
-        if nat is not None:call(['emu','redir','del',f'tcp:{nat}'])
+        try:
+            if wifi_ingress:wifi_ingress.close()
+            elif nat is not None:call(['emu','redir','del',f'tcp:{nat}'])
+        except (OSError,RuntimeError,ValueError):
+            report.update(state='FAIL',cleanup='owned ingress cleanup not confirmed; inspect preserved private fixture')
         for child in reversed(processes):stop(child)
         for log in logs:log.close()
         (run/'report.json').write_text(json.dumps(report,indent=2)+'\n')
