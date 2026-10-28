@@ -1,0 +1,64 @@
+{
+  "state": "PASS_EXACT_PUBLISHED4_BASELINE_ONLY",
+  "baseline": "c0655a8b09e8811726d5c1b350d44286d3a6814c",
+  "actual": {
+    "state": "PASS",
+    "scope": "Linux +API30 x86_64 synthetic; not phones/physical domains",
+    "adb_control_only": true,
+    "native_identity_reset": false,
+    "artifact": "published4",
+    "apk_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+    "native_android_tests": 2,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "logical_domains": 2,
+    "physical_domain_independence": false,
+    "actual_browser_login_upload_download": true,
+    "native_offline_fallback": true,
+    "controller_loss_denied": true,
+    "retained_process_identity": true,
+    "entry_mode": "fresh initialization",
+    "fresh_initialization_junit_completed": true
+  },
+  "android": [
+    {
+      "name": "android-initial.log",
+      "tests": 1,
+      "seconds": 85.277,
+      "failures": 0,
+      "skips": 0
+    },
+    {
+      "name": "android-retained.log",
+      "tests": 1,
+      "seconds": 36.08,
+      "failures": 0,
+      "skips": 0
+    }
+  ],
+  "network_readiness": {
+    "tests": 1,
+    "seconds": 0.161,
+    "failures": 0,
+    "skips": 0
+  },
+  "initial_setup": {
+    "state": "EXACT_PUBLISHED4_INSTALLED_NETWORK_PRECONDITION_PASS",
+    "scope": "NEW blank SDK userdata, not original Node/AVD",
+    "boot_seconds": 290.46,
+    "network_readiness_tests": 1,
+    "no_intermediate5": true,
+    "no_uninstall_clear_or_identity_reset": true
+  },
+  "test_apk_sha256": "b5375f59236263b66b5d8e9fc9125dedc2da879287fd4e6d88a9b54965597be7",
+  "signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "workspace": "/workspace/work/phase4-direct-apk45",
+  "new_blank_sdk_userdata": true,
+  "old_AVD_or_Node_data_cloned_or_reset": false,
+  "no_intermediate_main5_installed": true,
+  "direct_upgrade_result": "NOT TESTED YET; main still exact4",
+  "preliminary_private_harness": "First filesDir check raced asynchronous Activity launch; stopped BEFORE driver/JUnit/enrollment. Original failure log retained, later explicit files-present/Main-identity-absent check passed. No reset or passing claim for failed preflight.",
+  "source_scope": "Only qualification driver selection changed; Core/app/dependencies/packages and original tests unchanged. Host guards3 already PASS, not new full397.",
+  "api35": "BLOCKED unchanged, stopped backup preserved",
+  "next": "After normal feature push/fetch/verify: pre-update4 readback and hashes, normal direct published5 install-r, preserve all identity/data and run existing upgrade/retained tests; no -d/uninstall/clear"
+}

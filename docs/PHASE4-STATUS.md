@@ -73,3 +73,11 @@ qualification/phase4-published-apk-selection.json. Only this old frozen test-dri
 input changed; product/app/packages unchanged. Full392 is retained for unchanged
 product, not a fresh full397. Direct published4->final5 Android upgrade remains
 NOT TESTED pending actual fresh API30 sandbox; API35 blocker is preserved.
+
+
+API30 direct-upgrade baseline: exact published4 FIRST install in new blank SDK
+sandbox, NetworkReadiness1 +cold/retained NativeCatalog2 PASS. Real bytes/replicas/
+SHA/browser/Controller-loss/identity, no intermediate main5 yet. Receipt
+qualification/phase4-published4-cold-baseline.json. Actual direct4->final5 still
+NOT TESTED; two logical domains on one host are not physical phone acceptance.
+API35 blocked gate unchanged. Next preserve same state and normal final5 update.

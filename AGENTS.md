@@ -14,6 +14,16 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Current Phase4 closure pointer — 2026-10-28
+LATEST independent API30 blank SDK sandbox now exact PUBLISHED4 baseline PASS:
+NetworkReadiness1 +NativeCatalog cold/retained2, real pinned enrollment/Storage/FGS/
+256KiB/two logical replicas/browser/SHA/fallback/Controller-loss/process death.
+No intermediate main5 installed. Direct4->FINAL5 still NOT TESTED, next exact normal
+update/old identity+bytes readback. Receipt phase4-published4-cold-baseline.json.
+Only fresh task AVD RUNNING /workspace/work/phase4-direct-apk45/emulator-owner.json;
+reverify fresh /proc UID/exe/start/AVD/datadir before ADB, never historical PID.
+Original API30/API35/other data/signing untouched, no Node/Keystore clone or reset.
+API35 blocker remains independent, not superseded by this API30 result.
+
 CURRENT independent direct-APK qualification setup: existing Catalog driver now
 accepts --artifact published4/published5 (fixed original SHA allowlist), default
 current unchanged. Three HOST selection/no-fallback/path guards PASS0.193s; this

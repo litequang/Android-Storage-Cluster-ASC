@@ -870,3 +870,9 @@ serial, identity reset, startup-budget or I/O assertion relaxation.
 - docs/PHASE4-API35-QUALIFICATION.md / qualification/phase4-api35-transport5.json:
   fresh ownership, offline preservation, boot and actual APK5 JSSE5test scope;
   Node/identity/process lifecycle acceptance remains separate. No new runtime.
+
+
+Published4 baseline receipt: qualification/phase4-published4-cold-baseline.json,
+existing NetworkReadinessTest1 +NativeCatalogTest2 on exact original APK4/blank
+API30. Real existing Engine/Node/host Catalog, no new implementation. Cold+retained
+workflow PASS, direct final5 upgrade remains separate/NOT TESTED until actual run.

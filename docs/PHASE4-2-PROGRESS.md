@@ -2252,3 +2252,39 @@ verify original IDs/Keystore/volume/bytes plus refused downgrade/retained servic
 Keep all old AVD/Node data untouched; no cloned state, uninstall/clear/-d or force.
 API35 gate remains BLOCKED, Android/physical acceptance still distinct. Do not
 label this setup as a completed Android upgrade checkpoint.
+
+
+### Exact published4 cold baseline — PASS before direct update
+
+Selection checkpointc0655a8b09e8811726d5c1b350d44286d3a6814c normal-pushed/
+HEAD=FETCH_HEAD=advertised remote verified. Existing Core/app/archives/signing kept.
+NEW independent blank API30/default/x86_64 r10 SDK sandbox, only config created;
+no original AVD/userdata/Node/Keystore clone/reset. Fresh process UID/exe/start/
+AVD/datadir/port verified before ADB, original signer matched. Boot+PM two real
+probes READY290.460s. ASC package absent before install; exact published4/7c4ba649
+installed BEFORE any app/Node identity. Only same-signer testAPK b5375f59 also
+installed (different test package, not a main5 intermediate).
+
+Actual radio0/.15 measured, standard SDK fixture Wi-Fi disable selected it; real
+NetworkReadinessTest1PASS0skip0.161s. First private filesDir guard raced async
+Activity startup and stopped BEFORE host driver/JUnit/enrollment; failure retained.
+Later files PRESENT and Main identity/native context/proof ABSENT explicitly
+verified; same state resumed, no reset or false PASS. Ran original Catalog driver
+--artifact published4, all original assertions/budgets retained.
+
+Fresh NativeCatalog initial1PASS85.277s +retained1PASS36.08s,
+0fail/skip: real HTTPS pin/cluster enrollment, no auto approvals, actual writable/
+fsync private volume, owner grants, heartbeat/FGS/Node listener, Chromium HTTPS
+owner login/upload256KiB/two VERIFIED logical replicas/SHA download, Node offline
+fallback/unsafe upload refusal, original bytes after restart, actual Controller-loss
+503authorization_unavailable with NodeTLS still listening, same App/Node/Cluster/
+Volume/pin/context after process death. Same host Linux peer+emulator ONLY, not
+independent phone hardware/physical LAN. No ADB reverse data path.
+
+Receipt qualification/phase4-published4-cold-baseline.json; private baseline,
+Controller/peer and owned AVD under /workspace/work/phase4-direct-apk45. Main STILL
+APK4, never an interim5. No new app/source archive or product change; driver helper
+positive integration now exercised. No new full claim. API35 remains BLOCKED.
+Next normal checkpoint commit/push/fetch verify, then exact direct published5 update,
+original IDs/Keystore/volume/bytes readback and downgrade refusal/retained Node E2E.
+AVD remains RUNNING; original private signer and all existing states preserved.
