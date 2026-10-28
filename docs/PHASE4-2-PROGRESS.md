@@ -2216,3 +2216,13 @@ partial enrollment. Exact published4->FINAL5 retained Node/state direct update,
 ARM64/physical LAN/two phone domains/ChromeAndroid/OEM/Doze/owner upgrade remain
 unqualified. No phone/M51/Termux/production access, Phase5, Android voter/GC/
 failover, recovery writer or untested state migration to bypass these gates.
+
+
+API35 blocker handoff publication: `35604c642c8ed49f2188e568df7a924a8d00316c` normal-pushed to
+feature/phase4-2-android-native; fetch HEAD=FETCH_HEAD=advertised remote verified
+2026-10-28T01:34:51+00:00. Actual work/index415files,0untracked,0secret findings;
+JSON/raw receipt facts, requested-test inventory, Main absence/restored WiFi,
+private7file backup, unchanged314inputs and APK SHA consistency checks PASS.
+This is verification of the BLOCKED handoff, not a new passing Android checkpoint.
+Following documentation-only commit records this observed publication; no new test,
+source, artifact or full acceptance claim. Resume from latest branch, not old PIDs.
