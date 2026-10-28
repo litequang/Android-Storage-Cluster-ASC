@@ -889,3 +889,10 @@ Current exact direct published4->FINAL5 qualification:
 bytes after new5 writes. Existing canonical Engine/Catalog/tests reused. Raw state
 private/offline, SDK STOPPED. Core/app/APKs unchanged; Native STATE/OPERATIONS/PILOT
 and STATUS/HANDOFF own limited API30 SDK upgrade contract; API35 still blocked.
+
+Fresh first-install published5 qualification:
+qualification/phase4-fresh-final5-api30.json, NetworkReadiness1 +NativeCatalog2 on
+new blank API30 (first main APK5 before identity), actual bytes/enrollment/TLS/FGS/
+replicas/browser/fallback/Controller loss/process death. No new product code. Both
+exact fresh/upgrade paths now observed; API35/physical limits retained.7SDK images/
+32private host files verified offline; cache cleanup only public installer ZIPs.

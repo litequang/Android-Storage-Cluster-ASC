@@ -28,6 +28,12 @@ owner custody. If update fails, stop/preserve state and use a compatible forward
 update with higher versionCode/same signer; no forced downgrade or old DB restore.
 Private SDK images/host archive preserve this task only, not a phone backup/export.
 
+Fresh published5 FIRST identity now also qualified on independent blank API30:
+NetworkReadiness1 +cold/retained NativeCatalog2 PASS, no prior4/interim APK/state
+clone. See phase4-fresh-final5-api30.json. Same native Engine/enrollment/TLS/FGS and
+existing Controller/File Manager, not another implementation. Normal new install
+of exact5 is a separately tested SDK path; owner ARM64/phone acceptance required.
+
 The original foundation artifact/version and unsupported-operation text below
 is HISTORICAL, not the current Node capability. Do not replace Termux state or
 infer physical-phone/full Phase4.2 acceptance. Candidate upgrade uses the original

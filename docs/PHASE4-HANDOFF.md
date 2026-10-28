@@ -29,6 +29,12 @@ new5 writes. [Final receipt](../qualification/phase4-direct-published45-final.js
 This supersedes old direct4->5 NOT TESTED wording ONLY for the two exact APKs and
 this SDK path; not phones/physical LAN/API35 or a full Android acceptance.
 
+Fresh FIRST-install APK5 cũng đã PASS trên blank API30 riêng: network1 +cold Node1
++retained/process death1, actual Engine/TLS/enrollment/replicas/browser/SHA/fallback/
+Controller loss. [Fresh receipt](../qualification/phase4-fresh-final5-api30.json).
+Không cần cài APK4 trước để đi đường cài mới đã kiểm này. Hai đường riêng20lượt
+Android,0fail/skip; chỉSDK30x86_64, chưa ARM64/phone/physical LAN/API35 Node E2E.
+
 ## Gói đúng vai trò
 
 - [Node APK5 internal](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk)

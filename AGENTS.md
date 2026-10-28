@@ -15,6 +15,23 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 ## Current Phase4 closure pointer — 2026-10-28
 
+LATEST ALSO fresh FINAL5 FIRST-identity path QUALIFIED on separate blank API30:
+network1PASS0.202s, cold Node1PASS92.364s, retained/process-death1PASS36.607s.
+Receipt qualification/phase4-fresh-final5-api30.json. Original published5/aec65c2c
+FIRST installed before any identity, no prior4/clone/adoption; real Engine/enroll/
+TLS/FGS/replicas/browser/SHA/fallback/Controller loss. New IDs/pin distinct from
+prior upgrade dataset. Together two exact paths20Android EXECUTIONS0fail/skip,
+not20distinct methods/full suite;3host guards separate. API35 scope unchanged.
+
+Fresh SDK had2pre-data disk-check aborts (no user/app state); SDK clamped new2GiB
+config to minimum6GiB. Freed ONLY2verified already-installed public ZIP installers
+(API35 image +emulator),1,132,058,194bytes; URLs/hashes preserved, installed tools/
+source/APKs/signer/AVDs/backups untouched. No disk guard bypass or old-data deletion.
+Fresh dataset now STOPPED/private /workspace/work/phase4-fresh-final5-api30;
+7offline image copies +32host-state files hash-verified, all6records/UID equal,
+WiFi restored, SDK exit-10/SIGUSR1, no clean-powerloss/phone export/DR claim.
+Other direct-upgrade dataset preserved as below; all task guests STOPPED.
+
 LATEST exact published APK4->FINAL5 direct upgrade QUALIFIED on API30 x86_64 SDK.
 Read qualification/phase4-direct-published45-final.json +PHASE4-STATUS/HANDOFF and
 latest PHASE4-2-PROGRESS/ACCEPTANCE. Original4 FIRST identity/bytes on independently

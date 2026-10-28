@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-10-28 — Fresh FIRST-install FINAL5 Node qualified on API30 SDK
+
+- Exact published5 FIRST identity/enrollment/TLS/Engine/FGS/replicas/browser/SHA/
+ fallback/Controller loss/process death:3Android executions PASS,0fail/skip.
+ Separate from exact direct4->5 path17;20executions across two scenarios,
+ not a full20-method suite. Product/APK/source archive/signing unchanged.
+- Preserve all original AVD/data and private signer. Reclaim ONLY verified public
+ installer ZIP caches to satisfy SDK capacity guard; no private-state deletion.
+ New SDK/host state privately preserved offline/hash-verified, no restore.
+ API35/phone/full Phase4 acceptance remains incomplete.
+
 ## 2026-10-28 — Exact direct published APK4→FINAL5 qualified on API30 SDK
 
 - Add allowlisted original-APK selection to existing Catalog qualification driver;

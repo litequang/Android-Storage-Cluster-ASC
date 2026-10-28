@@ -1,6 +1,6 @@
 # Phase4 — trạng thái 2026-10-28
 
-**Đường nâng cấp trực tiếp APK4→FINAL5 đã nghiệm thu trên API30 x86_64 synthetic.
+**Cài mới trực tiếp APK5 và nâng cấp APK4→FINAL5 đã nghiệm thu trên API30 x86_64 synthetic.
 Toàn Phase4/4.2 và Android thật vẫn CHƯA ACCEPTED.**
 
 | Phần | Bằng chứng và giới hạn |
@@ -11,6 +11,7 @@ Toàn Phase4/4.2 và Android thật vẫn CHƯA ACCEPTED.**
 |Source upgrade|Exact042→b423:1PASS21.649s; exact e69/native-node và c831/PWA043→b423:2PASS51.823s, giữ NEW state khi rollback|
 |Công cụ nghiệm thu|Chọn đúng published4/5 bằng SHA/signer, không fallback build mới;3host guards PASS0.193s|
 |Native APK4→FINAL5|**17lượt Android targeted PASS0fail/skip** trên cùng data API30, không main5 trung gian; không phải17phương thức khác nhau/full suite|
+|Cài mới trực tiếp APK5|3lượt Android PASS: network0.202s, cold Node92.364s, retained36.607s; APK5 là bản đầu tiên trước identity|
 |Dữ liệu sau update|UID/Keystore/App/Node/Cluster/Volume/TLS pin và6records giữ nguyên; file4 còn đọc đúng SHA sau các lần ghi5|
 |Node sau update|Existing Engine/enrollment/FGS, upload256KiB/two logical replicas, HTTPS/browser/download SHA/fallback, Controller-loss503, process death PASS|
 |Web/PWA|Dùng chung owner Dashboard/File Manager; Linux Chromium HTTPS/PWA proof có sẵn, Chrome Android chưa nghiệm thu|
@@ -20,7 +21,10 @@ Toàn Phase4/4.2 và Android thật vẫn CHƯA ACCEPTED.**
 Chi tiết mới: [direct-upgrade receipt](../qualification/phase4-direct-published45-final.json).
 Bộ17lượt gồm network1, cold/retained4 Node2, local update11, retained5 Node2,
 đọc original4 sau ghi5 thêm1; có phương thức lặp lại tại các giai đoạn khác nhau.
-Mỗi checkpoint đã có source/receipt và push riêng; đọc PHASE4-2-PROGRESS.
+Thêm [fresh5 receipt](../qualification/phase4-fresh-final5-api30.json):3lượt trên
+userdata trống riêng. Tổng20lượt Android của hai đường, không phải20phương thức
+khác nhau/full suite; không cộng15API35 UNKNOWN. Mỗi checkpoint có source/receipt
+và push riêng; đọc PHASE4-2-PROGRESS.
 
 Chỉ một trong314inputs cũ đổi: test driver chọn artifact; Core/app/dependencies/
 package bytes không đổi. Ba test host mới được chạy riêng, API30 workflow thực
@@ -56,6 +60,9 @@ Các emulator đã dừng; private signer và mọi dữ liệu cũ giữ nguyê
 không restore. SDK shutdown yêu cầu bình thường, exit-10/SIGUSR1, chưa có bằng
 chứng clean-powerloss. API35 cũ giữ riêng backup/SIGSEGV. Không dùng disk backup
 SDK như tính năng export Keystore/phone backup hoặc quyền recovery writer.
+Fresh5 dataset riêng: /workspace/work/phase4-fresh-final5-api30, đã dừng,7images
++32host files backup/hash-verified. Chỉ dọn2ZIP installer công khai đã cài để đủ
+disk SDK; mọi công cụ cài sẵn, source/APK/signer/AVD/state cũ giữ nguyên.
 
 Bước tiếp: owner theo [pilot](ANDROID-NATIVE-PILOT.md) trên model được phép,
 SDK30+/ARM64,2phones/2domains/2replicas/SHA/fallback/restart/Controller loss,

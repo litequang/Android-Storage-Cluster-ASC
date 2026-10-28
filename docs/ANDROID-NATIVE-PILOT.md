@@ -15,6 +15,12 @@ an independently qualified APK-candidate -> published Demo0.4.1 Controller path.
 Do not infer that cross-version phone combination PASS. Keep existing Controller
 state; a supported tested Controller upgrade/candidate is required for a trial.
 
+Fresh published5 FIRST install/identity also qualified separately on blank API30
+x86_64: network1 +cold Native Node1 +retained process-death1,0fail/skip. Actual
+Engine/enrollment/TLS/FGS/browser/replicas/SHA/fallback/Controller-loss, distinct new
+IDs/pin, no old4 adoption/reset. Receipt phase4-fresh-final5-api30.json. A NEW
+installation does not require4 first. API35/ARM64/phone scopes remain separate.
+
 ## Before installation
 
 Use only a candidate actually provided with its SHA-256 and signer report; a build

@@ -144,3 +144,12 @@ build compatibility, phone backup/Keystore export or physical-device acceptance.
 Keep signer/private state in owner custody; lost key still fail-closed, never
 regenerate identity. Android normal downgrade refused; use compatible signed
 forward update, never uninstall/clear/-d or restore old databases over new data.
+
+
+Fresh exact FINAL5 first identity also qualified separately:
+qualification/phase4-fresh-final5-api30.json. ASC absent before first published5
+install on blank SDK data; original fresh NativeCatalog method and process-death
+retained method PASS with real TLS/enrollment/Engine bytes. New App/Node/Cluster/
+Volume/pin distinct from prior upgrade dataset; same new identity thereafter,
+6required records stable after stop. No prior4/state clone/adoption/Termux import.
+API30 x86_64 only, not API35/physical phone/Keystore export/recovery qualification.

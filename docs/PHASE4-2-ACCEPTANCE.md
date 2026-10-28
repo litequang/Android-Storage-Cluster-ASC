@@ -617,3 +617,37 @@ UNKNOWN; physical ARM64/LAN/two phones/Doze/OEM/ChromeAndroid and owner upgrade
 remain required. No Android voter/GC/failover/writableDR/Phase5. Older NOT TESTED
 published4->final5 lines are superseded ONLY by this exact API30 path; historical
 intermediate5 proofs remain separate and unchanged.
+
+
+## Fresh exact FINAL5 FIRST identity — API30 qualified, not phone acceptance
+
+Separate from direct4->5 checkpoint5273f29. NEW blank SDK userdata, ASC package
+absent before exact published5/aec65c2c first install; original signer/testAPK,
+actual installed version/SHA verified before first Main identity. No prior4,
+interim5, old-state adoption/clone/clear or identity replacement. Two SDK pre-data
+launches failed disk capacity, not ASC tests; reclaimed ONLY verified public SDK
+installer ZIP caches, kept installed tools/signing/source/APKs/all AVD data and
+capacity guard. Actual SDK minimum6GiB used, ASC quota64MiB/tests unchanged.
+
+|Actual API30 x86_64 step|Executions|Result|
+|---|---|---|
+|Default network precondition|1|PASS0.202s|
+|Cold Native Node first5 identity/enroll/bytes|1|PASS92.364s|
+|Same identity/data after process death|1|PASS36.607s|
+
+3executions0fail0skip, original tests/budgets unchanged; source/archive/API/Engine
+unchanged. Real pin/enrollment/no auto approval, approved private read/write/fsync,
+NodeTLS/FGS/heartbeat, owner browser/replicas/SHA/fallback, Controller-loss503 and
+process death. First5 identities/pin differ from old upgrade dataset,6records/UID
+stable after final stop.7private offline SDK image/config hashes +32quiescent host
+archive files verified, no restore; WiFi restored, SDK exit-10/SIGUSR1, not general
+clean-powerloss/phone export/recovery qualification. Original signer/other data
+preserved, no new release. Receipt qualification/phase4-fresh-final5-api30.json.
+
+Together with exact direct-upgrade17,20targeted Android executions across two
+independent paths (methods repeat at pre/post/fault stages), not a full20-method
+suite and excludesAPI35 UNKNOWN15. Prior full392/Go/faults apply ONLY unchanged
+product; test-helper3 separately targeted, not fresh full397. Same host/two logical
+domains/SDK NAT, no physical phones/LAN/ARM64/OEM/Doze/ChromeAndroid proof.
+API35 independent Node E2E remains BLOCKED, no new TLS defect inferred/fixed.
+Full Phase4/4.2 NOT ACCEPTED; no voter/GC/failover/writableDR/Phase5 activation.

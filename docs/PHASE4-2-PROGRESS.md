@@ -2380,3 +2380,66 @@ Owner-only ARM64/ZTE/Bphone/physical LAN/two hardware domains/ChromeAndroid/OEM/
 Doze/same-signer upgrade acceptance still required. Native26-29TLS/Termux->APK/
 Foundation2->final5 unsupported or unqualified. No Android voter/GC/failover,
 recovery writer, physical-phone action or Phase5. Full Phase4/4.2 NOT ACCEPTED.
+
+
+### Fresh FINAL5 FIRST identity/Node — API30 PASS; both paths stored
+
+Direct-upgrade final checkpoint5273f295e0a9be1cfcc0334bb2ba79dc26a705bf normal-
+pushed/HEAD=FETCH_HEAD=advertised remote verified before new independent case.
+Existing direct4->5 dataset/signing/all other AVDs preserved STOPPED; no clear,
+rollback/clone or identity regeneration to get a fresh5. Created NEW empty SDK
+config under/workspace/work/phase4-fresh-final5-api30 only, same verified API30
+x86_64 image/emulator37.2.12, no KVM. Fresh process/AVD/datadir/start/UID checks.
+
+Two initial SDK launches failed BEFORE userdata/app existed:6GiB partition needs
+7372.80MiB but only6556.89MiB free. Attempted2GiB config for unused new AVD was
+clamped by SDK to6GiB, not used to bypass a capacity guard. No original state
+removed/resized. Reviewed ONLY already-installed public download ZIP caches:
+x86_64-35_r02.zip782404023bytes official SHA1 2d857d170c0d1b827149565da34b3383e5306f7f;
+emulator-linux_x64-16428233.zip349654171bytes source.properties equal installed.
+Recorded URLs/SHA256/SHA1 before reclaiming these2cache files (1,132,058,194bytes).
+Installed SDK/JDK/Gradle/build outputs/source/APKs/signer/all AVDs/backups unchanged.
+Actual SDK6GiB allocation then passed; no proxy/CA/policy/route or disk-check bypass.
+
+SDK/PM two consecutive real probes ready239.311s (bootstrap wait450s based on
+measured first boot, original app/fault/authority assertion/deadline unchanged).
+ASC package ABSENT before first install, exact published5/aec65c2c +same-signer
+original testAPK b5375f59 installed, actual version5/SHA and genuine SDK30 verified.
+Actual radio0/.15 measured; normal fixture WiFi disable, NetworkReadiness1PASS
+0.202s/0skip. Main identity/native context/proof explicitly ABSENT; bounded normal
+filesDir readiness avoids earlier async-launch race, never manually seeds identity.
+
+Run original qualifier --artifact published5 on NEW output WITHOUT --resume:
+cold NativeCatalog1PASS92.364s +retained/process-death1PASS36.607s,0fail/skip.
+Actual new application/Node/Cluster/Volume/TLS identity, original Core enrollment
+(no auto storage/domain approval), private volume writable/readback/fsync, owner
+registration, NodeTLS listener/heartbeat/FGS, HTTPS owner browser upload256KiB/two
+VERIFIED logical replicas/SHA/download/Node-offline fallback and unsafe upload
+refusal. Controller loss503authorization_unavailable while NodeTLS still listening,
+reconnect/process death preserved SAME new identity/bytes. No ADB data forwarding;
+SDK direct10.0.2.2 +console NAT only, not physical LAN or two hardware domains.
+
+Fresh5 IDs/pin confirmed DISTINCT from prior direct-upgrade dataset (not cloned
+Node/Keystore/state). All6required metadata/ciphertext/proof records remain equal
+after owned app stop, same UID. Original WiFi restored, no NAT/owned host servers
+left. Normal SDK shutdown requested, supervisor exit-10/SIGUSR1; no clean-powerloss
+claim. Guest STOPPED;7private offline image/config copies hash-equal,32quiescent
+host files tar/hash-verified, no restore. Old signer/AVDs/ASC states untouched.
+Raw evidence PRIVATE /workspace/work/phase4-fresh-final5-api30. Public sanitized
+receipt qualification/phase4-fresh-final5-api30.json (includes public ZIP-cache
+provenance; never publish actual disks/host archive/credentials/full logcat).
+
+New path3Android executions PASS. Together direct-upgrade17 +fresh-first5three
+=20Android executions,0fail0skip across meaningful stages, NOT20distinct methods
+or full suite. Source unchanged since c0655a8 test-helper selection, no APK build/
+new release. Actual Controller source archive again SHA6a60... matches b423.
+3host guards and prior392product/Go/fault proof remain correctly scoped, NOT a
+fresh full397. Current AGENTS/STATUS/HANDOFF/PILOT/OPERATIONS/CODEMAP/ACCEPTANCE
+updated, source/index/JSON/raw-receipt/secrets checks before normal feature push.
+
+Remaining: responsive ownedAPI35/default network +pinned Controller for independent
+blocked Node gate and15UNKNOWN tests, owner physical ARM64/phones/real LAN/2hardware
+domains/OEM/Doze/ChromeAndroid/update. No phone/M51/Termux actions, new Controller/
+Catalog/Storage backend, writableDR/Android voter/GC/failover or Phase5. Full Phase4/
+4.2 NOT ACCEPTED from these SDK-only results. Do not repeat accepted Core or clear
+existing state to continue; inspect latest remote and actual emulator ownership.
