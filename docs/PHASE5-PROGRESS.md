@@ -274,3 +274,54 @@ applicable gates. No fresh full Python/Go/Android/fault run claimed at5.2b. Phys
 phone campaign DEFERRED BY OWNER. WritableDR/Android voter/GC/failover stay locked.
 Private raw logs /workspace/work/phase5-edge-{targeted-final,private-regression,
 observer-final}.log; public sanitized receipt qualification/phase5-edge-access.json.
+
+## 5.2b publication verified / 5.2c connector-browser and Core edge E2E
+Checkpoint bf04868f875fb800db1e9f4b6af7dfc2511d1f39 normal-pushed, local HEAD=
+FETCH_HEAD=advertised feature remote and clean working tree VERIFIED before5.2c.
+448tracked/index files/0untracked/0actual-secret findings at publication. Original
+Phase4 advertised remote still0877a15 unchanged. No APK/source archive/release.
+
+5.2c adds test-only SyntheticConnector and EdgeBrowser/Core/Recovery fixtures.
+Reuses every original Dashboard browser assertion and every actual Core partition/
+heal/recovery staged-byte assertion; only trusted fixture/runtime hooks introduced.
+No product source/authority/state/dependency changes afterbf04868. Shared original
+private browser/Core cases rerun alongside edge modes. Actual RSA verification is
+never mocked. Edge browser uses real pinned local HTTPS JWKS; observer cases use
+synthetic in-memory public key transport with real RSA/PyJWT claims validation.
+
+Initial3case suite23.704s: edge Core+recovery PASS, browser FAIL before untrusted-CA
+assertion due public-origin test route. Original failure log mislabeled it from
+expected regexp. Added secret-safe ACTUAL network-error reporting only; browser
+retry8.104s confirms ERR_TUNNEL_CONNECTION_FAILED. No credentials/logs exposed,
+no TLS assertion removed, no policy/proxy/CA override. Public-host DNS-mapping
+experiment removed, NOT called PASS. Source fixture now explicitly local-only
+connector front with valid independently trusted IP-SAN CA, exact local Host/Origin
+validation before reserved public-origin translation. This is ONLY synthetic
+adapter qualification, not real public hostname/Cloudflare/IdP/tunnel acceptance.
+
+Fresh command (all original assertions remain):
+ ASC_GO=/workspace/asc-cloud/go1.27.3/go/bin/go
+ /workspace/asc-access-dev/edge-env/bin/python -m unittest
+ tests.test_access_edge_qualification tests.test_access_browser tests.test_access_observer -v
+6PASS0skip/fail55.833s: edge browser1 +actual edge Core1 +passive edge recovery1,
+plus existing private browser1/Core1/recovery1. Browser actual two-node bytes, secure
+HttpOnly owner cookie, PWA manifest/worker/criteria(not actual install),390px/XSS,
+SHA/fallback after stopping actual node, browser offline UNKNOWN/refusal/reconnect/
+logout. Test connector inserts signed JWT SERVER-SIDE, no bearer in browser JS;
+three TLS layers/pinning and existing backend/Engine remain active. Not2physical
+phones/domains, VPN or cloud deployment. Core runtime remains read-only across
+actual three-island Raft partition/heal; staging bytes unchanged/no credentials.
+
+Private evidence /workspace/work/phase5-edge-e2e{,-final}.log,
+phase5-edge-browser-retry1.log, phase5-edge-browser/{result.json,desktop/mobile PNG}.
+New sanitized receipt qualification/phase5-edge-integration.json. Original private
+browser receipt is retained historically; latest test-only diagnostic/hook changes
+have their own exact input hashes here. No fresh full Python/Go/Android run claimed.
+
+NEXT5.3 controlled private maintenance: inspect existing stopped backup/verify/
+stage/preflight/upgrade/code rollback contract, preserve identities and distinguish
+Linux/Demo source from Android app/Termux/Core. No public SSH/custom shell API or
+automatic update. Then5.4 fresh applicable final regression/fault/security/package
+qualification. Live Cloudflare/IdP/DNS/tunnel/real public-browser STILL NOT TESTED/
+BLOCKED, physical campaign DEFERRED BY OWNER, full Phase5 NOT ACCEPTED. WritableDR,
+Android voter/GC/failover remain locked. Preserve all SDK/signers/states/artifacts.

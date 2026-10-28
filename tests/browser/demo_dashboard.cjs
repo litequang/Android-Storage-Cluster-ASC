@@ -169,13 +169,17 @@ async function launch(root) {
       pwa, trusted_tls: true, untrusted_tls_denied: true, mobile_width: 390, offline_refused: true, page_errors: errors.length }));
   } finally { if (context) await context.close(); if (browser) await browser.close(); }
 })().catch(error => {
-  const known = ['ERR_CERT_AUTHORITY_INVALID', 'ERR_CERT_COMMON_NAME_INVALID', 'canceled', 'ERR_BLOCKED_BY_CSP', 'Target closed'].find(value => String(error).includes(value));
+  // An assertion's expected regexp can contain CERT_AUTHORITY_INVALID even if
+  // the actual network error differs. Report only the observed error code.
+  const observed = error.actual instanceof Error ? error.actual : error;
+  const network = String(observed.message).match(/net::(ERR_[A-Z0-9_]+)/);
+  const known = network ? network[1] : (error.code === 'ERR_ASSERTION' ? 'ERR_ASSERTION' : error.name);
   const review = '/workspace/work/demo4-browser';
   fs.mkdirSync(review, { recursive: true });
   for (const name of ['dashboard-desktop.png', 'dashboard-mobile.png']) {
     const source = path.join(config.output, name);
     if (fs.existsSync(source)) fs.copyFileSync(source, path.join(review, name));
   }
-  console.error('Synthetic browser integration failed at ' + stage + ': ' + (known || error.name) + '; credentials suppressed.');
+  console.error('Synthetic browser integration failed at ' + stage + ': ' + known + '; credentials suppressed.');
   process.exitCode = 1;
 });

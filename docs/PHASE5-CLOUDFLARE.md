@@ -112,3 +112,44 @@ HTTPS JWKS server. This is not a Cloudflare-issued token/IdP/account qualificati
 CLI init/info/render tested locally; production CLI serve with real issuer keys and
 live connector/edge/browser flow remain NOT TESTED. Existing private browser/Core
 regressions qualify shared gateway behavior, not edge-provider reachability.
+
+## 5.2c synthetic connector/browser and read-only qualification
+
+Actual Chromium ->separate loopback HTTPS synthetic connector ->verified loopback
+edge TLS ->pinned Dashboard ->actual two-node Storage passed. Browser CA trust,
+untrusted-CA refusal, owner cookie/CSRF, Vietnamese responsive UI390px, original
+PWA criteria/XSS assertions, upload/two logical domains/SHA, actual node stop/
+fallback, offline refusal/reconnect/logout all execute. RSA assertion is inserted
+server-side by the fixture; not handed to browser JavaScript. Real JWT validation
+and real pinned HTTPS JWKS run in the edge. No signature or storage mocks.
+
+TEST-ONLY connector validates its own local Host/Origin before translating to the
+reserved public-origin profile. Its public CA/leaf and private leaf key are fresh,
+local/private and removed with fixture cleanup. It is NOT a cloudflared replacement,
+provider implementation, public DNS path or IdP simulation acceptance. Product
+has no second proxy/session/backend added in this checkpoint.
+
+Attempt to use asc.example.com with test Chromium DNS mapping failed BEFORE TLS
+with observed ERR_TUNNEL_CONNECTION_FAILED. Original diagnostic misleadingly cited
+expected CERT_AUTHORITY_INVALID regexp; it now reports actual bounded error codes,
+never URLs/credentials. No proxy/CA/policy override or no-proxy flag was used.
+DNS mapping experiment removed, initial failures preserved in PROGRESS. Therefore
+REAL public-host browser/Cloudflare/IdP/tunnel remains NOT TESTED/BLOCKED; local
+synthetic connector PASS must never substitute for that gate.
+
+Actual Core quorum and passive recovery also pass THROUGH EdgeRuntime: owner login
+with real signature,3Go/Python transport partition/heal, no writer/mutation rights;
+recovery READ-ONLY with unchanged staged bytes/identity absent. Those two tests use
+an in-memory synthetic public-key transport (real RSA/PyJWT), not local JWKS HTTPS;
+separate edge browser/API tests provide actual JWKS HTTPS evidence. Passive recovery
+metadata comes from existing MemorySource fixture, not live quorum recovery proof.
+
+Command (private hash-locked env, existing Go SDK; no global PATH/HOME changes):
+```
+ASC_GO=/workspace/asc-cloud/go1.27.3/go/bin/go /workspace/asc-access-dev/edge-env/bin/python -m unittest tests.test_access_edge_qualification tests.test_access_browser tests.test_access_observer -v
+```
+Fresh6PASS0skip/fail55.833s (edge3 +existing private3), separate from5.2b22+14+2.
+No product source changed after5.2b. Full5.4 Python/Go/security/fault gates remain
+pending, and no new release/Android runtime/provider deployment is qualified.
+Next5.3 operator-controlled private maintenance reuses existing stopped backup/
+verify/stage/preflight/code upgrade; no public SSH/custom shell/automatic updater.

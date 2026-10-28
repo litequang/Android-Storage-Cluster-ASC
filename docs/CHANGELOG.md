@@ -779,3 +779,10 @@ Reuse existing browser proxy with separate JWT ingress/profile hooks, trusted
 loopback TLS and ASC-only owner-cookie forwarding. Add safe connector renderer,
 actual local JWKS/TLS/file and refusal tests; official cloudflared offline config
 validated. No live Cloudflare deployment, public management, release or phone PASS.
+
+### Phase5.2c synthetic edge browser/Core qualification
+Actual original browser/file/PWA/replica/fallback gates through loopback synthetic
+connector and edge adapter; real Core quorum partition/heal and passive recovery
+stay read-only.6fresh targeted PASS55.833s. Improve test error-code diagnostics,
+no product/dependency/state change. Public-host route failed tunnel connection;
+no proxy/CA override/live provider/phone/production qualification.

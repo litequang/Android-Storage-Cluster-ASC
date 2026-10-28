@@ -17,6 +17,7 @@ from tests import test_external as recovery_fixture
 
 class IngressMixin:
     request=browser.PrivateGatewayTests.request
+    def ingress_runtime(self):return access.Runtime(self.root)
     def configure(self,backend_root,backend_origin,mode):
         self.port=fixtures.GatewayFixture.port();self.origin='https://127.0.0.1:'+str(self.port)
         self.root=backend_root.parent/'access'
@@ -41,7 +42,7 @@ class CorePrivateIngressTests(IngressMixin,fixtures.GatewayFixture):
             observer.init(root,'127.0.0.1',port,self.cluster,self.epoch,self.endpoints,source_roots=self.homes)
             with observer.Runtime(root) as backend:
                 self.configure(root,upstream,'core-quorum')
-                with access.Runtime(self.root):
+                with self.ingress_runtime():
                     self.owner_login(backend)
                     status,_,raw=self.request('GET','/api/state');self.assertEqual(status,200,raw)
                     state=json.loads(raw);self.assertTrue(state['runtime']['quorum_available']);self.assertFalse(state['writer_authority'])
@@ -72,7 +73,7 @@ class RecoveryPrivateIngressTests(IngressMixin,unittest.TestCase):
                 recovery={'root':str(target),'anchor':backup['manifest_sha256']},source_roots=self.roots,minimum_index=100)
             with observer.Runtime(root) as backend:
                 self.configure(root,upstream,'recovery-read-only')
-                with access.Runtime(self.root):
+                with self.ingress_runtime():
                     self.owner_login(backend);status,_,raw=self.request('GET','/api/state');self.assertEqual(status,200,raw)
                     state=json.loads(raw);self.assertEqual(state['runtime']['state'],'RECOVERY READ-ONLY')
                     self.assertFalse(state['writer_authority']);self.assertFalse(state['backup']['recovery']['credentials_restored'])

@@ -936,3 +936,14 @@ exact fresh/upgrade paths now observed; API35/physical limits retained.7SDK imag
 - tests/test_access_cloudflare.py: actual local HTTPS JWKS, real RS256 signatures,
   owner/CSRF/two logical Storage replicas/SHA/fallback, expired-key outage, pin/mode/
   CA refusal, cookie stripping and safe CLI render. Not live Cloudflare/phones.
+
+## Phase5.2c edge integration qualification
+- tests/edge_connector_fixture.py: TEST-ONLY independent loopback HTTPS front,
+  private ephemeral IP-SAN identity, exact Host/Origin translation and server-side
+  signed assertion; not a provider/cloudflared implementation or public DNS proof.
+- tests/test_access_edge_qualification.py: real Chromium via that fixture and
+  EdgeRuntime; inherits full original browser/actual Core partition/heal/passive
+  recovery assertions. tests/test_access_observer.py has trusted fixture runtime
+  hook; default remains original private gateway. test_access_browser saves edge
+  screenshots separately. Original JS gains actual-error-code-only diagnostics;
+  no assertion or TLS change. qualification/phase5-edge-integration.json receipt.

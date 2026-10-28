@@ -23,8 +23,12 @@ existing command-only ASC_GO=/workspace/asc-cloud/go1.27.3/go/bin/go (default go
 is wrong executable, no test skip). See PHASE5-PROGRESS/ACCEPTANCE/CLOUDFLARE and
 qualification/phase5-edge-access.json. Historical interruption draft superseded.
 Official checksum-verified cloudflared2026.10.5 OFFLINE validation/rules only; NO
-live tunnel/account/DNS/provider/browser acceptance or new artifact. NEXT5.2c
-edge-mode Core/recovery +synthetic browser; then5.3maintenance/5.4final gates.
+live tunnel/account/DNS/provider/browser acceptance or new artifact.
+LATEST5.2c also qualified6PASS55.833s: edge browser/Core/recovery plus original
+private equivalents; product unchanged sincebf04868. Test-only connector front is
+LOOPBACK, not real Cloudflare/IdP/public DNS; reserved-public-host experiment failed
+ERR_TUNNEL_CONNECTION_FAILED, no proxy/CA change. Exact scope/receipts in current
+progress. NEXT5.3 controlled private maintenance, then5.4fresh final gates.
 Preserve SDK/signer/all identities; phones deferred, writerDR remains BLOCKED.
 
 Current5.0/5.1 private access software subset QUALIFIED, normal-pushed sourcefa0ada9

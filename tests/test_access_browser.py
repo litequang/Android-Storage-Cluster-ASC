@@ -43,6 +43,6 @@ class PrivateGatewayBrowserTests(unittest.TestCase):
         self.assertTrue(reply['offline_refused']);self.assertEqual(reply['page_errors'],0)
         self.assertEqual(reply['sha256'],hashlib.sha256(backend.data).hexdigest())
         self.assertEqual((out/'downloaded-after-node-offline.bin').read_bytes(),backend.data)
-        destination=Path('/workspace/work/phase5-private-browser');destination.mkdir(mode=0o700,exist_ok=True)
+        destination=Path(getattr(self.f,'artifact_directory','/workspace/work/phase5-private-browser'));destination.mkdir(mode=0o700,exist_ok=True)
         for name in ('dashboard-desktop.png','dashboard-mobile.png'):shutil.copyfile(out/name,destination/name)
         (destination/'result.json').write_text(json.dumps(reply,indent=2)+'\n')

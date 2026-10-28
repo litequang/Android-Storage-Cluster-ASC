@@ -1,6 +1,11 @@
 # Phase5 acceptance — NOT ACCEPTED
 
-Latest5.1 private gateway software subset qualified:19API/regression +1CLI +1actual
+Latest5.2b/c edge source/synthetic subset qualified:22edge/foundation tests,
+14private API/CLI/Dashboard/browser regressions,2Core/recovery and6edge/private
+integration executions PASS in separate runs. Public provider/tunnel/browser,
+maintenance5.3 and fresh final5.4 gates remain outstanding.
+
+Historical5.1 private gateway software subset qualified:19API/regression +1CLI +1actual
 Chromium +2Core/passive read-only scoped executions PASS. Actual VPN/Tailscale,
 public Cloudflare, maintenance, physical/production and final full5.4 gates are
 outstanding. Hardware DEFERRED BY OWNER, not a reason to stop source development
@@ -59,3 +64,14 @@ Official cloudflared2026.10.5 SHA verified, offline config/rule/catchall PASS on
 No live Cloudflare/JWT issuer/IdP/DNS/tunnel/public browser/remote reachability,
 physical devices, new release or fresh full-suite acceptance. Next5.2c edge Core/
 recovery and synthetic browser integration; full Phase5 NOT ACCEPTED.
+
+## 5.2c synthetic connector/browser and edge read-only scoped PASS
+Fresh6PASS0skip/fail55.833s: actual edge connector/browser1/Core1/passive recovery1
+and original private equivalents3. No product source change sincebf04868; real
+TLS/RSA/owner/Engine bytes/pinning and all original assertions remain. See guide/
+receipt for exact key-transport and recovery fixture scope.
+Reserved public-host browser experiment failed ERR_TUNNEL_CONNECTION_FAILED;
+proxy/CA/policy untouched, test changed to explicitly local synthetic connector.
+Therefore no live provider/IdP/public-DNS/Cloudflare/tunnel acceptance is inferred.
+Next5.3 maintenance and5.4fresh final gates. Full Phase5 NOT ACCEPTED, phone gates
+deferred and writableDR/Android voter/GC/failover locked; no new release/APK.

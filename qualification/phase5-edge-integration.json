@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "checkpoint": "5.2c",
+  "source_baseline": "bf04868f875fb800db1e9f4b6af7dfc2511d1f39",
+  "scope": "Linux synthetic local connector/browser/Core/read-only recovery; NOT live public edge",
+  "product_changes": false,
+  "tests": {
+    "command": "ASC_GO=private-Go1.27.3 edge-env/python -m unittest tests.test_access_edge_qualification tests.test_access_browser tests.test_access_observer -v",
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 55.833,
+    "edge_cases": 3,
+    "private_regressions": 3
+  },
+  "browser": {
+    "passed": true,
+    "file_id": "a3fdf7af-9eb2-4512-95e0-0ed318fc694e",
+    "sha256": "1d7f183a51bed004c4a1d56cff97f56cc2d9d302dc99587ac7c02bcc3115b48f",
+    "replicas": 2,
+    "pwa": {
+      "manifest": true,
+      "active_worker": true,
+      "chromium_installability_errors": 0,
+      "actual_install": "NOT TESTED"
+    },
+    "trusted_tls": true,
+    "untrusted_tls_denied": true,
+    "mobile_width": 390,
+    "offline_refused": true,
+    "page_errors": 0
+  },
+  "topology": [
+    "actual CA-trusted Chromium",
+    "test-only loopback HTTPS connector and exact Origin translation",
+    "EdgeRuntime real RSA and local pinned HTTPS JWKS",
+    "pinned existing Dashboard",
+    "existing two Linux Storage nodes"
+  ],
+  "limitations": [
+    "real public-host test failed ERR_TUNNEL_CONNECTION_FAILED; not qualified",
+    "no inherited proxy/CA/policy override",
+    "no cloudflared run/IdP/live Cloudflare/DNS/account changes",
+    "Core/recovery uses in-memory synthetic public-key transport and real RSA",
+    "passive recovery MemorySource metadata, actual bytes; no writer authority",
+    "logical domains cohosted; no physical phones",
+    "PWA criteria only, actual install NOT TESTED",
+    "no fresh full Python/Go/Android/fault claim; no new release"
+  ],
+  "inputs_sha256": {
+    "asc/access/cloudflare.py": "9b4b8bb0455c7f99a61d67c0e2201797d0758a32a107ffdeec931a34bc2ae242",
+    "asc/access/gateway.py": "b552caa8544c825680d506b4de9a7a42fb3bd691711e4b35ea3b168c84a03fcc",
+    "asc/access/access_jwt.py": "5e4c128cb6fbf1007163fa64182aea9d1755b4847a95fd81f227052b79c95a0d",
+    "asc/access/edge_policy.py": "07ecd23acd5bc1df7b6b00ab7234f3f998ac01759e06cdb7610223c78ea5c81d",
+    "tests/edge_connector_fixture.py": "5461290e1e2bcf9bb5baa3f9787e0565e2d00f0ebb63f90542624eaebc47031c",
+    "tests/test_access_edge_qualification.py": "aa3eb9b3d339ee1a0c017e073bcbdefffe18bebecbaa58e8a6eea70229c1c4ae",
+    "tests/test_access_browser.py": "6a93dba15812aa314a38ebdcbca4b20a4bee65e91967481b79287acb877f97e5",
+    "tests/test_access_observer.py": "e03a99eb1237b6fe721af119aa94398773f5905d00815a52b21b61e9ba58e1c7",
+    "tests/browser/demo_dashboard.cjs": "ad4c499f16abc9c2aaf07a779864332d01c326aff568fe60779421f073338596"
+  }
+}
