@@ -578,3 +578,9 @@ working existing backend. Never delete/regenerate Node/Controller state to fix i
 503 after upstream loss is fail-closed; no alternate Controller/writer is created.
 Old cookie after backend restart requires new owner login code. Wrong CSRF token
 401 versus missing CSRF403 are existing backend contracts. See PHASE5-PRIVATE-ACCESS.
+
+Phase5.2 edge_keys_unavailable: install exact optional hash-locked dependencies in
+a private supported env and verify the configured team's HTTPS certs endpoint.
+Never use token jku URLs/stale expired keys or change proxy/CA. edge_access_denied
+means no valid application JWT for exact issuer/audience/claims; it never authorizes
+an ASC owner role. Missing live Cloudflare setup is NOT a source-test PASS.

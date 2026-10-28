@@ -568,3 +568,9 @@ receives fixed configured Host/Origin only AFTER external exact same-origin chec
 Cookie/CSRF remain backend verified. Bearer/Forwarded identities never forwarded,
 no Node API change. Unsupported routes/framing fail before forwarding body. TLS
 frontend uses separate trusted public CA; upstream uses existing exact leaf pin.
+
+Phase5.2 Access JWT is a separate ingress gate, not an ASC credential. Fixed RS256/
+team issuer/application audience/time checks; never trust merely header presence,
+email/forwarded claims, unverified key URLs or a Cloudflare cookie as ASC owner.
+Existing owner cookie/CSRF and Core/recovery mode restrictions remain mandatory.
+No Node/storage/enrollment/consensus wire change or new writer grant.

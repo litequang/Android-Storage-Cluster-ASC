@@ -530,3 +530,8 @@ upstream_mode, max_body_bytes. No admin/node credential or session persistence.
 Gateway TLS belongs to its separate private root; never adopt backend/Termux state.
 No backup/recovery/volume identity/schema changes. Unsupported profile versions
 refuse; removal of gateway leaves upstream state unchanged.
+
+Phase5.2 NEW access profile2 (cloudflare-edge): existing frontend/upstream/pin/mode/
+size fields plus listen_origin (loopback only), access_team and access_audience.
+It is a separate root/format, not a migration of private profile1 or any Catalog/
+Node state. Access JWT/claims are never persisted; public key cache is bounded RAM.

@@ -43,3 +43,9 @@ fixture, read-only mode/credentials missing/staged bytes unchanged/no writer.
 Synthetic memory-source recovery is NOT live-Raft backup/DR authority proof.
 Private software subset5.1 qualified in these named scopes. Actual VPN/public
 Cloudflare/remote maintenance/production/phone campaign remain outstanding.
+
+## 5.2a foundation scoped PASS
+16targeted PASS0skip/fail0.066s, real ephemeral RSA/PyJWT claims/signatures and
+private-mode regressions in hash-pinned optional private venv. No edge runtime/
+Cloudflare-issued JWT/live provider/remote reachability acceptance yet. Official
+references, dependency provenance and exact scope in PHASE5-CLOUDFLARE/PROGRESS.

@@ -1,5 +1,14 @@
 # ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
+## Phase5.2 edge foundation
+- asc/access/access_jwt.py: optional real PyJWT/RS256 Access verification, fixed
+  team certs URL, bounded public-key cache/refresh; no owner/session authority.
+- asc/access/edge_policy.py: NEW profile2, public DNS origin distinct from exact
+  loopback listener; no private-profile widening/migration. tests/test_access_jwt.py
+  uses ephemeral real RSA signatures/synthetic transport; not live Cloudflare.
+- requirements-cloudflare.txt: optional official PyPI wheel hash lock, private
+  env only. PHASE5-CLOUDFLARE documents references/provenance/qualification limits.
+
 ## Phase5 private access track
 - asc/access/policy.py: version1 explicit private ingress/upstream pin/mode/size
   contract and fixed browser route exclusions; no runtime or authority source.

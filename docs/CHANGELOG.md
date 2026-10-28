@@ -767,3 +767,9 @@ three-cohost Raft partition/heal. Passive recovery staging/bytes unchanged and
 credentials/writer remain absent (existing synthetic source fixture).2targeted
 PASS14.866s; no product/Core/Go/APK or authority change. No actual VPN/public-edge/
 production acceptance; phone campaign remains deferred by owner.
+
+### Phase5.2a explicit edge JWT foundation
+Separate loopback edge profile2 and standard-library-backed Access RS256 verifier,
+strict issuer/audience/claims, bounded key-cache rotation/fail-closed expiry. Four
+optional dependencies hash-pinned/workspace-only;16targeted PASS, synthetic real
+signatures, no live provider/listener/Cloudflare/production qualification yet.

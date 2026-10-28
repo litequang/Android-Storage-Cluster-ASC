@@ -701,3 +701,10 @@ rate/IO bounds, no arbitrary target/redirect/Node/admin proxy. Existing backend
 session remains sole auth, including invalidation on restart. No auth cache, DB,
 TLS/pinning bypass or live VPN/tunnel changes. Browser and actual Core gateway
 integration are following gates; only current Linux API scope qualified.
+
+Phase5.2a optional Access verifier uses standard pinned PyJWT/cryptography; no custom
+signature algorithm. Fixed team public-key endpoint/standard CA/proxy/no redirects,
+bounded fresh public-key cache, required signed issuer/audience/time/subject and
+application type. Unavailable expired keys fail closed. No JWT logging/persistence/
+automatic owner session. Profile2 is explicit new loopback-only origin, public Host
+separate; private profile1 remains strict. See ADR075/PHASE5-CLOUDFLARE for scopes.

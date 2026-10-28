@@ -151,3 +151,32 @@ DNS/tunnel deployment not authorized/configured; never open Node/admin/SSH ports
 Then5.3private operator maintenance,5.4fresh final applicable qualification. Physical
 phones/ARM64/LAN/Doze/OEM/power deferred to overall owner campaign, not PASS; no
 production/M51 access or Android voter/GC/failover/writableDR activation.
+
+## 5.2a JWT/profile/dependency foundation
+Resumed clean f47797f, fetch/HEAD equality verified, no reset/branch merge. Skill/
+network policy reviewed, inherited proxy/CA unchanged; no live VPN/cloud identities
+or credentials configured. Owner phone campaign remains deferred/not PASS.
+
+Official Cloudflare Access/origin docs and PyJWT API checked (links in PHASE5-
+CLOUDFLARE). Added AccessVerifier with real RS256/PyJWT verification, configured
+issuer/audience/claims, bounded token/JWKS/cache/refresh, fail-closed stale-key handling.
+EdgeProfile2 separates public DNS origin and loopback127 listener; private profile1
+still refuses edge/public config. No new listener in5.2a, no owner-role mapping.
+Optional requirements-cloudflare.txt hash-locks4official PyPI packages. Fresh
+private Python3.13.5 env: PyJWT2.15.1/cryptography50.0.2/cffi2.1.1/pycparser3.12,
+verified wheel hashes/local no-index install/pip check PASS. ensurepip absent,
+used workspace-only --without-pip and existing pip --python, no system installation.
+
+Fresh actual: /workspace/asc-access-dev/edge-env/bin/python -m unittest
+ tests.test_access_jwt tests.test_access_policy -v:16PASS0skip/fail0.066s. Nine new
+JWT/profile cases +seven existing private-policy regressions. Real in-memory RSA
+signatures/negative algorithm/signature/issuer/audience/time/missing-claim cases,
+key rotation/unknown-key cooldown/expired-cache offline/ambiguous JWKS and mode/
+bind separation. Synthetic key-source callable ONLY, no live issuer claim. No raw
+private key/JWT stored or logged. New optional imports do not change Node/Registry/
+Engine/Go/Android/app/old archived artifacts. No fresh full suite or provider PASS.
+
+Next AFTER normal commit/push/remote verification:5.2b edge origin runtime reusing
+same browser gateway, JWT BEFORE forwarding, cookie/assertion stripping, pinned
+backend and exact public Host/Origin, real local TLS/owner/file tests; connector
+config with trusted CA/loopback/per-rule Access +404 catchall. No live tunnel run.

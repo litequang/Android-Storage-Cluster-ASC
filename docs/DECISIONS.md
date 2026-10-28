@@ -359,3 +359,18 @@ or CGNAT address does not prove VPN membership; status stays UNKNOWN until actua
 provider evidence. First version denies public/DNS/wildcard endpoints and all
 node/admin/enrollment/GC/shell routes. Cloudflare/public trust and operator-only
 private maintenance are separate later checkpoints. Deferred hardware is not PASS.
+
+## ADR075 — Explicit Cloudflare edge mode with independent JWT and owner gates
+Keep private format1 unchanged; a NEW format2 cloudflare-edge root separates exact
+public HTTPS DNS origin from loopback-only TLS listener. No public/wildcard bind,
+private-profile widening or automatic root migration. Validate Access RS256 with
+PyJWT/cryptography, configured team issuer and application audience, required
+subject/iat/exp/type and bounded token/key data. Fetch public keys ONLY from the
+configured team's HTTPS certs URL, standard CA/inherited proxy, no redirects or
+unverified-token URLs. Bounded public-key cache/refresh; expired unavailable keys
+fail closed, never stale fallback. Access claims never create ASC owner session,
+Node approval or writer authority; existing owner cookie/CSRF remains required.
+Strip Access assertions/cookies/forwarded identity before existing backend. New
+edge dependencies are OPTIONAL/private-venv/hash pinned, no Android/Core rewrite.
+Connector origin TLS must verify the new public CA; Access required per ingress
+rule with final404 catchall. No account/DNS/tunnel activation in source task.
