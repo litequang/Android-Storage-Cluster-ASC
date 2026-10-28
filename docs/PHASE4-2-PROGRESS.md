@@ -2443,3 +2443,23 @@ domains/OEM/Doze/ChromeAndroid/update. No phone/M51/Termux actions, new Controll
 Catalog/Storage backend, writableDR/Android voter/GC/failover or Phase5. Full Phase4/
 4.2 NOT ACCEPTED from these SDK-only results. Do not repeat accepted Core or clear
 existing state to continue; inspect latest remote and actual emulator ownership.
+
+
+### Both API30 paths GitHub publication verified
+
+Latest tested evidence `2faa32bc93705f011b05c09bfe2491951e1a5359` normal-pushed to feature/phase4-2-android-native; actual
+HEAD=FETCH_HEAD=advertised remote verified 2026-10-28T04:14:07+00:00, clean working tree.
+Prior direct-upgrade5273f295e0a9be1cfcc0334bb2ba79dc26a705bf and selector-source
+c0655a8b09e8811726d5c1b350d44286d3a6814c remain separate ancestors; no force/merge.
+20Android executions0fail0skip (17direct +3fresh),3host guards, no new full or APK
+release. Precommit actual work/index421files,0untracked/secret findings. Publication
+receipt qualification/phase4-api30-paths-publication.json; existing binary/source
+archive hashes unchanged, no new Release API upload/download claimed.
+
+Executor briefly became unavailable AFTER tests/staged audit and BEFORE final
+commit. First commit command did not execute; workspace returned with ALL11staged
+files intact. Normal commit/push/fetch then succeeded; no source reconstruction,
+reset/overwrite or lost pending source. Both task datasets/all other private states
+and original signer remain preserved STOPPED. Following docs-only report records
+this observed remote event; source/artifacts/runtime proof unchanged. API35/owner
+phone gates remain incomplete, no Phase4 ACCEPTED/writerDR/Phase5 claim.
