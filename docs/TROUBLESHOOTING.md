@@ -358,6 +358,17 @@ intent, not a timeout or exception. Full3D regression is separate from targeted 
 
 <!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
 ## Demo installer preview refusal
+
+Physical ZTE PC2026-10-30: CLI install043 generic refusal/exit3 was reproduced with
+valid source/dependencies against a prefix selecting Demo03. Canonical installer
+reported `different active release; explicit stopped upgrade required`; an install
+is deliberately not an implicit code upgrade. Inspect pointer/state before retry.
+In this specific session owner explicitly chose NEW cluster/disposable old data;
+PC retained old directories and installed043 fresh, rather than upgrading03 or
+overriding the guard. Do not copy this state replacement for an existing cluster
+without that explicit owner choice. Resume current043, never rerun fresh init.
+Latest ZTE-FRESH-INSTALL-PC-HANDOFF and qualification receipt contain actual scope.
+
 Run `sh scripts/demo-alpha.sh preflight` for read-only dependency/device/SD status.
 Missing or non-working OpenSSL/Python/pkg requires owner review/manual preparation;
 no automatic installation occurs. Protected/unknown devices have no override.

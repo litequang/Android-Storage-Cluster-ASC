@@ -1,5 +1,20 @@
 # Phase5 progress — resumable source handoff
 
+LATEST2026-10-30: PC reached owner-selected physical ZTE9045/API30/aarch64 using
+owner-enabled LAN SSH. Existing Demo03 Controller/Node state was actually present;
+new043 install reproduced release-conflict refusal, dependencies/archive correct.
+Owner then explicitly authorized overwrite/disposable old data. Old code/state
+directories preserved by rename under stopped locks; exact published043 installed
+FRESH at standard prefix/state, NEW cluster/keys, no03 upgrade guide or guard bypass.
+Controller+Dashboard foreground running.14scoped real-phone TLS/pin/owner HTTP/
+session/CSRF checks PASS; browser/native/two-phone storage acceptance still pending,
+0paired Storage Nodes. Controlled stop/restart PASS with all9identity/config/TLS
+files unchanged;14HTTP checks repeated successfully after restart. No power-cut/
+Node-byte/replica proof. See ZTE-FRESH-INSTALL-PC-HANDOFF latest and qualification/
+zte-controller-fresh-install-20261030.json. Source/archives/APKs/deps unchanged;
+no full445 rerun or Phase5/production acceptance claim. Immediate NEXT browser CA/
+owner login and Native Node LAN campaign; prior source/Linux proofs unchanged.
+
 2026-10-28 owner explicitly defers phone acceptance and requests next roadmap work.
 Physical Phase4/production remains NOT ACCEPTED; this authorizes source/synthetic
 Phase5 progression, superseding the old requirement to wait for a phone pilot.

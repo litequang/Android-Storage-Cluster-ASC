@@ -4,9 +4,11 @@ PROJECT-ROADMAP.md is the master Phase0–5 timeline/current-task/backlog index,
 linked from AGENTS/README/IMPLEMENTATION_PLAN. Resume there after mandatory reads;
 stage-specific acceptance/progress remains the evidence source, not old headings.
 
-Owner ZTE fresh-install/PC continuation: ZTE-FRESH-INSTALL-PC-HANDOFF.md records
-corrected fresh-Termux baseline, undiagnosed install failure, exact published
-Controller043/NodeAPK5 hashes and role separation. No runtime fix/phone acceptance.
+Owner ZTE PC continuation: ZTE-FRESH-INSTALL-PC-HANDOFF.md LATEST2026-10-30 records
+actual existing03 release-conflict diagnosis and owner-authorized FRESH043 after
+preserving old directories. Controller/Dashboard physical ZTE HTTP checks scoped
+in qualification/zte-controller-fresh-install-20261030.json; browser/Node/two-phone
+acceptance pending. No runtime/source/archive fix or full phone acceptance.
 
 ## Phase5 operator-local access diagnostics5.4e
 - tools/check_access.py: source-only offline existing-profile/TLS validation and

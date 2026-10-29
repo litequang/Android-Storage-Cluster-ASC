@@ -1,6 +1,6 @@
 # ASC — Roadmap tổng và điểm tiếp tục cho AI
 
-Cập nhật 2026-10-29. Đọc AGENTS.md và chín tài liệu bắt buộc trước, sau đó đọc
+Cập nhật 2026-10-30. Đọc AGENTS.md và chín tài liệu bắt buộc trước, sau đó đọc
 tài liệu này để chọn đúng track. Đây là bản tổng hợp hiện tại; các báo cáo nghiệm
 thu bên dưới giữ bằng chứng chi tiết và giới hạn theo nền tảng. Không lấy tiêu đề
 v0.4/v0.10 hoặc đoạn "future/NOT implemented" trong tài liệu lịch sử làm trạng
@@ -74,7 +74,29 @@ private signing key/credentials/test state/AVDs/toolchains/raw logs không công
 Đừng tự rebuild APK với signer khác và hứa nâng cấp giữ state. Không chỉnh archive
 đã phát hành; bản sửa mới cần version/manifest/checksum và nghiệm thu riêng.
 
-## 4. ĐIỂM TIẾP TỤC NGAY — ZTE fresh install báo lỗi
+## 4. ĐIỂM TIẾP TỤC NGAY — Controller ZTE đã cài mới, còn browser/Node
+
+PC đã truy cập đúng ZTE9045/API30 qua SSH LAN owner cung cấp ngày2026-10-30.
+Inspect thực tế thấy Demo0.3.0 và state Controller/Node đã tồn tại, trái với giả
+định trống của handoff trước. Hai archive043 trên máy đều đúng SHA công bố.
+Lệnh install043 vào prefix đang chọn03 tái hiện exit3; canonical installer báo
+`different active release; explicit stopped upgrade required`. Dependency đầy đủ.
+
+Owner sau khi được báo hiện trạng đã yêu cầu cài đè, không cần giữ dữ liệu cũ.
+PC giữ nguyên hai thư mục cũ bằng rename, rồi chạy luồng cài MỚI043 ở đường dẫn
+chuẩn, tạo Cluster/identity mới theo yêu cầu; không chạy hướng dẫn upgrade03,
+không xóa khóa, không đổi archive/guard/source. Controller +Dashboard đã khởi tạo
+và chạy foreground qua cửa sổ SSH PC.14kiểm tra TLS/pin/owner HTTP/session/CSRF
+đạt trên thiết bị thật; controlled restart giữ cả9file identity/config/TLS,14HTTP
+checks lại đạt. Không phải browser tương tác hay nghiệm thu Native Node.
+Chi tiết/lệnh/remaining gates: [handoff cập nhật](ZTE-FRESH-INSTALL-PC-HANDOFF.md)
+và [receipt](../qualification/zte-controller-fresh-install-20261030.json).
+
+NEXT: owner trust public Dashboard CA và login bằng browser thật; sau đó ghép
+Native Node/two-phone domains và kiểm replicas/SHA/fallback/Controller loss.
+Cụm mới hiện0paired Storage Nodes/0files; chưa bảo vệ file hay hoàn thành Phase4.
+
+### Lịch sử handoff2026-10-29 — superseded by actual PC inspection above
 
 Owner xác nhận ZTE chỉ có Termux, chưa cài ASC trước lần thử. Không dùng lịch sử
 "ZTE đã có Demo0.3/volume" để bắt làm upgrade. Hiện owner báo cài Controller lỗi,
@@ -99,7 +121,7 @@ hiện tại và thứ tự tiếp tục:
    identity và Controller-loss refusal; thử mất Internet nhưng giữ Wi-Fi/IP.
    Ghi kết quả phone thật; không điền PASS bằng bằng chứng emulator cũ.
 
-Không có runtime fix trong handoff roadmap này. Lỗi ZTE còn **UNDIAGNOSED**.
+Tại handoff2026-10-29 lỗi còn UNDIAGNOSED; kết quả PC mới nhất nằm ở đầu mục4.
 
 ## 5. Backlog còn lại sau mốc cài LAN đầu tiên
 

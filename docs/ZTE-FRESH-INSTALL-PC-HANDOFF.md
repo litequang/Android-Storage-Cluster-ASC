@@ -1,6 +1,78 @@
 # Bàn giao Codex PC — cài mới Controller trên ZTE và xử lý lỗi
 
-## Hiện trạng do owner xác nhận gần nhất
+## LATEST 2026-10-30 — PC chẩn đoán và cài mới thực tế
+
+Đọc mục này trước các thông tin2026-10-29 bên dưới. Source PC bắt đầu từ fetched/
+advertised feature/phase5-remote-access ca002dbcb1dfc7edbafe42c0630db1ee5126a24b.
+Checkpoint riêng fix/zte-controller-fresh-install; không sửa runtime/archive/APK.
+
+- Owner cung cấp SSH LAN của ZTE rồi bật sshd và thêm public key PC. Chỉ đúng
+  ZTE9045/Android11/API30/aarch64, Termux0.118.3, Python3.14.8/OpenSSL3.6.5.
+  Không USB/ADB/root/public SSH/M51. Khóa SSH PC nằm ngoài repo.
+- Inspect thực tế thấy default prefix đã chọn Demo0.3.0-alpha/release ab229efb...
+  và state có Controller/Node/volume,2registry nodes/0files/0jobs; runtime đều dừng.
+  Đây là evidence thực tế mới, supersedes giả định fresh/partial UNKNOWN cũ.
+  Không thu full private DB/config/history/logcat; chỉ field allowlist và diagnose.
+- Hai thư mục asc-controller.* có archive043 đúng248278bytes/SHA6a60bd41...
+  Preflight allowed=true, không thiếu dependency. Install043 vào default prefix
+  tái hiện CLI exit3/generic refusal. Canonical install() giữ nguyên checks và báo
+  `different active release; explicit stopped upgrade required` trước chọn code
+  mới. Lệnh gây lỗi ban đầu của owner vẫn chưa được cung cấp; đây là reproducer
+  PC thật cho cùng luồng cài, không suy đoán lỗi Python/OpenSSL hay package hỏng.
+- Sau khi được báo existing state, owner yêu cầu: “cài đè đi, không cần quan tâm
+  dữ liệu cũ”. PC giữ cả hai thư mục dưới tên mới, kiểm OS locks dừng trước rename:
+  `~/.local/share/asc-demo.before-fresh-20261030-6f2cfea9` và
+  `~/.asc-demo.before-fresh-20261030-6f2cfea9`. Không delete/ghi đè key/DB hoặc chạy
+  upgrade03. Đây là giữ nguyên thư mục, không phải complete verified backup hay
+  migration/khả năng chạy code cũ tại đường dẫn mới.
+- Sau đó canonical dry-run/install/init controller/dashboard-init/dashboard-trust
+  đều exit0 với exact release b423c5d8... ở prefix/state chuẩn. **Cluster và keys
+  mới**, identity cũ không được adopt. Chỉ public Dashboard CA được đưa về PC;
+  private key/token vẫn trên ZTE. Source/version/immutable archives giữ nguyên.
+- Controller chạy foreground trong cửa sổ PC “ASC ZTE Controller” qua SSH -tt.
+  Đóng/đứt session có thể dừng runtime; không tạo daemon/Boot/service. Nếu dừng,
+  owner chạy lệnh foreground dưới đây trong Termux, không init lại.
+- 14 kiểm tra HTTP/TLS thực từ PC vào ZTE đạt: trusted CA+IP SAN, untrusted CA denied,
+  Controller correct pin+Cluster ID/wrong pin denied, HTML/mode, anonymous401,
+  owner login, cookie flags, one-use denial, authenticated state, wrong-CSRF401,
+  cross-Origin403, logout revocation. Không thay trust store hệ thống hoặc bỏ TLS.
+  Browser tương tác/PWA/CA UX, native Node/replicas chưa thử; hiện0paired Nodes.
+- Controlled SIGINT chỉ gửi sau khi xác minh exact owned Controller argv/UID/
+  process-start; diagnose xác nhận dừng. Khởi động lại foreground cùng launcher:
+  Controller running=true và cả9file identity/config/TLS giữ SHA giống trước dừng.
+  14 HTTP checks lại PASS sau restart, 0 paired Nodes/0files. Không phải power-cut,
+  Node/process-death/durability hoặc hoàn thành physical acceptance.
+
+Lệnh trên máy (ASC_UNPACK là source043 đã verify, không phải gói03/Access):
+
+```sh
+cd "$ASC_UNPACK/asc-demo-alpha"
+sh scripts/demo-alpha.sh preflight
+sh scripts/demo-alpha.sh install --dry-run
+sh scripts/demo-alpha.sh install
+ASC_RUN="$HOME/.local/share/asc-demo/bin/asc-demo"
+# Các lệnh init dưới đây ĐÃ chạy: không lặp để tạo identity khác.
+sh "$ASC_RUN" init --role controller --host ACTUAL_ZTE_LAN_IP --name ASC-ZTE
+sh "$ASC_RUN" dashboard-init --port 8444
+sh "$ASC_RUN" dashboard-trust --out NEW_PUBLIC_CA_FILE
+sh "$ASC_RUN" diagnose
+# Resume khi runtime đã dừng, dùng cùng state/keys hiện tại:
+sh "$ASC_RUN" run-controller --dashboard
+# Terminal Termux riêng, owner tự lấy code; không lưu/publish code:
+sh "$ASC_RUN" dashboard-code
+```
+
+PC public CA: private/zte-dashboard-ca-20261030.crt (ignored, chỉ public cert).
+Đối chiếu fingerprint với dashboard-trust trước owner trust browser; không bỏ lỗi
+certificate. Receipt public: qualification/zte-controller-fresh-install-20261030.json.
+Không publish runtime Cluster/pin/CA, SSH private key, credentials hay state.
+
+NEXT: owner browser trust/login thực, rồi APK5 Node và phone thứ hai/2domains,
+volume writable/fsync/replicas/SHA/fallback/restart/Controller-loss/LAN-no-Internet.
+Không khởi tạo lại Controller mới đã chạy. Không gán phone-wide/production PASS
+cho14HTTP checks; GC/Android voters/failover/writableDR vẫn khóa.
+
+## Lịch sử owner handoff2026-10-29 (trước actual PC inspection)
 
 - ZTE chỉ mới cài Termux, CHƯA cài ASC trước lần thử vừa rồi. Những mô tả cũ về
   ZTE đã chạy Demo0.3/đã có volume không còn là baseline cho lượt này.

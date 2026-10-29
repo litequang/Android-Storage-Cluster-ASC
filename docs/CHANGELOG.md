@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-10-30 — Physical ZTE Controller installation checkpoint (operations/docs)
+
+- Actual PC/ZTE inspection reproduced043 install refusal against an existing03
+  prefix with valid dependencies/source; no runtime source defect or patch claimed.
+- Owner explicitly chose a fresh cluster after being told existing state. Retained
+  old directories, installed exact immutable043 with new keys, started Dashboard.
+- Scoped physical API30/aarch64 TLS/pin/owner HTTP checks14PASS, controlled restart
+  preserved9identity/config/TLS files,14checks again PASS. Browser/native/two-phone
+  storage remain pending. Updated roadmap/current handoff and sanitized receipt;
+  no ASC/Go/Android/dependency/archive changes or full-suite/production claim.
+
 ## 2026-10-29 — Master roadmap and fresh-ZTE PC handoff
 
 - Add Phase0–5 master status/backlog/resume index, link from AGENTS/root READMEs/

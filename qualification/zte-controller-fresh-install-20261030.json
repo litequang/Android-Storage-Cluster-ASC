@@ -1,0 +1,117 @@
+{
+  "format": 1,
+  "date_owner_timezone": "2026-10-30",
+  "timezone": "Asia/Bangkok",
+  "source_baseline": "ca002dbcb1dfc7edbafe42c0630db1ee5126a24b",
+  "checkpoint_branch": "fix/zte-controller-fresh-install",
+  "scope": "physical owner-selected ZTE Controller installation and PC-to-phone HTTPS checks only",
+  "environment": {
+    "manufacturer": "ZTE",
+    "model": "ZTE 9045",
+    "android": "11",
+    "sdk": 30,
+    "machine_observed": "aarch64",
+    "termux": "0.118.3",
+    "python": "3.14.8",
+    "openssl_cli_and_library": "3.6.5",
+    "openssl_tool_package": "1:3.6.5",
+    "access": "existing owner-enabled private LAN SSH as Termux UID; no ADB/root/public SSH"
+  },
+  "artifacts": {
+    "controller_archive": "candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz",
+    "controller_bytes": 248278,
+    "controller_sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+    "controller_release_id": "b423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca",
+    "controller_version": "0.4.3-dev",
+    "pc_archive_inventory": "138 public files plus release.json; exact hashes and canonical release ID PASS",
+    "phone_existing_downloads_verified": 2,
+    "node_apk_sha256_pc_only": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "immutable_published_bytes_changed": false
+  },
+  "diagnosis": {
+    "original_owner_failed_command": "NOT_PROVIDED",
+    "observed_old_version": "0.3.0-alpha",
+    "observed_old_release_id": "ab229efb9179d356f7b4f363d0a82fa40d33a53164ca215f7c2625be8aaaece8",
+    "observed_old_state": "marked Controller and enrolled Termux Node/volume, two registry nodes, zero files/jobs; both runtimes stopped",
+    "preflight_allowed": true,
+    "missing_dependencies": [],
+    "reproducer": "sh scripts/demo-alpha.sh install from verified043 into existing default prefix",
+    "cli_exit_code": 3,
+    "canonical_installer_error": "different active release; explicit stopped upgrade required",
+    "no_runtime_source_fix_required": true
+  },
+  "owner_resolution": {
+    "authorization": "after being informed of existing state, owner explicitly requested overwrite and said old data need not be retained",
+    "action": "retained old code/state directories by rename under stopped lifecycle locks, then canonical fresh install at default paths with NEW cluster and keys",
+    "old_directory_suffix": "before-fresh-20261030-6f2cfea9",
+    "deletion_or_key_overwrite": false,
+    "old_zte_upgrade_guide_used": false,
+    "guard_or_identity_adoption_bypass": false,
+    "retained_directories_are_verified_backup_or_migration": false
+  },
+  "installation_commands": [
+    "sh scripts/demo-alpha.sh install --dry-run",
+    "sh scripts/demo-alpha.sh install",
+    "sh $HOME/.local/share/asc-demo/bin/asc-demo init --role controller --host ACTUAL_ZTE_LAN_IP --name ASC-ZTE",
+    "sh $HOME/.local/share/asc-demo/bin/asc-demo dashboard-init --port 8444",
+    "sh $HOME/.local/share/asc-demo/bin/asc-demo dashboard-trust --out NEW_PUBLIC_CA_FILE",
+    "sh $HOME/.local/share/asc-demo/bin/asc-demo diagnose",
+    "sh $HOME/.local/share/asc-demo/bin/asc-demo run-controller --dashboard"
+  ],
+  "completed_setup_exit_codes": {
+    "dry_run": 0,
+    "install": 0,
+    "controller_init": 0,
+    "dashboard_init": 0,
+    "dashboard_trust": 0,
+    "diagnose": 0
+  },
+  "runtime": {
+    "controller_running_after_checks": true,
+    "node_running": false,
+    "mode": "single-writer-demo",
+    "lifecycle": "foreground in visible owner PC terminal via SSH PTY; session loss may stop runtime; no daemon/Boot/service",
+    "paired_storage_nodes": 0,
+    "files": 0,
+    "jobs": 0,
+    "system_ca_store_modified": false
+  },
+  "pc_stdlib_https_checks": {
+    "trusted_ca_ip_san_tls": "PASS",
+    "untrusted_ca_refused": "PASS",
+    "pinned_controller_cluster": "PASS",
+    "wrong_controller_pin_refused": "PASS",
+    "dashboard_html": "PASS",
+    "anonymous_state_401": "PASS",
+    "explicit_demo_mode": "PASS",
+    "owner_login": "PASS",
+    "secure_httponly_samesite_cookie": "PASS",
+    "one_use_code_replay_401": "PASS",
+    "authenticated_state": "PASS",
+    "wrong_csrf_401": "PASS",
+    "cross_origin_403": "PASS",
+    "logout_revokes_session": "PASS"
+  },
+  "controlled_restart": {
+    "owned_process_uid_argv_and_start_reverified_before_sigint": true,
+    "diagnose_stopped": "PASS",
+    "diagnose_restarted": "PASS",
+    "unchanged_identity_config_tls_files": 9,
+    "same_14_http_checks_after_restart": "PASS",
+    "counting": "14 distinct scoped HTTP assertions executed before and after restart, not a new full test suite",
+    "power_cut_or_storage_durability_acceptance": false
+  },
+  "not_tested": [
+    "interactive browser owner login and manual CA trust UX",
+    "PWA or Chrome Android",
+    "native APK installation/enrollment/volume writable/fsync",
+    "two physical phones/domains and two verified replicas",
+    "file upload/download SHA, stopped-node fallback and Controller-loss storage refusal",
+    "LAN while Internet is disconnected",
+    "OEM/Doze/process death/power/media faults"
+  ],
+  "source_regression": "not rerun: no ASC/Go/Android/dependency/test/archive source changes; previous software qualification retained in its original platform scope",
+  "private_data_excluded": "SSH private key, owner codes/cookies/CSRF/admin/node credentials, phone Cluster/pins/CA, identity hashes and raw state/logs",
+  "next": "owner browser public-CA trust/login, then Native Node and independent-phone storage qualification; resume current identity, never fresh-init again",
+  "full_phase4_phase5_or_production_accepted": false
+}

@@ -16,15 +16,27 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 ## Project resume entry point
 After the nine mandatory reads, read docs/PROJECT-ROADMAP.md for the full timeline,
 runtime/artifact distinctions, current task and remaining gates. CURRENT TASK is
-owner PC/ZTE fresh Controller-install failure, not old03 upgrade or blind Phase5
-redevelopment. Read docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md then relevant progress.
+owner PC/ZTE Controller setup and remaining browser/Native LAN gates; read latest
+actual PC checkpoint before any install/init retry, not old03 upgrade or blind
+Phase5 redevelopment. Read docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md then progress.
 Every completed checkpoint must leave roadmap/current progress/handoff in GitHub
 so another account can resume without the conversation. Evidence stays platform-
 scoped; historical "future/absent" sections do not override latest status.
 
 ## Current Phase5 authorization — 2026-10-29
 
-LATEST owner PC handoff: ZTE initially ONLY fresh Termux, no prior ASC. Owner now
+LATEST PC2026-10-30: physical owner ZTE9045/API30/aarch64 reached over owner-enabled
+LAN SSH. Actual prefix/state contained Demo03 Controller+Node, superseding prior
+fresh/UNKNOWN assumption. New043 install reproduced existing-release refusal;
+dependencies/archive correct. Owner explicitly requested overwrite/disposable old
+data AFTER being told. Old directories retained under stopped locks; installed
+exact043 FRESH at standard paths, NEW cluster/keys, no old03 upgrade guide/bypass.
+Controller+Dashboard foreground;14scoped TLS/pin/owner HTTP/session/CSRF checks PASS.
+Read latest PC handoff/roadmap/receipt; browser/Node/two-phone gates still pending,
+0paired storage Nodes. Do NOT init again or import old state. Source/APK/archives
+unchanged, no full445 rerun/full phone or production acceptance. No M51/public SSH.
+
+Historical owner PC handoff2026-10-29: ZTE initially ONLY fresh Termux, no prior ASC. Owner now
 reports Controller install failed, exact command/error/version UNKNOWN; partial
 state after attempt must be inspected/preserved. Older existing-ZTE03 narrative
 is not baseline. Read docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md for exact Controller043/
