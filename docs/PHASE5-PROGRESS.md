@@ -501,3 +501,40 @@ Use existing private Go/Python paths; no global HOME/PATH/network changes. Logs/
 status JSON private, source unchanged checks each phase. NOT ACCEPTED until actual
 final gates pass; never label an interrupted run PASS. New source package/provider
 release not implied; actual Cloudflare/SSH/VPN/physical/production still outstanding.
+
+## 5.4b Go/build/package/static gates — full Python still running
+Freeze457ec6a384f644170451b5505faa43bac4b3b60e normal-pushed/fetch/advertised HEAD
+matched, clean tree, BEFORE fixed qualification driver started. No executable
+change after26ad88e source freeze. Private status work/phase5-final/gates.json.
+
+Fresh Go1.27.3 tests -json -count=1 -p1 -timeout240s ./... PASS11top-level/12pass
+events; vet/module verification PASS. Linux amd64, Windows amd64 and Android arm64
+builds PASS from exact source, -trimpath/CGO_ENABLED=0. Windows/Android CROSS-BUILD
+ONLY; no phone/Android voter runtime acceptance. All subprocesses use explicit
+private SDK and per-command GOMAXPROCS2 matching2CPU cgroup; no deadline/fence change.
+Actual exit/seconds/commands in qualification/phase5-platform-gates.json.
+
+Existing source package build twice yields byte-identical146regular files/
+127canonical Python modules, exact manifest/source-byte verification PASS. Tar
+path/type/mode/secret patterns checked,0findings. PRIVATE synthetic build only,
+NOT a new release or full Phase5 distribution: historical package allowlist lacks
+Phase5 optional requirements/operations guides. No old archive overwritten.
+Optional4official wheel SHA checks AND installed RECORD file hashes verified;
+pip check PASS. Initial private helper invocation failed import asc due script
+path (before artifact creation); corrected its trusted repo import path and all
+package checks actually PASS. No product/module/toolchain/package install change.
+
+Old APK5 SHAaec65c2c and original public signer bba77b68 reverified using apksigner,
+static package/inner archive inventory0secret patterns, appid/org.asc.foundation/
+versionCode5 retained. No generated-current-Core comparison: APK intentionally
+embeds old frozen Native source and DOES NOT include new host Phase5 code. No
+build/sign/Keystore/private signer read, ADB, SDK startup or new Android runtime
+claim. Official cloudflared2026.10.5 binary SHA rechecked; fresh offline version/
+ingress validate/hostname rule0/other hostname404rule1 PASS, no tunnel run.
+
+FULL PYTHON445 is still RUNNING at this checkpoint, not PASS. Raw logs private
+work/phase5-final/python-full.log; no fail/skip/fence removal. Required original
+64fault markers and all42Phase5 cases must appear in a successful fresh run before
+final source acceptance. Real provider/public-host/SSH/VPN and physical/production
+remain NOT TESTED/deferred. Preserve source and task process/state; do not blindly
+start a second full run or signal historical PIDs after interruption.

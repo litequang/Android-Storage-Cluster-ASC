@@ -1,0 +1,233 @@
+{
+  "format": 1,
+  "checkpoint": "5.4b",
+  "source_baseline": "26ad88e74f7379402946246cb44da0215506cc51",
+  "freeze_commit": "457ec6a384f644170451b5505faa43bac4b3b60e",
+  "state": "PLATFORM_PACKAGE_STATIC_GATES_PASS_FULL_PYTHON_PENDING",
+  "go": {
+    "go-tests": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "test",
+        "-json",
+        "-count=1",
+        "-p",
+        "1",
+        "-timeout",
+        "240s",
+        "./..."
+      ],
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-10-29T00:02:00.590556+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "child_pid": 132516,
+      "exit_code": 0,
+      "seconds": 25.479,
+      "finished_utc": "2026-10-29T00:02:26.070223+00:00",
+      "test_pass_events": [
+        "TestQualificationClusterFaults",
+        "TestFSMReceiptsCASAndSnapshot",
+        "TestRuntimeAuthorityUsesActualCommittedTerm",
+        "TestBackupProjectionKeepsActualTermFencingAndSnapshotBytes",
+        "TestQualificationLogRoundTrip",
+        "TestQualificationStableState/none",
+        "TestQualificationStableState/missing-db",
+        "TestQualificationStableState/corrupt-db",
+        "TestQualificationStableState/missing-term",
+        "TestQualificationStableState/corrupt-term",
+        "TestQualificationStableState/missing-vote",
+        "TestQualificationStableState/missing-bucket",
+        "TestQualificationStableState/partial-vote",
+        "TestQualificationStableState/wrong-binding",
+        "TestQualificationStableState/missing-anchor",
+        "TestQualificationStableState/missing-log",
+        "TestQualificationStableState/missing-snapshot-directory",
+        "TestQualificationStableState",
+        "TestQualificationNoDoubleVote",
+        "TestQualificationSnapshotCorruption",
+        "TestQualificationMissingLiveStableKeyQuarantines",
+        "TestQualificationPeerAuthentication",
+        "TestLauncherRejectsInvalidInvocation"
+      ],
+      "top_level_tests": 11
+    },
+    "go-vet": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "vet",
+        "./..."
+      ],
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-10-29T00:02:26.348562+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "child_pid": 132588,
+      "exit_code": 0,
+      "seconds": 3.43,
+      "finished_utc": "2026-10-29T00:02:29.778503+00:00"
+    },
+    "go-module-verify": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "mod",
+        "verify"
+      ],
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-10-29T00:02:30.038519+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "child_pid": 133614,
+      "exit_code": 0,
+      "seconds": 0.771,
+      "finished_utc": "2026-10-29T00:02:30.809867+00:00"
+    },
+    "build-linux": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/phase5-final/asc-raft-linux-amd64",
+        "./cmd/asc-raft"
+      ],
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-10-29T00:02:31.073592+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "child_pid": 133619,
+      "exit_code": 0,
+      "seconds": 6.285,
+      "finished_utc": "2026-10-29T00:02:37.358835+00:00"
+    },
+    "build-windows": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/phase5-final/asc-raft-windows-amd64.exe",
+        "./cmd/asc-raft"
+      ],
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-10-29T00:02:37.623426+00:00",
+      "state": "PASS",
+      "cross_build_only": true,
+      "child_pid": 133717,
+      "exit_code": 0,
+      "seconds": 20.384,
+      "finished_utc": "2026-10-29T00:02:58.007752+00:00"
+    },
+    "build-android": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/phase5-final/asc-raft-android-arm64",
+        "./cmd/asc-raft"
+      ],
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-10-29T00:02:58.288960+00:00",
+      "state": "PASS",
+      "cross_build_only": true,
+      "child_pid": 135120,
+      "exit_code": 0,
+      "seconds": 19.826,
+      "finished_utc": "2026-10-29T00:03:18.115563+00:00"
+    }
+  },
+  "package": {
+    "format": 1,
+    "state": "PASS",
+    "deterministic_build": true,
+    "tar_files": 146,
+    "source_module_count": 127,
+    "exact_source_verified": true,
+    "private_material_findings": [],
+    "package": {
+      "version": "0.4.3-dev",
+      "release_id": "7e03b7abc279a6fc27a604f2540a3202c375edbec852b8119917d560f796897f",
+      "sha256": "cad18b599a46c15719d88421ae22271206c1a86e6d64f425109368c9847a0bd0",
+      "files": 146,
+      "capabilities": [
+        "installer",
+        "lan-single-writer",
+        "upgrade-safe",
+        "dashboard-lite",
+        "android-volume-anchor",
+        "quick-join-foundation",
+        "local-engine-bridge",
+        "core-quorum-observer",
+        "dashboard-pwa-network-only"
+      ]
+    },
+    "dependencies": [
+      {
+        "name": "PyJWT",
+        "version": "2.15.1",
+        "wheel_sha256": "42d59d631f7768a1028a64c7ff581a9bf7519804daf91fc5b6c56e30eec5e193",
+        "installed_record_files_verified": 20
+      },
+      {
+        "name": "cryptography",
+        "version": "50.0.2",
+        "wheel_sha256": "9dab55f57c74c3cad24c323bacbbd04be4705ba6eb0d92e920b1fc4837ed5079",
+        "installed_record_files_verified": 121
+      },
+      {
+        "name": "cffi",
+        "version": "2.1.1",
+        "wheel_sha256": "a931079504ecc49efed7744c476a5c343a92fabf66dec2db95edb1b2fdc770e2",
+        "installed_record_files_verified": 33
+      },
+      {
+        "name": "pycparser",
+        "version": "3.12",
+        "wheel_sha256": "a076f3f489b39b43ed13563a1dafe42447445bec2e294154ec5c57fcdda4c85e",
+        "installed_record_files_verified": 14
+      }
+    ],
+    "scope": "private synthetic package only; NOT a new release or complete Phase5 distribution; old installer package does not include Phase5 dependency/operations guides"
+  },
+  "static_artifacts": {
+    "format": 1,
+    "state": "PASS",
+    "unchanged_apk": {
+      "sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+      "signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+      "version_code": 5,
+      "application_id": "org.asc.foundation",
+      "entries_scanned": 978,
+      "private_material_findings": [],
+      "new_build": false,
+      "new_runtime_qualification": false
+    },
+    "cloudflared": {
+      "version": "2026.10.5",
+      "binary_sha256": "e1bc0cf084fd9e590554fe769a86b1db46701c3f847a43d902f7b974a4e16298",
+      "offline_checks": [
+        {
+          "command_kind": "version",
+          "exit_code": 0
+        },
+        {
+          "command_kind": "validate",
+          "exit_code": 0
+        },
+        {
+          "command_kind": "rule",
+          "exit_code": 0
+        },
+        {
+          "command_kind": "rule",
+          "exit_code": 0
+        }
+      ],
+      "live_tunnel_started": false
+    },
+    "scope": "read-only public artifact/signature/inventory and offline connector config; private signer never read; no ADB/emulator/phone/provider connection"
+  },
+  "full_python": "RUNNING_NOT_YET_QUALIFIED",
+  "scope": "Linux synthetic source qualification only; no new APK/release or provider/device acceptance"
+}
