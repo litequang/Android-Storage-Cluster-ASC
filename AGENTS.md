@@ -17,7 +17,8 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 LATEST separate5.4e source-only tools/check_access.py: offline existing profile/TLS
 validation +explicit anonymous fixed GET probes.10new +28existing regression PASS,
-38distinct0skip/fail; see PHASE5-ACCESS-CHECK/PROGRESS and access-check receipt.
+38distinct0skip/fail; source6871dd5 normal-pushed/fetched/advertised equal. See
+PHASE5-ACCESS-CHECK/PROGRESS and access-check receipt.
 No ASC/Go/Android/old tests/deps/0.1.0 archive changes; do not rerun445 for unchanged
 runtime. New tool is NOT in immutable0.1.0 bundle. Mode/anonymous refusal does not
 prove writer/quorum/VPN/remote/authenticated/provider acceptance. NEXT live owner

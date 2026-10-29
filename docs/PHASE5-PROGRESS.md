@@ -737,7 +737,7 @@ added negative TLS test; no original runtime/guard/assertion modified or weakene
 
 Fresh existing regression28PASS0skip/fail85.849s: policy/JWT/private gateway/edge,
 actual owner session/CSRF/upload/two logical replicas/SHA/fallback/backend restart/
-key endpoint outage/CLI.38distinct current cases, NOT fresh full483 or new445.
+key endpoint outage/CLI.38distinct current cases, not a fresh full-suite run.
 Commands and sanitized source hashes: qualification/phase5-access-check.json.
 Private logs work/phase5-access-check.log (initial), -final.log, -regression.log.
 Canonical ASC/Android/Go/old tests/dependencies/package bootstrap unchanged; prior
@@ -755,3 +755,14 @@ Cloudflare choice, hostname/endpoint and reviewed permissions; no secrets in pro
 Async missing-configuration question sent; no live deployment authorized/inferred
 from absent response. Continue source tasks only where independently useful; do
 not invent Phase6 or rerun unchanged full445. Phone/OEM/hardware acceptance deferred.
+
+
+### 5.4e publication VERIFIED
+Source6871dd54505e00ef599257b36214ddfb855f4ac7 normally pushed on
+feature/phase5-remote-access; fresh fetch and advertised remote HEAD equal, clean
+tree after source publication.469tracked/index files,0untracked/0secret findings;
+diff checks clean. Immutable0.1.0 archive SHA unchanged. qualification receipt now
+records source commit/verification. This following report-only commit changes no
+source/test/bundle inputs; no test rerun required for publication reporting.
+NEXT remains owner-reviewed actual Linux VPN/Cloudflare target/configuration and
+deferred device/hardware campaign. No answer/config inferred; no live setup done.

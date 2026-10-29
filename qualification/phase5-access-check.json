@@ -52,6 +52,13 @@
     "writer or recovery authority"
   ],
   "publication": {
-    "state": "pending normal commit/push/fetch/advertised verification; see following progress receipt"
+    "state": "PUBLISHED_AND_VERIFIED",
+    "qualified_source_commit": "6871dd54505e00ef599257b36214ddfb855f4ac7",
+    "branch": "feature/phase5-remote-access",
+    "head_fetch_advertised_remote_equal": true,
+    "verified_at": "2026-10-29T10:09:02.730084+00:00",
+    "clean_tree_after_source_push": true,
+    "tracked_and_index_secret_findings": 0,
+    "tracked_files": 469
   }
 }
