@@ -1,7 +1,7 @@
 {
   "format": 1,
   "checkpoint": "5.4d.2",
-  "state": "LINUX_INTERNAL_DISTRIBUTION_QUALIFIED_PUBLICATION_PENDING",
+  "state": "LINUX_INTERNAL_DISTRIBUTION_PUBLISHED_AND_VERIFIED",
   "foundation_commit": "36408637feab978b9ef912d6fcd62dcac75c8605",
   "archive": "candidates/asc-linux-access-0.1.0-internal.tar.gz",
   "sha256": "d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9",
@@ -69,5 +69,31 @@
     "tests/test_access_distribution.py": "913f7991a71fd45270820dd4db6d425b3943514e0af24e01b6bb20ef2b1fad0b",
     "docs/PHASE5-LINUX-PACKAGE.md": "67c7ef481b21d9e88873b01b4233cac15a3e667e02d07aae295f7e3b8de900bc",
     "requirements-cloudflare.txt": "08b02a5550b9efff6c57af876af373709e182e685df95076b3ab06bdc4f46ff2"
+  },
+  "publication": {
+    "artifact_commit": "fd5ca25213c680ea212636b292db1d20450220f7",
+    "normal_push": true,
+    "local_fetch_advertised_equal": true,
+    "archive_download": {
+      "url": "https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/fd5ca25213c680ea212636b292db1d20450220f7/candidates/asc-linux-access-0.1.0-internal.tar.gz",
+      "bytes": 311724,
+      "sha256": "d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9",
+      "matches_local": true
+    },
+    "checksum_download": {
+      "url": "https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/fd5ca25213c680ea212636b292db1d20450220f7/candidates/asc-linux-access-0.1.0-internal.tar.gz.sha256",
+      "bytes": 105,
+      "sha256": "0db71e34a22d18c17ffa846be84989c83e4097e2a88e5f1df10e5d32c7807c17",
+      "matches_local": true
+    },
+    "downloaded_artifact_smoke": {
+      "remote_archive_unpacked": true,
+      "remote_bootstrap_prepared_env": true,
+      "remote_venv_verified": true,
+      "exact_source_rebuild": true,
+      "release_id": "1824ebd40055f8a4f1e1296c4c5cb496e0e46215d488e311cc4782b23bceef31"
+    },
+    "proxy_ca_inherited": true,
+    "tracked_staged_secret_findings": 0
   }
 }

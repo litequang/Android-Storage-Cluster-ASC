@@ -22,9 +22,11 @@ nested42/191.963s).51leaf executions, not new full496. Canonical ASC/Go/Android/
 legacy tests unchanged; prior445 proof retained. Complete dedicated146file bundle
 +8guides/lock/bootstrap, separate env/profile, no backend/app/service installation.
 Archive SHA d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9.
-Read latest PHASE5-PROGRESS +PHASE5-LINUX-PACKAGE and distribution receipt. Source/
-artifact publication must normal-push then exact remote archive+checksum download
-verify; do not call it complete before that proof. Live provider/SSH/VPN/phones/
+Read latest PHASE5-PROGRESS +PHASE5-LINUX-PACKAGE and distribution receipt. Publication COMPLETE at artifact
+fd5ca25213c680ea212636b292db1d20450220f7: normal push/fetch/advertised match; fresh
+HTTPS archive+checksum download byte-equal, downloaded unpack/env/verify and exact
+source rebuild PASS. See final distribution receipt. No need to repeat these gates
+for reporting; NEXT owner-configured real connectivity or separate source checkpoint. Live provider/SSH/VPN/phones/
 production/migrations/writerDR/Android voter/GC/failover remain unqualified/locked.
 
 LATEST5.4 final SOURCE/SYNTHETIC software subset ACCEPTED: fresh445Python0skip/

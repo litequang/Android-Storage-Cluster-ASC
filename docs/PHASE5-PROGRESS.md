@@ -683,3 +683,32 @@ exact-archive evidence work/phase5-distribution*.log and work/phase5-distributio
 After normal push/fetch/remote equality, MUST fetch exact published archive +SHA
 over inherited network/CA and verify both bytes and manifest before publication
 is marked complete. No live provider/device acceptance inferred from download.
+
+## 5.4d.2 publication COMPLETE — exact remote package verified
+Artifact commit fd5ca25213c680ea212636b292db1d20450220f7 normally pushed/fetched;
+HEAD=FETCH_HEAD=advertised feature remote and clean tree VERIFIED.465tracked/index
+files/0untracked/0secret findings; separate archive member/source/secret audit passed.
+Foundation3640863 and artifactfd5ca25 each persisted before subsequent work.
+
+Fresh HTTPS GET of BOTH archive and .sha256 from raw.githubusercontent.com at EXACT
+fd5ca25 commit via unchanged inherited proxy/CA returned200; downloaded bytes equal
+local publication,311724-byte archive SHA
+ d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9.
+Downloaded archive safely unpacked into fresh private HOME path, its own downloaded
+bootstrap actually prepared new private env and verified release1824ebd4...; exact
+current-source rebuild also produced SAME archive SHA. No unsafe tar extraction,
+provider/network policy bypass, old state/key restore or service start in smoke.
+
+Package/publication proof qualification/phase5-linux-distribution.json COMPLETE.
+User guide docs/PHASE5-LINUX-PACKAGE.md is also shipped as README. Archive and its
+checksum are versioned in candidates/, separate from all immutable old Demo/APKs.
+This following publication note changes REPORTS ONLY, not sealed archive inputs.
+No source/Runtime/Go/Android/profile schema change after installed qualification.
+
+NEXT actual owner-configured connectivity acceptance or further source work under
+separate checkpoint, not redo445 unchanged runtime/full tests for context. Artifact
+is Linuxx86_64 internal test distribution, not APK/Termux installer or production.
+Live VPN/SSH/Cloudflare/IdP/DNS/public browser and deferred physical ARM64/phones/
+independent domains/LAN/Doze/OEM/power remain unaccepted. Source logs/evidence private
+work/phase5-distribution*, historical PIDs not signal targets. Keep original private
+signer/SDK/identities, no writableDR/Android voter/GC/failover/migrations enabled.

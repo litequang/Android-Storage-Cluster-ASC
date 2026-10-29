@@ -159,3 +159,10 @@ private state/credentials0findings. Candidate byte-identical to active installed
 regression archive; manifest/source members checked. See distribution receipt/
 latest progress for normal push and REQUIRED fresh remote-download verification.
 No new APK, live Cloudflare/SSH/VPN/provider, phone/production or migration scope.
+
+Distribution publication verified at artifactfd5ca25213c680ea212636b292db1d20450220f7:
+normal push/fetch/advertised HEAD match, fresh HTTPS download archive +checksum
+byte-equal, SHA d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9.
+Downloaded bundle's actual safe unpack/env/verify and exact source rebuild PASS.
+Linux INTERNAL DISTRIBUTION accepted in that scope; overall/live/device/production
+Phase5 scope unchanged. No new APK or public management/service configuration.
