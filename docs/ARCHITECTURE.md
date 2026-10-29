@@ -1,5 +1,11 @@
 # ASC ARCHITECTURE 2.2 — PROPOSED
 
+Operator-local5.4e checker is a source tool, not a service/access plane. It reuses
+existing private/edge loaders and the pinned client, optional anonymous fixed GETs.
+No Engine/Catalog/authority/state/config or listener creation. Offline validity,
+observed mode and anonymous refusal are independent of deployment/writer proof.
+See PHASE5-ACCESS-CHECK; canonical runtime and published0.1.0 bundle unchanged.
+
 ## Phase 2B development boundary — Windows qualified
 
 The new opt-in failover runtime prepares existing business SQL against disposable

@@ -166,3 +166,15 @@ byte-equal, SHA d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9
 Downloaded bundle's actual safe unpack/env/verify and exact source rebuild PASS.
 Linux INTERNAL DISTRIBUTION accepted in that scope; overall/live/device/production
 Phase5 scope unchanged. No new APK or public management/service configuration.
+
+
+## Separate source checkpoint5.4e — operator-local diagnostic qualified
+10new checker cases PASS31.660s plus28unchanged access regression PASS85.849s,
+38distinct cases/0skip/fail. Initial1FAIL/1ERROR fixed in new checker only; see
+PROGRESS/qualification/phase5-access-check.json. Actual loopback TLS with existing
+Controller/Dashboard/Storage Nodes; no live provider/JWT issuer call by checker.
+Offline no-write/no-network, pin/mode/key/CA/path/permission/service-loss and
+negative anonymous-gate/malformed-mode refusals. This is source-only tooling, not
+a new artifact/full suite/Go/Android qualification or deployment approval. Existing
+runtime and published0.1.0 bytes unchanged. Phase5 overall remains PARTIAL; VPN/
+SSH/Cloudflare/IdP/DNS/phone/hardware/production and writableDR not accepted.

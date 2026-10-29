@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "checkpoint": "5.4e",
+  "scope": "Linux synthetic operator-local checker; source-only",
+  "qualified_at": "2026-10-29T10:07:47.449218+00:00",
+  "baseline": "a36270ddce59868edda08a7438dd57f68bf696bc",
+  "python": "3.13.5",
+  "new_source_sha256": {
+    "tools/check_access.py": "0e7ff1c13e1168ee54f3819dd9c9559b84e86180b5aab43cc2fef57dd88f55f9",
+    "tests/test_access_check.py": "b9ab81e9a18dc2ef03a10dfcd6333cedc29d4f98dfe32c3526419d3e3ce14a3f"
+  },
+  "tests": [
+    {
+      "command": "python -B -m unittest tests.test_access_check -v",
+      "pass": 10,
+      "fail": 0,
+      "skip": 0,
+      "seconds": 31.66
+    },
+    {
+      "command": "python -B -m unittest tests.test_access_policy tests.test_access_jwt tests.test_access_gateway tests.test_access_cloudflare -v",
+      "pass": 28,
+      "fail": 0,
+      "skip": 0,
+      "seconds": 85.849
+    }
+  ],
+  "total_distinct_cases": 38,
+  "initial_run": {
+    "tests": 9,
+    "failures": 1,
+    "errors": 1,
+    "seconds": 26.164,
+    "resolved": "Catch existing StorageError refusal; require actual edge protocol_version=1 response. Added negative TLS service gate test. No existing runtime/test weakening."
+  },
+  "evidence": "Actual loopback TLS with canonical Controller/Dashboard/two Storage Node fixtures; existing edge fixture real local HTTPS JWKS and RS256. Checker never fetches keys or receives credentials.",
+  "unchanged": [
+    "canonical asc runtime",
+    "Go",
+    "Android",
+    "existing tests",
+    "dependencies",
+    "published Linux Access0.1.0 archive",
+    "APK/signer/AVDs"
+  ],
+  "published_archive_sha256": "d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9",
+  "not_claimed": [
+    "new full Python suite",
+    "new Go or Android tests/builds",
+    "live VPN/SSH/Cloudflare/IdP/DNS",
+    "phone/hardware/production acceptance",
+    "writer or recovery authority"
+  ],
+  "publication": {
+    "state": "pending normal commit/push/fetch/advertised verification; see following progress receipt"
+  }
+}

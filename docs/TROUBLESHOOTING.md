@@ -605,3 +605,15 @@ SHA, complete manifest, NEW private destination, matching env receipt/Python/rel
 and edge dependency pins. Do not edit manifests/receipts or reuse another version's
 env to bypass refusal. No automatic repair/global dependency fallback. Android/
 Termux is not a supported installer target; see PHASE5-LINUX-PACKAGE.
+
+
+## Access checker5.4e
+Run tools/check_access.py --root EXISTING_ROOT offline first; see
+PHASE5-ACCESS-CHECK. profile BLOCKED: inspect existing private permissions, root
+separation, format/dependencies and CA/IP SAN locally. tls_identity BLOCKED: review
+existing certificate/key pair; never regenerate Node/Cluster state to repair it.
+upstream_mode BLOCKED: check configured Dashboard mode/pin and backend availability.
+listener checks BLOCKED: confirm owned service is running, exact origin/CA/leaf and
+expected authentication gate. It never starts a service automatically. Default
+CHECKS_PASSED does not mean a listener is running. Edge listener_mode UNKNOWN is
+expected without Access credentials; do not disable the gate. No raw secret output.

@@ -712,3 +712,46 @@ Live VPN/SSH/Cloudflare/IdP/DNS/public browser and deferred physical ARM64/phone
 independent domains/LAN/Doze/OEM/power remain unaccepted. Source logs/evidence private
 work/phase5-distribution*, historical PIDs not signal targets. Keep original private
 signer/SDK/identities, no writableDR/Android voter/GC/failover/migrations enabled.
+
+
+## 5.4e operator-local access checker — Linux source qualification PASS
+Resume baseline a36270ddce59868edda08a7438dd57f68bf696bc CLEAN, matching fetched/
+advertised feature/phase5-remote-access; no lost dirty work or branch switch.
+New tools/check_access.py reuses actual profile1/2 loaders and pinned client.
+Default offline, no file/lock/identity/service creation. Explicit GET probes check
+pinned backend mode and CA/IP SAN/exact-leaf listener mode/anonymous rejection.
+No login/token/JWKS fetching, public hostname probe, SSH/tunnel/account or network
+configuration. CHECKS_PASSED covers only executed checks; offline success is not
+running-service proof. Edge listener mode UNKNOWN; remote/VPN/quorum UNKNOWN,
+authenticated access NOT_TESTED, writer authority/live acceptance always false.
+
+Fresh targeted10PASS0skip/fail31.660s. Real TLS canonical Controller/Dashboard/two
+Storage Node fixture; existing edge fixture real local HTTPS JWKS/RS256, no issuer
+probe by checker. Negative TLS service with valid cert but wrong mode boolean and
+open anonymous state is refused. Default no socket connection/private inventory
+unchanged; wrong pin/mode/key/CA, missing/unknown profile/cert, permissions, links,
+engine/recovery markers, stopped listener and actual Controller loss all checked.
+Initial9 run had1FAIL+1ERROR26.164s: checker omitted StorageError in safe refusals,
+and expected edge403 without its existing protocol_version1 field. Fixed checker,
+added negative TLS test; no original runtime/guard/assertion modified or weakened.
+
+Fresh existing regression28PASS0skip/fail85.849s: policy/JWT/private gateway/edge,
+actual owner session/CSRF/upload/two logical replicas/SHA/fallback/backend restart/
+key endpoint outage/CLI.38distinct current cases, NOT fresh full483 or new445.
+Commands and sanitized source hashes: qualification/phase5-access-check.json.
+Private logs work/phase5-access-check.log (initial), -final.log, -regression.log.
+Canonical ASC/Android/Go/old tests/dependencies/package bootstrap unchanged; prior
+full445/Go/Android proofs apply only unchanged product. No broad rerun for this
+standalone diagnostic. Original0.1.0 archive still exact SHA d6f751d7.../no repack;
+new tool is source-only, not a new release or addition to sealed bundle. Original
+signer/AVD/phone/production state untouched; no authority/DR/GC/failover unlock.
+
+Guide docs/PHASE5-ACCESS-CHECK.md includes commands/statuses/limits/rollback. No
+state/schema changes; rollback simply stop using diagnostic, never restore old DB.
+Review tracked/staged/untracked secrets and normal push/fetch/advertised equality
+required before closing checkpoint; following publication note records hash/proof.
+NEXT owner-configured actual connectivity: target Linux test host, private VPN or
+Cloudflare choice, hostname/endpoint and reviewed permissions; no secrets in prompt.
+Async missing-configuration question sent; no live deployment authorized/inferred
+from absent response. Continue source tasks only where independently useful; do
+not invent Phase6 or rerun unchanged full445. Phone/OEM/hardware acceptance deferred.

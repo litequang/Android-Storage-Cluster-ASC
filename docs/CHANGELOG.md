@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2026-10-29 — Operator-local Access check (source-only5.4e)
+
+- Add offline existing profile/TLS/key validation plus explicit pinned backend
+  mode and CA-verified anonymous listener probes. Fixed sanitized JSON statuses,
+  no profile/state creation, issuer fetch, session or writer grant.
+- Preserve UNKNOWN for remote/VPN/quorum/authenticated access; edge anonymous
+  refusal is not provider acceptance. Linux Access0.1.0 archive/APK unchanged.
+- See PHASE5-ACCESS-CHECK for commands/limits/rollback and PROGRESS for actual tests.
+
 ## 2026-10-28 — Fresh FIRST-install FINAL5 Node qualified on API30 SDK
 
 - Exact published5 FIRST identity/enrollment/TLS/Engine/FGS/replicas/browser/SHA/

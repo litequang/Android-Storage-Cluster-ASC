@@ -15,6 +15,14 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 ## Current Phase5 authorization — 2026-10-29
 
+LATEST separate5.4e source-only tools/check_access.py: offline existing profile/TLS
+validation +explicit anonymous fixed GET probes.10new +28existing regression PASS,
+38distinct0skip/fail; see PHASE5-ACCESS-CHECK/PROGRESS and access-check receipt.
+No ASC/Go/Android/old tests/deps/0.1.0 archive changes; do not rerun445 for unchanged
+runtime. New tool is NOT in immutable0.1.0 bundle. Mode/anonymous refusal does not
+prove writer/quorum/VPN/remote/authenticated/provider acceptance. NEXT live owner
+configuration/target still required; no deploy/account/DNS/SSH changes implied.
+
 CURRENT5.4d.2 Linux Access0.1.0 internal distribution: foundation3640863 normal-
 pushed/verified BEFORE actual installed qualification.8package PASS7.349s +actual
 wrapper lifecycle1 +original42access cases PASS (integration driver2/208.918s,

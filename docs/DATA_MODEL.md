@@ -555,3 +555,14 @@ Separate env/access-env.json exact format1/release_id/edge_dependencies bool/Pyt
 version tuple. Written only after successful env setup, no keys/IDs/tokens. New
 code requires its own env receipt. Existing gateway profiles/Node/Cluster/volume/
 journal/DB formats unchanged; source rollback never restores older user state.
+
+
+## Operator diagnostic stdout1 (no persistence)
+tools/check_access.py outputs format1/scope=operator-local/state/checks and explicit
+non-authority fields. checks: profile, tls_identity, upstream_mode, listener_mode,
+anonymous_gate; values VERIFIED/BLOCKED/UNKNOWN/NOT_REQUESTED. state CHECKS_PASSED
+means no executed check blocked, including offline-only runs, not deployment.
+writer_authority/live_deployment_accepted false; quorum_status/remote_reachability/
+vpn_membership UNKNOWN; authenticated_access NOT_TESTED. No credentials/endpoints/
+raw responses, no persisted receipt or schema/identity migration. Existing profile,
+Catalog/Registry/Manifest/journal formats and immutable0.1.0 package remain intact.

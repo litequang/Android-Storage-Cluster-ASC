@@ -62,3 +62,11 @@ install/env/lifecycle/compatible code switch/rollback and actual canonical acces
 regression. Exact archive +SHA published only after remote bytes verify. This
 closes the old Linux distribution gap, not real provider/hardware/production gates.
 No automatic deploy, new consensus authority or Android/Termux installer.
+
+
+## Separate source checkpoint5.4e — operator-local readiness
+Reuse profile1/2 loaders and existing TLS/pinned client for offline validation and
+explicit fixed anonymous probes. No default network/state writes, listener start,
+issuer fetch or account configuration. PHASE5-ACCESS-CHECK documents source-only
+commands. Prepare live acceptance without claiming remote/provider/quorum/writer
+proof, reopening accepted software gates or changing immutable0.1.0 distribution.

@@ -1,5 +1,14 @@
 # ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
+## Phase5 operator-local access diagnostics5.4e
+- tools/check_access.py: source-only offline existing-profile/TLS validation and
+  explicit anonymous fixed GET probes; reuses canonical loaders/pinned client.
+  No listener/state creation, issuer fetch, token/session or authority grant.
+- tests/test_access_check.py: actual private/edge TLS/Controller fixtures, offline
+  no-write/no-network, wrong pin/mode/key/CA and stopped/misconfigured-service
+  refusals. PHASE5-ACCESS-CHECK documents command, UNKNOWN scope and rollback.
+  Published Linux Access0.1.0 archive does not include this tool.
+
 ## Phase5.2 edge foundation
 - asc/access/access_jwt.py: optional real PyJWT/RS256 Access verification, fixed
   team certs URL, bounded public-key cache/refresh; no owner/session authority.

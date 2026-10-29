@@ -745,3 +745,14 @@ require release-bound private env and exact optional pins. Same canonical runtim
 guards remain: maintenance keeps its own protected/unknown Demo checks, gateway/
 edge their Linux host checks; no platform override. No arbitrary module/shell/
 SSH/tunnel/Controller/node startup or global package install by bootstrap.
+
+
+## Operator-local check5.4e
+Source-only tools/check_access.py never starts a service, reads backend state,
+accepts credentials or creates identity/locks/journals. Reuses canonical host,
+private-path/profile/TLS validation; optional anonymous fixed GETs to configured
+endpoints only. Listener verifies CA/IP SAN AND exact existing leaf. No redirect,
+TLS/proxy/CA bypass, issuer URL probe, generic scanner or deployment authorization.
+Fixed JSON labels never expose raw private exceptions/paths/profile/response.
+CHECKS_PASSED includes only executed checks; UNKNOWN/NOT_TESTED remain for quorum,
+VPN, remote/authenticated/provider acceptance. No report is an authority token.
