@@ -13,7 +13,23 @@
 
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
-## Current Phase5 authorization — 2026-10-28
+## Current Phase5 authorization — 2026-10-29
+
+LATEST5.4 final SOURCE/SYNTHETIC software subset ACCEPTED: fresh445Python0skip/
+fail/error1690.895s, all42Phase5 cases/all64required old fault markers; Go11top+
+12nested/vet/modules/Linux+Windows+Android builds PASS (foreign compile ONLY).
+Source26ad88e, freeze449inputs/e98f57ca... unchanged; post-run445unique inventory
+exact. See PHASE5-ACCEPTANCE/PROGRESS and qualification/phase5-final*.json plus
+phase5-platform-gates.json. No source fix/rerun/skip/fence relaxation in this full
+run, no new APK/release/Android runtime/SDK/signing/phone/provider/SSH/VPN action.
+Overall Phase5 remains PARTIAL/production NOT ACCEPTED. Full private logs/status/
+runner work/phase5-final; final source unchanged. Preserve all archived artifacts,
+SDKs/private signer/identities. Do not blindly rerun full445 for reporting only.
+NEXT separate complete Linux access distribution qualification (old installer
+omits Phase5 optional lock/guides), reviewed owner live-connectivity configuration
+and deferred phone/hardware/production campaign. No auto-deploy or account/DNS/SSH
+setup implied, no Phase6 invented or writableDR/Android voter/GC/failover unlock.
+Older pending5.4 statements below are historical, overridden by this final scope.
 
 LATEST5.2b: executor recovered, both dirty runtime files preserved, docs-only
 handoff fast-forwarded28fea21. New loopback edge CLI/Access-before-owner/cookie

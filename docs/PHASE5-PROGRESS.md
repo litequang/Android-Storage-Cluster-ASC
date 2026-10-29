@@ -507,8 +507,8 @@ Freeze457ec6a384f644170451b5505faa43bac4b3b60e normal-pushed/fetch/advertised HE
 matched, clean tree, BEFORE fixed qualification driver started. No executable
 change after26ad88e source freeze. Private status work/phase5-final/gates.json.
 
-Fresh Go1.27.3 tests -json -count=1 -p1 -timeout240s ./... PASS11top-level/12pass
-events; vet/module verification PASS. Linux amd64, Windows amd64 and Android arm64
+Fresh Go1.27.3 tests -json -count=1 -p1 -timeout240s ./... PASS11top-level/12nested
+(23test pass events); vet/module verification PASS. Linux amd64, Windows amd64 and Android arm64
 builds PASS from exact source, -trimpath/CGO_ENABLED=0. Windows/Android CROSS-BUILD
 ONLY; no phone/Android voter runtime acceptance. All subprocesses use explicit
 private SDK and per-command GOMAXPROCS2 matching2CPU cgroup; no deadline/fence change.
@@ -538,3 +538,40 @@ work/phase5-final/python-full.log; no fail/skip/fence removal. Required original
 final source acceptance. Real provider/public-host/SSH/VPN and physical/production
 remain NOT TESTED/deferred. Preserve source and task process/state; do not blindly
 start a second full run or signal historical PIDs after interruption.
+
+## 5.4c fresh full regression complete — Linux source/synthetic only
+Fresh command /workspace/asc-access-dev/edge-env/bin/python -m unittest discover
+-s tests -v with command-only ASC_GO=/workspace/asc-cloud/go1.27.3/go/bin/go and
+GOMAXPROCS2. **445PASS0fail/error/skip1690.895s**, host elapsed1691.067s,
+2026-10-29T00:03:18.367532Z ->00:31:29.434869Z.42Phase5 cases included,445unique
+IDs match discovery exactly; all64old physical/metadata/backup/recovery/observer
+fault markers actually printed in this successful run. No code fix/rerun or
+weakened fault/deadline/skip in this full qualification. Original synthetic
+TLS/process crash/quorum partition/actual fsync/unlink only temporary test volumes.
+
+All449frozen input hashes still equal e98f57ca952692f33228a46d8b708139bf13f7aa914fe2a8c81bb7bee212d065;
+no added executable paths. Only six explicitly excluded report docs/new receipt
+files changed. Source stays26ad88e baseline. Go11top-level+12nested/23events PASS,
+vet/module verify/Linux+Windows+Android builds PASS (foreign builds NOT runtime).
+Earlier progress wording12pass events corrected to12NESTED cases; original JSON
+always recorded all23actual pass events. Source package/static/dependency gates
+in37d7134 apply to identical final source, no repeat merely to inflate counts.
+
+Public final sanitized receipt qualification/phase5-final.json; full raw logs and
+fixed qualification driver under private work/phase5-final. No tokens/keys/plan/
+backup/raw logs published. Full PHASE5-ACCEPTANCE rewritten with exact gate/scope
+matrix and preserved historical checkpoints, not a claim of production readiness.
+No Android build/JVM/emulator/ADB/Keystore or physical-phone operation this run;
+old APK/hash/signer and published archives unchanged. No provider/SSH/VPN/tunnel/
+DNS/system/proxy/CA change. No new package/release, migrations or authority unlock.
+
+Linux source/synthetic software5.0–5.4 subset ACCEPTED; overall Phase5 PARTIAL,
+production/live connectivity/hardware NOT ACCEPTED. Packaging audit exposes scope:
+historical installer archive is internally consistent but lacks Phase5 optional
+requirements/operations guides, so it is NOT a complete new Phase5 distribution.
+Use source checkout for documented Linux gateway/maintenance entry points. Future
+independent source packaging needs its own install/upgrade/rollback tests. Actual
+provider/private-connectivity deployment needs reviewed owner configuration; real
+phone/ARM64/physical LAN/Doze/OEM/power acceptance remains deferred by owner. Keep
+writable DR/Android voter/GC/failover locked and preserve all private SDK/signers/
+Node state. Following final publication must normal-push/fetch/advertised-verify.

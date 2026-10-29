@@ -47,3 +47,12 @@ compatibility. Live SSH/VPN and Android maintenance remain separate NOT TESTED.
 5.4 follows only after5.3 normal publication/remote verification; freeze tested
 inputs, run fresh applicable full Python/Go/security/fault/package gates and keep
 provider/hardware/production acceptance explicitly outstanding.
+
+Status2026-10-29:5.0–5.4 LINUX SOURCE/SYNTHETIC SOFTWARE SUBSET ACCEPTED, fresh445
+Python/64faults +Go/vet/modules/builds and integrity/package checks. Overall Phase5
+PARTIAL/production NOT ACCEPTED; PHASE5-ACCEPTANCE exact scope overrides historical
+pending notes. No new release: source checkout only. Remaining independent work:
+complete Linux access distribution/install/upgrade/rollback qualification; owner-
+configured VPN/SSH/Cloudflare/IdP/DNS/live-client deployment tests; deferred physical
+ARM64/phone/LAN/Doze/OEM/power campaign and production approval. Do not infer live
+connectivity or recovery/Android writer authority from synthetic software PASS.

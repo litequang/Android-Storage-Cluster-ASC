@@ -1,9 +1,61 @@
-# Phase5 acceptance — NOT ACCEPTED
+# Phase5 acceptance — Linux software subset ACCEPTED / overall PARTIAL
 
-Latest5.3b owner-local maintenance source subset qualified:8fresh targeted tests
-and6fresh upgrade/compatibility regressions PASS in Linux synthetic. Prior private/
-edge subsets remain scoped below. Fresh final5.4, live SSH/VPN/provider/public
-browser and physical/production gates remain outstanding.
+## Final5.4c — 2026-10-29
+
+Fresh full Python: **445PASS,0FAIL/ERROR/SKIP,1690.895s**. All42Phase5 cases included,
+all64required original fault markers present. Runtime started00:03:18Z and ended
+00:31:29Z. Full log private work/phase5-final/python-full.log. No failed full run,
+source fix, skipped assertion or deadline/fencing relaxation in this qualification.
+
+Source26ad88e74f7379402946246cb44da0215506cc51, freeze449inputs/e98f57ca...;
+all hashes and445unique test IDs identical after execution. Reports-only freeze/
+platform commits457ec6a/37d7134 change no tested executable. Public exact proof:
+qualification/phase5-final-source.json, phase5-platform-gates.json, phase5-final.json.
+Source branch feature/phase5-remote-access, original Core/Demo/Phase4 refs preserved.
+
+| Gate | Actual result | Scope |
+|---|---|---|
+| Full Python |445PASS/0skip,1690.895s | Linux x86_64/Python3.13.5, source/synthetic |
+| Existing fault gates |64/64PASS | Actual TLS/process/quorum/I/O/unlink on temporary volumes only |
+| Go tests |11top-level +12nested PASS | Fresh uncached Go1.27.3,23pass events |
+| Go vet/modules |PASS | Actual current checkout |
+| Builds |Linux/Windows/Android PASS | Windows/Android compile only, not runtime |
+| Source package |Deterministic146files,127exact Python modules,0secret patterns | PRIVATE synthetic package, no release |
+| Dependencies |4official wheel SHA +installed RECORD integrity and pip check PASS | Optional private env only |
+| Old APK5 |Original SHA/signer/static inventory PASS | Unchanged binary; no new build/runtime/Keystore/ADB action |
+| cloudflared |Official2026.10.5 SHA/offline config/rules PASS | No tunnel/account/DNS/IdP connection |
+
+Software subset qualified: existing owner Dashboard/File Manager over private
+HTTPS; separate Access JWT/owner gates over actual LOCAL TLS and synthetic connector;
+actual file bytes/two logical domains/SHA/fallback; Core observer across actual
+quorum partition/heal; passive recovery unchanged; owner-local stopped maintenance
+with final CAS/backup/identity and NEW-state code rollback. Standard tests preserve
+Core3A–3D guards/data/history. No second Engine/Catalog, authority or remote shell.
+Resource context2CPU/8GiB/GOMAXPROCS2, as prior qualification;10s/250ms safety fences
+and original fault assertions unchanged. No active emulator/Gradle workload.
+
+**Overall Phase5 / production remains NOT ACCEPTED.** Live Cloudflare/Access/IdP/
+DNS/tunnel/public-host browser, actual VPN/SSH/remote maintenance, independent real
+hardware/LAN/ARM64/Doze/OEM/power are NOT TESTED or deferred by owner. Earlier public
+hostname experiment ERR_TUNNEL_CONNECTION_FAILED remains unqualified; loopback
+connector PASS never substitutes for it. Android evidence from earlier receipts
+is historical on the EXACT unchanged APK, not a fresh Gradle/JVM/emulator run here.
+Termux/APK/Demo/Core migration and writable DR remain unsupported/blocked. Android
+Raft/voters/physical GC/failover remain locked; no production/phone/M51 access.
+
+No new source/APK release published. Existing installer can build a consistent
+internal source package, but its historical allowlist omits Phase5 optional lock/
+operations guides: NOT a complete Phase5 distribution. Use verified source checkout
+and PHASE5-PRIVATE-ACCESS, PHASE5-CLOUDFLARE, PHASE5-MAINTENANCE for qualified local
+commands/limits. Stop the gateway to return to existing LAN access; source upgrades
+use NEW stopped backups and code-only rollback, never old DB restore or reinit.
+
+Remaining work can be split: separately qualify a complete Linux access distribution
+without phone access; deploy actual VPN/provider/SSH only under a reviewed owner
+configuration, then execute deferred physical-device/production acceptance. No new
+phase/consensus/recovery authority is authorized by software PASS.
+
+## Historical checkpoint scopes (superseded by final source result above)
 
 Historical5.1 private gateway software subset qualified:19API/regression +1CLI +1actual
 Chromium +2Core/passive read-only scoped executions PASS. Actual VPN/Tailscale,

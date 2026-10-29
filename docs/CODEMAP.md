@@ -961,3 +961,14 @@ exact fresh/upgrade paths now observed; API35/physical limits retained.7SDK imag
 5.3b maintenance.locked prechecks marker/recovery/prefix binding BEFORE creating
 coordination files; repeats fresh guards under original locks. New filesystem
 regression asserts unmarked/recovery-marker/unbound directories stay untouched.
+
+## Phase5.4 source qualification
+- qualification/phase5-final-source.json:449frozen input hashes,445test discovery,
+  source26ad88e baseline and optional environment context.
+- qualification/phase5-platform-gates.json: fresh Go11top/12nested/vet/modules/
+  Linux+foreign cross-builds, private deterministic source package, dependency/
+  unchanged APK/static signature and offline connector checks; no live provider.
+- qualification/phase5-final.json / PHASE5-ACCEPTANCE: fresh445PASS0skip1690.895s,
+  all64old fault markers, all42Phase5 cases, unchanged source/test inventory.
+  Linux SOFTWARE SUBSET accepted; overall/live/hardware/production still partial.
+  No new release, app/Core/Go implementation or authority change in qualification.
