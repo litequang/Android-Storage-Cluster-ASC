@@ -62,7 +62,7 @@ def request_json(origin, pin, method, path, obj=None, token=None, timeout=12):
             code = reply.get('error')
             allowed = {'unauthorized', 'credential_rejected_repair_required', 'rate_limited',
                        'invalid_or_expired_code', 'bad_request', 'payload_too_large',
-                       'not_found', 'registry_unavailable', 'no_eligible_storage',
+                       'not_found', 'registry_unavailable', 'no_eligible_storage', 'node_state_changed',
                        'catalog_unavailable', 'metadata_not_authorized', 'resync_required',
                        'file_not_found', 'job_not_found', 'logical_version_exists', 'idempotency_conflict',
                        'invalid_policy', 'job_state_conflict', 'stale_job_lease', 'verification_required',

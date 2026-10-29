@@ -121,13 +121,28 @@ class GatewayHandler(Handler):
                     or response.headers.get('Transfer-Encoding') or len(sizes)!=1 or not sizes[0].isascii()
                     or not sizes[0].isdigit() or int(sizes[0])>max(profile.max_body_bytes,2*1024**2)):
                 raise Rejected(502,'upstream_framing_rejected')
+            replacement=None
+            if self.path=='/api/capabilities' and response.status==200:
+                if int(sizes[0])>8192:raise Rejected(502,'upstream_framing_rejected')
+                raw=response.read(8193)
+                if len(raw)!=int(sizes[0]):raise Rejected(502,'upstream_framing_rejected')
+                capabilities=json.loads(raw)
+                if (type(capabilities) is not dict or type(capabilities.get('dashboard_api_version')) is not int
+                        or capabilities['dashboard_api_version']!=1 or capabilities.get('mode')!=profile.upstream_mode):
+                    raise Rejected(502,'upstream_framing_rejected')
+                capabilities.update(node_management=False,access_mode='file-access-only')
+                replacement=json.dumps(capabilities,separators=(',',':'),allow_nan=False).encode()
             self.send_response(response.status)
             allowed={'content-type','content-length','cache-control','set-cookie','content-disposition',
                 'x-asc-sha256','x-asc-replica-node','content-security-policy','x-content-type-options',
                 'referrer-policy','x-frame-options','cross-origin-resource-policy','permissions-policy','retry-after'}
             for name,value in response.getheaders():
-                if name.lower() in allowed:self.send_header(name,value)
+                if name.lower() in allowed and not (replacement is not None and name.lower()=='content-length'):self.send_header(name,value)
+            if replacement is not None:self.send_header('Content-Length',str(len(replacement)))
+            self.send_header('X-ASC-Access-Mode','file-access-only')
             self.send_header('Connection','close');self.end_headers();started=True
+            if replacement is not None:
+                self.wfile.write(replacement);return
             remaining=int(sizes[0])
             while remaining:
                 if time.monotonic()>deadline:raise OSError('bounded response deadline')

@@ -9,7 +9,7 @@ import threading
 import time
 from urllib.parse import urlsplit
 from . import validation as valid
-from .store import SCHEMA_VERSION
+from .store import SCHEMA_VERSION, NodeStateChanged
 from . import __version__
 
 MAX_JSON = valid.MAX_JSON
@@ -271,14 +271,16 @@ class Handler(BaseHTTPRequestHandler):
                 code = reg.add_pair_code(ttl, obj.get('node_id'))
                 return self._json(201, {'code': code, 'ttl': ttl, 'node_id': obj.get('node_id')})
             if path == '/api/v1/admin/rename':
-                valid.payload(obj, ('node_id', 'name'))
-                ok = reg.rename(obj['node_id'], obj['name'])
+                valid.payload(obj, ('node_id', 'name'), ('expected_generation',))
+                ok = reg.rename(obj['node_id'], obj['name'], expected_generation=obj.get('expected_generation'))
             else:
-                valid.payload(obj, ('node_id',))
-                ok = reg.revoke(obj['node_id'])
+                valid.payload(obj, ('node_id',), ('expected_generation',))
+                ok = reg.revoke(obj['node_id'], expected_generation=obj.get('expected_generation'))
             return self._json(200, {'ok': True}) if ok else self._json(404, {'error': 'not_found'})
         except PayloadTooLarge:
             return self._json(413, {'error': 'payload_too_large'})
+        except NodeStateChanged:
+            return self._json(409, {'error': 'node_state_changed'})
         except (ValueError, UnicodeError, RecursionError, OverflowError):
             return self._json(400, {'error': 'bad_request'})
         except sqlite3.Error:

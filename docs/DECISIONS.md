@@ -401,3 +401,16 @@ Python/dependency mode; partial env never becomes runtime-ready. Reuse canonical
 mode guards, owner/TLS/runtime logic. Code rollback selects retained code/env, not
 old DB/profile restore. No current pointer, background update, service registration
 or runtime/schema migration. Actual deployment/provider/hardware stay separate.
+
+
+## ADR078 — LAN owner management with explicit preview and canonical CAS
+Expose bounded, session-bound public Node previews/confirmations on DIRECT LAN
+Dashboard only. No machine credential or Node secret reaches JavaScript. Authority
+still belongs to existing Controller, generation/protected/active-node checks and
+Catalog approval. Add optional backward-compatible conditional writes under the
+original SQL transaction; never check generation only before a remote request.
+Volatile preview/receipt lifetime <=120s/session: known ACK retry is historical,
+restart/crash ambiguity requires current-state review/new confirmation, no fake
+rollback or durable success. No schema/second DB, physical deletion, voter/quorum,
+Core observer/recovery writer or public management ingress. Quota/FS/lifecycle
+remain Node-owned until an authenticated backend exists and qualifies separately.

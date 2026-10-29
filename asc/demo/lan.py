@@ -49,10 +49,12 @@ def lifecycle_request(client, method, path, value=None):
 
 
 class DemoCatalog(CatalogService):
-    def register(self, node_id, endpoint, pin, device_id, volume_ids, metadata_allowed=True, storage_allowed=True):
+    def register(self, node_id, endpoint, pin, device_id, volume_ids, metadata_allowed=True, storage_allowed=True,
+                 *, expected_generation=None, expected_approval=None):
         if storage_allowed:
             lan_origin(endpoint)
-        return super().register(node_id, endpoint, pin, device_id, volume_ids, metadata_allowed, storage_allowed)
+        return super().register(node_id, endpoint, pin, device_id, volume_ids, metadata_allowed, storage_allowed,
+                                expected_generation=expected_generation, expected_approval=expected_approval)
 
     def upload_plan(self, obj):
         if obj.get('policy') != 'replicated_2':

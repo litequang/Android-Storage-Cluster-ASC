@@ -66,7 +66,10 @@ class GatewayHTTPTests(GatewayFixture):
                 self.assertEqual(session['mode'],'core-quorum');self.assertEqual(session['max_upload_bytes'],0)
                 snapshot=json.loads(self.browser_request('GET','/api/state')[2]);self.assertFalse(snapshot['writer_authority'])
                 self.assertTrue(snapshot['runtime']['quorum_available'])
+                capabilities=json.loads(self.browser_request('GET','/api/capabilities')[2])
+                self.assertFalse(capabilities['node_management']);self.assertFalse(capabilities['recovery_writer'])
                 for method,path in [('POST','/api/refresh'),('POST','/api/uploads'),('POST','/api/v1/quick-join/pairings'),
+                    ('POST','/api/manage/v1/nodes/local-controller/preview'),('POST','/api/manage/v1/confirm/not-a-preview'),
                     ('POST','/api/approve'),('POST','/api/gc'),('POST','/api/promote'),('POST','/api/recovery/activate'),
                     ('GET','/api/files/11111111-1111-4111-8111-111111111111/content')]:
                     self.assertEqual(self.browser_request(method,path,{} if method=='POST' else None)[0],403,(method,path))
@@ -143,6 +146,9 @@ class RecoveryGatewayTests(unittest.TestCase):
                 self.assertEqual(state['runtime']['state'],'RECOVERY READ-ONLY');self.assertFalse(state['writer_authority'])
                 self.assertFalse(state['backup']['recovery']['credentials_restored'])
                 self.assertEqual(self.browser_request('POST','/api/recovery/activate',{})[0],403)
+                self.assertFalse(json.loads(self.browser_request('GET','/api/capabilities')[2])['node_management'])
+                self.assertEqual(self.browser_request('POST','/api/manage/v1/nodes/local-controller/preview',{})[0],403)
+                self.assertEqual(self.browser_request('POST','/api/manage/v1/confirm/anything',{})[0],403)
             self.assertEqual(before,{p.relative_to(root):p.read_bytes() for p in root.rglob('*') if p.is_file()})
             self.assertFalse((root/'registry.sqlite3').exists());self.assertFalse((root/'controller.json').exists())
             # A trusted manifest from another epoch cannot silently satisfy

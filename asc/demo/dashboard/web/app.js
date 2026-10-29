@@ -24,8 +24,9 @@
     navigator.serviceWorker.register('/service-worker.js', { scope: '/', updateViaCache: 'none' })
       .catch(() => { $('install-status').textContent = 'Web App chưa sẵn sàng; Dashboard vẫn dùng qua trình duyệt HTTPS.'; });
   }
-  const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null };
+  const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null, features: null };
   const pairing = { generation: 0, ticket: null, timer: null, creating: false, polling: false };
+  const management = { generation: 0, revision: 0, node: null, preview: null, busy: false };
   const messages = {
     pairing_limit: 'Đã đạt giới hạn mã đang theo dõi (8/phiên, 32/Controller). Đợi hoặc kiểm tra các mã đã tạo.',
     pairing_not_found: 'Không còn bằng chứng theo dõi trong phiên này. Không suy ra mã đã bị thu hồi.',
@@ -52,6 +53,11 @@
     upload_incomplete: 'Chưa nhận đủ file. Giữ cùng file để thử lại.',
     metadata_too_large: 'Yêu cầu vượt giới hạn cho phép.',
     bad_request: 'Yêu cầu không hợp lệ. Kiểm tra tên file hoặc tải lại trang.',
+    node_state_changed: 'Node hoặc phê duyệt đã thay đổi. Đọc lại trạng thái, xem trước và xác nhận lại.',
+    node_not_manageable: 'Node không tồn tại, bị bảo vệ hoặc không thể quản lý trong chế độ này.',
+    management_limit: 'Đã đạt giới hạn bản xem trước. Đợi bản cũ hết hạn rồi thử lại.',
+    management_preview_expired: 'Bản xem trước hết hạn hoặc không thuộc phiên này. Xem trước lại.',
+    management_confirmation_required: 'Cần đúng Node ID và xác nhận endpoint/PIN/volume/miền lỗi trước khi áp dụng.',
   };
   class APIError extends Error {
     constructor(code, status) { super(messages[code] || 'Yêu cầu chưa được xác nhận. Kiểm tra kết nối và thử lại.'); this.code = code; this.status = status; }
@@ -79,6 +85,7 @@
   function notice(text) { $('notice').textContent = text; $('notice').hidden = !text; }
   function connection(ok) {
     model.connected = ok;
+    if (!ok) clearManagement();
     if (!ok) clearPairing('Mất kết nối: mã đã ẩn, đăng ký và quyền lưu trữ UNKNOWN.');
     pairingButton();
     if (!ok && $('details').open) $('details').close();
@@ -89,6 +96,7 @@
   }
   function loginView(clear = true) {
     model.csrf = null; model.connected = false; model.state = null;
+    model.features = null; clearManagement();
     clearPairing('Đăng nhập lại để tạo mã ghép. Mã cũ chưa dùng có thể vẫn còn hiệu lực.');
     $('application').hidden = true; $('login-panel').hidden = false; $('logout').hidden = true;
     $('summary').replaceChildren(); $('node-list').replaceChildren(); $('file-list').replaceChildren();
@@ -112,7 +120,9 @@
         throw new APIError(code, response.status);
       }
       if (binary) return { buffer: await response.arrayBuffer(), sha: response.headers.get('X-ASC-SHA256') };
-      return await response.json();
+      const value = await response.json();
+      if (path === '/api/capabilities' && response.headers.get('X-ASC-Access-Mode') === 'file-access-only') value.node_management = false;
+      return value;
     } catch (error) {
       if (error instanceof APIError) throw error;
       connection(false); notice('Mất kết nối Controller. Dữ liệu dưới đây là bản xem cũ; trạng thái bảo vệ chưa xác minh lại.');
@@ -143,7 +153,7 @@
       if (value.state !== 'waiting') $('pair-code').textContent = '';
       const approval = value.state === 'registered' ?
         value.storage_approved === true ? 'Đã có phê duyệt lưu trữ từ owner; miền lỗi: ' + (value.failure_domain || 'UNKNOWN') :
-        value.storage_approved === false ? 'CHƯA phê duyệt lưu trữ / miền lỗi. Owner phải kiểm tra và approve bằng CLI.' : 'Quyền lưu trữ / miền lỗi UNKNOWN.' : 'Quyền lưu trữ chưa xác minh.';
+        value.storage_approved === false ? 'CHƯA phê duyệt lưu trữ / miền lỗi. Owner kiểm tra tại Điện thoại → Quản lý hoặc CLI.' : 'Quyền lưu trữ / miền lỗi UNKNOWN.' : 'Quyền lưu trữ chưa xác minh.';
       $('pair-registration').textContent = (value.node_id ? 'Node ID: ' + value.node_id + '. ' : '') + approval;
     } catch (error) {
       if (generation === pairing.generation) clearPairing(error.message);
@@ -184,6 +194,83 @@
     $('refresh').textContent = model.readOnly ? 'Đọc trạng thái' : 'Cập nhật kiểm tra';
     pairingButton();
   }
+  async function loadFeatures() {
+    const value = await request('/api/capabilities');
+    if (value.dashboard_api_version !== 1 || value.mode !== model.mode) throw new APIError('unsupported_runtime', 503);
+    model.features = value;
+  }
+  function clearManagement() {
+    management.generation += 1; management.node = null; management.preview = null; management.busy = false;
+    $('manage-apply').disabled = false; $('manage-preview').disabled = false;
+    $('manage-confirm-panel').hidden = true; $('manage-confirm-node').value = ''; $('manage-domain-confirm').checked = false;
+    $('manage-preview-body').textContent = ''; $('manage-result').textContent = '';
+    if ($('manage-dialog').open) $('manage-dialog').close();
+  }
+  function managementFields() {
+    management.revision += 1;
+    management.preview = null; $('manage-confirm-panel').hidden = true;
+    $('manage-confirm-node').value = ''; $('manage-domain-confirm').checked = false;
+    const action = $('manage-action').value;
+    $('manage-approval-fields').hidden = action !== 'approve';
+    $('manage-name-fields').hidden = action !== 'rename';
+    $('manage-revoke-warning').hidden = action !== 'revoke';
+  }
+  async function manageNode(item) {
+    if (!model.features?.node_management || model.readOnly || !model.connected) return;
+    clearManagement(); const generation = management.generation;
+    try {
+      const value = await request('/api/manage/v1/nodes/' + encodeURIComponent(item.node_id));
+      if (generation !== management.generation || !model.csrf) return;
+      management.node = value;
+      $('manage-node').textContent = value.name + ' · Node ID: ' + value.node_id + ' · Replica ghi nhận: ' + value.recorded_replicas;
+      $('manage-name').value = value.name; $('manage-action').value = 'approve';
+      $('manage-origin').value = value.approval?.origin || '';
+      $('manage-pin').value = value.approval?.pin || '';
+      $('manage-volumes').value = (value.approval?.volume_ids || value.reported_volume_ids || []).join('\n');
+      $('manage-domain').value = value.approval?.device_id || '';
+      managementFields(); $('manage-preview').disabled = value.state !== 'active';
+      $('manage-dialog').showModal();
+    } catch (error) { notice(error.message); }
+  }
+  $('manage-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!management.node || management.busy || !model.connected || !model.csrf) return;
+    const generation = management.generation, revision = management.revision, action = $('manage-action').value;
+    const parameters = action === 'approve' ? {
+      origin: $('manage-origin').value.trim(), pin: $('manage-pin').value.replace(/:/g, '').trim().toLowerCase(),
+      volume_ids: $('manage-volumes').value.split(/[\s,]+/).filter(Boolean), failure_domain: $('manage-domain').value.trim()
+    } : action === 'rename' ? { name: $('manage-name').value.trim() } : {};
+    management.busy = true; $('manage-preview').disabled = true; $('manage-result').textContent = 'Đang lấy bản xem trước; chưa áp dụng thay đổi.';
+    try {
+      const value = await request('/api/manage/v1/nodes/' + encodeURIComponent(management.node.node_id) + '/preview',
+        { method: 'POST', json: { management_version: 1, action, parameters } });
+      if (generation !== management.generation || revision !== management.revision || !model.csrf) return;
+      management.preview = value;
+      $('manage-preview-body').textContent = value.action + '\n' + JSON.stringify(value.parameters, null, 2) + '\nReplica đang ghi nhận: ' + value.recorded_replicas + '\nBản xem trước hết hạn sau tối đa 120 giây. Chưa xác minh storage writable.';
+      $('manage-confirm-panel').hidden = false; $('manage-result').textContent = 'Đối chiếu thông tin rồi xác nhận bằng đúng Node ID.';
+    } catch (error) { if (generation === management.generation) $('manage-result').textContent = error.message; }
+    finally { if (generation === management.generation) { management.busy = false; $('manage-preview').disabled = false; } }
+  });
+  $('manage-apply').addEventListener('click', async () => {
+    if (!management.preview || management.busy || !model.connected || !model.csrf) return;
+    const generation = management.generation, preview = management.preview;
+    management.busy = true; $('manage-apply').disabled = true; $('manage-result').textContent = 'Đang áp dụng; chờ Controller xác nhận.';
+    try {
+      await request('/api/manage/v1/confirm/' + encodeURIComponent(preview.preview_id), { method: 'POST', json: {
+        management_version: 1, intent_sha256: preview.intent_sha256, confirmation_node_id: $('manage-confirm-node').value.trim(),
+        physical_domain_confirmed: $('manage-domain-confirm').checked
+      } });
+      if (generation !== management.generation || !model.csrf) return;
+      management.preview = null; $('manage-confirm-panel').hidden = true;
+      $('manage-result').textContent = 'Controller đã xác nhận thay đổi. Phê duyệt không phải bằng chứng đủ replica hoặc volume writable.';
+      await reload(true);
+    } catch (error) { if (generation === management.generation) $('manage-result').textContent = error.message; }
+    finally { if (generation === management.generation) { management.busy = false; $('manage-apply').disabled = false; } }
+  });
+  $('manage-close').addEventListener('click', clearManagement);
+  $('manage-dialog').addEventListener('cancel', clearManagement);
+  $('manage-action').addEventListener('change', managementFields);
+  for (const id of ['manage-origin','manage-pin','manage-volumes','manage-domain','manage-name']) $(id).addEventListener('input', managementFields);
   function renderCore(state) {
     const r = state.runtime;
     $('connection').textContent = model.connected ? r.state : 'Gateway UNKNOWN';
@@ -227,7 +314,7 @@
     if (!$('details').open) $('details').showModal();
   }
   function nodeDetails(item) {
-    const rows = [detail('Node ID', item.node_id), detail('Phê duyệt', item.storage_approved ? 'Đã duyệt lưu trữ' : 'Chưa duyệt lưu trữ / cần duyệt lại bằng CLI'),
+    const rows = [detail('Node ID', item.node_id), detail('Phê duyệt', item.storage_approved ? 'Đã duyệt lưu trữ' : 'Chưa duyệt lưu trữ / cần owner duyệt lại'),
       detail('Miền lỗi do owner xác nhận', item.failure_domain || 'UNKNOWN'), detail('Heartbeat cuối (giờ Controller)', date(item.last_seen)),
       detail('Replica được ghi nhận', count(item.recorded_replicas))];
     for (const volume of item.volumes) {
@@ -308,9 +395,13 @@
       card.append(title, node('code', '', short(item.node_id)),
         node('p', 'node-facts', (item.storage_approved ? 'Đã duyệt lưu trữ' : 'Chưa duyệt lưu trữ') + ' · ' + item.volumes.length + ' volume · ' + item.recorded_replicas + ' replica ghi nhận'),
         node('p', 'muted', 'Heartbeat: ' + date(item.last_seen)), button('Xem chi tiết', () => nodeDetails(item)));
+      if (model.features?.node_management && !model.readOnly) {
+        const manage = button('Quản lý', () => manageNode(item)); manage.dataset.action = 'manage'; manage.disabled = !model.connected;
+        card.append(manage);
+      }
       return card;
     }));
-    if (!state.nodes.length) $('node-list').append(node('p', 'muted', 'Chưa có Storage Node được ghép. Ghép và phê duyệt bằng CLI trước.'));
+    if (!state.nodes.length) $('node-list').append(node('p', 'muted', 'Chưa có Storage Node được ghép. Mở Ghép điện thoại để tạo mã, rồi phê duyệt trong Quản lý.'));
     $('file-count').textContent = count(c.files) + ' file';
     $('file-list').replaceChildren(...state.files.map(file => {
       const row = node('article', 'file-row'); row.dataset.fileId = file.file_id;
@@ -398,7 +489,7 @@
     try {
       const reply = await request('/api/login', { method: 'POST', json: { code: $('login-code').value.trim() }, csrf: false });
       model.csrf = reply.csrf;
-      const session = await request('/api/session', { csrf: false }); applyMode(session); model.max = session.max_upload_bytes;
+      const session = await request('/api/session', { csrf: false }); applyMode(session); model.max = session.max_upload_bytes; await loadFeatures();
       activate(); await reload();
     } catch (error) { $('login-error').textContent = error.message; }
     finally { $('login-button').disabled = false; }
@@ -411,7 +502,7 @@
       loginView(); notice('');
     } catch (error) { notice(error.message); }
   });
-  window.addEventListener('pagehide', () => { clearPairing('Trang đã đóng: theo dõi đã bỏ, không tự thu hồi mã.'); });
+  window.addEventListener('pagehide', () => { clearPairing('Trang đã đóng: theo dõi đã bỏ, không tự thu hồi mã.'); clearManagement(); });
   $('pair-create').addEventListener('click', () => { void createPairing(); });
   $('refresh').addEventListener('click', () => { void reload(true); });
   $('upload-form').addEventListener('submit', upload);
@@ -424,7 +515,7 @@
     if (location.protocol !== 'https:' || !window.isSecureContext || !crypto.subtle) {
       $('login-error').textContent = 'Cần HTTPS được trình duyệt tin cậy. Xác minh CA/IP, không bỏ qua lỗi certificate.'; $('login-button').disabled = true; return;
     }
-    try { applyMode(await request('/api/mode', { csrf: false })); const session = await request('/api/session', { csrf: false }); applyMode(session); model.csrf = session.csrf; model.max = session.max_upload_bytes; activate(); await reload(); }
+    try { applyMode(await request('/api/mode', { csrf: false })); const session = await request('/api/session', { csrf: false }); applyMode(session); model.csrf = session.csrf; model.max = session.max_upload_bytes; await loadFeatures(); activate(); await reload(); }
     catch (_) { $('login-error').textContent = ''; /* normal first visit requires login */ }
     setInterval(() => { if (model.csrf && !model.uploading) void reload(); }, 10000);
   }

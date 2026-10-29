@@ -756,3 +756,17 @@ TLS/proxy/CA bypass, issuer URL probe, generic scanner or deployment authorizati
 Fixed JSON labels never expose raw private exceptions/paths/profile/response.
 CHECKS_PASSED includes only executed checks; UNKNOWN/NOT_TESTED remain for quorum,
 VPN, remote/authenticated/provider acceptance. No report is an authority token.
+
+
+## Direct LAN Dashboard Node management
+Owner session/CSRF/Origin precede exact v1 action schema, explicit Node ID/domain
+confirmation and bounded session preview. Endpoints/pins/volume IDs are public
+bindings; Node-reported IDs are NOT proof. Existing Controller uses its own token
+server-side; no machine credentials in browser. Check credential generation and
+approval binding under original BEGIN IMMEDIATE, including protected/active checks.
+Revoke retains objects but can remove network readability, so preview warns owner.
+Core/recovery management always403; no membership/voter/writer/GC activation.
+Phase5 permits GET capabilities only; scopes node_management=false with fixed
+file-access-only header/body. Node/pair/admin/manage paths remain blocked. Static
+header is UI capability hint, never caller identity or authorization. Preserve
+TLS/pinning and all old origin/session/transfer guards. No arbitrary FS/quota/shell.

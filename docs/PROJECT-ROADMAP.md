@@ -64,7 +64,8 @@ không có nghĩa mọi tính năng đó đều được bật hoặc có UI tro
 
 ## 3. Branch, code và bộ cài nên dùng
 
-Source continuation hiện tại: **feature/phase5-remote-access**, kế thừa Phase4
+Source Dashboard hiện tại: **feature/dashboard-full**, từ PC4336ab7 sau
+feature/phase5-remote-access, kế thừa Phase4
 qua lịch sử tích hợp có kiểm soát. Base trước handoff này:
 c2c7f531f24c73938084f5cc72b8f0838fbfe1b6. Fetch HEAD mới nhất gồm tài liệu này.
 Core/Demo/Phase4 gốc giữ nguyên, không dùng main làm baseline hoặc merge cả nhánh.

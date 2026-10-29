@@ -56,7 +56,7 @@ class Profile:
         if (type(path) is not str or not path.isascii() or any(c in path for c in ('%', '?', '#', '\\'))
                 or '//' in path or any(p in ('.', '..') for p in path.split('/'))):
             return False
-        if method == 'GET' and path in (*ASSETS, '/favicon.ico', '/api/mode', '/api/session', '/api/state'):
+        if method == 'GET' and path in (*ASSETS, '/favicon.ico', '/api/mode', '/api/session', '/api/state', '/api/capabilities'):
             return True
         if method == 'POST' and path in ('/api/login', '/api/logout'):
             return True

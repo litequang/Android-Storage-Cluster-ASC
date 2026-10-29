@@ -26,7 +26,8 @@ from ..pairing import Pairings, PairingError
 CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self'; worker-src 'self'"
 ERRORS = {'no_eligible_storage': 'insufficient_capacity', 'logical_version_exists': 'file_exists',
           'idempotency_conflict': 'idempotency_conflict', 'file_not_found': 'not_found',
-          'no_available_replica': 'replica_unavailable'}
+          'no_available_replica': 'replica_unavailable', 'node_state_changed': 'node_state_changed',
+          'protected_or_inactive_node': 'node_not_manageable'}
 
 
 class Rejected(Exception):
@@ -42,6 +43,8 @@ class DashboardAPI:
         self.sessions = Sessions()
         self.views = Views(service, cluster_name)
         self.pairings = Pairings(root,service,client)
+        from .management import Management
+        self.management = Management(self)
         self.lock = threading.Lock()
         self.tickets = {}
         self.transfers = threading.BoundedSemaphore(1)
@@ -107,6 +110,7 @@ class DashboardAPI:
     def close(self):
         self.sessions.close()
         self.pairings.close()
+        self.management.close()
         with self.lock:
             self.tickets.clear()
 
@@ -287,15 +291,31 @@ class DashboardHandler(Handler):
             if self.body_json() != {}:
                 raise Rejected(400, 'bad_request')
             if api.pairings is not None:api.pairings.forget(authenticated[1])
+            if getattr(api, 'management', None) is not None:api.management.forget(authenticated[1])
             api.sessions.logout(authenticated[0])
             return self._json(200, {'authenticated': False},
                               (('Set-Cookie', cookie_name + '=; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'),))
+        if path == '/api/capabilities' and method == 'GET':
+            return self._json(200, {'dashboard_api_version': 1, 'mode': api.mode,
+                'node_management': api.mode == 'single-writer-demo' and getattr(api, 'management', None) is not None,
+                'file_upload_download': api.mode == 'single-writer-demo',
+                'owner_password': False, 'file_history': False, 'snapshot_restore': False,
+                'physical_gc': False, 'recovery_writer': False})
         if api.mode != 'single-writer-demo':
             if path=='/api/state' and method=='GET':return self._json(200,api.views.state())
             pieces=path.strip('/').split('/')
             if method=='GET' and len(pieces)==3 and pieces[:2]==['api','files']:
                 return self._json(200,api.views.file(pieces[2]))
             raise Rejected(403,'read_only_mode')
+        parts = path.strip('/').split('/')
+        if parts[:4] == ['api', 'manage', 'v1', 'nodes']:
+            if len(parts) == 5 and method == 'GET':
+                return self._json(200, api.management.detail(parts[4]))
+            if len(parts) == 6 and parts[5] == 'preview' and method == 'POST':
+                return self._json(201, api.management.preview(parts[4], self.body_json(),
+                    authenticated[1], authenticated[2]['expires']))
+        if len(parts) == 5 and parts[:4] == ['api', 'manage', 'v1', 'confirm'] and method == 'POST':
+            return self._json(200, api.management.apply(parts[4], self.body_json(), authenticated[1]))
         if path == '/api/v1/quick-join/pairings' and method == 'POST':
             if self.body_json() != {}:raise Rejected(400,'bad_request')
             return self._json(201,api.pairings.create(authenticated[1],authenticated[2]['expires']))

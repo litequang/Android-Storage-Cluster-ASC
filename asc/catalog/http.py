@@ -83,9 +83,14 @@ def handle(handler):
             if query:raise ValueError()
             obj=handler._read_json()
             if parts==['nodes','register']:
-                valid.payload(obj,('node_id','device_id'),('origin','pin','volume_ids','metadata_allowed','storage_allowed'))
+                valid.payload(obj,('node_id','device_id'),('origin','pin','volume_ids','metadata_allowed','storage_allowed',
+                    'expected_generation','expected_approval'))
+                conditions={k:obj[k] for k in ('expected_generation','expected_approval') if k in obj}
+                if conditions and getattr(service,'failover',False):
+                    raise ValueError('conditional Demo approval is not a quorum runtime contract')
                 return handler._json(200,service.register(obj['node_id'],obj.get('origin'),obj.get('pin'),obj['device_id'],
-                    obj.get('volume_ids',[]),obj.get('metadata_allowed',True),obj.get('storage_allowed',True)))
+                    obj.get('volume_ids',[]),obj.get('metadata_allowed',True),obj.get('storage_allowed',True),
+                    **conditions))
             if parts==['uploads']:
                 valid.payload(obj,('idempotency_key','logical_path','size','sha256','policy'),('version',))
                 return handler._json(201,service.upload_plan(obj))

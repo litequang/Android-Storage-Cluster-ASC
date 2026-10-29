@@ -4,7 +4,7 @@ import sqlite3
 import threading
 import time
 from . import grants
-from .common import CatalogError, identifier, now, origin
+from .common import CatalogError, digest, identifier, now, origin
 from .metadata import MetadataSource
 from .placement import active_nodes, eligible, readable
 from .queue import JobQueue
@@ -14,6 +14,12 @@ from .. import validation as valid
 from ..client import ClientError
 from ..runtime import foreground_lock
 from ..storage.client import StorageClient
+
+
+def approval_stamp(row):
+    """Public administrative binding only; live probes do not invalidate a preview."""
+    return digest({k: row[k] for k in ('origin', 'pin', 'device_id', 'volume_ids',
+                  'metadata_allowed', 'storage_allowed', 'approved_generation')} if row else None)
 
 
 class CatalogService:
@@ -58,20 +64,29 @@ class CatalogService:
                 pass  # Fixed job/health states carry diagnostics; never log secret-bearing exceptions.
             self._stop.wait(1)
 
-    def register(self,node_id,endpoint,pin,device_id,volume_ids,metadata_allowed=True,storage_allowed=True):
+    def register(self,node_id,endpoint,pin,device_id,volume_ids,metadata_allowed=True,storage_allowed=True,
+                 *,expected_generation=None,expected_approval=None):
         valid.node_id(node_id);valid.name(device_id)
         endpoint,pin=origin(endpoint,pin) if storage_allowed else ('','')
         if (not isinstance(volume_ids,list) or len(volume_ids)>8 or storage_allowed and not volume_ids or
                 type(metadata_allowed) is not bool or type(storage_allowed) is not bool):
             raise CatalogError('invalid_node_approval',400)
         for volume_id in volume_ids:identifier(volume_id)
+        if expected_generation is not None and (type(expected_generation) is not int or expected_generation < 1):
+            raise CatalogError('invalid_node_approval',400)
+        if expected_approval is not None:
+            from .common import content
+            content(0,expected_approval)
         with self.registry.connect() as db:
             db.execute('BEGIN IMMEDIATE')
             node=db.execute('SELECT * FROM nodes WHERE node_id=?',(node_id,)).fetchone()
             if (not node or node['state']!='active' or node_id=='local-controller' or
                     json.loads(node['profile']).get('protected') is True):
                 raise CatalogError('protected_or_inactive_node',403)
-            exists=db.execute('SELECT node_id FROM catalog_nodes WHERE node_id=?',(node_id,)).fetchone()
+            exists=db.execute('SELECT * FROM catalog_nodes WHERE node_id=?',(node_id,)).fetchone()
+            if ((expected_generation is not None and node['token_version']!=expected_generation)
+                    or expected_approval is not None and approval_stamp(exists)!=expected_approval):
+                raise CatalogError('node_state_changed',409)
             if not exists and db.execute('SELECT COUNT(*) FROM catalog_nodes').fetchone()[0]>=16:
                 raise CatalogError('catalog_node_limit',409)
             values=(endpoint,pin,device_id,int(metadata_allowed),int(storage_allowed),node['token_version'],

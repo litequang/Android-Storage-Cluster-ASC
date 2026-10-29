@@ -628,3 +628,16 @@ listener checks BLOCKED: confirm owned service is running, exact origin/CA/leaf 
 expected authentication gate. It never starts a service automatically. Default
 CHECKS_PASSED does not mean a listener is running. Edge listener_mode UNKNOWN is
 expected without Access credentials; do not disable the gate. No raw secret output.
+
+
+## Dashboard management
+node_state_changed409: credential or approval changed since preview; inspect current
+Node, create a new preview and explicitly confirm. Never reinitialize identity.
+management_confirmation_required409: exact Node ID/intent and domain confirmation
+required. management_preview_expired404: expired, other owner/session or server
+restart; inspect actual state before retry. management_limit429:8session/32total
+within120s; wait/review, no unbounded queue. Approval ACK does not verify writable
+storage; refresh Controller probes and check actual volume/replica evidence.
+Controls hidden through Phase5 ingress is intentional file-only scope; use trusted
+LAN Dashboard, not public management allowlist widening. Revoked Node needs proper
+existing lifecycle repair, not blind join/new ID or deleting private state.

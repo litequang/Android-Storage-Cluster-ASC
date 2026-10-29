@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Dashboard1 — owner Node management (source checkpoint)
+
+- Add trusted LAN owner preview/confirmation for storage binding/domain approval,
+  rename/revoke, using canonical APIs and conditional SQL generation/approval CAS.
+- Add authenticated capabilities and mobile management form; keep Core/recovery
+  read-only and Phase5 ingress file-only. No physical deletion/new schema or keys.
+- Real API/browser/Node bytes/fallback/security qualification in DASHBOARD-PROGRESS;
+  no update package or ZTE deployment yet, full Dashboard track continues.
+
 ## 2026-10-30 — Physical ZTE Controller installation checkpoint (operations/docs)
 
 - Actual PC/ZTE inspection reproduced043 install refusal against an existing03

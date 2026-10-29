@@ -47,7 +47,7 @@
       <p class="muted">Dung lượng là số đo theo quota, reserve và công việc đang chờ. Upload cần đủ chỗ trên hai điện thoại độc lập; tổng dung lượng không phải kích thước file tối đa.</p>
     </section>
     <section id="nodes" class="tab-panel" hidden>
-      <div class="section-heading"><h2>Điện thoại &amp; volume</h2><span class="muted">Phê duyệt và miền lỗi giữ ở CLI</span></div>
+      <div class="section-heading"><h2>Điện thoại &amp; volume</h2><span class="muted">Owner kiểm tra và xác nhận quyền lưu trữ, miền lỗi</span></div>
       <div id="node-list" class="node-grid"></div>
     </section>
     <section id="quick-join" class="tab-panel" hidden>
@@ -68,7 +68,7 @@
           <p>Trên node đã khởi tạo, chạy <code>ascdemo quick-join</code> với đúng private state; nhập origin, PIN, Cluster ID và tên node theo hướng dẫn, rồi nhập mã khi được hỏi ẩn. Giữ pending context nếu mất kết nối; retry cùng lệnh. Không khởi tạo lại node đã có identity.</p>
           <p id="pair-registration"></p>
         </div>
-        <p class="muted">Đăng ký không tự cấp quyền lưu trữ. Owner vẫn phải kiểm tra volume và xác nhận miền lỗi độc lập bằng CLI. Hai volume trên một điện thoại không phải hai miền lỗi.</p>
+        <p class="muted">Đăng ký không tự cấp quyền lưu trữ. Sang Điện thoại → Quản lý để owner kiểm tra volume và xác nhận miền lỗi. Hai volume trên một điện thoại không phải hai miền lỗi.</p>
         <p class="muted">Đăng xuất, tải lại hoặc mất kết nối sẽ ẩn mã và bỏ theo dõi trên trang; mã chưa dùng có thể còn hiệu lực đến hết hạn. Đây không phải thao tác thu hồi mã.</p>
       </section>
     </section>
@@ -90,6 +90,31 @@
     </section>
   </section>
   <dialog id="details"><div class="dialog-heading"><h2 id="details-title">Chi tiết</h2><button id="details-close" class="button subtle" aria-label="Đóng chi tiết">Đóng</button></div><div id="details-body"></div></dialog>
+  <dialog id="manage-dialog">
+    <div class="dialog-heading"><h2>Quản lý điện thoại</h2><button id="manage-close" class="button subtle" type="button">Đóng</button></div>
+    <p id="manage-node" class="muted"></p>
+    <form id="manage-form">
+      <label for="manage-action">Thao tác</label>
+      <select id="manage-action"><option value="approve">Phê duyệt / cập nhật storage</option><option value="rename">Đổi tên</option><option value="revoke">Thu hồi quyền Node</option></select>
+      <div id="manage-approval-fields">
+        <label for="manage-origin">HTTPS Storage Node (không phải Controller/Dashboard)</label><input id="manage-origin" type="text" placeholder="https://192.168.1.21:9443" spellcheck="false" maxlength="128">
+        <label for="manage-pin">SHA-256 PIN Storage Node đã đối chiếu đầy đủ</label><input id="manage-pin" type="text" spellcheck="false" maxlength="95">
+        <label for="manage-volumes">Volume ID đã duyệt trên điện thoại (mỗi dòng một ID)</label><textarea id="manage-volumes" rows="3" spellcheck="false" maxlength="300"></textarea>
+        <p class="muted">IDs gợi ý từ heartbeat chưa phải phép đo hoặc chứng minh quyền ghi. Quota/reserve cấu hình trên chính Node.</p>
+        <label for="manage-domain">Miền lỗi vật lý do owner xác nhận</label><input id="manage-domain" type="text" placeholder="bphone-phone" maxlength="64" spellcheck="false">
+      </div>
+      <div id="manage-name-fields" hidden><label for="manage-name">Tên điện thoại</label><input id="manage-name" type="text" maxlength="64"></div>
+      <p id="manage-revoke-warning" class="error" hidden>Thu hồi làm Node mất quyền truy cập. Bản sao đang giữ có thể không còn đọc qua mạng; dữ liệu vật lý vẫn giữ nguyên.</p>
+      <button id="manage-preview" class="button primary" type="submit">Xem trước thay đổi</button>
+    </form>
+    <section id="manage-confirm-panel" hidden>
+      <h3>Xác nhận thay đổi đã xem trước</h3><pre id="manage-preview-body"></pre>
+      <label for="manage-confirm-node">Dán đầy đủ Node ID bên trên để xác nhận</label><input id="manage-confirm-node" type="text" maxlength="64" spellcheck="false" autocomplete="off">
+      <label><input id="manage-domain-confirm" type="checkbox"> Tôi đã đối chiếu endpoint/PIN/volume và miền lỗi thực tế. Các Node trên cùng điện thoại dùng cùng miền lỗi.</label>
+      <button id="manage-apply" class="button primary" type="button">Áp dụng thay đổi</button>
+    </section>
+    <p id="manage-result" role="status" aria-live="polite"></p>
+  </dialog>
 </main>
 <footer>Linux synthetic đã kiểm thử · Android cần chủ dự án nghiệm thu · Một Controller, không failover tự động · Không xóa vật lý</footer>
 </body>

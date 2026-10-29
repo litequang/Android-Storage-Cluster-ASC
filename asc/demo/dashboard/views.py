@@ -110,4 +110,4 @@ class Views:
                            'protected_files': sum(f['protected'] for f in files) if len(ids) <= 256 else None,
                            'unprotected_files': sum(not f['protected'] for f in files) if len(ids) <= 256 else None},
                 'capacity': capacity, 'capacity_note': 'shared_filesystem_unknown' if ambiguous else None,
-                'node_approval': 'CLI only; owner confirms physical failure domain'}
+                'node_approval': 'Owner confirmation via LAN Dashboard or CLI; physical failure domain must be verified'}

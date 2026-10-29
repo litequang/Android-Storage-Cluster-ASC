@@ -566,3 +566,13 @@ writer_authority/live_deployment_accepted false; quorum_status/remote_reachabili
 vpn_membership UNKNOWN; authenticated_access NOT_TESTED. No credentials/endpoints/
 raw responses, no persisted receipt or schema/identity migration. Existing profile,
 Catalog/Registry/Manifest/journal formats and immutable0.1.0 package remain intact.
+
+
+## Dashboard owner management previews1 — no persistent schema change
+Bounded32RAM entries/8owner, expiry <=120s and session. UUID preview maps public
+intent, owner session hash, expected credential generation and approval SHA,
+optional confirmed historical result. Hash covers administrative origin/pin/domain/
+volume IDs/metadata+storage flags/approved_generation; live probe updates excluded.
+No raw session cookie, machine secret, key, new DB/table/version or persistent
+identity. Logout/server restart clears previews. Existing Registry4/Manifest1/
+Catalog journals unchanged; no automatic retry after unknown crash outcome.

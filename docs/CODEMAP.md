@@ -1,5 +1,22 @@
 # ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
+Dashboard1 Node management:
+- demo/dashboard/management.py: exact Demo-bound owner/session preview/confirmation,
+  public Node bindings, bounded volatile receipts and pinned canonical API calls.
+- catalog/service.py approval_stamp/register optional generation/approval CAS under
+  original SQL transaction; catalog/http.py only forwards supplied preconditions,
+  rejects that Demo contract on failover. DemoCatalog delegates unchanged guards.
+- store.py conditional rename/revoke and server.py optional expected_generation/
+  fixed409; client.py includes fixed node_state_changed label. Legacy defaults kept.
+- dashboard/http.py: authenticated capabilities/manage routes; Core/recovery deny
+  before management, logout/close clear volatile receipts. web assets: owner modal,
+  preview, explicit Node/domain confirmation, XSS-safe text and late-result clearing.
+- access/policy.py permits only GET capabilities; gateway.py scopes bounded reply
+  and static access header to file-only, all management routes remain denied.
+- tests/test_dashboard_management.py +browser counterpart/JS: real TLS/Engine/new
+  unapproved Node/owner/CSRF/CAS/lostACK/restart/bytes/fallback/mobile/XSS. Original
+  access/Core/recovery tests add scoped capability/deny assertions, none removed.
+
 DASHBOARD-PLAN.md / DASHBOARD-PROGRESS.md own current full owner Dashboard track,
 from PC4336 on feature/dashboard-full. Existing Lite source remains canonical;
 mode/capability/reuse audit and checkpoint tests precede each incremental change.

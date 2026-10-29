@@ -593,3 +593,21 @@ locks. Completion retry requires real matching journal/release/backup evidence.
 Error response is maintenance_refused/UNKNOWN, never raw private exception text.
 No management route is added to private/Cloudflare browser gateways. Plan digest
 is not a credential, source signature, writer grant or SSH authorization.
+
+
+## Dashboard management v1 / existing single-writer conditional writes
+Owner cookie+CSRF+exact Origin required for GET /api/capabilities and manage API.
+GET /api/manage/v1/nodes/NODE reads sanitized public approval/generation and reported
+volume IDs (explicitly NOT verified). POST .../nodes/NODE/preview exact body:
+management_version1, action approve|rename|revoke, parameters. Approve parameters:
+origin/pin/volume_ids/failure_domain; rename name; revoke empty. Preview returns
+preview_id/intent_sha256/node/action/parameters/warnings, storage_verified=false.
+POST /api/manage/v1/confirm/UUID exact body management_version1/intent_sha256/
+confirmation_node_id/physical_domain_confirmed bool. Approve needs true and exact
+Node ID; all actions bind stored intent/owner/session/expiry. No extra commands.
+Catalog nodes/register optionally accepts expected_generation/expected_approval
+ONLY non-failover API; old clients unchanged. Existing admin rename/revoke accept
+optional expected_generation. Checks inside original SQL transaction; stale409
+node_state_changed. Protected/unknown/local Controller deny. Core/recovery manage
+routes403 before backend mutation. Gateway GET capabilities scoped file-only;
+POST manage still403. No Node/consensus/transfer/identity/schema wire change.

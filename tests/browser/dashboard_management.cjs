@@ -1,0 +1,96 @@
+'use strict';
+// Trusted browser -> actual owner API/Node/Engine; no TLS bypass or live devices.
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
+const { chromium } = require('playwright');
+const cfg = JSON.parse(fs.readFileSync(0, 'utf8'));
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+let stage = 'trust';
+(async () => {
+  const home = path.join(cfg.output, 'browser-home');
+  const db = path.join(home, '.pki', 'nssdb');
+  fs.mkdirSync(db, { recursive: true, mode: 0o700 });
+  execFileSync('certutil', ['-N', '-d', 'sql:'+db, '--empty-password'], { stdio:'pipe' });
+  execFileSync('certutil', ['-A', '-d', 'sql:'+db, '-n', 'ASC synthetic CA', '-t', 'C,,', '-i', cfg.ca], { stdio:'pipe' });
+  const browser = await chromium.launch({ executablePath: process.env.ASC_TEST_CHROMIUM || '/usr/bin/chromium',
+    headless:true, env:{...process.env, HOME:home}, args:['--disable-background-networking','--disable-component-update','--disable-sync'] });
+  try {
+    const context = await browser.newContext({ viewport:{width:390,height:844}, acceptDownloads:true, ignoreHTTPSErrors:false });
+    const page = await context.newPage(); const errors=[]; page.on('pageerror', e=>errors.push(e.name));
+    stage='login'; await page.goto(cfg.origin);
+    await page.locator('#login-code').fill(cfg.code); await page.locator('#login-button').click();
+    await page.locator('#application').waitFor({state:'visible'});
+    const state = () => page.evaluate(async () => {
+      const session=await (await fetch('/api/session')).json();
+      return (await fetch('/api/state',{headers:{'X-ASC-CSRF':session.csrf}})).json();
+    });
+    assert.equal((await state()).nodes.find(n=>n.node_id===cfg.node_id).storage_approved,false);
+    stage='preview'; await page.locator('[data-tab="nodes"]').click();
+    const card=()=>page.locator('[data-node-id="'+cfg.node_id+'"]');
+    await card().locator('[data-action="manage"]').click();
+    await page.locator('#manage-dialog').waitFor({state:'visible'});
+    assert.ok((await page.locator('#manage-volumes').inputValue()).includes(cfg.volume_id));
+    await page.locator('#manage-origin').fill(cfg.node_origin);
+    await page.locator('#manage-pin').fill(cfg.node_pin);
+    await page.locator('#manage-domain').fill('dashboard-new-domain');
+    await page.locator('#manage-preview').click(); await page.locator('#manage-confirm-panel').waitFor({state:'visible'});
+    assert.equal((await state()).nodes.find(n=>n.node_id===cfg.node_id).storage_approved,false);
+    stage='confirmation-refusal'; await page.locator('#manage-confirm-node').fill('wrong-node');
+    await page.locator('#manage-domain-confirm').check(); await page.locator('#manage-apply').click();
+    await page.waitForFunction(()=>document.querySelector('#manage-result').textContent.includes('Cần đúng Node ID'));
+    assert.equal((await state()).nodes.find(n=>n.node_id===cfg.node_id).storage_approved,false);
+    stage='approval'; await page.locator('#manage-confirm-node').fill(cfg.node_id); await page.locator('#manage-apply').click();
+    await page.waitForFunction(()=>document.querySelector('#manage-result').textContent.includes('Controller đã xác nhận'));
+    let observed;
+    for(let i=0;i<40;i++) {
+      observed=(await state()).nodes.find(n=>n.node_id===cfg.node_id);
+      if(observed.storage_approved && observed.volumes[0]?.writable===true) break;
+      await delay(250);
+    }
+    assert.equal(observed.storage_approved,true);assert.equal(observed.failure_domain,'dashboard-new-domain');
+    assert.equal(observed.volumes[0].writable,true);
+    await page.locator('#manage-close').click();
+    stage='rename-xss'; await card().locator('[data-action="manage"]').click();
+    await page.locator('#manage-action').selectOption('rename');
+    const name='<img src=x onerror=globalThis.manageXss=1>';
+    await page.locator('#manage-name').fill(name); await page.locator('#manage-preview').click();
+    await page.locator('#manage-confirm-panel').waitFor({state:'visible'});
+    await page.locator('#manage-confirm-node').fill(cfg.node_id); await page.locator('#manage-apply').click();
+    await page.waitForFunction(()=>document.querySelector('#manage-result').textContent.includes('Controller đã xác nhận'));
+    await page.locator('#manage-close').click();
+    for(let i=0;i<30 && !(await card().innerText()).includes(name);i++)await delay(200);
+    assert.ok((await card().innerText()).includes(name));
+    assert.equal(await page.evaluate(()=>globalThis.manageXss),undefined);
+    stage='real-upload'; await page.locator('[data-tab="files"]').click();
+    await page.locator('#file-input').setInputFiles(cfg.payload); await page.locator('#logical-path').fill('dashboard/managed-node.bin');
+    await page.locator('#upload-button').click();
+    await page.waitForFunction(()=>document.querySelector('#upload-status').textContent.includes('Đã xác nhận đủ hai bản sao'),{},{timeout:120000});
+    const entry=(await state()).files.find(f=>f.logical_path==='dashboard/managed-node.bin');
+    assert.equal(entry.protected,true); assert.equal(entry.available_replicas,2);
+    assert.ok(entry.replicas.some(r=>r.node_id===cfg.node_id));
+    stage='stop-node'; fs.writeFileSync(path.join(cfg.output,'stop-node.json'),JSON.stringify({node_id:cfg.node_id}),{mode:0o600});
+    for(let i=0;i<200 && !fs.existsSync(path.join(cfg.output,'node-stopped'));i++)await delay(100);
+    assert.ok(fs.existsSync(path.join(cfg.output,'node-stopped')));
+    stage='download-fallback'; const event=page.waitForEvent('download');
+    await page.locator('[data-file-id="'+entry.file_id+'"] [data-action="download"]').click();
+    const download=await event; const output=path.join(cfg.output,'fallback.bin');await download.saveAs(output);
+    assert.equal(crypto.createHash('sha256').update(fs.readFileSync(output)).digest('hex'),cfg.sha256);
+    stage='revoke';await page.locator('[data-tab="nodes"]').click();await card().locator('[data-action="manage"]').click();
+    await page.locator('#manage-action').selectOption('revoke'); await page.locator('#manage-preview').click();
+    await page.locator('#manage-confirm-panel').waitFor({state:'visible'});
+    await page.locator('#manage-confirm-node').fill(cfg.node_id);await page.locator('#manage-apply').click();
+    await page.waitForFunction(()=>document.querySelector('#manage-result').textContent.includes('Controller đã xác nhận'));
+    assert.equal((await state()).nodes.find(n=>n.node_id===cfg.node_id).lifecycle_state,'revoked');
+    await page.locator('#manage-close').click();
+    await page.waitForFunction(id=>document.querySelector('[data-node-id="'+id+'"]')?.textContent.includes('Chưa duyệt lưu trữ'),cfg.node_id);
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
+    const storage=await page.evaluate(()=>JSON.stringify({local:{...localStorage},session:{...sessionStorage}}));
+    assert.ok(!storage.includes(cfg.code));assert.equal(errors.length,0);
+    await page.screenshot({path:path.join(cfg.output,'management-mobile.png'),fullPage:true});
+    console.log(JSON.stringify({passed:true,replicas:2,sha256:cfg.sha256,owner_approval:true,revoked:true}));
+    await context.close();
+  } finally { await browser.close(); }
+})().catch(error=>{console.error('Management browser failed at '+stage+' ('+error.name+')');process.exit(1);});

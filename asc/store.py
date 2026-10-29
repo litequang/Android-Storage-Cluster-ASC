@@ -14,6 +14,20 @@ from . import validation as valid
 SCHEMA_VERSION = 4
 
 
+class NodeStateChanged(ValueError):
+    """A conditional owner operation cannot target a newer credential/state."""
+
+
+def check_node_generation(row, expected):
+    if expected is None:
+        return
+    if type(expected) is not int or expected < 1:
+        raise ValueError('invalid expected generation')
+    if (row is None or row['state'] != 'active' or row['token_version'] != expected
+            or row['node_id'] == 'local-controller' or json.loads(row['profile']).get('protected') is True):
+        raise NodeStateChanged('node_state_changed')
+
+
 def _digest(s):
     return hashlib.sha256(s.encode('utf-8')).hexdigest()
 
@@ -199,19 +213,23 @@ class Registry:
                        (json.dumps(profile), int(time.time()), node_id))
         return True
 
-    def rename(self, node_id, name):
+    def rename(self, node_id, name, *, expected_generation=None):
         valid.node_id(node_id)
         valid.name(name)
         with self.connect() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row = db.execute('SELECT * FROM nodes WHERE node_id=?', (node_id,)).fetchone()
+            check_node_generation(row, expected_generation)
             return db.execute('UPDATE nodes SET name=? WHERE node_id=?', (name, node_id)).rowcount == 1
 
-    def revoke(self, node_id):
+    def revoke(self, node_id, *, expected_generation=None):
         valid.node_id(node_id)
         if node_id == 'local-controller':
             raise ValueError('cannot revoke local controller')
         with self.connect() as db:
             db.execute('BEGIN IMMEDIATE')
-            exists = db.execute('SELECT node_id FROM nodes WHERE node_id=?', (node_id,)).fetchone()
+            exists = db.execute('SELECT * FROM nodes WHERE node_id=?', (node_id,)).fetchone()
+            check_node_generation(exists, expected_generation)
             if not exists:
                 return False
             db.execute("UPDATE nodes SET state='revoked',token_hash='<revoked>',revoked_at=?,"

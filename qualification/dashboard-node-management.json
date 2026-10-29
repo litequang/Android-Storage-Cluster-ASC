@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "checkpoint": "dashboard1-node-management",
+  "state": "QUALIFIED_LINUX_SYNTHETIC_SOURCE",
+  "qualified_at": "2026-10-29T18:38:06.797472+00:00",
+  "baseline": "1047bda5535e2d60ca27a89a8cd721b90a6e3092",
+  "branch": "feature/dashboard-full",
+  "runs": [
+    {
+      "log": "dashboard-1-qualified-new.log",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 59.919
+    },
+    {
+      "log": "dashboard-1-regression-final.log",
+      "passed": 86,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 270.19
+    }
+  ],
+  "distinct_cases": 95,
+  "qualified_inputs_sha256": {
+    "asc/access/gateway.py": "f1f3b7aad172e6c3a5671d5570ab7f5600fdf5a308cf3fd6d457ede21e5f68cd",
+    "asc/access/policy.py": "8c89996c632e9fe6beb971b15fac5821504a413778620072258a3149d1e04869",
+    "asc/catalog/http.py": "9e56e0242a51b19a4b0bf22a091441646a6ef0c7425da76dddd65f238dcdd3ec",
+    "asc/catalog/service.py": "08e9be3c906c18fc8b7279dddf201630b012266662172176602b3ef8811c7cbb",
+    "asc/client.py": "784405ec7347227d37bf9988d2244220fd954fb775bf72a126b0ef5ccb03fee8",
+    "asc/demo/dashboard/http.py": "8f103cb29000b3ae4645aef5ed5f3ec39b5b90e1242b890d12c360b29e2680db",
+    "asc/demo/dashboard/management.py": "49bbdddedcb9f9be8829f493ace201b0b9ba233629e54cc7d5d11848a024eb91",
+    "asc/demo/dashboard/views.py": "e95b0b6b9b4442f14845de29398a6938b2b764d1fd352ffd6388be06316cf0b0",
+    "asc/demo/dashboard/web/app.js": "97ca70a56bdbe93528e3dd80987f62e0b9839edad180cd70ef2f94aba80e8f9a",
+    "asc/demo/dashboard/web/index.html": "9b0f5b3a0ac88697e412288e8661f13e53d73005e217cc77de92b5754412ec0e",
+    "asc/demo/dashboard/web/style.css": "b6fc2b4ce948e1c963262349fb5384a355435018018bb0bb95127dfd8b032289",
+    "asc/demo/lan.py": "b0c52e407599e920cb9120f404fcab0a8e15903a706e92e115641793d54e63ee",
+    "asc/server.py": "7288c9dfb2bd5cdeb4de87e2b759a707920bf244da34517e286ab2fdf5e6f8f4",
+    "asc/store.py": "998028663898dfc1e551a2f20eb659bda6c058178c7a5101aba1a0daac856514",
+    "tests/browser/dashboard_management.cjs": "6eee6291c7ae06082899064e8edb0a2045b8f43f57fbd903c49afe98f295f60e",
+    "tests/test_access_gateway.py": "f7a4f458ecb505323b5797d11f37fd2f35cad7c449654e305e48f1afb260388b",
+    "tests/test_dashboard_management.py": "5043539379f9d3a6c4177b3816d4b1fdb7766bb52eb931cf8187a3a3f661d54d",
+    "tests/test_dashboard_management_browser.py": "bbce6bd6169e81272a1cda5e1f9f3d2e44cd1dd6f1d0fe0d3f9bb72ba7299908",
+    "tests/test_observer_gateway.py": "aaadc9d938b941b8b6762f858074c711e42a7b479c4f0a079683bc1335185ea5"
+  },
+  "evidence": [
+    "actual TLS Controller and Storage Engine nodes",
+    "new enrollment not automatically approved",
+    "owner preview/confirmation and SQL generation/approval CAS",
+    "real lost successful TLS ACK retry and restart",
+    "owner browser mobile XSS/CSRF/Origin/session checks",
+    "two logical-domain physical file replicas/SHA/stopped-node fallback",
+    "Core quorum partition/heal and passive recovery read-only",
+    "private/edge ingress stays file-only"
+  ],
+  "initial_runs": "New9 initial whole-row comparison raced background telemetry; NEW test now compares all administrative authority fields with probes live. Initial regression had missing-jwt loader in base Python; corrected existing edge env, final86 clean. Earlier passes not added to final95.",
+  "not_claimed": [
+    "fresh full Python suite",
+    "new Go tests/builds",
+    "physical-phone Dashboard/independent hardware domains",
+    "new package/release",
+    "full Dashboard completion",
+    "Core/recovery writer or public management"
+  ],
+  "private_logs": "/workspace/work/dashboard-1-*.log; no raw state/credential published"
+}

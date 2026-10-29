@@ -625,3 +625,12 @@ Bootstrap verifies its full dedicated manifest before imports, binds environment
 to release and dispatches only existing entry points. Upgrades choose a NEW code/
 env directory, stop owned foreground and reuse compatible profile; no shared pointer/
 DB migration or automatic restart. Legacy Demo installer must reject this kind.
+
+
+## Dashboard owner Node management
+Existing Demo Dashboard adds a same-owner preview/confirm facade, no Registry or
+Catalog clone. Exact existing Demo/cluster/root binding rechecked per action.
+Management calls existing pinned lifecycle/Catalog owner APIs. Optional generation
+and administrative approval stamp compare INSIDE existing SQL write transaction.
+Core/recovery observer never instantiates/dispatches this mutable facade. Private/
+edge ingress remains file-only with scoped capabilities, not a management relay.
