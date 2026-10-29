@@ -972,3 +972,11 @@ regression asserts unmarked/recovery-marker/unbound directories stay untouched.
   all64old fault markers, all42Phase5 cases, unchanged source/test inventory.
   Linux SOFTWARE SUBSET accepted; overall/live/hardware/production still partial.
   No new release, app/Core/Go implementation or authority change in qualification.
+
+## Phase5 Linux distribution5.4d.1
+- tools/package_access.py: standalone build/bootstrap copied as access.py;
+  deterministic dedicated manifest/archive, bounded preverified no-link unpack,
+  new private venv/hash-locked optional deps, release-bound runtime dispatch to
+  ORIGINAL gateway/edge/maintenance. No ASC/Core/Go/Android implementation change.
+- tests/test_access_package.py:7actual archive/venv/offline hash/refusal tests.
+  PHASE5-LINUX-PACKAGE owner guide; install/runtime qualification follows5.4d.2.

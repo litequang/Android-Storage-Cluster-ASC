@@ -598,3 +598,35 @@ owner configuration; no account/service/phone action was authorized/performed by
 this qualification. Owner deferred real ARM64/phone/independent-domain/LAN/Doze/
 OEM/power/production acceptance; never call those PASS. WritableDR/migrations/
 Android voter/GC/failover remain blocked. Preserve all private state/signers/SDKs.
+
+## 5.4d.1 dedicated Linux distribution bootstrap
+Resumed a2151cf2bd14d2527a2281fad5636cd3587b598f, clean tree/remote fetch equality.
+Environment134 restarted and ready; original workspace/SDK/signer/state retained.
+Skill/network inspected, inherited proxy/CA unchanged; no new live capabilities.
+
+tools/package_access.py is standalone developer builder +copied access.py bootstrap,
+not a new ASC runtime. Bundle has dedicated access-release.json, canonical127ASC
+modules/assets,8guides/README and optional requirements lock; no private state or
+backend/tunnel executable. Deterministic tar, externally anchored checksum, full
+bounded archive/manifest validation before NEW private extraction and fsync. Env
+prepared separately with --without-pip; optional dependencies use explicit existing
+pip --python/require-hashes, offline wheelhouse tested, no automatic/system install.
+Receipt binds release/Python/dependency mode; immutable source and existing mode
+CLI guards checked before dispatch. No pointer/migration or automatic runtime start.
+Old Demo installer format rejects this archive. See PHASE5-LINUX-PACKAGE/ADR077.
+
+Fresh tests.test_access_package7PASS0skip/fail5.656s: deterministic/canonical bytes,
+complete guides/lock, real private venv/no global packages, release/Python binding,
+real4official offline wheels and hash-corrupt refusal/partial-env hold, bad checksum,
+state/recovery/volume/backup/code/link/traversal/special/duplicate/missing/corrupt/
+expanded archive refusals BEFORE extraction; installed-source tamper refusal. Initial
+smoke and7case5.287s passed before final output-overlap/fsync review; final5.656s
+supersedes, no pass inflation. No legacy tests or ASC/Go/Android implementation edits.
+214previously frozen runtime/Go/Android/launcher inputs hash-identical to full445
+source qualification; do not relabel that old full as new452. New packaging has
+separate qualification and does not change production/live-provider scope.
+
+NEXT after source normal push/remote:5.4d.2 installed wrapper HTTPS/files/upgrade/
+retained profile+env/code rollback, installed edge dependencies/TLS/source regression,
+then build/secret audit/public archive+SHA/remote byte verification. No new artifact
+published at5.4d.1. Physical/VPN/SSH/Cloudflare live remain unqualified/deferred.

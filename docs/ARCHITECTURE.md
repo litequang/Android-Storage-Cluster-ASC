@@ -611,3 +611,11 @@ final installation/current-release/backup revalidation under its original locks.
 Existing journal/pointer/backup/recover-upgrade remain the only activation flow.
 No runtime auto-start, DB restore, Core quorum change or APK/Termux UID sharing.
 SSH/private connectivity remains separately operator-managed and NOT TESTED.
+
+## Dedicated Linux access distribution
+Code-only immutable version directories +separate prepared venv +existing separate
+profile/TLS root. No new installer for Controller/Node/APK or second Engine/Catalog.
+Bootstrap verifies its full dedicated manifest before imports, binds environment
+to release and dispatches only existing entry points. Upgrades choose a NEW code/
+env directory, stop owned foreground and reuse compatible profile; no shared pointer/
+DB migration or automatic restart. Legacy Demo installer must reject this kind.

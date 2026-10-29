@@ -388,3 +388,16 @@ restore old DB after newer writes; code rollback requires NEW complete backup.
 No arbitrary commands, remote listener, SSH setup, auto-update or runtime start.
 Linux synthetic qualification only; Android/APK/Termux/Core/recovery maintenance
 requires its own contract. Private SSH/VPN deployment is not implied by this CLI.
+
+## ADR077 — Immutable Linux access bundle, keep state and runtime separate
+Do not extend the historical Demo archive into a mixed Android/host installer.
+Use dedicated access-release.json kind/version/hash inventory and a standalone
+stdlib bootstrap; copy qualified canonical ASC modules byte-for-byte. Include
+optional hash-locked dependencies and Phase5 guides, no wheels/credentials/tunnel
+executables/private state. Preverify entire bounded archive before private new-only
+extraction. Prepare a NEW isolated env explicitly; edge deps use existing pip with
+--python and require-hashes, no OS/global package changes. Receipt1 binds release/
+Python/dependency mode; partial env never becomes runtime-ready. Reuse canonical
+mode guards, owner/TLS/runtime logic. Code rollback selects retained code/env, not
+old DB/profile restore. No current pointer, background update, service registration
+or runtime/schema migration. Actual deployment/provider/hardware stay separate.

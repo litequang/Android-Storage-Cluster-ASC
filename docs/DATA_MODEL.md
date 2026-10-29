@@ -546,3 +546,12 @@ and same-release target. No commands/credential paths or secrets in plan. Existi
 Demo formats/Registry/Manifest/upgrade-journal1 unchanged; no migration/new catalog.
 Activation optional preconditions are in-process arguments, not persisted authority.
 Plan file never substitutes for current stopped-state/backup/release verification.
+
+## Linux access distribution metadata1
+access-release.json exact format1/kind=asc-linux-access/version/profile_formats
+[1,2]/maintenance_format1/files SHA256 map/release_id(canonical body SHA excluding
+release_id). Not Demo release.json; no state/schema compatibility adoption.
+Separate env/access-env.json exact format1/release_id/edge_dependencies bool/Python
+version tuple. Written only after successful env setup, no keys/IDs/tokens. New
+code requires its own env receipt. Existing gateway profiles/Node/Cluster/volume/
+journal/DB formats unchanged; source rollback never restores older user state.

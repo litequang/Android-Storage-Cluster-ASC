@@ -734,3 +734,14 @@ no live SSH/VPN configured/tested and no public management exposed here.
 creation, then rechecks under existing locks. A denied operator path must not gain
 a lifecycle marker. Actual synthetic filesystem regression reproduces prior write
 and proves refusal leaves inventories/bytes unchanged; no storage/authority bypass.
+
+## Linux bundle/bootstrap boundary
+Externally trusted archive SHA is required; self-consistent manifest is not
+publisher authentication. Bound compressed/expanded bytes and entries; reject
+links/sparse/traversal/duplicates/special files/unknown paths BEFORE extraction.
+New private HOME destinations only, outside state/code/volume/backup/recovery;
+never clean/overwrite partial installs. Verify immutable code before trusted import,
+require release-bound private env and exact optional pins. Same canonical runtime
+guards remain: maintenance keeps its own protected/unknown Demo checks, gateway/
+edge their Linux host checks; no platform override. No arbitrary module/shell/
+SSH/tunnel/Controller/node startup or global package install by bootstrap.

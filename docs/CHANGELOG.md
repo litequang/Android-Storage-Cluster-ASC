@@ -808,3 +808,9 @@ exact deterministic private package/dependency/artifact integrity PASS.449frozen
 inputs and test inventory unchanged, no product change/new release. Linux source/
 synthetic software subset accepted; actual provider/SSH/VPN/public-host/phones/
 production, full Phase5 distribution and writableDR remain unaccepted/blocked.
+
+### Phase5 distribution5.4d.1 — Linux bootstrap foundation
+Add deterministic separate Linux access bundle with full Phase5 guides/optional
+hash lock, safe new-only unpack and isolated release-bound environment. Reuse
+qualified runtime modules unchanged;7targeted package/venv/negative cases PASS.
+Actual installed lifecycle qualification/public archive follows separately.

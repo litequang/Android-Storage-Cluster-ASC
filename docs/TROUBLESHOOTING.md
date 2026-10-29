@@ -599,3 +599,9 @@ before activation; make a new stopped backup/preflight after operator review.
 A PREPARED journal uses existing recover-upgrade only; never edit it or reinit
 identity. Code rollback needs NEW-state backup, not old SQLite restore. This Linux
 source CLI refuses Android/Termux; it is not an APK updater or remote SSH service.
+
+access_bundle_refused: preserve partial code/env and state; check trusted archive
+SHA, complete manifest, NEW private destination, matching env receipt/Python/release
+and edge dependency pins. Do not edit manifests/receipts or reuse another version's
+env to bypass refusal. No automatic repair/global dependency fallback. Android/
+Termux is not a supported installer target; see PHASE5-LINUX-PACKAGE.

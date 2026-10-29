@@ -15,6 +15,14 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 ## Current Phase5 authorization — 2026-10-29
 
+CURRENT continuation5.4d.1 Linux access distribution bootstrap: tools/package_access.py
++PHASE5-LINUX-PACKAGE and7targeted archive/env/hash/refusal PASS5.656s, runtime/Go/
+Android unchanged. Dedicated manifest/code/new env/profile split, no mixed Demo/
+Android installer. Read latest PHASE5-PROGRESS and ADR077. NEXT5.4d.2 installed TLS/
+file/upgrade/code rollback qualification and archive+SHA publication. No new archive
+released atd.1, live account/tunnel/SSH/device actions remain unauthorized. Reuse
+prior445 proof ONLY identical runtime; run new packaging/install tests separately.
+
 LATEST5.4 final SOURCE/SYNTHETIC software subset ACCEPTED: fresh445Python0skip/
 fail/error1690.895s, all42Phase5 cases/all64required old fault markers; Go11top+
 12nested/vet/modules/Linux+Windows+Android builds PASS (foreign compile ONLY).
