@@ -153,5 +153,16 @@
   ],
   "security_scope": "source/artifact/secret/path and dependency wheel+installed RECORD integrity checks; not an external penetration test or CVE audit",
   "new_product_source_changed": false,
-  "verified_utc": "2026-10-29T00:35:59.754038+00:00"
+  "verified_utc": "2026-10-29T00:35:59.754038+00:00",
+  "publication": {
+    "branch": "feature/phase5-remote-access",
+    "qualification_commit": "53db1d72a7b9ce4153b3ea605ecedf400ad5fb88",
+    "normal_push": true,
+    "local_fetch_advertised_remote_equal": true,
+    "clean_tree_verified": true,
+    "tracked_index_files_audited": 458,
+    "untracked_files": 0,
+    "secret_pattern_findings": 0,
+    "next_note": "Following docs-only publication changes no frozen input/test/artifact"
+  }
 }

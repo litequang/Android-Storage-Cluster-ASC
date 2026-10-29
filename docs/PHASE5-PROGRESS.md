@@ -575,3 +575,26 @@ provider/private-connectivity deployment needs reviewed owner configuration; rea
 phone/ARM64/physical LAN/Doze/OEM/power acceptance remains deferred by owner. Keep
 writable DR/Android voter/GC/failover locked and preserve all private SDK/signers/
 Node state. Following final publication must normal-push/fetch/advertised-verify.
+
+## 5.4 final GitHub publication / exact handoff
+Qualification53db1d72a7b9ce4153b3ea605ecedf400ad5fb88 normally pushed; fetched
+HEAD=FETCH_HEAD=advertised feature remote, clean tree verified. Freeze457ec6a and
+platform37d7134 also separately published/verified before final. Audit458tracked/
+index files,0untracked/0secret findings; final449frozen inputs still exactly match.
+This following publication note updates reports only; no new test/build/source/
+artifact change. Phase5 Linux software subset ACCEPTED, overall Phase5 PARTIAL.
+
+Resume by fetching feature/phase5-remote-access safely and reading AGENTS +mandatory
+maps then PHASE5-PLAN/PROGRESS/ACCEPTANCE and qualification/phase5-final*.json. Do
+NOT repeat full445 or rebuild/sign/start Android merely to recover status. Raw
+private work/phase5-final/{gates.json,freeze.json,python-full.log,run.py} records
+completed PASS, not a live process; historical PIDs are not signal targets.
+Next independent source work: dedicated complete Linux access distribution with
+optional requirements/guides, isolated install/config/state-preserving upgrade/
+rollback and checksum/publication gates. Existing146-file private synthetic
+archive is NOT that distribution and old public archives/APK5 remain unchanged.
+Actual VPN/SSH/Cloudflare/Access/IdP/DNS/public-browser deployment needs reviewed
+owner configuration; no account/service/phone action was authorized/performed by
+this qualification. Owner deferred real ARM64/phone/independent-domain/LAN/Doze/
+OEM/power/production acceptance; never call those PASS. WritableDR/migrations/
+Android voter/GC/failover remain blocked. Preserve all private state/signers/SDKs.
