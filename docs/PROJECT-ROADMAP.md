@@ -6,6 +6,14 @@ thu bên dưới giữ bằng chứng chi tiết và giới hạn theo nền t�
 v0.4/v0.10 hoặc đoạn "future/NOT implemented" trong tài liệu lịch sử làm trạng
 thái mới nhất. ASC có phiên bản Core, Controller package và APK khác nhau.
 
+## CURRENT TASK — Dashboard đầy đủ, owner đã cài ZTE OK
+Owner yêu cầu triển khai full Dashboard. Cloud phát triển source/synthetic trên
+feature/dashboard-full từ PC4336ab7; ZTE runtime/state không bị truy cập hoặc đổi.
+[DASHBOARD-PLAN](DASHBOARD-PLAN.md) và [DASHBOARD-PROGRESS](DASHBOARD-PROGRESS.md)
+là cursor hiện tại: Node management ->owner login ->File Manager ->history/
+snapshot/restore ->settings/diagnostics ->qualification/package. PC install đã OK,
+không tiếp tục chẩn đoán lỗi đã giải quyết. Các mục phía dưới giữ evidence/history.
+
 ## 1. Dự án đang làm gì?
 
 ASC biến nhiều điện thoại thành cụm lưu trữ: enrollment/identity, các volume được

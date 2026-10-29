@@ -1,5 +1,9 @@
 # ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
+DASHBOARD-PLAN.md / DASHBOARD-PROGRESS.md own current full owner Dashboard track,
+from PC4336 on feature/dashboard-full. Existing Lite source remains canonical;
+mode/capability/reuse audit and checkpoint tests precede each incremental change.
+
 PROJECT-ROADMAP.md is the master Phase0–5 timeline/current-task/backlog index,
 linked from AGENTS/README/IMPLEMENTATION_PLAN. Resume there after mandatory reads;
 stage-specific acceptance/progress remains the evidence source, not old headings.

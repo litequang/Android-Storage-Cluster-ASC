@@ -14,6 +14,13 @@
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
 ## Project resume entry point
+LATEST owner authorizes full Dashboard after ZTE install OK. Read DASHBOARD-PLAN/
+PROGRESS and latest PC4336ab7. New feature/dashboard-full from4336, original refs
+untouched. Cloud SOURCE/SYNTHETIC ONLY; no phone/SSH access. Implement successive
+tested/pushed checkpoints, not docs-only planning. Reuse canonical services; Core/
+recovery read-only, no GC/Raft/failover/writerDR or fake unsupported features.
+PROJECT-ROADMAP current cursor is updated for this new task.
+
 After the nine mandatory reads, read docs/PROJECT-ROADMAP.md for the full timeline,
 runtime/artifact distinctions, current task and remaining gates. CURRENT TASK is
 owner PC/ZTE Controller setup and remaining browser/Native LAN gates; read latest
