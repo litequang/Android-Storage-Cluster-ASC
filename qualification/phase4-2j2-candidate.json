@@ -1,0 +1,87 @@
+{
+  "checkpoint": "4.2j.2",
+  "base_commit": "14ce27c9749ad60e71d8e3f462289716cf099c25",
+  "state": "TARGETED_INTERNAL_CANDIDATE_PASS",
+  "full_phase42": "NOT ACCEPTED",
+  "public_apk_release": false,
+  "final_private_apk_audit": {
+    "sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+    "bytes": 39000362,
+    "application_id": "org.asc.foundation",
+    "version_code": 4,
+    "version_name": "0.4.0-native-node-candidate",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+      "android.permission.CHANGE_NETWORK_STATE",
+      "android.permission.POST_NOTIFICATIONS"
+    ],
+    "canonical_core_modules": 119,
+    "inventory_findings": [],
+    "scope": "internal debug inventory/signature only; no migration or phone acceptance"
+  },
+  "jvm": {
+    "tests": 17,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "candidate_e2e": {
+    "state": "PASS",
+    "scope": "Linux +API35 x86_64 synthetic; not phones/physical domains",
+    "adb_control_only": true,
+    "native_identity_reset": false,
+    "native_android_tests": 2,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "logical_domains": 2,
+    "physical_domain_independence": false,
+    "actual_browser_login_upload_download": true,
+    "native_offline_fallback": true,
+    "controller_loss_denied": true,
+    "retained_process_identity": true,
+    "entry_mode": "retained resume",
+    "fresh_initialization_junit_completed": false
+  },
+  "candidate_e2e_apk_sha256": "847307b0c3deb524bc2739138db29e39bb7273a1159a56f180e6e895dfacc576",
+  "candidate_e2e_android_seconds": [
+    165.809,
+    100.39
+  ],
+  "upgrade_android_tests": 9,
+  "upgrade_android_seconds": 124.138,
+  "upgrade_proof": {
+    "state": "PASS",
+    "android_tests": 9,
+    "original_v3_bytes_read_after_upgrade": true,
+    "original_file_created_at": 1793040132,
+    "platform_downgrade_refused": true,
+    "data_sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "bytes": 262144
+  },
+  "final_apk_android_tests": 4,
+  "final_apk_android_seconds": 112.623,
+  "final_apk_test_scope": "3 actual UI trust/navigation tests +retained original v3 Engine file/identity read; after library-info label text-only correction",
+  "new_full_python_go": "NOT RUN at this small checkpoint; j.3 mandatory before phase acceptance",
+  "old_primary_crash_restart": "NOT TESTED; offline images/signing key retained",
+  "cold_initialization_completed_junit": "INCOMPLETE at j.1, not relabelled PASS",
+  "phone_arm64_real_lan_cloudflare": "NOT QUALIFIED / Cloudflare NOT IMPLEMENTED",
+  "source_sha256": {
+    "android/app/build.gradle.kts": "53fd63632125edf167a2bc7b08bff951e0ba4469a56b2d038b499bf2fc8706ab",
+    "android/app/src/main/java/org/asc/foundation/MainActivity.kt": "fb57fb52a30a995fcc1630f0d34d8ed2626addc4c9545eff21fca87f2cf9c0f1",
+    "android/app/src/main/java/org/asc/foundation/DashboardLink.kt": "4d388e221596df1d1c95b322b65792ad6b06fd84acda4c1e1c50b418f7a20c2e",
+    "android/app/src/test/java/org/asc/foundation/DashboardLinkTest.kt": "97965c17ee4a66fa9b3c8bc1b6e97a57a37b2f177629ce359906e864d70ec787",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeUiTest.kt": "a9fb0a87131d2f5d18ac02258676b68a321df258465489e6da727dbf0a039cc5",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeUpgradeDataTest.kt": "fd32a8f9dcb723d08fd6ba5b688b6b362f78ca0a5fad0209c923d6aacc8c9406"
+  }
+}

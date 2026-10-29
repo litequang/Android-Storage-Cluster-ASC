@@ -1,0 +1,26 @@
+{
+  "state": "PASS",
+  "method": "separate fresh bare GitHub clone, actual remote binary and SHA sidecar downloads; not local copy or Release API",
+  "branch": "feature/phase4-2-android-native",
+  "artifact_commit": "ed1749b5d05dfc886ebdd8027b44df338dcfadcb",
+  "verified_utc": "2026-10-27 15:00:01 UTC",
+  "files": [
+    {
+      "path": "android-artifacts/asc-native-node-0.4.1-internal-debug.apk",
+      "bytes": 39000831,
+      "downloaded_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+      "sidecar_verified": true,
+      "matches_audited_workspace_artifact": true
+    },
+    {
+      "path": "candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz",
+      "bytes": 247919,
+      "downloaded_sha256": "c726bd36f107335452da5e59b87614052608ffa92816df727728c9eec4f027fc",
+      "sidecar_verified": true,
+      "matches_audited_workspace_artifact": true
+    }
+  ],
+  "github_release_api": "not used; normal Git publication",
+  "scope": "artifact availability/integrity only, not physical Android acceptance",
+  "qualification": "INTERNAL DEBUG SNAPSHOT ONLY: full regression BLOCKED; remote checksum PASS is not acceptance"
+}

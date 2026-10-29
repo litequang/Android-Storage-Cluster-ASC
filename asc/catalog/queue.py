@@ -5,6 +5,8 @@ from .state import insert
 
 class JobQueue:
     def __init__(self, catalog, timeout=300, max_attempts=5):
+        if catalog.registry.consensus_enabled():
+            raise CatalogError('distributed_fencing_required', 503)
         if type(timeout) is not int or not 30 <= timeout <= 900:
             raise ValueError('invalid job timeout')
         self.catalog, self.registry = catalog, catalog.registry
@@ -15,17 +17,24 @@ class JobQueue:
         with self.registry.connect() as db:
             row = db.execute('SELECT * FROM catalog_jobs WHERE job_id=?', (job_id,)).fetchone()
         if not row:
+            from ..replication.archive import get as archived_job
+            with self.registry.connect() as db:archived=archived_job(db,job_id)
+            if archived:return archived
             raise CatalogError('job_not_found', 404)
         return dict(row)
 
     def list(self, offset=0):
         if type(offset) is not int or not 0 <= offset <= 10000:
             raise CatalogError('invalid_offset', 400)
+        import json
         with self.registry.connect() as db:
-            rows = db.execute('SELECT * FROM catalog_jobs ORDER BY created_at,job_id LIMIT 101 OFFSET ?', (offset,)).fetchall()
+            rows = [dict(r) for r in db.execute('SELECT * FROM catalog_jobs')]
+            state=db.execute("SELECT value FROM settings WHERE key='phase3c_replication'").fetchone()
+            if state:rows += [{**r,'archived':True} for r in json.loads(state[0]).get('archived_jobs',{}).values()]
+        rows=sorted(rows,key=lambda r:(r['created_at'],r['job_id']))[offset:offset+101]
         public = ('job_id','file_id','replica_id','kind','state','source_replica_id','target_node_id',
                   'target_volume_id','attempts','next_attempt_at','last_error','created_at','updated_at')
-        return {'jobs':[{k:r[k] for k in public} for r in rows[:100]],
+        return {'jobs':[{**{k:r.get(k) for k in public},**({'archived':True} if r.get('archived') else {})} for r in rows[:100]],
                 'next_offset':offset+100 if len(rows)>100 else None}
 
     def recover(self):
@@ -103,8 +112,15 @@ class JobQueue:
         with self.registry.connect() as db:
             db.execute('BEGIN IMMEDIATE')
             job = db.execute('SELECT * FROM catalog_jobs WHERE job_id=?',(identifier(job_id),)).fetchone()
-            if not job or job['kind']!='UPLOAD':
+            if not job:
+                from ..replication.archive import get as archived_job
+                from .common import digest
+                archived=archived_job(db,job_id)
+                if (archived and archived['kind']=='UPLOAD' and archived['completion_sha256']==digest(
+                        {'session_id':session_id,'local_file_id':local_file_id})):
+                    return archived
                 raise CatalogError('job_not_found',404)
+            if job['kind']!='UPLOAD':raise CatalogError('job_not_found',404)
             if job['target_local_file_id'] and (job['target_session_id'],job['target_local_file_id'])!=(session_id,local_file_id):
                 raise CatalogError('job_object_conflict',409)
             db.execute('UPDATE catalog_jobs SET target_session_id=?,target_local_file_id=?,next_attempt_at=? WHERE job_id=?',

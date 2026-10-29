@@ -1,0 +1,17 @@
+{
+  "checkpoint": "4.2h.1",
+  "scope": "Linux synthetic actual Core Registry/pinned TLS, source contract extraction only",
+  "python_tests": 57,
+  "failures": 0,
+  "skipped": 0,
+  "duration_seconds": 55.804,
+  "native_agent_fgs": "NOT IMPLEMENTED",
+  "apk_rebuilt": false,
+  "full_phase_accepted": false,
+  "full_regression": "NOT RUN at this scoped checkpoint",
+  "source_sha256": {
+    "asc/agent.py": "000711383d75c2be72da4af0d5279cdf382da3a34411f354fa8b2d24d6375ceb",
+    "asc/cli.py": "6a4d018141cc45553de1541279d8e16c4cecd7cb739d550abf4705011d8ccc92",
+    "tests/test_agent_contract.py": "5d49d9cdba7fcd66d34e4f5ebc5de3df8d1f7d574ece42fcbebf7d9286fee334"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "scope": "fresh isolated API35 x86_64 AVD; original existing AVDs untouched",
+  "state": "COLD_START_BLOCKED",
+  "product_runtime_changed": false,
+  "apk_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+  "fresh_package_absent_before_install": true,
+  "attempts": [
+    {
+      "configuration": "1536MiB/2vCPU",
+      "initial_package_check": "failed before install; PM not stable",
+      "cold_junit": "failed to attach,0completed",
+      "startup_diagnostic": "process crashed,0completed"
+    },
+    {
+      "configuration": "same userdata,2048MiB/1vCPU",
+      "startup_diagnostic": "JUnit entered LaunchTest then process crashed;0completed"
+    }
+  ],
+  "observed_system_errors": [
+    "com.android.phone repeated startup ANR; TelephonyProvider APN database creation/ICU regex in trace",
+    "Bluetooth SIGABRT in system crash buffer"
+  ],
+  "asc_root_cause": "NOT PROVEN; do not label system ANRs as proof ASC has no bug",
+  "identity_context_proof_absent_before_restart": true,
+  "no_wipe_reseed_signer_change": true,
+  "raw_logs": "private /workspace/work/phase4-cold-final",
+  "next": "separate official Android11/API30 fixture qualification; API35 cold gate not counted PASS"
+}

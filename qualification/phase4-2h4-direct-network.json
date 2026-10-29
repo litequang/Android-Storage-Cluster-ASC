@@ -1,0 +1,69 @@
+{
+  "checkpoint": "4.2h.4 direct Native Node network and Controller address setting",
+  "scope": "owned API35 x86_64 emulator standard NAT, NOT phone/physical LAN/two independent replicas",
+  "linux_native_targeted_tests": 46,
+  "linux_native_seconds": 14.632,
+  "skipped": 0,
+  "jvm_tests": 13,
+  "gradle_build": "PASS, final main/testAPK build; no new dependency/permission",
+  "android_direct_tls_cluster_probe_seconds": 9.935,
+  "android_cold_binder_address_change_seconds": 14.73,
+  "android_direct_host_node_e2e_seconds": 84.213,
+  "host_data_report": {
+    "request_id": "66f8c7e4-be6b-4e93-9dbc-234eaa9c9b3f",
+    "state": "PASS",
+    "scope": "SDK NAT, not physical LAN/two replicas",
+    "adb_reverse_removed": true,
+    "adb_control_only": true,
+    "startup_seconds": 84.949,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "volume_id": "69a4b310-7131-44b3-aac6-408ef7b86345"
+  },
+  "same_node_token_tls_volume_and_existing_data": true,
+  "route": "host loopback ->standard SDK NAT redirect ->guest10.0.2.15:9443; Node ->Controller10.0.2.2; ADB reverse removed, ADB control only",
+  "earlier_attempt": "FAIL84.887s; host90s startup wait expired before READY,0direct uploads; fixed harness startup budget180, unchanged data/TLS deadlines and Android assertions; not counted as PASS",
+  "full_current_phase_accepted": false,
+  "core_observer_native": "NOT IMPLEMENTED",
+  "two_independent_replica_fallback": "NOT TESTED",
+  "physical_phone_arm64_doze_oem": "NOT TESTED",
+  "current_full_python_go": "deferred per owner MVP priority; no reuse of historical368 as current-runtime acceptance",
+  "public_release": false,
+  "apk": {
+    "sha256": "8df08b615dafc693e8d9236f159343fc3ec9635e800db1a1864de5cd33916321",
+    "bytes": 39819667,
+    "application_id": "org.asc.foundation",
+    "version_code": 3,
+    "version_name": "0.3.0-native-context",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+      "android.permission.CHANGE_NETWORK_STATE",
+      "android.permission.POST_NOTIFICATIONS"
+    ],
+    "canonical_core_modules": 118,
+    "inventory_findings": [],
+    "scope": "internal debug inventory/signature only; no migration or phone acceptance"
+  },
+  "source_sha256": {
+    "asc/node/enrollment.py": "177c916c318653c97a46268d058709e1dc73dd641b8a5b2b20fb0e058a21bc2c",
+    "android/app/src/main/java/org/asc/foundation/NativeNodeContext.kt": "b0091fd7698a0cdcf21e9d8e4894e5cccf550aa74307095cff15bfb3329a269f",
+    "android/app/src/main/java/org/asc/foundation/EngineService.kt": "9f369855ee40ade47b473b820b1375b8bbf182e88f6a3a604f34bb39d5d59859",
+    "android/app/src/main/java/org/asc/foundation/RequestPolicy.kt": "1e84dff97d0a9936ba01d31a1d6618cdfe30918e7e5155990fdfb47fed830ad9",
+    "android/app/src/main/java/org/asc/foundation/MainActivity.kt": "e558b8145144150f4ea0251f94a0221650a4840357ea042fb224df10c0ea3c51",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeNodeDirectTest.kt": "4149d782e6c4ec87645b7eb65d17667c6ec2876ce91720a3b9998109047621fb",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeNodeForegroundTest.kt": "9737a8ee66b72f64cf7a0d49475dd28e17529d7c2e5e780c5c0ba81d22631baf",
+    "tests/test_native_controller_change.py": "8b31dc23134aa91af6be35e31ff9e617ecde4e83028ebd09864133353131792d",
+    "tools/qualify_native_direct.py": "6d86f7cdf23bcd8ffbb65d3a7ad5b4f61bdedd06d763b78473633dc0ecc053be"
+  }
+}

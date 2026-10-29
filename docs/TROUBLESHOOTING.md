@@ -1,5 +1,39 @@
 # ASC TROUBLESHOOTING
 
+## Phase 2B Windows development
+
+- Metadata `invalid_snapshot` / `invalid_metadata` from a runtime: snapshots and
+  deltas must keep MetadataSource's exact versioned envelope. Runtime checkpoint
+  labels previously broke this contract; the response wrapper now preserves it.
+  Never loosen the cache validator or recalculate a received digest to accept it.
+
+- `controller_not_ready` / `runtime_recovering`: Follower, replay or missing
+  quorum; preserve state, wait for authenticated discovery/quorum. A cached role
+  cannot authorize writes.
+- `stale_authority`: actual Raft term differs from the prepared activation;
+  preserve stable request/job/session IDs and rediscover. Never increment a term
+  in client input or reset votes to bypass this check.
+- `runtime_cache_quarantined` / `invalid_runtime_projection`: stop and retain
+  complete state for reviewed restore; never edit the checkpoint/document/hash.
+- `attached_registry_required` / `upgrade_precondition_conflict`: runtime upgrade
+  requires a stopped attached primary and exact reviewed committed metadata SHA.
+  It cannot merge independent histories or replace keys/private SQL.
+- Sidecar shuts down after Python dies: expected armed liveness watchdog after
+  12 seconds. Restart matching complete state; never run init for recovery.
+- Distributed Storage denies missing epoch/nonce/proof: provision the correct
+  trusted cluster epoch and pinned bootstrap list. Never disable proof or use an
+  old whole-volume grant as a fallback.
+- `unmerged_controller_authority`: the original private registry is neither the
+  committed primary source nor a fresh matching metadata follower. Preserve both
+  histories; operator review is required. Never erase private jobs/identities or
+  bypass this check to attach.
+- NEEDS_REVIEW after quorum loss: a fresh exact distributed job may resume only
+  when staging and final both still match. `object_requires_review` retains both
+  bodies for review; never delete/rewrite an unknown copy to make retry succeed.
+- Queue delayed by audit: runtime now runs due work first and limits each audit
+  turn to one physical verification. Owner completion may still return PENDING;
+  inspect the same persistent job until physical proof is committed.
+
 | Symptom | Likely cause | Safe action |
 |---|---|---|
 | `getprop` missing on Windows/Linux | Probe is designed for Termux; other OS uses fallback | Run from Android Termux for hardware names; unknown telemetry is okay |
@@ -150,3 +184,436 @@ The Controller defaults to one transfer and 4 MiB/s relay/readback; Agents retai
 Rollback details: DATA_MODEL and README section 12. Stop all development processes, retain current state/objects, restore the complete pre-upgrade schema-3 backup and v0.5 source together. Newer cache checkpoints intentionally refuse an older Controller. There is no automatic epoch reset or distributed recovery authority in this phase.
 
 Catalog state/epoch missing in schema 4: stop and restore the complete reviewed stopped-state backup. Do not run initialization to create a fresh epoch over existing replicas or edit the schema version.
+
+## Phase 2A engine qualification — blocked
+
+- tools/qualify_pysyncobj.py --download returning exit 1 and qualified=false means the upstream candidate failed ASC safety gates. Current 0.3.17 result is one passing clean-restart probe and five failed gates; this is not a failing ASC production service and must not be relabeled PASS/SKIP.
+- Missing/corrupt .meta in the isolated probe loses a prior vote and emits a second same-term vote. Never repair actual consensus state by deleting metadata or resetting term/vote. ASC has not integrated this engine; no production Raft recovery command exists.
+- Exit 2 / qualification_inconclusive means download, checksum, import or probe execution failed. Preserve the error classification; verify the official artifact/network/environment instead of changing the pinned hash or installing packages automatically.
+- No matching rraft-py 0.2.27 Windows CPython-3.14 wheel was published in the inspected release. go/rustc/cargo were absent from process PATH; no WSL distribution was listed. This is a development qualification blocker, not proof that Android cannot support Raft. Do not auto-install a toolchain or use phone production state to investigate.
+- Existing v0.6 Controller remains single-writer with raft_enabled=false; it cannot elect a replacement or grant strong quorum reads. Metadata caches never promote themselves. Do not run independent copied Controllers against the same logical history.
+
+Reproduce evidence and review alternatives/rollback in PHASE2A-ACCEPTANCE.md. A fresh unchanged-runtime full suite passed 92 tests (3 POSIX skips); no Phase 2A quorum/partition/snapshot acceptance has run.
+
+## Go metadata consensus continuation
+
+The preceding Phase 2A block is historical PySyncObj status. Current tests,
+qualification and publication status: PHASE2A-ACCEPTANCE.md continuation.
+
+| Symptom | Meaning / safe action |
+|---|---|
+| Go toolchain required / no executable on PATH | Set process-local ASC_GO to an official checked Go executable; no consensus test may silently skip. Portable development location is documented in GO-SIDECAR.md |
+| Android build `undefined maxMapSize` | Backend transitive bbolt v1.4.1 had an upstream Android compile bug. Current module pins v1.4.3; run go mod verify, do not patch module cache or downgrade the pin |
+| Sidecar refused / quarantine | Missing/corrupt/mismatched state, anchor, witness, seed, snapshot, membership or duplicate ownership. Stop; restore the complete reviewed private backup. Do not delete DB/.meta/witness or run init to recover |
+| init refuses after whole directory loss | The external .enrolled witness correctly prevents known-voter reset. Rebuild/rejoin is not implemented; retain all remaining state for reviewed recovery |
+| consensus_seed_mismatch / import refused | Existing metadata differs from the original canonical seed or target has history. Export a consistent stopped primary; import only to an explicitly fresh matching-cluster registry. Never merge independent nonempty epochs |
+| consensus_required / SQL not authorized | Distributed registry is fenced. Use metadata API/adapter, never remove triggers or register the apply function on a normal writer |
+| consensus_guards_missing / projection_quarantined | Restore complete consistent checkpoint/projection/receipt state. Do not edit index/digest/rows or recreate missing guards blindly |
+| stale/recovering after Go restart | Python serves its last verified checkpoint while Go catches up. Restore quorum and wait; this cache cannot grant write authority |
+| quorum_read_unavailable / commit_unconfirmed | Follower, missing quorum or interrupted commit. No success is established. Inspect authenticated status leader_id as a hint, retry SAME intent/request ID against the legitimate Leader after quorum recovers |
+| request_id_conflict | Same ID used for another intent. Preserve original receipt; choose a fresh ID for a genuinely new request |
+| precondition_conflict | Another committed document won the prepared SHA. This rejection is itself a durable receipt. Read current state and prepare a new request ID after inspecting the conflict |
+| receipt_limit | 4096 permanent receipts reached. New requests fail; no safe automatic eviction/reset protocol exists. Preserve state; future reviewed protocol required |
+| distributed_fencing_required / old grants rejected | Intentional metadata-only limit. No upload/download/job/reconcile/grant or private-registry failover. RUNNING job records remain frozen, never treated as complete |
+| Android runtime refused | Cross-compiled artifact is not Android runtime acceptance. Do not install/run it on a phone in this task |
+
+Actual durable sync on this Windows filesystem required election budgets larger
+than subsecond in-memory fixtures. Current heartbeat/election/leader-lease values
+are 3/6/2 seconds. Tests wait for quorum Barrier/application conditions instead of
+asserting a fixed elected ID or disabling fsync. Go timers remain randomized.
+
+Rollback requires stopped/isolated complete pre-attachment private backups and
+matching source, retaining current metadata/objects separately. Full instructions
+and exact commands: GO-SIDECAR.md and DATA_MODEL.md. No production/phone recovery
+was attempted.
+
+## Phase 3A backup/restore diagnostics
+
+- phase3a_not_enabled: upgrade every stopped development Controller to matching
+  source, preserve complete private backups, then explicit backup-enable.
+- invalid_backup_projection: preserve full state; restore reviewed consistent
+  backup. Never edit manifest digests, source indices or tombstones to accept it.
+- snapshot_unverified_head: latest version lacks verified replica evidence; finish
+  its existing upload before capture. Older versions are not silently substituted.
+- copies_pending: ordinary Catalog COPY jobs have not met requested domains yet.
+  Inspect existing jobs/probes/space; backup is not VERIFIED. No data is removed.
+- backup_unavailable/restore_unavailable: checksum, node, quorum or transfer failed;
+  checkpoints and original bytes remain. Repair cause; use same-job explicit retry
+  after five failed attempts. NEEDS_REVIEW still requires exact retained hashes.
+- version_not_live/version_expired: ordinary download denied by logical lifecycle.
+  Restore a retained version or a retained snapshot reference into a new version.
+- restore_version_reserved: an existing restore owns that logical version; use a
+  different explicit upload version or complete/retry the same restore job.
+- Stale backup lease/Controller failure: new Leader invalidates leases, preserves
+  snapshot/reserved version/upload key and rechecks bytes. Do not reset state.
+- Logical retention does not free disk space. Final immutable objects remain;
+  capacity exhaustion is explicit. Physical GC requires separate qualification.
+- Projection/receipt limits fail closed. No automatic history eviction exists.
+
+Due captures with an unverified head or exhausted snapshot/job bound record a fixed
+schedule last_error and retry time; existing jobs continue. Retrying a logically
+expired source is refused, preserving the same restore eligibility rules.
+
+The supplied base commit omitted `consensus/cmd/asc-raft/main.go`: the unanchored
+asc-raft ignore also matched the source directory. The source launcher is now
+tracked and calls the existing validated init/run APIs; no Raft module is rewritten.
+
+## Phase 3B node insights
+
+- phase3b_not_enabled: upgrade all stopped development Controllers, retain complete
+  private backups, then owner POST nodes/enable with a stable request_id.
+- UNKNOWN/low confidence: missing/stale/future/unapproved inputs or history gaps;
+  inspect source times and counts. Never substitute preset RAM/readiness scores.
+- node_history_limit/node_request_limit/runtime_projection_limit/receipt_limit:
+  bounded state exhausted; preserve authority and existing backups. No automatic
+  receipt eviction/reset. Hourly sampling reduces growth but does not remove the
+  inherited Go 4096-receipt lifetime limit.
+- Re-paired node: retained prior-generation history does not score the new identity.
+  No history or credential is silently rewritten to manufacture continuity.
+- Avoid/Drain/Protected can intentionally cause no_eligible_storage or an explicit
+  replica deficit; Preferred never overrides protection/capacity/domain gates.
+  Existing authorized jobs may finish; Drain does not move or delete stored bytes.
+- Linux CLI integration tests use an explicitly permitted fake hardware profile.
+  Real unknown hardware remains refused; do not add a product bypass for Cloud.
+- Real Python failover entrypoint is still Windows development only. Cloud fault
+  suites use a synthetic test launcher with a module-local platform/profile mock;
+  do not copy it into production or add a runtime bypass. A startup refusal in a
+  plain Linux launch is expected. Use existing `/workspace/asc-cloud/activate.sh`
+  in this Cloud environment to select Go 1.27.3/Python 3.13.5, not `/usr/bin/go`.
+
+## Phase 3C development
+
+- phase3c_not_enabled: matching all-Controller upgrade/private stopped backup before
+  explicit owner replication/enable. No implicit schema upgrade or GC activation.
+- no_independent_eligible_target: Drain can remain blocked by actual quota/domain/
+  status/policy. Keep source; wait for measured fresh probes, not a fabricated ACK.
+- copy_not_verified/survivor_verification_required/survivor_proof_changed:
+  source is retained; finish the same COPY job and obtain current independent
+  served-byte proof. A terminal FAILED job needs explicit existing retry.
+- retired_object_reintroduction: preserve retirement journal and remaining copies;
+  never re-adopt an old local ID/clear the fence. Use a new stable COPY job/object.
+- Logical retirement frees no disk by itself. History/job/grant/snapshot pins can
+  legitimately keep all retired bytes; future GC must enumerate these holds.
+- gc_existing_volume_not_adopted/physical_gc_platform_locked: intentional isolated
+  Linux x86 fresh-volume boundary; never create a marker/flag to convert real data.
+- gc_journal_quarantined/gc_journal_conflict/gc_unknown_absence: retain complete
+  state and original bytes; restore reviewed matching journal/volume backups.
+  Never delete/edit the journal to claim an object was safely removed.
+- gc_checksum_mismatch/gc_object_identity_changed/unsafe_gc_test_arena: preserve
+  original and replacement/link targets; no recursive cleanup or identity override.
+- gc_authority_budget_expired: final local work exceeded the short fresh-proof
+  budget; no unlink occurred. Retry with a newly authorized same immutable intent.
+
+- gc_execution_unconfirmed / gc_completion_unconfirmed: the remote result or its exact scope is unconfirmed; retain Controller reservation and Node journal. Retry the same gc_job_id after current quorum/proofs recover; do not mint another target, edit DONE or delete the journal.
+- gc_permit_rejected / gc_permit_changed / gc_scope_rejected: expired or replaced run, changed identity/approval/endpoint or wrong exact scope. Only the explicit owner execution may renew a permit; never change term/schema/token fields manually.
+- Missing/nonexistent test arena now returns unsafe_gc_test_arena consistently on Windows too. It never creates/adopts that directory or grants capability.
+
+- Windows metadata regression initially failed its no-fallback stderr assertion because the unconfigured real PC correctly hit DEVICE IDENTITY UNKNOWN first. Synthetic launchers now supply a permitted fake profile on both platforms; do not relax the assertion or change the product hardware/config guards.
+
+- stale_gc_proof: current references or endpoint/approval graph changed during checksum streaming. Preserve the reservation and retry the same job for new proof. Never accept a former endpoint checksum under a new pin.
+
+- A heartbeat can legitimately stale an exact confirmed plan. Reprepare/reconfirm its new SHA; retain old plan receipts. The isolated fault harness bounds these retries and never treats a denied attempt as successful physical/lost-ACK evidence.
+
+Linux GC qualification with a full 1024-event history can expose repeated expensive
+structural checks and stale plans under CPU contention. Exact-byte structural reuse
+reduces repeated work; it grants no authority. Run heavy fault matrices serially,
+reprepare stale exact plans and obtain new proofs, preserving the 10s callback and
+250ms local budgets. Never clear history or extend freshness limits to get PASS.
+Synthetic-only pause/crash/stack controls live in tests/gc_fixture.py, not runtime
+config or product endpoints.
+
+## Phase 3D external archive diagnostics
+
+external_destination_overlaps_source / unsafe_external_path: choose an explicitly
+private empty external root outside every source HOME/volume and Git, no symlinks/
+hardlinks; never change system permissions or bypass checks. external_store_busy:
+wait for owning operation; don't remove lock. external_object_corrupt /
+external_snapshot_mismatch: preserve archive and source; do not overwrite bytes or
+recompute the anchor to relabel success. IO/ENOSPC/source/quorum errors leave working
+INCOMPLETE; restore correct media/authority and resume same Backup ID after review.
+Initialization interrupted before complete capture may need a new backup, retaining
+incomplete old evidence. No automatic external retention deletion or writer recovery.
+
+External CLI exit1/UNKNOWN means unavailable/untrusted evidence, not an empty
+backup. CORRUPT requires retaining and reviewing data, not recomputing its trusted
+anchor. STALE preserves valid old bytes but fails a newer operator-known index
+floor. COMPLETE_UNVERIFIED listing is not verification. VERIFIED can age/corrupt
+after its timestamp. external platform refusal is intentional for Android/M51;
+no flag enables phone operation. Retention-preview always holds and cannot delete.
+
+external_backup_stale: do not lower the known required index to accept lost newer
+history; retain old bytes and find newer trusted backup. external_recovery_intent_
+conflict/nonempty destination: preserve existing state; choose genuinely NEW
+isolated destination, not a live cluster. Interrupted staging can resume exact
+original command; READY absent means not verified complete. NEVER run Controller
+on staging or restore old DB/config/credentials to grant writer. Missing authority
+recovery/fencing is an explicit blocker, not an installer error to bypass.
+
+After quorum recovery, readiness/placement probes can still be unavailable; do
+not relabel an early rejected transfer as a fault-boundary success. Preserve same
+Backup ID, wait for measured approved sources and retry; final quorum gate remains
+mandatory. Process-crash qualification requires actual exit91 and retained inode/
+intent, not a timeout or exception. Full3D regression is separate from targeted PASS.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Demo installer preview refusal
+Run `sh scripts/demo-alpha.sh preflight` for read-only dependency/device/SD status.
+Missing or non-working OpenSSL/Python/pkg requires owner review/manual preparation;
+no automatic installation occurs. Protected/unknown devices have no override.
+Checksum, existing unmarked prefix, modified source or symlink refusal means stop
+and preserve directories; do not delete identities or overwrite source. An exact
+package rerun resumes a partial code install. Different releases need a later
+explicit stopped upgrade, never an installer overwrite.
+
+## Demo LAN incomplete replication / offline media
+Use `replicas FILE_ID` to request fresh reconciliation and display verified/available
+counts. Upload exit 4 means protection incomplete: preserve bytes/jobs and retry the
+same key and identical file, not a new logical overwrite. Missing/offline/changed
+volume or one eligible domain denies a new upload. Restore the original medium and
+marker; never substitute its directory or treat free-space estimates as write proof.
+Controller outage denies both metadata writes and node operation authorization;
+keep existing state and restart that Controller manually. Do not promote a node.
+Explicit bind requires the phone's private Wi-Fi IPv4 (same isolated LAN); wildcard,
+public, link-local and hostname inputs are refused. Pin mismatch always means stop
+and verify the correct Controller certificate out of band, never switch to HTTP.
+
+## Demo activation interrupted / incompatible state
+Stop every local foreground before backup/upgrade/rollback. A lock conflict leaves
+pointer/state intact; do not remove lock files or kill guessed PIDs. Unknown format,
+installer-only candidate, missing medium, source mutation, checksum mismatch, links
+or insufficient backup space means preserve state and resolve the cause. A failed
+backup has no backup-complete.json and is never valid recovery evidence. PREPARED
+journal blocks startup: recover-upgrade verifies unchanged current state against its
+complete backup and selects old compatible code only. It never restores old bytes/
+DB. If code integrity prevents launcher execution, retain old release/package and
+seek review, not network bypass or identity regeneration. Controlled multi-node
+upgrade uses stop-all; mixed-version/rolling/endpoint/schema migrations unqualified.
+
+Existing Demo installer-preview 0.1.0 code is intentionally retained/refused as an
+implicit upgrade target. For the first final Alpha install use a NEW code prefix
+and launcher function as described in DEMO-ANDROID-PILOT.md; preview created no
+cluster identity. Never delete existing private state to make installation pass.
+Owner Android observations belong in the blank pilot record; Cloud PASS does not
+populate it. Unknown/M51/real production operations remain prohibited for Codex.
+
+## DEMO.4 browser backend
+Dashboard is optional: stop local foregrounds before dashboard-init, then explicitly
+run-controller --dashboard. A port/config/partial-key conflict preserves state;
+never delete keys or alter versions to make startup pass. Original CLI-only mode
+can run without a completed Dashboard config. Export only public CA to a NEW HOME
+file via dashboard-trust, compare SHA and manually trust it on owner browser device.
+Untrusted CA/wrong IP SAN must fail; no click-through/HTTP fallback. dashboard-code
+requires running Dashboard + pinned Core owner admin; one code expires in five
+minutes and replacement invalidates prior code. Session lasts thirty minutes and
+restart/logout invalidates it. Re-login rather than copying admin/node credentials.
+Backend 202 means copies pending, never protected; preserve same idempotency key/file.
+Byte receipt and checksum/protection differ. Browser transfers max 32 MiB, one at a
+time; larger file uses existing CLI. Unknown capacity and shared-domain ambiguity
+stay UNKNOWN. UI/browser/Android qualification is separate; see current progress.
+
+### DEMO.4b browser behavior
+Open only the exact IP SAN HTTPS URL after verifying/trusting public Dashboard CA. Missing WebCrypto or certificate error blocks login; do not bypass TLS. Node approval/domain confirmation remains CLI. Upload button requires live Controller; max 32 MiB by default. Pending upload is not protected: keep original file and retry same bytes/path in the same tab to reuse key. Download verifies SHA before offering browser save; Controller byte progress alone never proves two replicas. UNKNOWN after disconnect is intentional; reconnect then use Cập nhật kiểm tra. Browser regression prerequisites: Node with Playwright, Chromium, certutil; tests import only synthetic public CA in an isolated HOME, no system trust modification.
+
+### Android11 Termux: readable but write_denied with accessible private volume
+The owner reported '/' OPEN_FAILED EACCES but ASC volume/staging OPEN_OK on initialized ZTE9045 Demo0.3. Old LocalVolume.open/remove_staging read-open '/' before descending; check() could read private marker directly, producing exactly readable=true/writable=false/fsync=null. Linux regression reproduces it. DEMO.4d anchors directly at approved root with full identity/no-follow checks, no root/SELinux/system-permission changes. Real EACCES is still denied; safe_volume_access_unavailable requires supported descriptor primitives, never insecure fallback. Missing/changed marker/media requires preserve/review, not reinit. Wait for qualified0.4.1 upgrade guide; do not overwrite old release/state. Android runtime fix still needs owner confirmation writable=true/fsync_tested=true. Old-code rollback retains the original root-open bug on affected Android.
+
+### Demo0.4.1 owner storage-status
+After upgrading existing source, stop the local Storage Node (Controller can remain up), then `ascdemo storage-status`. It reads the existing config/manifest/volume and actually probes only its private staging. Require writable=true, fsync_tested=true, online and last_error=null; UNKNOWN/false is not ready. Running node returns refusal due ownership: Ctrl+C owning terminal, never remove locks. No init/join/storage-init is needed for an existing node/volume. Restart original node afterward, retaining all IDs/pins/bytes.
+
+### Existing ZTE0.3 direct0.4.1 upgrade
+Use DEMO-ZTE-0.4.1 copyable owner guide and trusted publication SHA. Stop foregrounds, old launcher complete backup/readback, stage/preflight/upgrade to immutable new release with another NEW backup. Compare private identity snapshot, stopped-node storage-status actual writable/fsync, then original Controller+Node. Do not install over prefix or init/join/storage-init existing ZTE. Both0.3 and0.4 direct routes tested from exact archives. Rollback is data-preserving code selection with NEW backup, but restores original Android bug on affected host: keep storage stopped/review, never clear markers/old database to make it run.
+
+## Phase4.0 Quick Join diagnostics
+Use PHASE4-QUICK-JOIN.md. setup_required means explicit approved Demo init is
+missing; never copy Core/recovery state to bypass it. tls_pin_mismatch or
+cluster_mismatch requires independently rechecking the owner endpoint/pin/cluster,
+not bypassing TLS or deleting identity. resume_required preserves pending; retry
+the same command. Expired/rejected grant: explicit --new-code with a fresh owner
+code keeps the same operation. identity_present +unknown confirmation is not a
+claim that Controller is reachable. A lost pairing ticket after logout/restart
+only loses UI tracking; it does not revoke a still-valid Core code. Registered
+node still needs manual storage setup and owner-approved independent domain.
+
+## Phase4.1 local bridge
+Use LOCAL-ENGINE-BRIDGE. setup_required/state_incompatible/recovery_read_only/
+installation_mismatch: preserve original initialized state/identity, no reinit or
+copied markers. application_unauthorized/scope_denied: local-app grant is distinct
+from node/admin; operator provisioning/scopes, never copy a node token. request_id_
+conflict: retain original public binding and code; explicit replacement needs NEW
+bridge request ID but existing Core operation. join_unconfirmed: preserve pending,
+retry same ID/--resume; no duplicate identity. request_limit: journal lifetime bound,
+no unsafe automatic eviction. socket_already_exists: b.1 preserves stale/foreign
+socket; do not unlink a socket/lock blindly. Writable/fsync null is honest read-only
+status, not permission denial and not readiness from process existence.
+
+Phase4.1b.2 known stale socket can recover automatically ONLY with its exact
+private app/device/inode receipt, exclusive bridge lock and connection refusal.
+Unknown/live socket or mismatched receipt stays refused. external_runtime_owned:
+stop original foreground in its terminal; bridge cannot kill it. node_not_configured:
+no existing node/storage setup, no implicit init. START_REQUESTED/owned process
+ONLINE is not writable/protection proof. After bridge death old start receipt is
+historical and does not auto-start; inspect fresh status, use NEW explicit ID.
+
+### Phase4.1 local bridge / observer
+- setup_required/installation_mismatch/source_selection_mismatch: preserve root,
+  inode, IDs and selected source; never init/copy DB/recreate identity to bypass.
+- application_unauthorized/scope_denied: local app grant is separate from node or
+  owner credentials; use correct private same-UID provisioned control, not browser.
+- request_id_conflict/request_limit: retain journal, same intent/ID on retry; new
+  mutation ID only for explicit new intent.256 retained IDs is a bounded prototype.
+- Unknown/live socket after crash: do not delete socket/locks. Recovery only for
+  exact owned receipt+inode under exclusive lock and actual connection refusal.
+- Core gateway QUORUM UNAVAILABLE/UNKNOWN: no writer proof/GC/automatic repair.
+  Check explicit pinned endpoints/identity/floor; never fall back to Demo SQL.
+- Recovery UNKNOWN with valid bytes: compare trusted cluster AND expected epoch
+  and minimum index/manifest anchor, no metadata edit/activation workaround.
+- Gateway code expired: stop/restart serve --issue-login-code in PRIVATE terminal;
+  this revokes all volatile owner sessions. Never log/publicly share its output.
+Detailed candidate-only use/backup/code rollback: PHASE4-1-OPERATIONS.md.
+
+## Android native emulator / compatibility
+Network-loss test must disable both emulator WiFi and cellular; disabling WiFi alone can keep a real default cellular network and correctly fails the fault gate. Restore both in finally and require actual callback/code clearing. No KVM means software boot takes minutes; wait for observed boot_completed, not a timed PASS. Use retained owned parent process and private ADB5038/numeric127.0.0.1 serial, never phone discovery or unknown locks.
+INSTALL_FAILED_VERSION_DOWNGRADE is expected safety proof; don't use -d/uninstall/data clear. Signature mismatch requires original private signer, not identity reset. Native runtime_unqualified is the real missing reviewed Node/enrollment/provider boundary; engine library I/O success does not remove it. See ANDROID-NATIVE-OPERATIONS for safe limits.
+
+A restarted Controller public API may listen before its separate Dashboard listener. Synthetic Dashboard fixture now waits verified TLS on the actual Dashboard endpoint before FIRST session assertion; no HTTP200 acceptance/retry, auth/grant consumption or weakened401/key-preservation checks.
+
+Native native_context_locked means missing/corrupt encrypted context/key/witness,
+replaced private root/receipt, incompatible schema/device or legacy/recovery
+state. Preserve all bytes/key/receipt; do not delete root, recreate identity or
+copy Termux state. CONTEXT_READY is local provider readiness only, not enrollment,
+TLS listener, storage approval or Node ONLINE. See ANDROID-NATIVE-CONTEXT.
+
+Native TLS: Chaquopy may omit os.memfd_create although API30+ Bionic provides it.
+The explicit typed public-Bionic adapter still requires actual sealing/CLOEXEC/
+readback. Android may deny proc-fd reopen; native JSSE consumes already-open fd
+bytes with ordinary OS policy. No disk-key/SELinux/raw-syscall workaround.
+Any key/cert/pin/seal/credential error refuses without rotation; preserve state.
+TLS identity readiness is not Node enrollment/approval/listener health. API26–29
+TLS NOT QUALIFIED. Read ANDROID-NATIVE-TLS and progress before continuing.
+
+### Native pending enrollment adapter g.2a
+PENDING_RECEIPT can mean the Controller committed a join but its ACK or local
+publication was lost. Preserve context/Keystore record, resume the same operation;
+do not clear state or reinitialize Node ID. If code expired, an explicit new owner
+code may replace only the pending code. resume_required/binding_mismatch require
+review of the existing request/bindings. HISTORICAL_JOIN_RECEIPT does not establish
+current Controller connectivity, valid credentials or storage approval. Native
+Binder/UI enrollment is not available at this Linux-only source checkpoint.
+
+### Native join/resume from UI g.2b
+Explicitly prepare application identity/context/TLS, then independently verify
+Controller endpoint/PIN/Cluster ID and check the same binding before sending.
+PENDING_RECEIPT can follow successful server commit plus lost ACK: use Resume,
+not initialize/reset/re-pair. After process restart read pending/public bindings
+first. Invalid/expired/used code keeps pending; request an owner code and explicitly
+replace only that code. Binding mismatch or corrupt/lost context requires holding
+state for review. Never delete keys/state, restore stale databases, or copy Termux
+identity. Native node_start still refuses until h; no FGS/replica claim from join.
+
+### Native UI qualification setup
+am start -W waits for Activity startup, not asynchronous service binding. For
+a brand-new APK, wait for actual platform filesDir before writing a test-only
+private fixture. Never create a Node/identity to repair setup. Separate UI AVD
+had SIGABRT during initial install; preserve offline userdata/keys/logs, verify
+current task ownership/free stale lock before controlled restart. No wipe/root/
+signer recreation. Quickstep launcher ANR can cover the Activity even while
+programmatic View/Binder tests pass: that does NOT qualify interactive usability.
+
+### Native Catalog/Dashboard qualification j.1
+Reconcile `{busy:true}` is NOT physical verification. Wait for an actual completed
+reconciliation and target file verified/available counts before selecting a fresh
+Native download grant; never mark protection or invent a candidate manually.
+An interrupted initial Android holder may already have enrolled/configured bytes:
+preserve same context/proof/Controller, use explicit retained --resume, not reinit.
+--resume-setup is only for proven preidentity interruption; established/lost/
+corrupt keys must hold. Native stage marker is test-only/private, no Node secret.
+AVD crash is not a clean shutdown/power-loss PASS: preserve userdata/key images,
+verify fresh ownership and require actual subsequent key/identity/byte readback.
+
+
+Fresh SDK35 TCG sandbox can fail process attach/startup; observed system telephony
+ANR in APN database/ICU regex and Bluetooth SIGABRT as well as ASC startup failure.
+This does NOT prove ASC innocent or qualify cold-start. Keep raw logs private,
+preserve userdata; no watchdog/identity/security bypass. API30 is an independent
+platform gate, not a relabelled35 PASS. Official pinned image metadata is in
+qualification/android-api30-image.json (repository rev11 versus bundled rev10
+source.properties discrepancy preserved). Actual image API30 checked at runtime.
+
+SDK API30 network fixture: observed active wlan0 .16 versus standard SDK ingress
+redir .15 (radio0 simulated data interface). A Node bound only to .16 can enroll/
+heartbeat outward yet host upload times out. Verify actual interfaces and selected
+private Node bind; use the intended supported SDK adapter before E2E. A normal
+WiFi toggle in a TASK-OWNED fixture corrected this without changing identity,
+proxy/CA or using ADB as data transport. Phone WiFi LAN remains a separate gate.
+
+
+PWA install criteria: use verified HTTPS and a NORMAL browser profile; Chromium
+reports in-incognito and refuses installation in private browsing. Unsupported
+browsers can still use ordinary Dashboard. The install button appears only after
+browser beforeinstallprompt; no fake success. Offline navigation/API has no cached
+files or offline writes. This is a web client, not a Termux/native service launcher.
+
+
+### GC authorization expiry with large retained metadata
+A readable survivor is not enough if fresh quorum authorization exceeds its
+10s budget. Preserve the rejected operation/journal and do not increase the fence,
+claim a lost ACK without actual unlink, or remove history/pins to reduce load.
+For diagnosis, measure Runtime validation/lock/network phases with private
+synthetic metadata only; do not log tokens, payloads or production state. Exact
+structural decode reuse reduces repeated SQL work, but all fresh quorum/term and
+physical checks still apply. Current acceptance/progress owns the actual network
+fault result; an offline decode benchmark is not that result.
+
+## Phase5 access foundation
+Unsupported private profile/mode or public/wildcard origin: stop and correct the
+explicit access config, never widen backend LAN guards or regenerate its identity.
+A100.64/10 address alone means VPN membership/reachability UNKNOWN. No live VPN/
+Cloudflare service has been configured. Missing phone acceptance is deferred by
+owner, not a runtime failure or a permission to deploy to production/M51.
+
+Phase5 private_gateway_refused: verify a NEW separate private root/profile, exact
+numeric bind, correct independently verified upstream DASHBOARD leaf pin/mode and
+working existing backend. Never delete/regenerate Node/Controller state to fix it.
+503 after upstream loss is fail-closed; no alternate Controller/writer is created.
+Old cookie after backend restart requires new owner login code. Wrong CSRF token
+401 versus missing CSRF403 are existing backend contracts. See PHASE5-PRIVATE-ACCESS.
+
+Phase5.2 edge_keys_unavailable: install exact optional hash-locked dependencies in
+a private supported env and verify the configured team's HTTPS certs endpoint.
+Never use token jku URLs/stale expired keys or change proxy/CA. edge_access_denied
+means no valid application JWT for exact issuer/audience/claims; it never authorizes
+an ASC owner role. Missing live Cloudflare setup is NOT a source-test PASS.
+
+Phase5.2b edge_origin_refused: preserve root/profile/certificate; check explicit
+format2/public origin versus loopback bind, pinned backend mode and optional
+dependencies. Existing incomplete root must NOT be regenerated automatically.
+Missing/wrong Access assertion403 differs from valid Access/no ASC owner401.
+Expired key cache/provider outage503 never falls back to stale keys or owner-only
+access. Connector offline validation does not prove tunnel/DNS/IdP reachability.
+
+Phase5.3 maintenance_refused/UNKNOWN: preserve plan/state/prefix/backups/journal.
+Check stopped local runtime, exact installation/release and verified complete
+backup of CURRENT state. A changed state or corrupted/missing backup must refuse
+before activation; make a new stopped backup/preflight after operator review.
+A PREPARED journal uses existing recover-upgrade only; never edit it or reinit
+identity. Code rollback needs NEW-state backup, not old SQLite restore. This Linux
+source CLI refuses Android/Termux; it is not an APK updater or remote SSH service.
+
+access_bundle_refused: preserve partial code/env and state; check trusted archive
+SHA, complete manifest, NEW private destination, matching env receipt/Python/release
+and edge dependency pins. Do not edit manifests/receipts or reuse another version's
+env to bypass refusal. No automatic repair/global dependency fallback. Android/
+Termux is not a supported installer target; see PHASE5-LINUX-PACKAGE.
+
+
+## Access checker5.4e
+Run tools/check_access.py --root EXISTING_ROOT offline first; see
+PHASE5-ACCESS-CHECK. profile BLOCKED: inspect existing private permissions, root
+separation, format/dependencies and CA/IP SAN locally. tls_identity BLOCKED: review
+existing certificate/key pair; never regenerate Node/Cluster state to repair it.
+upstream_mode BLOCKED: check configured Dashboard mode/pin and backend availability.
+listener checks BLOCKED: confirm owned service is running, exact origin/CA/leaf and
+expected authentication gate. It never starts a service automatically. Default
+CHECKS_PASSED does not mean a listener is running. Edge listener_mode UNKNOWN is
+expected without Access credentials; do not disable the gate. No raw secret output.

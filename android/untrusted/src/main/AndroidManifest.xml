@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="org.asc.foundation.permission.LOCAL_ENGINE" />
+    <queries><package android:name="org.asc.foundation" /></queries>
+    <application android:label="ASC untrusted qualification client" android:allowBackup="false" android:usesCleartextTraffic="false" />
+</manifest>

@@ -1,0 +1,26 @@
+{
+  "state": "PASS",
+  "method": "separate fresh bare GitHub clone, actual remote binary and SHA sidecar downloads; not local copy or Release API",
+  "branch": "feature/phase4-2-android-native",
+  "artifact_commit": "d3b1a9f303a03151d520154d850c407449bb69f9",
+  "verified_utc": "2026-10-28 00:09:15 UTC",
+  "files": [
+    {
+      "path": "android-artifacts/asc-native-node-0.4.1-internal-debug.apk",
+      "bytes": 39000831,
+      "downloaded_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+      "sidecar_verified": true,
+      "matches_audited_workspace_artifact": true
+    },
+    {
+      "path": "candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz",
+      "bytes": 248278,
+      "downloaded_sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+      "sidecar_verified": true,
+      "matches_audited_workspace_artifact": true
+    }
+  ],
+  "github_release_api": "not used; normal Git publication",
+  "scope": "artifact availability/integrity only, not physical Android acceptance",
+  "qualification": "Artifact integrity/availability only; Linux software scope in phase4-core-decode-final.json, no Android/production acceptance"
+}

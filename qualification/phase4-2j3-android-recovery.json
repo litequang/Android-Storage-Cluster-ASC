@@ -1,0 +1,66 @@
+{
+  "checkpoint": "4.2j.3 qualified Android recovery prerequisite; final Python gate running",
+  "base_source_commit": "30660d8c28886d8a363bbcada48e06aaa2e6e776",
+  "scope": "task-owned original retained API35 x86_64 AVD +Linux; not physical Android",
+  "original_recovery": {
+    "state": "PASS",
+    "tests": 26,
+    "seconds": 822.806,
+    "original_primary_vm_exit_before_recovery": -11,
+    "same_original_avd": true,
+    "installed_original_apk_sha256": "d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a",
+    "candidate_apk_sha256": "7c4ba6496e89ac673026345f7abf1ea1bc4424f5ff93747630dbd072cbdc91e8",
+    "uid_preserved": true,
+    "identity_and_old_bytes_actual_readback": true,
+    "first_install_host_timeout": "90seconds; not counted as PASS; actual installed hash checked before resume",
+    "full_power_loss_not_claimed": true
+  },
+  "foreign_uid_signature_binder_denial": {
+    "tests": 1,
+    "seconds": 0.464,
+    "state": "PASS"
+  },
+  "go_tests": 11,
+  "go_checks": {
+    "go-tests": {
+      "exit": 0,
+      "seconds": 21.441,
+      "cross_build_only": false
+    },
+    "go-vet": {
+      "exit": 0,
+      "seconds": 0.277,
+      "cross_build_only": false
+    },
+    "go-mod-verify": {
+      "exit": 0,
+      "seconds": 0.165,
+      "cross_build_only": false
+    },
+    "build-linux": {
+      "exit": 0,
+      "seconds": 9.191,
+      "cross_build_only": false
+    },
+    "build-windows": {
+      "exit": 0,
+      "seconds": 31.407,
+      "cross_build_only": true
+    },
+    "build-android": {
+      "exit": 0,
+      "seconds": 33.948,
+      "cross_build_only": true
+    }
+  },
+  "private_signer_mode": "0600; original signer retained",
+  "old_archives_apk_preserved": 7,
+  "full_python": "RUNNING; no PASS claimed",
+  "full_frozen_files": 296,
+  "vm_shutdown": "SDK SIGSEGV(-11) even after guest shutdown; not clean shutdown/power-loss acceptance;8original image/config files copied offline, old copy kept",
+  "cold_initialization_complete_junit": "INCOMPLETE at j.1; no identity reset or false PASS",
+  "full_phase42": "NOT ACCEPTED",
+  "source_sha256": {
+    "android/app/src/androidTest/java/org/asc/foundation/NativeCrashRecoveryTest.kt": "780382a6dc7048a431489b10e666df64b6575cbac9d461af21a05b472c0c5ea5"
+  }
+}

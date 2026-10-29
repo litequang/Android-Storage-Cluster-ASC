@@ -26,6 +26,7 @@ runtime/
 backups/
 node.json
 controller.json
+cluster-client.json
 enrollment_pending.json
 enrollment_abandoned-*.json
 node_before_repair-*.json
@@ -121,3 +122,60 @@ manifest.sqlite*
 metadata_sync_state.json
 catalog-snapshot*.json
 catalog-metadata*.json
+
+# Go consensus development artifacts and private sidecar config/state
+/asc-raft
+/consensus/asc-raft
+asc-raft.exe
+*.test
+consensus*.json
+failover*.json
+bootstrap*.json
+raft-state/
+*.enrolled
+
+# Private external DR archive/recovery markers (still audit tracked/index blobs)
+.asc-external*/
+external-backups/
+recovery-staging/
+RECOVERY_READ_ONLY.json
+READY.json
+
+# Preserved verified public SOURCE-only Demo archives, not private backups.
+!/releases/asc-demo-alpha-installer-0.1.0.tar.gz
+!/releases/asc-demo-alpha-0.3.0.tar.gz
+!/releases/asc-demo-alpha-0.4.0.tar.gz
+!/releases/asc-demo-alpha-0.4.1.tar.gz
+
+# Phase4 source-only synthetic candidate, never an Android release/private backup.
+!/candidates/asc-demo-alpha-0.4.2-dev.tar.gz
+
+# Phase4.1 private local-app/gateway control material (never source).
+bridge.json
+client.json
+gateway.json
+socket.json
+!/candidates/asc-demo-alpha-0.4.3-dev.tar.gz
+
+# Android development caches/artifacts/private signing material (workspace only).
+.gradle/
+local.properties
+*.apk
+*.aab
+*.jks
+*.keystore
+/android/.kotlin/
+
+# Explicit reviewed internal native foundation artifact only.
+!/android-artifacts/asc-native-foundation-0.2.0-debug.apk
+
+# Reviewed Phase4 Native Node internal artifacts, no private signer/state.
+!/android-artifacts/asc-native-node-0.4.0-internal-debug.apk
+!/candidates/asc-demo-alpha-0.4.3-native-node-internal-source.tar.gz
+!/android-artifacts/asc-native-node-0.4.1-internal-debug.apk
+!/candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz
+# Distinct reviewed host-source artifact; old public archives remain immutable.
+!/candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz
+
+# Reviewed Linux access internal CODE bundle; no private env/profile/state.
+!/candidates/asc-linux-access-0.1.0-internal.tar.gz

@@ -39,7 +39,11 @@ class StorageClient:
             raise ClientError('invalid storage response')
         if response.status >= 400:
             # Do not reflect untrusted server text or secrets into exceptions.
-            raise ClientError('storage request rejected', response.status, 'storage_rejected')
+            label=reply.get('error')
+            allowed={'authorization_unavailable','forbidden','rate_limited','storage_busy','volume_unavailable',
+                     'checksum_mismatch','file_not_found','object_requires_review'}
+            raise ClientError('storage request rejected', response.status,
+                              label if isinstance(label,str) and label in allowed else 'storage_rejected')
         return reply
 
     def json(self, method, path, obj=None):

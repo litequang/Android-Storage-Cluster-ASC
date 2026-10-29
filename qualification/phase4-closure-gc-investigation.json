@@ -1,0 +1,82 @@
+{
+  "state": "BLOCKED_FULL_REGRESSION_NOT_ACCEPTED",
+  "last_committed_source": "16c0717c74c87c08a82b2bb44eef138ba100337f",
+  "fresh_full": {
+    "source_commit": "16c0717c74c87c08a82b2bb44eef138ba100337f",
+    "started_utc": "2026-10-27 13:50:50 UTC",
+    "finished_utc": "2026-10-27 14:16:28 UTC",
+    "exit_code": 1,
+    "source_unchanged": true,
+    "summary": [
+      "Ran 184 tests in 1537.737s",
+      "FAILED (errors=1)"
+    ]
+  },
+  "completed_fault_banners": 43,
+  "failed_gate": {
+    "test": "tests.test_gc_faults.GCClusterTests.test_real_quorum_scope_takeover_and_default_windows_lock",
+    "stage": "After proven actual Linux synthetic unlink and dropped successful TLS ACK, next same-job execution rejected stale_gc_proof",
+    "error": "HTTP409 stale_gc_proof",
+    "physical_gc_default": "LOCKED; only isolated synthetic fixture issued an executor"
+  },
+  "bounded_owner_retry_experiment": {
+    "state": "FAIL",
+    "test_count": 1,
+    "seconds": 1094.769,
+    "error": "HTTP503 gc_execution_unconfirmed after five bounded retries of same job",
+    "qualified_source_change": false
+  },
+  "routing_hint_experiment": {
+    "state": "FAIL_NOT_RETAINED",
+    "test_count": 1,
+    "seconds": 783.307,
+    "failure": "Actual unlink/lost-successful-ACK marker remained armed after the original five attempts; rejection is not fault execution",
+    "live_denials": [
+      "gc_authority_budget_expired",
+      "authorization_unavailable"
+    ],
+    "change": "Trial TTL2->10 and unqualified bounded owner retry both removed exactly; canonical Core/test files match16c0717",
+    "private_patch": "/workspace/work/phase4-closure-blocked-handoff/unqualified-gc-experiments.patch"
+  },
+  "observed_limits": {
+    "cpu_quota_cores": 2,
+    "owned_android_guest": "stopped before targeted/full; original signer and state preserved",
+    "controller_observation": "metadata preparation under Runtime lock; storage authorization waits on routing/quorum; exact root cause not yet proven",
+    "diagnostics_scope": "controlled synthetic fault fixture only, no production",
+    "controller_projection_bytes_observed": 2409034,
+    "retained_catalog_events_observed": 1024
+  },
+  "unchanged_requirements": [
+    "10s final network authority budget",
+    "250ms local final-unlink window",
+    "fresh TLS pin, nonce and actual-term quorum receipt",
+    "physical survivor readback SHA and independent logical domains",
+    "retention/history/backup/last-readable-copy guards"
+  ],
+  "native_pwa_scoped_receipt": "phase4-web-native5-targeted.json",
+  "new_artifact_publication": "Internal debug review snapshot ed1749b5d05dfc886ebdd8027b44df338dcfadcb normal-pushed and separately downloaded SHA verified; full regression BLOCKED, no qualified release",
+  "full_phase4": "NOT ACCEPTED",
+  "next_steps": [
+    "Investigate original GC authorization latency/proof drift on the 1024-event workload; compare controlled resource envelope and collect per-stage timing, no budget/assertion relaxation. Both failed experiments removed.",
+    "Run fresh full384 only after failed targeted gate passes",
+    "Audit exact APK/source package and preserve original signer/state",
+    "Normal feature push then independent GitHub download checksum; no force/whole merge",
+    "Owner physical Android/LAN/OEM gates remain NOT TESTED"
+  ],
+  "restored_safety_targeted": {
+    "state": "PASS",
+    "tests": 44,
+    "skips": 0,
+    "seconds": 14.068,
+    "command": "python -B -m unittest -v tests.test_gc_authorization tests.test_gc_sandbox tests.test_storage",
+    "scope": "Fast guards/storage tests only; does NOT replace the failed actual network GC fault gate"
+  },
+  "historical_record": true,
+  "current_resolution": {
+    "source": "8c547288816342f9c6ebf94d3262ebf91049300a",
+    "receipt": "phase4-core-decode-final.json",
+    "targeted": "45PASS incl original network/all8Linux physical groups",
+    "fresh_full": "392PASS0skip1484.150s/64faults/314inputs unchanged",
+    "old_failures": "All old outcomes retained above; neither failed retry nor failed TTL experiment included in fix"
+  }
+}

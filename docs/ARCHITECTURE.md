@@ -1,9 +1,42 @@
 # ASC ARCHITECTURE 2.2 — PROPOSED
 
+Operator-local5.4e checker is a source tool, not a service/access plane. It reuses
+existing private/edge loaders and the pinned client, optional anonymous fixed GETs.
+No Engine/Catalog/authority/state/config or listener creation. Offline validity,
+observed mode and anonymous refusal are independent of deployment/writer proof.
+See PHASE5-ACCESS-CHECK; canonical runtime and published0.1.0 bundle unchanged.
+
+## Phase 2B development boundary — Windows qualified
+
+The new opt-in failover runtime prepares existing business SQL against disposable
+in-memory state, commits a bounded schema-2 authority envelope through the same
+Go CAS FSM, and caches only verified committed bytes/checkpoints in a separate
+private runtime DB. The original guarded Phase 2A registry remains preserved.
+Control revision is distinct from Catalog revision. Takeover commits the owner
+and actual Raft term, invalidates old grants and leases, preserves stable job/
+session/object identities, and invalidates placement probes before work resumes.
+An authenticated liveness heartbeat withdraws a sidecar if Python dies. Discovery
+uses provisioned pins only; storage requires fresh online committed authority.
+The readiness audit and executed Windows qualification are in PHASE2B-ACCEPTANCE.md.
+
+Runtime attachment proves the frozen original private state against the permanent
+initial upgrade receipt. It refuses independent authority histories instead of
+discarding them. A fresh follower must have the exact source Catalog and no private
+authority to merge. Pending jobs run before background reconciliation, with one
+physical verification per audit turn. A known scoped job can explicitly resume a
+held immutable final copy only after rehashing matching retained staging/final
+bodies and obtaining fresh authority; unknown/mismatched bodies remain held.
+
+Public MetadataSource snapshot/delta envelopes retain their original exact schema,
+digest and transaction revision. Runtime response labels are not injected into
+these versioned payloads; node caches continue using the unchanged strict validator.
+
 ## Lifecycle boundary inherited from 0.4.1 / Phase 1.1
 
 The lifecycle below is retained. Phase 1.2A local storage is documented at the end.
-The consensus target remains proposed. Later sections document implemented local storage and single-writer distributed Catalog; no Raft, automatic failover or production integration.
+The early consensus target below is historical design. Later sections describe
+single-writer storage and the opt-in Go metadata consensus continuation. Phase 2B
+Controller failover is described above; production/Android integration is absent.
 
 - API stays `/api/v1`; registry schema 2 adds node credential lifecycle and hashed
   enrollment-operation routing without replacing v0.4 cluster/node identities.
@@ -109,3 +142,486 @@ Metadata snapshots are consistent read transactions, canonical SHA-256 protected
 Reconciliation rotates persistent per-volume inventory cursors (16 pages/run, 200 rows/page), verifies at most eight known replicas/run and caps diagnostic categories at 256 entries. It reports native v0.5 files and orphan objects without automatic adoption/deletion, repairs deficits only from physically valid sources and preserves suspicious/last copies. Failed target domains are held for explicit retry; spare eligible domains can still heal.
 
 Catalog.mutate is an integration boundary, not a completed deterministic Raft apply. Phase 2 must separate nondeterministic preparation (IDs, time, placement) from replicated application, define fencing/epoch recovery and fault-test quorum behavior. No consensus, election, automatic Controller failover, disaster-proof backup or Android/power-cut readiness is claimed.
+
+## Phase 2A — Go metadata mode and preserved initial investigation
+
+Go continuation: the development-only `consensus/` package wraps official
+HashiCorp Raft and its synchronous Bolt backend. ASC supplies identity/integrity
+and quarantine policy, not an election algorithm. Runtime open never calls
+bootstrap; initialization is explicit and refuses an existing state directory.
+An interrupted pair of upstream vote-term/candidate writes quarantines restart.
+Engine qualification now includes durable three-voter loopback mTLS election,
+partition, restart and snapshot tests. Windows metadata-only integration acceptance
+passes all 15 scenarios and the full 95-test Python suite (3 POSIX skips).
+`controller-run --consensus-config PRIVATE_FILE` opts into metadata-only consensus:
+Python prepares DECLARE/POLICY documents, Go commits a SHA-preconditioned document
+and durable replay receipts, then Python installs Catalog rows/events, applied
+index/term and receipts in one SQLite transaction. State bytes are base64 on IPC
+to preserve canonical UTF-8 hashes exactly. Snapshots include the Go authoritative
+document and receipts even if Python has not yet projected committed changes.
+
+Persistent SQL guards and default-deny connections block legacy Catalog, registry,
+job and grant writers after attachment. Old grants no longer authorize storage.
+The mode starts no storage worker/heartbeat refresh and exposes only a loopback
+metadata API. Physical objects/manifests are untouched; no Controller/storage
+automatic failover claim is made. Local reads are stale with exact checkpoint;
+strong reads wait for an upstream committed Barrier and applied FSM. During Go
+startup replay, the last verified Python projection remains explicitly stale.
+
+### Initial PySyncObj investigation (historical)
+
+Engine qualification rejected unmodified PySyncObj 0.3.17: missing/corrupt vote metadata permits another same-term vote; persistence synchronization and default voter authentication do not meet ASC requirements. See ADR-037/038 and PHASE2A-ACCEPTANCE.md for reproducible evidence and alternatives. At that initial stage no consensus runtime or v0.7 release existed; the Go continuation above subsequently qualified metadata consensus.
+
+The proposed integration separates leader preparation (IDs, clock, placement and physical proof), an engine majority-commit boundary, deterministic Catalog apply, and a transactional applied-index/idempotency receipt. Apply must not consult live network, local clock, random values, unreplicated node approvals or queue leases. File revisions map to committed Catalog changes; engine no-ops do not create file revisions.
+
+A safe read barrier/ReadIndex plus applied-index check is required for strong reads. A local leader flag/term/heartbeat is insufficient. Existing read-only caches remain stale. Public metadata exports need a separate validated consensus snapshot envelope rather than becoming Raft snapshots merely by renaming them.
+
+At that initial stage, registry lifecycle, approvals/probes, job leases/grants and storage side effects remained single-Controller state. Metadata-only consensus must prohibit physical-write/job failover until distributed fencing is proved. Bootstrap/membership/recovery must preserve cluster identity and fail closed on lost state. These were the initial integration constraints; the separate Phase 2B boundary and qualification above describe the later opt-in runtime.
+
+## Phase 3A opt-in backup boundary ? Windows development accepted
+
+POST backup/enable adds bounded backup schema 1 to the existing schema-2 runtime
+projection. All Controllers must use the matching source before enabling it.
+Existing Go CAS, actual-term checks, private cache and Storage introspection carry
+this extension unchanged. Base registry 4/manifest 1/public cache 1 are unchanged.
+Snapshots capture exact committed index/term/control and Catalog revisions plus
+immutable version descriptors; subsequent verification is historical evidence.
+Backup jobs request existing domain-separated COPY jobs and independently hash
+served bytes. Restore uses existing UPLOAD/session/commit/proof paths with one
+persisted version and stable key; it creates a new version, preserving the source.
+Retention expires logical references only. Physical immutable bytes are preserved.
+
+The executed 12-gate Phase 3A matrix and fresh complete regression qualify this
+bounded Windows development path only; see PHASE3A-ACCEPTANCE.md.
+
+## Phase 3B optional node insights
+
+Read-only score views derive from one verified runtime document, never live network
+IO during apply. Explicit owner enable adds insights schema 1; upgrade all stopped
+Controllers first. Existing prepared-document CAS, term authority and byte-proof
+paths remain unchanged. Post-refresh capture samples fresh pinned probe observations
+at most once/node/hour into UTC calendar-hour/day aggregates. Missing hours remain
+UNKNOWN; observed probe success is not continuous uptime. Takeover preserves history;
+probe freshness is still invalidated. No voter/membership/leadership decision uses it.
+
+3B.4 placement consumes insights only after enable, preserving legacy ordering
+without the extension. Hard checks run before any preference/score: active current
+approved identity, non-protected profile, fresh nonfuture heartbeat/pinned probe,
+approved readable+writable online volume, upload limit, double-copy free/quota
+reserve minus pending reservations, no running target transfer, excluded/planned
+physical domains. Eligible Preferred first, then score*confidence/100, available
+bytes, stable node/volume ID. Existing policy/schedule still chooses at most one
+new target per independent approved device domain; no score changes voter state.
+Avoid/Drain/Protected exclude new target allocation, retaining authenticated reads
+and existing work/bytes. Re-pair keeps generation-tagged history and collects new
+samples separately; only current-generation reliability contributes to score.
+
+Phase 3C.1 explicitly enables replication schema 1 on the same runtime schema 2.
+Owner policies and reconciliation prepare existing Catalog SQL in memory and
+commit policy/history/scheduled COPY jobs/intent receipt atomically through actual-
+term Go CAS. Increasing policy schedules missing independent domains; decreasing
+policy retains all current replicas and bytes. Existing physical proof worker,
+reservations, failure/lease fences and read behavior remain. No physical GC path.
+
+3C.2a adds durable move intents, not automatic source removal. Explicit owner Drain
+sets 3B preference and schedules independent COPY work atomically; explicit move
+can rebalance one replica. At most 128 intents; repeated requests/source IDs reuse
+same intent/job. Required survivors include retained backup snapshot copy counts.
+No target space/domain means a blocked report and preserved source. A READY plan
+still requires fresh survivor-byte proofs before a later retirement checkpoint.
+
+3C.2b owns an additional trusted prepared-Catalog retirement boundary. After the
+existing COPY job commits physical completion, verify required survivors by actual
+streamed SHA, excluding the retiring replica. Required domains include current
+policy and retained snapshot backup copy counts. A final CAS rechecks term, current
+policy, approvals/generations, freshness and unfinished source/target jobs before
+removing only the current replica reference and appending its ordinary Catalog
+event. Existing versions/snapshots/events/jobs and source bytes remain. A bounded
+retirement record permanently fences that exact node/volume/local-object identity
+against reintroduction. Background work advances at most one ready move per turn.
+No retirement implies physical GC eligibility; all retained pointers still count.
+
+3C.3a GC planning indexes every current-version physical pointer, trash content pin,
+retained snapshot, all backup/restore jobs (including terminal evidence), every
+Catalog job physical/source pointer (including COMPLETED), live scoped grants and
+retained public event replicas. Only proven retired identities are candidates;
+unknown/native inventory is held, never inferred reclaimable. Strong owner plan
+binds graph and complete plan SHA, source epoch/term/checkpoint and 60-second
+expiry, but supplies no delete authority. Logical excess and reclaimable bytes
+remain distinct. Monotone Runtime transitions reject extension/receipt/retirement/
+move erasure and retained-history edits; ordinary <=1024-event append/retention is
+allowed only with the previous digest anchor, not arbitrary compaction for GC.
+
+3C.3b explicit owner archive may release completed transfer-job physical pointers
+only for a proven retired replica. Active/retryable jobs cannot be archived.
+COMPLETED job-scoped grants already deny further authority and are removed with
+those terminal rows. Retain job identity/file/kind/times, full-record SHA and exact
+completion digest in bounded permanent audit receipts, plus unchanged state history.
+No raw local-object/session/source pointer remains in archived receipts; the logical
+file still resolves through its current verified replicas. Upload/completion replay
+returns its original success without reviving the old physical target. Every writer
+must prove archival against the prior exact terminal row; historical Catalog event
+pointers still block GC until the ordinary existing retention window ages them.
+No event eviction/archive/byte deletion is performed to create eligibility.
+
+3C.4a separates overview planning from a durable selected-object plan. Prepare
+requires fresh streamed survivors outside the target device domain, rechecks every
+reference and stores an immutable 60s plan SHA. Exact owner confirmation plus an
+in-process issued synthetic temporary Controller capability may reserve one target
+through quorum. Ordinary runtime never constructs that capability; JSON/config/env
+cannot supply it, and Android/ARM/non-temporary hosts are refused. Reservation and
+retirement identity cannot be removed/reused. Takeover invalidates pending permits
+and proofs; no physical executor or unlink is present in this checkpoint. GC job
+survivor evidence itself is a retained reference; reserved targets are retirement
+journals, not new data-use pins. Repeated confirmation with the same request replays.
+
+3C.4b supplies a separately issued Node test-volume capability: Linux x86, existing
+approved directory under temporary storage, exact node/volume/root/objects/staging
+identities, and no pre-existing sessions/files/bodies when first issued. Retained
+binding allows restart only on the exact same arena. Normal Agent constructs none.
+Executor serializes through Engine.transfer (including in-flight reads), verifies
+manifest/upload scope and SHA, journals identity before deletion intent, then calls
+fresh authorization immediately before descriptor-relative single-object unlink.
+A 250ms post-authorization local budget rejects delayed boundary work; no recursive
+or arbitrary path removal. Recheck links/inodes/size/change times/root at the boundary.
+
+The private FULL SQLite journal progresses PREPARED -> DELETING -> DONE across
+unlink, directory fsync and manifest removal. Only a known matching DELETING/DONE
+intent can acknowledge absence; unknown/corrupt/mismatched/reappeared data is held.
+Retry does not repeat an unlink or claim additional bytes, and always reauthorizes.
+No network GC endpoint is wired yet; this checkpoint qualifies local fake-callback
+and filesystem behavior, not final quorum fencing. Physical execution stays locked
+on Windows/Android/real devices and outside issued synthetic temporary arenas.
+
+3C.4c connects explicit confirmed GC jobs to Controller/Storage authorization. Every run replaces the memory-only bearer and stores only its hash/run/term. Authorization rehashes independent survivors, rechecks the full target graph and current credentials, and commits a fresh nonce receipt. Storage accepts only an issued exact-volume executor, never a config switch; no background GC. A callback taking over 10 seconds is refused, followed by the existing 250ms local unlink budget. These bounds do not make network and filesystem atomic.
+
+3C.5b additionally binds the complete reference/approval graph before and after streamed survivor proof. Current identity/domain/freshness checks alone cannot reuse proof from a formerly approved endpoint after its pin changes. The transient graph SHA is not persisted and changes no schema; any concurrent graph change requires fresh proof.
+
+Proof fingerprint retains all references, policies, approvals, identities and effective protection. Only unrelated self-reported profile telemetry is canonicalized away; current pinned readability/freshness still uses the real document. Ordinary heartbeat free-space changes must not substitute for, or invalidate, independently streamed byte evidence by themselves. Confirmed plan SHA semantics are unchanged.
+
+Linux qualification exposed repeated structural validation of identical 1024-event
+Catalogs in runtime read/preparation. A bounded two-entry cache admits only
+successfully validated exact canonical JSON bytes with native JSON types; no mutable
+document, authority, time-dependent evidence or grant is cached. Changed bytes
+validate again, including history/materialization checks. All other runtime
+validation, digest verification, fresh quorum/nonce and streamed-proof gates remain
+per-operation. Callback/local time budgets are unchanged.
+
+## Phase 3D external archives (separate feature branch)
+
+External BackupEngine consumes a source capture/stream/revalidate interface. Private
+LocalStore pins approved destination descriptors and owns one exclusive store lock;
+immutable capture and all Catalog version bytes live outside source state/volumes.
+64KiB streams hash/fsync/readback before no-replace publication; complete replay
+rehashes rather than trusting progress. Only a current source authority final gate
+can publish new COMPLETE. Base runtime/registry/manifest/GC remain unchanged.
+Offline recovery is planned as passive READ_ONLY data staging, never a writer.
+
+3D.1b runtime source APIs reuse strong Runtime.operation and existing scoped
+audit/read grants, not cached metadata as authority. Exact capture is nested so
+transport labels cannot alter source checkpoint. Owner client streams candidates
+over pinned Storage HTTPS and retries only its unpublished private partial. Final
+current quorum check gates new COMPLETE; completed archives remain historical.
+No backup code runs in Raft apply or mutates source content/pins/history.
+
+3D.2 offline verification needs an independently trusted manifest digest; local
+completion/self-hash alone is not authenticity. Same-cluster minimum known index
+adds a historical rollback floor, not proof of newest history. Verification is
+time-stamped and rehashes all bodies; list stays COMPLETE_UNVERIFIED. Retention
+is non-destructive preview only; no completed backup is removed or used as GC credit.
+
+3D.3 recovery is a passive data bundle on a NEW isolated empty root, not an ASC
+HOME/volume. Exact captured projection and global-ID portable bodies plus READ_ONLY
+intent/READY integrity receipt preserve history without constructing authority.
+No runtime import/bootstrap/migration/credential reuse or server launch exists.
+Full writable recovery remains blocked pending upstream library/fencing review.
+
+The logical Destination protocol owns initialize/create/resume/inventory/verify/
+retention-preview/stage. LocalDirectory dispatches to qualified POSIX transaction
+implementation; no provider silently falls back. Future NAS/S3/cloud must supply
+independently reviewed credentials/privacy/conditional publication and recovery
+semantics, not emulate POSIX handles. Exact baseline source can validate/roundtrip
+current captured schema; archives are additive and do not alter live base formats.
+
+
+<!-- Reviewed Demo c9c2660 historical extension; current Phase4 status is in PHASE4-PROGRESS. -->
+## Demo Track immutable installer boundary
+DEMO.1 installs a public source-only release under a dedicated private code prefix;
+private Core/Demo state is never adopted or initialized by installation. A content
+SHA identifies each release, with a strictly verified inventory. The stable launcher
+verifies bytes with stdlib before importing release code and runs Python without
+bytecode writes. Explicit stopped upgrades are deferred to DEMO.3. No new network
+runtime is delivered by the installer preview.
+
+## Demo single-writer LAN boundary (DEMO.2)
+A Demo Controller may cohost an enrolled Storage Node in a different private home:
+<state>/controller versus <state>/node. It retains one fixed metadata writer with
+Core registry 4; no failover bootstrap, consensus state or advanced Core extension
+is adopted. ControllerRuntime binds explicit private IPv4 with Core pinned HTTPS,
+Catalog jobs and byte proofs. Node runs Core StorageRuntime and agent_once in its
+own process with ASC_HOME set before import, retaining OS engine/agent locks.
+Demo lifecycle operation lock serializes setup/startup with future stopped upgrades.
+Two identities on one physical phone MUST use the same owner-approved domain label.
+New files require two independently labeled, fresh actually writable domains with
+Core double-copy capacity; race/outage may leave retained incomplete jobs. CLI only
+reports protected=true after two available verified domains; downloads may use one
+readable copy while Controller is up. All node requests still introspect Controller
+for grants; its outage denies new authority rather than selecting another writer.
+
+## Demo stopped upgrade boundary (DEMO.3a)
+An installed prefix binds exactly one dedicated Demo root. Setup/runtime rechecks
+binding and PREPARED upgrade journal inside lifecycle startup fencing; activation
+holds root operation plus controller/catalog-worker/agent/storage-engine OS locks.
+No activation proceeds with any local runtime running. Candidate source is verified
+and staged immutably, requires exact native integer formats and installer/LAN/
+upgrade-safe capabilities; old installer-only releases cannot run initialized state.
+Complete private state plus every approved original medium is inventoried, copied,
+fsynced and independently hashed before atomic source selection. Changes during
+copy, missing medium, links or unknown formats fail closed. PREPARED journal and
+atomic pointer are separate durable writes; interrupted activation blocks startup
+until explicit recovery verifies unchanged state+backup and selects old compatible
+code. No DB/byte restore or implicit migration. Multi-phone upgrades require owner
+stop-all/backup/change/start Controller then nodes; mixed versions not qualified.
+
+Demo coordination-file hardening (DEMO.3a.1): Demo wraps the Core OS lock primitives
+with an O_NOFOLLOW regular/single-link/inode-checked opener before any marker write.
+Do not call Core foreground_lock directly from Demo. State preflight validates
+existing internal Core worker/engine lock paths before invoking those constructors.
+No Core runtime/schema is changed; existing immutable source/state boundaries hold.
+
+## DEMO.4a optional browser facade
+Dashboard listener is opt-in inside the existing Controller process/OS lifetime;
+Core Catalog/worker and pinned metadata/Storage clients remain the sole storage
+logic. Browser port uses its own private CA/leaf with IP SAN; Core/node TLS pins
+and identities never change. Owner manually trusts public CA after SHA comparison.
+Pinned local owner CLI mints a one-use login grant, redeemed for a bounded RAM-only
+HttpOnly/Secure/SameSite session; restart clears grants/sessions. Browser never sees
+Core admin/node/transfer bearer or key. Exact Host/Origin/CSRF and local CSP protect
+browser routes. Node administration is read-only; domain approval stays CLI.
+One bounded private temporary spool relays upload/download via existing Core client,
+with actual received counts/full SHA and conservative protection from Core replica
+counts. Unknown/stale metrics remain null; duplicate domains do not create copies.
+No second Catalog, election, deletion, GC or public endpoint. Default runtime keeps
+Dashboard disabled. Optional completed Dashboard config is versioned independently;
+root/base schemas unchanged so old CLI-only 0.3.0 can ignore this feature safely.
+
+### DEMO.4b browser client
+Controller serves three local immutable release assets. Browser holds only owner session cookie/CSRF, whitelisted Catalog views and selected test file bytes; Core grants/keys stay in Controller. Fetch upload progress uses backend-observed counts, protection uses Core domain/readability results. Download buffers at most the Dashboard limit, rechecks SHA with WebCrypto then requests a new browser download (no filesystem overwrite API). On connection failure cached protection is UNKNOWN and writes/download actions disable. No second persistence authority, cloud dependency, offline write queue or PWA service worker.
+
+## DEMO.4d POSIX storage anchor
+Android may deny read-open of '/' while allowing search/stat and direct access to approved private volume. Replace system-root descriptor traversal with direct open of the approved root ONLY, checked against persisted medium dev/inode before child reads. Ancestor lstat snapshots and pinned marker/root/subdirectories are revalidated around IO; all actual child IO/scandir/statvfs/fsync/unlink stays relative to descriptors. No full-path child-file fallback or identity/schema rewrite. Windows existing handle route stays separate. Probe success follows real IO/SHA/fsync and owned cleanup. GC's distinct synthetic-only executor/authority protocol remains locked and unchanged.
+
+## Phase4.0b.1 source convergence, modes remain separate
+Reviewed Demo modules and approved-root adapter now coexist with intact Core3D
+external backup/recovery in this feature tree. No state migration/authority change:
+Demo keeps marked single-writer and refuses Core quorum/advanced state; external
+module CLI/RuntimeHandler remain their own guarded development scope. Shared base
+Registry/Catalog/Storage services remain sole implementations. Historical Demo doc
+extensions above do not supersede current Phase4 plan/progress/acceptance.
+
+## Phase4.0 Quick Join foundation
+The marked Demo single-writer Controller owns the existing Dashboard facade.
+Pairings explicitly requires DemoCatalog and matching local Registry/cluster/TLS
+binding; unknown/quorum modes have no SQL fallback. Existing admin/pair issues
+600s one-use grants, Registry is the sole durable enrollment authority. Session
+tracking is bounded hash-only RAM and is lost on logout/restart; live grants are
+not thereby revoked. The local CLI uses the same Core durable enrollment engine,
+existing pending context and optional expected cluster guard. No additional state
+schema or native/browser node-credential store. Recovery staging is rejected even
+if somebody adds a Demo marker. Core3D authority and modules remain separate.
+
+## Phase4.1 architecture contract
+Private same-UID authenticated UDS/application scope facade reuses existing Demo
+Quick Join/Core Engine in fixed private state; no browser/TCP process/filesystem
+route. Node lifecycle only owned child, no Controller/Core writer launch. Separate
+Core observer uses strong Runtime.view Barrier, never ensure_ready/takeover, and
+existing Dashboard security/assets in explicit read-only mode. No Catalog/schema
+migration or recovery writer. See PHASE4-1-PLAN and dedicated threat/API/app contracts.
+
+Phase4.1c.1 reuses existing Runtime.view(strong=True) without readiness/takeover.
+Public aggregation uses existing disposable prepared SQL with query_only +same
+Catalog/Views, not a persistent database/live registry fallback. Explicit pinned
+collector and separately configured passive-stage verifier provide read-only
+observations only; writer_authority always false. Source authority/schema/Engine,
+3D recovery writer and static membership remain unchanged.
+
+### Phase4.1 shared UI and source compatibility
+Core read-only gateway is a separate explicit Linux observer, reusing Demo HTTPS,
+CA factory, Sessions/handler/assets with mode-specific routing before mutations.
+It never constructs a live Catalog/Storage/runtime. Core existing RuntimeHandler
+only delegates the owner GET observer; no readiness/takeover path is called.
+Same public UI has policy-aware Core views; Demo writer remains separate. Gateway
+cookies are unique per private gateway root, not separated merely by TCP port.
+Anchored recovery view binds expected cluster/epoch/history floor and verifies
+whole bytes each read, never writer/credential activation. Source-only0.4.3-dev
+keeps base formats; bridge/gateway roots live outside existing engine/volumes.
+
+## Phase4.2 native foundation boundary
+Separate Kotlin application org.asc.foundation, own Android UID/private data and
+version independent of Core0.4.3 candidate. Same Core Engine remains canonical;
+initial UI has FOUNDATION/UNKNOWN, no node identity/runtime/source state adoption.
+Private native Binder/Keystore/embedded engine qualification requires actual gates;
+no Termux UID sharing, copied DB/keys/markers or Android recovery writer.
+
+Native4.2d UI is an authenticated private Binder client, not a parallel backend.
+Embedded Core handles local capability probes and pinned public info; no enrollment
+POST/node runtime until explicit-context provider is qualified. Unconfigured native
+Core observer/list/replicas/quorum/recovery UNKNOWN; existing Dashboard remains
+the operational owner UI. Draft!=Core pending, app probe!=cluster storage approval.
+
+## Native qualification boundary
+Native device gate adds a diagnostic fence before private state (M51/unknown deny); it never overrides Core device guards or authorizes a Node. AOSP debug emulator is diagnostics only. Native Binder transaction IDs are explicit/stable. Default-network changes invalidate form trust and late callbacks. Native state excludes Android cloud/D2D backup: nonexportable Keystore is not folder-migratable. Test-only alternate instrumentation seeds/verifies exact old APK state, never included in management/runtime APK. No new observer, enrollment authority, FGS, Raft/GC or recovery writer.
+
+## Phase4.2f.1 explicit native context foundation
+Trusted native Context/Build plus fixed sealed credential provider now feed an
+explicit canonical Core NodeContext. No process-global HOME/getpass/subprocess or
+second Registry/Catalog. Optional context is independent of old app/probe/Core
+formats; missing state/key/receipt/medium holds, no Node creation. Native runtime
+and enrollment remain unqualified. See ANDROID-NATIVE-CONTEXT.
+
+## Phase4.2f.2 platform TLS without plaintext disk keys
+NodeContext now accepts an explicit trusted in-process platform loader. Both use
+sealed anonymous fd readback; Linux uses CPython SSL, Android uses standard JSSE
+from RAM because its proc-fd reopen is denied. Selection is explicit before IO,
+never a failed-operation fallback or policy bypass. Key/cert match before sealed
+persistence, reuse rather than regenerate. No Kotlin Catalog/Storage/Registry.
+Returned JSSE context is NOT a CPython socket runtime: native transport/owned
+Agent/FGS integration remains4.2h; listener protocol minimum/bounds/authorization
+must be enforced there. No automatic listener/enrollment/writer. See native TLS doc.
+
+4.2g.1 extracts the shared host-independent Core enrollment payload/acceptance
+functions, reusing the same Registry server transaction and original CLI behavior.
+No second enrollment authority/DB, Native/Termux state bridge or network endpoint.
+Native encrypted pending/IPC/UI integration remains g.2, not implied by extraction.
+
+### Native enrollment adapter g.2a
+The explicit app-owned NodeContext can now retain a typed Core enrollment operation
+and accepted node configuration in its single authenticated encrypted provider
+record. NativeEnrollment calls the SAME Core pinned HTTP client and shared CLI
+pending/receipt functions; Registry.join remains the only enrollment transaction.
+Pin/expected cluster/single-writer mode are verified before creating pending;
+pending is durably published before POST. Lost ACK or local publication failure
+resumes the original operation/token. Existing node retry reports a historical
+receipt, never live credential validity or approval. No runtime is started.
+Android Binder/UI wiring and real Keystore/network qualification are subsequent
+g.2b work; Linux memory-provider tests do not establish native enrollment PASS.
+
+### Native enrollment bindings g.2b
+Private Binder routes actual Core enrollment through NativeNodeContext and the
+Keystore-encrypted context. UI adds explicit preparation, independently verified
+public trust bindings and pending resume; it does not expose raw credential
+provider or duplicate enrollment/Registry. A saved receipt is historical, never
+current online/approval/writer evidence. Source remains without Agent/FGS/native
+StorageServer transport. Instrumentation harness is isolated from main APK and
+uses explicitly named development loopback tunnels, not direct LAN acceptance.
+
+### Explicit Agent transport h.1
+asc.agent.heartbeat extracts only the existing CLI network/cluster-verification
+contract. Caller supplies approved config/profile; it creates no identity, state
+root, process, thread, volume or listener. CLI retains hardware/ownership checks,
+capability measurement and private cache/metadata sync exactly as before. Native
+host can later reuse this same Core operation after validated context/device and
+owned runtime checks; it must not import/patch CLI HOME/getpass. A successful
+heartbeat establishes point-in-time authenticated Controller communication only,
+not write/storage/replica/Leader authority. No native Agent/FGS at h.1.
+
+### Native TLS socket boundary h.2a
+JSSE's SSLContext is not a CPython SSLSocket. A narrow owned native connection +
+Python file/socket facade now supplies the stream operations needed by the
+existing Core HTTP handler. Only public Java socket APIs; binary chunks/deadlines/
+ownership explicit. No second Engine/protocol or plaintext forwarding backend.
+Absolute socket-close watchdog is necessary because Java soTimeout does not bound
+writes. Listener is internal and unused by app startup/IPC; actual Handler/Engine
+serving and owned Agent/FGS are still required. See ANDROID-NATIVE-TRANSPORT.
+
+### Existing-only local metadata open
+Native runtime must not let a generic Engine constructor create a new manifest
+when existing approved state is missing. New optional existing_only mode opens
+SQLite with mode=rw, binds the actual inode and checks canonical format1/Node ID/
+structure/quick_check without creating directories, repairing schema or inserting
+identity. Default creation behavior stays available for explicit NEW setup only.
+Native caller must bind an approved private root/manifest receipt; shared/SAF
+metadata is unsupported. This is not a custom fd-pinned SQLite VFS defending a
+compromised same-UID host. No new Catalog/Schema or network volume approval.
+
+### Native Node MVP owned session
+Private Binder ->NativeNodeSession ->same Python NativeRuntime/StorageEngine/
+StorageHandler, with JSSE sockets through the existing NativeSocket facade. Python
+StorageServer is unbound, so no parallel plaintext HTTP hop/listener. Existing Core
+heartbeat/introspection authorize operations. One owned accept thread +heartbeat
+thread, explicit stop and Engine close; no process PID control or auto bootstrap.
+This first session is activity-bound; native FGS/background ownership is still a
+separate next step. Linux targeted actual TLS/file/restart proof !=Android runtime.
+
+### h.3 foreground ownership
+Same EngineService now owns the explicitly started Node independently of UI binding
+through connectedDevice FGS, actual network work and notification Stop. It never
+starts an idle fake FGS or creates identity on restart. Existing actor/provider/
+Storage/Controller authorization unchanged; own stopped/failed-session health
+cleanup, START_NOT_STICKY, no boot/recovery writer/Termux process control.
+
+### i.2 optional native Core observer
+Private Binder transaction4 ->NativeCoreObserver ->canonical Python NativeObserver
+->existing Phase4.1 HTTPS gateway ->existing Core quorum projection. Explicit
+owner mode/cluster/epoch/leaf-pin and RAM-only owner session, separate from Node
+enrollment/token and app lifecycle authorization. No persistent observer database,
+Catalog/Storage rewrite, Node state change or automatic single-writer/Core migration.
+Minimal Cụm view consumes sanitized actual gateway data; unknown/unconfirmed/stale
+availability stays UNKNOWN. Separate observer/Node locks; passive observation does
+not create FGS or writer authority. Full-byte recovery remains passive READ-ONLY.
+
+
+## Phase4 Web App — network-only PWA client
+Existing Dashboard now provides fixed manifest/icons and root service worker for
+standalone browser installation. Same owner session and canonical services; no
+new Catalog, filesystem/process bridge, Node startup or cloud dependency. SW only
+passes root GET navigation to network/no-store; API/upload/download are untouched.
+No CacheStorage/IndexedDB, offline write or background sync. Browser install prompt
+needs explicit user action; acceptance of prompt is not claimed as installation.
+Current install criteria are verified in actual Chromium normal isolated persistent
+profile, not incognito; real Chrome Android installation remains an owner gate.
+
+
+### Core structural decoding and live authority
+Runtime projection decoding can reuse exact-byte structural validation separately
+from live readiness. The two-entry <=2MiB/input in-memory cache stores no mutable
+projection, authorization or quorum result; decoded outputs are independent.
+Runtime durable checksum/envelope/monotonicity checks and fresh Go/GC authority
+remain per operation. This reduces repeated disposable-SQL preparation in nested
+survivor verification, without changing the Registry/Catalog/Engine boundaries.
+Android Node and single-writer Demo do not instantiate this quorum Runtime.
+
+## Phase5 private access plane foundation
+Owner defers phone acceptance2026-10-28 and allows source/synthetic continuation.
+Separate asc.access profile/gateway reuses existing browser Dashboard/File Manager
+or explicit read-only Core observer; no Engine/Catalog/Controller replacement.
+Private ingress -> pinned HTTPS Dashboard -> existing authorized services. Existing
+Node/consensus ports are not ingress routes. Owner session/CSRF stays backend-owned;
+private routing grants no authority. See PHASE5-PLAN and ADR074. Hardware and
+production acceptance remain deferred, not inherited from emulator results.
+
+## Phase5.2b optional edge origin
+Separate format2 runtime binds only127.0.0.1/TLS. A separately managed connector
+would terminate public HTTPS/Access and use verified origin CA/IP SAN, exact
+public Host, required Access audience. ASC independently verifies signed JWT
+BEFORE upstream connection; claims do not grant owner authority. Existing owner
+session/CSRF and pinned explicit Dashboard mode follow unchanged. Shared gateway
+hooks reuse routing/streaming/limits, no second Engine/Catalog or authority cache.
+No provider/account/DNS deployment or live edge acceptance in source work.
+
+## Phase5.3 maintenance boundary
+No additional access server or remote execution engine. Local same-owner CLI
+creates a bounded content-confirmed plan from existing stopped Demo state/staged
+release/verified complete backup. Apply reuses existing upgrade activation, with
+final installation/current-release/backup revalidation under its original locks.
+Existing journal/pointer/backup/recover-upgrade remain the only activation flow.
+No runtime auto-start, DB restore, Core quorum change or APK/Termux UID sharing.
+SSH/private connectivity remains separately operator-managed and NOT TESTED.
+
+## Dedicated Linux access distribution
+Code-only immutable version directories +separate prepared venv +existing separate
+profile/TLS root. No new installer for Controller/Node/APK or second Engine/Catalog.
+Bootstrap verifies its full dedicated manifest before imports, binds environment
+to release and dispatches only existing entry points. Upgrades choose a NEW code/
+env directory, stop owned foreground and reuse compatible profile; no shared pointer/
+DB migration or automatic restart. Legacy Demo installer must reject this kind.

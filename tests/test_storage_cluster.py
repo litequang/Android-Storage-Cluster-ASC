@@ -200,12 +200,12 @@ class ClusterTests(unittest.TestCase):
         grant.write_text(json.dumps({'grant': self.client.grant, 'volume_id': self.node['volume']}))
         common = ['--origin', self.client.origin, '--pin', self.client.pin, '--grant-file', str(grant)]
         output = io.StringIO()
-        with mock.patch('sys.argv', ['asc', 'storage-upload', str(source), 'cli/file.bin',
+        with mock.patch.object(cli, 'inspect', return_value={'protected': False, 'installation_allowed': True, 'simulation': True}), mock.patch('sys.argv', ['asc', 'storage-upload', str(source), 'cli/file.bin',
                                    '--key', 'cli_request_key'] + common), contextlib.redirect_stdout(output):
             cli.main()
         file = json.loads(output.getvalue())
         destination = self.base / 'download.bin'
-        with mock.patch('sys.argv', ['asc', 'storage-download', file['file_id'], str(destination)] + common), contextlib.redirect_stdout(io.StringIO()):
+        with mock.patch.object(cli, 'inspect', return_value={'protected': False, 'installation_allowed': True, 'simulation': True}), mock.patch('sys.argv', ['asc', 'storage-download', file['file_id'], str(destination)] + common), contextlib.redirect_stdout(io.StringIO()):
             cli.main()
         self.assertEqual(destination.read_bytes(), self.data)
         # Exclusive local output never overwrites an existing user's file.

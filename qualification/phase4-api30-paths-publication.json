@@ -1,0 +1,33 @@
+{
+  "state": "VERIFIED_REMOTE_API30_PATHS_CHECKPOINT",
+  "repository": "litequang/Android-Storage-Cluster-ASC",
+  "branch": "feature/phase4-2-android-native",
+  "commit": "2faa32bc93705f011b05c09bfe2491951e1a5359",
+  "verified_utc": "2026-10-28T04:14:07+00:00",
+  "HEAD_FETCH_HEAD_advertised_match": true,
+  "working_tree_clean_before_report": true,
+  "normal_push_only": true,
+  "published_source_checkpoint": "c0655a8b09e8811726d5c1b350d44286d3a6814c",
+  "direct_upgrade_checkpoint": "5273f295e0a9be1cfcc0334bb2ba79dc26a705bf",
+  "fresh_first5_checkpoint": "2faa32bc93705f011b05c09bfe2491951e1a5359",
+  "android_executions": 20,
+  "android_failures": 0,
+  "android_skips": 0,
+  "count_scope": "17direct4->5 +3fresh-first5; repeated methods at pre/post/fault stages, not20distinct-method/full suite; excludesAPI35 UNKNOWN15",
+  "host_guard_tests": 3,
+  "current_staged_secret_audit_before_fresh_commit": {
+    "work": 421,
+    "index": 421,
+    "untracked": 0,
+    "findings": 0
+  },
+  "artifact_apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+  "controller_archive_sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+  "binary_artifact_changed_or_new_release": false,
+  "artifact_verification_scope": "Exact local tracked APK/source bytes and installed APK/signature checked; same historical published blobs retained. Prior independent GitHub download proof applies to unchanged artifacts; no new Release API upload/download claimed.",
+  "executor_interruption": "Transient unavailable after all tests+staged secret audit, before commit. Commit attempt did not execute. Workspace then accessible with all11staged files intact; normal commit/push/fetch succeeded. No reconstruction/reset/overwrite or pending source lost.",
+  "private_state": "Both new API30 datasets/old API35/other AVDs/signing preserved STOPPED with private hash-verified backups; no raw credentials/disks uploaded",
+  "api35": "Independent cold Node gate BLOCKED, additional15UNKNOWN; transport5PASS only",
+  "full_phase4_accepted": false,
+  "next": "Responsive ownedAPI35 environment and owner physical ARM64/LAN/two domains/Doze/OEM/ChromeAndroid/update pilot. No phone/production/Termux access or writerDR/Android voter/GC/failover/Phase5."
+}

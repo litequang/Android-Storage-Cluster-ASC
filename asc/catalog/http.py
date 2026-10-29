@@ -10,6 +10,9 @@ def handle(handler):
     service=handler.server.catalog
     if service is None:
         return handler._json(404,{'error':'not_found'})
+    if getattr(service, 'distributed', False):
+        from ..consensus.service import handle as consensus_handle
+        return consensus_handle(handler)
     try:
         parsed=urlsplit(handler.path);parts=parsed.path.removeprefix('/catalog/v1/').split('/')
         query=parse_qs(parsed.query,strict_parsing=True)
@@ -38,6 +41,23 @@ def handle(handler):
                 return handler._json(403,{'error':'metadata_not_authorized'})
             return handler._json(200,service.metadata_ack(obj))
         if not handler._admin():return
+        if parts == ['nodes', 'enable'] and method == 'POST' and getattr(service, 'failover', False):
+            if query: raise ValueError()
+            obj = handler._read_json()
+            valid.payload(obj, ('request_id',))
+            return handler._json(200, service.insights.enable(obj))
+        if (len(parts) == 3 and parts[0] == 'nodes' and parts[2] == 'preferences' and
+                method == 'POST' and getattr(service, 'failover', False)):
+            if query: raise ValueError()
+            obj = handler._read_json()
+            valid.payload(obj, ('request_id', 'mode'))
+            return handler._json(200, service.insights.preference(parts[1], obj))
+        if parts[0] == 'replication' and getattr(service, 'failover', False):
+            from ..replication.http import handle as replication_handle
+            return replication_handle(handler, parts[1:], query)
+        if parts[0] == 'backup' and getattr(service, 'failover', False):
+            from ..backup.http import handle as backup_handle
+            return backup_handle(handler, parts[1:], query)
         if method=='GET':
             if parts==['files'] or parts==['jobs']:
                 if set(query)-{'offset'}:raise ValueError()

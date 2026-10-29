@@ -1,6 +1,17 @@
 # ASC IMPLEMENTATION & ACCEPTANCE PLAN
 
-## Current acceptance order — 2026-10-23
+## Latest roadmap / resume — 2026-10-29
+Read [PROJECT-ROADMAP](PROJECT-ROADMAP.md) for the complete current timeline,
+runtime/artifact roles and remaining gates; old chronological entries below are
+history, not a statement that Phase4/5 software is still absent. Phase4.0/4.1 Linux
+foundations accepted;4.2 actual Native Node API30/35 emulator scoped PASS, physical
+phone/ARM64/LAN/OEM unaccepted. Phase5 Linux software/distribution subset accepted,
+live provider/SSH/VPN/production unaccepted.3D writable DR remains BLOCKED.
+CURRENT TASK: owner PC investigates fresh-Termux ZTE Controller install failure;
+[handoff](ZTE-FRESH-INSTALL-PC-HANDOFF.md) has exact archives/hashes, unknowns and
+next actions. No error output or fix/phone acceptance exists yet for this attempt.
+
+## Historical acceptance order — 2026-10-23
 - Baselines: v0.4.1 b74bb594a5bff9ad0926255effed1fd41bbc1647; v0.5.0 f70b095b8f2ec507baaea5a4bdb3d03667209f94.
 - Phase 1.2B v0.6.0 is explicitly authorized: Global Catalog, metadata replication, placement, durable copy jobs/reconciliation, local checks and non-force main publication after applicable PASS.
 - Codex final Windows gate: 92 tests OK (skipped=3 POSIX installer), 89 PASS / 0 FAIL / 0 ERROR; no previous owner PASS reused. See PHASE1-2B-ACCEPTANCE.md.
@@ -49,22 +60,32 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - Test leader loss, network partition 1/2, stale log candidate, power cycling, membership update, rollback/replay, no false commits and stale-leader fencing.
 - Gate: failure injection pass. Otherwise remain read-only/single-writer test mode.
 
-## Phase 3 — Storage/data protection
-- Internal storage adapter; separate SD and optional Android SAF bridge.
-- Staging/immutable object ids, SHA256, chunks, retries, versioning, replica placement and safe GC.
-- Recovery: delete mistake, node loss, card removal, lost metadata snapshot, file corruption.
-- Gate: reproducible verified restore of representative 1GB+ file and important metadata backups.
+## Historical roadmap snapshot — 2026-10-24
 
-## Phase 4 — User-facing application
-- ASC Drive PWA mobile/desktop: files/search/volumes/node view/jobs/restore/health.
-- Quick Join installer: true enrollment (not CSV registration), signed config, idempotent install/reinstall, safe rollback.
-- WebDAV/desktop sync/android photo background/iOS native only as follow-on capabilities once storage integrity works.
+- **Phase 3A — Backup, Versioning & Safe Restore: DONE**, v0.9.0 Windows
+  development accepted. Preserve [acceptance evidence](PHASE3A-ACCEPTANCE.md).
+- **Phase 3B — Node Scoring, Telemetry, Node Preferences & Smart Placement**:
+  DONE for v0.10.0 Linux Cloud simulation; [acceptance](PHASE3B-ACCEPTANCE.md).
+  Checkpoint contract and resume instructions in [PHASE3B-PLAN.md](PHASE3B-PLAN.md)
+  and [PHASE3B-PROGRESS.md](PHASE3B-PROGRESS.md).
+- **Phase 3C — Dynamic Replication, Replica Reduction & Safe Garbage Collection**:
+  DONE for Linux x86_64 isolated synthetic qualification; [acceptance](PHASE3C-ACCEPTANCE.md),
+  [plan](PHASE3C-PLAN.md) and [progress](PHASE3C-PROGRESS.md). Fresh 208 Python / 11
+  Go tests, all required faults, vet/module/build PASS on 8b679bc. Physical GC stays
+  off by default and locked on real devices; no deployment/platform unlock.
+- **Phase 3D — External Backup & Disaster Recovery**: active separate branch
+  feature/phase3d-external-dr; PARTIALLY COMPLETE. External metadata+bytes,
+  anchored verification and isolated read-only staging Linux synthetic ACCEPTED
+  (238 Python/11 Go/all faults PASS); see PHASE3D-PLAN/PROGRESS/ACCEPTANCE.
+  Full writable recovery remains NOT ACCEPTED/BLOCKED pending upstream recovery,
+  old-cluster fencing and identity credential qualification.
+- **Phase 4 — ASC Drive Web/PWA and Android Quick Join**: future application and
+  enrollment UX; no Dashboard in Phase 3B.
+- **Phase 5 — Remote Access & Production Qualification**: future private access,
+  real-device sleep/network/power qualification and explicit production review.
 
-## Phase 5 — Remote access and production readiness
-- LAN local discovery independent of cloud.
-- Tailscale private connectivity, leader-aware gateway(s) on compatible devices; HTTPS edge optional after threat review.
-- M51 production-protected export-only first; load-throttled backups of consistent MariaDB/web artifacts after explicit approval.
-- 72h test with phone sleep, Wi-Fi dropout, power loss, failover, monitoring of temperatures. Confirm no hosting impact.
+Phase 3B changes no static voter membership/quorum and never performs physical GC.
+Android, SAF, SD/power-cut, 1GB+ restore and production remain separately unqualified.
 
 ## NO premature promises
 - Not always-on despite Doze/ROM limitations until verified on devices.
@@ -73,3 +94,76 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - No marketing capacity as real usable capacity without measuring files and replication factor.
 
 Phase 1.2A local gate: Codex Windows final 61 tests OK (skipped=3 POSIX installer), 58 PASS, 0 FAIL/ERROR. Three-node HTTPS simulation passed. See PHASE1-2A-ACCEPTANCE.md; Android/SAF/power-cut and distributed acceptance remain open.
+
+## Historical Phase 2A investigation — before Go continuation
+
+Completed investigation: mandatory document/source review, actual Catalog-write/authority classification, five candidate assessment, reproducible six-gate PySyncObj probe, and fresh v0.6 Windows regression (92 tests OK, 3 POSIX skips). See PHASE2A-ACCEPTANCE.md and ADR-037/038.
+
+Unmodified PySyncObj 0.3.17 fails missing/corrupt vote-state recovery and other sampled persistence/identity gates. No evaluated candidate is yet qualified for the available Windows Python/target Termux architecture. Next choice is an authorized native toolchain/etcd-raft sidecar qualification, or a reviewed pinned PySyncObj fork with durable persistence and authenticated transport. No system tools/dependencies were installed, no consensus algorithm was invented and no runtime migration/version change was made.
+
+Remaining Phase 2A gates: engine/platform acceptance; deterministic commands and atomic applied-index/receipt persistence; comprehensive Catalog bypass protection; quorum strong reads; safe bootstrap/static membership, snapshot/catch-up/restart; per-voter RPC identity; all 15 requested deterministic election/partition/fault cases plus full regressions. Physical-write failover stays disabled until distributed fencing is proved. Commit/publish v0.7 only after those gates pass; Phase 2B and phone trials remain blocked.
+
+## Phase 2A v0.7.0 — Go metadata consensus continuation
+
+Owner authorized Go development tooling and selected HashiCorp first. The new
+`consensus/` module and `asc/consensus/` adapter implement static three-voter
+metadata consensus, persistent state/quarantine, per-voter mTLS, loopback IPC,
+deterministic projection CAS/receipts, atomic Python applied checkpoints,
+snapshots/replay, quorum Barrier reads and persistent denial of legacy writers.
+No new project, homegrown Raft or PySyncObj fork was created.
+
+Qualification and actual Python/Go/TLS integration PASS all fifteen gates and
+extra state-loss/crash/identity/replay/snapshot cases. Phase 2A is accepted for
+Windows metadata consensus: 8 Go tests PASS and final Python full suite 95 OK
+(3 existing POSIX installer skips, 92 PASS, no FAIL/ERROR). Publication status
+lives in PHASE2A-ACCEPTANCE.md and the completion report. Commit/push uses only
+the existing WIP branch after secret/staged review, without main merge or force push.
+
+The accepted scope may only be metadata consensus. Registry approvals, private
+jobs/grants and physical storage automation are frozen rather than promoted by
+metadata election. Android ARM64 cross-build proves feasibility only; no phone,
+physical power-cut, Doze/SD, dynamic membership, disaster rebuild or production
+acceptance is inferred.
+
+## Phase 2B v0.8.0 — Windows development complete
+
+Controller failover is implemented on the existing WIP branch. The readiness
+audit and design for unsafe authority groups are in PHASE2B-ACCEPTANCE.md.
+All 20 fault scenarios PASS with separate temporary processes/volumes; the final
+full regression is 101 tests OK (98 PASS, 3 POSIX skips), with 9 Go tests and both
+Windows/Android ARM64 builds PASS. Original engines and Phase 2A evidence remain
+intact. No real-phone/Android runtime or production acceptance is inferred.
+
+## Phase4.0 integration track — bounded current checkpoint
+Core-first feature/phase4-core-demo-integration, selective compatible Demo modules
+only (no whole Demo merge). Architecture audit and Demo-only Quick Join owner UI/
+local durable adapter implemented; exact04.1 candidate upgrade/new-state rollback
+and pending compatibility targeted PASS. Final fresh qualification pending;
+PHASE4-PLAN/PROGRESS/ACCEPTANCE own status. Core3D external backup/verify/passive
+recovery preserved; writable DR still BLOCKED. Next Phase4 requires explicit
+native/local-engine bridge, Core quorum UI adapter and tested migration/Keystore/
+SAF contracts; no APK or real-device readiness inferred from synthetic candidate.
+
+Phase4.0 bounded Linux synthetic foundation now ACCEPTED on frozen4d1758d,
+287 fresh Python/all old faults and11 Go/vet/modules/builds PASS. See current
+PHASE4-ACCEPTANCE/PROGRESS. Broader app/Core quorum UI/migration/device work remains
+future Phase4.1+, Core3D writable recovery BLOCKED; no whole Demo branch merge.
+
+## Phase4.1 bounded foundation — Linux synthetic ACCEPTED
+See PHASE4-1-ACCEPTANCE for frozen source/candidate and311 fresh Python/11 Go/full
+fault/build qualification. Same-UID private bridge +existing enrollment/owned Demo
+Node lifecycle; explicit Core read-only owner gateway shares Dashboard, no second
+Catalog/Storage. Phase4.0/Core3A–3D preserved, no whole-branch merge. Next4.2:
+ANDROID-APP-CONTRACT verified SDK/Binder/native lifecycle/Keystore/SAF/network/Doze/
+OS-death gates then owner-operated devices. No APK/Termux migration/Android runtime
+or writable disaster recovery acceptance; no copying state to convert authority.
+
+## Phase5 continuation authorization — 2026-10-28
+Owner defers physical-phone acceptance to later overall qualification and authorizes
+next source/synthetic track from verified Phase4 checkpoint0877a15. Phase4 Linux/
+emulator software evidence is retained; hardware/production stays NOT ACCEPTED.
+Phase5 private access foundation/runtime in feature/phase5-remote-access reuses
+existing Dashboard and explicit read-only observer. See PHASE5-PLAN/PROGRESS.
+No requirement to wait on phones before source work; no permission to access real
+phones/M51/production or activate writableDR/Android Raft/GC/failover. Private
+VPN provider and optional Cloudflare/maintenance remain distinct checkpoints.

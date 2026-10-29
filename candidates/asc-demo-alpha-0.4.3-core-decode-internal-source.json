@@ -1,0 +1,25 @@
+{
+  "version": "0.4.3-dev",
+  "release_id": "b423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca",
+  "sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+  "files": 139,
+  "capabilities": [
+    "installer",
+    "lan-single-writer",
+    "upgrade-safe",
+    "dashboard-lite",
+    "android-volume-anchor",
+    "quick-join-foundation",
+    "local-engine-bridge",
+    "core-quorum-observer",
+    "dashboard-pwa-network-only"
+  ],
+  "state": "PASS",
+  "source_commit": "8c547288816342f9c6ebf94d3262ebf91049300a",
+  "deterministic_rebuild": true,
+  "exact_source_verified": true,
+  "secret_findings": [],
+  "scope": "Linux synthetic current-source Controller snapshot only, not Android/production release",
+  "apk": "Existing APK5 unchanged; includes prior Core3914, not this host-only Runtime optimization",
+  "upgrade": "Exact042->current source and NEW-state code rollback tested; direct prior043->current NOT TESTED"
+}

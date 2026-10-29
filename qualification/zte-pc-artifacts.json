@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-10-29T17:12:52.988316+00:00",
+  "artifact_commit": "d3b1a9f303a03151d520154d850c407449bb69f9",
+  "files": [
+    {
+      "path": "candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz",
+      "sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+      "bytes": 248278,
+      "archive_and_sidecar_verified": true
+    },
+    {
+      "path": "android-artifacts/asc-native-node-0.4.1-internal-debug.apk",
+      "sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+      "bytes": 39000831,
+      "archive_and_sidecar_verified": true
+    }
+  ],
+  "format": 1,
+  "state": "VERIFIED_REMOTE_ARTIFACTS_ONLY",
+  "method": "Fresh streaming HTTPS download of actual Controller archive and APK plus both checksum sidecars; inherited proxy/CA unchanged",
+  "phone_install_error": "UNDIAGNOSED: command/output/version not provided",
+  "phone_runtime_acceptance": "NOT TESTED",
+  "runtime_changes": false
+}

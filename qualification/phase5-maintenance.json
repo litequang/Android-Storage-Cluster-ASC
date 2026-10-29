@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "checkpoint": "5.3b",
+  "baseline": "96d52935f1e1f4c2e51323fc5a8421c13da5c860",
+  "scope": "Linux synthetic stopped private operator CLI; not actual SSH/VPN/Android",
+  "tests": [
+    {
+      "module": "tests.test_access_maintenance",
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 49.868
+    },
+    {
+      "modules": [
+        "tests.test_demo_upgrade.DemoUpgradeTests: five named upgrade/fault cases",
+        "tests.test_phase41_upgrade.CurrentSourceUpgradeTests"
+      ],
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 59.793
+    }
+  ],
+  "implemented": [
+    "bounded plan1 and explicit content confirmation",
+    "original stopped backup/stage/activation/recovery",
+    "same-lock identity/current-release/current-backup CAS",
+    "verified completed local-ACK retry",
+    "new-state code-only rollback preserving old/new bytes and identity",
+    "reject unmarked/recovery roots and unbound prefix before any coordination write"
+  ],
+  "not_qualified": [
+    "SSH/VPN/live remote operation",
+    "Android/Termux/APK maintenance",
+    "Core quorum/recovery maintenance",
+    "physical phones/production",
+    "fresh full Python/Go/Android/fault regression",
+    "new source/APK release"
+  ],
+  "unchanged_formats": true,
+  "remote_commands_executed": false,
+  "runtime_auto_start": false,
+  "inputs_sha256": {
+    "asc/access/maintenance.py": "641416a4935ce297d2f7cb91b18b14d3e80733d9664400e1f49e0aa1e93fcb42",
+    "asc/demo/upgrade.py": "8dfdc972166072cbf0478457ce1b84425cffd4ba1a0f971974ba4e80165ee6a0",
+    "tests/test_access_maintenance.py": "c14113951f314986e70ba8f59e587d0c04fd32d356901f77bf352beea26df512",
+    "tests/test_demo_upgrade.py": "7ec305f6e04639c079190009fea28b965e05cf790e2546648fbb093e93c6b763",
+    "tests/test_phase41_upgrade.py": "fceae90c9976372c8252350d76b3f1e15840752d28e87b10ffc8ef4528d2c09f",
+    "scripts/demo-alpha.sh": "ea604244095224cfaec0c9dc18e80646953238aec42d9aa72666410fdabd3864",
+    "asc/demo/cli.py": "661a87af66f6304fd346e487dbd7524c95ffc9814521b4e29bce185b45c2033e",
+    "asc/demo/installer.py": "ea5bd41e7efc5b9e3e5c964f8cae4226bf3541c2b1f764c7ae495fcbe8a93768",
+    "asc/demo/state.py": "de0b0923823e231ef5dd51985b71fe99fc1f1f7343e2a229c1099432ecac5892",
+    "asc/demo/locks.py": "c0aa6bff6a5c9b3256eb3dd0136ffbe395c4576821403292e6723a9eca2b3273",
+    "asc/demo/package.py": "52f3a75f7466f69a7a7ce1a8a23c0da6815c35c5edc2016907da8ee7abcc0efd"
+  },
+  "historical_runs": "Initial six-case maintenance34.830s PASS, then final7cases39.055s PASS. Initial regression5PASS plus one loader-name error; corrected current-source1PASS24.651s; final complete intended regression6PASS59.551s supersedes earlier counts. Initial source2521be8 qualified7+6 cases. Follow-up unmarked-directory test reproduced extra lifecycle lock1FAIL4.892s; final pre-lock fix8+6PASS supersedes prior current-source counts.",
+  "previous_qualified_source": "2521be8a6e2b6ce4f3caab39f21ec61471e82bab",
+  "qualified_source_commit": "c5c1cb0526b1eb09f888dbd649b494d1ea6c3488",
+  "publication_verified": "local HEAD=FETCH_HEAD=advertised feature remote; clean before docs-only publication"
+}

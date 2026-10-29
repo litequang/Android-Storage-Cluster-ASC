@@ -1,0 +1,67 @@
+{
+  "checkpoint": "4.2f.2",
+  "source_base": "161e833970682ae16bda597db0d0833ef7bb5b7e",
+  "workspace_recovered": true,
+  "preserved_dirty_files": 12,
+  "linux_targeted": 34,
+  "jvm": 11,
+  "android_targeted": 20,
+  "foreign_uid_signer_gate": 1,
+  "failures": 0,
+  "skips": 0,
+  "process_death_tls_identity_and_old_upgrade_state": "PASS",
+  "original_signer_and_uid_retained": true,
+  "lint": {
+    "Error": 0,
+    "Warning": 22,
+    "retained_dependency_warning": "BC EST getTrustAllTrustManager is not used by app; actual platform-trust rejection PASS; warning not suppressed"
+  },
+  "private_candidate_only": {
+    "sha256": "88435153fda9493bf13bd75a2d4e6a0cd3bc6c833e179e275b5f0faa511f2aa3",
+    "bytes": 39794157,
+    "application_id": "org.asc.foundation",
+    "version_code": 3,
+    "version_name": "0.3.0-native-context",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE"
+    ],
+    "canonical_core_modules": 112,
+    "inventory_findings": [],
+    "scope": "internal debug FOUNDATION; no native Node, migration or phone acceptance"
+  },
+  "source_sha256": {
+    "android/app/build.gradle.kts": "a9126002e4fafe6cc1651c24c367833eeb5c91f61e85ca949daf368827f91e4f",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeTLSTest.kt": "5157dce8392d1ae1a80a8e4494b6935155338f140cc4a58fc596a2b41e4ae311",
+    "android/app/src/androidTest/java/org/asc/foundation/UpgradeQualificationRunner.kt": "efb5996f03a4a32f119d8e98ca246d8a7e3507be196a3332985344468215ccde",
+    "android/app/src/main/java/org/asc/foundation/EngineService.kt": "2ef61caa99a13fd6679c67cf875fb8dbdd93ee75d12024dcbdb8e4efc34e9075",
+    "android/app/src/main/java/org/asc/foundation/NativeNodeContext.kt": "bdfc247a69a827a9ad0c55fc0a8b010fa2ecca6aaee094b3fab8ad07ff8797a6",
+    "android/app/src/main/java/org/asc/foundation/NativeTLSIdentity.kt": "4d2916f04ab1a53706b3d925d4444a53d0b5c1c46ee2617b606ec8a86e522ff1",
+    "android/app/src/main/java/org/asc/foundation/NativeTLSLoader.kt": "0c8d9c65e2e859a144753c3ca45c96d0f519b9f7407b2da0c77d93096e625ae2",
+    "android/app/src/main/java/org/asc/foundation/RequestPolicy.kt": "4c3818a3c84f91773ca38d863cf5fc7a438c4140a0861783cf67edd26a9361b6",
+    "android/app/src/test/java/org/asc/foundation/RequestPolicyTest.kt": "1c3b62dc12fdcd6cdebbf318ab81abca64f258de85ecf63c2254eef2faabcacd",
+    "android/gradle/verification-metadata.xml": "a61cb2d2ece8166fa4edc39a0cf773871d2c57a70240541dc00cb5e4493484b2",
+    "asc/node/context.py": "9f0b004d38c6724569e2977e66a7dc4d8b8dff5416addb77330831a950f43449",
+    "asc/node/tls.py": "63efaa8dd2ae9ae7ad491fad4317e5088823ac9c244397c3ceab8f401d696b45",
+    "tests/test_native_tls.py": "7d1962bafcaa55ba3a4ad1a38ad211a4abbfd4505a89466e6f9b9e3d51e1d9cb"
+  },
+  "network_scope": "actual API35 x86_64 guest-loopback TLS; no ADB reverse/direct LAN/phone acceptance",
+  "full_phase4_2": "NOT ACCEPTED",
+  "remaining": [
+    "4.2g native Core enrollment/pending/resume",
+    "4.2h existing Agent/native transport/FGS",
+    "4.2i read-only observer",
+    "4.2j direct network/full end-to-end qualification"
+  ],
+  "historical_interrupted_qualification": "UNKNOWN; recovered failures diagnosed, not included in fresh PASS",
+  "android_time_seconds": 106.286,
+  "default_platform_trust_negative_handshake": "PASS"
+}

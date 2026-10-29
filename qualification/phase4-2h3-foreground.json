@@ -1,0 +1,65 @@
+{
+  "checkpoint": "4.2h.3 Foreground Node session",
+  "scope": "owned API35 x86_64 emulator actual OS foreground service/background file read/notification Stop",
+  "android_tests": 1,
+  "android_seconds": 58.326,
+  "failures": 0,
+  "skipped": 0,
+  "real_os_foreground_flag": true,
+  "all_activity_and_test_service_bindings_removed": true,
+  "background_download_sha256_verified": true,
+  "actual_notification_pending_intent_stop": true,
+  "notification_and_os_foreground_removed": true,
+  "native_tls_port_closed": true,
+  "jvm_tests": 13,
+  "jvm_provenance": "executed first main-source build; final test-only syntax fix build reused unchanged13 results",
+  "gradle_build": "PASS36s",
+  "foreground_service_type": "connectedDevice, actual Node TLS/Controller network session",
+  "new_manifest_permissions": [
+    "FOREGROUND_SERVICE",
+    "FOREGROUND_SERVICE_CONNECTED_DEVICE",
+    "CHANGE_NETWORK_STATE",
+    "POST_NOTIFICATIONS"
+  ],
+  "notification_permission_setup": "granted by operator on owned emulator; physical permission UI NOT TESTED",
+  "automatic_restart_boot": "NOT IMPLEMENTED; START_NOT_STICKY, no missing identity/state initialization",
+  "direct_lan": "NOT PASSED; explicit dev reverse/guest loopback",
+  "phone_arm64_doze_oem": "NOT TESTED",
+  "full_current_runtime_regression": "deferred per owner MVP priority; no fresh full claim for this new native runtime",
+  "full_phase_accepted": false,
+  "public_release": false,
+  "apk": {
+    "sha256": "55bec3d9a9a9590ef6b35d70c37e164eed76ed4b2d56021175e96bc9fb44a4d5",
+    "bytes": 39819253,
+    "application_id": "org.asc.foundation",
+    "version_code": 3,
+    "version_name": "0.3.0-native-context",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+      "android.permission.CHANGE_NETWORK_STATE",
+      "android.permission.POST_NOTIFICATIONS"
+    ],
+    "canonical_core_modules": 118,
+    "inventory_findings": [],
+    "scope": "internal debug inventory/signature only; no migration or phone acceptance"
+  },
+  "source_sha256": {
+    "android/app/src/main/AndroidManifest.xml": "ee57fb32e411fff5232f2866a05b5bd4817673190cb93f815e7172f10455875c",
+    "android/app/src/main/java/org/asc/foundation/EngineService.kt": "ab233c7ca69d945aac510c3abb8bb7dc40469d15aff3cf7471fbedd8bad6e6f7",
+    "android/app/src/main/java/org/asc/foundation/MainActivity.kt": "22cb91449150cfe92b0aba68e035421db82d7049f28fb84f30247bc30ac91a8f",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeNodeForegroundTest.kt": "046c1c6a6609ffb8afd2425403c9777abc681a57dfd1b83b6b99262e53ae9483",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeNodeMVPTest.kt": "b03c4fad26f6e6bf834a0487c6f9f78a84e476240393433705ab7bd66809fb31",
+    "tools/audit_native_apk.py": "4fe871b2dd3b46db1ceabf8800b7377b934ecf0a4292928162f522ac13d6eb08"
+  }
+}

@@ -281,11 +281,11 @@ class DistributedTests(unittest.TestCase):
             'listen_port':self.server.server_address[1],'cluster_id':'test-cluster'})
         source=self.base/'owner-source.bin';source.write_bytes(self.data)
         text=io.StringIO()
-        with mock.patch.object(cli,'HOME',home),mock.patch.object(identity,'HOME',home),mock.patch.object(cli,'inspect',return_value={'protected':False}),mock.patch('sys.argv',['asc','catalog-upload',str(source),'cli-global.bin','--key','cli_global_request']),contextlib.redirect_stdout(text):
+        with mock.patch.object(cli,'HOME',home),mock.patch.object(identity,'HOME',home),mock.patch.object(cli,'inspect',return_value={'protected':False,'installation_allowed':True}),mock.patch('sys.argv',['asc','catalog-upload',str(source),'cli-global.bin','--key','cli_global_request']),contextlib.redirect_stdout(text):
             cli.main()
         result=json.loads(text.getvalue());file_id=result['file']['file']['file_id']
         self.drain();output=self.base/'owner-download.bin'
-        with mock.patch.object(cli,'HOME',home),mock.patch.object(identity,'HOME',home),mock.patch.object(cli,'inspect',return_value={'protected':False}),mock.patch('sys.argv',['asc','catalog-download',file_id,str(output)]),contextlib.redirect_stdout(io.StringIO()):
+        with mock.patch.object(cli,'HOME',home),mock.patch.object(identity,'HOME',home),mock.patch.object(cli,'inspect',return_value={'protected':False,'installation_allowed':True}),mock.patch('sys.argv',['asc','catalog-download',file_id,str(output)]),contextlib.redirect_stdout(io.StringIO()):
             cli.main()
         self.assertEqual(output.read_bytes(),self.data)
         node=self.nodes[0];synchronize(node['private'],node['cfg'])

@@ -1,0 +1,74 @@
+{
+  "checkpoint": "4.2h.2b.1a",
+  "qualification": "PASS: scoped existing-only prerequisite; NOT Native Storage Node",
+  "scope": "POSIX app-private existing-only canonical Manifest/Engine prerequisite; NOT Native Storage Node",
+  "linux_targeted_tests": 10,
+  "android_existing_only_tests": 3,
+  "android_existing_only_seconds": 9.327,
+  "android_regression_tests": 18,
+  "android_regression_seconds": 380.244,
+  "foreign_caller_tests": 1,
+  "foreign_caller_seconds": 0.218,
+  "enrolled_identity_retention": "fixed production app proof PASS before/after normal same-signer install-r; no clear/uninstall/reseed",
+  "jvm_tests": {
+    "count": 13,
+    "provenance": "unchanged h.2a XML; current Gradle task UP-TO-DATE, not fresh executions"
+  },
+  "gradle_build": "PASS; strict dependency checks, main/testAPK, lint0errors25retained warnings",
+  "go_tests": 11,
+  "go_vet": "PASS",
+  "go_module_verification": "PASS",
+  "builds": {
+    "linux_amd64": "PASS",
+    "windows_amd64": "cross-build PASS, not runtime",
+    "android_arm64": "cross-build PASS, not runtime"
+  },
+  "fresh_full_python": {
+    "tests": 368,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 1991.896,
+    "finished_utc": "2026-10-26 11:07:14 UTC",
+    "source_commit": "923c5558b92c0acd473109b19857cbf3b56c00e5",
+    "all230_frozen_files_unchanged": true,
+    "fault_pass_markers": 64
+  },
+  "prior_full_runs": [
+    {
+      "result": "FAIL after73; original consensus child shutdown20s; exact unchanged test retry PASS23.568s"
+    },
+    {
+      "result": "INTERRUPTED SIGKILL; 288 completed ok lines/60 fault markers; no final receipt, NOT PASS"
+    },
+    {
+      "result": "FAIL:309 tests/1failure at historical Phase41 source/archive identity; no skips;61fault PASS markers do not make full PASS",
+      "seconds": 1912.461,
+      "repair": "original historical body retained; rebuild pinned0a3ea839 matches published96260f17 exactly; additional same complete body tests current source on fresh cluster"
+    }
+  ],
+  "apk_sha256": "61eb0323b40021df192ebccb6f3089425bac1fd8eaac1e6cfbea551fae052821",
+  "signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "canonical_core_modules": 116,
+  "new_permissions": [],
+  "new_dependencies": [],
+  "public_release": false,
+  "full_phase_accepted": false,
+  "native_storage_agent_fgs": "NOT IMPLEMENTED",
+  "direct_lan": "NOT PASSED",
+  "phone_runtime": "NOT TESTED",
+  "writable_disaster_recovery": "BLOCKED",
+  "source_sha256": {
+    "asc/storage/engine.py": "c35dd015f47c3831d524a468a41f246016582fa0a4e1a591c144c2474c129e08",
+    "asc/storage/manifest.py": "e39aec5e1d2a4df6eb5652f904985a586afd537b18914e11af269b7a4f779130",
+    "tests/test_existing_storage.py": "06724cea682d20e8f2498022cd05b7846dc453b323e0dc44b66ca9d6bd244717",
+    "android/app/src/androidTest/java/org/asc/foundation/ExistingStorageTest.kt": "a5f6bf976216ffde2708b4a92696cecc018ca3f29041c50d9104ac4b417e93de",
+    "tests/test_phase41_upgrade.py": "fceae90c9976372c8252350d76b3f1e15840752d28e87b10ffc8ef4528d2c09f"
+  },
+  "linux_targeted_seconds": 44.775,
+  "linux_targeted_scope": "existing-only8 +2 complete historical/current-source upgrade/rollback paths,0skip",
+  "full_frozen_files": 230,
+  "original_complete_upgrade_test_body_ast_unchanged": true,
+  "historical_source_ref": "0a3ea839217156b69209a073f5d836ee1db4452b",
+  "historical_archive_sha256": "96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04"
+}

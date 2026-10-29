@@ -10,6 +10,7 @@ import time
 from urllib.parse import urlsplit
 from . import validation as valid
 from .store import SCHEMA_VERSION
+from . import __version__
 
 MAX_JSON = valid.MAX_JSON
 
@@ -46,14 +47,14 @@ class Server(ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = True
 
-    def __init__(self, address, registry, admin_token, handler=None, catalog=None):
+    def __init__(self, address, registry, admin_token, handler=None, catalog=None, *, bind_and_activate=True):
         self.catalog = catalog
         self.registry = registry
         self.admin_hash = hashlib.sha256(admin_token.encode()).hexdigest()
         self.limiter = RateLimiter()
         self.slots = threading.BoundedSemaphore(32)
         self.tls_context = None
-        super().__init__(address, handler or Handler)
+        super().__init__(address, handler or Handler, bind_and_activate=bind_and_activate)
 
     def get_request(self):
         sock, address = super().get_request()
@@ -99,7 +100,7 @@ def _unique_object(pairs):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = 'ASC-LAN/0.6.0'
+    server_version = 'ASC-LAN/' + __version__
     sys_version = ''
 
     def log_message(self, fmt, *args):
@@ -190,6 +191,12 @@ class Handler(BaseHTTPRequestHandler):
                 from .catalog.http import handle
                 return handle(self)
             if path == '/api/v1/info':
+                if getattr(self.server.catalog, 'distributed', False):
+                    return self._json(200, {'cluster_id': self.server.registry.cluster_id(),
+                        'mode': 'metadata-consensus-development', 'schema_version': SCHEMA_VERSION,
+                        'features': ['metadata-consensus-v1'], 'raft_enabled': True,
+                        'automatic_failover': False, 'file_storage_enabled': False,
+                        'global_file_catalog_enabled': True})
                 return self._json(200, {'cluster_id': self.server.registry.cluster_id(),
                                        'mode': 'single-writer-development', 'schema_version': SCHEMA_VERSION,
                                        'features': ['node-lifecycle-v1', 'retry-safe-enrollment-v1', 'local-storage-v1', 'file-scoped-transfers-v1'] +
@@ -286,7 +293,8 @@ def serve(host, port, registry, admin_token, cert, key, catalog=None):
         context.load_cert_chain(certfile=str(cert), keyfile=str(key))
         # Handshake happens in bounded workers, not in the accept loop.
         httpd.tls_context = context
-        print(f'ASC LAN development HTTPS on {host}:{port}. NOT a Raft leader. Ctrl+C to stop.', flush=True)
+        mode = 'metadata consensus; storage automation disabled' if getattr(catalog, 'distributed', False) else 'single-writer; no Raft'
+        print(f'ASC development HTTPS on {host}:{port}; {mode}. Ctrl+C to stop.', flush=True)
         httpd.serve_forever(poll_interval=0.5)
     except KeyboardInterrupt:
         pass

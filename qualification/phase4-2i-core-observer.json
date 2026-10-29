@@ -1,0 +1,85 @@
+{
+  "checkpoint": "4.2i.2",
+  "base_commit": "92f4ed2c5e9d3b92a43608aa0330bedbbb51df81",
+  "state": "TARGETED_PASS",
+  "scope": "API35 x86_64 task-owned emulator and Linux synthetic; not full Phase4.2/phone acceptance",
+  "android": {
+    "observer_tests": 1,
+    "observer_seconds": 90.332,
+    "regression_tests": 12,
+    "regression_seconds": 136.452,
+    "failures": 0,
+    "skips": 0,
+    "data_transport": "direct private host HTTPS; ADB test control only",
+    "actual_quorum_partition_heal": true,
+    "node_context_payload_preserved": true,
+    "ciphertext_byte_equality_asserted": false
+  },
+  "jvm": {
+    "tests": 15,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "apk": {
+    "sha256": "d1847ce8e73a7af44ad5b830875e4877143dd0b3c0486489de8613daceb2672a",
+    "bytes": 39826187,
+    "application_id": "org.asc.foundation",
+    "version_code": 3,
+    "version_name": "0.3.0-native-context",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE",
+      "android.permission.CHANGE_NETWORK_STATE",
+      "android.permission.POST_NOTIFICATIONS"
+    ],
+    "canonical_core_modules": 119,
+    "inventory_findings": [],
+    "scope": "internal debug inventory/signature only; no migration or phone acceptance"
+  },
+  "public_apk_published": false,
+  "source_sha256": {
+    "asc/observability/native.py": "6ecc56a839492fadb000e388ed4f0b0cefc9b58050326af1cc56e450fd944534",
+    "tests/test_native_observer.py": "0024dd99c4f17b5a90d5b890e1e58170a2e4f8ddde2186e1efc14f15752bd860",
+    "tools/qualify_native_observer.py": "90b36c40aeb1e8e21c109c5e41a9d2d1738d5b5ccf5012e994ff5702f24b9798",
+    "android/app/src/main/aidl/org/asc/foundation/ILocalEngine.aidl": "7a04cf95716f8b06dcc8e641f874b167ef3c603e91c1193ad8950141e13d686f",
+    "android/app/src/main/java/org/asc/foundation/ObserverPolicy.kt": "1ecf9ea4445095dc1154e4b09aaffeba67f7b1e355ed99546b6d0dcbe0d5dea7",
+    "android/app/src/main/java/org/asc/foundation/NativeCoreObserver.kt": "0a5176e735a930b918aa3ca582d60f4fdab36d9c6f7320faea6c188acbea2ba7",
+    "android/app/src/main/java/org/asc/foundation/EngineService.kt": "3e5e6be44fca4947066573fd7debb96e374532d8a7edffd98d5413716de6dff2",
+    "android/app/src/main/java/org/asc/foundation/MainActivity.kt": "2f7c8ed80c4f19db9dadcbdb8c11338172d1d7c0398d32fb1637251071a75b1c",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeObserverTest.kt": "68217ae798e85e5c289234c9c5e61eeb9cdd887992c5af62141399252a0659bb",
+    "android/app/src/androidTest/java/org/asc/foundation/NativeLifecycleTest.kt": "52c7d01212131934cbd5f63ded160d79c7fe56e5c35564b33cb01a5ce3888409",
+    "android/app/src/test/java/org/asc/foundation/ObserverPolicyTest.kt": "4e400fdcba4bb3fb03aa38025b85d224c64b3c492d29963bb5f427354feb309e"
+  },
+  "earlier_failure": {
+    "state": "FAIL",
+    "android_seconds": 79.91,
+    "cause": "test-control ACK read during non-atomic write",
+    "fix": "host-only temporary file + rename; unchanged main APK and Android assertions"
+  },
+  "not_claimed": [
+    "fresh full Python/Go on this source",
+    "physical-phone/ARM64 runtime",
+    "independent phone domains",
+    "Termux migration",
+    "writable disaster recovery",
+    "production acceptance"
+  ],
+  "next_checkpoint": "4.2j integrated Node/fault/final regression and increased-version same-signer candidate upgrade",
+  "source_commit": "78d4b08b056ad4324ad512b94d8d5e6b02e5c826",
+  "publication": {
+    "branch": "feature/phase4-2-android-native",
+    "normal_push": true,
+    "fetched_and_advertised_head_verified": "78d4b08b056ad4324ad512b94d8d5e6b02e5c826"
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "format": 1,
+  "phase": "4.2",
+  "overall": "NOT_ACCEPTED",
+  "qualified_scope": "Independent native FOUNDATION subset; API35 x86_64 software emulator; explicit development TLS transport only",
+  "native_source_commit": "67fdd0c3ef4e3c5e2e684d2dbd7f1ce5f504cd3a",
+  "regression_source_commit": "c7dabb041ee06ed27de7077f1ceb7c51f59288a1",
+  "python": {
+    "cases": 317,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "test_seconds": 1817.803,
+    "started": "2026-10-25T19:20:48.301095+00:00",
+    "completed": "2026-10-25T19:51:06.280376+00:00",
+    "source_unchanged": true,
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v",
+      "-f"
+    ]
+  },
+  "core_fault_groups": {
+    "Phase 3A": 12,
+    "Phase 2B": 20,
+    "Phase 3B": 7,
+    "Phase 3C": 3,
+    "Linux GC": 8,
+    "Phase3D": 9,
+    "GC network authorization": 3
+  },
+  "go": {
+    "tests": 11,
+    "uncached": true,
+    "vet": "PASS",
+    "module_verification": "PASS",
+    "builds": [
+      "linux/amd64",
+      "windows/amd64",
+      "android/arm64"
+    ],
+    "windows_android_build_scope": "cross-build only; no Windows/Android Go runtime acceptance"
+  },
+  "android": {
+    "jvm_tests": 10,
+    "jvm_failures": 0,
+    "jvm_errors": 0,
+    "jvm_skips": 0,
+    "lint_errors": 0,
+    "lint_warnings": 21,
+    "full_instrumentation_cases": 16,
+    "additional_instrumentation_cases": 4,
+    "transport": "EXPLICIT adb-reverse-loopback; not native LAN acceptance",
+    "runtime": [
+      {
+        "gate": "foreign-uid-signer-permission-denied",
+        "state": "PASS",
+        "transport": "adb-reverse-loopback"
+      },
+      {
+        "gate": "actual-default-network-ready",
+        "state": "PASS",
+        "transport": "adb-reverse-loopback"
+      },
+      {
+        "gate": "full-android-online",
+        "state": "PASS",
+        "transport": "adb-reverse-loopback"
+      },
+      {
+        "gate": "actual-controller-offline",
+        "state": "PASS",
+        "transport": "adb-reverse-loopback"
+      },
+      {
+        "gate": "actual-controller-reconnect",
+        "state": "PASS",
+        "transport": "adb-reverse-loopback"
+      },
+      {
+        "gate": "no-enrollment-or-node-credential-mutation",
+        "state": "PASS"
+      }
+    ],
+    "exact_prior_native_apk_upgrade": [
+      {
+        "gate": "seed-exact-old-apk",
+        "state": "PASS"
+      },
+      {
+        "gate": "verify-after-same-signer-upgrade",
+        "state": "PASS"
+      },
+      {
+        "gate": "verify-after-actual-process-death",
+        "state": "PASS"
+      },
+      {
+        "gate": "platform-downgrade-refusal",
+        "state": "PASS"
+      },
+      {
+        "gate": "verify-after-refused-downgrade",
+        "state": "PASS"
+      }
+    ],
+    "post_fault_upgraded_state_check": "PASS",
+    "native_node_enrollment_fgs": "BLOCKED: reviewed shared-Core native context/TLS/enrollment/agent providers not implemented",
+    "core_native_observer": "UNCONFIGURED/UNKNOWN",
+    "direct_cloud_avd_nat": "NOT_PASSED ConnectionRefusedError to10.0.2.2; no silent fallback",
+    "physical_devices": "NOT_TESTED",
+    "saf": "NOT_SUPPORTED",
+    "biometric_hardware_key_invalidation": "NOT_TESTED; actual key deletion/loss tested",
+    "termux_apk_migration": "NOT_IMPLEMENTED"
+  },
+  "native_artifact": {
+    "sha256": "ab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705",
+    "bytes": 35790961,
+    "application_id": "org.asc.foundation",
+    "version_code": 2,
+    "version_name": "0.2.0-foundation",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "debug_signer_certificate_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+    "abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "permissions": [
+      "org.asc.foundation.permission.LOCAL_ENGINE",
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_NETWORK_STATE"
+    ],
+    "canonical_core_modules": 109,
+    "inventory_findings": [],
+    "scope": "internal debug FOUNDATION; no native Node, migration or phone acceptance"
+  },
+  "published_source_proof": {
+    "published_native_apk_sha256": "ab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705",
+    "branch": "feature/phase4-2-android-native",
+    "remote_head": "3aa51ae4f44eab501b0b51c3156519285f1305ef",
+    "independent_bare_fetch": true,
+    "frozen_paths_verified": 243,
+    "published_archive_sha256": "96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04",
+    "protected_refs": {
+      "refs/heads/feature/phase4-1-local-engine-quorum-ui": "f42fffe7aa3fac8884d169bed61d884b0d777b33",
+      "refs/heads/feature/phase4-core-demo-integration": "b9e75779670d5565d05a324751af02e48d2538eb",
+      "refs/heads/feature/phase3d-external-dr": "ca2504fa3bc9f2eef706cdf50ddf6835182ada53",
+      "refs/heads/wip/phase2a-raft-qualification": "acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c",
+      "refs/heads/feature/android-demo-alpha": "c9c2660b5aad9fe347cb0b216f0d691144f74caa"
+    }
+  },
+  "frozen_files": 243,
+  "source_hash_manifest": "qualification/phase4-2-source-sha256.json",
+  "secrets_review_scope": "tracked and staged paths/content, nested APK archives, module inventory, test-class exclusion and credential/private-key patterns; not formal binary SAST",
+  "prohibited": [
+    "real-phone/M51/production access",
+    "Android Raft/GC/failover",
+    "writable recovery staging",
+    "Termux private-state adoption",
+    "uninstall/data-clear/forced downgrade"
+  ],
+  "final_payload_publication_receipt": {
+    "published_native_apk_sha256": "ab1b2da3797df93ea7fbc186866c187f8b04802f3b614fed4afcaa232fddf705",
+    "branch": "feature/phase4-2-android-native",
+    "remote_head": "b5fe3de100a5ae0f7383a0126d80ad82044b5e44",
+    "independent_bare_fetch": true,
+    "frozen_paths_verified": 243,
+    "published_archive_sha256": "96260f1709f6a9db6cb98869fbef8fc2313feaf68a4f12da354665ad04693c04",
+    "protected_refs": {
+      "refs/heads/feature/phase4-1-local-engine-quorum-ui": "f42fffe7aa3fac8884d169bed61d884b0d777b33",
+      "refs/heads/feature/phase4-core-demo-integration": "b9e75779670d5565d05a324751af02e48d2538eb",
+      "refs/heads/feature/phase3d-external-dr": "ca2504fa3bc9f2eef706cdf50ddf6835182ada53",
+      "refs/heads/wip/phase2a-raft-qualification": "acea2aead8cfd50f8a8fc2b31e24f8f9ccaeb84c",
+      "refs/heads/feature/android-demo-alpha": "c9c2660b5aad9fe347cb0b216f0d691144f74caa"
+    }
+  }
+}

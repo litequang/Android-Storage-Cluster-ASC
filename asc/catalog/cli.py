@@ -12,6 +12,10 @@ def register(parser,handlers,cli):
 
     def client():
         guard()
+        bootstrap=cli.HOME/'cluster-client.json'
+        if bootstrap.exists():
+            cfg=cli._read_path(bootstrap)
+            return ClusterClient(cluster_id=cfg['cluster_id'],controllers=cfg['controllers'])
         cfg=cli.read_private('controller.json')
         return ClusterClient('https://127.0.0.1:'+str(cfg['listen_port']),
                              cli.fingerprint_from_pem(cli.HOME/'server.crt'),cfg['admin_token'])
@@ -72,3 +76,8 @@ def register(parser,handlers,cli):
     a.add_argument('node_id');a.add_argument('--origin');a.add_argument('--pin')
     a.add_argument('--device-id',required=True);a.add_argument('--volume-id',action='append',default=[])
     a.add_argument('--metadata-only',action='store_true');handlers['catalog-register-node']=execute
+
+    from ..backup.cli import register as register_backup
+    register_backup(parser, handlers, client, cli)
+    from ..nodes.cli import register as register_nodes
+    register_nodes(parser, handlers, client, cli)

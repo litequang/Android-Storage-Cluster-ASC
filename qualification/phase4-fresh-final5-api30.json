@@ -1,0 +1,120 @@
+{
+  "state": "PASS_EXACT_FINAL5_FRESH_FIRST_IDENTITY_API30",
+  "baseline": "5273f295e0a9be1cfcc0334bb2ba79dc26a705bf",
+  "actual": {
+    "state": "PASS",
+    "scope": "Linux +API30 x86_64 synthetic; not phones/physical domains",
+    "adb_control_only": true,
+    "native_identity_reset": false,
+    "artifact": "published5",
+    "apk_sha256": "aec65c2ca5541aab4060e19616204eef8caf4d2f0d6e7a3e27010dd819cf60f5",
+    "native_android_tests": 2,
+    "bytes": 262144,
+    "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+    "logical_domains": 2,
+    "physical_domain_independence": false,
+    "actual_browser_login_upload_download": true,
+    "native_offline_fallback": true,
+    "controller_loss_denied": true,
+    "retained_process_identity": true,
+    "entry_mode": "fresh initialization",
+    "fresh_initialization_junit_completed": true
+  },
+  "new_android_test_executions": 3,
+  "failures": 0,
+  "skips": 0,
+  "network_precondition": {
+    "tests": 1,
+    "seconds": 0.202
+  },
+  "android": [
+    {
+      "name": "android-initial.log",
+      "tests": 1,
+      "seconds": 92.364,
+      "failures": 0,
+      "skips": 0
+    },
+    {
+      "name": "android-retained.log",
+      "tests": 1,
+      "seconds": 36.607,
+      "failures": 0,
+      "skips": 0
+    }
+  ],
+  "setup": {
+    "state": "EXACT_FINAL5_FIRST_INSTALLED_NETWORK_PRECONDITION_PASS",
+    "scope": "NEW blank SDK userdata, not original Node/AVD",
+    "boot_seconds": 239.311,
+    "network_readiness_tests": 1,
+    "no_intermediate5": true,
+    "no_uninstall_clear_or_identity_reset": true
+  },
+  "first_install_proof": "ASC package absent before first install; exact published5/aec65c2c installed/actual SHA and version5 verified BEFORE app identity; Main records absent before original fresh test. No prior4 or upgrade state.",
+  "source_archive_sha256": "6a60bd4180bc338d8c62eff4ef1347082a0e6c0ce36e06143ff53baa791b9d57",
+  "test_apk_sha256": "b5375f59236263b66b5d8e9fc9125dedc2da879287fd4e6d88a9b54965597be7",
+  "public_signer_sha256": "bba77b68e43ecfe885705442d2224977208bf77a397c216393c26fc151a6bc30",
+  "fresh_app_node_cluster_volume_pin_distinct_from_prior_upgrade_sandbox": true,
+  "physical_domain_independence": false,
+  "predata_sdk_launch_failures": {
+    "attempts": 2,
+    "asc_or_userdata_created": false,
+    "reason": "Not enough free disk for SDK minimum6GiB data (requires7372.80MiB); attempted unused-new-AVD2GiB config was clamped by SDK. No disk-capacity guard bypass, old-data deletion or resize of existing guest.",
+    "resolution": "Reclaimed only two verified public installer ZIP caches already installed; metadata/URLs/hashes retained. Installed SDK/tools/source/APKs/signers/AVDs/private data untouched.",
+    "cache": {
+      "state": "RECLAIMED_VERIFIED_PUBLIC_INSTALLER_CACHE",
+      "files": [
+        {
+          "name": "x86_64-35_r02.zip",
+          "bytes": 782404023,
+          "sha256": "6dd7de33e63ef105cf2fabea6badda1dbe7665c96d8908e5f6e1407e63ff4556",
+          "sha1": "2d857d170c0d1b827149565da34b3383e5306f7f",
+          "url": "https://dl.google.com/android/repository/x86_64-35_r02.zip",
+          "scope": "Re-downloadable public installer cache ONLY; installed SDK/private states untouched"
+        },
+        {
+          "name": "emulator-linux_x64-16428233.zip",
+          "bytes": 349654171,
+          "sha256": "b08fc43d8608d2955f607f1b287beb525041e730086bdca3af152accac3af9c1",
+          "sha1": "cd7362ea55dfb86a418958138dc396e74165dd01",
+          "url": "https://dl.google.com/android/repository/emulator-linux_x64-16428233.zip",
+          "scope": "Re-downloadable public installer cache ONLY; installed SDK/private states untouched"
+        }
+      ],
+      "private_signer_unchanged": true,
+      "installed_tools_removed": false,
+      "source_apk_or_AVD_data_removed": false,
+      "verified_utc": "2026-10-28T03:44:15.908547+00:00"
+    },
+    "retained_asc_quota_mib": 64,
+    "actual_new_sdk_partition_bytes": 6442450944,
+    "boot_readiness_budget_seconds": 450,
+    "note": "SDK bootstrap bound based on measured first-boot latency, not a changed Android/GC/fault-test assertion or deadline"
+  },
+  "preservation": {
+    "state": "STOPPED_AND_PRIVATE_OFFLINE_FRESH5_VERIFIED",
+    "sdk_exit": -10,
+    "clean_shutdown_powerloss_qualified": false,
+    "private_offline_images_hash_verified": 7,
+    "private_host_files_archive_verified": 32,
+    "all6_required_records_equal_after_stop": true,
+    "same_uid": true,
+    "original_wifi_restored": true,
+    "old_AVD_signer_state_removed_cloned_or_restored": false,
+    "private_evidence_root": "/workspace/work/phase4-fresh-final5-api30",
+    "scope": "Task SDK preservation only, not phone backup/export/migration or writable DR"
+  },
+  "source_changes": "No product/app/dependency/archive/APK change or new release; same c0655a8 artifact-selection test helper, original assertions/budgets unchanged",
+  "prior_product_regression": "392Python/Go/all64fault proof retained for identical product; helper3 and exact Android scenarios separately targeted, not fresh full397",
+  "prior_direct_path": "qualification/phase4-direct-published45-final.json,17Android executions; THIS fresh-first5 path adds3 executions. Not a distinct20-method/full suite and excludesAPI35 UNKNOWN15.",
+  "api35": "Independent cold Node E2E remains BLOCKED; transport5PASS and extra15UNKNOWN retained. ThisAPI30 does not supersedeAPI35/phone scope.",
+  "limits": [
+    "API30 x86_64 SDK +Linux peer only, SDK direct10.0.2.2/console NAT, not ADB data forwarding or physical LAN",
+    "Same host two logical domains, not two independent phones",
+    "Physical ARM64/phones/Doze/OEM/ChromeAndroid/same-signer owner pilot NOT TESTED",
+    "NativeTLS26-29/Termux->APK/native Controller/SAF unsupported or unqualified",
+    "No Android voter/GC/failover/writableDR/Phase5 activation"
+  ],
+  "full_phase4_accepted": false
+}
