@@ -51,6 +51,15 @@ class AccessPackageTests(unittest.TestCase):
     def test_actual_private_venv_no_global_packages_and_release_binding(self):
         code=self.install();env=self.base/'env';package.prepare_env(code,env)
         result=self.cli(code,env/'bin/python','verify');self.assertEqual(result.returncode,0,result.stderr)
+        profile=self.base/'approved-profile.json';profile.write_text(json.dumps(dict(format=1,mode='private-gateway',
+            frontend_origin='https://127.0.0.1:8445',upstream_origin='https://127.0.0.1:8444',
+            upstream_pin='a'*64,upstream_mode='single-writer-demo',max_body_bytes=1024**2)));profile.chmod(0o600)
+        state=self.base/'new-gateway-only'
+        initialized=self.cli(code,env/'bin/python','gateway','--root',state,'init','--profile',profile)
+        self.assertEqual(initialized.returncode,0,initialized.stderr);before=(state/'dashboard/server.crt').read_bytes()
+        repeated=self.cli(code,env/'bin/python','gateway','--root',state,'init','--profile',profile)
+        self.assertEqual(repeated.returncode,0,repeated.stderr);self.assertEqual((state/'dashboard/server.crt').read_bytes(),before)
+        self.assertFalse((state/'controller.json').exists());self.assertFalse((state/'node.json').exists())
         no_jwt=subprocess.run([str(env/'bin/python'),'-I','-B','-c','import importlib.util;assert importlib.util.find_spec("jwt") is None'],capture_output=True)
         self.assertEqual(no_jwt.returncode,0)
         result=self.cli(code,env/'bin/python','edge','--root',self.base/'no-state','info')
@@ -128,3 +137,17 @@ class AccessPackageTests(unittest.TestCase):
         with self.assertRaises(ValueError):package.verify(code)
         result=self.cli(code,env/'bin/python','gateway','--root',self.base/'absent','init','--profile',self.base/'absent-profile')
         self.assertEqual(json.loads(result.stdout)['error'],'access_bundle_refused');self.assertFalse((self.base/'absent').exists())
+
+    def test_operator_cli_unpack_prepare_verify_and_no_overwrite(self):
+        code=self.base/'operator-code';tool=self.repo/'tools/package_access.py'
+        command=[sys.executable,'-I','-B',str(tool),'unpack','--archive',str(self.archive),
+            '--sha256',self.report['sha256'],'--destination',str(code)]
+        first=subprocess.run(command,cwd=self.base,capture_output=True,text=True,timeout=15)
+        self.assertEqual(first.returncode,0,first.stderr);self.assertFalse(json.loads(first.stdout)['identity_created'])
+        before=(code/package.MANIFEST).read_bytes()
+        again=subprocess.run(command,cwd=self.base,capture_output=True,text=True,timeout=15)
+        self.assertNotEqual(again.returncode,0);self.assertEqual((code/package.MANIFEST).read_bytes(),before)
+        env=self.base/'operator-env'
+        result=self.cli(code,sys.executable,'prepare-env','--destination',env)
+        self.assertEqual(result.returncode,0,result.stderr);self.assertFalse(json.loads(result.stdout)['runtime_started'])
+        result=self.cli(code,env/'bin/python','verify');self.assertEqual(result.returncode,0,result.stderr)

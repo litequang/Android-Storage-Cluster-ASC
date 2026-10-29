@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "checkpoint": "5.4d.2",
+  "state": "LINUX_INTERNAL_DISTRIBUTION_QUALIFIED_PUBLICATION_PENDING",
+  "foundation_commit": "36408637feab978b9ef912d6fcd62dcac75c8605",
+  "archive": "candidates/asc-linux-access-0.1.0-internal.tar.gz",
+  "sha256": "d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9",
+  "release_id": "1824ebd40055f8a4f1e1296c4c5cb496e0e46215d488e311cc4782b23bceef31",
+  "version": "0.1.0-internal",
+  "files": 146,
+  "canonical_runtime_modules": 127,
+  "packaged_guides": 8,
+  "tests": {
+    "package_cli_env_and_adversarial": {
+      "passed": 8,
+      "skipped": 0,
+      "failed": 0,
+      "seconds": 7.349
+    },
+    "installed_integration_driver": {
+      "passed": 2,
+      "skipped": 0,
+      "failed": 0,
+      "seconds": 208.918,
+      "includes_nested_access_suite": true
+    },
+    "nested_original_access": {
+      "passed": 42,
+      "skipped": 0,
+      "failed": 0,
+      "seconds": 191.963
+    },
+    "leaf_execution_count": 51,
+    "not_a_new_full_suite": true
+  },
+  "installed_proofs": [
+    "cold installed wrapper HTTPS to actual two-node Dashboard/Storage",
+    "actual upload/two logical replicas/SHA",
+    "separate synthetic code+env version0.1.1 on SAME profile",
+    "private profile/TLS backup exact hash readback, no state restore",
+    "old code/env serves before+after files and offline Node fallback",
+    "exact candidate bytes matched active installed access-test archive",
+    "42original access assertions with parent canonical modules loaded from installed bundle; existing backend fixtures/selected CLI subprocesses retain their own byte-identical source contexts",
+    "actual offline4hash-locked dependency install; no global site-packages"
+  ],
+  "preserved_runtime_input_count": 287,
+  "preserved_runtime_inputs_sha256": "68c9e9fb17e11a0c473473e3762cd5901aa750a329458afa30a758285f1a0fe8",
+  "legacy_full_receipt": "qualification/phase5-final.json",
+  "legacy_full_python": 445,
+  "legacy_result_reused_only_for_byte_identical_runtime": true,
+  "security": {
+    "tar_regular_only": true,
+    "member_source_bytes_exact": true,
+    "secret_findings": [],
+    "no_state_or_keys_packaged": true,
+    "source_env_profile_separate": true
+  },
+  "limits": [
+    "Linuxx86_64/Python3.13.5 actually qualified; internal test package only",
+    "no new runtime/schema/API or Go/Android source changes",
+    "new synthetic0.1.1 is test-only, not another published release or migration",
+    "live Cloudflare/IdP/DNS/tunnel/public browser/SSH/VPN NOT TESTED",
+    "physical Android/ARM64/independent domains/Doze/OEM/power/production deferred/unaccepted",
+    "no APK/Termux/Core migration, Android voter/GC/failover or writableDR activation"
+  ],
+  "source_inputs_sha256": {
+    "tools/package_access.py": "784d96b921fd47afbe25e5304b269d946855a7f4c494fb18d5f926a4f34ef1cd",
+    "tests/test_access_package.py": "3ce0d1a43c4b12d7a4edf33346b72852db2db6c75fbde81c4a3dae23ccf15074",
+    "tests/test_access_distribution.py": "913f7991a71fd45270820dd4db6d425b3943514e0af24e01b6bb20ef2b1fad0b",
+    "docs/PHASE5-LINUX-PACKAGE.md": "67c7ef481b21d9e88873b01b4233cac15a3e667e02d07aae295f7e3b8de900bc",
+    "requirements-cloudflare.txt": "08b02a5550b9efff6c57af876af373709e182e685df95076b3ab06bdc4f46ff2"
+  }
+}

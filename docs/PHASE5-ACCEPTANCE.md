@@ -43,7 +43,7 @@ is historical on the EXACT unchanged APK, not a fresh Gradle/JVM/emulator run he
 Termux/APK/Demo/Core migration and writable DR remain unsupported/blocked. Android
 Raft/voters/physical GC/failover remain locked; no production/phone/M51 access.
 
-No new source/APK release published. Existing installer can build a consistent
+Historical5.4c did not publish a new source/APK release. Its existing installer can build a consistent
 internal source package, but its historical allowlist omits Phase5 optional lock/
 operations guides: NOT a complete Phase5 distribution. Use verified source checkout
 and PHASE5-PRIVATE-ACCESS, PHASE5-CLOUDFLARE, PHASE5-MAINTENANCE for qualified local
@@ -147,3 +147,15 @@ current-source compatibility PASS59.793s,0skip/fail. Reproduced prior extra lock
 unmarked state1FAIL4.892s and fixed pre-lock marker/binding validation; synthetic
 unmarked/recovery-marker/unbound paths remain untouched.14distinct final cases,
 not cumulative with earlier passes. Full5.4/real connectivity/phone gates pending.
+
+## Separate distribution5.4d.2 — Linux internal candidate
+Dedicated Linux Access0.1.0-internal closes the historical missing-guides/lock gap.
+8package cases PASS7.349s, shipped wrapper lifecycle1 and nested original42access
+cases PASS in208.918s integration driver (nested42=191.963s).51leaf executions,
+0skip/fail; prior445full reused only identical runtime/legacy test bytes, not new
+full496. Exact shipped candidate146files/127runtime modules/8guides+README/lock,
+SHA d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9,
+private state/credentials0findings. Candidate byte-identical to active installed
+regression archive; manifest/source members checked. See distribution receipt/
+latest progress for normal push and REQUIRED fresh remote-download verification.
+No new APK, live Cloudflare/SSH/VPN/provider, phone/production or migration scope.

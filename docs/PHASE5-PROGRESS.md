@@ -630,3 +630,56 @@ NEXT after source normal push/remote:5.4d.2 installed wrapper HTTPS/files/upgrad
 retained profile+env/code rollback, installed edge dependencies/TLS/source regression,
 then build/secret audit/public archive+SHA/remote byte verification. No new artifact
 published at5.4d.1. Physical/VPN/SSH/Cloudflare live remain unqualified/deferred.
+
+## 5.4d.2 installed Linux distribution qualification / internal archive
+Foundation36408637feab978b9ef912d6fcd62dcac75c8605 normally pushed/fetch/advertised
+HEAD=local verified, clean tree BEFORE installed integration. Bootstrap/runtime/
+packaged guides unchanged afterd.1. Added tests only; no canonical ASC/Go/Android
+implementation, private SDK/signer/Node/Cluster/volume change or actual device.
+
+Fresh package suite8PASS0skip/fail7.349s: operator CLI unpack/prepare/verify and
+explicit fresh gateway init/reinit retaining certificate, plus all7archive/env/
+dependency/negative cases. Prior7PASS5.656s and intermediate8case run superseded,
+not added to totals. Real offline four official locked wheels/clean venv actually
+used; bad wheel SHA creates no ready receipt, no global package fallback.
+
+Installed lifecycle +regression driver2PASS208.918s. First: ACTUAL packaged wrapper
+in prepared env/neutral cwd, trusted CA HTTPS ->existing Dashboard/two TLS Storage
+nodes; upload/protected2/logical domains, controlled stop/private profile backup
+readback, new code+env synthetic0.1.1 version, same profile/certificate/session,
+new upload, rollback to retained0.1.0 code+env WITHOUT backup/DB restore, download
+both old/new bytes/SHA and actual stopped-Node fallback. All profile/TLS file hashes
+and private backup identical. This qualifies compatible DIRECTORY selection; no
+arbitrary future schema/runtime migration or uninterrupted rolling writes promise.
+
+Second: ORIGINAL42access tests191.963s,0skip/fail, all assertions retained. Fresh
+installed edge env, parent asc/gateway/cloudflare/maintenance imports ASSERTED from
+installed code before discovery. Actual JWT/local pinned HTTPS JWKS/owner/CSRF/
+files/browser/PWA/Core quorum partition+heal/passive recovery and maintenance run.
+Backend fixtures and selected existing CLI subprocesses continue using their own
+byte-identical canonical source context (no sys.path/guard weakening). Separate
+installed-wrapper lifecycle above is the direct shipped CLI proof.51leaf executions
+=8package +1lifecycle +42existing access; NOT a new full496 or another445 run.
+
+Candidate bytes matched the ACTUAL active installed-42 archive while it ran:
+asc-linux-access-0.1.0-internal.tar.gz SHA
+ d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9
+release_id1824ebd40055f8a4f1e1296c4c5cb496e0e46215d488e311cc4782b23bceef31.
+146regular0600members/127canonical ASC modules/8guides +README/optional lock/bootstrap,
+full manifest/source bytes match,0private-key/credential/state patterns. No wheels,
+venv, private config, token, CA private key or tunnel binary shipped. Deterministic
+build checks passed; bootstrap is self-contained, not Demo release.json.
+
+Prior445full/64fault/Go evidence reused ONLY identical runtime/legacy tests, with
+fresh hash comparison; all canonical ASC/Go/Android/legacy tests unchanged. New
+packaging/install entry point has the separate tests above. No need to rerun
+unchanged Core/Android merely to package these bytes. Full Phase5/production/live
+network/phones remain unaccepted; no SSH/VPN/account/DNS/tunnel or system changes.
+
+Public files candidates/asc-linux-access-0.1.0-internal.tar.gz +.sha256; only this
+specific code archive added to ignore allowlist, all old archives unchanged. New
+sanitized proof qualification/phase5-linux-distribution.json. Private raw logs /
+exact-archive evidence work/phase5-distribution*.log and work/phase5-distribution/.
+After normal push/fetch/remote equality, MUST fetch exact published archive +SHA
+over inherited network/CA and verify both bytes and manifest before publication
+is marked complete. No live provider/device acceptance inferred from download.

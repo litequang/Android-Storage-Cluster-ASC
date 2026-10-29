@@ -814,3 +814,10 @@ Add deterministic separate Linux access bundle with full Phase5 guides/optional
 hash lock, safe new-only unpack and isolated release-bound environment. Reuse
 qualified runtime modules unchanged;7targeted package/venv/negative cases PASS.
 Actual installed lifecycle qualification/public archive follows separately.
+
+### Phase5 Linux Access0.1.0 internal distribution qualification
+Complete dedicated code/guide/hash-lock bundle, new-only install/private env and
+actual shipped wrapper TLS/files/profile-preserving code switch/rollback/fallback.
+8package +1lifecycle +42existing access executions PASS; no new full-suite claim.
+Artifact/SHA and remote-download proof in distribution receipt/progress. Linux
+internal test artifact only, no phone/production/provider/SSH/APK acceptance.

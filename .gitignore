@@ -176,3 +176,6 @@ local.properties
 !/candidates/asc-demo-alpha-0.4.3-native-pwa-internal-source.tar.gz
 # Distinct reviewed host-source artifact; old public archives remain immutable.
 !/candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz
+
+# Reviewed Linux access internal CODE bundle; no private env/profile/state.
+!/candidates/asc-linux-access-0.1.0-internal.tar.gz

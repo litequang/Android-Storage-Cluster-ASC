@@ -15,13 +15,17 @@ After reading maps, inspect only relevant source files, not the whole repo unles
 
 ## Current Phase5 authorization — 2026-10-29
 
-CURRENT continuation5.4d.1 Linux access distribution bootstrap: tools/package_access.py
-+PHASE5-LINUX-PACKAGE and7targeted archive/env/hash/refusal PASS5.656s, runtime/Go/
-Android unchanged. Dedicated manifest/code/new env/profile split, no mixed Demo/
-Android installer. Read latest PHASE5-PROGRESS and ADR077. NEXT5.4d.2 installed TLS/
-file/upgrade/code rollback qualification and archive+SHA publication. No new archive
-released atd.1, live account/tunnel/SSH/device actions remain unauthorized. Reuse
-prior445 proof ONLY identical runtime; run new packaging/install tests separately.
+CURRENT5.4d.2 Linux Access0.1.0 internal distribution: foundation3640863 normal-
+pushed/verified BEFORE actual installed qualification.8package PASS7.349s +actual
+wrapper lifecycle1 +original42access cases PASS (integration driver2/208.918s,
+nested42/191.963s).51leaf executions, not new full496. Canonical ASC/Go/Android/
+legacy tests unchanged; prior445 proof retained. Complete dedicated146file bundle
++8guides/lock/bootstrap, separate env/profile, no backend/app/service installation.
+Archive SHA d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9.
+Read latest PHASE5-PROGRESS +PHASE5-LINUX-PACKAGE and distribution receipt. Source/
+artifact publication must normal-push then exact remote archive+checksum download
+verify; do not call it complete before that proof. Live provider/SSH/VPN/phones/
+production/migrations/writerDR/Android voter/GC/failover remain unqualified/locked.
 
 LATEST5.4 final SOURCE/SYNTHETIC software subset ACCEPTED: fresh445Python0skip/
 fail/error1690.895s, all42Phase5 cases/all64required old fault markers; Go11top+

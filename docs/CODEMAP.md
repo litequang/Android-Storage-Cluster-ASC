@@ -980,3 +980,9 @@ regression asserts unmarked/recovery-marker/unbound directories stay untouched.
   ORIGINAL gateway/edge/maintenance. No ASC/Core/Go/Android implementation change.
 - tests/test_access_package.py:7actual archive/venv/offline hash/refusal tests.
   PHASE5-LINUX-PACKAGE owner guide; install/runtime qualification follows5.4d.2.
+
+5.4d.2 tests/test_access_distribution.py: shipped-wrapper actual HTTPS/file/two
+logical replicas/stopped code+env version switch/private profile backup/rollback/
+fallback, plus unchanged42access assertions loading installed canonical modules.
+qualification/phase5-linux-distribution.json and versioned candidate/.sha256 record
+exact shipped bytes; source runtime/Core/Go/Android remain prior qualified bytes.

@@ -56,3 +56,9 @@ complete Linux access distribution/install/upgrade/rollback qualification; owner
 configured VPN/SSH/Cloudflare/IdP/DNS/live-client deployment tests; deferred physical
 ARM64/phone/LAN/Doze/OEM/power campaign and production approval. Do not infer live
 connectivity or recovery/Android writer authority from synthetic software PASS.
+
+5.4d.1/d.2: separate Linux Access0.1.0-internal bundle now has qualified safe
+install/env/lifecycle/compatible code switch/rollback and actual canonical access
+regression. Exact archive +SHA published only after remote bytes verify. This
+closes the old Linux distribution gap, not real provider/hardware/production gates.
+No automatic deploy, new consensus authority or Android/Termux installer.
