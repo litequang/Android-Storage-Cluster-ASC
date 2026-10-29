@@ -766,3 +766,36 @@ records source commit/verification. This following report-only commit changes no
 source/test/bundle inputs; no test rerun required for publication reporting.
 NEXT remains owner-reviewed actual Linux VPN/Cloudflare target/configuration and
 deferred device/hardware campaign. No answer/config inferred; no live setup done.
+
+
+## Owner PC handoff / master roadmap — 2026-10-29 (docs only)
+Owner corrected the old ZTE03 narrative: initially fresh Termux, no ASC. Owner
+then reported Controller installation failure; exact command/output/step/version
+NOT PROVIDED. Root cause UNKNOWN, not fixed or reproduced. A failed attempt may
+have partial state/keys; preserve/inspect before retry. Owner wants Codex PC to
+fetch installer and help install/repair on owner-selected ZTE. Current Cloud
+remains source-only; no physical phone or production access performed.
+
+CURRENT TASK now PC/ZTE install diagnosis, overriding earlier NEXT-live-provider
+cursor for immediate work. docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md records exact
+Controller043/NativeAPK5 roles, hashes/immutable URLs/dependencies/next steps and
+remaining gates. docs/PROJECT-ROADMAP.md maps ALL Phase0/1/2/3A–D/Demo/4.0–4.2/5,
+current software/platform scope, artifacts, unfinished backlog and resume workflow.
+AGENTS, root READMEs, CODEMAP and IMPLEMENTATION_PLAN now route new AI sessions to
+that master index; historical early Phase4/5 future wording is explicitly dated.
+Read stage progress/acceptance as evidence, not a merged production-ready claim.
+
+Fresh actual HTTPS download of Controller043248278bytes AND APK539000831bytes
+plus BOTH checksum sidecars at immutable d3b1a9f303a03151d520154d850c407449bb69f9
+verified SHA6a60bd41.../aec65c2c...; no network/CA/proxy override. Sanitized public
+receipt qualification/zte-pc-artifacts.json. Private raw receipt work/zte-pc-
+publication-check.json. Private signer/toolchains/state/logs intentionally not Git.
+
+This checkpoint changes docs/artifact receipt only; no ASC/Go/Android/dependency/
+archive/APK/bootstrap or existing test changes. Validation: new master/handoff
+relative links, embedded shell syntax, exact role/hash receipts, diff checks and
+tracked/staged/untracked secret audit; no runtime tests rerun, no new phone PASS.
+Normal commit/push/fetch/advertised remote check closes publication. Source baseline
+before these documents c2c7f531f24c73938084f5cc72b8f0838fbfe1b6. New AI should fetch
+latest feature/phase5-remote-access, read AGENTS then PROJECT-ROADMAP/PC handoff,
+inspect actual error and fix on separate branch; no resets/identity recreation.

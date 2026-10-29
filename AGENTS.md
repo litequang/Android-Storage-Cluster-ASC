@@ -13,7 +13,25 @@
 
 After reading maps, inspect only relevant source files, not the whole repo unless a broad change truly requires it.
 
+## Project resume entry point
+After the nine mandatory reads, read docs/PROJECT-ROADMAP.md for the full timeline,
+runtime/artifact distinctions, current task and remaining gates. CURRENT TASK is
+owner PC/ZTE fresh Controller-install failure, not old03 upgrade or blind Phase5
+redevelopment. Read docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md then relevant progress.
+Every completed checkpoint must leave roadmap/current progress/handoff in GitHub
+so another account can resume without the conversation. Evidence stays platform-
+scoped; historical "future/absent" sections do not override latest status.
+
 ## Current Phase5 authorization — 2026-10-29
+
+LATEST owner PC handoff: ZTE initially ONLY fresh Termux, no prior ASC. Owner now
+reports Controller install failed, exact command/error/version UNKNOWN; partial
+state after attempt must be inspected/preserved. Older existing-ZTE03 narrative
+is not baseline. Read docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md for exact Controller043/
+NodeAPK5 archives/SHA and owner-requested PC installation/diagnostic continuation.
+Current Cloud remains source-only/no phone access; PC targets owner-selected test
+ZTE only, no M51/production/public SSH or guard/identity bypass. Error NOT fixed or
+phone-qualified by this docs-only handoff. Preserve all immutable published bytes.
 
 LATEST separate5.4e source-only tools/check_access.py: offline existing profile/TLS
 validation +explicit anonymous fixed GET probes.10new +28existing regression PASS,

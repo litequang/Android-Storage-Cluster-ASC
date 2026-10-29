@@ -1,4 +1,12 @@
-# Android Storage Cluster (ASC) — v0.10.0 development
+# Android Storage Cluster (ASC)
+
+**Start/resume here:** [Full roadmap and current task](docs/PROJECT-ROADMAP.md).
+Current source branch: `feature/phase5-remote-access`. Linux/emulator software is
+qualified within documented scopes; physical Android/production remain unaccepted.
+Owner's ZTE started with fresh Termux and now has an undiagnosed Controller install
+failure: [PC handoff, exact packages and next steps](docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md).
+Read AGENTS.md first. Older version-specific sections below retain historical
+evidence; use the roadmap for current status, runtime roles and remaining gates.
 
 Vietnamese project and historical setup guide: [README-VI.md](README-VI.md).
 Historical Phase 3A Windows evidence and limits: [PHASE3A-ACCEPTANCE.md](docs/PHASE3A-ACCEPTANCE.md).

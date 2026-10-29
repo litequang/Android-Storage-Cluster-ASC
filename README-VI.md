@@ -1,4 +1,11 @@
-# ASC v0.10.0 — Node Scoring, Telemetry & Smart Placement
+# ASC — Cụm lưu trữ Android
+
+**AI/phiên mới bắt đầu tại:** [Roadmap tổng và điểm tiếp tục](docs/PROJECT-ROADMAP.md),
+sau khi đọc AGENTS.md và các tài liệu bắt buộc. Source hiện tại:
+`feature/phase5-remote-access`; Core, Controller package và APK có phiên bản riêng.
+Việc ngay: [cài mới ZTE từ Termux và chẩn đoán lỗi Controller bằng Codex PC](docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md).
+Linux/emulator PASS không phải phone/production PASS. Các mục phiên bản cũ bên
+dưới giữ lịch sử; không dùng để ghi đè trạng thái mới nhất trong roadmap tổng.
 
 Phase 3C đã **nghiệm thu Linux x86_64 synthetic** trên source `8b679bc`:
 **208 Python PASS, không skip**, toàn bộ fault gates và Go/vet/module/build PASS.

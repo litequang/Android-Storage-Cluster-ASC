@@ -1,6 +1,17 @@
 # ASC IMPLEMENTATION & ACCEPTANCE PLAN
 
-## Current acceptance order — 2026-10-23
+## Latest roadmap / resume — 2026-10-29
+Read [PROJECT-ROADMAP](PROJECT-ROADMAP.md) for the complete current timeline,
+runtime/artifact roles and remaining gates; old chronological entries below are
+history, not a statement that Phase4/5 software is still absent. Phase4.0/4.1 Linux
+foundations accepted;4.2 actual Native Node API30/35 emulator scoped PASS, physical
+phone/ARM64/LAN/OEM unaccepted. Phase5 Linux software/distribution subset accepted,
+live provider/SSH/VPN/production unaccepted.3D writable DR remains BLOCKED.
+CURRENT TASK: owner PC investigates fresh-Termux ZTE Controller install failure;
+[handoff](ZTE-FRESH-INSTALL-PC-HANDOFF.md) has exact archives/hashes, unknowns and
+next actions. No error output or fix/phone acceptance exists yet for this attempt.
+
+## Historical acceptance order — 2026-10-23
 - Baselines: v0.4.1 b74bb594a5bff9ad0926255effed1fd41bbc1647; v0.5.0 f70b095b8f2ec507baaea5a4bdb3d03667209f94.
 - Phase 1.2B v0.6.0 is explicitly authorized: Global Catalog, metadata replication, placement, durable copy jobs/reconciliation, local checks and non-force main publication after applicable PASS.
 - Codex final Windows gate: 92 tests OK (skipped=3 POSIX installer), 89 PASS / 0 FAIL / 0 ERROR; no previous owner PASS reused. See PHASE1-2B-ACCEPTANCE.md.
@@ -49,7 +60,7 @@ Hardware audit is integrated into automatic on-device profiling instead of requi
 - Test leader loss, network partition 1/2, stale log candidate, power cycling, membership update, rollback/replay, no false commits and stale-leader fencing.
 - Gate: failure injection pass. Otherwise remain read-only/single-writer test mode.
 
-## Current roadmap — 2026-10-24
+## Historical roadmap snapshot — 2026-10-24
 
 - **Phase 3A — Backup, Versioning & Safe Restore: DONE**, v0.9.0 Windows
   development accepted. Preserve [acceptance evidence](PHASE3A-ACCEPTANCE.md).

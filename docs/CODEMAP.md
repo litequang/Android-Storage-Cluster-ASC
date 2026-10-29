@@ -1,5 +1,13 @@
 # ASC CODEMAP — v0.10.0 development / Phase 3C Linux synthetic qualification
 
+PROJECT-ROADMAP.md is the master Phase0–5 timeline/current-task/backlog index,
+linked from AGENTS/README/IMPLEMENTATION_PLAN. Resume there after mandatory reads;
+stage-specific acceptance/progress remains the evidence source, not old headings.
+
+Owner ZTE fresh-install/PC continuation: ZTE-FRESH-INSTALL-PC-HANDOFF.md records
+corrected fresh-Termux baseline, undiagnosed install failure, exact published
+Controller043/NodeAPK5 hashes and role separation. No runtime fix/phone acceptance.
+
 ## Phase5 operator-local access diagnostics5.4e
 - tools/check_access.py: source-only offline existing-profile/TLS validation and
   explicit anonymous fixed GET probes; reuses canonical loaders/pinned client.

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-10-29 — Master roadmap and fresh-ZTE PC handoff
+
+- Add Phase0–5 master status/backlog/resume index, link from AGENTS/root READMEs/
+  implementation plan and correct stale historical entry-point expectations.
+- Record owner fresh-Termux ZTE and undiagnosed Controller-install failure; publish
+  exact Controller043/APK5 roles, verified remote artifact hashes and PC next steps.
+- Documentation only; no installer fix, phone acceptance, new binary or authority.
+
 ## 2026-10-29 — Operator-local Access check (source-only5.4e)
 
 - Add offline existing profile/TLS/key validation plus explicit pinned backend
