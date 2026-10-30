@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "checkpoint": "dashboard3-file-manager",
+  "state": "QUALIFIED_LINUX_SYNTHETIC_SOURCE",
+  "qualified_at": "2026-10-30T02:21:25.747372+00:00",
+  "baseline": "cef9ce1bd4c43bbcc1eeb2d8d827899d85f0f675",
+  "branch": "feature/dashboard-full",
+  "runs": [
+    {
+      "log": "dashboard-3-qualified-final.log",
+      "passed": 70,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 295.792
+    },
+    {
+      "log": "dashboard-3-retry-final.log",
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 47.394,
+      "overlaps_broad": true
+    }
+  ],
+  "distinct_cases": 70,
+  "qualified_inputs_sha256": {
+    "asc/access/gateway.py": "2e12e7462e3faf934f2beab1ac1688f312553cf744bc367ff58b8824d233d7c8",
+    "asc/access/policy.py": "1d6c2b5ba9a8847fc8b6020878272f3c8dde63923ea2d600320733a55f8761be",
+    "asc/catalog/queue.py": "47fe8ecd74910c92673d56543e9b4a29e5c3a838476974933ba12c8dfd3f7c47",
+    "asc/demo/dashboard/files.py": "9b1fed004c0482194bbc1ed815ece29345bd6a1268f19e0b511dd58a10987373",
+    "asc/demo/dashboard/http.py": "eb48c91c2af131f971f7c09809a678621e329e6b5cfcf0369ebce758848d0bfd",
+    "asc/demo/dashboard/web/app.js": "9ab607ba029934c7e80ffa83e11bece7d07b177c9fa31dbfbac07889ddd0f02c",
+    "asc/demo/dashboard/web/index.html": "c908bec1eef3208a4332dc305c3d50f15da11f452e1d02ea7aa26fc80e0c6ed0",
+    "asc/demo/dashboard/web/style.css": "0797149664d5de977a10f22aabc12254fc74cfaf9db11e9260e0cad30b443684",
+    "tests/browser/dashboard_files.cjs": "7889ac2218ff4f3f9b6f289a10988a51d0ea49f2716f99888d981390cefd0212",
+    "tests/test_access_gateway.py": "6480e557c11562e117a8d85072e8bb3070f649bd9a62b409809232463aad8e81",
+    "tests/test_access_policy.py": "16089412db0d42656800f6b6f9a63c9244f174c156857197161c0f60d8d71515",
+    "tests/test_catalog.py": "2b118851e9a3842d3cf9c3c064b0e14d2658c8ba26f88e998dcc7a14ddb9cab5",
+    "tests/test_dashboard_files.py": "43e7a10807b28fce67965c53c524b1d6cbe35529465eb2c4b3a13dc1f6696152",
+    "tests/test_dashboard_files_browser.py": "4f0c4631882f449534958af138b4aa079649208a8c9bf28e4c4df9434aa4f9aa",
+    "tests/test_observer_gateway.py": "b50c0d30c5c968f23fb6a6277131c351080dd7a3707f54a662504c27bd719ce8"
+  },
+  "final_delta": "Broad70 after queue fix; final narrow busy mapping/browser bounded same-intent retry/API helper covered by22 overlapping cases. No other product delta.",
+  "evidence": [
+    "actual TLS Controller/Engine two-version upload and old SHA after restart",
+    "53 canonical pending plans paginated50+3 without fake replicas",
+    "literal Unicode search/logical folder/latest/history mobile browser",
+    "actual premature staging ACK fails proof; real transfer/retry yields2verified logical domains",
+    "sender/verifier lease exclusion, duplicate ACK, expiry/stale-token unit gates",
+    "Core quorum/recovery read-only, current file gateway read queries and immutable old Access browser",
+    "actual existing Storage cluster fault/restart/scoped authorization cases"
+  ],
+  "initial_runs": "Initial66:1real retry lease race FAIL and1nonexistent test_catalog_integration loader ERROR. Fixed queue ownership; follow-up exposed legitimate busy409, now explicit bounded same-intent retry. Final70/22 clean; no assertions removed or weakened.",
+  "not_claimed": [
+    "fresh full applicable Python/Go acceptance",
+    "physical phone/new package",
+    "full Dashboard completion",
+    "snapshot/restore",
+    "per-file ACL",
+    "Core/recovery writer/GC/public management"
+  ],
+  "private_logs": "/workspace/work/dashboard-3-*.log; no private state/credential published"
+}

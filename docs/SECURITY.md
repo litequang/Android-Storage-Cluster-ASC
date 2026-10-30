@@ -788,3 +788,15 @@ Viewer may read ALL cluster file bytes; no private-folder/file ACL claim. Backen
 no password store/writer grant; file ingress allows auth-method GET/login but
 blocks accounts/admin/pair/manage and advertises scoped capabilities. Old ingress
 missing metadata only degrades known file UI, never mode/authority/TLS.
+
+
+File query1 accepts only bounded structured logical metadata, fixed SQL sort
+allowlist and parameterized literal Unicode substring; no LIKE wildcard injection
+or request-derived filesystem path. Query POSTs /api/files/query and /api/jobs/
+query are the only explicit Viewer POST exceptions besides logout; same CSRF/
+Origin/session remains required. File-only ingress exposes only those read routes
+and job detail; retry stays direct-LAN Owner. Strict no-query-URL rule remains.
+Jobs DTO explicitly whitelists public fields/errors, excludes grants/leases/keys.
+Version upload delegates existing immutable Core intent/version; no auto overwrite
+or metadata-only protected result. UI uses textContent and clears user projections
+on logout; UNKNOWN/last observation remains distinct from current byte proof.

@@ -185,6 +185,38 @@ class CatalogTests(unittest.TestCase):
         self.assertIsNone(self.queue.claim())
         self.assertEqual(self.queue.get(job['job_id'])['last_error'],'job_timeout')
 
+    def test_resumed_upload_lease_excludes_background_claim_until_ack_or_expiry(self):
+        file_id=self.create()['file']['file_id'];job=self.upload_job(file_id)
+        session,local=uid(),uid()
+        self.queue.ack_upload(job['job_id'],session,local)
+        attempt=self.queue.claim(job['job_id']);self.assertIsNotNone(attempt)
+        self.queue.failed_attempt(attempt,'replica_missing')
+        with self.reg.connect() as db:
+            db.execute('UPDATE catalog_jobs SET next_attempt_at=0 WHERE job_id=?',(job['job_id'],))
+        lease=self.queue.upload_lease(job['job_id'])
+        self.assertIsNone(self.queue.claim(job['job_id']))
+        self.assertEqual(self.queue.get(job['job_id'])['run_token'],lease['run_token'])
+        self.assert_code('job_state_conflict',lambda:self.queue.retry(job['job_id']))
+        self.assertEqual(self.catalog.file(file_id)['verified_replicas'],0)
+        self.queue.ack_upload(job['job_id'],session,local)
+        verifying=self.queue.claim(job['job_id']);self.assertIsNotNone(verifying)
+        self.queue.ack_upload(job['job_id'],session,local)  # Duplicate/lost successful ACK.
+        self.assertEqual(self.queue.get(job['job_id'])['run_token'],verifying['run_token'])
+        self.assertEqual(self.queue.get(job['job_id'])['lease_until'],verifying['lease_until'])
+        self.queue.failed_attempt(verifying,'replica_missing')
+        with self.reg.connect() as db:
+            db.execute('UPDATE catalog_jobs SET next_attempt_at=0 WHERE job_id=?',(job['job_id'],))
+        old_lease=self.queue.upload_lease(job['job_id'])
+        self.assertIsNone(self.queue.claim(job['job_id']))
+        with self.reg.connect() as db:
+            db.execute('UPDATE catalog_jobs SET lease_until=0 WHERE job_id=?',(job['job_id'],))
+        reclaimed=self.queue.claim(job['job_id']);self.assertIsNotNone(reclaimed)
+        self.assertNotEqual(reclaimed['run_token'],old_lease['run_token'])
+        self.queue.failed_attempt(old_lease,'transfer_unavailable')
+        self.assertEqual(self.queue.get(job['job_id'])['run_token'],reclaimed['run_token'])
+        self.assertEqual(self.catalog.file(file_id)['verified_replicas'],0)
+        # No synthetic COMPLETE proof: the test covers queue ownership only.
+
     def test_migration_three_preserves_identity_grants_manifest_and_committed_bytes(self):
         node=self.nodes[0]
         grant=self.reg.storage_grant(node['node_id'],node['volume_id'],['read'])

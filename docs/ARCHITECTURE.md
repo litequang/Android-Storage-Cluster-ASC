@@ -646,3 +646,11 @@ checks current account generation; role writes guarded server-side. Core/recover
 gateway never instantiates Accounts and stays one-use-code/read-only. File-only
 ingress scopes account management off. Missing legacy capabilities may preserve
 ONLY existing file routes in the explicit verified mode; never fallback authority.
+
+
+Dashboard File Manager delegates immutable versions and durable jobs to canonical
+Catalog. Read-only browse/history is a parameterized projection (50entries,
+bounded offset, logical names); no parallel filesystem/catalog. Availability is
+observed separately from the listing metadata point. Resumed UPLOAD holds the
+existing sender lease against background verifier claim until ACK/expiry; ACK
+cannot clear an already RUNNING verifier lease. Actual proof still owns COMPLETE.

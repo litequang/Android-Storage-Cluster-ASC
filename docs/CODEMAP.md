@@ -1041,3 +1041,15 @@ Dashboard2 owner accounts:
 - tests/test_dashboard_accounts.py +browser JS/Python: real persistence/TLS/roles/
   restart/bytes/privacy/rotation/last-owner; test_dashboard_legacy_access.py runs
   ORIGINAL browser assertions through EXACT published010 bundle +isolated env.
+
+
+Dashboard file checkpoint3: asc/demo/dashboard/files.py projects canonical
+Catalog logical folders/versions/pagination; no second DB/filesystem access.
+http.py reuses Core explicit version upload and durable job read/retry; web app
+adds search/navigation/history/version/jobs. tests/test_dashboard_files.py and
+test_dashboard_files_browser.py +browser/dashboard_files.cjs test actual Engine
+I/O, metadata-only pagination, premature ACK refusal/resume and trusted browser.
+
+Queue ownership:asc/catalog/queue.py sender lease excludes background UPLOAD
+claim until ACK/expiry, duplicate ACK preserves RUNNING verifier; new Catalog
+regression covers expiry/stale sender and no fabricated replica proof.

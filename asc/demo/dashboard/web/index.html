@@ -45,6 +45,7 @@
       <button class="tab selected" data-tab="overview" aria-selected="true">Tổng quan</button>
       <button class="tab" data-tab="nodes" aria-selected="false">Điện thoại</button>
       <button class="tab" data-tab="files" aria-selected="false">File Manager</button>
+      <button id="jobs-tab" class="tab" data-tab="jobs" aria-selected="false" hidden>Tác vụ</button>
       <button class="tab" data-tab="quick-join" aria-selected="false">Ghép điện thoại</button>
       <button id="accounts-tab" class="tab" data-tab="accounts" aria-selected="false" hidden>Tài khoản</button>
     </nav>
@@ -83,9 +84,11 @@
     <section id="files" class="tab-panel" hidden>
       <section id="upload-panel" class="panel upload-panel">
         <h2>Thêm file</h2><p id="upload-limit" class="muted">Đang xác minh giới hạn…</p>
+        <button id="upload-new-file" class="button subtle" type="button">Chuẩn bị file mới (phiên bản 1)</button>
         <form id="upload-form">
           <label for="file-input">Chọn file thử nghiệm</label><input id="file-input" type="file" required>
           <label for="logical-path">Tên / đường dẫn trong cụm</label><input id="logical-path" type="text" required maxlength="512" placeholder="demo/tai-lieu.txt" spellcheck="false">
+          <div id="version-upload-fields" hidden><label for="upload-version">Phiên bản (mặc định 1; đổi có chủ ý khi thêm phiên bản mới)</label><input id="upload-version" type="number" min="1" max="1000000" step="1" value="1" required><p class="muted">Mỗi tên + phiên bản là bất biến. Chọn lại cùng file, tên và phiên bản để tiếp tục lần gửi dở; không tự tăng số khi retry.</p></div>
           <button id="upload-button" class="button primary" type="submit">Upload &amp; tạo hai bản sao</button>
         </form>
         <progress id="upload-progress" max="1" value="0" hidden></progress>
@@ -93,8 +96,25 @@
         <p id="upload-status" role="status" aria-live="polite"></p>
       </section>
       <div class="section-heading"><h2>File trong cụm</h2><span id="file-count" class="muted">UNKNOWN</span></div>
+      <section id="file-tools" class="panel" hidden>
+        <form id="file-search-form" class="file-toolbar">
+          <label>Tìm trong đường dẫn<input id="file-search" type="search" maxlength="128" placeholder="Tên file hoặc từ khóa"></label>
+          <label>Sắp xếp<select id="file-sort"><option value="name">Tên</option><option value="newest">Mới nhất</option><option value="size">Dung lượng lớn trước</option></select></label>
+          <label>Phiên bản<select id="file-versions"><option value="all">Tất cả phiên bản</option><option value="latest">Chỉ phiên bản mới nhất</option></select></label>
+          <button class="button subtle" type="submit">Tìm / áp dụng</button>
+        </form>
+        <div class="file-toolbar"><button id="browse-all" class="button subtle" type="button">Tất cả file</button><button id="browse-root" class="button subtle" type="button">Duyệt thư mục</button><button id="browse-parent" class="button subtle" type="button" hidden>Thư mục trên</button></div>
+        <p id="browse-location" class="muted"></p><p id="browse-status" role="status"></p>
+      </section>
       <p id="download-status" role="status" aria-live="polite"></p>
       <div id="file-list" class="file-list"></div>
+      <div id="file-pagination" class="file-toolbar" hidden><button id="files-prev" class="button subtle" type="button">Trang trước</button><span id="files-page"></span><button id="files-next" class="button subtle" type="button">Trang sau</button></div>
+    </section>
+    <section id="jobs" class="tab-panel" hidden>
+      <div class="section-heading"><h2>Tác vụ sao chép</h2><button id="jobs-refresh" class="button subtle" type="button">Đọc lại</button></div>
+      <p class="muted">Trạng thái lấy từ hàng đợi bền vững của Controller. Retry chỉ yêu cầu chạy lại; không phải xác nhận replica thành công. Upload chưa có bytes cần chọn lại đúng file/phiên bản trong File Manager.</p>
+      <p id="jobs-status" role="status"></p><div id="job-list" class="file-list"></div>
+      <div class="file-toolbar"><button id="jobs-prev" class="button subtle" type="button">Trang trước</button><span id="jobs-page"></span><button id="jobs-next" class="button subtle" type="button">Trang sau</button></div>
     </section>
     <section id="accounts" class="tab-panel" hidden>
       <section class="panel"><h2>Tài khoản Dashboard</h2>

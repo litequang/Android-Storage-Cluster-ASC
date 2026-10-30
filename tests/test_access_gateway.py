@@ -75,6 +75,11 @@ class PrivateGatewayTests(unittest.TestCase):
         status,headers,raw=self.request('GET','/api/capabilities')
         self.assertEqual(status,200);self.assertFalse(json.loads(raw)['node_management'])
         self.assertFalse(json.loads(raw)['account_management'])
+        self.assertFalse(json.loads(raw)['job_retry'])
+        from tests.test_dashboard_files import query
+        self.assertEqual(self.request('POST','/api/files/query',query())[0],200)
+        self.assertEqual(self.request('POST','/api/jobs/query',{'offset':0})[0],200)
+        self.assertEqual(self.request('POST','/api/jobs/11111111-1111-4111-8111-111111111111/retry',{})[0],403)
         self.assertEqual(headers['X-ASC-Access-Mode'],'file-access-only')
         for headers in ({'Host':'evil.invalid'},{'Origin':'https://evil.invalid'},{'Sec-Fetch-Site':'cross-site'}):
             self.assertEqual(self.request('GET','/api/state',headers=headers)[0],403)

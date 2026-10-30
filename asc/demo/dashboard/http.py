@@ -22,10 +22,13 @@ from .assets import ASSETS
 from .auth import COOKIE, SESSION_TTL, GRANT_TTL, Sessions
 from .views import Views
 from .accounts import Accounts, AccountError
+from .files import Files, offset, public_job, JOB_ERRORS
 from ..pairing import Pairings, PairingError
 
 CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self'; worker-src 'self'"
 ERRORS = {'no_eligible_storage': 'insufficient_capacity', 'logical_version_exists': 'file_exists',
+          'upload_state_conflict': 'transfer_busy',
+          'job_state_conflict': 'job_state_changed', 'job_not_found': 'not_found',
           'idempotency_conflict': 'idempotency_conflict', 'file_not_found': 'not_found',
           'no_available_replica': 'replica_unavailable', 'node_state_changed': 'node_state_changed',
           'protected_or_inactive_node': 'node_not_manageable'}
@@ -43,6 +46,7 @@ class DashboardAPI:
         self.origin = f"https://{cfg['host']}:{cfg['port']}"
         self.sessions = Sessions()
         self.views = Views(service, cluster_name)
+        self.files = Files(self.views)
         self.pairings = Pairings(root,service,client)
         from .management import Management
         self.management = Management(self)
@@ -83,9 +87,11 @@ class DashboardAPI:
         return result
 
     def prepare(self, obj, identity):
-        if set(obj) != {'logical_path', 'size', 'sha256', 'idempotency_key'}:
+        if set(obj) - {'version'} != {'logical_path', 'size', 'sha256', 'idempotency_key'}:
             raise Rejected(400, 'bad_request')
         logical_path(obj['logical_path']); content(obj['size'], obj['sha256']); key(obj['idempotency_key'])
+        if type(obj.get('version', 1)) is not int or not 1 <= obj.get('version', 1) <= 1000000:
+            raise Rejected(400, 'bad_request')
         if obj['size'] > self.cfg['max_upload_bytes']:
             raise Rejected(413, 'upload_too_large')
         with self.lock:
@@ -216,7 +222,7 @@ class DashboardHandler(Handler):
                     if api.sessions.authenticate(cookie, session['csrf']) is None:
                         raise Rejected(401, 'login_required')
                     api.update(ticket_id, status='forwarding', checksum_verified_bytes=ticket['size'])
-                    api.client.upload(stream, ticket['logical_path'], ticket['idempotency_key'])
+                    api.client.upload(stream, ticket['logical_path'], ticket['idempotency_key'], version=ticket.get('version', 1))
                     file = api.views.file(ticket['file_id'])
                     api.update(ticket_id, status='protected' if file['protected'] else 'replicating')
                 return self._json(200 if file['protected'] else 202, {'file': file, 'transfer_id': ticket_id})
@@ -319,7 +325,10 @@ class DashboardHandler(Handler):
                 'refresh_probe': owner and api.mode == 'single-writer-demo',
                 'account_management': owner and api.mode == 'single-writer-demo' and getattr(api, 'accounts', None) is not None,
                 'owner_password': api.mode == 'single-writer-demo' and getattr(api, 'accounts', None) is not None,
-                'file_history': False, 'snapshot_restore': False,
+                'file_browse': api.mode == 'single-writer-demo', 'file_history': api.mode == 'single-writer-demo',
+                'version_upload': owner and api.mode == 'single-writer-demo',
+                'job_read': api.mode == 'single-writer-demo', 'job_retry': owner and api.mode == 'single-writer-demo',
+                'snapshot_restore': False,
                 'physical_gc': False, 'recovery_writer': False})
         if api.mode != 'single-writer-demo':
             if path=='/api/state' and method=='GET':return self._json(200,api.views.state())
@@ -328,8 +337,28 @@ class DashboardHandler(Handler):
                 return self._json(200,api.views.file(pieces[2]))
             raise Rejected(403,'read_only_mode')
         if authenticated[2].get('role','owner') != 'owner':
-            if method != 'GET' or path.startswith(('/api/manage/', '/api/accounts')):
+            if (method != 'GET' and not (method == 'POST' and path in ('/api/files/query', '/api/jobs/query'))
+                    or path.startswith(('/api/manage/', '/api/accounts'))):
                 raise Rejected(403, 'role_denied')
+        if path == '/api/files/query' and method == 'POST':
+            return self._json(200, api.files.query(self.body_json()))
+        if path == '/api/jobs/query' and method == 'POST':
+            obj = self.body_json()
+            if set(obj) != {'offset'}:raise ValueError('invalid job query')
+            page = api.client.request('GET', 'jobs?offset='+str(offset(obj['offset'])))
+            return self._json(200, {'jobs': [public_job(j) for j in page['jobs']], 'next_offset': page['next_offset']})
+        pieces = path.strip('/').split('/')
+        if len(pieces) == 3 and pieces[:2] == ['api', 'jobs'] and method == 'GET':
+            identifier(pieces[2]); result = api.client.request('GET', 'jobs/'+pieces[2])
+            history = [dict(state=h['state'], created_at=h['created_at'],
+                            error=h.get('error') if h.get('error') in JOB_ERRORS else 'transfer_unavailable' if h.get('error') else None)
+                       for h in result['history']]
+            return self._json(200, {'job': public_job(result['job']), 'history': history})
+        if len(pieces) == 4 and pieces[:2] == ['api', 'jobs'] and pieces[3] == 'retry' and method == 'POST':
+            identifier(pieces[2])
+            if self.body_json() != {}:raise ValueError('invalid retry')
+            api.client.request('POST', 'jobs/'+pieces[2]+'/retry', {})
+            return self._json(200, {'accepted': True, 'job': public_job(api.client.request('GET', 'jobs/'+pieces[2])['job'])})
         if path == '/api/accounts':
             if method == 'GET':return self._json(200, api.accounts.list())
             if method == 'POST':return self._json(201, api.accounts.create(self.body_json()))

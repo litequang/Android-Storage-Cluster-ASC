@@ -66,3 +66,26 @@ từ chối, không ghi đè/silent reset. Missing file không tự tạo accoun
 chỉ owner code +explicit create thiết lập lại web accounts, không đổi Node keys.
 Rollback043 code-only vẫn dùng mã owner, giữ nguyên accounts file để forward;
 exact package qualification cuối track mới công bố đường upgrade/rollback.
+
+
+## File Manager / phiên bản / tác vụ (checkpoint3 source)
+Tìm tên hoặc một phần đường dẫn, chọn sort và tất cả/phiên bản mới nhất rồi Tìm/
+áp dụng. Mỗi trang50mục, Trang trước/sau. Duyệt thư mục/Thư mục trên là thư mục
+LOGIC từ tên Catalog, không duyệt filesystem. Tìm có từ khóa đi đệ quy trong thư
+mục đang chọn. Giới hạn Catalog256 của Core hiện tại vẫn giữ, chưa phải unlimited.
+
+File mới mặc định phiên bản1. Muốn cập nhật cùng tên, chọn Thêm phiên bản, kiểm
+tra số phiên bản được gợi ý từ Catalog, chọn file nội dung mới và Upload. File cũ
+không bị ghi đè; concurrent owner có thể chiếm cùng số ->409, đọc lại trước ý định
+mới. Khi upload dở/mất ACK, chọn ĐÚNG file/tên/phiên bản cũ; key nội dung được giữ
+trong sessionStorage (không token). Không tự tăng version để che lỗi retry.
+Lịch sử liệt kê các version bất biến và tải SHA từng bản. Đây không phải snapshot
+hoặc external backup. Nút chuẩn bị file mới không xóa job đã tồn tại.
+
+Tác vụ đọc queue Core bền vững và lịch sử. Owner có thể Yêu cầu thử lại khi
+FAILED/RETRY; ACK chỉ nhận retry, không xác nhận bytes/protected. UPLOAD chưa có
+bytes cần chọn lại file trong File Manager; Dashboard không giữ source bytes sau
+request. Đủ replica chỉ sau canonical fsync/readback/SHA/physical-domain proofs.
+Viewer đọc file/history/job, không retry/upload. File-only gateway cũng không
+retry; bundle Access0.1 cũ vẫn giao diện file cũ có ghi giới hạn, không giả hỗ trợ
+route mới. Core/quorum/recovery giữ observer-only. Không xóa vật lý/GC.

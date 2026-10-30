@@ -590,3 +590,10 @@ thread lock, sessions RAM8global; runtime ownership prevents two live Controller
 No Registry/Manifest/schema change, Node/Cluster/Volume/cert/key unchanged. Existing
 backups include private auth file; never publish it. Legacy043 reader ignores it,
 uses one-use codes; it does not authenticate password users or migrate state.
+
+
+Dashboard checkpoint3 adds no persistent schema. Files/versions/jobs remain in
+existing catalog_files/catalog_jobs/history; immutable IDs, upload keys, policy
+and actual replica proof authority unchanged. Browse metadata_point reflects one
+SQLite listing transaction only; availability later observed, not Core authority.
+Pagination50/offset10000 does not raise Core256-file cap or create directories.

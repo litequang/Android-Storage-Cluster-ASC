@@ -654,3 +654,10 @@ role_denied403 means Viewer cannot upload or administer, not network/TLS failure
 After password/role changes login again; old sessions/password can be rejected.
 Older file ingress may show code-only login/no account management: use direct LAN
 Dashboard for setup, no management allowlist widening or copying private state.
+
+
+File Manager transfer_busy409 after retry: worker may be verifying prior staged
+ACK; UI waits boundedly with same bytes/path/version/key. If still busy, inspect
+job status and retry later. Keep original file. Job retry ACK is not COMPLETE.
+file_exists409 means immutable path/version already exists; download/history to
+check before choosing a NEW explicit version. No overwrite or automatic bump.

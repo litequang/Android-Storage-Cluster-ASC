@@ -141,3 +141,59 @@ source and dependencies unchanged. No new ZTE deploy or full Dashboard claim.
 NEXT:after normal commit/push/fetch/advertised equality, checkpoint3 File Manager
 (pagination/search/logical folders, explicit immutable versions, jobs/retry), then
 4snapshot/restore,5diagnostics and6exact043 upgrade/package/fresh final gates.
+
+
+## Checkpoint2 publication VERIFIED / checkpoint3 in progress
+Source cef9ce1bd4c43bbcc1eeb2d8d827899d85f0f675 normally pushed/fetched/advertised
+on feature/dashboard-full; clean tree before3.71distinct source cases qualified,
+final narrow deltas rechecked as recorded. Existing ZTE still original Lite043.
+
+Checkpoint3 implements bounded50-entry/offset10000 logical Catalog queries,
+literal Unicode search, all/latest immutable versions, sort, folder navigation,
+history read/download and explicit version upload through original Core client.
+Original Core catalog bound256 remains, no arbitrary disk browsing/new schema.
+Jobs list/detail/retry delegate existing durable Core queue; no grant/run token
+leak, retry ACK is not protected. Viewer read-only query POSTs explicitly allowed
+behind same session/CSRF; writes stay Owner-only. Core/recovery deny first.
+File-only ingress adds exact read queries/job detail, refuses job retry/admin.
+Original frozen Access0.1 bundle degrades to original file-only UI, unchanged.
+
+Initial actual targeted:new API4PASS28.024s and mobile browser1PASS13.716s,
+plus original upload/Viewer/browser smoke3PASS25.755s (overlapping final cases).
+Real TLS/Engine: two immutable versions, old SHA after restart, canonical53pending
+plans across50+3 (zero verified replicas), literal Unicode search and logical
+folders. Premature actual staging ACK fails physical proof; owner retry preserves
+job and real transfer later produces2verified domains. No fake completion/proof.
+Final broadened related regression is running; not yet qualified/published3.
+
+
+Checkpoint3 regression discovered a real resumed-UPLOAD/background-verifier
+lease race after premature ACK: initial66executions had1FAIL (PUT403 after worker
+replaced foreground grant lease) plus1loader ERROR (mistyped nonexistent
+test_catalog_integration; actual network fixture is test_storage_cluster). No
+assertion weakened. Core queue now defers background UPLOAD claim while foreground
+lease is live; ACK clears only pending/retry sender lease, duplicate ACK preserves
+RUNNING verifier token/expiry. Manual retry refuses active sender lease. Missing
+bytes still fail canonical _proof. A follow-up exposed legitimate plan409 while
+verifier is RUNNING; map upload_state_conflict to transfer_busy and browser retries
+only that409 with SAME bounded intent, five900ms waits; no new key/version or
+false success. New test follows same explicit busy contract, accepts no403/error.
+New queue regression asserts sender exclusion, duplicate ACK, expiry/stale-token
+refusal and zero fake replicas. Fresh final22PASS47.394s after all retry fixes
+(File Manager API4+mobile1+Catalog17); broadened final run still pending.
+
+
+### Checkpoint3 final source qualification
+Fresh broadened70PASS0FAIL/ERROR/SKIP295.792s includes Catalog, actual Storage
+cluster faults/restart, Dashboard/management/accounts browsers, actual old Access
+archive browser and Core quorum/recovery observer. Final narrow delta (upload
+busy mapping, bounded same-intent browser retry and corresponding API helper)
+qualified by fresh22PASS47.394s above; case IDs overlap, not92unique. Final queue
+unit includes live lease exclusion, duplicate ACK, expiry and stale-token checks.
+No pre-fix/failed counts added to final PASS.
+
+qualification/dashboard-files.json binds final inputs/runs. No full applicable
+Python/Go final claim yet. Original043/APK5/Access archives, Android/Go/dependency
+bytes unchanged. All code remains source-only, not deployed to ZTE. NEXT after
+commit/push/fetch/advertised equality:4safe single-writer snapshot/restore,5storage/
+diagnostics,6exact043 upgrade/new-state rollback and final package/full gates.

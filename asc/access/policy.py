@@ -64,7 +64,8 @@ class Profile:
             return True
         if self.upstream_mode != 'single-writer-demo':
             return False
-        return bool(method == 'POST' and path in ('/api/refresh', '/api/uploads')
+        return bool(method == 'POST' and path in ('/api/refresh', '/api/uploads', '/api/files/query', '/api/jobs/query')
+                    or method == 'GET' and re.fullmatch(r'/api/jobs/' + UUID, path)
                     or method == 'GET' and re.fullmatch(r'/api/files/' + UUID + r'/content', path)
                     or method in ('GET', 'PUT') and re.fullmatch(r'/api/uploads/' + UUID, path)
                     or method == 'GET' and re.fullmatch(r'/api/nodes/(?:local-controller|' + UUID + ')', path))

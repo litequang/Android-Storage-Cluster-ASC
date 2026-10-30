@@ -20,8 +20,8 @@ untouched. Cloud SOURCE/SYNTHETIC ONLY; no phone/SSH access. Implement successiv
 tested/pushed checkpoints, not docs-only planning. Reuse canonical services; Core/
 recovery read-only, no GC/Raft/failover/writerDR or fake unsupported features.
 PROJECT-ROADMAP current cursor is updated for this new task. Node management1
-is pushed; accounts2 qualified next, then File Manager3/snapshot4/diagnostics5/
-final package6. Read DASHBOARD-PROGRESS for actual source/publication evidence.
+and accounts2 are pushed (efe0ec4/cef9ce1); File Manager3 qualified, then
+snapshot4/diagnostics5/final package6. Read DASHBOARD-PROGRESS for actual source/publication evidence.
 
 After the nine mandatory reads, read docs/PROJECT-ROADMAP.md for the full timeline,
 runtime/artifact distinctions, current task and remaining gates. CURRENT TASK is

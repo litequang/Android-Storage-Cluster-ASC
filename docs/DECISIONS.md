@@ -426,3 +426,15 @@ account generation and revokes sessions; Viewer reads ALL cluster files, not a
 per-file ACL. File-only ingress cannot manage accounts or Nodes. Legacy packages
 remain code-only until separately qualified against NEW account state; no implicit
 rollback to stale credential backups or automatic state/identity regeneration.
+
+
+## ADR080 — Logical file projections and sender/verifier lease separation
+Expose bounded read-only POST queries with existing cookie/CSRF and explicit
+Viewer scope; no URL credential/path query or arbitrary filesystem. New immutable
+versions are explicit user intent, reuse canonical Catalog upload keys/jobs/SHA.
+Never auto-bump version or retry unrelated failures. A live foreground UPLOAD
+lease excludes background claim; ACK releases only sender lease, not a RUNNING
+verifier's token. Manual retry cannot invalidate an active sender. Legitimate
+plan409busy gets at most five same-intent browser attempts, then user-visible
+unconfirmed status. Premature ACK never bypasses physical proof or creates a
+VERIFIED replica. No schema/consensus/GC/old package changes.

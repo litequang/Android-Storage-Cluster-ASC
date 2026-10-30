@@ -867,3 +867,13 @@ actual shipped wrapper TLS/files/profile-preserving code switch/rollback/fallbac
 8package +1lifecycle +42existing access executions PASS; no new full-suite claim.
 Artifact/SHA and remote-download proof in distribution receipt/progress. Linux
 internal test artifact only, no phone/production/provider/SSH/APK acceptance.
+
+
+Dashboard checkpoint3 source (qualification pending): canonical logical File
+Manager pagination/search/folders/sort, explicit immutable version upload/history
+and durable job detail/retry. Old version bytes retained; no Catalog/Engine clone,
+schema, physical delete or Core/recovery writer. Original packages unchanged.
+
+Checkpoint3 qualified:70distinct related cases PASS, final retry delta22overlapping
+PASS. Canonical resumed-UPLOAD sender/verifier lease race fixed without weakening
+byte proof; duplicate ACK preserves active verification. Original packages intact.

@@ -28,6 +28,9 @@
   const pairing = { generation: 0, ticket: null, timer: null, creating: false, polling: false };
   const management = { generation: 0, revision: 0, node: null, preview: null, busy: false };
   const accountUI = { generation: 0, editing: null, busy: false };
+  const fileUI = { generation: 0, offset: 0, next: null, folder: '', recursive: true, page: null };
+  const jobUI = { generation: 0, offset: 0, next: null };
+  let detailGeneration = 0;
   const messages = {
     pairing_limit: 'Đã đạt giới hạn mã đang theo dõi (8/phiên, 32/Controller). Đợi hoặc kiểm tra các mã đã tạo.',
     pairing_not_found: 'Không còn bằng chứng theo dõi trong phiên này. Không suy ra mã đã bị thu hồi.',
@@ -66,6 +69,7 @@
     account_state_changed: 'Tài khoản đã thay đổi. Đọc lại trước khi xác nhận thao tác mới.',
     last_owner_required: 'Phải giữ ít nhất một Owner. Tài khoản đầu tiên phải là Owner.',
     account_state_unavailable: 'State tài khoản không đọc/xác minh được. Giữ nguyên file để owner kiểm tra, không tự tạo lại.',
+    job_state_changed: 'Tác vụ không còn ở trạng thái được thử lại. Đọc trạng thái mới; chưa suy ra sao chép thành công.',
   };
   class APIError extends Error {
     constructor(code, status) { super(messages[code] || 'Yêu cầu chưa được xác nhận. Kiểm tra kết nối và thử lại.'); this.code = code; this.status = status; }
@@ -105,6 +109,9 @@
   function loginView(clear = true) {
     model.csrf = null; model.connected = false; model.state = null;
     model.features = null; clearManagement();
+    fileUI.generation++; fileUI.page = null; fileUI.offset = 0; fileUI.folder = ''; fileUI.recursive = true;
+    jobUI.generation++; jobUI.offset = 0; $('job-list').replaceChildren(); detailGeneration++;
+    $('file-search').value = ''; $('upload-version').value = '1';
     closeAccountEditor(); $('account-list').replaceChildren(); $('account-new-password').value = ''; $('login-password').value = '';
     $('account-new-username').value = ''; $('account-result').textContent = '';
     $('actor-label').hidden = true; $('actor-label').textContent = '';
@@ -133,7 +140,7 @@
       if (binary) return { buffer: await response.arrayBuffer(), sha: response.headers.get('X-ASC-SHA256') };
       const value = await response.json();
       if (path === '/api/capabilities' && response.headers.get('X-ASC-Access-Mode') === 'file-access-only') {
-        value.node_management = false; value.account_management = false;
+        value.node_management = false; value.account_management = false; value.job_retry = false;
       }
       return value;
     } catch (error) {
@@ -229,6 +236,10 @@
     }
     $('upload-panel').hidden = model.readOnly || !model.features.file_upload;
     $('accounts-tab').hidden = !model.features.account_management;
+    $('file-tools').hidden = !model.features.file_browse;
+    $('file-pagination').hidden = !model.features.file_browse;
+    $('version-upload-fields').hidden = !model.features.version_upload;
+    $('jobs-tab').hidden = !model.features.job_read;
     document.querySelector('[data-tab="quick-join"]').hidden = !model.features.node_management;
     $('refresh').textContent = model.features.refresh_probe ? 'Cập nhật kiểm tra' : 'Đọc trạng thái';
     $('actor-label').textContent = (model.role === 'viewer' ? 'Viewer' : 'Owner') + (model.username ? ' · '+model.username : ' · mã cục bộ');
@@ -430,6 +441,7 @@
     const row = node('div', 'detail-row'); row.append(node('span', '', label), node('strong', '', text)); return row;
   }
   function showDetails(title, values) {
+    detailGeneration++;
     $('details-title').textContent = title; $('details-body').replaceChildren(...values);
     if (!$('details').open) $('details').showModal();
   }
@@ -522,19 +534,110 @@
       return card;
     }));
     if (!state.nodes.length) $('node-list').append(node('p', 'muted', 'Chưa có Storage Node được ghép. Mở Ghép điện thoại để tạo mã, rồi phê duyệt trong Quản lý.'));
-    $('file-count').textContent = count(c.files) + ' file';
-    $('file-list').replaceChildren(...state.files.map(file => {
+    if (!model.features?.file_browse || !fileUI.page) {
+      $('file-count').textContent = count(c.files) + ' file';
+      renderFiles(state.files);
+      if (state.files_truncated) $('file-list').append(node('p', 'error', 'Danh sách bị giới hạn; không coi đây là toàn bộ Catalog.'));
+    } else renderBrowse(fileUI.page);
+    $('upload-button').disabled = !model.connected || model.uploading || !canUpload();
+  }
+  function renderFiles(files) {
+    $('file-list').replaceChildren(...files.map(file => {
       const row = node('article', 'file-row'); row.dataset.fileId = file.file_id;
       const info = node('div', 'file-info'); info.append(node('div', 'file-name', file.logical_path), badge(file),
         node('p', 'file-meta', amount(file.size) + ' · v' + file.version + ' · verified ' + file.verified_replicas + ' · available ' + (model.connected ? count(file.available_replicas) : 'UNKNOWN')));
       const actions = node('div', 'file-actions');
       const view = button('Bản sao & SHA', () => replicas(file.file_id)); view.dataset.action = 'replicas';
       const get = button('Tải xuống', () => download(file)); get.dataset.action = 'download'; get.disabled = !model.connected || file.size > model.max;
-      actions.append(view); if (!model.readOnly) actions.append(get); row.append(info, actions); return row;
+      actions.append(view); if (!model.readOnly) actions.append(get);
+      if (model.features?.file_history) { const h = button('Lịch sử', () => history(file)); h.dataset.action = 'history'; actions.append(h); }
+      if (model.features?.version_upload) { const v = button('Thêm phiên bản', () => newVersion(file)); v.dataset.action = 'new-version'; v.disabled = !model.connected; actions.append(v); }
+      row.append(info, actions); return row;
     }));
-    if (!state.files.length) $('file-list').append(node('p', 'muted', model.readOnly ? 'Chưa có file trong metadata quan sát.' : canUpload() ? 'Chưa có file. Upload một file nhỏ để thử hai bản sao.' : 'Chưa có file trong cụm. Owner có thể thêm file.'));
-    if (state.files_truncated) $('file-list').append(node('p', 'error', 'Danh sách bị giới hạn; không coi đây là toàn bộ Catalog.'));
-    $('upload-button').disabled = !model.connected || model.uploading || !canUpload();
+    if (!files.length) $('file-list').append(node('p', 'muted', 'Không có file khớp bộ lọc tại thời điểm đọc.'));
+  }
+  function fileQuery(extra = {}) {
+    return { browse_api_version:1, offset:fileUI.offset, search:$('file-search').value,
+      folder:fileUI.folder, recursive:fileUI.recursive, sort:$('file-sort').value, versions:$('file-versions').value, ...extra };
+  }
+  function renderBrowse(page) {
+    renderFiles(page.entries.filter(x => x.kind === 'file'));
+    const folders = page.entries.filter(x => x.kind === 'folder').map(item => {
+      const row = node('article', 'file-row'); row.dataset.folder = item.logical_path;
+      row.append(node('strong', 'file-name', item.logical_path.split('/').pop()), button('Mở thư mục', () => navigateFolder(item.logical_path)));
+      return row;
+    });
+    if (folders.length && !page.entries.some(x => x.kind === 'file')) $('file-list').replaceChildren();
+    $('file-list').prepend(...folders);
+    $('file-count').textContent = count(page.total) + ' mục khớp bộ lọc';
+    $('browse-location').textContent = fileUI.recursive ? 'Tìm đệ quy: ' + (fileUI.folder || 'toàn cụm') : 'Thư mục logic: /' + fileUI.folder;
+    $('browse-parent').hidden = !fileUI.folder;
+    $('files-page').textContent = 'Mục ' + (page.total ? page.offset+1 : 0) + '–' + (page.offset+page.entries.length) + ' / ' + page.total;
+    $('files-prev').disabled = !model.connected || fileUI.offset === 0;
+    $('files-next').disabled = !model.connected || page.next_offset === null;
+    $('browse-status').textContent = !model.connected ? 'Mất kết nối: danh sách cũ, trạng thái hiện tại UNKNOWN.' : page.query_limit_reached ? 'Đã đến giới hạn duyệt; thu hẹp thư mục hoặc từ khóa.' : '';
+  }
+  async function loadFiles() {
+    if (!model.features?.file_browse || !model.csrf) return;
+    const generation = ++fileUI.generation; $('browse-status').textContent = 'Đang đọc Catalog…';
+    try {
+      const page = await request('/api/files/query', { method:'POST', json:fileQuery() });
+      if (generation !== fileUI.generation || !model.csrf) return;
+      fileUI.page = page; fileUI.next = page.next_offset; renderBrowse(page);
+    } catch (error) { if (generation === fileUI.generation && model.csrf) $('browse-status').textContent = error.message; }
+  }
+  function navigateFolder(folder) { fileUI.folder = folder; fileUI.recursive = false; fileUI.offset = 0; $('file-search').value = ''; void loadFiles(); }
+  async function history(file) {
+    showDetails('Lịch sử: ' + file.logical_path, [node('p', 'muted', 'Các phiên bản bất biến trong Catalog; không phải external backup.')]);
+    const generation = detailGeneration;
+    async function page(start) {
+      try {
+        const result = await request('/api/files/query', { method:'POST', json:fileQuery({ offset:start, folder:'', search:'', recursive:true, versions:'all', sort:'name', history_file_id:file.file_id }) });
+        if (generation !== detailGeneration || !$('details').open || !model.csrf) return;
+        const rows = result.entries.map(item => { const card = node('div', 'replica-card'); card.dataset.historyFileId = item.file_id;
+          card.append(node('strong', '', 'Phiên bản ' + item.version), badge(item), detail('SHA-256', item.sha256), detail('Dung lượng', amount(item.size)), button('Tải phiên bản này', () => download(item))); return card; });
+        $('details-body').replaceChildren(...rows);
+        const nav = node('div', 'file-toolbar');
+        if (start > 0) nav.append(button('Trang trước', () => page(Math.max(0, start-50))));
+        if (result.next_offset !== null) nav.append(button('Trang sau', () => page(result.next_offset)));
+        $('details-body').append(nav);
+      } catch (error) { if (generation === detailGeneration && $('details').open) $('details-body').replaceChildren(node('p', 'error', error.message)); }
+    }
+    await page(0);
+  }
+  async function newVersion(file) {
+    try {
+      const result = await request('/api/files/query', { method:'POST', json:fileQuery({ offset:0, folder:'', search:'', recursive:true, versions:'all', sort:'name', history_file_id:file.file_id }) });
+      if (!model.csrf || !canUpload()) return;
+      const version = result.entries[0].version+1;
+      if (version > 1000000) throw new APIError('bad_request', 400);
+      $('logical-path').value = file.logical_path; $('upload-version').value = String(version); $('file-input').value = '';
+      $('upload-status').textContent = 'Chọn nội dung cho phiên bản ' + version + '. File cũ giữ nguyên; chưa có dữ liệu mới được gửi.';
+      $('upload-panel').scrollIntoView({ block:'start' }); $('file-input').focus();
+    } catch (error) { notice(error.message); }
+  }
+  async function loadJobs() {
+    if (!model.features?.job_read || !model.csrf) return;
+    const generation = ++jobUI.generation; $('jobs-status').textContent = 'Đang đọc hàng đợi…';
+    try {
+      const page = await request('/api/jobs/query', { method:'POST', json:{offset:jobUI.offset} });
+      if (generation !== jobUI.generation || !model.csrf) return;
+      jobUI.next = page.next_offset;
+      $('job-list').replaceChildren(...page.jobs.map(job => {
+        const card = node('article', 'file-row'); card.dataset.jobId = job.job_id;
+        const info = node('div', 'file-info'); info.append(node('strong', '', job.kind + ' · ' + job.state), detail('File / Node', short(job.file_id) + ' / ' + short(job.target_node_id)), detail('Lần thử / cập nhật', count(job.attempts) + ' / ' + date(job.updated_at)), detail('Lỗi', job.last_error || 'Chưa ghi nhận'));
+        card.append(info, button('Chi tiết', async () => { try { const d = await request('/api/jobs/'+job.job_id); showDetails('Tác vụ ' + short(job.job_id), [detail('Trạng thái', d.job.state), ...d.history.map(h => detail(date(h.created_at), h.state + (h.error ? ' · '+h.error : '')))]); } catch(error) { notice(error.message); } }));
+        if (job.retryable && model.features.job_retry) card.append(button('Yêu cầu thử lại', async () => {
+          try { await request('/api/jobs/'+job.job_id+'/retry', {method:'POST', json:{}}); await loadJobs(); $('jobs-status').textContent = 'Controller đã nhận yêu cầu retry. Chờ kiểm chứng bytes/replica; chưa phải thành công.'; }
+          catch(error) { await loadJobs(); $('jobs-status').textContent = error.message; }
+        }));
+        return card;
+      }));
+      if (!page.jobs.length) $('job-list').append(node('p', 'muted', 'Chưa có tác vụ trong trang này.'));
+      $('jobs-page').textContent = 'Từ ' + jobUI.offset + ' · ' + page.jobs.length + ' tác vụ';
+      $('jobs-prev').disabled = jobUI.offset === 0; $('jobs-next').disabled = page.next_offset === null;
+      $('jobs-status').textContent = '';
+    } catch(error) { if (generation === jobUI.generation && model.csrf) $('jobs-status').textContent = error.message; }
   }
   async function reload(probe = false) {
     if (!model.csrf || model.polling) return;
@@ -543,13 +646,15 @@
       probe = probe && !model.readOnly && model.features?.refresh_probe === true;
       const state = await request(probe ? '/api/refresh' : '/api/state', probe ? { method: 'POST', json: {} } : {});
       model.state = state; connection(true); notice(''); render(state);
+      await loadFiles();
+      if (!$('jobs').hidden) await loadJobs();
     } catch (error) { if (model.csrf) notice(error.message); }
     finally { model.polling = false; $('refresh').disabled = false; }
   }
   function pending(meta) {
     try {
       const old = model.pending || JSON.parse(sessionStorage.getItem('asc-demo-pending-upload') || 'null');
-      if (old && old.path === meta.path && old.size === meta.size && old.sha === meta.sha && typeof old.key === 'string') return old.key;
+      if (old && old.path === meta.path && old.size === meta.size && old.sha === meta.sha && (old.version || 1) === meta.version && typeof old.key === 'string') return old.key;
     } catch (_) { /* storage may be unavailable; in-memory retry still uses same request key */ }
     const key = crypto.randomUUID();
     model.pending = { ...meta, key };
@@ -567,8 +672,20 @@
     try {
       if (file.size > model.max) throw new APIError('upload_too_large', 413);
       const sha = await sha256(await file.arrayBuffer());
-      const key = pending({ path, size: file.size, sha });
-      const plan = await request('/api/uploads', { method: 'POST', json: { logical_path: path, size: file.size, sha256: sha, idempotency_key: key } });
+      const version = model.features?.version_upload ? Number($('upload-version').value) : 1;
+      if (!Number.isInteger(version) || version < 1 || version > 1000000) throw new APIError('bad_request', 400);
+      const key = pending({ path, size: file.size, sha, version });
+      const payload = { logical_path: path, size: file.size, sha256: sha, idempotency_key: key };
+      if (model.features?.version_upload) payload.version = version;
+      let plan;
+      for (let attempt = 0; attempt < 5; attempt++) {
+        try { plan = await request('/api/uploads', { method:'POST', json:payload }); break; }
+        catch (error) {
+          if (error.status !== 409 || error.code !== 'transfer_busy' || attempt === 4 || !model.csrf) throw error;
+          $('upload-status').textContent = 'Worker đang xác minh lần gửi trước. Đợi lease kết thúc; giữ nguyên nội dung, phiên bản và key.';
+          await sleep(900);
+        }
+      }
       let result = plan.file;
       if (!plan.completed) {
         model.activeTicket = plan.transfer_id;
@@ -629,11 +746,23 @@
   $('pair-create').addEventListener('click', () => { void createPairing(); });
   $('refresh').addEventListener('click', () => { void reload(true); });
   $('upload-form').addEventListener('submit', upload);
-  $('file-input').addEventListener('change', () => { const file = $('file-input').files[0]; if (file) $('logical-path').value = file.name; });
-  $('details-close').addEventListener('click', () => $('details').close());
+  $('upload-new-file').addEventListener('click', () => { $('upload-version').value = '1'; $('logical-path').value = ''; $('file-input').value = ''; $('upload-status').textContent = 'Chọn tên và nội dung mới. Lần gửi dở trước vẫn giữ trong Controller, không tự xóa.'; });
+  $('file-input').addEventListener('change', () => { const file = $('file-input').files[0]; if (file && Number($('upload-version').value) === 1) $('logical-path').value = file.name; });
+  $('details-close').addEventListener('click', () => { detailGeneration++; $('details').close(); });
+  $('details').addEventListener('close', () => { detailGeneration++; });
+  $('file-search-form').addEventListener('submit', e => { e.preventDefault(); fileUI.offset = 0; void loadFiles(); });
+  $('browse-all').addEventListener('click', () => { fileUI.folder = ''; fileUI.recursive = true; fileUI.offset = 0; void loadFiles(); });
+  $('browse-root').addEventListener('click', () => navigateFolder(''));
+  $('browse-parent').addEventListener('click', () => navigateFolder(fileUI.folder.split('/').slice(0,-1).join('/')));
+  $('files-prev').addEventListener('click', () => { fileUI.offset = Math.max(0,fileUI.offset-50); void loadFiles(); });
+  $('files-next').addEventListener('click', () => { if (fileUI.next !== null) { fileUI.offset = fileUI.next; void loadFiles(); } });
+  $('jobs-refresh').addEventListener('click', () => { void loadJobs(); });
+  $('jobs-prev').addEventListener('click', () => { jobUI.offset = Math.max(0,jobUI.offset-100); void loadJobs(); });
+  $('jobs-next').addEventListener('click', () => { if (jobUI.next !== null) { jobUI.offset = jobUI.next; void loadJobs(); } });
   for (const tab of document.querySelectorAll('[data-tab]')) tab.addEventListener('click', () => {
     for (const other of document.querySelectorAll('[data-tab]')) { const selected = other === tab; other.classList.toggle('selected', selected); other.setAttribute('aria-selected', String(selected)); $(other.dataset.tab).hidden = !selected; }
     if (tab.dataset.tab === 'accounts') void loadAccounts();
+    if (tab.dataset.tab === 'jobs') void loadJobs();
   });
   async function boot() {
     if (location.protocol !== 'https:' || !window.isSecureContext || !crypto.subtle) {

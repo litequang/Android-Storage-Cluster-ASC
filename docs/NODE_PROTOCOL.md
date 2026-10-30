@@ -627,3 +627,27 @@ same-origin cookie+CSRF; stale409, last-owner409, malformed400, state unavailabl
 Self-update expires cookie, changes/delete invalidate affected sessions. Viewer
 only reads/downloads ALL cluster files; all mutations and account/manage reads403
 role_denied. No Node/machine credential/user ACL/membership protocol added.
+
+
+Dashboard browse API1 (Demo only): POST /api/files/query with EXACT fields
+browse_api_version:1, offset:int0..10000, search:str<=128, folder:canonical logical
+path or empty, recursive:bool, sort:name|newest|size, versions:all|latest; optional
+history_file_id:UUID restricts to its immutable logical-path history. Same cookie/
+CSRF/Origin as writes, but read-only and Viewer permitted. Returns <=50 entries
+(file public projection or logical folder), exact matching total, next_offset and
+query_limit_reached. metadata_point is a read listing point, not quorum authority
+or atomic availability proof. Empty folders are not created; no disk path API.
+POST /api/uploads optionally version:int1..1000000, default1 unchanged; Core
+immutable path/version uniqueness and stable intent key remain authority. Same
+bytes/path/version/key retries, never auto bump after ambiguous ACK.
+POST /api/jobs/query {offset:int0..10000}, GET /api/jobs/UUID: bounded public Core
+queue/history, no lease/grant/credentials. Owner POST /api/jobs/UUID/retry {} calls
+existing queue; 409job_state_changed means reread, not automatic success. Viewer/
+file-only ingress cannot retry. Core/recovery refuse all new Demo routes.
+
+Resumed single-writer UPLOAD: worker waits for sender lease ACK/expiry. Duplicate
+ACK while verification RUNNING preserves that verifier's token/lease. Manual job
+retry during active sender returns409job_state_changed. Upload plan409
+upload_state_conflict is exposed as transfer_busy; browser tries same intent at
+most5times900ms apart, then stops unconfirmed. No generic403/SHA/pin/identity
+retry, new key/version, lease bypass or success inferred from ACK.

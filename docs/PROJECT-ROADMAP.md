@@ -175,3 +175,10 @@ pending/blocker và NEXT action trong GitHub. Nếu sửa runtime, chạy regres
 phù hợp; không lặp full445 khi chỉ cập nhật docs hoặc source đã qualified không
 đổi. Không để tình trạng thật chỉ nằm trong chat hoặc đánh dấu hoàn thành phần
 chưa chạy. Roadmap này là cursor tổng; acceptance/progress riêng là bằng chứng.
+
+
+Dashboard update:Node management1 and Owner/Viewer accounts2 published on
+feature/dashboard-full (efe0ec4,cef9ce1). File Manager3 source now qualified
+70distinct related cases; see DASHBOARD-PROGRESS for publication evidence and
+remaining4snapshot/restore,5diagnostics,6upgrade/package/final gates. ZTE continues
+original043Lite until owner explicitly applies a newly qualified package.

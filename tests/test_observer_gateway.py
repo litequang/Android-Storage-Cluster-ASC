@@ -74,6 +74,8 @@ class GatewayHTTPTests(GatewayFixture):
                 for method,path in [('POST','/api/refresh'),('POST','/api/uploads'),('POST','/api/v1/quick-join/pairings'),
                     ('POST','/api/manage/v1/nodes/local-controller/preview'),('POST','/api/manage/v1/confirm/not-a-preview'),
                     ('POST','/api/accounts'),('POST','/api/accounts/primary/change'),
+                    ('POST','/api/files/query'),('POST','/api/jobs/query'),
+                    ('POST','/api/jobs/11111111-1111-4111-8111-111111111111/retry'),
                     ('POST','/api/approve'),('POST','/api/gc'),('POST','/api/promote'),('POST','/api/recovery/activate'),
                     ('GET','/api/files/11111111-1111-4111-8111-111111111111/content')]:
                     self.assertEqual(self.browser_request(method,path,{} if method=='POST' else None)[0],403,(method,path))

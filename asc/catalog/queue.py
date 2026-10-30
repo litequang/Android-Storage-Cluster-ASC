@@ -56,7 +56,9 @@ class JobQueue:
                            (now()+2,row['job_id']))
                 self.catalog._history(db,row['job_id'],'RETRY','job_timeout')
             rows = db.execute("SELECT * FROM catalog_jobs WHERE state IN ('PENDING','RETRY') AND next_attempt_at<=? "
-                              "AND (kind='COPY' OR target_local_file_id IS NOT NULL) AND (? IS NULL OR job_id=?) ORDER BY created_at,job_id", (now(),job_id,job_id)).fetchall()
+                              "AND (kind='COPY' OR target_local_file_id IS NOT NULL) "
+                              "AND (kind!='UPLOAD' OR run_token IS NULL OR lease_until IS NULL OR lease_until<=?) "
+                              "AND (? IS NULL OR job_id=?) ORDER BY created_at,job_id", (now(),now(),job_id,job_id)).fetchall()
             for row in rows:
                 source = db.execute('SELECT node_id FROM catalog_replicas WHERE replica_id=?', (row['source_replica_id'],)).fetchone()
                 nodes = {row['target_node_id']}
@@ -123,7 +125,12 @@ class JobQueue:
             if job['kind']!='UPLOAD':raise CatalogError('job_not_found',404)
             if job['target_local_file_id'] and (job['target_session_id'],job['target_local_file_id'])!=(session_id,local_file_id):
                 raise CatalogError('job_object_conflict',409)
-            db.execute('UPDATE catalog_jobs SET target_session_id=?,target_local_file_id=?,next_attempt_at=? WHERE job_id=?',
+            # The foreground sender has ended this attempt. Only now may the
+            # worker claim the retained object for real byte verification. A
+            # premature ACK still fails _proof; it never completes a replica.
+            db.execute("UPDATE catalog_jobs SET target_session_id=?,target_local_file_id=?,next_attempt_at=?,"
+                       "run_token=CASE WHEN state IN ('PENDING','RETRY') THEN NULL ELSE run_token END,"
+                       "lease_until=CASE WHEN state IN ('PENDING','RETRY') THEN NULL ELSE lease_until END WHERE job_id=?",
                        (session_id,local_file_id,now(),job_id))
         return self.get(job_id)
 
@@ -144,6 +151,8 @@ class JobQueue:
             db.execute('BEGIN IMMEDIATE')
             row=db.execute('SELECT * FROM catalog_jobs WHERE job_id=?',(identifier(job_id),)).fetchone()
             if not row or row['state'] not in ('FAILED','RETRY'):
+                raise CatalogError('job_state_conflict',409)
+            if row['kind']=='UPLOAD' and row['run_token'] is not None and (row['lease_until'] or 0)>now():
                 raise CatalogError('job_state_conflict',409)
             db.execute("UPDATE catalog_jobs SET state='RETRY',attempts=0,next_attempt_at=?,run_token=NULL,lease_until=NULL WHERE job_id=?",
                        (now(),job_id))

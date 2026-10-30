@@ -41,6 +41,7 @@ class AccessPolicyTests(unittest.TestCase):
     def test_owner_file_manager_routes_use_existing_paths(self):
         p=Profile.parse(profile())
         for method,path in [('GET','/'),('GET','/api/state'),('POST','/api/login'),('POST','/api/uploads'),
+                            ('POST','/api/files/query'),('POST','/api/jobs/query'),('GET','/api/jobs/'+FILE),
                             ('PUT','/api/uploads/'+FILE),('GET','/api/files/'+FILE+'/content')]:
             with self.subTest(method=method,path=path):self.assertTrue(p.permits(method,path))
 
@@ -48,6 +49,7 @@ class AccessPolicyTests(unittest.TestCase):
         for mode in ('core-quorum','recovery-read-only'):
             raw=profile();raw['upstream_mode']=mode;p=Profile.parse(raw)
             for method,path in [('POST','/api/uploads'),('POST','/api/refresh'),('PUT','/api/uploads/'+FILE),
+                                ('POST','/api/files/query'),('POST','/api/jobs/query'),('GET','/api/jobs/'+FILE),
                                 ('GET','/api/files/'+FILE+'/content'),('POST','/api/v1/quick-join/pairings')]:
                 with self.subTest(mode=mode,path=path):self.assertFalse(p.permits(method,path))
             self.assertTrue(p.permits('POST','/api/login'));self.assertTrue(p.permits('GET','/api/state'))
@@ -55,6 +57,7 @@ class AccessPolicyTests(unittest.TestCase):
     def test_never_expose_storage_management_shell_or_destructive_paths(self):
         p=Profile.parse(profile())
         for path in ('/api/v1/nodes','/api/v1/storage','/storage/v1/files','/api/v1/quick-join/pairings',
+                     '/api/jobs/'+FILE+'/retry',
                      '/api/approve','/api/gc','/api/activate','/api/shell','/api/update','/api/files/'+FILE):
             with self.subTest(path=path):self.assertFalse(p.permits('DELETE',path));self.assertFalse(p.permits('POST',path))
 
