@@ -74,6 +74,7 @@ class PrivateGatewayTests(unittest.TestCase):
         self.login()
         status,headers,raw=self.request('GET','/api/capabilities')
         self.assertEqual(status,200);self.assertFalse(json.loads(raw)['node_management'])
+        self.assertFalse(json.loads(raw)['account_management'])
         self.assertEqual(headers['X-ASC-Access-Mode'],'file-access-only')
         for headers in ({'Host':'evil.invalid'},{'Origin':'https://evil.invalid'},{'Sec-Fetch-Site':'cross-site'}):
             self.assertEqual(self.request('GET','/api/state',headers=headers)[0],403)
@@ -83,6 +84,9 @@ class PrivateGatewayTests(unittest.TestCase):
         for path in ('/api/v1/nodes','/storage/v1/files','/api/gc','/api/activate','/api/v1/quick-join/pairings',
                      '/api/manage/v1/nodes/local-controller/preview','/api/manage/v1/confirm/anything'):
             self.assertEqual(self.request('POST',path,{})[0],403)
+        self.assertEqual(self.request('GET','/api/accounts')[0],403)
+        self.assertEqual(self.request('POST','/api/accounts',{})[0],403)
+        self.assertEqual(self.request('POST','/api/accounts/primary/change',{})[0],403)
         self.assertEqual(self.request('GET','/api/state',authenticated=False,headers={'Forwarded':'for=127.0.0.1','X-Forwarded-User':'owner'})[0],401)
 
     def test_wrong_pin_mode_and_existing_identity_cannot_be_silently_replaced(self):

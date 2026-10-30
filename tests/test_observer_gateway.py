@@ -62,6 +62,9 @@ class GatewayHTTPTests(GatewayFixture):
                                  {'mode':'core-quorum','read_only':True})
                 self.assertEqual(self.browser_request('GET','/api/state',authenticated=False)[0],401)
                 self.owner_login(runtime)
+                methods=json.loads(self.browser_request('GET','/api/auth/methods',authenticated=False)[2])
+                self.assertFalse(methods['password'])
+                self.assertEqual(self.browser_request('POST','/api/login',{'username':'primary','password':'synthetic-test-password'},False)[0],400)
                 session=json.loads(self.browser_request('GET','/api/session')[2]);self.assertTrue(session['read_only'])
                 self.assertEqual(session['mode'],'core-quorum');self.assertEqual(session['max_upload_bytes'],0)
                 snapshot=json.loads(self.browser_request('GET','/api/state')[2]);self.assertFalse(snapshot['writer_authority'])
@@ -70,6 +73,7 @@ class GatewayHTTPTests(GatewayFixture):
                 self.assertFalse(capabilities['node_management']);self.assertFalse(capabilities['recovery_writer'])
                 for method,path in [('POST','/api/refresh'),('POST','/api/uploads'),('POST','/api/v1/quick-join/pairings'),
                     ('POST','/api/manage/v1/nodes/local-controller/preview'),('POST','/api/manage/v1/confirm/not-a-preview'),
+                    ('POST','/api/accounts'),('POST','/api/accounts/primary/change'),
                     ('POST','/api/approve'),('POST','/api/gc'),('POST','/api/promote'),('POST','/api/recovery/activate'),
                     ('GET','/api/files/11111111-1111-4111-8111-111111111111/content')]:
                     self.assertEqual(self.browser_request(method,path,{} if method=='POST' else None)[0],403,(method,path))

@@ -770,3 +770,21 @@ Phase5 permits GET capabilities only; scopes node_management=false with fixed
 file-access-only header/body. Node/pair/admin/manage paths remain blocked. Static
 header is UI capability hint, never caller identity or authorization. Preserve
 TLS/pinning and all old origin/session/transfer guards. No arbitrary FS/quota/shell.
+
+
+
+## Dashboard Owner/Viewer password roles
+No default account/password; local owner grant explicitly bootstraps first Owner.
+Standard hashlib.pbkdf2_hmac SHA256600k, fresh16-byte random salt/32-byte hash,
+hmac.compare_digest; no new crypto/dependencies. Private0600 no-link/single-link
+cluster-bound format1 checked before use; unknown/corrupt/unsafe fails closed.
+Never persist plaintext or JS auth credentials. Login exact Origin/TLS, original
+join-rate budget, bounded8RAM sessions, secure HttpOnly SameSite Strict cookie,
+CSRF on authenticated API. No password/hash/salt in public DTO/logs/URL/storage.
+Generation/role/delete revokes future requests, recheck sessions before published
+transfer result; already authorized in-flight Core work is not promised canceled.
+Viewer may read ALL cluster file bytes; no private-folder/file ACL claim. Backend
+403 gates writes/manage/account reads regardless of UI manipulation. Core/recovery
+no password store/writer grant; file ingress allows auth-method GET/login but
+blocks accounts/admin/pair/manage and advertises scoped capabilities. Old ingress
+missing metadata only degrades known file UI, never mode/authority/TLS.

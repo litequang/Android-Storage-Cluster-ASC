@@ -86,3 +86,58 @@ new Node receives replica, stops and download uses survivor; original physical
 object hashes preserved after revoke. No fake runtime/phone/full-suite PASS.
 Source commit/push/fetch/advertised verification follows; next checkpoint2 only
 AFTER remote equality. Original packages/Go/Android/deps unchanged.
+
+
+
+## Checkpoint1 publication VERIFIED / checkpoint2 in progress
+Source efe0ec4003d5f574c56486347723e1636c212025 normally pushed/fetched/advertised
+on feature/dashboard-full, clean tree before2.95distinct Linux source cases PASS.
+Original PC/Phase5/Core/Demo/Phase4 refs and all published archives unchanged.
+
+Environment spec136 restarted during2: wait_for_environment returned ready,
+original dirty accounts/auth/http/access files all recovered, same HEAD efe0ec4;
+no reset/recreation/phone/SSH or proxy/CA change. Existing private Python3.13.5
+edge env/Go/browser toolchains retained. Current code continues, no phase redo.
+
+Checkpoint2: optional cluster-bound private accounts.json1,8accounts max,
+PBKDF2-HMAC-SHA256600000/salt16/hash32, standard hashlib/hmac; no default password,
+plaintext disk/browser storage or external dependency. Existing one-use operator
+code remains explicit bootstrap/recovery. Owner can create/change/delete accounts;
+Viewer reads/downloads ALL cluster files only, no per-file ACL/sharing promised.
+Role/account generation checked server-side; password/role/delete revokes account
+sessions; last Owner cannot be removed/downgraded. Accounts survive restart with
+all Core/Node/Volume/Cluster identity and old file bytes unchanged.
+
+Actual mobile browser creates Owner+Viewer, refuses last-owner delete, password
+login/self rotation/old-password refusal, Viewer download actual SHA and forbidden
+POST. New account API/store8 +browser1 +existing session1 initial10PASS41.103s.
+Fresh broad final qualification pending below. Initial broad70run had2browser
+failures waiting for original code-login error text after a translation edit;
+restored ORIGINAL code message and made password error contextual. No assertion
+removed/timeout increased. Fresh final71 includes exact shipped Access0.1.0
+browser compatibility, not a fake proxy response. Final result must precede push.
+
+Gateway remains file-only (node/account controls false, account API blocked),
+only public supported-method metadata GET added. Explicit old-gateway403/404
+capability degradation retains original file functions in verified mode/session,
+never enables management or changes Core/recovery into Demo. Original old bundle
+stays immutable. No new ZTE package/deploy or full Dashboard completion yet.
+
+
+### Checkpoint2 final source qualification
+Fresh broad run:71distinct PASS,0FAIL/ERROR/SKIP in408.439s, including original
+Dashboard/QuickJoin browsers, actual shipped Linux Access0.1.0 archive browser,
+Core quorum/recovery read-only and private/edge ingress. Follow-up final changes
+only refine Viewer capability metadata and clear old account/management DOM fields
+on logout: affected Viewer API1PASS7.424s, Viewer API+mobile browser2PASS18.316s,
+Node management mobile browser1PASS12.786s. These overlap the71case IDs, not75unique.
+No test assertion removed or TLS bypass; original code-login wording restored.
+
+Exact input hashes and run scope:qualification/dashboard-accounts.json. Browser
+uses trusted synthetic CA/actual TLS, real replicas/fallback; not Android/phone
+runtime or a new full Python suite. Old043/APK/LinuxAccess packages, Go/Android
+source and dependencies unchanged. No new ZTE deploy or full Dashboard claim.
+
+NEXT:after normal commit/push/fetch/advertised equality, checkpoint3 File Manager
+(pagination/search/logical folders, explicit immutable versions, jobs/retry), then
+4snapshot/restore,5diagnostics and6exact043 upgrade/package/fresh final gates.

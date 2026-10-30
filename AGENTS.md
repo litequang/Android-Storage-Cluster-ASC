@@ -19,7 +19,9 @@ PROGRESS and latest PC4336ab7. New feature/dashboard-full from4336, original ref
 untouched. Cloud SOURCE/SYNTHETIC ONLY; no phone/SSH access. Implement successive
 tested/pushed checkpoints, not docs-only planning. Reuse canonical services; Core/
 recovery read-only, no GC/Raft/failover/writerDR or fake unsupported features.
-PROJECT-ROADMAP current cursor is updated for this new task.
+PROJECT-ROADMAP current cursor is updated for this new task. Node management1
+is pushed; accounts2 qualified next, then File Manager3/snapshot4/diagnostics5/
+final package6. Read DASHBOARD-PROGRESS for actual source/publication evidence.
 
 After the nine mandatory reads, read docs/PROJECT-ROADMAP.md for the full timeline,
 runtime/artifact distinctions, current task and remaining gates. CURRENT TASK is

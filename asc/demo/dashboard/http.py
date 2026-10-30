@@ -21,6 +21,7 @@ from ...storage.volumes import no_links
 from .assets import ASSETS
 from .auth import COOKIE, SESSION_TTL, GRANT_TTL, Sessions
 from .views import Views
+from .accounts import Accounts, AccountError
 from ..pairing import Pairings, PairingError
 
 CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self'; worker-src 'self'"
@@ -45,6 +46,7 @@ class DashboardAPI:
         self.pairings = Pairings(root,service,client)
         from .management import Management
         self.management = Management(self)
+        self.accounts = Accounts(self.root, self.service.registry.cluster_id())
         self.lock = threading.Lock()
         self.tickets = {}
         self.transfers = threading.BoundedSemaphore(1)
@@ -167,6 +169,10 @@ class DashboardHandler(Handler):
             self.server.limiter.blocked('auth', self.client_address[0], consume=True)
             raise Rejected(403, 'csrf_required')
         result = self.server.api.sessions.authenticate(cookie, values[0] if csrf else None)
+        if (result is not None and result[1].get('account_id') is not None
+                and (getattr(self.server.api, 'accounts', None) is None or not self.server.api.accounts.valid(result[1]))):
+            self.server.api.sessions.logout(cookie)
+            result = None
         if result is None:
             self.server.limiter.blocked('auth', self.client_address[0], consume=True)
             raise Rejected(401, 'login_required')
@@ -251,13 +257,21 @@ class DashboardHandler(Handler):
             raise Rejected(400, 'bad_request')
         self.browser_origin(self.command != 'GET')
         path, method = parsed.path, self.command
+        if path == '/api/auth/methods' and method == 'GET':
+            accounts = getattr(api, 'accounts', None)
+            return self._json(200, {'auth_api_version': 1, 'one_time_code': True,
+                'password': api.mode == 'single-writer-demo' and accounts is not None and accounts.list()['password_enabled']})
         if path == '/api/login' and method == 'POST':
             if self._rate('join', consume=True):
                 return
             obj = self.body_json()
-            if set(obj) != {'code'}:
+            if set(obj) == {'code'}:
+                result = api.sessions.login(obj['code'])
+            elif set(obj) == {'username', 'password'} and api.mode == 'single-writer-demo' and getattr(api, 'accounts', None) is not None:
+                principal = api.accounts.authenticate(obj['username'], obj['password'])
+                result = api.sessions.create(principal) if principal is not None else None
+            else:
                 raise Rejected(400, 'bad_request')
-            result = api.sessions.login(obj['code'])
             if result is None:
                 raise Rejected(401, 'login_rejected')
             cookie, session = result
@@ -283,7 +297,8 @@ class DashboardHandler(Handler):
             authenticated = self.auth(csrf=False)
             if authenticated is None:
                 return
-            return self._json(200, {'authenticated': True, 'csrf': authenticated[2]['csrf'], 'max_upload_bytes': api.cfg['max_upload_bytes'],'mode':api.mode,'read_only':api.mode!='single-writer-demo'})
+            return self._json(200, {'authenticated': True, 'csrf': authenticated[2]['csrf'], 'max_upload_bytes': api.cfg['max_upload_bytes'],'mode':api.mode,'read_only':api.mode!='single-writer-demo',
+                                   'role': authenticated[2].get('role','owner'), 'username': authenticated[2].get('username')})
         authenticated = self.auth()
         if authenticated is None:
             return
@@ -296,10 +311,15 @@ class DashboardHandler(Handler):
             return self._json(200, {'authenticated': False},
                               (('Set-Cookie', cookie_name + '=; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'),))
         if path == '/api/capabilities' and method == 'GET':
+            owner = authenticated[2].get('role','owner') == 'owner'
             return self._json(200, {'dashboard_api_version': 1, 'mode': api.mode,
-                'node_management': api.mode == 'single-writer-demo' and getattr(api, 'management', None) is not None,
-                'file_upload_download': api.mode == 'single-writer-demo',
-                'owner_password': False, 'file_history': False, 'snapshot_restore': False,
+                'node_management': owner and api.mode == 'single-writer-demo' and getattr(api, 'management', None) is not None,
+                'file_upload_download': owner and api.mode == 'single-writer-demo',
+                'file_upload': owner and api.mode == 'single-writer-demo', 'file_download': api.mode == 'single-writer-demo',
+                'refresh_probe': owner and api.mode == 'single-writer-demo',
+                'account_management': owner and api.mode == 'single-writer-demo' and getattr(api, 'accounts', None) is not None,
+                'owner_password': api.mode == 'single-writer-demo' and getattr(api, 'accounts', None) is not None,
+                'file_history': False, 'snapshot_restore': False,
                 'physical_gc': False, 'recovery_writer': False})
         if api.mode != 'single-writer-demo':
             if path=='/api/state' and method=='GET':return self._json(200,api.views.state())
@@ -307,6 +327,19 @@ class DashboardHandler(Handler):
             if method=='GET' and len(pieces)==3 and pieces[:2]==['api','files']:
                 return self._json(200,api.views.file(pieces[2]))
             raise Rejected(403,'read_only_mode')
+        if authenticated[2].get('role','owner') != 'owner':
+            if method != 'GET' or path.startswith(('/api/manage/', '/api/accounts')):
+                raise Rejected(403, 'role_denied')
+        if path == '/api/accounts':
+            if method == 'GET':return self._json(200, api.accounts.list())
+            if method == 'POST':return self._json(201, api.accounts.create(self.body_json()))
+        parts = path.strip('/').split('/')
+        if len(parts) == 4 and parts[:2] == ['api','accounts'] and parts[3] == 'change' and method == 'POST':
+            result = api.accounts.change(parts[2], self.body_json())
+            api.sessions.revoke_account(result['account_id'])
+            result['current_session_revoked'] = authenticated[2].get('account_id') == result['account_id']
+            extra = (('Set-Cookie', cookie_name + '=; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'),) if result['current_session_revoked'] else ()
+            return self._json(200, result, extra)
         parts = path.strip('/').split('/')
         if parts[:4] == ['api', 'manage', 'v1', 'nodes']:
             if len(parts) == 5 and method == 'GET':
@@ -353,7 +386,7 @@ class DashboardHandler(Handler):
         self._response_started = False
         try:
             self._route()
-        except (Rejected,PairingError) as exc:
+        except (Rejected,PairingError,AccountError) as exc:
             if not self._response_started:
                 self._json(exc.status, {'error': exc.code})
         except ClientError as exc:

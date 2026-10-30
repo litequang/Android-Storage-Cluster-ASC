@@ -93,3 +93,10 @@ footer { max-width: 1120px; padding: 24px 20px 32px; margin: auto; font-size: 11
 #manage-dialog input[type="checkbox"] { width: auto; margin-right: .5rem; }
 #manage-preview-body { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .85rem; }
 #manage-confirm-panel { border-top: 1px solid #cad9df; margin-top: 1rem; padding-top: .5rem; }
+
+#login-form select, #accounts select, #account-dialog select { width: 100%; padding: .75rem; font: inherit; border: 1px solid #cad9df; border-radius: 8px; }
+#accounts form { max-width: 620px; }
+#account-dialog label { display: block; margin-top: .85rem; }
+#account-dialog input[type="checkbox"] { width: auto; margin-right: .5rem; }
+#actor-label { max-width: 180px; overflow-wrap: anywhere; font-size: .8rem; }
+.topbar { flex-wrap: wrap; }

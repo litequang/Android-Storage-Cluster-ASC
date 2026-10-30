@@ -576,3 +576,17 @@ volume IDs/metadata+storage flags/approved_generation; live probe updates exclud
 No raw session cookie, machine secret, key, new DB/table/version or persistent
 identity. Logout/server restart clears previews. Existing Registry4/Manifest1/
 Catalog journals unchanged; no automatic retry after unknown crash outcome.
+
+
+
+## Optional Dashboard accounts1
+Private dashboard/accounts.json exact format1/cluster_id/kdf/iterations/revision/
+accounts. kdf=pbkdf2-hmac-sha256, iterations600000; max8 usernames. Each row exact
+account_id UUID/role(owner|viewer)/generation/salt16bytes hex/password_hash32bytes
+hex/created_at/updated_at. Version/cluster/KDF/typed bounds checked; atomic existing
+private fsync helper, no plaintext password. Single live Dashboard owns writes;
+no independent CLI writer or DB. Generation CAS/last-owner constraints under its
+thread lock, sessions RAM8global; runtime ownership prevents two live Controllers.
+No Registry/Manifest/schema change, Node/Cluster/Volume/cert/key unchanged. Existing
+backups include private auth file; never publish it. Legacy043 reader ignores it,
+uses one-use codes; it does not authenticate password users or migrate state.

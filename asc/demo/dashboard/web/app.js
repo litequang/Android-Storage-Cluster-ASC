@@ -24,16 +24,18 @@
     navigator.serviceWorker.register('/service-worker.js', { scope: '/', updateViaCache: 'none' })
       .catch(() => { $('install-status').textContent = 'Web App chưa sẵn sàng; Dashboard vẫn dùng qua trình duyệt HTTPS.'; });
   }
-  const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null, features: null };
+  const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null, features: null, role: null, username: null, passwordEnabled: false };
   const pairing = { generation: 0, ticket: null, timer: null, creating: false, polling: false };
   const management = { generation: 0, revision: 0, node: null, preview: null, busy: false };
+  const accountUI = { generation: 0, editing: null, busy: false };
   const messages = {
     pairing_limit: 'Đã đạt giới hạn mã đang theo dõi (8/phiên, 32/Controller). Đợi hoặc kiểm tra các mã đã tạo.',
     pairing_not_found: 'Không còn bằng chứng theo dõi trong phiên này. Không suy ra mã đã bị thu hồi.',
     unsupported_runtime: 'Quick Join chỉ hỗ trợ Demo single-writer đã xác minh.',
     read_only_mode: 'Chế độ Core chỉ quan sát; thao tác thay đổi bị từ chối phía server.',
     login_rejected: 'Mã không hợp lệ, đã dùng hoặc đã hết hạn. Lấy mã mới từ Controller.',
-    login_required: 'Phiên đã hết hạn. Đăng nhập lại bằng mã một lần.',
+    login_required: 'Phiên đã hết hạn. Đăng nhập lại để tiếp tục.',
+    rate_limited: 'Đã thử quá nhiều lần. Đợi giới hạn đăng nhập mở lại rồi thử tiếp.',
     insufficient_capacity: 'Không đủ dung lượng hoặc chưa có hai điện thoại độc lập đủ điều kiện. Chưa xác nhận upload.',
     insufficient_spool_space: 'Controller chưa đủ chỗ tạm để xử lý file. Giữ file gốc và thử lại sau.',
     upload_too_large: 'File vượt giới hạn của Dashboard. Hãy dùng CLI cho file lớn hơn.',
@@ -58,6 +60,12 @@
     management_limit: 'Đã đạt giới hạn bản xem trước. Đợi bản cũ hết hạn rồi thử lại.',
     management_preview_expired: 'Bản xem trước hết hạn hoặc không thuộc phiên này. Xem trước lại.',
     management_confirmation_required: 'Cần đúng Node ID và xác nhận endpoint/PIN/volume/miền lỗi trước khi áp dụng.',
+    role_denied: 'Tài khoản Viewer chỉ được đọc và tải file; thao tác này cần Owner.',
+    account_exists: 'Tên đăng nhập đã tồn tại. Đọc lại danh sách trước khi thử tiếp.',
+    account_limit: 'Đã đạt giới hạn tài khoản hoặc số lần thay đổi được hỗ trợ.',
+    account_state_changed: 'Tài khoản đã thay đổi. Đọc lại trước khi xác nhận thao tác mới.',
+    last_owner_required: 'Phải giữ ít nhất một Owner. Tài khoản đầu tiên phải là Owner.',
+    account_state_unavailable: 'State tài khoản không đọc/xác minh được. Giữ nguyên file để owner kiểm tra, không tự tạo lại.',
   };
   class APIError extends Error {
     constructor(code, status) { super(messages[code] || 'Yêu cầu chưa được xác nhận. Kiểm tra kết nối và thử lại.'); this.code = code; this.status = status; }
@@ -85,18 +93,21 @@
   function notice(text) { $('notice').textContent = text; $('notice').hidden = !text; }
   function connection(ok) {
     model.connected = ok;
-    if (!ok) clearManagement();
+    if (!ok) { clearManagement(); closeAccountEditor(); $('account-new-password').value = ''; }
     if (!ok) clearPairing('Mất kết nối: mã đã ẩn, đăng ký và quyền lưu trữ UNKNOWN.');
     pairingButton();
     if (!ok && $('details').open) $('details').close();
     $('connection').textContent = model.readOnly ? (ok ? 'Gateway online' : 'Gateway UNKNOWN') : ok ? 'Controller online' : 'Controller UNKNOWN';
     $('connection').className = 'badge ' + (ok ? 'good' : 'unknown');
-    $('upload-button').disabled = !ok || model.uploading;
+    $('upload-button').disabled = !ok || model.uploading || !canUpload();
     if (model.state) render(model.state);
   }
   function loginView(clear = true) {
     model.csrf = null; model.connected = false; model.state = null;
     model.features = null; clearManagement();
+    closeAccountEditor(); $('account-list').replaceChildren(); $('account-new-password').value = ''; $('login-password').value = '';
+    $('account-new-username').value = ''; $('account-result').textContent = '';
+    $('actor-label').hidden = true; $('actor-label').textContent = '';
     clearPairing('Đăng nhập lại để tạo mã ghép. Mã cũ chưa dùng có thể vẫn còn hiệu lực.');
     $('application').hidden = true; $('login-panel').hidden = false; $('logout').hidden = true;
     $('summary').replaceChildren(); $('node-list').replaceChildren(); $('file-list').replaceChildren();
@@ -121,7 +132,9 @@
       }
       if (binary) return { buffer: await response.arrayBuffer(), sha: response.headers.get('X-ASC-SHA256') };
       const value = await response.json();
-      if (path === '/api/capabilities' && response.headers.get('X-ASC-Access-Mode') === 'file-access-only') value.node_management = false;
+      if (path === '/api/capabilities' && response.headers.get('X-ASC-Access-Mode') === 'file-access-only') {
+        value.node_management = false; value.account_management = false;
+      }
       return value;
     } catch (error) {
       if (error instanceof APIError) throw error;
@@ -130,7 +143,7 @@
     } finally { clearTimeout(timer); }
   }
   function pairingButton() {
-    $('pair-create').disabled = !model.csrf || !model.connected || model.readOnly || pairing.creating;
+    $('pair-create').disabled = !model.csrf || !model.connected || model.readOnly || !model.features?.node_management || pairing.creating;
   }
   function clearPairing(message = 'Chưa tạo mã ghép.') {
     pairing.generation += 1;
@@ -184,6 +197,10 @@
   function applyMode(value) {
     if (!['single-writer-demo', 'core-quorum', 'recovery-read-only'].includes(value.mode) || value.read_only !== (value.mode !== 'single-writer-demo')) throw new APIError('unsupported_runtime', 503);
     model.mode = value.mode; model.readOnly = value.read_only;
+    if (value.authenticated === true) {
+      if (value.role !== undefined && !['owner','viewer'].includes(value.role)) throw new APIError('unsupported_runtime',503);
+      model.role = value.role || 'owner'; model.username = value.username || null;
+    }
     $('runtime-label').textContent = model.readOnly ? 'Core · Quan sát chỉ đọc' : 'Demo Alpha · LAN riêng';
     $('login-method').textContent = model.readOnly ?
       'Dùng mã một lần được operator chủ gateway tạo qua serve --issue-login-code. Xác minh CA/URL trước khi nhập; mã hiệu lực 5 phút.' :
@@ -195,15 +212,118 @@
     pairingButton();
   }
   async function loadFeatures() {
-    const value = await request('/api/capabilities');
-    if (value.dashboard_api_version !== 1 || value.mode !== model.mode) throw new APIError('unsupported_runtime', 503);
-    model.features = value;
+    try {
+      const value = await request('/api/capabilities');
+      if (value.dashboard_api_version !== 1 || value.mode !== model.mode) throw new APIError('unsupported_runtime', 503);
+      model.features = value; $('capability-note').hidden = true;
+    } catch (error) {
+      // Published older file gateways do not forward this new metadata route.
+      // Keep ONLY original file functions in the already verified mode/session;
+      // never enable management or switch Core/recovery into Demo.
+      if (!(error instanceof APIError) || ![403,404].includes(error.status)) throw error;
+      model.features = { node_management:false, account_management:false, owner_password:false,
+        file_upload:!model.readOnly && model.role === 'owner', file_download:!model.readOnly,
+        refresh_probe:!model.readOnly && model.role === 'owner' };
+      $('capability-note').textContent = 'Kết nối chỉ hỗ trợ File Manager cũ. Quản trị mới cần Dashboard LAN trực tiếp hoặc gateway tương thích.';
+      $('capability-note').hidden = false;
+    }
+    $('upload-panel').hidden = model.readOnly || !model.features.file_upload;
+    $('accounts-tab').hidden = !model.features.account_management;
+    document.querySelector('[data-tab="quick-join"]').hidden = !model.features.node_management;
+    $('refresh').textContent = model.features.refresh_probe ? 'Cập nhật kiểm tra' : 'Đọc trạng thái';
+    $('actor-label').textContent = (model.role === 'viewer' ? 'Viewer' : 'Owner') + (model.username ? ' · '+model.username : ' · mã cục bộ');
+    $('actor-label').hidden = false;
   }
+  function canUpload() { return !model.readOnly && model.features?.file_upload === true; }
+  function loginKind() {
+    const password = $('login-kind').value === 'password' && model.passwordEnabled && !model.readOnly;
+    if (!password) $('login-kind').value = 'code';
+    $('login-code-fields').hidden = password; $('login-code').disabled = password; $('login-code').required = !password;
+    $('login-password-fields').hidden = !password;
+    for (const id of ['login-username','login-password']) { $(id).disabled = !password; $(id).required = password; }
+    if (password) $('login-method').textContent = 'Dùng tài khoản do Owner tạo. Mật khẩu chỉ gửi qua HTTPS, phiên đăng nhập không lưu vào browser storage.';
+  }
+  async function loadAuthMethods() {
+    model.passwordEnabled = false;
+    try {
+      const value = await request('/api/auth/methods', { csrf:false });
+      if (value.auth_api_version === 1 && value.password === true && !model.readOnly) model.passwordEnabled = true;
+    } catch (_) { /* Legacy file ingress remains one-time code only; no downgrade of TLS or runtime. */ }
+    $('login-kind').querySelector('[value="password"]').disabled = !model.passwordEnabled;
+    if (model.passwordEnabled) $('login-kind').value = 'password';
+    loginKind();
+  }
+  function closeAccountEditor() {
+    accountUI.generation += 1; accountUI.editing = null; accountUI.busy = false;
+    $('account-password').value = ''; $('account-confirm-name').value = ''; $('account-delete').checked = false;
+    $('account-target').textContent = '';
+    $('account-password').disabled = false; $('account-save').disabled = false; $('account-change-result').textContent = '';
+    if ($('account-dialog').open) $('account-dialog').close();
+  }
+  function editAccount(item) {
+    if (!model.features?.account_management || !model.connected) return;
+    closeAccountEditor(); accountUI.editing = item;
+    $('account-target').textContent = item.username + ' · generation '+item.generation;
+    $('account-role').value = item.role; $('account-dialog').showModal();
+  }
+  async function loadAccounts() {
+    if (!model.features?.account_management || !model.csrf) return;
+    const generation = accountUI.generation;
+    try {
+      const value = await request('/api/accounts');
+      if (generation !== accountUI.generation || !model.csrf) return;
+      if (value.account_api_version !== 1) throw new APIError('unsupported_runtime',503);
+      $('account-list').replaceChildren(...value.accounts.map(item => {
+        const card = node('article','node-card'); card.dataset.accountId = item.account_id;
+        card.append(node('h3','',item.username),node('p','',item.role === 'owner' ? 'Owner — quản trị toàn cụm' : 'Viewer — đọc toàn bộ file'),
+          node('p','muted','Cập nhật: '+date(item.updated_at)),button('Sửa quyền / mật khẩu',()=>editAccount(item)));
+        return card;
+      }));
+      if (!value.accounts.length) $('account-list').append(node('p','muted','Chưa có tài khoản. Tạo Owner đầu tiên bằng phiên mã cục bộ này.'));
+    } catch (error) { if (generation === accountUI.generation) $('account-result').textContent = error.message; }
+  }
+  $('account-create-form').addEventListener('submit',async event => {
+    event.preventDefault(); if (!model.features?.account_management || !model.connected || accountUI.busy) return;
+    const generation = accountUI.generation;
+    const body = { username:$('account-new-username').value.trim(), password:$('account-new-password').value, role:$('account-new-role').value };
+    $('account-new-password').value = ''; accountUI.busy = true; $('account-create').disabled = true;
+    $('account-result').textContent = 'Đang tạo tài khoản; chưa xác nhận thành công.';
+    try {
+      await request('/api/accounts',{method:'POST',json:body});
+      if (generation !== accountUI.generation || !model.csrf) return;
+      $('account-result').textContent = 'Controller đã xác nhận tạo tài khoản. Bạn có thể đăng xuất rồi dùng tài khoản/mật khẩu.';
+      await loadAccounts();
+    } catch (error) { if (generation === accountUI.generation) $('account-result').textContent = error.message; }
+    finally { if (generation === accountUI.generation) accountUI.busy = false; $('account-create').disabled = false; }
+  });
+  $('account-change-form').addEventListener('submit',async event => {
+    event.preventDefault(); const item = accountUI.editing;
+    if (!item || accountUI.busy || !model.connected || !model.features?.account_management) return;
+    if ($('account-confirm-name').value !== item.username) { $('account-change-result').textContent = 'Nhập đúng tên đăng nhập để xác nhận.'; return; }
+    const generation = accountUI.generation;
+    const body = { expected_generation:item.generation, role:$('account-role').value, password:$('account-password').value, delete:$('account-delete').checked };
+    $('account-password').value = ''; accountUI.busy = true; $('account-save').disabled = true;
+    $('account-change-result').textContent = 'Đang lưu; chờ Controller xác nhận.';
+    try {
+      const result = await request('/api/accounts/'+encodeURIComponent(item.username)+'/change',{method:'POST',json:body});
+      if (generation !== accountUI.generation || !model.csrf) return;
+      if (result.current_session_revoked) { loginView(); notice('Đã cập nhật tài khoản và thu hồi phiên cũ. Đăng nhập lại.'); await loadAuthMethods(); }
+      else { closeAccountEditor(); $('account-result').textContent = 'Controller đã xác nhận thay đổi và thu hồi các phiên của tài khoản đó.'; await loadAccounts(); }
+    } catch (error) { if (generation === accountUI.generation) $('account-change-result').textContent = error.message; }
+    finally { if (generation === accountUI.generation) { accountUI.busy = false; $('account-save').disabled = false; } }
+  });
+  $('account-delete').addEventListener('change',()=>{ $('account-password').value = ''; $('account-password').disabled = $('account-delete').checked; });
+  $('account-close').addEventListener('click',closeAccountEditor);
+  $('account-dialog').addEventListener('cancel',closeAccountEditor);
+  $('accounts-refresh').addEventListener('click',()=>{ void loadAccounts(); });
+  $('login-kind').addEventListener('change',()=>{ $('login-password').value = ''; $('login-code').value = ''; loginKind(); });
   function clearManagement() {
     management.generation += 1; management.node = null; management.preview = null; management.busy = false;
     $('manage-apply').disabled = false; $('manage-preview').disabled = false;
     $('manage-confirm-panel').hidden = true; $('manage-confirm-node').value = ''; $('manage-domain-confirm').checked = false;
     $('manage-preview-body').textContent = ''; $('manage-result').textContent = '';
+    $('manage-node').textContent = '';
+    for (const id of ['manage-origin','manage-pin','manage-volumes','manage-domain','manage-name']) $(id).value = '';
     if ($('manage-dialog').open) $('manage-dialog').close();
   }
   function managementFields() {
@@ -412,15 +532,15 @@
       const get = button('Tải xuống', () => download(file)); get.dataset.action = 'download'; get.disabled = !model.connected || file.size > model.max;
       actions.append(view); if (!model.readOnly) actions.append(get); row.append(info, actions); return row;
     }));
-    if (!state.files.length) $('file-list').append(node('p', 'muted', model.readOnly ? 'Chưa có file trong metadata quan sát.' : 'Chưa có file. Upload một file nhỏ để thử hai bản sao.'));
+    if (!state.files.length) $('file-list').append(node('p', 'muted', model.readOnly ? 'Chưa có file trong metadata quan sát.' : canUpload() ? 'Chưa có file. Upload một file nhỏ để thử hai bản sao.' : 'Chưa có file trong cụm. Owner có thể thêm file.'));
     if (state.files_truncated) $('file-list').append(node('p', 'error', 'Danh sách bị giới hạn; không coi đây là toàn bộ Catalog.'));
-    $('upload-button').disabled = !model.connected || model.uploading;
+    $('upload-button').disabled = !model.connected || model.uploading || !canUpload();
   }
   async function reload(probe = false) {
     if (!model.csrf || model.polling) return;
     model.polling = true; $('refresh').disabled = true;
     try {
-      probe = probe && !model.readOnly;
+      probe = probe && !model.readOnly && model.features?.refresh_probe === true;
       const state = await request(probe ? '/api/refresh' : '/api/state', probe ? { method: 'POST', json: {} } : {});
       model.state = state; connection(true); notice(''); render(state);
     } catch (error) { if (model.csrf) notice(error.message); }
@@ -437,7 +557,7 @@
     return key;
   }
   async function upload(event) {
-    event.preventDefault(); if (model.readOnly || model.uploading || !model.connected) return;
+    event.preventDefault(); if (!canUpload() || model.uploading || !model.connected) return;
     const file = $('file-input').files[0], path = $('logical-path').value.trim();
     if (!file || !path) return;
     $('upload-status').className = ''; $('upload-status').textContent = 'Đang tính SHA-256 trước khi gửi…';
@@ -482,16 +602,19 @@
       if (result.protected) { model.pending = null; try { sessionStorage.removeItem('asc-demo-pending-upload'); } catch (_) { /* optional metadata storage */ } }
       await reload();
     } catch (error) { $('upload-status').className = 'error'; $('upload-status').textContent = error.message; }
-    finally { model.activeTicket = null; if (timer) clearInterval(timer); model.uploading = false; $('upload-button').disabled = !model.connected; }
+    finally { model.activeTicket = null; if (timer) clearInterval(timer); model.uploading = false; $('upload-button').disabled = !model.connected || !canUpload(); }
   }
   $('login-form').addEventListener('submit', async event => {
     event.preventDefault(); $('login-button').disabled = true; $('login-error').textContent = '';
+    const passwordLogin = $('login-kind').value === 'password';
     try {
-      const reply = await request('/api/login', { method: 'POST', json: { code: $('login-code').value.trim() }, csrf: false });
+      const credentials = passwordLogin ? { username:$('login-username').value.trim(), password:$('login-password').value } : { code:$('login-code').value.trim() };
+      $('login-password').value = ''; $('login-code').value = '';
+      const reply = await request('/api/login', { method: 'POST', json: credentials, csrf: false });
       model.csrf = reply.csrf;
       const session = await request('/api/session', { csrf: false }); applyMode(session); model.max = session.max_upload_bytes; await loadFeatures();
       activate(); await reload();
-    } catch (error) { $('login-error').textContent = error.message; }
+    } catch (error) { $('login-error').textContent = passwordLogin && error.code === 'login_rejected' ? 'Tên đăng nhập hoặc mật khẩu không đúng.' : error.message; }
     finally { $('login-button').disabled = false; }
   });
   $('logout').addEventListener('click', async () => {
@@ -499,10 +622,10 @@
     try { await request('/api/logout', { method: 'POST', json: {} });
       model.pending = null;
       try { sessionStorage.removeItem('asc-demo-pending-upload'); } catch (_) { /* no auth storage */ }
-      loginView(); notice('');
+      loginView(); notice(''); await loadAuthMethods();
     } catch (error) { notice(error.message); }
   });
-  window.addEventListener('pagehide', () => { clearPairing('Trang đã đóng: theo dõi đã bỏ, không tự thu hồi mã.'); clearManagement(); });
+  window.addEventListener('pagehide', () => { clearPairing('Trang đã đóng: theo dõi đã bỏ, không tự thu hồi mã.'); clearManagement(); closeAccountEditor(); $('account-new-password').value = ''; $('login-password').value = ''; });
   $('pair-create').addEventListener('click', () => { void createPairing(); });
   $('refresh').addEventListener('click', () => { void reload(true); });
   $('upload-form').addEventListener('submit', upload);
@@ -510,12 +633,13 @@
   $('details-close').addEventListener('click', () => $('details').close());
   for (const tab of document.querySelectorAll('[data-tab]')) tab.addEventListener('click', () => {
     for (const other of document.querySelectorAll('[data-tab]')) { const selected = other === tab; other.classList.toggle('selected', selected); other.setAttribute('aria-selected', String(selected)); $(other.dataset.tab).hidden = !selected; }
+    if (tab.dataset.tab === 'accounts') void loadAccounts();
   });
   async function boot() {
     if (location.protocol !== 'https:' || !window.isSecureContext || !crypto.subtle) {
       $('login-error').textContent = 'Cần HTTPS được trình duyệt tin cậy. Xác minh CA/IP, không bỏ qua lỗi certificate.'; $('login-button').disabled = true; return;
     }
-    try { applyMode(await request('/api/mode', { csrf: false })); const session = await request('/api/session', { csrf: false }); applyMode(session); model.csrf = session.csrf; model.max = session.max_upload_bytes; await loadFeatures(); activate(); await reload(); }
+    try { applyMode(await request('/api/mode', { csrf: false })); await loadAuthMethods(); const session = await request('/api/session', { csrf: false }); applyMode(session); model.csrf = session.csrf; model.max = session.max_upload_bytes; await loadFeatures(); activate(); await reload(); }
     catch (_) { $('login-error').textContent = ''; /* normal first visit requires login */ }
     setInterval(() => { if (model.csrf && !model.uploading) void reload(); }, 10000);
   }

@@ -1,0 +1,77 @@
+{
+  "format": 1,
+  "checkpoint": "dashboard2-accounts",
+  "state": "QUALIFIED_LINUX_SYNTHETIC_SOURCE",
+  "qualified_at": "2026-10-30T01:58:00.890720+00:00",
+  "baseline": "efe0ec4003d5f574c56486347723e1636c212025",
+  "branch": "feature/dashboard-full",
+  "runs": [
+    {
+      "log": "dashboard-2-qualified.log",
+      "passed": 71,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 408.439
+    },
+    {
+      "log": "dashboard-2-viewer-capability.log",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 7.424,
+      "overlaps_broad": true
+    },
+    {
+      "log": "dashboard-2-privacy-final.log",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 18.316,
+      "overlaps_broad": true
+    },
+    {
+      "log": "dashboard-2-management-privacy.log",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 12.786,
+      "overlaps_broad": true
+    }
+  ],
+  "distinct_cases": 71,
+  "qualified_inputs_sha256": {
+    "asc/access/gateway.py": "87b52b48053f2bbf1944c6c91830df6646f865854a6949f53346cdf5de49c7c6",
+    "asc/access/policy.py": "4b0ea9fb68469611bfd864ba64a9d47668906860b13e77af4aa419b1c99af466",
+    "asc/demo/dashboard/accounts.py": "574eecd1a6c308f6715b5579a70d6899b326795bbae65026a09639a4281ce51d",
+    "asc/demo/dashboard/auth.py": "6e08667d952fd0ec4a3337983eb84f3757982053f544e38e076ac468a8287656",
+    "asc/demo/dashboard/http.py": "5c448cb69f4ffc587d04efd83a04df4dfe7fe2800a95a2db4d064ec0182c08ae",
+    "asc/demo/dashboard/web/app.js": "da5094c36eec3e843f899035e334293dd3cebe2e2b745afeb9130d96af7f88cd",
+    "asc/demo/dashboard/web/index.html": "c7defb3726562a9c62074883f302fc11f72c44f67c8e4292aac5bac1e8c16c6e",
+    "asc/demo/dashboard/web/style.css": "2b8de45d8cbbb898c4a0cd2315fcfe09368c3404d86cb7ff4a0b97b01a632337",
+    "tests/browser/dashboard_accounts.cjs": "6c88122dadbfeff75014d57cc68b94c4d656723005206f2dd5b48c47167a5fd3",
+    "tests/test_access_gateway.py": "dfc5e53b13b01db81a064268bb079e7242b0f475425fbbfa5b9df20fcb096cac",
+    "tests/test_dashboard_accounts.py": "eb65ef44dd94eaacc1bc84766ffcc181fd0a2bc7336647d4476e3cd22902f6c0",
+    "tests/test_dashboard_accounts_browser.py": "e9d0a2f2f911fcd9fc96276a878095d5381aa74b031def33ef70e015f7641216",
+    "tests/test_dashboard_legacy_access.py": "f6c38e6468b488081276dd640bf640eef91fed89191ed91ccfb99f8c242802e4",
+    "tests/test_observer_gateway.py": "33fbca3467acc083690011f0a80e02c8d40b36ab8b3929ae8845798fc572aa48"
+  },
+  "final_delta": "After broad71, Viewer combined capability flag and logout/account-management DOM clearing refined; affected cases rerun as listed. No other product delta.",
+  "evidence": [
+    "private cluster-bound standard KDF credentials/restart/fail-closed state",
+    "Owner/Viewer server-side roles/rotation/session invalidation/last Owner refusal",
+    "actual trusted mobile browser login/roles/download SHA",
+    "exact shipped Linux Access0.1.0 archive TLS/browser/upload/replicas/fallback",
+    "Core quorum/recovery remains read-only; private/edge ingress stays file-only"
+  ],
+  "initial_runs": "Initial70 had two original browser failures due to product translation edit; original code-login wording restored, password error contextual; final71 clean. No assertions removed or timeout raised.",
+  "not_claimed": [
+    "fresh full Python suite",
+    "new Go/Android tests/builds",
+    "physical-phone acceptance",
+    "new package/release",
+    "full Dashboard completion",
+    "per-file ACL/sharing",
+    "Core/recovery writer/public management"
+  ],
+  "private_logs": "/workspace/work/dashboard-2-*.log; no credentials/state published"
+}

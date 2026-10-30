@@ -1026,3 +1026,18 @@ logical replicas/stopped code+env version switch/private profile backup/rollback
 fallback, plus unchanged42access assertions loading installed canonical modules.
 qualification/phase5-linux-distribution.json and versioned candidate/.sha256 record
 exact shipped bytes; source runtime/Core/Go/Android remain prior qualified bytes.
+
+
+
+Dashboard2 owner accounts:
+- demo/dashboard/accounts.py: optional private cluster-bound JSON1, standard
+  PBKDF2-HMAC-SHA256600k, bounded Owner/Viewer CRUD/generation CAS/last-owner guard.
+- dashboard/auth.py: bounded existing sessions gain server-owned role/account
+  principal, password session creation and account-wide revocation; code unchanged.
+- dashboard/http.py: supported auth methods/login/account endpoints, per-request
+  account generation +server role checks, self-change clears cookie. Core no store.
+- web assets: code/password forms, Owner account CRUD/confirmation, Viewer file
+  reads/downloads with no mutation controls, no secrets in URL/browser storage.
+- tests/test_dashboard_accounts.py +browser JS/Python: real persistence/TLS/roles/
+  restart/bytes/privacy/rotation/last-owner; test_dashboard_legacy_access.py runs
+  ORIGINAL browser assertions through EXACT published010 bundle +isolated env.

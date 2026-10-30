@@ -641,3 +641,16 @@ storage; refresh Controller probes and check actual volume/replica evidence.
 Controls hidden through Phase5 ingress is intentional file-only scope; use trusted
 LAN Dashboard, not public management allowlist widening. Revoked Node needs proper
 existing lifecycle repair, not blind join/new ID or deleting private state.
+
+
+
+## Dashboard accounts
+Use local dashboard-code for first Owner or explicit operator recovery, then set
+a chosen password in Tài khoản. No default password. account_state_unavailable503:
+preserve private file/backup; check owner-only/no-links/format/cluster binding,
+never overwrite/delete to bypass. account_state_changed409: refresh generation.
+last_owner_required409: create/retain another Owner before downgrade/delete.
+role_denied403 means Viewer cannot upload or administer, not network/TLS failure.
+After password/role changes login again; old sessions/password can be rejected.
+Older file ingress may show code-only login/no account management: use direct LAN
+Dashboard for setup, no management allowlist widening or copying private state.

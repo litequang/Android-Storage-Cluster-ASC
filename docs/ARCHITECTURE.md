@@ -634,3 +634,15 @@ Management calls existing pinned lifecycle/Catalog owner APIs. Optional generati
 and administrative approval stamp compare INSIDE existing SQL write transaction.
 Core/recovery observer never instantiates/dispatches this mutable facade. Private/
 edge ingress remains file-only with scoped capabilities, not a management relay.
+
+
+
+## Optional Dashboard accounts
+An optional private cluster-bound credential file belongs to the existing single
+Controller/Dashboard, not Registry/Node identity or another Catalog. Existing
+code-grant sessions bootstrap/recover owner access; password login uses the same
+bounded cookie/CSRF store with server-owned Owner/Viewer principals. Every request
+checks current account generation; role writes guarded server-side. Core/recovery
+gateway never instantiates Accounts and stays one-use-code/read-only. File-only
+ingress scopes account management off. Missing legacy capabilities may preserve
+ONLY existing file routes in the explicit verified mode; never fallback authority.

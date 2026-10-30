@@ -414,3 +414,15 @@ restart/crash ambiguity requires current-state review/new confirmation, no fake
 rollback or durable success. No schema/second DB, physical deletion, voter/quorum,
 Core observer/recovery writer or public management ingress. Quota/FS/lifecycle
 remain Node-owned until an authenticated backend exists and qualifies separately.
+
+
+## ADR079 — Optional private Dashboard accounts, machine identity stays separate
+Use standard PBKDF2-HMAC-SHA256600000 with random salt for owner-managed local
+passwords, bounded8accounts and server-side Owner/Viewer sessions. Optional
+cluster-bound accounts.json1 is not a Catalog/Registry replacement. No default
+password, last Owner removal or browser machine credential. Existing one-use
+operator code remains explicit local bootstrap/recovery. Rotation/delete changes
+account generation and revokes sessions; Viewer reads ALL cluster files, not a
+per-file ACL. File-only ingress cannot manage accounts or Nodes. Legacy packages
+remain code-only until separately qualified against NEW account state; no implicit
+rollback to stale credential backups or automatic state/identity regeneration.

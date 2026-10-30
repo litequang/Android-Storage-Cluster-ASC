@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Dashboard2 — optional Owner/Viewer password login (source checkpoint)
+
+- Cluster-bound private password accounts, standard PBKDF2-HMAC-SHA256600k,
+  original one-use owner bootstrap/recovery and bounded secure cookie/CSRF sessions.
+- Server-side Owner/Viewer access, account generation/rotation/session revocation,
+  last-owner guard, mobile account forms and real Viewer file download. No file ACL.
+- Preserve exact published010 file gateway browser compatibility and read-only
+  Core/recovery; no new package, ZTE deployment or full Dashboard completion yet.
+
 ## Dashboard1 — owner Node management (source checkpoint)
 
 - Add trusted LAN owner preview/confirmation for storage binding/domain approval,

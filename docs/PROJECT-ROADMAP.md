@@ -32,7 +32,8 @@ Phân biệt các runtime:
   hiện chưa làm Controller. Mất Controller không tự promote Node hoặc cấp ghi mới.
 - Native APK: Storage Node, private state/UID riêng, không cần Termux cho Node.
 - Dashboard/PWA: UI owner và File Manager dùng backend hiện có. Login bằng mã
-  owner một lần; chưa phải hệ thống nhiều user/password/sharing ACL hoàn chỉnh.
+  owner một lần ở gói043. Nhánh Dashboard mới bổ sung Owner/Viewer/password;
+  chưa có ACL chia sẻ/cô lập theo từng file. Xem DASHBOARD-PROGRESS về source và gói.
 - Core quorum observer: chỉ đọc. Leader flag/heartbeat/cache không cấp quyền ghi.
 - Phase3D recovery staging: read-only, không được kích hoạt thành writer.
 - Phase5 gateway: access plane tùy chọn trước Dashboard, không thêm Engine/authority.

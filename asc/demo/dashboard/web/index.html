@@ -14,6 +14,7 @@
 <header class="topbar">
   <div class="brand"><span class="brand-mark">ASC</span><div><strong>Dashboard Lite</strong><small id="runtime-label">ASC · LAN riêng</small></div></div>
   <button id="install-app" class="button subtle" hidden>Cài Web App</button>
+  <span id="actor-label" class="muted" hidden></span>
   <button id="logout" class="button subtle" hidden>Đăng xuất</button>
 </header>
 <main>
@@ -23,8 +24,13 @@
     <h1>Đăng nhập chủ cụm</h1>
     <p id="login-method">Đang xác minh chế độ Dashboard…</p>
     <form id="login-form">
-      <label for="login-code">Mã đăng nhập một lần</label>
-      <input id="login-code" name="code" type="password" autocomplete="one-time-code" required minlength="16" maxlength="128" spellcheck="false">
+      <label for="login-kind">Cách đăng nhập</label><select id="login-kind"><option value="code">Mã owner một lần</option><option value="password" disabled>Tài khoản / mật khẩu</option></select>
+      <div id="login-code-fields"><label for="login-code">Mã đăng nhập một lần</label>
+      <input id="login-code" name="code" type="password" autocomplete="one-time-code" required minlength="16" maxlength="128" spellcheck="false"></div>
+      <div id="login-password-fields" hidden>
+        <label for="login-username">Tên đăng nhập</label><input id="login-username" type="text" autocomplete="username" spellcheck="false" maxlength="48" disabled>
+        <label for="login-password">Mật khẩu</label><input id="login-password" type="password" autocomplete="current-password" minlength="12" maxlength="128" disabled>
+      </div>
       <button id="login-button" class="button primary" type="submit">Mở Dashboard</button>
     </form>
     <p id="login-error" class="error" role="alert"></p>
@@ -34,11 +40,13 @@
     <div class="heading"><div><span class="eyebrow">Không gian lưu trữ</span><h1 id="cluster-name">Cụm ASC</h1><p id="snapshot-time" class="muted">Đang tải dữ liệu…</p></div>
       <div class="heading-actions"><span id="connection" class="badge unknown">UNKNOWN</span><button id="refresh" class="button subtle">Cập nhật kiểm tra</button></div></div>
     <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <p id="capability-note" class="muted" hidden></p>
     <nav class="tabs" aria-label="Điều hướng Dashboard">
       <button class="tab selected" data-tab="overview" aria-selected="true">Tổng quan</button>
       <button class="tab" data-tab="nodes" aria-selected="false">Điện thoại</button>
       <button class="tab" data-tab="files" aria-selected="false">File Manager</button>
       <button class="tab" data-tab="quick-join" aria-selected="false">Ghép điện thoại</button>
+      <button id="accounts-tab" class="tab" data-tab="accounts" aria-selected="false" hidden>Tài khoản</button>
     </nav>
     <section id="overview" class="tab-panel">
       <div id="summary" class="summary-grid"></div>
@@ -88,6 +96,20 @@
       <p id="download-status" role="status" aria-live="polite"></p>
       <div id="file-list" class="file-list"></div>
     </section>
+    <section id="accounts" class="tab-panel" hidden>
+      <section class="panel"><h2>Tài khoản Dashboard</h2>
+        <p>Owner quản trị toàn cụm. Viewer đọc và tải toàn bộ file trong cụm; không upload hoặc quản trị. Chưa có ACL chia sẻ theo từng file.</p>
+        <p class="muted">Lần đầu dùng mã owner cục bộ để tạo tài khoản Owner. Không có tài khoản/mật khẩu mặc định. Mã cục bộ vẫn dùng được khi cần khôi phục truy cập.</p>
+        <form id="account-create-form">
+          <label for="account-new-username">Tên đăng nhập (3–48 ký tự: chữ thường, số, dấu . _ -; bắt đầu bằng chữ)</label><input id="account-new-username" type="text" required pattern="[a-z][a-z0-9_.-]{2,47}" maxlength="48" spellcheck="false" autocomplete="off">
+          <label for="account-new-password">Mật khẩu (12–128 ký tự)</label><input id="account-new-password" type="password" required minlength="12" maxlength="128" autocomplete="new-password">
+          <label for="account-new-role">Quyền</label><select id="account-new-role"><option value="owner">Owner — quản trị toàn cụm</option><option value="viewer">Viewer — đọc mọi file</option></select>
+          <button id="account-create" class="button primary" type="submit">Tạo tài khoản</button>
+        </form><p id="account-result" role="status"></p>
+      </section>
+      <div class="section-heading"><h2>Tài khoản hiện có</h2><button id="accounts-refresh" class="button subtle" type="button">Đọc lại</button></div>
+      <div id="account-list" class="node-grid"></div>
+    </section>
   </section>
   <dialog id="details"><div class="dialog-heading"><h2 id="details-title">Chi tiết</h2><button id="details-close" class="button subtle" aria-label="Đóng chi tiết">Đóng</button></div><div id="details-body"></div></dialog>
   <dialog id="manage-dialog">
@@ -114,6 +136,18 @@
       <button id="manage-apply" class="button primary" type="button">Áp dụng thay đổi</button>
     </section>
     <p id="manage-result" role="status" aria-live="polite"></p>
+  </dialog>
+  <dialog id="account-dialog">
+    <div class="dialog-heading"><h2>Sửa tài khoản</h2><button id="account-close" class="button subtle" type="button">Đóng</button></div>
+    <p id="account-target"></p>
+    <form id="account-change-form">
+      <label for="account-role">Quyền</label><select id="account-role"><option value="owner">Owner</option><option value="viewer">Viewer — đọc toàn bộ file</option></select>
+      <label for="account-password">Mật khẩu mới (để trống nếu giữ nguyên)</label><input id="account-password" type="password" minlength="12" maxlength="128" autocomplete="new-password">
+      <label><input id="account-delete" type="checkbox"> Xóa quyền truy cập tài khoản này</label>
+      <p class="muted">Lưu thay đổi sẽ thu hồi các phiên đăng nhập của tài khoản. Không được xóa/hạ quyền Owner cuối cùng. Node identity và dữ liệu file giữ nguyên.</p>
+      <label for="account-confirm-name">Nhập lại tên đăng nhập để xác nhận</label><input id="account-confirm-name" type="text" required autocomplete="off" spellcheck="false" maxlength="48">
+      <button id="account-save" class="button primary" type="submit">Lưu thay đổi</button>
+    </form><p id="account-change-result" role="status"></p>
   </dialog>
 </main>
 <footer>Linux synthetic đã kiểm thử · Android cần chủ dự án nghiệm thu · Một Controller, không failover tự động · Không xóa vật lý</footer>

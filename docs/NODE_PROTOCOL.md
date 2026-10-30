@@ -611,3 +611,19 @@ optional expected_generation. Checks inside original SQL transaction; stale409
 node_state_changed. Protected/unknown/local Controller deny. Core/recovery manage
 routes403 before backend mutation. Gateway GET capabilities scoped file-only;
 POST manage still403. No Node/consensus/transfer/identity/schema wire change.
+
+
+
+## Dashboard account/auth API1
+GET /api/auth/methods is public same-origin supported-method metadata only:
+auth_api_version1/one_time_code/password enabled. POST /api/login accepts EITHER
+code OR username/password, never caller role/token/identity. Core/recovery accepts
+only existing code. Existing rate/session/CSRF/Origin/cookie bounds unchanged.
+GET session adds role/username (nonsecret), capabilities scopes every UI feature.
+Owner-only GET/POST /api/accounts list/create; create exact username/password/role.
+POST /api/accounts/NAME/change exact expected_generation/role/password/delete;
+password empty preserves existing; deleting cannot also change password. All are
+same-origin cookie+CSRF; stale409, last-owner409, malformed400, state unavailable503.
+Self-update expires cookie, changes/delete invalidate affected sessions. Viewer
+only reads/downloads ALL cluster files; all mutations and account/manage reads403
+role_denied. No Node/machine credential/user ACL/membership protocol added.

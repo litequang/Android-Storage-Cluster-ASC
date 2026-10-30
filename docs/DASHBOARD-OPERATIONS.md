@@ -43,3 +43,26 @@ Rollback source/code: dừng runtime có chủ sở hữu, backup mới, chọn 
 thích qua upgrade contract; không restore DB cũ. Checkpoint1 không thêm schema
 hoặc file state. Authority changes đã áp dụng không bị hoàn tác bằng rollback
 code. Original packages/APK/signer/Node/Cluster/Volume identity giữ nguyên.
+
+
+
+## Tài khoản Owner / Viewer (checkpoint2)
+Lần đầu đăng nhập bằng mã owner từ Controller, mở Tài khoản, tạo tài khoản Owner
+với tên3–48ASCII chữ thường/số/._- và mật khẩu12–128ký tự. Không có password mặc
+định. Sau logout chọn tài khoản/mật khẩu. Mã owner cục bộ vẫn phục hồi quyền quản
+trị nếu quên mật khẩu; không tự xóa account state hoặc init lại Controller.
+Owner tạo thêm Owner hoặc Viewer. Viewer được đọc/tải TẤT CẢ file cụm, không phải
+thư mục riêng hay file-sharing ACL. UI và backend cùng chặn upload/reconcile/
+pairing/node/account changes. Không cấp Viewer khi cần cô lập dữ liệu theo file.
+Sửa quyền/mật khẩu hoặc xóa: nhập lại tên để xác nhận; server CAS generation, thu
+hồi các phiên của tài khoản. Sửa tài khoản đang đăng nhập sẽ yêu cầu login lại.
+Giữ ít nhất1Owner. Thao tác đã được backend/Core authorize có thể đã chạy; thay
+role không rollback bytes/jobs hoặc hứa hủy mọi thao tác đang truyền.
+
+Account hash/salt lưu private trong dashboard/accounts.json1, gắn Cluster ID.
+Không gửi file này/backup/cookie/password lên GitHub. Không có thay đổi Registry/
+Manifest schema hoặc Node identity. File sai/quyền rộng/link/cluster mismatch bị
+từ chối, không ghi đè/silent reset. Missing file không tự tạo account/default pass;
+chỉ owner code +explicit create thiết lập lại web accounts, không đổi Node keys.
+Rollback043 code-only vẫn dùng mã owner, giữ nguyên accounts file để forward;
+exact package qualification cuối track mới công bố đường upgrade/rollback.

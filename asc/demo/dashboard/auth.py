@@ -43,10 +43,28 @@ class Sessions:
             if len(self.sessions) >= 8:
                 return None
             self.grant = None  # Exact one-use, serialized redemption; no session fixation.
-            cookie = secrets.token_urlsafe(32)
-            session = {'csrf': secrets.token_urlsafe(32), 'expires': self.clock() + SESSION_TTL}
-            self.sessions[hashed(cookie)] = session
-            return cookie, dict(session)
+            return self._create(None)
+
+    def _create(self, principal):
+        cookie = secrets.token_urlsafe(32)
+        session = {'csrf': secrets.token_urlsafe(32), 'expires': self.clock() + SESSION_TTL,
+                   'role': 'owner', 'account_id': None, 'account_generation': None, 'username': None}
+        if principal is not None:
+            session.update(role=principal['role'], account_id=principal['account_id'],
+                           account_generation=principal['generation'], username=principal['username'])
+        self.sessions[hashed(cookie)] = session
+        return cookie, dict(session)
+
+    def create(self, principal):
+        with self.lock:
+            self._prune()
+            if len(self.sessions) >= 8:
+                return None
+            return self._create(principal)
+
+    def revoke_account(self, account_id):
+        with self.lock:
+            self.sessions = {k: v for k, v in self.sessions.items() if v['account_id'] != account_id}
 
     def authenticate(self, cookie, csrf=None):
         if not isinstance(cookie, str) or not 16 <= len(cookie) <= 128 or not cookie.isascii():
