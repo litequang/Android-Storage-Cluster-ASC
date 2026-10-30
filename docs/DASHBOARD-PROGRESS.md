@@ -197,3 +197,43 @@ Python/Go final claim yet. Original043/APK5/Access archives, Android/Go/dependen
 bytes unchanged. All code remains source-only, not deployed to ZTE. NEXT after
 commit/push/fetch/advertised equality:4safe single-writer snapshot/restore,5storage/
 diagnostics,6exact043 upgrade/new-state rollback and final package/full gates.
+
+
+## Checkpoint3 publication VERIFIED — current resume cursor
+Source29044f6dea4ad4c5b56afa66fee4f5200c0ff8ad normally pushed to
+feature/dashboard-full; fetch and advertised ls-remote BOTH match that full SHA.
+Tree clean after source publication. Checkpoint2cef9ce1 also verified as above.
+All original branches/archives/APK/signer preserved. This follow-up only records
+publication; no implementation/tests/package delta.
+
+CURRENT:full Dashboard still NOT COMPLETE; ZTE remains original043Lite. Qualified
+source includes Nodes/approval, Owner/Viewer password sessions, real File Manager
+search/pagination/folders, immutable versions/history/download SHA, jobs/retry.
+No source auto-deployed, new artifact or phone PASS. Source3related70PASS plus
+22overlapping final retry checks; not a fresh full suite.
+
+NEXT checkpoint4:single-writer snapshot/restore contract and implementation, then
+5diagnostics and6full gates/exact043 upgrade/new-state rollback/new package.
+Audit blocker to resolve SAFELY:asc.backup.service.Backups requires Core runtime
+operation/committed term/index; NEVER fake Runtime or attach quorum backup writer
+to Demo. Existing Demo inspect_state rejects extra Registry settings, so adding
+a Dashboard history key there would break exact043 NEW-state code rollback.
+Prefer a separately versioned optional PRIVATE operator-history document if
+needed, bounded/cluster+epoch-bound/atomic/durable; reuse MetadataSource consistent
+listing, canonical proof/download/upload and existing queue/ids. No second
+Catalog/Storage, fake quorum, GC, loss of references or external-DR claim. This
+contract is audit guidance ONLY, not implemented or qualified snapshot/restore.
+
+Resume tests:use configured Python with existing optional edge dependencies,
+ASC_GO pointing at approved local Go toolchain, GOMAXPROCS=2, real Chromium/NSS/
+Playwright. unittest modules tests.test_dashboard_files,
+tests.test_dashboard_files_browser, tests.test_dashboard_accounts,
+tests.test_dashboard_accounts_browser, tests.test_dashboard_management,
+tests.test_dashboard_management_browser, tests.test_demo_dashboard,
+tests.test_demo_dashboard_browser, tests.test_access_policy,
+tests.test_access_gateway, tests.test_access_browser,
+tests.test_dashboard_legacy_access, tests.test_observer_gateway,
+tests.test_catalog, tests.test_storage_cluster. Existing exact Access archive
+checksum remains d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9.
+No need rerun all70 for this docs-only publication record; run appropriate tests
+for NEXT source changes, final full applicable suite only after final source.
