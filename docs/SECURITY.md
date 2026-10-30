@@ -813,3 +813,12 @@ writer/GC/external-backup credit. Restore creates new immutable version only;
 source versions/objects never deleted. Concurrent version collision is BLOCKED,
 no auto bump/overwrite. Original Core quorum backup proof body only extracted
 for reuse; no consensus/authority change.
+
+
+4b browser snapshot/restore uses only authenticated same-origin canonical API.
+Source path typed confirmation+version/SHA shown before creating a new intent.
+Public retry metadata contains UUID/file refs, never auth code/cookie/private key.
+RAM fallback with blocked browser storage, stale async results discarded on user
+change/offline/pagehide; server role/mode remains authority. Pause ends future
+requests, not a fake remote cancel. Text-only rendering/CSP and actual download
+SHA kept; no HTML interpretation of file/snapshot labels.

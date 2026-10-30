@@ -1064,3 +1064,11 @@ client/queue integration. http.py capability/role/mode routes; gateway denies
 history. test_dashboard_history.py real TLS/bytes/ACK loss/restart/missing-copy/
 corrupt state/refusals; test_dashboard_upgrade.py exact b423043 package/identities/
 accounts/history/new bytes/code-only rollback+forward. No UI yet at4a.
+
+
+Dashboard4b web assets: Snapshot/restore records, public manifest/version details,
+owner confirmation and durable existing-API step/resume, historical proof labels,
+Viewer/Core/ingress capability controls. tests/test_dashboard_history_browser.py
++browser/dashboard_history.cjs run real trusted mobile/browser storage denial/
+Node stop/pinned-ready restart/actual restore SHA. Existing account/Core browser
+assertions add hidden owner controls/read-only behavior, none removed.

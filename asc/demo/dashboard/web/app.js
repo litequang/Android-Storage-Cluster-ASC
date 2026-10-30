@@ -30,6 +30,7 @@
   const accountUI = { generation: 0, editing: null, busy: false };
   const fileUI = { generation: 0, offset: 0, next: null, folder: '', recursive: true, page: null };
   const jobUI = { generation: 0, offset: 0, next: null };
+  const historyUI = { generation: 0, run: 0, running: false, doc: null, source: null, snapshot: null, restoreGeneration: 0, intent: null };
   let detailGeneration = 0;
   const messages = {
     pairing_limit: 'Đã đạt giới hạn mã đang theo dõi (8/phiên, 32/Controller). Đợi hoặc kiểm tra các mã đã tạo.',
@@ -70,6 +71,13 @@
     last_owner_required: 'Phải giữ ít nhất một Owner. Tài khoản đầu tiên phải là Owner.',
     account_state_unavailable: 'State tài khoản không đọc/xác minh được. Giữ nguyên file để owner kiểm tra, không tự tạo lại.',
     job_state_changed: 'Tác vụ không còn ở trạng thái được thử lại. Đọc trạng thái mới; chưa suy ra sao chép thành công.',
+    history_state_unavailable: 'Không xác minh được state snapshot/restore. Giữ nguyên document và witness để owner kiểm tra; không xóa hoặc init lại.',
+    history_limit: 'Đã đạt giới hạn lịch sử/metadata. Các bản cũ được giữ nguyên; không tự xóa để tạo chỗ.',
+    history_intent_conflict: 'Intent đã tồn tại với nội dung khác. Đọc lại tiến độ trước khi xác nhận ý định mới.',
+    history_busy: 'Một bước kiểm chứng/khôi phục đang chạy. Đợi rồi đọc lại tiến độ.',
+    snapshot_empty: 'Không có phiên bản trong thư mục đã chọn; chưa tạo snapshot.',
+    snapshot_not_verified: 'Snapshot chưa kiểm chứng đủ bytes trên hai miền lỗi. Tiếp tục kiểm chứng trước khi khôi phục từ snapshot.',
+    restore_too_large: 'Phiên bản nguồn vượt giới hạn restore của Dashboard hoặc hết dải phiên bản được hỗ trợ.',
   };
   class APIError extends Error {
     constructor(code, status) { super(messages[code] || 'Yêu cầu chưa được xác nhận. Kiểm tra kết nối và thử lại.'); this.code = code; this.status = status; }
@@ -97,13 +105,15 @@
   function notice(text) { $('notice').textContent = text; $('notice').hidden = !text; }
   function connection(ok) {
     model.connected = ok;
-    if (!ok) { clearManagement(); closeAccountEditor(); $('account-new-password').value = ''; }
+    if (!ok) { clearManagement(); closeAccountEditor(); pauseHistory(); closeRestore(); $('account-new-password').value = ''; }
     if (!ok) clearPairing('Mất kết nối: mã đã ẩn, đăng ký và quyền lưu trữ UNKNOWN.');
     pairingButton();
     if (!ok && $('details').open) $('details').close();
     $('connection').textContent = model.readOnly ? (ok ? 'Gateway online' : 'Gateway UNKNOWN') : ok ? 'Controller online' : 'Controller UNKNOWN';
     $('connection').className = 'badge ' + (ok ? 'good' : 'unknown');
     $('upload-button').disabled = !ok || model.uploading || !canUpload();
+    $('snapshot-create').disabled = !ok || historyUI.running;
+    if (historyUI.doc) renderHistory(historyUI.doc);
     if (model.state) render(model.state);
   }
   function loginView(clear = true) {
@@ -111,6 +121,8 @@
     model.features = null; clearManagement();
     fileUI.generation++; fileUI.page = null; fileUI.offset = 0; fileUI.folder = ''; fileUI.recursive = true;
     jobUI.generation++; jobUI.offset = 0; $('job-list').replaceChildren(); detailGeneration++;
+    pauseHistory(); historyUI.generation++; historyUI.doc = null; closeRestore();
+    $('snapshot-list').replaceChildren(); $('restore-list').replaceChildren(); $('snapshot-label').value = ''; $('snapshot-prefix').value = ''; $('history-status').textContent = '';
     $('file-search').value = ''; $('upload-version').value = '1';
     closeAccountEditor(); $('account-list').replaceChildren(); $('account-new-password').value = ''; $('login-password').value = '';
     $('account-new-username').value = ''; $('account-result').textContent = '';
@@ -140,7 +152,7 @@
       if (binary) return { buffer: await response.arrayBuffer(), sha: response.headers.get('X-ASC-SHA256') };
       const value = await response.json();
       if (path === '/api/capabilities' && response.headers.get('X-ASC-Access-Mode') === 'file-access-only') {
-        value.node_management = false; value.account_management = false; value.job_retry = false;
+        value.node_management = false; value.account_management = false; value.job_retry = false; value.snapshot_restore = false; value.snapshot_read = false;
       }
       return value;
     } catch (error) {
@@ -240,6 +252,8 @@
     $('file-pagination').hidden = !model.features.file_browse;
     $('version-upload-fields').hidden = !model.features.version_upload;
     $('jobs-tab').hidden = !model.features.job_read;
+    $('snapshots-tab').hidden = !model.features.snapshot_read;
+    $('snapshot-create-form').hidden = !model.features.snapshot_restore;
     document.querySelector('[data-tab="quick-join"]').hidden = !model.features.node_management;
     $('refresh').textContent = model.features.refresh_probe ? 'Cập nhật kiểm tra' : 'Đọc trạng thái';
     $('actor-label').textContent = (model.role === 'viewer' ? 'Viewer' : 'Owner') + (model.username ? ' · '+model.username : ' · mã cục bộ');
@@ -595,7 +609,10 @@
         const result = await request('/api/files/query', { method:'POST', json:fileQuery({ offset:start, folder:'', search:'', recursive:true, versions:'all', sort:'name', history_file_id:file.file_id }) });
         if (generation !== detailGeneration || !$('details').open || !model.csrf) return;
         const rows = result.entries.map(item => { const card = node('div', 'replica-card'); card.dataset.historyFileId = item.file_id;
-          card.append(node('strong', '', 'Phiên bản ' + item.version), badge(item), detail('SHA-256', item.sha256), detail('Dung lượng', amount(item.size)), button('Tải phiên bản này', () => download(item))); return card; });
+          card.append(node('strong', '', 'Phiên bản ' + item.version), badge(item), detail('SHA-256', item.sha256), detail('Dung lượng', amount(item.size)), button('Tải phiên bản này', () => download(item)));
+          const group=node('section');group.append(card);
+          if (model.features?.snapshot_restore) { const restore = button('Khôi phục thành phiên bản mới', () => openRestore(item,null)); restore.dataset.action = 'restore-version'; group.append(restore); }
+          return group; });
         $('details-body').replaceChildren(...rows);
         const nav = node('div', 'file-toolbar');
         if (start > 0) nav.append(button('Trang trước', () => page(Math.max(0, start-50))));
@@ -639,6 +656,130 @@
       $('jobs-status').textContent = '';
     } catch(error) { if (generation === jobUI.generation && model.csrf) $('jobs-status').textContent = error.message; }
   }
+  function pauseHistory() {
+    const active = historyUI.running; historyUI.run++; historyUI.running = false;
+    $('history-pause').hidden = true; $('snapshot-create').disabled = !model.connected;
+    if (active) $('history-status').textContent = 'Đã tạm dừng gửi bước mới. Yêu cầu đã gửi có thể hoàn tất; đọc lại tiến độ trước khi tiếp tục.';
+  }
+  function closeRestore() {
+    historyUI.restoreGeneration++; historyUI.source = null; historyUI.snapshot = null;
+    $('restore-confirm-path').value = ''; $('restore-confirm').checked = false; $('restore-source').replaceChildren();
+    if ($('restore-dialog').open) $('restore-dialog').close();
+  }
+  function openRestore(file, snapshot) {
+    if (!model.features?.snapshot_restore || !model.connected) return;
+    if ($('details').open) $('details').close();
+    closeRestore(); historyUI.source = file; historyUI.snapshot = snapshot;
+    $('restore-source').replaceChildren(detail('Nguồn', file.logical_path), detail('Phiên bản', String(file.version)), detail('SHA-256', file.sha256), detail('Dung lượng', amount(file.size)));
+    $('restore-result').textContent = ''; $('restore-create').disabled = false; $('restore-dialog').showModal();
+  }
+  function historyIntent(action, payload) {
+    const metadata = { action, payload };
+    try {
+      const old = historyUI.intent || JSON.parse(sessionStorage.getItem('asc-dashboard-history-intent') || 'null');
+      if (old && JSON.stringify(old.metadata) === JSON.stringify(metadata) && typeof old.request_id === 'string') { historyUI.intent=old;return old.request_id; }
+    } catch (_) { /* No credentials; in-memory/browser retry is optional. */ }
+    const request_id = crypto.randomUUID();
+    historyUI.intent = {metadata, request_id};
+    try { sessionStorage.setItem('asc-dashboard-history-intent', JSON.stringify({ metadata, request_id })); } catch (_) { /* Core progress remains durable. */ }
+    return request_id;
+  }
+  function finishHistoryIntent() { historyUI.intent = null;try { sessionStorage.removeItem('asc-dashboard-history-intent'); } catch (_) { /* optional metadata */ } }
+  function historyError(error) {
+    return ({ backup_unavailable:'Chưa đọc đúng bytes trên hai miền lỗi. Kiểm tra node/volume, rồi tiếp tục cùng snapshot.',
+      copies_pending:'Đang chờ Core xác minh đủ hai bản sao.', restore_unavailable:'Chưa hoàn tất restore. Giữ operation, kiểm tra nguồn/kết nối/dung lượng rồi tiếp tục.',
+      version_conflict:'Số phiên bản đích đã có intent khác. Operation bị chặn, không tự ghi đè hoặc tăng version.' })[error] || '';
+  }
+  function snapshotDetails(id, snap) {
+    const rows = [detail('Manifest SHA-256', snap.manifest_sha256), detail('Metadata point', snap.manifest.epoch + ' / ' + snap.manifest.catalog_revision),
+      node('p','muted','Tham chiếu trong cụm; VERIFIED là bằng chứng lịch sử, không phải external backup hoặc quyền ghi quorum.')];
+    for (const file of snap.manifest.files) {
+      const card = node('div','replica-card'); card.dataset.snapshotFileId = file.file_id;
+      card.append(node('strong','',file.logical_path+' · v'+file.version), detail('SHA-256',file.sha256), detail('Dung lượng',amount(file.size)),button('Tải phiên bản này',()=>download(file)));
+      if (model.features?.snapshot_restore && snap.state === 'VERIFIED') { const restore=button('Khôi phục phiên bản này',()=>openRestore(file,id)); restore.dataset.action='restore-snapshot-file';card.append(restore); }
+      rows.push(card);
+    }
+    showDetails(snap.manifest.label,rows);
+  }
+  function renderHistory(doc) {
+    const owner=model.features?.snapshot_restore === true;
+    $('snapshot-list').replaceChildren(...Object.entries(doc.snapshots).sort((a,b)=>b[1].manifest.created_at-a[1].manifest.created_at).map(([id,snap])=>{
+      const card=node('article','file-row');card.dataset.snapshotId=id;
+      const info=node('div','file-info');info.append(node('strong','file-name',snap.manifest.label),node('span','badge '+(snap.state==='VERIFIED'?'good':'unknown'),snap.state),
+        detail('Phạm vi / phiên bản', (snap.manifest.prefix || 'Toàn bộ Catalog')+' / '+snap.manifest.files.length),detail('Đã kiểm chứng',snap.cursor+' / '+snap.manifest.files.length),
+        detail('Hoàn tất kiểm chứng lịch sử',date(snap.verified_at)),node('p','muted',historyError(snap.last_error)));
+      card.append(info,button('Xem phiên bản',()=>snapshotDetails(id,snap)));
+      if (owner && snap.state!=='VERIFIED') { const next=button('Tiếp tục kiểm chứng',()=>runHistory('snapshots',id)); next.dataset.historyStep='snapshot';next.disabled=!model.connected || historyUI.running;card.append(next); }
+      return card;
+    }));
+    if (!Object.keys(doc.snapshots).length) $('snapshot-list').append(node('p','muted','Chưa có snapshot được ghi nhận.'));
+    $('restore-list').replaceChildren(...Object.entries(doc.restores).sort((a,b)=>b[1].created_at-a[1].created_at).map(([id,job])=>{
+      const card=node('article','file-row');card.dataset.restoreId=id;
+      const info=node('div','file-info');info.append(node('strong','file-name',job.source_file.logical_path),node('span','badge '+(job.state==='COMPLETED'?'good':'unknown'),job.state),
+        detail('Nguồn → đích','v'+job.source_file.version+' → v'+job.target_version),detail('Cập nhật',date(job.updated_at)),node('p','muted',historyError(job.last_error)));
+      card.append(info);
+      if (job.state==='COMPLETED') { const get=button('Tải bản khôi phục',()=>download({...job.source_file,file_id:job.target_file_id}));get.disabled=!model.connected;card.append(get,node('p','muted','Đã kiểm chứng SHA trên hai miền lỗi tại thời điểm hoàn tất; xem replica hiện tại trong File Manager.')); }
+      else if (owner && job.state!=='BLOCKED') { const next=button('Tiếp tục khôi phục',()=>runHistory('restores',id));next.dataset.historyStep='restore';next.disabled=!model.connected || historyUI.running;card.append(next); }
+      return card;
+    }));
+    if (!Object.keys(doc.restores).length) $('restore-list').append(node('p','muted','Chưa có operation khôi phục. Chọn một phiên bản trong Lịch sử file hoặc snapshot VERIFIED.'));
+  }
+  async function loadHistory() {
+    if (!model.csrf || !model.features?.snapshot_read) return;
+    const generation=++historyUI.generation;
+    try {
+      const doc=await request('/api/history');
+      if (generation!==historyUI.generation || !model.csrf) return;
+      if (doc.history_api_version!==1 || doc.mode!=='single-writer-demo') throw new APIError('unsupported_runtime',503);
+      historyUI.doc=doc;renderHistory(doc);
+    } catch(error) { if (generation===historyUI.generation && model.csrf) $('history-status').textContent=error.message; }
+  }
+  async function runHistory(kind,id) {
+    if (!model.csrf || !model.features?.snapshot_restore || !model.connected || historyUI.running) return;
+    const run=++historyUI.run,session=model.csrf,deadline=Date.now()+120000;historyUI.running=true;
+    $('history-pause').hidden=false;$('snapshot-create').disabled=true;
+    if (historyUI.doc) renderHistory(historyUI.doc);
+    try {
+      for (let turn=0;turn<256 && Date.now()<deadline && run===historyUI.run && session===model.csrf;turn++) {
+        $('history-status').textContent='Controller đang đọc/ghi và xác minh SHA. Chưa xác nhận hoàn tất…';
+        const reply=await request('/api/history/'+kind+'/'+id+'/step',{method:'POST',json:{}});
+        if (run!==historyUI.run || session!==model.csrf) break;
+        await loadHistory();
+        if (['VERIFIED','COMPLETED'].includes(reply.state)) { $('history-status').textContent='Controller đã xác nhận '+reply.state+' với bằng chứng SHA hai miền lỗi. Đây là trạng thái được ghi nhận tại thời điểm thực hiện.';break; }
+        if (reply.error && reply.error!=='copies_pending') { $('history-status').textContent=historyError(reply.error);break; }
+        await sleep(1000);
+        if (Date.now()>=deadline) $('history-status').textContent='Đã hết lượt chờ của trang; tiến độ vẫn được giữ. Chọn tiếp tục cùng operation, không tạo lại.';
+      }
+    } catch(error) { if (session===model.csrf) $('history-status').textContent=error.message; }
+    finally { if (run===historyUI.run) { historyUI.running=false;$('history-pause').hidden=true;$('snapshot-create').disabled=!model.connected; } if(session===model.csrf) await loadHistory(); }
+  }
+  $('snapshot-create-form').addEventListener('submit',async event=>{
+    event.preventDefault();if(!model.features?.snapshot_restore || historyUI.running || !model.connected)return;
+    const payload={history_api_version:1,label:$('snapshot-label').value,prefix:$('snapshot-prefix').value.trim()};
+    const session=model.csrf;$('snapshot-create').disabled=true;
+    try {
+      const result=await request('/api/history/snapshots',{method:'POST',json:{...payload,request_id:historyIntent('snapshot',payload)}});
+      if(session!==model.csrf)return;finishHistoryIntent();await loadHistory();await runHistory('snapshots',result.snapshot_id);
+    } catch(error) { if(session===model.csrf)$('history-status').textContent=error.message; }
+    finally { if(session===model.csrf && !historyUI.running)$('snapshot-create').disabled=!model.connected; }
+  });
+  $('restore-form').addEventListener('submit',async event=>{
+    event.preventDefault();const file=historyUI.source;
+    if(!file || !model.features?.snapshot_restore || !model.connected)return;
+    if($('restore-confirm-path').value!==file.logical_path || !$('restore-confirm').checked) { $('restore-result').textContent='Cần đúng đường dẫn nguồn và xác nhận phiên bản/SHA.';return; }
+    const generation=historyUI.restoreGeneration,payload={history_api_version:1,file_id:file.file_id,snapshot_id:historyUI.snapshot};$('restore-create').disabled=true;
+    try {
+      const result=await request('/api/history/restores',{method:'POST',json:{...payload,request_id:historyIntent('restore',payload)}});
+      if(generation!==historyUI.restoreGeneration || !model.csrf)return;
+      finishHistoryIntent();closeRestore();$('snapshots-tab').click();await loadHistory();await runHistory('restores',result.restore_id);
+    } catch(error) { if(generation===historyUI.restoreGeneration)$('restore-result').textContent=error.message; }
+    finally { $('restore-create').disabled=false; }
+  });
+  $('restore-close').addEventListener('click',closeRestore);
+  $('restore-dialog').addEventListener('cancel',closeRestore);
+  $('history-pause').addEventListener('click',()=>{pauseHistory();if(historyUI.doc)renderHistory(historyUI.doc);});
+  $('history-refresh').addEventListener('click',()=>{void loadHistory();});
+
   async function reload(probe = false) {
     if (!model.csrf || model.polling) return;
     model.polling = true; $('refresh').disabled = true;
@@ -648,6 +789,7 @@
       model.state = state; connection(true); notice(''); render(state);
       await loadFiles();
       if (!$('jobs').hidden) await loadJobs();
+      if (!$('snapshots').hidden) await loadHistory();
     } catch (error) { if (model.csrf) notice(error.message); }
     finally { model.polling = false; $('refresh').disabled = false; }
   }
@@ -738,11 +880,12 @@
     clearPairing('Mã đã ẩn; đăng xuất không tự thu hồi mã node chưa dùng.');
     try { await request('/api/logout', { method: 'POST', json: {} });
       model.pending = null;
+      finishHistoryIntent();
       try { sessionStorage.removeItem('asc-demo-pending-upload'); } catch (_) { /* no auth storage */ }
       loginView(); notice(''); await loadAuthMethods();
     } catch (error) { notice(error.message); }
   });
-  window.addEventListener('pagehide', () => { clearPairing('Trang đã đóng: theo dõi đã bỏ, không tự thu hồi mã.'); clearManagement(); closeAccountEditor(); $('account-new-password').value = ''; $('login-password').value = ''; });
+  window.addEventListener('pagehide', () => { clearPairing('Trang đã đóng: theo dõi đã bỏ, không tự thu hồi mã.'); clearManagement(); closeAccountEditor(); pauseHistory();closeRestore();$('account-new-password').value = ''; $('login-password').value = ''; });
   $('pair-create').addEventListener('click', () => { void createPairing(); });
   $('refresh').addEventListener('click', () => { void reload(true); });
   $('upload-form').addEventListener('submit', upload);
@@ -763,6 +906,7 @@
     for (const other of document.querySelectorAll('[data-tab]')) { const selected = other === tab; other.classList.toggle('selected', selected); other.setAttribute('aria-selected', String(selected)); $(other.dataset.tab).hidden = !selected; }
     if (tab.dataset.tab === 'accounts') void loadAccounts();
     if (tab.dataset.tab === 'jobs') void loadJobs();
+    if (tab.dataset.tab === 'snapshots') void loadHistory();
   });
   async function boot() {
     if (location.protocol !== 'https:' || !window.isSecureContext || !crypto.subtle) {

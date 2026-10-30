@@ -110,3 +110,22 @@ Không chia sẻ history.json/history-required.json/accounts.json hoặc backup 
 Mất/hỏng một trong hai history files giữ lỗi503; không xóa/reset để làm UI chạy.
 Code-only rollback043 cần backup MỚI của toàn bộ state/volumes, giữ optional files
 để forward; không restore database cũ. Exact package test riêng ghi trong progress.
+
+
+## Snapshot / khôi phục bằng giao diện (4b source)
+Mở Snapshot / Khôi phục, nhập tên và thư mục logic hoặc để trống toàn bộ Catalog.
+Tạo và kiểm chứng: UI gửi từng bước, chỉ VERIFIED khi Controller đọc SHA thật
+trên2miền lỗi của mọi version đã chụp. Tạm dừng gửi bước mới/đóng trang giữ progress,
+không hứa hủy lệnh đã gửi. Mở lại, Đọc lại và Tiếp tục đúng snapshot/operation.
+Thiếu Node/copies báo chưa hoàn tất; sửa kết nối rồi tiếp tục, không tạo identity.
+
+Xem phiên bản của snapshot VERIFIED, chọn bản muốn khôi phục. Hoặc mở Lịch sử
+trong File Manager để chọn version cũ. Nhập lại ĐÚNG đường dẫn, đối chiếu version/
+SHA và xác nhận tạo version mới. Chỉ COMPLETED sau2domain readback; tải bản khôi
+phục lại kiểm SHA trong browser. BLOCKED va chạm giữ nguyên tất cả dữ liệu, cần
+operator review/ý định mới. Mỗi file khôi phục riêng, không hứa atomic whole-cluster
+restore. VERIFIED/COMPLETED là quan sát lịch sử, xem replica hiện tại riêng.
+Viewer chỉ xem/tải, không capture/step/restore. Core/recovery và file-only remote
+gateway không có controls; không đổi mode/allowlist để mở quyền ghi. Metadata
+intent trong sessionStorage không chứa token/code; nếu browser chặn storage, retry
+trong cùng trang vẫn giữ key RAM, reload cần kiểm progress trước ý định mới.

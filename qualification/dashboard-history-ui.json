@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "checkpoint": "dashboard4b-history-ui",
+  "state": "QUALIFIED_LINUX_SYNTHETIC_SOURCE",
+  "qualified_at": "2026-10-30T03:07:53.911280+00:00",
+  "baseline": "826c237d05fdc9c1772c73b43d1597dafea84085",
+  "branch": "feature/dashboard-full",
+  "runs": [
+    {
+      "log": "dashboard-4b-qualified-final.log",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 118.392
+    }
+  ],
+  "distinct_cases": 9,
+  "qualified_inputs_sha256": {
+    "asc/demo/dashboard/web/app.js": "d7ff2556149208f1f5c1e21fde59991104745e0efa63df9bea4a93e3df0cc9e2",
+    "asc/demo/dashboard/web/index.html": "dd889750a06db456c84bc415eb859a4723da44d1b9b57d8ebf1701a5f57cee42",
+    "asc/demo/dashboard/web/style.css": "ca2ef1abbd99743270adcc3422e7bec15a4a099af935b640f2bb00c5bb2b3b29",
+    "tests/browser/core_observer.cjs": "6d7d3d10e7e0c6d734204d59adf9e38ba8928759be641ecde04f72e8b09574f0",
+    "tests/browser/dashboard_accounts.cjs": "8110e77aa090e984651686914bc554a4059c8d59307ef8c86950128bde3c1a25",
+    "tests/browser/dashboard_history.cjs": "b0fd8e9d180d1c0a9210538345dbc2537604b42cc5f97b65b724f1fdbb010e96",
+    "tests/test_dashboard_history_browser.py": "03077a8448158ed41ec44f666eb866ad162250b15a7162f82757a3040eb53175"
+  },
+  "evidence": [
+    "actual trusted390px browser snapshot capture/pause/page reload",
+    "actual retained Node stop and pinned-ready restart; unfinished snapshot stays unverified",
+    "all3immutable versions physically verified across2logical domains",
+    "typed source-path refusal and restorev1 into NEWv4 with exact downloaded SHA",
+    "browser storage denied, same canonical API/Core progress",
+    "original owner/password/Viewer/file/QuickJoin/Node management and immutable Access0.1 browser",
+    "Core actual3voter partition/heal stays read-only with no snapshot controls/new write requests"
+  ],
+  "initial_runs": "Found source disabled-create after login and added restore action breaking ambiguous historical download selector. Fixed product state/layout, all original download/SHA assertions unchanged. New Node fixture signalled readiness before listener existed; now actual pinned TLS ready before browser resumes; no time budget or proof relaxed. Final9 clean. New subprocess streams always closed.",
+  "not_claimed": [
+    "fresh full applicable Python/Go suite",
+    "physical phone/Android browser acceptance",
+    "external backup/quorum snapshot/writable DR",
+    "new package/full Dashboard completion"
+  ],
+  "private_logs": "/workspace/work/dashboard-4b-*.log; synthetic image private, no credential published"
+}

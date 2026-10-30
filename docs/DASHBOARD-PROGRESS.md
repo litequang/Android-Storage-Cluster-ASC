@@ -295,3 +295,39 @@ qualification/dashboard-history-backend.json binds exact source/tests. No UI4b,
 full applicable regression, new artifact or physical phone claim yet.
 NEXT after normal commit/push/fetch/advertised equality:4b owner mobile snapshot/
 restore controls and browser tests, then5diagnostics/settings,6final package/gates.
+
+
+## Checkpoint4a publication VERIFIED /4b UI in progress
+Source826c237d05fdc9c1772c73b43d1597dafea84085 normally pushed/fetched, advertised
+remote exact, clean before4b.49distinct scoped Linux cases, exact b423043 upgrade/
+NEW-state rollback/forward and original Core backup faults recorded above.
+
+4b adds mobile Vietnamese Snapshot/Khôi phục tab, exact manifest/history details,
+actual owner-step progression, pause/new-request stop and explicit resume, typed
+source-path+SHA consent, restore/new version/proof status and actual downloads.
+Viewer sees records only; Core/recovery/file-only ingress controls remain hidden
+and server-blocked. No frontend machine credential or new backend. Intent UUID/
+public metadata is retry-preserved in RAM plus optional sessionStorage; storage
+denial does not disable operation. Pausing/closing never claims to cancel Core IO.
+
+Initial browser gates found disabled-create after login and history-card button
+ambiguity affecting original download selector. Fixed source connection state and
+kept original download card semantics; NO old download/SHA assertion changed.
+New browser failed restart-resume because test signalled readiness at process
+spawn, before Node TLS listener ready. New fixture now verifies actual pinned
+handshake before signalling, then browser still requires actual2domain SHA proof.
+No startup budget change/TLS bypass/mock successful backend. Final new browser
+1PASS15.356s with actual stop/retained restart/pause/reload/restorev4/SHA and storage
+denied. Final broadened9browser qualification is running, no4b push yet.
+
+
+### Checkpoint4b final source qualification
+Fresh9browser PASS0fail/error/skip118.392s:actual trusted mobile snapshot capture/
+pause/reload, actual Node offline ->unverified, pinned-ready retained restart ->
+all3versions actual2domain proofs, typed-path refusal, restorev1 ->v4 and downloaded
+exact SHA. Storage blocked in browser, real backend unchanged. Original PWA/file/
+accounts/management/QuickJoin/private gateway/exact Access0.1 bundle and actual
+Core3voter partition/heal read-only all PASS. No mock receipt/TLS bypass/phone.
+qualification/dashboard-history-ui.json binds source/tests. NEXT after normal
+push/fetch/remote match:5storage/cluster/settings/diagnostics, then6fresh full/
+exact043 upgrade/new-state rollback and immutable new package. ZTE unchanged.

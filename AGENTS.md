@@ -21,7 +21,7 @@ tested/pushed checkpoints, not docs-only planning. Reuse canonical services; Cor
 recovery read-only, no GC/Raft/failover/writerDR or fake unsupported features.
 PROJECT-ROADMAP current cursor is updated for this new task. Node management1
 and accounts2 are pushed (efe0ec4/cef9ce1); File Manager3 qualified, then
-snapshot4a backend qualified (4b UI next), diagnostics5/final package6. Read DASHBOARD-PROGRESS for actual source/publication evidence.
+snapshot4a backend pushed (826c237),4b UI qualified next, diagnostics5/final package6. Read DASHBOARD-PROGRESS for actual source/publication evidence.
 
 After the nine mandatory reads, read docs/PROJECT-ROADMAP.md for the full timeline,
 runtime/artifact distinctions, current task and remaining gates. CURRENT TASK is

@@ -36,6 +36,7 @@ async function launch(root) {
     await page.locator('#core-status').filter({ hasText: 'Đã xác minh barrier' }).waitFor({ timeout: 40000 });
     assert.equal(await page.locator('[data-controller-id]').count(), 3);
     assert.ok(await page.locator('[data-tab="quick-join"]').isHidden());
+    assert.ok(await page.locator('#snapshots-tab').isHidden());
     await page.locator('[data-tab="nodes"]').click(); assert.equal(await page.locator('.node-card[data-node-id]').count(), 3);
     await page.locator('[data-tab="files"]').click(); assert.ok(await page.locator('#upload-panel').isHidden());
     assert.equal(await page.locator('[data-action="download"]').count(), 0);

@@ -884,3 +884,9 @@ with actual2domain physical proof, durable explicit-step restore to new immutabl
 versions, private bounded progress/witness and same-intent replay. Reuse canonical
 metadata/stream/queue and extracted unchanged Core audit body; no Core/quorum/GC/
 writerDR change, physical delete, new Catalog or external-backup claim. UI4b follows.
+
+
+Dashboard4b UI under qualification:mobile Snapshot/Khôi phục tab, per-file source
+confirmation, actual step/proof status/pause/resume, new-version restore and SHA
+download. Historical proof and in-cluster-only scope explicit, Viewer read-only/
+Core+file-ingress excluded. Original file/download/QuickJoin flows retained.

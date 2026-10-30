@@ -46,6 +46,7 @@
       <button class="tab" data-tab="nodes" aria-selected="false">Điện thoại</button>
       <button class="tab" data-tab="files" aria-selected="false">File Manager</button>
       <button id="jobs-tab" class="tab" data-tab="jobs" aria-selected="false" hidden>Tác vụ</button>
+      <button id="snapshots-tab" class="tab" data-tab="snapshots" aria-selected="false" hidden>Snapshot / Khôi phục</button>
       <button class="tab" data-tab="quick-join" aria-selected="false">Ghép điện thoại</button>
       <button id="accounts-tab" class="tab" data-tab="accounts" aria-selected="false" hidden>Tài khoản</button>
     </nav>
@@ -116,6 +117,21 @@
       <p id="jobs-status" role="status"></p><div id="job-list" class="file-list"></div>
       <div class="file-toolbar"><button id="jobs-prev" class="button subtle" type="button">Trang trước</button><span id="jobs-page"></span><button id="jobs-next" class="button subtle" type="button">Trang sau</button></div>
     </section>
+    <section id="snapshots" class="tab-panel" hidden>
+      <section class="panel"><h2>Snapshot &amp; khôi phục phiên bản</h2>
+        <p>Snapshot ghi lại các phiên bản trong cụm tại một metadata point. VERIFIED là bằng chứng đọc SHA trên hai miền lỗi ở thời điểm kiểm tra; không phải backup độc lập ngoài cụm hoặc bảo đảm các node luôn online.</p>
+        <form id="snapshot-create-form" hidden>
+          <label for="snapshot-label">Tên snapshot</label><input id="snapshot-label" type="text" required maxlength="64" placeholder="Trước khi cập nhật tài liệu">
+          <label for="snapshot-prefix">Thư mục logic (để trống: toàn bộ Catalog)</label><input id="snapshot-prefix" type="text" maxlength="512" placeholder="tai-lieu" spellcheck="false">
+          <button id="snapshot-create" class="button primary" type="submit">Tạo và kiểm chứng snapshot</button>
+        </form>
+        <p class="muted">Giữ toàn bộ version trong phạm vi đã chọn. Không xóa vật lý, không tự hết hạn. Giới hạn 16 snapshot, 64 restore và 128 intent; đầy thì báo lỗi, không tự dọn dữ liệu.</p>
+      </section>
+      <div class="section-heading"><h2>Snapshot đã lưu</h2><div><button id="history-refresh" class="button subtle" type="button">Đọc lại</button><button id="history-pause" class="button subtle" type="button" hidden>Tạm dừng gửi bước mới</button></div></div>
+      <p id="history-status" role="status" aria-live="polite"></p><div id="snapshot-list" class="file-list"></div>
+      <h2>Tiến độ khôi phục</h2><p class="muted">Mỗi restore tạo version mới, giữ nguyên bản cũ. Đóng trang hoặc tạm dừng không hủy các lệnh đã được Controller chấp thuận. Mở lại và chọn tiếp tục cùng operation.</p>
+      <div id="restore-list" class="file-list"></div>
+    </section>
     <section id="accounts" class="tab-panel" hidden>
       <section class="panel"><h2>Tài khoản Dashboard</h2>
         <p>Owner quản trị toàn cụm. Viewer đọc và tải toàn bộ file trong cụm; không upload hoặc quản trị. Chưa có ACL chia sẻ theo từng file.</p>
@@ -168,6 +184,16 @@
       <label for="account-confirm-name">Nhập lại tên đăng nhập để xác nhận</label><input id="account-confirm-name" type="text" required autocomplete="off" spellcheck="false" maxlength="48">
       <button id="account-save" class="button primary" type="submit">Lưu thay đổi</button>
     </form><p id="account-change-result" role="status"></p>
+  </dialog>
+  <dialog id="restore-dialog">
+    <div class="dialog-heading"><h2>Khôi phục thành phiên bản mới</h2><button id="restore-close" class="button subtle" type="button">Đóng</button></div>
+    <div id="restore-source"></div>
+    <p>Controller sẽ đặt một số phiên bản mới, giữ nguyên dữ liệu và lịch sử cũ. Không ghi đè file, không phục hồi database cũ. Chỉ hoàn tất sau khi bytes mới có SHA đúng trên hai miền lỗi.</p>
+    <form id="restore-form">
+      <label for="restore-confirm-path">Nhập lại đúng đường dẫn nguồn để xác nhận</label><input id="restore-confirm-path" type="text" required maxlength="512" spellcheck="false" autocomplete="off">
+      <label><input id="restore-confirm" type="checkbox" required> Tôi đã kiểm tra đúng phiên bản và SHA nguồn.</label>
+      <button id="restore-create" class="button primary" type="submit">Xác nhận tạo phiên bản khôi phục</button>
+    </form><p id="restore-result" role="status"></p>
   </dialog>
 </main>
 <footer>Linux synthetic đã kiểm thử · Android cần chủ dự án nghiệm thu · Một Controller, không failover tự động · Không xóa vật lý</footer>
