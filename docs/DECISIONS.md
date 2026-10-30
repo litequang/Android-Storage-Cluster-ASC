@@ -438,3 +438,16 @@ verifier's token. Manual retry cannot invalidate an active sender. Legitimate
 plan409busy gets at most five same-intent browser attempts, then user-visible
 unconfirmed status. Premature ACK never bypasses physical proof or creates a
 VERIFIED replica. No schema/consensus/GC/old package changes.
+
+
+## ADR081 — Single-writer snapshot observations, never quorum authority
+Do not attach Core Backups.Runtime or invent term/index for Demo. Capture exact
+canonical MetadataSource metadata and all versions in requested prefix, retain
+references in optional private bounded history document+witness. Verify bytes
+using original shared proof, actual2independent domains, record per-file times.
+VERIFIED is historical completion; in-cluster references are not external DR.
+Restore to explicit reserved NEW immutable version using original client/queue,
+persist stable intent/target before transfer, owner-driven resumable steps. No
+new Registry settings (old043 rejects extensions), second Catalog/Engine/daemon,
+auto expiration, destructive operation or GC credit. Missing/corrupt progress is
+held. Share existing worker I/O lock; incomplete COPY is not corrupt data evidence.

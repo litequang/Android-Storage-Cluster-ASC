@@ -74,3 +74,12 @@ call would not make it available to Demo. Existing observer must remain read-onl
 Phase5 ingress currently excludes admin/pair routes intentionally. Management APIs
 are direct trusted LAN Dashboard only initially; no widening remote allowlist by
 default. Audit any future ingress capability separately, keep all old protections.
+
+
+Checkpoint4 split after audit:4a backend/operator contract +exact043 compatibility
+first, then4b UI/browser. Demo inspect_state intentionally rejects extra Registry
+settings; optional private history.json1 +required-record witness preserve old043
+code rollback. No new table/Engine/Catalog or fake quorum snapshot authority.
+Use canonical MetadataSource, shared physical audit, stream client and durable
+Core queue. Operations are owner-driven bounded steps; disconnected browser leaves
+progress and exact upload intent for explicit resume, not an extra daemon queue.

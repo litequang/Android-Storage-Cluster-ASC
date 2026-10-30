@@ -800,3 +800,16 @@ Jobs DTO explicitly whitelists public fields/errors, excludes grants/leases/keys
 Version upload delegates existing immutable Core intent/version; no auto overwrite
 or metadata-only protected result. UI uses textContent and clears user projections
 on logout; UNKNOWN/last observation remains distinct from current byte proof.
+
+
+Dashboard history4a:direct owner session+CSRF+Origin for capture/step/restore,
+Viewer can only read existing public manifests/progress. File-only gateway denies
+all history routes and scopes capabilities false; Core/recovery refuse before
+dispatch. Private document+witness strictly bounded/cluster+epoch/ref/digest
+validated, no default/reset or browser machine secret. Actual canonical Engine
+proof/readback and distinct physical domains remain mandatory; metadata/capture/
+ACK/progress never means protected bytes. Historical VERIFIED does not confer
+writer/GC/external-backup credit. Restore creates new immutable version only;
+source versions/objects never deleted. Concurrent version collision is BLOCKED,
+no auto bump/overwrite. Original Core quorum backup proof body only extracted
+for reuse; no consensus/authority change.

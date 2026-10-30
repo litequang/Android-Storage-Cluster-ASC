@@ -130,7 +130,8 @@ class GatewayHandler(Handler):
                 if (type(capabilities) is not dict or type(capabilities.get('dashboard_api_version')) is not int
                         or capabilities['dashboard_api_version']!=1 or capabilities.get('mode')!=profile.upstream_mode):
                     raise Rejected(502,'upstream_framing_rejected')
-                capabilities.update(node_management=False,account_management=False,job_retry=False,access_mode='file-access-only')
+                capabilities.update(node_management=False,account_management=False,job_retry=False,
+                    snapshot_restore=False,snapshot_read=False,access_mode='file-access-only')
                 replacement=json.dumps(capabilities,separators=(',',':'),allow_nan=False).encode()
             self.send_response(response.status)
             allowed={'content-type','content-length','cache-control','set-cookie','content-disposition',

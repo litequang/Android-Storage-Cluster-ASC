@@ -1053,3 +1053,14 @@ I/O, metadata-only pagination, premature ACK refusal/resume and trusted browser.
 Queue ownership:asc/catalog/queue.py sender lease excludes background UPLOAD
 claim until ACK/expiry, duplicate ACK preserves RUNNING verifier; new Catalog
 regression covers expiry/stale sender and no fabricated replica proof.
+
+
+Dashboard4a:catalog/audit.py verify_file is the original physical readback body
+shared with backup.service.Backups._verify; Core authority path unchanged.
+demo/dashboard/document.py bounded private no-link atomic operator documents
+(separate from IPC8KiB bound). history.py exact MetadataSource snapshot/manifest,
+private required-record witness, explicit owner-step verify/restore and canonical
+client/queue integration. http.py capability/role/mode routes; gateway denies
+history. test_dashboard_history.py real TLS/bytes/ACK loss/restart/missing-copy/
+corrupt state/refusals; test_dashboard_upgrade.py exact b423043 package/identities/
+accounts/history/new bytes/code-only rollback+forward. No UI yet at4a.

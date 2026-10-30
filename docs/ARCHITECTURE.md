@@ -654,3 +654,16 @@ bounded offset, logical names); no parallel filesystem/catalog. Availability is
 observed separately from the listing metadata point. Resumed UPLOAD holds the
 existing sender lease against background verifier claim until ACK/expiry; ACK
 cannot clear an already RUNNING verifier lease. Actual proof still owns COMPLETE.
+
+
+## Dashboard single-writer operator history
+Optional history.json1 plus history-required.json1 live only under existing
+private Dashboard root. They record immutable Catalog references/observations
+and operation intents, not a second Catalog/queue or quorum document. Existing
+Controller OS ownership remains required; Core/recovery never instantiate this
+adapter. Exact MetadataSource point contains no invented term/index. Physical
+audit body is shared with Core Backups, unchanged, under canonical worker I/O
+admission. Source versions/bytes remain; restore uses stable existing upload
+intent into a NEW version and waits real2domain proof. Explicit bounded owner
+steps persist progress across disconnect; no auto lifecycle/worker/writer grant.
+Old043 ignores optional state, but exact NEW-state rollback must prove preservation.

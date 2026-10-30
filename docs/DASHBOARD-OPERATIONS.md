@@ -89,3 +89,24 @@ request. Đủ replica chỉ sau canonical fsync/readback/SHA/physical-domain pr
 Viewer đọc file/history/job, không retry/upload. File-only gateway cũng không
 retry; bundle Access0.1 cũ vẫn giao diện file cũ có ghi giới hạn, không giả hỗ trợ
 route mới. Core/quorum/recovery giữ observer-only. Không xóa vật lý/GC.
+
+
+## Snapshot / khôi phục (checkpoint4a API; giao diện4b tiếp theo)
+Snapshot single-writer giữ danh sách TẤT CẢ version bất biến trong thư mục logic
+đã chọn tại một metadata point. Cần chạy các bước kiểm chứng bytes trên2miền lỗi
+để VERIFIED. Hoàn tất là bằng chứng LỊCH SỬ theo từng thời điểm đọc; không phải
+external backup, quorum snapshot, bảo đảm luôn online hay GC credit. Không xóa
+phiên bản/object, không tự hết hạn snapshot. Giới hạn16snapshot/64restore/128intent
+và2MiB metadata; hết chỗ báo lỗi, không tự xóa bản cuối để tiếp tục.
+
+Khôi phục file cũ tạo version MỚI, dùng chính Catalog/Storage/SHA/jobs hiện có.
+Không thay DB/file cũ. Intent/target bền vững trước truyền, mất ACK/restart thì tiếp
+tục cùng operation; không tự chọn version khác để che va chạm. BLOCKED
+version_conflict cần đọc trạng thái và xác nhận một ý định MỚI. COMPLETED chỉ sau
+2miền lỗi có actual readback SHA. Chưa đủ copies thì giữ tiến độ, chọn tiếp tục.
+Đóng browser dừng yêu cầu bước mới, không hủy tác vụ Core đã được authorize.
+
+Không chia sẻ history.json/history-required.json/accounts.json hoặc backup state.
+Mất/hỏng một trong hai history files giữ lỗi503; không xóa/reset để làm UI chạy.
+Code-only rollback043 cần backup MỚI của toàn bộ state/volumes, giữ optional files
+để forward; không restore database cũ. Exact package test riêng ghi trong progress.

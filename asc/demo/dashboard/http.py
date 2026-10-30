@@ -23,6 +23,7 @@ from .auth import COOKIE, SESSION_TTL, GRANT_TTL, Sessions
 from .views import Views
 from .accounts import Accounts, AccountError
 from .files import Files, offset, public_job, JOB_ERRORS
+from .history import History, HistoryError
 from ..pairing import Pairings, PairingError
 
 CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self'; worker-src 'self'"
@@ -54,6 +55,7 @@ class DashboardAPI:
         self.lock = threading.Lock()
         self.tickets = {}
         self.transfers = threading.BoundedSemaphore(1)
+        self.history = History(self)
 
     @contextmanager
     def transfer(self):
@@ -328,7 +330,8 @@ class DashboardHandler(Handler):
                 'file_browse': api.mode == 'single-writer-demo', 'file_history': api.mode == 'single-writer-demo',
                 'version_upload': owner and api.mode == 'single-writer-demo',
                 'job_read': api.mode == 'single-writer-demo', 'job_retry': owner and api.mode == 'single-writer-demo',
-                'snapshot_restore': False,
+                'snapshot_restore': owner and api.mode == 'single-writer-demo',
+                'snapshot_read': api.mode == 'single-writer-demo',
                 'physical_gc': False, 'recovery_writer': False})
         if api.mode != 'single-writer-demo':
             if path=='/api/state' and method=='GET':return self._json(200,api.views.state())
@@ -340,6 +343,15 @@ class DashboardHandler(Handler):
             if (method != 'GET' and not (method == 'POST' and path in ('/api/files/query', '/api/jobs/query'))
                     or path.startswith(('/api/manage/', '/api/accounts'))):
                 raise Rejected(403, 'role_denied')
+        if path == '/api/history' and method == 'GET':
+            return self._json(200, api.history.view())
+        if path in ('/api/history/snapshots','/api/history/restores') and method == 'POST':
+            return self._json(201, api.history.create('snapshot' if path.endswith('/snapshots') else 'restore',self.body_json()))
+        pieces = path.strip('/').split('/')
+        if (len(pieces) == 5 and pieces[:2] == ['api','history'] and pieces[2] in ('snapshots','restores')
+                and pieces[4] == 'step' and method == 'POST'):
+            if self.body_json() != {}:raise ValueError('invalid history step')
+            return self._json(200, api.history.step(pieces[2],pieces[3]))
         if path == '/api/files/query' and method == 'POST':
             return self._json(200, api.files.query(self.body_json()))
         if path == '/api/jobs/query' and method == 'POST':
@@ -415,7 +427,7 @@ class DashboardHandler(Handler):
         self._response_started = False
         try:
             self._route()
-        except (Rejected,PairingError,AccountError) as exc:
+        except (Rejected,PairingError,AccountError,HistoryError) as exc:
             if not self._response_started:
                 self._json(exc.status, {'error': exc.code})
         except ClientError as exc:

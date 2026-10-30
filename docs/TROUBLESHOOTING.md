@@ -661,3 +661,14 @@ ACK; UI waits boundedly with same bytes/path/version/key. If still busy, inspect
 job status and retry later. Keep original file. Job retry ACK is not COMPLETE.
 file_exists409 means immutable path/version already exists; download/history to
 check before choosing a NEW explicit version. No overwrite or automatic bump.
+
+
+Dashboard history_state_unavailable503:preserve history.json and required witness,
+review private permissions/no-links/cluster+epoch/reference/manifest integrity or
+restore a verified consistent operator backup while stopped. Never delete/reset
+progress or re-init identity. history_limit507:bounded history full, preserve all
+records; no automatic destructive retention. backup_unavailable/copies_pending:
+wait for actual two-domain copies/reconnect then explicitly resume. Snapshot
+VERIFIED is historical, inspect current file replica state separately. Restore
+version_conflict BLOCKED:inspect occupied immutable version, start a NEW explicit
+intent after review; do not overwrite or auto increment a lost-ACK request.

@@ -877,3 +877,10 @@ schema, physical delete or Core/recovery writer. Original packages unchanged.
 Checkpoint3 qualified:70distinct related cases PASS, final retry delta22overlapping
 PASS. Canonical resumed-UPLOAD sender/verifier lease race fixed without weakening
 byte proof; duplicate ACK preserves active verification. Original packages intact.
+
+
+Dashboard4a backend under qualification:single-writer in-cluster snapshot metadata
+with actual2domain physical proof, durable explicit-step restore to new immutable
+versions, private bounded progress/witness and same-intent replay. Reuse canonical
+metadata/stream/queue and extracted unchanged Core audit body; no Core/quorum/GC/
+writerDR change, physical delete, new Catalog or external-backup claim. UI4b follows.

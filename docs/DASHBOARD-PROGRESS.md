@@ -237,3 +237,61 @@ tests.test_catalog, tests.test_storage_cluster. Existing exact Access archive
 checksum remains d6f751d7bd93f3f438bec1c983b05b133b209870fe164cf7ea4bcf9e268e10d9.
 No need rerun all70 for this docs-only publication record; run appropriate tests
 for NEXT source changes, final full applicable suite only after final source.
+
+
+## Continuation / checkpoint4a backend in progress
+Fetched1849a85dbbb6b89665eb99535d3d216cfde548e2, advertised remote exact, clean
+workspace before source work. Environment spec136 ready/enforced; inherited proxy/
+CA unchanged, no phone/SSH/production action.
+
+Implemented shared catalog.audit.verify_file by moving existing Backups._verify
+body without semantic change; Core backup delegates that same physical proof.
+Demo adapter uses canonical MetadataSource for exact metadata point/all immutable
+versions in requested logical prefix, private bounded history document1+witness,
+original download/upload/SHA/failure-domain proof and durable Core jobs. No new
+Catalog/table/Registry setting/schema, fake Raft/term/index, physical deletion or
+external-DR claim. Missing witness/document/corrupt unsafe state held503, no reset.
+
+Snapshot initial UNVERIFIED, per-file actual2domain SHA proofs advance cursor;
+VERIFIED completion is HISTORICAL, not current availability/independent backup.
+Restore intent reserves new immutable version before IO, stable Core key/target
+persist before bytes. Source unchanged, no stale DB restore. Same request retries
+replay; changed intent409. Explicit owner steps survive disconnect/restart; no new
+background daemon or operation grants in browser. Viewer read-only, Core/recovery
+blocked, file-only ingress excludes history and scopes capabilities false.
+
+Initial10run unintentionally rediscovered4imported FileManager tests; test helper
+now module alias, preserving original tests in their own module. That initialrun
+had1restore-after-restart FAIL: new adapter audited during unfinished COPY. Fixed
+by sharing original worker I/O lock and waiting actual available/verified2 before
+physical audit. Restore first asks canonical idempotent plan, so a completed
+target can resume without rereading old source; private target ID saved before
+transfer. Fresh6history API tests PASS46.041s after fixes. Broad4a qualification
+now running exact published043 ->current source ->NEW-state rollback/forward,
+old Phase3A backup faults, external/Core observer and Dashboard/access regressions.
+No final4a PASS/push/package or phone completion claim until results below.
+
+
+4a final related regression45PASS0fail/error/skip404.299s, all12Phase3A actual
+Go/Python/TLS backup fault marks, external quorum/version bytes and Core recovery
+read-only included. New document anchor uses held approved dirfd for create/read/
+rename/fsync/cleanup, checks parent identity; no outside namespace writes.
+Initial anchor9run had1NEW test ERROR because shared no_links returns StorageError
+unsafe_path rather than ValueError; actual outside write was correctly refused.
+NEW test now asserts that precise shared refusal plus untouched outside bytes.
+No old assertion or product guard weakened. Final document/history10PASS64.627s
+includes2new physical corruption/version-collision gates and2document fault gates.
+Case IDs overlap broader45; distinct49 so far, not55. Exact043 upgrade retested
+after final anchored helper in separate final run below. No UI or package release.
+
+
+### Checkpoint4a source qualification complete
+Final exact published b423043 ->current anchored helper/accounts/history/restore
+->NEW-state code rollback ->forward:1PASS20.589s, same credentials/Cluster/Node/
+Volume/TLS and old/new immutable bytes, optional private files preserved. No DB
+restore. Related45PASS404.299s +final document/history10PASS64.627s +upgrade1
+overlap,49DISTINCT cases total. No failed initial runs counted.
+qualification/dashboard-history-backend.json binds exact source/tests. No UI4b,
+full applicable regression, new artifact or physical phone claim yet.
+NEXT after normal commit/push/fetch/advertised equality:4b owner mobile snapshot/
+restore controls and browser tests, then5diagnostics/settings,6final package/gates.

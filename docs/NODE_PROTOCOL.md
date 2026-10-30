@@ -651,3 +651,18 @@ retry during active sender returns409job_state_changed. Upload plan409
 upload_state_conflict is exposed as transfer_busy; browser tries same intent at
 most5times900ms apart, then stops unconfirmed. No generic403/SHA/pin/identity
 retry, new key/version, lease bypass or success inferred from ACK.
+
+
+Dashboard history API1 (direct LAN Demo only): GET /api/history read-only public
+manifest/proof/restore progress, no private request index. Owner POST /api/history/
+snapshots exact history_api_version1/request_idUUID/label1..64/prefix logical folder
+or empty. Captures ALL immutable versions in prefix, never bytes completeness.
+POST /api/history/restores exact history_api_version1/request_idUUID/file_idUUID/
+snapshot_idUUID-or-null; retained snapshot must be VERIFIED if supplied. New
+version reserved before IO; same request replays, changed intent409.
+Owner POST /api/history/{snapshots|restores}/UUID/step {} performs <=one snapshot
+file verification or one restore attempt. Busy429, incomplete/error remains
+unconfirmed/resumable. Snapshot VERIFIED/restore COMPLETED require actual SHA
+readback on2domains. Completed step returns historical:true, not fresh proof.
+Same cookie/CSRF/Origin/role guards; Viewer GET only, Core/recovery and file-only
+ingress refuse. Browser cannot supply path/shell/authority or storage credentials.

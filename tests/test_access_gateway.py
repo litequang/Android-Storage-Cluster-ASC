@@ -76,6 +76,9 @@ class PrivateGatewayTests(unittest.TestCase):
         self.assertEqual(status,200);self.assertFalse(json.loads(raw)['node_management'])
         self.assertFalse(json.loads(raw)['account_management'])
         self.assertFalse(json.loads(raw)['job_retry'])
+        self.assertFalse(json.loads(raw)['snapshot_restore']);self.assertFalse(json.loads(raw)['snapshot_read'])
+        self.assertEqual(self.request('GET','/api/history')[0],403)
+        self.assertEqual(self.request('POST','/api/history/snapshots',{})[0],403)
         from tests.test_dashboard_files import query
         self.assertEqual(self.request('POST','/api/files/query',query())[0],200)
         self.assertEqual(self.request('POST','/api/jobs/query',{'offset':0})[0],200)

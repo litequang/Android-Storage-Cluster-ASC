@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "checkpoint": "dashboard4a-history-backend",
+  "state": "QUALIFIED_LINUX_SYNTHETIC_SOURCE",
+  "qualified_at": "2026-10-30T02:50:39.414281+00:00",
+  "baseline": "1849a85dbbb6b89665eb99535d3d216cfde548e2",
+  "branch": "feature/dashboard-full",
+  "runs": [
+    {
+      "log": "dashboard-4a-qualified.log",
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 404.299
+    },
+    {
+      "log": "dashboard-4a-history-final.log",
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 64.627,
+      "overlap": 6
+    },
+    {
+      "log": "dashboard-4a-upgrade-final.log",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 20.589,
+      "overlaps_broad": true
+    }
+  ],
+  "distinct_cases": 49,
+  "qualified_inputs_sha256": {
+    "asc/access/gateway.py": "6f71819fbd319ff151b32b0bc2aa4b6765c269dc0f5396f1b91f72bb845b8733",
+    "asc/backup/service.py": "fe5f47b23d3d5f4d81bc02a96d705be43bb7287e4aa608d4cf6f72910007c9a7",
+    "asc/catalog/audit.py": "a81a296a4639f855135a3719b2ceb531cbc2fa014683fc6d276fa326706956cf",
+    "asc/demo/dashboard/document.py": "e18b6b19bef2b5675416f42a7da541dfe56682ba230cceb0d7889c6feb3af93f",
+    "asc/demo/dashboard/history.py": "6cf3feac15f4fcae7bfe9c5fcaf92c81ddc0e37b8ee7a7f1879bc891a47c5a56",
+    "asc/demo/dashboard/http.py": "ada9ebce5f97d8239fda36c12332e1063b3dd640674a8f2fc5be4ef4f4ef37ad",
+    "tests/test_access_gateway.py": "0dfb93b7940842031b258f0a3696bd72d5667f2af1f7136be404e7a57d44c842",
+    "tests/test_dashboard_document.py": "5e3c782e79fb12a82ced527cb56cf3c10a3a03da2f1ae5b7fdedceb4975cde47",
+    "tests/test_dashboard_history.py": "64622a5602927842214b71fc8de51202c7d5f27d776500c084ff2a96ff34a3c6",
+    "tests/test_dashboard_upgrade.py": "98b221a1d003d13cc706fecfb1078224555ab564760ea44a0c41510367d0af1e",
+    "tests/test_observer_gateway.py": "97b5a54a6f48bed088dbce7d0ea6f5db5272b2f8b73f2cc393b87a9b7c64a1b9"
+  },
+  "final_delta": "Held-dirfd private-document anchor finalized during broad run; final document/history10 and fresh exact upgrade1 cover final helper. Two new corruption/collision cases included in10. No later product delta.",
+  "evidence": [
+    "same original canonical physical audit body shared with Core Backups",
+    "all12 actual Phase3A fault markers plus external quorum/version bytes and observer read-only",
+    "actual2domain snapshot readback/immutable manifest/source change",
+    "restore new version/actual lost TLS ACK/restart/persistent same intent",
+    "physical corrupt replica refuses verification; last readable copy SHA survives",
+    "version collision BLOCKED without overwrite/automatic bump",
+    "private witness/corruption/link/parent swap/fsync failure held; outside bytes unchanged",
+    "exact published b423043 first install/data, upgrade/accounts/history/new bytes, NEW-state code rollback/forward preserves all state"
+  ],
+  "initial_runs": "Initial10 imported4 existing tests and had1new restore-after-restart failure: adapter audited unfinished COPY. Fixed shared worker admission/readiness and completed-target resume; final6 clean. Anchor9 had1NEW expected-exception ERROR: actual unsafe_path refusal already correct, new test now asserts shared StorageError plus untouched outside bytes. Final10/45/1 clean.",
+  "not_claimed": [
+    "Dashboard history UI",
+    "fresh full applicable Python/Go suite",
+    "external independent backup",
+    "Core/quorum snapshot authority/writable DR",
+    "physical phone/Android acceptance",
+    "new package/full Dashboard completion",
+    "physical deletion/GC"
+  ],
+  "private_logs": "/workspace/work/dashboard-4*.log; no state/credential published"
+}

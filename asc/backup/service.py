@@ -4,7 +4,6 @@ import threading
 
 from . import state
 from ..catalog.common import CatalogError, POLICIES, digest, identifier, key, logical_path, now, uid
-from ..catalog.placement import active_nodes, readable
 from ..catalog.transport import source_stream
 from ..client import ClientError
 from ..storage.client import StorageClient
@@ -264,26 +263,8 @@ class Backups:
         return self._edit('checkpoint', {}, change)
 
     def _verify(self, file_id, copies=1):
-        entry = self.service.catalog.file(file_id)
-        with self.service.registry.connect() as db:
-            nodes = {n['node_id']: n for n in active_nodes(db)}
-        domains, source = [], None
-        for replica in entry['replicas']:
-            node = nodes.get(replica['node_id'])
-            if replica['state'] != 'VERIFIED' or not node or not readable(node, replica['volume_id']) or node['device_id'] in domains:
-                continue
-            try:
-                client = self.service._client(replica['node_id'], replica['volume_id'], 'audit', replica['local_file_id'])
-                self.service._proof(client, replica['local_file_id'], replica['volume_id'],
-                    '_asc-global/'+file_id+'/'+replica['replica_id'], entry['file'])
-                domains.append(node['device_id'])
-                source = source or (client, replica)
-                if len(domains) >= copies:
-                    return {'file_id': file_id, 'sha256': entry['file']['sha256'], 'size': entry['file']['size'],
-                            'domains': domains, 'verified_at': now()}, source
-            except (OSError, ValueError, CatalogError, ClientError) as exc:
-                self.service._bad_replica(replica, exc)
-        raise CatalogError('backup_unavailable', 503)
+        from ..catalog.audit import verify_file
+        return verify_file(self.service, file_id, copies)
 
     def _backup(self, job):
         view = self.runtime.view()

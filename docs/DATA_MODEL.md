@@ -597,3 +597,23 @@ existing catalog_files/catalog_jobs/history; immutable IDs, upload keys, policy
 and actual replica proof authority unchanged. Browse metadata_point reflects one
 SQLite listing transaction only; availability later observed, not Core authority.
 Pagination50/offset10000 does not raise Core256-file cap or create directories.
+
+
+Optional Dashboard history1:private history.json +history-required.json witness
+bind format/mode/Cluster ID/Catalog epoch/document UUID; no base schema changes
+or new Registry setting. Document revision, snapshots(up to16), restores(up to64),
+request receipts(up to128), maximum2MiB. Each snapshot immutable manifest includes
+exact metadata revision/digest, label/prefix and ALL matching versions/size/SHA;
+manifest digest, UNVERIFIED/VERIFYING/VERIFIED cursor/per-file actual2domain proofs
+and observed timestamps. Restore source/snapshot link, reserved version, stable
+target ID, PENDING/COPYING/VERIFYING/COMPLETED/BLOCKED, fixed error and final proof.
+Request UUID/digest prevents changed-intent replay. No bytes/keys/tokens stored.
+Witness published before first document; interrupted pair or lost member holds
+503, never empty reset. Private0600 atomic temp/fsync/rename/parent-fsync; no-links/
+single-link/owner/inode+mtime read checks. Every load binds immutable references
+to canonical live Catalog. Retain records/references, no auto expiration/deletion.
+
+Operator document directory IO uses a held original private directory descriptor
+for file open/temp create/replace/fsync/cleanup, with namespace/inode rechecks;
+interrupted publish may be unconfirmed, never silently rolled back or redirected
+outside approved directory. Required witness and document are preserved for review.
