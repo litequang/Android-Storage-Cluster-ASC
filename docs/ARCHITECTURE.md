@@ -667,3 +667,12 @@ admission. Source versions/bytes remain; restore uses stable existing upload
 intent into a NEW version and waits real2domain proof. Explicit bounded owner
 steps persist progress across disconnect; no auto lifecycle/worker/writer grant.
 Old043 ignores optional state, but exact NEW-state rollback must prove preservation.
+
+
+Dashboard preferences are optional UI label/read-refresh only, separate from
+immutable Cluster/Node/config identities, quota and heartbeat. They use original
+private receipt storage with cluster binding and CAS revision, no Registry/schema
+change. Owner redacted diagnostics aggregate existing observations/canonical job
+and operator-history counts, not a second monitoring DB or raw-log reader. No
+remote Node filesystem/process/quota API. Core/recovery/read-only boundaries and
+file-ingress management exclusions remain explicit.

@@ -24,7 +24,7 @@
     navigator.serviceWorker.register('/service-worker.js', { scope: '/', updateViaCache: 'none' })
       .catch(() => { $('install-status').textContent = 'Web App chưa sẵn sàng; Dashboard vẫn dùng qua trình duyệt HTTPS.'; });
   }
-  const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null, features: null, role: null, username: null, passwordEnabled: false };
+  const model = { mode: null, readOnly: true, csrf: null, connected: false, state: null, max: null, uploading: false, activeTicket: null, polling: false, pending: null, features: null, role: null, username: null, passwordEnabled: false, preferences: null, lastPoll: 0 };
   const pairing = { generation: 0, ticket: null, timer: null, creating: false, polling: false };
   const management = { generation: 0, revision: 0, node: null, preview: null, busy: false };
   const accountUI = { generation: 0, editing: null, busy: false };
@@ -78,6 +78,9 @@
     snapshot_empty: 'Không có phiên bản trong thư mục đã chọn; chưa tạo snapshot.',
     snapshot_not_verified: 'Snapshot chưa kiểm chứng đủ bytes trên hai miền lỗi. Tiếp tục kiểm chứng trước khi khôi phục từ snapshot.',
     restore_too_large: 'Phiên bản nguồn vượt giới hạn restore của Dashboard hoặc hết dải phiên bản được hỗ trợ.',
+    preferences_changed: 'Cấu hình đã được owner khác thay đổi. Đọc lại trước khi lưu.',
+    preferences_limit: 'Cấu hình đã đến giới hạn revision được hỗ trợ.',
+    preferences_unavailable: 'Không xác minh được cấu hình giao diện. Giữ file state để owner kiểm tra, không tự ghi đè.',
   };
   class APIError extends Error {
     constructor(code, status) { super(messages[code] || 'Yêu cầu chưa được xác nhận. Kiểm tra kết nối và thử lại.'); this.code = code; this.status = status; }
@@ -119,6 +122,7 @@
   function loginView(clear = true) {
     model.csrf = null; model.connected = false; model.state = null;
     model.features = null; clearManagement();
+    model.preferences=null;$('preferences-name').value='';$('preferences-status').textContent='';$('diagnostics-status').textContent='';$('storage-health').replaceChildren();
     fileUI.generation++; fileUI.page = null; fileUI.offset = 0; fileUI.folder = ''; fileUI.recursive = true;
     jobUI.generation++; jobUI.offset = 0; $('job-list').replaceChildren(); detailGeneration++;
     pauseHistory(); historyUI.generation++; historyUI.doc = null; closeRestore();
@@ -153,6 +157,7 @@
       const value = await response.json();
       if (path === '/api/capabilities' && response.headers.get('X-ASC-Access-Mode') === 'file-access-only') {
         value.node_management = false; value.account_management = false; value.job_retry = false; value.snapshot_restore = false; value.snapshot_read = false;
+        value.preferences_read=false;value.preferences_write=false;value.diagnostics=false;
       }
       return value;
     } catch (error) {
@@ -254,10 +259,14 @@
     $('jobs-tab').hidden = !model.features.job_read;
     $('snapshots-tab').hidden = !model.features.snapshot_read;
     $('snapshot-create-form').hidden = !model.features.snapshot_restore;
+    $('settings-tab').hidden = !model.features.preferences_read;
+    $('preferences-form').hidden = !model.features.preferences_write;
+    $('diagnostics-panel').hidden = !model.features.diagnostics;
     document.querySelector('[data-tab="quick-join"]').hidden = !model.features.node_management;
     $('refresh').textContent = model.features.refresh_probe ? 'Cập nhật kiểm tra' : 'Đọc trạng thái';
     $('actor-label').textContent = (model.role === 'viewer' ? 'Viewer' : 'Owner') + (model.username ? ' · '+model.username : ' · mã cục bộ');
     $('actor-label').hidden = false;
+    if(model.features.preferences_read)await loadPreferences();
   }
   function canUpload() { return !model.readOnly && model.features?.file_upload === true; }
   function loginKind() {
@@ -469,6 +478,7 @@
         node('p', '', 'Volume: ' + volume.volume_id), node('p', '', 'Trạng thái: ' + (model.connected ? volume.state : 'UNKNOWN · dữ liệu cũ')),
         node('p', '', 'Quota: ' + amount(volume.quota) + ' · Đã dùng: ' + amount(volume.used_bytes)),
         node('p', '', 'Free đo được: ' + amount(volume.free_bytes) + ' · Khả dụng: ' + amount(volume.available_bytes)),
+        node('p', '', 'Read / write / fsync: '+truth(volume.readable)+' / '+truth(volume.writable)+' / '+truth(volume.fsync_tested)),
         node('p', 'muted', 'Số đo: ' + date(volume.checked_at)));
       rows.push(card);
     }
@@ -511,7 +521,7 @@
   }
   function render(state) {
     model.state = state;
-    $('cluster-name').textContent = state.cluster.name;
+    $('cluster-name').textContent = model.preferences?.display_name || state.cluster.name;
     $('snapshot-time').textContent = (model.readOnly ? (state.runtime.strong_read_confirmed ? 'Quan sát qua barrier: ' : 'Metadata cũ / chưa xác minh quorum: ') : model.connected ? 'Cập nhật: ' : 'Bản xem cũ: ') + date(state.as_of);
     if (model.readOnly) { renderCore(state); if (!state.runtime.strong_read_confirmed && $('details').open) $('details').close(); }
     const c = state.counts, capacity = state.capacity;
@@ -548,6 +558,7 @@
       return card;
     }));
     if (!state.nodes.length) $('node-list').append(node('p', 'muted', 'Chưa có Storage Node được ghép. Mở Ghép điện thoại để tạo mã, rồi phê duyệt trong Quản lý.'));
+    renderStorage(state);
     if (!model.features?.file_browse || !fileUI.page) {
       $('file-count').textContent = count(c.files) + ' file';
       renderFiles(state.files);
@@ -780,9 +791,57 @@
   $('history-pause').addEventListener('click',()=>{pauseHistory();if(historyUI.doc)renderHistory(historyUI.doc);});
   $('history-refresh').addEventListener('click',()=>{void loadHistory();});
 
+  function truth(value) { return !model.connected || value!==true && value!==false ? 'UNKNOWN' : value ? 'Có' : 'Không'; }
+  function renderStorage(state) {
+    const cards=[];
+    for(const item of state.nodes)for(const volume of item.volumes) {
+      const card=node('article','replica-card');card.dataset.healthVolume=volume.volume_id;
+      card.append(node('strong','',item.name),detail('Volume',volume.volume_id),detail('Adapter',volume.kind || 'UNKNOWN'),
+        detail('Read / write / fsync',truth(volume.readable)+' / '+truth(volume.writable)+' / '+truth(volume.fsync_tested)),
+        detail('Quota / reserve',amount(volume.quota)+' / '+amount(volume.reserve)),
+        detail('Đã dùng / khả dụng',amount(volume.used_bytes)+' / '+(model.connected?amount(volume.available_bytes):'UNKNOWN')),detail('Thời điểm đo',date(volume.checked_at)));
+      cards.push(card);
+    }
+    $('storage-health').replaceChildren(...cards);
+    if(!cards.length)$('storage-health').append(node('p','muted','Chưa có volume đã được owner phê duyệt; khả năng ghi UNKNOWN.'));
+  }
+  async function loadPreferences() {
+    if(!model.csrf || !model.features?.preferences_read)return;
+    const session=model.csrf;
+    try {
+      const value=await request('/api/preferences');if(session!==model.csrf)return;
+      if(value.preferences_api_version!==1)throw new APIError('unsupported_runtime',503);
+      model.preferences=value;$('preferences-name').value=value.display_name;$('preferences-refresh').value=String(value.refresh_seconds);
+      if(model.state)$('cluster-name').textContent=value.display_name;
+      $('preferences-status').textContent=model.features.preferences_write?'':'Cấu hình chỉ đọc: '+value.display_name+' · '+value.refresh_seconds+' giây.';
+    }catch(error){if(session===model.csrf)$('preferences-status').textContent=error.message;}
+  }
+  $('preferences-form').addEventListener('submit',async event=>{
+    event.preventDefault();if(!model.connected || !model.features?.preferences_write || !model.preferences)return;
+    const session=model.csrf;$('preferences-save').disabled=true;
+    try {
+      const reply=await request('/api/preferences',{method:'POST',json:{preferences_api_version:1,expected_revision:model.preferences.revision,display_name:$('preferences-name').value,refresh_seconds:Number($('preferences-refresh').value)}});
+      if(session!==model.csrf)return;model.preferences=reply;$('cluster-name').textContent=reply.display_name;
+      $('preferences-status').textContent='Controller đã xác nhận cấu hình giao diện; Cluster/Node identity giữ nguyên.';
+    }catch(error){if(session===model.csrf){await loadPreferences();$('preferences-status').textContent=error.message;}}
+    finally{$('preferences-save').disabled=false;}
+  });
+  $('diagnostics-download').addEventListener('click',async()=>{
+    if(!model.connected || !model.features?.diagnostics)return;
+    const session=model.csrf;$('diagnostics-download').disabled=true;
+    try {
+      const report=await request('/api/diagnostics');if(session!==model.csrf)return;
+      if(report.diagnostic_api_version!==1)throw new APIError('bad_request',503);
+      const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'})),link=node('a');
+      link.href=url;link.download='asc-diagnostics.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+      $('diagnostics-status').textContent='Đã tạo bản JSON chẩn đoán có số đo/thời điểm. Kiểm tra trước khi chia sẻ; báo cáo không phải bằng chứng quyền ghi hoặc nghiệm thu điện thoại.';
+    }catch(error){if(session===model.csrf)$('diagnostics-status').textContent=error.message;}
+    finally{$('diagnostics-download').disabled=false;}
+  });
+
   async function reload(probe = false) {
     if (!model.csrf || model.polling) return;
-    model.polling = true; $('refresh').disabled = true;
+    model.polling = true;model.lastPoll=Date.now(); $('refresh').disabled = true;
     try {
       probe = probe && !model.readOnly && model.features?.refresh_probe === true;
       const state = await request(probe ? '/api/refresh' : '/api/state', probe ? { method: 'POST', json: {} } : {});
@@ -907,6 +966,7 @@
     if (tab.dataset.tab === 'accounts') void loadAccounts();
     if (tab.dataset.tab === 'jobs') void loadJobs();
     if (tab.dataset.tab === 'snapshots') void loadHistory();
+    if (tab.dataset.tab === 'settings') void loadPreferences();
   });
   async function boot() {
     if (location.protocol !== 'https:' || !window.isSecureContext || !crypto.subtle) {
@@ -914,7 +974,7 @@
     }
     try { applyMode(await request('/api/mode', { csrf: false })); await loadAuthMethods(); const session = await request('/api/session', { csrf: false }); applyMode(session); model.csrf = session.csrf; model.max = session.max_upload_bytes; await loadFeatures(); activate(); await reload(); }
     catch (_) { $('login-error').textContent = ''; /* normal first visit requires login */ }
-    setInterval(() => { if (model.csrf && !model.uploading) void reload(); }, 10000);
+    setInterval(() => { if (model.csrf && !model.uploading && !historyUI.running && Date.now()-model.lastPoll>=(model.preferences?.refresh_seconds || 10)*1000) void reload(); }, 1000);
   }
   void boot();
 })();

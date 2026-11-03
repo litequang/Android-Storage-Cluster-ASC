@@ -1072,3 +1072,13 @@ Viewer/Core/ingress capability controls. tests/test_dashboard_history_browser.py
 +browser/dashboard_history.cjs run real trusted mobile/browser storage denial/
 Node stop/pinned-ready restart/actual restore SHA. Existing account/Core browser
 assertions add hidden owner controls/read-only behavior, none removed.
+
+
+Dashboard5:preferences.py optional private cluster-bound UI settings, strict
+validation/revisionCAS, not machine config. diagnostics.py bounded redacted owner
+report over existing diagnose/views/job/history counts, no raw state/logs.
+views.py measured bool fsync_tested/None; http.py roles/mode/capabilities, gateway
+scopes management false. Web Settings/health/JSON download, configurable read
+interval and long-name wrapping. tests/test_dashboard_diagnostics.py/browser/JS
+cover actual TLS/restart/identity/SHA/CAS/privacy/UNKNOWN/mobile; dashboard_upgrade
+adds NEW preferences preservation through exact043 code rollback/forward.

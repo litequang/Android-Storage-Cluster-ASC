@@ -24,6 +24,7 @@ from .views import Views
 from .accounts import Accounts, AccountError
 from .files import Files, offset, public_job, JOB_ERRORS
 from .history import History, HistoryError
+from .preferences import Preferences, PreferenceError
 from ..pairing import Pairings, PairingError
 
 CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self'; worker-src 'self'"
@@ -56,6 +57,7 @@ class DashboardAPI:
         self.tickets = {}
         self.transfers = threading.BoundedSemaphore(1)
         self.history = History(self)
+        self.preferences = Preferences(self)
 
     @contextmanager
     def transfer(self):
@@ -332,6 +334,9 @@ class DashboardHandler(Handler):
                 'job_read': api.mode == 'single-writer-demo', 'job_retry': owner and api.mode == 'single-writer-demo',
                 'snapshot_restore': owner and api.mode == 'single-writer-demo',
                 'snapshot_read': api.mode == 'single-writer-demo',
+                'preferences_read': api.mode == 'single-writer-demo',
+                'preferences_write': owner and api.mode == 'single-writer-demo',
+                'diagnostics': owner and api.mode == 'single-writer-demo',
                 'physical_gc': False, 'recovery_writer': False})
         if api.mode != 'single-writer-demo':
             if path=='/api/state' and method=='GET':return self._json(200,api.views.state())
@@ -341,8 +346,14 @@ class DashboardHandler(Handler):
             raise Rejected(403,'read_only_mode')
         if authenticated[2].get('role','owner') != 'owner':
             if (method != 'GET' and not (method == 'POST' and path in ('/api/files/query', '/api/jobs/query'))
-                    or path.startswith(('/api/manage/', '/api/accounts'))):
+                    or path.startswith(('/api/manage/', '/api/accounts', '/api/diagnostics'))):
                 raise Rejected(403, 'role_denied')
+        if path == '/api/preferences':
+            if method == 'GET':return self._json(200,api.preferences.get())
+            if method == 'POST':return self._json(200,api.preferences.update(self.body_json()))
+        if path == '/api/diagnostics' and method == 'GET':
+            from .diagnostics import report
+            return self._json(200,report(api))
         if path == '/api/history' and method == 'GET':
             return self._json(200, api.history.view())
         if path in ('/api/history/snapshots','/api/history/restores') and method == 'POST':
@@ -427,7 +438,7 @@ class DashboardHandler(Handler):
         self._response_started = False
         try:
             self._route()
-        except (Rejected,PairingError,AccountError,HistoryError) as exc:
+        except (Rejected,PairingError,AccountError,HistoryError,PreferenceError) as exc:
             if not self._response_started:
                 self._json(exc.status, {'error': exc.code})
         except ClientError as exc:

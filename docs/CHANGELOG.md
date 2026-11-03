@@ -890,3 +890,9 @@ Dashboard4b UI under qualification:mobile Snapshot/Khôi phục tab, per-file so
 confirmation, actual step/proof status/pause/resume, new-version restore and SHA
 download. Historical proof and in-cluster-only scope explicit, Viewer read-only/
 Core+file-ingress excluded. Original file/download/QuickJoin flows retained.
+
+
+Dashboard5 under qualification:measured storage/fsync health, Owner UI-name/refresh
+settings with private CAS, Viewer read-only, redacted owner diagnostic JSON. No
+cluster/Node identity/config or storage quota/process changes, no new schema/
+monitoring DB/raw log reader. Actual API4PASS; broader browser/upgrade gates pending.

@@ -76,6 +76,7 @@ class GatewayHTTPTests(GatewayFixture):
                     ('POST','/api/accounts'),('POST','/api/accounts/primary/change'),
                     ('POST','/api/files/query'),('POST','/api/jobs/query'),
                     ('GET','/api/history'),('POST','/api/history/snapshots'),('POST','/api/history/restores'),
+                    ('GET','/api/preferences'),('POST','/api/preferences'),('GET','/api/diagnostics'),
                     ('POST','/api/jobs/11111111-1111-4111-8111-111111111111/retry'),
                     ('POST','/api/approve'),('POST','/api/gc'),('POST','/api/promote'),('POST','/api/recovery/activate'),
                     ('GET','/api/files/11111111-1111-4111-8111-111111111111/content')]:

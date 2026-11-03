@@ -129,3 +129,19 @@ Viewer chỉ xem/tải, không capture/step/restore. Core/recovery và file-only
 gateway không có controls; không đổi mode/allowlist để mở quyền ghi. Metadata
 intent trong sessionStorage không chứa token/code; nếu browser chặn storage, retry
 trong cùng trang vẫn giữ key RAM, reload cần kiểm progress trước ý định mới.
+
+
+## Storage / cấu hình / chẩn đoán (checkpoint5 source)
+Cấu hình / Chẩn đoán hiển thị các volume đã duyệt, adapter, quota/reserve, số đo
+free/used/available và read/write/fsync. UNKNOWN khi không có probe còn mới; không
+coi UNKNOWN là0 hoặc có thể ghi. Fsync-tested không phải bảo đảm power-loss/OEM.
+
+Owner sửa tên giao diện và chu kỳ đọc trạng thái5..60giây; không đổi Cluster ID,
+Node ID, tên Controller thật, heartbeat hay quota. Mỗi browser lấy cấu hình khi
+đăng nhập/mở tab, thay đổi stale bị409 và đọc lại trước save. Viewer chỉ đọc.
+
+Tải chẩn đoán xuất JSON với counts/measurements/timestamps/jobs/history/limits,
+không chứa tên/IDs/endpoint/PIN/token/private key/path/log thô. Kiểm tra lại trước
+chia sẻ. Các số đếm/trạng thái không cấp quyền writer/quorum; chưa thay nghiệm thu
+điện thoại. Không có nút shell, remote quota, start/stop Node hay GC. Lịch sử job
+và snapshot/restore có sẵn, chưa hứa audit log toàn bộ thao tác admin/ACL từng file.

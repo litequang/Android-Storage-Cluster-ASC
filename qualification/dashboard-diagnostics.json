@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "checkpoint": "dashboard5-diagnostics-preferences",
+  "state": "QUALIFIED_LINUX_SYNTHETIC_SOURCE",
+  "qualified_at": "2026-11-03T02:19:49.295225+00:00",
+  "baseline": "575c8cf68d11347bd1319461775b0c639a133504",
+  "branch": "feature/dashboard-full",
+  "runs": [
+    {
+      "log": "dashboard-5-qualified.log",
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 202.242
+    },
+    {
+      "log": "dashboard-5-resume.log",
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 35.726,
+      "overlaps_broad": true
+    }
+  ],
+  "distinct_cases": 20,
+  "qualified_inputs_sha256": {
+    "asc/access/gateway.py": "fef3293be282319477f51fb90a9cf6f8af09d4e08f8f999017931b19a20cf34b",
+    "asc/demo/dashboard/diagnostics.py": "df788805d218d2f0181f8ba8a336a88c7edb4c1713fdb4e60d2e25f1bd59d6db",
+    "asc/demo/dashboard/http.py": "7c4c4f1b38ce51a9cdf9a7803f757e112c3893021edd0e68576a70df6c320c86",
+    "asc/demo/dashboard/preferences.py": "4fc84f3237d0e6b8e9446b6030e93a45e031acc367211713b8da83bf13bd1a6a",
+    "asc/demo/dashboard/views.py": "e9d35b47bfa4271a83122bdf2670c48c95f425cda5e0d242588bfd44174e005c",
+    "asc/demo/dashboard/web/app.js": "15dba0e866fd3480f5fa44feb02dd4d8cf317ae576b3a37952ab6a51962996f6",
+    "asc/demo/dashboard/web/index.html": "09d28f2e9ef8294e31d09bc55ba2419757d1897302ddc1600319e9ccaee1f88e",
+    "asc/demo/dashboard/web/style.css": "879f30b4d567429723220986b6d2f9289b0083453f17917b98d9b34a03296d0a",
+    "tests/browser/core_observer.cjs": "65fe567ddc6b7d9c88c0428f5b150c1f11dcf9617d19a413e1d93211e3173d1c",
+    "tests/browser/dashboard_accounts.cjs": "cb6fddd65bae5a35f1e83240ab7c4df577138a92bb3b61d34f9498404c0cb790",
+    "tests/browser/dashboard_diagnostics.cjs": "d163a1132f5fc173082f5be948c999c7e26bb3e8f483e34d52af57fa232171da",
+    "tests/test_access_gateway.py": "01c12204f249855cc4c8360a25d8b7551fe2cbe628c20ea9fed73769e39fb946",
+    "tests/test_dashboard_diagnostics.py": "4ddb59d0b4eda50d2e571d73e94632717f5c2a787ca234977b11cf59506ab27e",
+    "tests/test_dashboard_diagnostics_browser.py": "a6a483231dded115a262d9bf702291755f1d095c279b9da7ecba6849789e3a8d",
+    "tests/test_dashboard_upgrade.py": "1fea3007c63abec84c7df2965125c64ee2d8074f3689c67d133b7f2bed3c7dcb",
+    "tests/test_observer_gateway.py": "57a26b07ad5dabd1961cbbb7ca6f460f1e0ef6674e9763bab5cbcba67bc8708f"
+  },
+  "evidence": [
+    "actual storage probe/fsync; stale metrics remain UNKNOWN/None",
+    "private optional UI preferences CAS/restart with unchanged Node/Cluster/TLS/old bytes",
+    "redacted owner JSON excludes names/IDs/paths/endpoints/pins/credentials, no new state on export",
+    "actual trusted mobile preferences/reload/measured health/download JSON",
+    "exact b423043 first state, upgrade/new preferences/accounts/history/restore, NEW-state rollback and forward preservation",
+    "original browser/Node/snapshot/file gateway and actual Core quorum/recovery read-only"
+  ],
+  "environment_resume": "2026-11-03 wait returned ready spec136; prior20 log completed, all dirty source recovered unchanged; fresh5 rechecked. No reset/proxy/CA/phone change.",
+  "initial_runs": "New mobile long UI name overflow found and fixed via product heading min-width/wrap; original assertion retained. Final20 and resume5 clean.",
+  "not_claimed": [
+    "fresh full applicable Python/Go suite",
+    "physical phone/Android acceptance",
+    "new package/full Dashboard completion",
+    "remote Node quota/process/shell",
+    "complete admin audit log/per-file ACL",
+    "Core/recovery writer/GC"
+  ],
+  "private_logs": "/workspace/work/dashboard-5-*.log; no state/credential published"
+}

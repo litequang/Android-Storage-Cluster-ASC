@@ -48,7 +48,8 @@ class Views:
                 volumes.append({'volume_id': v['volume_id'], 'kind': v.get('kind') if probe_fresh and v.get('kind') in ('internal', 'termux_sd') else None,
                                 'state': v.get('state') if probe_fresh else 'unknown', 'checked_at': approval['checked_at'],
                                 **values, 'available_bytes': available, 'readable': v.get('readable') if measured else None,
-                                'writable': v.get('writable') if measured else None})
+                                'writable': v.get('writable') if measured else None,
+                                'fsync_tested': v.get('fsync_tested') if measured and type(v.get('fsync_tested')) is bool else None})
             result.append({'node_id': row['node_id'], 'name': row['name'], 'online': online, 'lifecycle_state': row['state'],
                            'last_seen': row['last_seen'], 'approved': current, 'storage_approved': current and bool(approval['storage_allowed']),
                            'failure_domain': approval['device_id'] if current else None,

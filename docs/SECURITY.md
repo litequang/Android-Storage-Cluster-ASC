@@ -822,3 +822,13 @@ RAM fallback with blocked browser storage, stale async results discarded on user
 change/offline/pagehide; server role/mode remains authority. Pause ends future
 requests, not a fake remote cancel. Text-only rendering/CSP and actual download
 SHA kept; no HTML interpretation of file/snapshot labels.
+
+
+Dashboard5 UI preferences Owner-only mutations, strict fields/CAS/cluster/private
+file binding; labels use textContent, no filesystem/system fields. Viewer can
+read shared nonsecret UI preference only; diagnostic export Owner-only. Report
+explicitly whitelists observations/counts, excludes names/IDs/paths/endpoints/
+certPIN/tokens/keys/logs; no arbitrary log or file reader. Measurements keep null
+UNKNOWN when stale, including fsync; report never grants writer/quorum/GC proof.
+Browser export still needs operator review. Source/phone/provider qualification
+remain separate, no new ingress management exposure or native permissions.

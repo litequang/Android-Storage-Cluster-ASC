@@ -617,3 +617,11 @@ Operator document directory IO uses a held original private directory descriptor
 for file open/temp create/replace/fsync/cleanup, with namespace/inode rechecks;
 interrupted publish may be unconfirmed, never silently rolled back or redirected
 outside approved directory. Required witness and document are preserved for review.
+
+
+Optional dashboard/preferences.json format1:exact cluster_id/revision1..1000000/
+display_name<=64/refresh_seconds5..60. Missing means configured UI defaults without
+creating state; corrupt/unknown/unsafe/cluster mismatch refuses, not reset. Updates
+CAS revision and original owner-private atomic receipt/fsync. Not a name change
+in Controller config/Registry, not Node/volume/quota or cluster identity. Old043
+ignores file, backups preserve it for forward. No diagnostics persistence/store.

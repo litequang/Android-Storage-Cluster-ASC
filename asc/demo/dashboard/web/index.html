@@ -47,6 +47,7 @@
       <button class="tab" data-tab="files" aria-selected="false">File Manager</button>
       <button id="jobs-tab" class="tab" data-tab="jobs" aria-selected="false" hidden>Tác vụ</button>
       <button id="snapshots-tab" class="tab" data-tab="snapshots" aria-selected="false" hidden>Snapshot / Khôi phục</button>
+      <button id="settings-tab" class="tab" data-tab="settings" aria-selected="false" hidden>Cấu hình / Chẩn đoán</button>
       <button class="tab" data-tab="quick-join" aria-selected="false">Ghép điện thoại</button>
       <button id="accounts-tab" class="tab" data-tab="accounts" aria-selected="false" hidden>Tài khoản</button>
     </nav>
@@ -131,6 +132,24 @@
       <p id="history-status" role="status" aria-live="polite"></p><div id="snapshot-list" class="file-list"></div>
       <h2>Tiến độ khôi phục</h2><p class="muted">Mỗi restore tạo version mới, giữ nguyên bản cũ. Đóng trang hoặc tạm dừng không hủy các lệnh đã được Controller chấp thuận. Mở lại và chọn tiếp tục cùng operation.</p>
       <div id="restore-list" class="file-list"></div>
+    </section>
+    <section id="settings" class="tab-panel" hidden>
+      <section class="panel"><h2>Cấu hình Dashboard</h2><p>Tên hiển thị chỉ dùng cho giao diện, không đổi Cluster ID, Node ID hoặc cấu hình Controller/Storage. Tần suất đọc trạng thái không phải heartbeat và không cấp quyền ghi.</p>
+        <form id="preferences-form" hidden>
+          <label for="preferences-name">Tên cụm trên giao diện</label><input id="preferences-name" type="text" required maxlength="64">
+          <label for="preferences-refresh">Đọc trạng thái mỗi (5–60 giây)</label><input id="preferences-refresh" type="number" min="5" max="60" step="1" required value="10">
+          <button id="preferences-save" class="button primary" type="submit">Lưu cấu hình giao diện</button>
+        </form><p id="preferences-status" role="status"></p>
+      </section>
+      <section class="panel"><h2>Storage &amp; giới hạn vận hành</h2><div id="storage-health" class="node-grid"></div>
+        <p>Quota/reserve và start/stop do Node/app hoặc CLI trên chính thiết bị quản lý. Dashboard không có remote shell hay API thay đổi filesystem. Xem probe, fsync và replica thực tế trước khi dùng dữ liệu.</p>
+        <p>Controller cố định, replicated_2 trên hai miền lỗi được owner xác nhận; không tự failover. Không bật Raft/GC/replica reduction hoặc writable disaster recovery. Snapshot trong cụm không thay external backup.</p>
+      </section>
+      <section id="diagnostics-panel" class="panel" hidden><h2>Báo cáo chẩn đoán</h2>
+        <p>Xuất JSON gồm số đếm, dung lượng, probe/fsync, trạng thái job và snapshot/restore. Không gồm tên file/node, ID, endpoint, PIN, token, khóa riêng, đường dẫn hay log thô. Kiểm tra trước khi chia sẻ.</p>
+        <button id="diagnostics-download" class="button subtle" type="button">Tải chẩn đoán đã loại bí mật</button><p id="diagnostics-status" role="status"></p>
+        <p class="muted">Lịch sử tác vụ nằm trong Tác vụ và Snapshot/Khôi phục. Chưa có audit log đầy đủ cho mọi thao tác quản trị hoặc quyền file riêng theo tài khoản.</p>
+      </section>
     </section>
     <section id="accounts" class="tab-panel" hidden>
       <section class="panel"><h2>Tài khoản Dashboard</h2>

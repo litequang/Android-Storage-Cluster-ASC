@@ -672,3 +672,12 @@ wait for actual two-domain copies/reconnect then explicitly resume. Snapshot
 VERIFIED is historical, inspect current file replica state separately. Restore
 version_conflict BLOCKED:inspect occupied immutable version, start a NEW explicit
 intent after review; do not overwrite or auto increment a lost-ACK request.
+
+
+preferences_changed409:another Owner saved newer settings; read again before
+editing. preferences_unavailable503:preserve optional private file and verify
+format/cluster/owner permissions/no-links, no reset/identity recreation. Label
+only changes Dashboard presentation, not Controller/Cluster identity or TLS.
+UNKNOWN fsync/free/writable on old/offline probe is intentional; refresh real
+Controller probes. Diagnostic report has measured timestamps, not authority or
+raw logs; remote Node quota/start/stop still require local approved app/CLI.

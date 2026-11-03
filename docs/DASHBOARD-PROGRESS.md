@@ -331,3 +331,38 @@ Core3voter partition/heal read-only all PASS. No mock receipt/TLS bypass/phone.
 qualification/dashboard-history-ui.json binds source/tests. NEXT after normal
 push/fetch/remote match:5storage/cluster/settings/diagnostics, then6fresh full/
 exact043 upgrade/new-state rollback and immutable new package. ZTE unchanged.
+
+
+## Checkpoint4b publication VERIFIED /5in progress
+575c8cf68d11347bd1319461775b0c639a133504 normally pushed/fetched/advertised exact,
+clean tree before5.9trusted browser cases qualified; original phone still043Lite.
+
+5 adds measured fsync_tested projection with UNKNOWN on stale probes, storage
+health view; optional cluster-bound private preferences1(display label/read refresh
+5..60s, revisionCAS). Does not change Controller name/ClusterID/Node identity/
+storage quota/heartbeat. Viewer preferences read-only, owner-only redacted fixed
+JSON diagnostic export reuses diagnose/views and counts, no raw logs/IDs/names/
+paths/pins/tokens/keys. Core/recovery/file-only ingress exclude new management.
+API4PASS26.228s, actual bytes after restart and identity preservation, stale
+telemetry staysNone, unsafe settings/roles/CAS/privacy gates. Initial mobile test
+found long label wrapping defect; fixed heading shrink/word-wrap, assertion kept.
+Fresh broadened qualification now running incl real browser report/preferences,
+exact043 NEW-state code rollback with preferences preserved, old browser/gateway/
+Core observer regressions. Not final5/full suite/new package/phone claim yet.
+
+
+### Checkpoint5 qualification / executor resume2026-11-03
+Cloud started again; wait_for_environment ready, all dirty5source/docs/tests and
+private toolchains preserved, same575c8cf HEAD. Fresh fetch still exact, no reset/
+cleanup/phone/proxy/CA action. Previous log COMPLETED20PASS0fail/error/skip202.242s
+before restart (not interrupted UNKNOWN):new APIs/mobile/settings/diagnostics,
+exact043 rollback/forward with private preferences preserved, original owner/
+file/snapshot/Node/private+legacy gateway and Core/recovery browser cases.
+After restart fresh5API+mobile PASS35.726s, no source delta since prior final20;
+these overlap20, not25distinct. Initial mobile overflow fixed in product CSS,
+original mobile assertion retained. qualification/dashboard-diagnostics.json
+binds final source/tests. No fresh full regression or package/phone claim yet.
+NEXT after normal commit/push/remote:6new Controller Dashboard package/guides,
+exact final archive upgrade/NEW-state rollback, fresh full Python/Go/fault/package
+gates, immutable publication/SHA+remote download verification. Original artifacts
+and all existing ZTE identities/data remain untouched by Cloud.

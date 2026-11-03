@@ -107,3 +107,5 @@ footer { max-width: 1120px; padding: 24px 20px 32px; margin: auto; font-size: 11
 #restore-dialog label { display: block; margin-top: .85rem; }
 #restore-dialog input[type="checkbox"] { width: auto; margin-right: .5rem; }
 #history-status, #restore-result { overflow-wrap: anywhere; }
+.heading > div:first-child { min-width: 0; }
+#cluster-name { overflow-wrap: anywhere; }

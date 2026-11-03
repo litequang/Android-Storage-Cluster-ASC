@@ -52,6 +52,7 @@ const cfg=JSON.parse(fs.readFileSync(0,'utf8'));let stage='trust';
     assert.equal(await page.locator('[data-tab="quick-join"]').isHidden(),true);
     await page.locator('#snapshots-tab').click();assert.equal(await page.locator('#snapshot-create-form').isHidden(),true);
     assert.equal(await page.locator('[data-history-step]').count(),0);
+    await page.locator('#settings-tab').click();assert.equal(await page.locator('#preferences-form').isHidden(),true);assert.equal(await page.locator('#diagnostics-panel').isHidden(),true);
     await page.locator('[data-tab="nodes"]').click();assert.equal(await page.locator('[data-action="manage"]').count(),0);
     const denied=await page.evaluate(async()=>{
       const session=await(await fetch('/api/session')).json();const r=await fetch('/api/refresh',{method:'POST',headers:{'Content-Type':'application/json','X-ASC-CSRF':session.csrf},body:'{}'});

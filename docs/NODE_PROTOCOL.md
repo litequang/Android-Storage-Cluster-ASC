@@ -666,3 +666,14 @@ unconfirmed/resumable. Snapshot VERIFIED/restore COMPLETED require actual SHA
 readback on2domains. Completed step returns historical:true, not fresh proof.
 Same cookie/CSRF/Origin/role guards; Viewer GET only, Core/recovery and file-only
 ingress refuse. Browser cannot supply path/shell/authority or storage credentials.
+
+
+Dashboard5 direct Demo:GET /api/preferences returns preferences_api_version1,
+format1/cluster_id/revision/display_name/refresh_seconds. Viewer may read; Owner
+POST exact preferences_api_version1/expected_revision/display_name/refresh_seconds.
+Name nonempty<=64/control-free; refresh strict int5..60; stale409preferences_changed.
+GET /api/diagnostics Owner-only same cookie/CSRF/Origin, fixed sanitized API1
+JSON with counts/volume measurements/job/history summary/limits/false unsafe
+feature flags. No raw paths/profiles/logs/credentials or machine identities.
+Core/recovery refuse routes; file-only ingress scopes both preferences and
+diagnostics false and excludes their routes. No Node protocol/schema change.
