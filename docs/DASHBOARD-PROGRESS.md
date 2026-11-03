@@ -450,3 +450,24 @@ phones/provider/production/full Phase4/5 remain separate/unaccepted.
 NEXT artifact+SHA normal push, fetch/advertised match, then FRESH HTTPS downloads
 from immutable commit/byte-equal manifest verification. Do not claim remote artifact
 publication complete until separate receipt. No new source/tests/package delta.
+
+
+## Checkpoint6b publication COMPLETE — source-ready Dashboard0.5.0
+
+Normal artifact push/fetch/advertised HEAD matched `afa0ba4de5265ef467cae6d9c5b41d4403aca25e`.
+Fresh HTTPS downloads at that immutable commit of archive and checksum PASS:
+SHA `4ffcf623ee3d17e51fd191f4fa51ba74096b04274d236cb68c18dea536bed10d`, 300514bytes,
+local byte-equal; manifest verifier FROM downloaded bundle verifies all157payload
+files and release ID. qualification/dashboard-publication.json has immutable URLs.
+Fresh full509PASS0skip/fail/error, all64old faults and Go/platform gates complete.
+Final reporting-only handoff does not change487frozen inputs, package, tests or APK.
+
+NEXT owner/PC: read DASHBOARD-INSTALL and DASHBOARD-OPERATIONS; ZTE is still043Lite.
+Stop only owned foreground services, create+verify NEW state/volume backup, download
+exact050 archive+SHA, stage/preflight/stopped upgrade; DO NOT init/adopt/recreate.
+Then trusted HTTPS browser Owner bootstrap/login, enroll approved Native Nodes on
+two REAL phones/domains, upload/replicas/SHA/fallback and disconnect/restart tests.
+No Cloud phone/SSH/install action. Code-only rollback requires a NEW verified backup;
+never restore old DB over new writes. Physical/OEM/LAN/provider/production acceptance
+remains deferred; writable DR/Android voter/GC/failover remain locked.
+No further source/full rerun is necessary for reporting unchanged qualified inputs.

@@ -117,7 +117,9 @@
     "manifest_verified": true,
     "rebuild_byte_equal": true,
     "exact043_upgrade_new_state_rollback_in_full": true,
-    "publication": "PENDING_REMOTE_PUBLICATION_PROOF"
+    "publication": "REMOTE_ARCHIVE_VERIFIED",
+    "publication_commit": "afa0ba4de5265ef467cae6d9c5b41d4403aca25e",
+    "publication_receipt": "qualification/dashboard-publication.json"
   },
   "original_apk_unchanged": true,
   "original_packages_unchanged": true,

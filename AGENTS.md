@@ -21,12 +21,15 @@ tested/pushed checkpoints, not docs-only planning. Reuse canonical services; Cor
 recovery read-only, no GC/Raft/failover/writerDR or fake unsupported features.
 PROJECT-ROADMAP current cursor is updated for this new task. Node management1
 and accounts2 are pushed (efe0ec4/cef9ce1); File Manager3 qualified, then
-snapshot4a/4b pushed (826c237/575c8cf), diagnostics5 pushed (de6cdc8),6a source5919c2c frozen,6b full509 RUNNING.
-Archive local/unpublished until actual final gates and remote proof; read progress. Read DASHBOARD-PROGRESS for actual source/publication evidence.
+snapshot4a/4b pushed (826c237/575c8cf), diagnostics5 pushed (de6cdc8),6a source5919c2c frozen;6b COMPLETE Linux source-ready:
+509fresh Python PASS0skip/fail/error +64old fault marks, Go/vet/modules/builds PASS.
+Controller0.5.0-dashboard-alpha archive+SHA published at afa0ba4de5265ef467cae6d9c5b41d4403aca25e
+and downloaded fresh/byte-equal/manifest-verified. Read DASHBOARD-ACCEPTANCE and
+qualification/dashboard-publication.json; packaged source/tests unchanged after full. Read DASHBOARD-PROGRESS for actual source/publication evidence.
 
 After the nine mandatory reads, read docs/PROJECT-ROADMAP.md for the full timeline,
 runtime/artifact distinctions, current task and remaining gates. CURRENT TASK is
-owner PC/ZTE Controller setup and remaining browser/Native LAN gates; read latest
+owner PC/ZTE stopped043->050 backup/verify/upgrade and remaining browser/Native LAN gates; read latest
 actual PC checkpoint before any install/init retry, not old03 upgrade or blind
 Phase5 redevelopment. Read docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md then progress.
 Every completed checkpoint must leave roadmap/current progress/handoff in GitHub

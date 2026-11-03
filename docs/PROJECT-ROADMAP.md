@@ -11,9 +11,12 @@ Owner yêu cầu triển khai full Dashboard. Cloud phát triển source/synthet
 feature/dashboard-full từ PC4336ab7; ZTE runtime/state không bị truy cập hoặc đổi.
 [DASHBOARD-PLAN](DASHBOARD-PLAN.md) và [DASHBOARD-PROGRESS](DASHBOARD-PROGRESS.md)
 là cursor hiện tại: Node management ->owner login ->File Manager ->history/
-snapshot/restore ->settings/diagnostics ->qualification/package. Checkpoints1–5
-đã qualified/pushed;6Controller0.5.0-dashboard-alpha actual full/artifact gates xem
-DASHBOARD-ACCEPTANCE/PROGRESS, không tự suy ra đã đạt từ source availability. PC install đã OK,
+snapshot/restore ->settings/diagnostics ->qualification/package. Checkpoints1–6 COMPLETE cho source/synthetic:
+509fresh Python PASS0skip/fail/error,64old fault marks, Go/vet/modules/builds PASS;
+Controller0.5.0-dashboard-alpha đã publish archive+SHA, fresh immutable GitHub
+download/byte equality/manifest PASS. Xem DASHBOARD-ACCEPTANCE/PROGRESS và
+qualification/dashboard-publication.json. NEXT owner/PC nâng cấp ZTE043 đã có bằng
+backup+verify/stopped stage/preflight/upgrade trong DASHBOARD-INSTALL, không init lại. PC install đã OK,
 không tiếp tục chẩn đoán lỗi đã giải quyết. Các mục phía dưới giữ evidence/history.
 
 ## 1. Dự án đang làm gì?
@@ -75,6 +78,7 @@ Core/Demo/Phase4 gốc giữ nguyên, không dùng main làm baseline hoặc mer
 
 | Artifact | Dành cho | Tài liệu/đường dẫn |
 | --- | --- | --- |
+| Controller0.5.0-dashboard-alpha | Full scoped LAN owner Dashboard; SOURCE-READY Linux, upgrade043 tested using exact archive | [install/upgrade](DASHBOARD-INSTALL.md), [operations](DASHBOARD-OPERATIONS.md), [archive](../candidates/asc-controller-0.5.0-dashboard-alpha.tar.gz), [proof](../qualification/dashboard-publication.json) |
 | Controller0.4.3 core-decode internal source | Controller single-writer + Dashboard/PWA, có đường tích hợp Native Node | [PHASE4-HANDOFF](PHASE4-HANDOFF.md), [exact package](../candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz) |
 | Node APK5 /0.4.1-native-node-candidate | Storage Node native; NativeTLS API30+ | [exact APK](../android-artifacts/asc-native-node-0.4.1-internal-debug.apk), [pilot](ANDROID-NATIVE-PILOT.md) |
 | Linux Access0.1.0 internal | Gateway/edge/maintenance trên Linux x86_64; không phải installer Controller/Android | [package guide](PHASE5-LINUX-PACKAGE.md), [archive](../candidates/asc-linux-access-0.1.0-internal.tar.gz) |
@@ -104,7 +108,9 @@ checks lại đạt. Không phải browser tương tác hay nghiệm thu Native 
 Chi tiết/lệnh/remaining gates: [handoff cập nhật](ZTE-FRESH-INSTALL-PC-HANDOFF.md)
 và [receipt](../qualification/zte-controller-fresh-install-20261030.json).
 
-NEXT: owner trust public Dashboard CA và login bằng browser thật; sau đó ghép
+NEXT: owner/PC có thể nâng cấp043->050 theo DASHBOARD-INSTALL (NEW verified backup,
+stage/preflight/stopped upgrade; giữ identity, không init lại). Gói mới chưa chạy
+trên ZTE và Cloud chưa cài đặt. Sau đó owner trust public Dashboard CA và login bằng browser thật; sau đó ghép
 Native Node/two-phone domains và kiểm replicas/SHA/fallback/Controller loss.
 Cụm mới hiện0paired Storage Nodes/0files; chưa bảo vệ file hay hoàn thành Phase4.
 

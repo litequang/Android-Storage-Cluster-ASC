@@ -1,0 +1,19 @@
+{
+  "state": "REMOTE_ARCHIVE_VERIFIED",
+  "commit": "afa0ba4de5265ef467cae6d9c5b41d4403aca25e",
+  "url": "https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/afa0ba4de5265ef467cae6d9c5b41d4403aca25e/candidates/asc-controller-0.5.0-dashboard-alpha.tar.gz",
+  "sha256": "4ffcf623ee3d17e51fd191f4fa51ba74096b04274d236cb68c18dea536bed10d",
+  "size_bytes": 300514,
+  "local_byte_equal": true,
+  "release_id": "3e6a9332cf2c8535fabde405730e077d3f4071b357d82482a288d9211dcc5901",
+  "version": "0.5.0-dashboard-alpha",
+  "files": 157,
+  "scope": "HTTPS inherited proxy/CA, exact immutable commit; public source bundle only, not device/production acceptance",
+  "format": 1,
+  "verified_utc": "2026-11-03T03:24:01.510462+00:00",
+  "checksum_url": "https://raw.githubusercontent.com/litequang/Android-Storage-Cluster-ASC/afa0ba4de5265ef467cae6d9c5b41d4403aca25e/candidates/asc-controller-0.5.0-dashboard-alpha.tar.gz.sha256",
+  "checksum_download_verified": true,
+  "manifest_verified_from_downloaded_source": true,
+  "source_freeze_commit": "5919c2c057348261a46c36e8ed646c2d2f84e2a8",
+  "remote_head_verified_before_download": true
+}

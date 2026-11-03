@@ -903,3 +903,13 @@ existing Engine/Catalog, current installer/operator/PWA/native pilot guides and
 source-only immutable package. Targeted9distinct cases PASS, Go/vet/modules/build
 gates PASS; fresh final509Python/all old fault acceptance still pending. No
 physical phone/Windows runtime/provider/production or new APK claim.
+
+
+Controller0.5.0-dashboard-alpha SOURCE-READY Linux — 2026-11-03.
+Final fresh509Python PASS0skip/fail/error, all64old fault markers, Go11top+12nested/
+vet/modules/Linux build and Windows/Android COMPILE-only PASS. Actual new immutable
+archive+SHA published and fresh HTTPS/manifest/byte-equality verified; receipt
+qualification/dashboard-publication.json. Exact043->050 NEW-state code rollback/
+forward qualified. Scoped owner accounts/Node/File Manager/history/snapshots/new-
+version restore/settings/redacted diagnostics complete; no new APK/phone/provider/
+production/writableDR claim. Old artifacts and all guards preserved.

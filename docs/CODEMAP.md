@@ -1092,3 +1092,12 @@ exact packaged extraction guide, manifest/source checks and private-payload audi
 PublishedDashboardUpgradeTests runs same full exact043 NEW-state rollback gate
 against actual new candidate archive; CurrentSource path remains separate.
 Historical Phase41 expected043 stays literal; only CURRENT expectation is050.
+
+
+Dashboard6b FINAL: qualification/dashboard-final.json records fresh509Python,
+64old fault markers,487unchanged frozen inputs and Go/platform actual gates.
+qualification/dashboard-publication.json binds immutable normal publication commit,
+fresh HTTPS exact archive+checksum/byte equality and downloaded manifest.
+DASHBOARD-ACCEPTANCE is authoritative final scope; DASHBOARD-INSTALL/OPERATIONS
+are packaged operator guides. APK5/old043/Access010 original bytes remain unchanged.
+Next owner stopped upgrade/phone campaign, not source redevelopment or auto-deploy.
