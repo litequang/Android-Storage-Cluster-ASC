@@ -436,3 +436,17 @@ fault marks reached, overall64mandatory old faults/full509 still required.
 If executor interrupts, first inspect preserved source, final status/log and hash
 inventory. An incomplete run is UNKNOWN, never accepted. Do not rerun implemented
 checkpoints, reset state, publish package or skip tests to close this gate.
+
+
+## Checkpoint6b final source gates PASS
+Fresh full509PASS0skip/fail/error2353.336s, all
+64old fault markers, exact509unique inventory and487frozen inputs unchanged.
+Actual full source5919c2c, final docs-only progress949b189 did not change code.
+Go11top+12nested/vet/modules/Linux +foreign cross-builds PASS as platform receipt.
+New actual archive/published043 upgrade/NEW-state code rollback/forward included
+in full, original artifacts/APK/signer preserved. qualification/dashboard-final.json
+and DASHBOARD-ACCEPTANCE record exact scope/limits. SOURCE software subset complete,
+phones/provider/production/full Phase4/5 remain separate/unaccepted.
+NEXT artifact+SHA normal push, fetch/advertised match, then FRESH HTTPS downloads
+from immutable commit/byte-equal manifest verification. Do not claim remote artifact
+publication complete until separate receipt. No new source/tests/package delta.
