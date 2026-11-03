@@ -681,3 +681,11 @@ only changes Dashboard presentation, not Controller/Cluster identity or TLS.
 UNKNOWN fsync/free/writable on old/offline probe is intentional; refresh real
 Controller probes. Diagnostic report has measured timestamps, not authority or
 raw logs; remote Node quota/start/stop still require local approved app/CLI.
+
+
+Dashboard050 install on existing043:use stopped backup/verify/stage/preflight/
+upgrade in DASHBOARD-INSTALL. different active release is an upgrade guard, not
+a reason to re-init/delete prefix/state. Missing new archive in a SOURCE-PREP
+checkpoint means build deterministic candidate first using documented command;
+verify expected SHA, full gates still pending until acceptance receipt. Old
+packages and APK5 remain available and immutable, no signer replacement needed.

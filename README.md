@@ -1,12 +1,15 @@
 # Android Storage Cluster (ASC)
 
 **Start/resume here:** [Full roadmap and current task](docs/PROJECT-ROADMAP.md).
-Current source branch: `feature/phase5-remote-access`. Linux/emulator software is
-qualified within documented scopes; physical Android/production remain unaccepted.
-Owner's ZTE started with fresh Termux and now has an undiagnosed Controller install
-failure: [PC handoff, exact packages and next steps](docs/ZTE-FRESH-INSTALL-PC-HANDOFF.md).
-Read AGENTS.md first. Older version-specific sections below retain historical
-evidence; use the roadmap for current status, runtime roles and remaining gates.
+Current source branch: `feature/dashboard-full`. Controller Dashboard
+`0.5.0-dashboard-alpha` reuses the existing backend for Owner/Viewer accounts,
+Node approval, immutable files/versions/SHA/jobs, snapshots/restore and diagnostics.
+Actual final gates/publication: [DASHBOARD-ACCEPTANCE](docs/DASHBOARD-ACCEPTANCE.md),
+[progress](docs/DASHBOARD-PROGRESS.md). ZTE already runs043Lite; use the
+[stopped upgrade/backup/rollback guide](docs/DASHBOARD-INSTALL.md), never re-init.
+Native Node APK5 remains separate and unchanged. Linux/emulator evidence is not
+physical Android or production acceptance. Read AGENTS.md first; older sections
+below retain history, use the roadmap for the current scope and remaining gates.
 
 Vietnamese project and historical setup guide: [README-VI.md](README-VI.md).
 Historical Phase 3A Windows evidence and limits: [PHASE3A-ACCEPTANCE.md](docs/PHASE3A-ACCEPTANCE.md).

@@ -63,13 +63,14 @@ def build(source, output):
     names = [p.relative_to(source).as_posix() for p in (source / 'asc').rglob('*.py')]
     names += ['asc/demo/dashboard/web/' + name for name, _ in ASSETS.values()]
     names += ['scripts/demo-alpha.sh', 'docs/DEMO-QUICKSTART.md', 'docs/DEMO-ANDROID-PILOT.md', 'docs/DEMO-ZTE-0.4.1.md', 'docs/PHASE4-QUICK-JOIN.md', 'docs/PHASE4-1-OPERATIONS.md', 'docs/LOCAL-ENGINE-BRIDGE.md', 'docs/LOCAL-ENGINE-THREAT-MODEL.md', 'docs/CORE-QUORUM-DASHBOARD.md', 'docs/ANDROID-APP-CONTRACT.md']
+    names += ['docs/DASHBOARD-INSTALL.md', 'docs/DASHBOARD-OPERATIONS.md', 'docs/PHASE4-WEB-APP.md', 'docs/ANDROID-NATIVE-PILOT.md']
     files = {}
     for name in sorted(names):
         p = source / name
         if not safe_name(name) or p.is_symlink():
             raise ValueError('unsafe package source')
         files[name] = p.read_bytes()
-    files['README.md'] = ('# ASC source candidate ' + VERSION + '\n\nNot a public Android release. Read docs/PHASE4-1-OPERATIONS.md first for candidate scope,\ntrust, upgrade and rollback. The following historical Demo guide is reference only;\nits released archive examples do not install this candidate.\n\n').encode() + (source / 'docs/DEMO-QUICKSTART.md').read_bytes()
+    files['README.md'] = ('# ASC Controller Dashboard ' + VERSION + '\n\nInternal source package, not a production/Android-accepted release.\nRead docs/DASHBOARD-INSTALL.md first for exact043 stopped upgrade/backup/rollback,\nthen docs/DASHBOARD-OPERATIONS.md for owner login/files/nodes/snapshots/diagnostics.\nController runs existing single-writer Python Engine; Native Storage Node APK5 is\na separate unchanged artifact. No auto-init, Raft, failover, GC or writable DR.\nThe following HISTORICAL Demo guide is reference only; its old archive examples\ndo not install this Controller package.\n\n').encode() + (source / 'docs/DEMO-QUICKSTART.md').read_bytes()
     body = {'format': 1, 'version': VERSION, 'capabilities': CAPABILITIES,
             'state_formats': STATE_FORMATS,
             'files': {name: digest(data) for name, data in files.items()}}

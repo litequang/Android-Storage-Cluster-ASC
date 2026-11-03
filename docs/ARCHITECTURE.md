@@ -676,3 +676,10 @@ change. Owner redacted diagnostics aggregate existing observations/canonical job
 and operator-history counts, not a second monitoring DB or raw-log reader. No
 remote Node filesystem/process/quota API. Core/recovery/read-only boundaries and
 file-ingress management exclusions remain explicit.
+
+
+Controller Dashboard0.5.0 is a separate internal source package from APK5/Core
+versioning. Base state formats/Node wire stay unchanged; optional Dashboard files
+remain outside Registry for tested old043 rollback. New package keeps original
+modules and includes current upgrade/operator guides. Full regression/artifact
+publication evidence is external to immutable package inputs, no self-SHA cycle.

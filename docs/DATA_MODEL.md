@@ -625,3 +625,9 @@ creating state; corrupt/unknown/unsafe/cluster mismatch refuses, not reset. Upda
 CAS revision and original owner-private atomic receipt/fsync. Not a name change
 in Controller config/Registry, not Node/volume/quota or cluster identity. Old043
 ignores file, backups preserve it for forward. No diagnostics persistence/store.
+
+
+Controller Dashboard0.5.0 changes release identity/capabilities only, keeps demo1/
+Registry4/manifest1/metadata1/config1/wire1. Optional UI state contracts above
+remain independent. Exact old043 code rollback retains NEW bytes/operator state;
+no SQLite/Termux->APK/single-writer->Raft migration or recovery writer activation.

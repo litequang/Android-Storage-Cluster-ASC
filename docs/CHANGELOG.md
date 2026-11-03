@@ -896,3 +896,10 @@ Dashboard5 under qualification:measured storage/fsync health, Owner UI-name/refr
 settings with private CAS, Viewer read-only, redacted owner diagnostic JSON. No
 cluster/Node identity/config or storage quota/process changes, no new schema/
 monitoring DB/raw log reader. Actual API4PASS; broader browser/upgrade gates pending.
+
+
+Controller0.5.0-dashboard-alpha preparation:full scoped LAN owner Dashboard over
+existing Engine/Catalog, current installer/operator/PWA/native pilot guides and
+source-only immutable package. Targeted9distinct cases PASS, Go/vet/modules/build
+gates PASS; fresh final509Python/all old fault acceptance still pending. No
+physical phone/Windows runtime/provider/production or new APK claim.

@@ -1,0 +1,147 @@
+{
+  "format": 1,
+  "checkpoint": "dashboard6a-platform",
+  "state": "PASS_LINUX_AND_CROSS_BUILD_ONLY",
+  "gates": {
+    "go-tests": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "test",
+        "-json",
+        "-count=1",
+        "-p",
+        "1",
+        "-timeout",
+        "240s",
+        "./..."
+      ],
+      "environment": {},
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-11-03T02:37:55.593846+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "exit_code": 0,
+      "seconds": 30.322,
+      "passed_test_events": [
+        "TestQualificationClusterFaults",
+        "TestFSMReceiptsCASAndSnapshot",
+        "TestRuntimeAuthorityUsesActualCommittedTerm",
+        "TestBackupProjectionKeepsActualTermFencingAndSnapshotBytes",
+        "TestQualificationLogRoundTrip",
+        "TestQualificationStableState/none",
+        "TestQualificationStableState/missing-db",
+        "TestQualificationStableState/corrupt-db",
+        "TestQualificationStableState/missing-term",
+        "TestQualificationStableState/corrupt-term",
+        "TestQualificationStableState/missing-vote",
+        "TestQualificationStableState/missing-bucket",
+        "TestQualificationStableState/partial-vote",
+        "TestQualificationStableState/wrong-binding",
+        "TestQualificationStableState/missing-anchor",
+        "TestQualificationStableState/missing-log",
+        "TestQualificationStableState/missing-snapshot-directory",
+        "TestQualificationStableState",
+        "TestQualificationNoDoubleVote",
+        "TestQualificationSnapshotCorruption",
+        "TestQualificationMissingLiveStableKeyQuarantines",
+        "TestQualificationPeerAuthentication",
+        "TestLauncherRejectsInvalidInvocation"
+      ],
+      "top_level_tests": 11
+    },
+    "go-vet": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "vet",
+        "./..."
+      ],
+      "environment": {},
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-11-03T02:38:25.916486+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "exit_code": 0,
+      "seconds": 0.115
+    },
+    "go-mod-verify": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "mod",
+        "verify"
+      ],
+      "environment": {},
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-11-03T02:38:26.032191+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "exit_code": 0,
+      "seconds": 0.117
+    },
+    "build-linux": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/dashboard-final/asc-raft-linux-amd64",
+        "./cmd/asc-raft"
+      ],
+      "environment": {
+        "GOOS": "linux",
+        "GOARCH": "amd64",
+        "CGO_ENABLED": "0"
+      },
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-11-03T02:38:26.149583+00:00",
+      "state": "PASS",
+      "cross_build_only": false,
+      "exit_code": 0,
+      "seconds": 0.118
+    },
+    "build-windows": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/dashboard-final/asc-raft-windows-amd64.exe",
+        "./cmd/asc-raft"
+      ],
+      "environment": {
+        "GOOS": "windows",
+        "GOARCH": "amd64",
+        "CGO_ENABLED": "0"
+      },
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-11-03T02:38:26.267650+00:00",
+      "state": "PASS",
+      "cross_build_only": true,
+      "exit_code": 0,
+      "seconds": 0.116
+    },
+    "build-android": {
+      "command": [
+        "/workspace/asc-cloud/go1.27.3/go/bin/go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/workspace/work/dashboard-final/asc-raft-android-arm64",
+        "./cmd/asc-raft"
+      ],
+      "environment": {
+        "GOOS": "android",
+        "GOARCH": "arm64",
+        "CGO_ENABLED": "0"
+      },
+      "cwd": "/workspace/Android-Storage-Cluster-ASC/consensus",
+      "started_utc": "2026-11-03T02:38:26.384264+00:00",
+      "state": "PASS",
+      "cross_build_only": true,
+      "exit_code": 0,
+      "seconds": 0.117
+    }
+  },
+  "apk_changed": false,
+  "physical_phone_tested": false,
+  "scope": "Go tests/vet/module verification and Linux build actual; Windows/Android compile only, no phone/runtime deployment"
+}

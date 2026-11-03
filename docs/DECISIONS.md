@@ -451,3 +451,14 @@ persist stable intent/target before transfer, owner-driven resumable steps. No
 new Registry settings (old043 rejects extensions), second Catalog/Engine/daemon,
 auto expiration, destructive operation or GC credit. Missing/corrupt progress is
 held. Share existing worker I/O lock; incomplete COPY is not corrupt data evidence.
+
+
+## ADR082 — Distinct Controller Dashboard release, retain old package/state contracts
+Use Controller0.5.0-dashboard-alpha with unchanged base schemas/Node wire/APK5 and
+legacy capability flags plus additive Dashboard feature flags. New immutable
+source archive includes actual upgrade/operation guides; never edit old043/APKs
+or copy assets into a verified release. Test exact published043 first-state and
+actual new archive upgrade/NEW-state code rollback/forward. Source prep freeze
+may be checkpointed before long final qualification; binary remains local until
+mandatory final gates and fresh remote byte verification. Acceptance/publication
+receipts live outside immutable package inputs to avoid circular self-SHA/commit.

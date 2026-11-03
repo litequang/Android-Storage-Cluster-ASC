@@ -1,147 +1,135 @@
-# Dashboard owner — sử dụng và giới hạn hiện tại
+# ASC Dashboard 0.5.0 — thao tác và giới hạn
 
-Đọc DASHBOARD-PROGRESS trước: checkpoint đang ở source, chưa phải tất cả tính năng
-hoặc gói cập nhật đã phát hành. Không chép đè assets/source vào release được hash-
-verify trên ZTE. Gói mới/upgrade exact043 sẽ có sau qualification cuối track.
+Đây là Dashboard quản trị LAN của Controller single-writer hiện có, dùng chung
+Registry/Catalog/Storage Engine. Đọc [DASHBOARD-INSTALL](DASHBOARD-INSTALL.md) để
+nâng cấp từ đúng0.4.3, và báo cáo GitHub DASHBOARD-ACCEPTANCE/PROGRESS để biết bằng
+chứng thực chạy. Không chép đè assets/source vào release được hash-verify. APK5
+Storage Node giữ riêng; Web App không tự chạy Termux/Native Engine hoặc filesystem.
 
-## Quản lý Node (checkpoint1)
+## Đăng nhập và tài khoản
 
-1. Mở HTTPS LAN Dashboard trực tiếp, public CA đã trust. Đăng nhập bằng mã owner
-   hiện có. Tab Ghép điện thoại tạo mã node/pin/Cluster ID và theo dõi enrollment.
-2. Trên Node, chuẩn bị identity/volume và chạy runtime qua app/CLI hiện có. Node
-   không tự được duyệt vì đã ghép. Không copy Termux state vào APK.
-3. Trong Điện thoại chọn Quản lý. Nhập đúng HTTPS STORAGE endpoint/PIN, volume IDs
-   và tên miền lỗi vật lý. Volume IDs gợi ý từ heartbeat chỉ là thông tin Node
-   báo cáo; quyền ghi/durability vẫn UNKNOWN đến Controller probe thực.
-4. Chọn Xem trước. Đối chiếu toàn bộ thông tin trả về, dán Node ID đầy đủ và xác
-   nhận đã kiểm tra binding/physical domain. Hai Nodes/volumes trên cùng một phone
-   cùng domain; không đổi tên domain để giả độc lập.
-5. Áp dụng: server owner-session/CSRF, preview binding và credential generation/
-   approval CAS được kiểm trong transaction Core. Sau ACK, UI refresh qua existing
-   probe. Chỉ báo đủ replica khi bytes/SHA/domain hợp lệ, không từ approval ACK.
-6. Đổi tên và thu hồi dùng cùng preview/confirmation. Thu hồi mất quyền Node và
-   có thể làm file không đọc qua mạng được nếu thiếu survivor; physical bytes vẫn
-   giữ. Không xóa identity hoặc tạo Node mới để vượt trạng thái revoked; repair
-   giữ Node ID cần quy trình lifecycle hiện có, chưa phải nút re-enroll ngầm.
+Mở đúng HTTPS Dashboard đã trust public CA/IP SAN. Lấy `dashboard-code` bằng
+launcher owner trên Controller, không phải mã ghép node. Mã một lần tạo phiên
+Secure/HttpOnly/SameSite cookie +CSRF; không gửi code/cookie/token vào log/chat.
+Lần đầu vào Tài khoản, tạo Owner/password do bạn chọn. Không password mặc định.
+Tên3–48ASCII chữ thường/số/._-, bắt đầu bằng chữ; password12–128ký tự. Tối đa8
+accounts/8RAM sessions. Code owner cục bộ vẫn bootstrap/recovery khi quên password.
 
-Preview tối đa120s/không vượt session,8/owner/32Controller. RAM-only: restart mất
-preview, logout quên preview của phiên đó. Retry ACK đã xác nhận trong cùng phiên
-trả replayed=true/historical confirmed_at; không chứng minh Node hiện đang online.
-Nếu crash giữa commit và receipt: kiểm tra current state rồi preview lại; không
-coi outcome UNKNOWN là chưa từng áp dụng và không auto-reset state.
+Owner quản trị toàn cụm. Viewer đọc/tải TẤT CẢ file/snapshot/progress, không upload,
+quản trị node/account/restore/settings hoặc lấy diagnostic export. Chưa có ACL/
+private folder/sharing theo file. Không cấp Viewer khi cần cô lập dữ liệu riêng.
+Sửa role/password/delete cần typed username +generation CAS; các phiên liên quan
+bị thu hồi. Self-change phải login lại. Không được xóa/hạ quyền Owner cuối cùng.
+Tác vụ đã được authorize có thể đã chạy; đổi role không hoàn tác bytes/Core jobs.
+Private accounts.json không được chia sẻ; hỏng/cluster mismatch/quyền rộng/link
+thì giữ lỗi, không xóa/reset để né kiểm tra. Không thay Node/Cluster identity.
 
-Core quorum/recovery giữ chỉ đọc. Phase5 private/edge gateway vẫn file-access-only,
-không forward management/pairing/admin APIs. Capabilities qua gateway bị scope
-node_management=false và X-ASC-Access-Mode:file-access-only; browser ẩn controls.
-Không đổi allowlist hoặc trust forwarded headers để mở chúng lên Internet.
+## Ghép và quản lý Node
 
-Quota/reserve/root của Node do app/CLI trên chính Node cấu hình; Dashboard không
-có API remote filesystem/quota/start/stop/shell. API chưa có backend an toàn không
-được hiển thị thành thao tác thành công.
+Ghép điện thoại tạo mã Node một lần cùng Controller HTTPS/PIN/Cluster ID. Node
+app/CLI phải đối chiếu public bindings và dùng existing enrollment/resume; không
+copy Termux state sang APK. Enrollment KHÔNG tự duyệt storage hoặc failure domain.
 
-Rollback source/code: dừng runtime có chủ sở hữu, backup mới, chọn code tương
-thích qua upgrade contract; không restore DB cũ. Checkpoint1 không thêm schema
-hoặc file state. Authority changes đã áp dụng không bị hoàn tác bằng rollback
-code. Original packages/APK/signer/Node/Cluster/Volume identity giữ nguyên.
+Trong Điện thoại ->Quản lý, owner nhập đúng HTTPS STORAGE Node (khác Controller/
+Dashboard port), leaf SHA-256 PIN đã đối chiếu, UUID volume đã duyệt trên Node,
+và physical failure domain đúng thực tế. Các Node/volume trên cùng một điện thoại
+phải cùng domain. Gợi ý volume từ heartbeat CHƯA được Controller kiểm chứng.
 
+Xem trước ->đối chiếu bindings ->typed full Node ID +physical-domain checkbox ->
+áp dụng. Preview<=120s/không vượt session, tối đa8/session32/Controller. Existing
+Controller checks approval/generation trong SQL transaction. Sau ACK, refresh
+probe; chỉ actual read/write/fsync/SHA/replica proofs mới là bằng chứng lưu trữ.
+Stale approval/generation409 cần đọc/xem trước lại, không tự bypass.
 
+Đổi tên và thu hồi cũng preview/typed Node ID. Revoke có thể làm replica không còn
+đọc qua mạng được; physical bytes vẫn giữ. Không tạo Node ID mới để né revoked
+state. Preview/known ACK receipts RAM-only; restart/ambiguous ACK cần xem current
+state rồi xác nhận intent mới, không suy ra chưa từng áp dụng. Quota/reserve/root
+và start/stop vẫn do chính Node/app/CLI quản lý; không có remote shell hoặc FS API.
 
-## Tài khoản Owner / Viewer (checkpoint2)
-Lần đầu đăng nhập bằng mã owner từ Controller, mở Tài khoản, tạo tài khoản Owner
-với tên3–48ASCII chữ thường/số/._- và mật khẩu12–128ký tự. Không có password mặc
-định. Sau logout chọn tài khoản/mật khẩu. Mã owner cục bộ vẫn phục hồi quyền quản
-trị nếu quên mật khẩu; không tự xóa account state hoặc init lại Controller.
-Owner tạo thêm Owner hoặc Viewer. Viewer được đọc/tải TẤT CẢ file cụm, không phải
-thư mục riêng hay file-sharing ACL. UI và backend cùng chặn upload/reconcile/
-pairing/node/account changes. Không cấp Viewer khi cần cô lập dữ liệu theo file.
-Sửa quyền/mật khẩu hoặc xóa: nhập lại tên để xác nhận; server CAS generation, thu
-hồi các phiên của tài khoản. Sửa tài khoản đang đăng nhập sẽ yêu cầu login lại.
-Giữ ít nhất1Owner. Thao tác đã được backend/Core authorize có thể đã chạy; thay
-role không rollback bytes/jobs hoặc hứa hủy mọi thao tác đang truyền.
+## File Manager / versions / tác vụ
 
-Account hash/salt lưu private trong dashboard/accounts.json1, gắn Cluster ID.
-Không gửi file này/backup/cookie/password lên GitHub. Không có thay đổi Registry/
-Manifest schema hoặc Node identity. File sai/quyền rộng/link/cluster mismatch bị
-từ chối, không ghi đè/silent reset. Missing file không tự tạo account/default pass;
-chỉ owner code +explicit create thiết lập lại web accounts, không đổi Node keys.
-Rollback043 code-only vẫn dùng mã owner, giữ nguyên accounts file để forward;
-exact package qualification cuối track mới công bố đường upgrade/rollback.
+Tìm literal Unicode trong đường dẫn, sort, lọc all/latest version và phân trang50.
+Duyệt thư mục/Thư mục trên là logical prefixes từ Catalog, không filesystem.
+Tìm có từ khóa đi đệ quy dưới thư mục chọn. Không tạo empty physical folders.
+Core vẫn giới hạn256file/version, offset<=10000; đây không phải unlimited storage.
 
+File mới version1. Thêm phiên bản ->kiểm tra số gợi ý ->chọn nội dung mới ->Upload.
+Tên+version bất biến, không ghi đè. Concurrent owner có thể chiếm cùng version:
+409 thì đọc lại trước ý định MỚI. Upload dở/mất ACK: chọn ĐÚNG bytes/tên/version cũ,
+giữ idempotency key, không auto-bump version để che lỗi. Public pending metadata
+ở sessionStorage/RAM, không phải credential. Đổi browser sau gián đoạn phải kiểm
+Catalog/jobs trước intent mới; Dashboard không giữ file nguồn sau request.
 
-## File Manager / phiên bản / tác vụ (checkpoint3 source)
-Tìm tên hoặc một phần đường dẫn, chọn sort và tất cả/phiên bản mới nhất rồi Tìm/
-áp dụng. Mỗi trang50mục, Trang trước/sau. Duyệt thư mục/Thư mục trên là thư mục
-LOGIC từ tên Catalog, không duyệt filesystem. Tìm có từ khóa đi đệ quy trong thư
-mục đang chọn. Giới hạn Catalog256 của Core hiện tại vẫn giữ, chưa phải unlimited.
+Upload cần đủ chỗ/quota/reserve trên hai domain được duyệt, SHA chuẩn và actual
+fsync/readback. Progress bytes Controller nhận không đồng nghĩa protected. Chỉ
+báo đủ2replica khi Controller xác nhận. File thiếu replica vẫn degraded/UNKNOWN.
+Browser transfer<=32MiB/file; giữ file gốc cho đến khi đã tự kiểm tra bản tải.
 
-File mới mặc định phiên bản1. Muốn cập nhật cùng tên, chọn Thêm phiên bản, kiểm
-tra số phiên bản được gợi ý từ Catalog, chọn file nội dung mới và Upload. File cũ
-không bị ghi đè; concurrent owner có thể chiếm cùng số ->409, đọc lại trước ý định
-mới. Khi upload dở/mất ACK, chọn ĐÚNG file/tên/phiên bản cũ; key nội dung được giữ
-trong sessionStorage (không token). Không tự tăng version để che lỗi retry.
-Lịch sử liệt kê các version bất biến và tải SHA từng bản. Đây không phải snapshot
-hoặc external backup. Nút chuẩn bị file mới không xóa job đã tồn tại.
+Bản sao &SHA hiển thị từng Node/volume, historical verified/current available khác
+nhau. Download dùng canonical valid-copy fallback; browser tự kiểm size+SHA trước
+lưu file mới. Lịch sử cho xem/tải mọi immutable version. Tác vụ đọc durable Core
+queue/history, Owner retry FAILED/RETRY. ACK retry không phải COMPLETE; active
+sender/verifier lease có thể409busy, UI đợi boundedly với SAME intent rồi báo
+chưa xác nhận. Không chấp nhận403/SHA/pin lỗi như thành công. Retry không xóa bytes.
 
-Tác vụ đọc queue Core bền vững và lịch sử. Owner có thể Yêu cầu thử lại khi
-FAILED/RETRY; ACK chỉ nhận retry, không xác nhận bytes/protected. UPLOAD chưa có
-bytes cần chọn lại file trong File Manager; Dashboard không giữ source bytes sau
-request. Đủ replica chỉ sau canonical fsync/readback/SHA/physical-domain proofs.
-Viewer đọc file/history/job, không retry/upload. File-only gateway cũng không
-retry; bundle Access0.1 cũ vẫn giao diện file cũ có ghi giới hạn, không giả hỗ trợ
-route mới. Core/quorum/recovery giữ observer-only. Không xóa vật lý/GC.
+## Snapshot và khôi phục
 
+Snapshot giữ TẤT CẢ immutable versions trong logical folder hoặc toàn Catalog tại
+một exact metadata revision/digest. UNVERIFIED lúc capture, per-file SHA thật trên
+2approved domains mới advance cursor. VERIFIED là bằng chứng LỊCH SỬ từng thời
+điểm đọc, không bảo đảm luôn online, quorum snapshot hoặc external backup độc lập.
+File pending/chưa có bytes không được tính verified. Snapshot không chứa keys.
 
-## Snapshot / khôi phục (checkpoint4a API; giao diện4b tiếp theo)
-Snapshot single-writer giữ danh sách TẤT CẢ version bất biến trong thư mục logic
-đã chọn tại một metadata point. Cần chạy các bước kiểm chứng bytes trên2miền lỗi
-để VERIFIED. Hoàn tất là bằng chứng LỊCH SỬ theo từng thời điểm đọc; không phải
-external backup, quorum snapshot, bảo đảm luôn online hay GC credit. Không xóa
-phiên bản/object, không tự hết hạn snapshot. Giới hạn16snapshot/64restore/128intent
-và2MiB metadata; hết chỗ báo lỗi, không tự xóa bản cuối để tiếp tục.
+Tạo và kiểm chứng ->đợi kết quả. Tạm dừng gửi bước mới/đóng trang giữ progress,
+không hủy lệnh đã được authorize. Mở lại ->Đọc lại ->Tiếp tục đúng operation. Thiếu
+Node thì sửa kết nối, đợi listener/probe thật sẵn sàng rồi tiếp tục; không init lại.
+Mỗi lượt browser chờ tối đa120s/256steps, hết lượt vẫn giữ cursor cho lần tiếp.
 
-Khôi phục file cũ tạo version MỚI, dùng chính Catalog/Storage/SHA/jobs hiện có.
-Không thay DB/file cũ. Intent/target bền vững trước truyền, mất ACK/restart thì tiếp
-tục cùng operation; không tự chọn version khác để che va chạm. BLOCKED
-version_conflict cần đọc trạng thái và xác nhận một ý định MỚI. COMPLETED chỉ sau
-2miền lỗi có actual readback SHA. Chưa đủ copies thì giữ tiến độ, chọn tiếp tục.
-Đóng browser dừng yêu cầu bước mới, không hủy tác vụ Core đã được authorize.
+Xem phiên bản của snapshot VERIFIED hoặc Lịch sử file ->Khôi phục thành phiên bản
+mới. Nhập đúng source path, đối chiếu version/SHA, checkbox rồi xác nhận. Intent
+và số version đích bền vững trước IO, Core target ID lưu trước bytes. Mất ACK/restart
+resume SAME intent/key/target; không restore DB hoặc thay file cũ. COMPLETED chỉ
+sau actual2domain readback. BLOCKED version_conflict giữ mọi dữ liệu, cần review
+và ý định MỚI. Tải lại kết quả để đối chiếu SHA. Mỗi file khôi phục riêng, chưa có
+atomic whole-cluster restore. Snapshot/history records không bị tự hết hạn/xóa.
 
-Không chia sẻ history.json/history-required.json/accounts.json hoặc backup state.
-Mất/hỏng một trong hai history files giữ lỗi503; không xóa/reset để làm UI chạy.
-Code-only rollback043 cần backup MỚI của toàn bộ state/volumes, giữ optional files
-để forward; không restore database cũ. Exact package test riêng ghi trong progress.
+Giới hạn16snapshots/64restores/128intent receipts và2MiB metadata. Đầy thì báo lỗi,
+không tự xóa bản cuối. Private history.json +history-required.json gắn Cluster/
+Catalog epoch/document ID; mất/hỏng một record giữ lỗi503, không reset. Bao gồm
+chúng trong stopped backups. Compatible old043 code giữ file nhưng không có UI;
+forward mới lại đọc progress. Browser storage bị chặn vẫn retry RAM trong trang;
+reload sau ambiguous ACK cần đọc progress trước khi xác nhận operation mới.
 
+## Storage / cấu hình / chẩn đoán
 
-## Snapshot / khôi phục bằng giao diện (4b source)
-Mở Snapshot / Khôi phục, nhập tên và thư mục logic hoặc để trống toàn bộ Catalog.
-Tạo và kiểm chứng: UI gửi từng bước, chỉ VERIFIED khi Controller đọc SHA thật
-trên2miền lỗi của mọi version đã chụp. Tạm dừng gửi bước mới/đóng trang giữ progress,
-không hứa hủy lệnh đã gửi. Mở lại, Đọc lại và Tiếp tục đúng snapshot/operation.
-Thiếu Node/copies báo chưa hoàn tất; sửa kết nối rồi tiếp tục, không tạo identity.
+Cấu hình / Chẩn đoán hiển thị approved volume, adapter, quota/reserve, số đo free/
+used/available và read/write/fsync. UNKNOWN khi không có probe còn mới, không phải0
+hay bằng chứng có thể ghi. Fsync-tested không phải bảo đảm power-loss/Doze/OEM.
+Nhiều volumes chung filesystem có thể làm available UNKNOWN, không cộng giả.
 
-Xem phiên bản của snapshot VERIFIED, chọn bản muốn khôi phục. Hoặc mở Lịch sử
-trong File Manager để chọn version cũ. Nhập lại ĐÚNG đường dẫn, đối chiếu version/
-SHA và xác nhận tạo version mới. Chỉ COMPLETED sau2domain readback; tải bản khôi
-phục lại kiểm SHA trong browser. BLOCKED va chạm giữ nguyên tất cả dữ liệu, cần
-operator review/ý định mới. Mỗi file khôi phục riêng, không hứa atomic whole-cluster
-restore. VERIFIED/COMPLETED là quan sát lịch sử, xem replica hiện tại riêng.
-Viewer chỉ xem/tải, không capture/step/restore. Core/recovery và file-only remote
-gateway không có controls; không đổi mode/allowlist để mở quyền ghi. Metadata
-intent trong sessionStorage không chứa token/code; nếu browser chặn storage, retry
-trong cùng trang vẫn giữ key RAM, reload cần kiểm progress trước ý định mới.
+Owner đổi tên giao diện/read-refresh5..60s, không đổi Controller name thật, Node/
+Cluster ID, heartbeat, TLS/PIN hoặc quota. Browser lấy cấu hình lúc login/mở tab;
+CAS409 thì đọc lại trước save. Viewer chỉ đọc. Optional preferences.json private,
+không phải Registry/schema migration; corrupt/unsafe/cluster mismatch giữ lỗi.
 
+Diagnostic JSON chỉ Owner, số đếm/measurements/timestamps/jobs/history/limits,
+không tên/IDs/endpoints/PIN/token/private key/path/raw logs. Kiểm tra trước chia sẻ.
+Đây không phải writer/quorum/phone acceptance. Chưa có audit log đầy đủ mọi admin
+operation/per-file ACL. Không có nút shell, remote quota/start-stop hoặc GC.
 
-## Storage / cấu hình / chẩn đoán (checkpoint5 source)
-Cấu hình / Chẩn đoán hiển thị các volume đã duyệt, adapter, quota/reserve, số đo
-free/used/available và read/write/fsync. UNKNOWN khi không có probe còn mới; không
-coi UNKNOWN là0 hoặc có thể ghi. Fsync-tested không phải bảo đảm power-loss/OEM.
+## LAN, remote và rollback
 
-Owner sửa tên giao diện và chu kỳ đọc trạng thái5..60giây; không đổi Cluster ID,
-Node ID, tên Controller thật, heartbeat hay quota. Mỗi browser lấy cấu hình khi
-đăng nhập/mở tab, thay đổi stale bị409 và đọc lại trước save. Viewer chỉ đọc.
+LAN không cần Internet/cloud nếu còn đường IP giữa các máy và Controller online.
+Mất Controller từ chối ghi mới, không tự tạo Leader/failover. Web App không có
+cached file/metadata/offline-write/background sync hoặc quyền launch Node.
 
-Tải chẩn đoán xuất JSON với counts/measurements/timestamps/jobs/history/limits,
-không chứa tên/IDs/endpoint/PIN/token/private key/path/log thô. Kiểm tra lại trước
-chia sẻ. Các số đếm/trạng thái không cấp quyền writer/quorum; chưa thay nghiệm thu
-điện thoại. Không có nút shell, remote quota, start/stop Node hay GC. Lịch sử job
-và snapshot/restore có sẵn, chưa hứa audit log toàn bộ thao tác admin/ACL từng file.
+Core quorum/recovery observer vẫn READ-ONLY. Phase5 private/edge ingress file-only,
+không quản trị node/accounts/snapshot/restore/settings/diagnostics. Capability
+scope/header không phải authority; không mở allowlist để vượt giới hạn. Cloudflare/
+Tailscale/IdP/DNS/provider và Android/hardware acceptance là nghiệm thu riêng.
+
+Nâng cấp/rollback theo DASHBOARD-INSTALL:stop ->backup MỚI+verify ->staged exact
+code ->preflight ->activate. Giữ mọi release/identity/volume marker/bytes/private
+history; không restore SQLite cũ đè dữ liệu mới. Core/Raft/GC/failover/writableDR
+không được bật bằng Dashboard này, không đổi mode bằng cách copy database.

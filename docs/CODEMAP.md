@@ -1082,3 +1082,13 @@ scopes management false. Web Settings/health/JSON download, configurable read
 interval and long-name wrapping. tests/test_dashboard_diagnostics.py/browser/JS
 cover actual TLS/restart/identity/SHA/CAS/privacy/UNKNOWN/mobile; dashboard_upgrade
 adds NEW preferences preservation through exact043 code rollback/forward.
+
+
+Dashboard6 distribution:asc/demo/VERSION0.5.0-dashboard-alpha retains base formats
+and legacy capabilities, adds explicit management/files/history/diagnostics flags.
+package.py includes current DASHBOARD-INSTALL/OPERATIONS +PWA/native pilot and new
+README, canonical source copied unchanged. New dashboard_package test executes
+exact packaged extraction guide, manifest/source checks and private-payload audit.
+PublishedDashboardUpgradeTests runs same full exact043 NEW-state rollback gate
+against actual new candidate archive; CurrentSource path remains separate.
+Historical Phase41 expected043 stays literal; only CURRENT expectation is050.

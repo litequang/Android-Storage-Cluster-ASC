@@ -366,3 +366,56 @@ NEXT after normal commit/push/remote:6new Controller Dashboard package/guides,
 exact final archive upgrade/NEW-state rollback, fresh full Python/Go/fault/package
 gates, immutable publication/SHA+remote download verification. Original artifacts
 and all existing ZTE identities/data remain untouched by Cloud.
+
+
+## Checkpoint5 publication VERIFIED /6a source preparation
+de6cdc8614b143e406207b422dd5a0a88f8c9d4c normal push/fetch/advertised exact, clean
+before6. Controller source version now0.5.0-dashboard-alpha, base formats unchanged,
+old043/APK5/Access archives untouched. Added full operator/install/stopped upgrade
++backup/NEW-state code rollback guide, package includes native pilot/PWA guides.
+Current-source version assertion updated to new literal; HISTORICAL frozen043
+case keeps exact old literal/archives/checks. Every old invariant assertion kept.
+
+Source/package targeted8PASS100.482s (current043->050 +actual new archive path,
+current042->050 and historical042->043 full pending/identity/bytes/rollback,
+installer/protected/unknown and original browser). Actual documented extraction/
+manifest/no private payload1PASS0.241s. Final exact archive+guide and full published
+043 NEW-state rollback2PASS21.827s; these overlap,9distinct cases. Archive rebuilt
+byte-identically after review, initial private copy retained, NOT published yet.
+SHA4ffcf623ee3d17e51fd191f4fa51ba74096b04274d236cb68c18dea536bed10d,
+release3e6a9332cf2c8535fabde405730e077d3f4071b357d82482a288d9211dcc5901.
+
+6a source freeze may be committed/pushed before long final run; new binary archive
+remains LOCAL/unpublished until full gates pass. Fresh clone continuation MUST
+first build deterministic candidate:
+python -B -m asc.demo.package candidates/asc-controller-0.5.0-dashboard-alpha.tar.gz
+Verify expected SHA above before package/full tests. Tests require real archive
+and fail if absent, never skip or mock it. Qualified toolchain Python3.13.5/Linux,
+existing edge env +ASC_GO Go1.27.3, real Chromium/NSS/Playwright. No source/payload
+changes after freeze; final logs/receipts track actual source/test hashes/cases.
+Next6b FRESH full applicable Python/all old faults+Go/vet/modules/builds/package
+checks, then artifact publication and fresh HTTPS download/byte-equal verification.
+Do not mark Dashboard/source-ready or deploy while final acceptance pending.
+
+
+6a freeze inventory:487hashed inputs/509unique applicable Python
+cases discovered, no loader errors. Private inventory driver initially omitted
+repo from sys.path and failed BEFORE any test execution; corrected private driver,
+no source/test/skip change. Manifest SHA ca6d3de1088123fd8a02f94eb530aad30c99d174d23cd12d6431e0e90310812f.
+Go11top-level/12nested tests/vet/module verification/Linux build PASS, Windows
+amd64+Androidarm64 cross-build PASS only, qualification/dashboard-platform.json.
+New archive remains local/unpublished; exact published-archive upgrade tests will
+run in the fresh full suite as well, no result inferred from preparation.
+
+Private inventory driver named platform.py briefly shadowed stdlib during import
+and reran actual Go gates (all PASS); renamed to run_platform_gates.py before any
+full Python execution. Fresh inventory proper stdlib path still487inputs/509unique
+cases and SAME ca6d3de1... hash; no product/test/skip changes. Full runner will
+launch clean child `python -u -B -m unittest discover -s tests -v` from repo.
+
+Final6a documentation closed BEFORE fresh full suite; refreshed frozen manifest
+b017fb0ac3fb609dc2191f4d827ae2620efac3ffba4abdb525a92c296d6da3db (487inputs/
+509cases). Earlier ca6d... was preliminary before final architectural
+documentation, no runtime/archive/test delta; archive remains4ffcf623... byte-equal.
+Do not edit frozen paths while final tests run. Acceptance/progress/publication
+receipts are outside the frozen input set and may record real results afterward.

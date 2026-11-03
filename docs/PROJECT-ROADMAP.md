@@ -1,6 +1,6 @@
 # ASC — Roadmap tổng và điểm tiếp tục cho AI
 
-Cập nhật 2026-10-30. Đọc AGENTS.md và chín tài liệu bắt buộc trước, sau đó đọc
+Cập nhật 2026-11-03. Đọc AGENTS.md và chín tài liệu bắt buộc trước, sau đó đọc
 tài liệu này để chọn đúng track. Đây là bản tổng hợp hiện tại; các báo cáo nghiệm
 thu bên dưới giữ bằng chứng chi tiết và giới hạn theo nền tảng. Không lấy tiêu đề
 v0.4/v0.10 hoặc đoạn "future/NOT implemented" trong tài liệu lịch sử làm trạng
@@ -11,7 +11,9 @@ Owner yêu cầu triển khai full Dashboard. Cloud phát triển source/synthet
 feature/dashboard-full từ PC4336ab7; ZTE runtime/state không bị truy cập hoặc đổi.
 [DASHBOARD-PLAN](DASHBOARD-PLAN.md) và [DASHBOARD-PROGRESS](DASHBOARD-PROGRESS.md)
 là cursor hiện tại: Node management ->owner login ->File Manager ->history/
-snapshot/restore ->settings/diagnostics ->qualification/package. PC install đã OK,
+snapshot/restore ->settings/diagnostics ->qualification/package. Checkpoints1–5
+đã qualified/pushed;6Controller0.5.0-dashboard-alpha actual full/artifact gates xem
+DASHBOARD-ACCEPTANCE/PROGRESS, không tự suy ra đã đạt từ source availability. PC install đã OK,
 không tiếp tục chẩn đoán lỗi đã giải quyết. Các mục phía dưới giữ evidence/history.
 
 ## 1. Dự án đang làm gì?

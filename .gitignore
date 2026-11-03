@@ -179,3 +179,4 @@ local.properties
 
 # Reviewed Linux access internal CODE bundle; no private env/profile/state.
 !/candidates/asc-linux-access-0.1.0-internal.tar.gz
+!/candidates/asc-controller-0.5.0-dashboard-alpha.tar.gz

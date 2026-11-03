@@ -16,6 +16,7 @@ from tests import test_quick_join as quick
 
 
 class Phase41UpgradeTests(historical.PublishedUpgradeFixture):
+    expected_candidate_version='0.4.3-dev'  # Historical exact archive remains unchanged.
     proxy=quick.QuickJoinTests.proxy
     quick_join=quick.QuickJoinTests.join
 
@@ -51,7 +52,7 @@ class Phase41UpgradeTests(historical.PublishedUpgradeFixture):
             self.prepare_candidate()
             self.candidate_source=self.source
             self.candidate_release=verify(self.source)
-            self.assertEqual(self.candidate_release['version'],'0.4.3-dev')
+            self.assertEqual(self.candidate_release['version'],self.expected_candidate_version)
             self.assert_candidate_source()
             archive=self.repo/'candidates/asc-demo-alpha-0.4.2-dev.tar.gz'
             self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(),
@@ -177,6 +178,7 @@ class CurrentSourceUpgradeTests(Phase41UpgradeTests):
     only frozen packages. All inherited identity/bytes/pending/rollback assertions
     execute independently on a fresh cluster for this current-source transition.
     """
+    expected_candidate_version='0.5.0-dashboard-alpha'  # New CURRENT source, not historical043.
     def prepare_candidate(self):
         pass  # DemoLAN setUp has already built/extracted the current source.
 

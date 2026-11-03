@@ -16,6 +16,10 @@ class DashboardUpgradeTests(published.PublishedUpgradeFixture):
     http=browser.DashboardAPITests.http
     login=browser.DashboardAPITests.login
 
+    def candidate_archive(self):
+        current=self.root/'current-dashboard-source.tar.gz';package.build(self.repo,current)
+        return current
+
     def command_result(self,root,*args,input=None):
         if not hasattr(self,'old_source'):
             archive=self.repo/'candidates/asc-demo-alpha-0.4.3-core-decode-internal-source.tar.gz'
@@ -23,7 +27,7 @@ class DashboardUpgradeTests(published.PublishedUpgradeFixture):
             with tarfile.open(archive) as saved:saved.extractall(self.root/'exact043',filter='data')
             self.old_source=self.root/'exact043/asc-demo-alpha';self.old_release=package.verify(self.old_source)
             self.assertEqual(self.old_release['release_id'],'b423c5d8e811876ae71a9e0ad41c6ba46acc5b4056b408a8e125875aabcf2aca')
-            current=self.root/'current-dashboard-source.tar.gz';package.build(self.repo,current)
+            current=self.candidate_archive()
             with tarfile.open(current) as saved:saved.extractall(self.root/'current',filter='data')
             self.new_source=self.root/'current/asc-demo-alpha';self.new_release=package.verify(self.new_source)
             for name in ('asc/demo/dashboard/history.py','asc/catalog/audit.py','asc/demo/dashboard/accounts.py'):
@@ -75,6 +79,7 @@ class DashboardUpgradeTests(published.PublishedUpgradeFixture):
             self.assertFalse(result['schema_migration']);self.command(root,'verify-backup',str(backup))
             self.assertTrue(self.identity_bytes(root)==identities[str(root)],'identity changed; private values suppressed')
         self.assertTrue({p.name:p.read_bytes() for p in (self.controller/'dashboard').iterdir() if p.is_file()}==optional)
+
         self.source=self.old_source;self.restart_cluster()
         self.wait_for(lambda:request_json(self.origin,self.pin,'GET','/api/v1/info'))
         self.wait_for(lambda:self.command(self.controller,'replicas',target)['available_replicas']==2)
@@ -91,3 +96,15 @@ class DashboardUpgradeTests(published.PublishedUpgradeFixture):
         self.assertEqual(self.http('GET','/api/preferences')[2]['display_name'],preferences['display_name'])
         self.assertEqual(self.http('POST','/api/login',dict(username='primary',password=password),authenticated=False)[0],200)
         self.assertTrue({p.name:p.read_bytes() for p in (self.controller/'dashboard').iterdir() if p.is_file()}==optional)
+
+
+class PublishedDashboardUpgradeTests(DashboardUpgradeTests):
+    """Same full invariant gate, against the actual NEW immutable release archive."""
+    def candidate_archive(self):
+        archive=self.repo/'candidates/asc-controller-0.5.0-dashboard-alpha.tar.gz'
+        sha=archive.with_name(archive.name+'.sha256').read_text().split()[0]
+        self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(),sha)
+        independently_built=self.root/'independent-final-dashboard.tar.gz'
+        package.build(self.repo,independently_built)
+        self.assertTrue(archive.read_bytes()==independently_built.read_bytes(),'Final archive differs from exact current package inputs')
+        return archive

@@ -832,3 +832,11 @@ certPIN/tokens/keys/logs; no arbitrary log or file reader. Measurements keep nul
 UNKNOWN when stale, including fsync; report never grants writer/quorum/GC proof.
 Browser export still needs operator review. Source/phone/provider qualification
 remain separate, no new ingress management exposure or native permissions.
+
+
+Controller050 source distribution requires separately trusted archive SHA/full
+manifest and regular bounded new-only extraction before import/stage. Packaged
+guide preserves system TLS/proxy/CA/identity and original M51/unknown guards.
+No private state/signing key or binaries copied into Controller source package;
+existing APK signer/artifacts retained. Source prep is not final acceptance;
+fresh full/fault/package/remote equality proof precedes final publication claim.

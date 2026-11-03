@@ -1,15 +1,14 @@
 # ASC IMPLEMENTATION & ACCEPTANCE PLAN
 
-## Latest roadmap / resume — 2026-10-29
-Read [PROJECT-ROADMAP](PROJECT-ROADMAP.md) for the complete current timeline,
-runtime/artifact roles and remaining gates; old chronological entries below are
-history, not a statement that Phase4/5 software is still absent. Phase4.0/4.1 Linux
-foundations accepted;4.2 actual Native Node API30/35 emulator scoped PASS, physical
-phone/ARM64/LAN/OEM unaccepted. Phase5 Linux software/distribution subset accepted,
-live provider/SSH/VPN/production unaccepted.3D writable DR remains BLOCKED.
-CURRENT TASK: owner PC investigates fresh-Termux ZTE Controller install failure;
-[handoff](ZTE-FRESH-INSTALL-PC-HANDOFF.md) has exact archives/hashes, unknowns and
-next actions. No error output or fix/phone acceptance exists yet for this attempt.
+## Latest roadmap / resume — 2026-11-03
+Read [PROJECT-ROADMAP](PROJECT-ROADMAP.md) for the current timeline, roles and
+remaining gates. CURRENT TASK is full LAN owner Dashboard on feature/dashboard-full:
+Node management1/accounts2/files3/history4a+4b/diagnostics5 are qualified/pushed;
+Controller0.5.0-dashboard-alpha final package/full gates6 follow in
+[DASHBOARD-PROGRESS](DASHBOARD-PROGRESS.md). Source/freezes/publication evidence,
+not historical headings, determine acceptance. ZTE043Lite install is already OK,
+no new init/phone access from Cloud. Core3D writable DR remains BLOCKED; Android
+voters/failover/GC not enabled. Full physical/OEM/provider acceptance stays separate.
 
 ## Historical acceptance order — 2026-10-23
 - Baselines: v0.4.1 b74bb594a5bff9ad0926255effed1fd41bbc1647; v0.5.0 f70b095b8f2ec507baaea5a4bdb3d03667209f94.
