@@ -419,3 +419,20 @@ b017fb0ac3fb609dc2191f4d827ae2620efac3ffba4abdb525a92c296d6da3db (487inputs/
 documentation, no runtime/archive/test delta; archive remains4ffcf623... byte-equal.
 Do not edit frozen paths while final tests run. Acceptance/progress/publication
 receipts are outside the frozen input set and may record real results afterward.
+
+
+## Checkpoint6a publication VERIFIED /6b actual full RUNNING
+5919c2c057348261a46c36e8ed646c2d2f84e2a8 normal push/fetch/advertised exact.
+Source freeze487inputs/509unique cases, manifest
+b017fb0ac3fb609dc2191f4d827ae2620efac3ffba4abdb525a92c296d6da3db. New archive+SHA remain
+LOCAL/unpublished by design; source clone must run documented deterministic build
+first. No dropped user work, old artifacts/phones/signer unchanged.
+
+Fresh full command:python -u -B -m unittest discover -s tests -v, existing optional
+edge env/Python3.13.5/ASC_GO Go1.27.3/GOMAXPROCS2/Chromium. Started UTC
+2026-11-03T02:44:07.736230+00:00, source commit5919c2c. Driver/private complete log under
+/workspace/work/dashboard-final; status still RUNNING, NOT final PASS. All12Phase3A
+fault marks reached, overall64mandatory old faults/full509 still required.
+If executor interrupts, first inspect preserved source, final status/log and hash
+inventory. An incomplete run is UNKNOWN, never accepted. Do not rerun implemented
+checkpoints, reset state, publish package or skip tests to close this gate.
